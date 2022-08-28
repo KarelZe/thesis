@@ -1,0 +1,15 @@
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]
+addopts = ["-p", "no:warnings"]
+
+[tool.mypy]
+# https://github.com/python/mypy/issues/2410
+ignore_missing_imports = true
+disallow_untyped_defs = true
+disallow_untyped_calls = true
+disallow_incomplete_defs = true
+
+[tool.isort]
+profile = "black"

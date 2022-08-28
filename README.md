@@ -30,6 +30,7 @@ Project Organization
     │
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
     │                         generated with `pip freeze > requirements.txt`
+    ├── .pre-commit-config.yaml   <- Pre-checks to avoid committing error-prone code
     │
     ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
     ├── src                <- Source code for use in this project.
@@ -58,3 +59,11 @@ Project Organization
 Notes 📜
 ------------
 Notes are stored in the `references` folder in a obsidian vault. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes.
+
+
+Set up pre-commit hooks 🐙
+------------
+```
+pre-commit install
+pre-commit run --all-files
+```
