@@ -54,3 +54,7 @@ Project Organization
 
 --------
 
+
+Notes 📜
+------------
+Notes are stored in the `references` folder in a obsidian vault. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes.
