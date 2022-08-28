@@ -1,0 +1,115 @@
+{
+  "main": {
+    "id": "550952c7dea0cc23",
+    "type": "split",
+    "children": [
+      {
+        "id": "bfd60c3526085927",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "❓ Questions.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "b529659093fc318f",
+    "type": "split",
+    "children": [
+      {
+        "id": "c5256196fcf4b790",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8399eb31ec07fd72",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "6942b2f8be896a2c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "steuerrech",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 431
+  },
+  "right": {
+    "id": "9db2ac4605daf425",
+    "type": "split",
+    "children": [
+      {
+        "id": "8b73bff3515ba23a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b822a70ca6f7b75f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "❓ Questions.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": true,
+                "searchQuery": "clip",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              }
+            }
+          },
+          {
+            "id": "80a8566a30589318",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "bfd60c3526085927",
+  "lastOpenFiles": [
+    "📜 TOC.md",
+    "❓ Questions.md",
+    "Model Building/draft_model_building.md",
+    "Related Works/@basakPredictingDirectionStock2019.md",
+    "Pasted image 20220818140122.png",
+    "🎓Uni/⚔️Klausurplanung.md",
+    "🎀Life/🫵 Psychology.md",
+    "🎀Life/🪦Gravestone.md",
+    "📜Blog/Blog.md",
+    "🎓Uni/Rechnerstrukturen/💷 Steuerrecht 2.md"
+  ]
+}
