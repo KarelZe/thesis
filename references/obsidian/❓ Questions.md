@@ -7,7 +7,7 @@
 - How many features does the data set contain? Which ones does it ok?
 - How were quote and tick rules implemented e. g. library / custom implementation in python? How are the tables generated?
 - What were the greatest challenges writing the draft of the paper?
-- Who would supervise / grade a thesis? What is his / her special focus?
+- Who would supervise / grade a thesis? What is his / her special focus e. g., economical inference?
 - Is it ok to start with full thrust at beginning of semester?
 - What should be the focus one? Primary focus on improving prediction quality / bridging gap?
 - Are there certain options to put special emphasize on e. g. index options?
@@ -47,6 +47,8 @@
 - Try out pseudo-labelling e. g., [How To Build an Efficient NLP Model – Weights & Biases (wandb.ai)](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) and [[@leePseudolabelSimpleEfficient]]. Requires solving the issue of obtaining soft probablities.
 - Implement re-producable models.
 - Start of with Gradient Boosted Trees, due to being well suited for tabular data.
+- Frame problem as time series classification problem, if prev prices / orders are available. Mind the gaps in options data though.
+- Use classification methods (*probablistic classifer*) that can return probablities instead of class-only for better analysis.
 
 ## Problems
 - How can the disadvantages of generating the true labels be mitigated e. g., matching trade size, not just buys / sells?
