@@ -91,25 +91,23 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "active": "bfd60c3526085927",
   "lastOpenFiles": [
     "📜 TOC.md",
     "❓ Questions.md",
+    "📥Inbox/@leePseudolabelSimpleEfficient.md",
+    "📥Inbox/@savickasInferringDirectionOption2003.md",
+    "📥Inbox/@owenHyperparameterTuningPython2022.md",
+    "📥Inbox/@grauerOptionTradeClassification2022.md",
     "Model Building/draft_model_building.md",
     "Related Works/@basakPredictingDirectionStock2019.md",
     "Pasted image 20220818140122.png",
-    "🎓Uni/⚔️Klausurplanung.md",
-    "🎀Life/🫵 Psychology.md",
-    "🎀Life/🪦Gravestone.md",
-    "📜Blog/Blog.md",
-    "🎓Uni/Rechnerstrukturen/💷 Steuerrecht 2.md"
+    "🎓Uni/⚔️Klausurplanung.md"
   ]
 }
