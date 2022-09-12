@@ -29,20 +29,20 @@
 
 ### 🧠 Machine Learning-based approaches
 
-#### Data pre-processing
+#### 🦺 Data pre-processing
 - The approach of Grauer matches the LiveVol data set, only if there is a matching volume on buyer or seller side. Results in 40 % reconstruction rate (p. 9). One could obtain more **training samples** by:
 - **pseudo-labelling:** e. g., [How To Build an Efficient NLP Model – Weights & Biases (wandb.ai)](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) and [[@leePseudolabelSimpleEfficient]]. Requires solving the issue of obtaining soft probablities.
 - **synthetic data:** Use (unconditional) Generative Adversial Networks to generate tabular data, that is not part of the data set itself but could be used for training. See e. g., [nbsynthetic/vgan.py at master · NextBrain-ml/nbsynthetic (github.com)](https://github.com/NextBrain-ml/nbsynthetic/blob/master/src/nbsynthetic/vgan.py) or [Synthetic Tabular Data Generation | by Javier Marin | Sep, 2022 | Towards Data Science](https://towardsdatascience.com/synthetic-tabular-data-generation-34eb94a992ed)
 - **fuzzy matching:** e. g., match volumes, even if there are small deviations in the volumes e. g. 5 contracts.
 
-#### Modelling
+#### 🏗️ Modelling
 - Implement reproducible models with reproducible data sets early on. (see [[❓ Questions#^bd4973]])
 - Current rules like the tick test, consider previous prices. Frame problem as time series classification problem, if previous prices/orders are available. Mind the gaps in options data though.
 - Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data.
 - Use classification methods (*probabilistic classifier*) that can return probabilities instead of class-only for better analysis.
 
 
-## Tasks
+## 🔔 Tasks
 
 ## 🏫 Organizational
 - Define micro-tasks
