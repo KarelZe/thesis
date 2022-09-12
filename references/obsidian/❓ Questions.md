@@ -25,12 +25,12 @@
 
 ### 📜Classical rules
 - Enhance the mid-spread rule. Consider the distance from the mid-spread and bid-ask spread as a probability. The current formulation can't classify trades at mid-spread. A different formulation assigns a low probability to classifications close to the mean.
-- Current hybrid approaches use stacking (p. 11). Also, due to technical limitations. Why not try out the majority vote/voting classifier with a final estimator?
+- Current hybrid approaches use stacking ([[@grauerOptionTradeClassification2022]] p. 11). Also, due to technical limitations. Why not try out the majority vote/voting classifier with a final estimator?
 
 ### 🧠 Machine Learning-based approaches
 
 #### 🦺 Data pre-processing
-- The approach of Grauer matches the LiveVol data set, only if there is a matching volume on buyer or seller side. Results in 40 % reconstruction rate (p. 9). One could obtain more **training samples** by:
+- The approach of [[@grauerOptionTradeClassification2022]] matches the LiveVol data set, only if there is a matching volume on buyer or seller side. Results in 40 % reconstruction rate [[@grauerOptionTradeClassification2022]](p. 9). One could obtain more **training samples** by:
 - **pseudo-labelling:** e. g., [How To Build an Efficient NLP Model – Weights & Biases (wandb.ai)](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) and [[@leePseudolabelSimpleEfficient]]. Requires solving the issue of obtaining soft probablities.
 - **synthetic data:** Use (unconditional) Generative Adversial Networks to generate tabular data, that is not part of the data set itself but could be used for training. See e. g., [nbsynthetic/vgan.py at master · NextBrain-ml/nbsynthetic (github.com)](https://github.com/NextBrain-ml/nbsynthetic/blob/master/src/nbsynthetic/vgan.py) or [Synthetic Tabular Data Generation | by Javier Marin | Sep, 2022 | Towards Data Science](https://towardsdatascience.com/synthetic-tabular-data-generation-34eb94a992ed)
 - **fuzzy matching:** e. g., match volumes, even if there are small deviations in the volumes e. g. 5 contracts.
