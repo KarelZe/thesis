@@ -74,7 +74,7 @@
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": true,
-                "searchQuery": "clip",
+                "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": false
               }
@@ -99,12 +99,12 @@
   },
   "active": "bfd60c3526085927",
   "lastOpenFiles": [
-    "📜 TOC.md",
+    "Classical rules/@grauerOptionTradeClassification2022.md",
     "❓ Questions.md",
-    "📥Inbox/@leePseudolabelSimpleEfficient.md",
+    "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
+    "📜 TOC.md",
     "📥Inbox/@savickasInferringDirectionOption2003.md",
     "📥Inbox/@owenHyperparameterTuningPython2022.md",
-    "📥Inbox/@grauerOptionTradeClassification2022.md",
     "Model Building/draft_model_building.md",
     "Related Works/@basakPredictingDirectionStock2019.md",
     "Pasted image 20220818140122.png",

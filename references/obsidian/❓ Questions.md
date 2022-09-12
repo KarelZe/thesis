@@ -12,12 +12,16 @@
 - Are there any criteria/expectations I have to meet? Are there certain ideas from ongoing research that I have to try out? Do I have to formally apply e. g., with my CV?
 **Data set:**
 - Could I obtain access to the previously used data? What kind of features like volumes at certain exchanges would be available?
-- How many features does the data set contain?
+- How many features does the data set contain? `8 categories for buy and sell volumes  x 4 trader types by option series x trading day`. 
+- What should be primary target e. g., classification on `NBBO`?
 - Should the data set remain static or include new samples since publication? Hence, 2017 onwards for the ISE set.
-- Are there certain options to put special emphasis on e. g. index options?
+- Are there certain options to put special emphasis on e. g., index options? Hard to classify trades e. g., large trade sizes or close to mid-spread? (see [[@grauerOptionTradeClassification2022]])
 
 **Models:**
 - Are there certain models that must be considered?
+
+**Other:**
+- What is the idea behind the two step process of publishing on Open Science Framework first? Do you want to "mark the field"? Get early feedback? [osf.io](https://osf.io/kj86r/ ?view_only=388a89b23254425a8271402e2b11fc4e.)
 
 ## 💥Ideas
 
@@ -38,7 +42,7 @@
 #### 🏗️ Modelling
 - Implement reproducible models with reproducible data sets early on. (see [[❓ Questions#^bd4973]])
 - Current rules like the tick test, consider previous prices. Frame problem as time series classification problem, if previous prices/orders are available. Mind the gaps in options data though.
-- Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data.
+- Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Implement robustness checks (as in [[@grauerOptionTradeClassification2022]]) early on.
 - Use classification methods (*probabilistic classifier*) that can return probabilities instead of class-only for better analysis.
 
 
@@ -50,6 +54,7 @@
 - Schedule meetings
 - Apply for SCC computing resources
 - Collect checklists of errors to check for e. g., inconsistent capitalization etc.
+- Investigate printing bug from seminar paper with complex diagrams. Try at copyshop at uni. Try compression.
 
 ### 👨‍🚀 Technical
 
@@ -59,6 +64,7 @@
 - Implement experiment tracking with [`weights and bias`]([Weights & Biases – Developer tools for ML (wandb.ai)](https://wandb.ai/site)) or [Overview - Verta](https://docs.verta.ai/verta/). 
 - Set up `mypy` and [beartype/beartype: Unbearably fast O(1) runtime type-checking in pure Python. (github.com)](https://github.com/beartype/beartype) type to avoid errors through incorrect typing. 
 - Set up consistent plotting early on e. g. style. E. g., see [garrettj403/SciencePlots: Matplotlib styles for scientific plotting (github.com)](https://github.com/garrettj403/SciencePlots).
+- Replace `pandas` with [`modin`](https://github.com/modin-project/modin)
 - If using neural networks in `pytorch`, develop a deeper understanding of the profiler. See e. g., [OPT-175B: Open Pretrained Transformer | ML Coding Series - YouTube](https://www.youtube.com/watch?v=5RUOrXl3nag). 
 - If using neural networks try out `flax`, [google/flax: Flax is a neural network library for JAX that is designed for flexibility. (github.com)](https://github.com/google/flax)
 - Improve `tikz` skills for diagrams.
