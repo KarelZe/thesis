@@ -6,6 +6,7 @@ tags: #option-trade-classification #rule-based
 ---
 
 ## Key takeaways
+- Getting option-trade classification right is central for several applications like the calculation of order imbalances. One Example is: [[@garleanuDemandBasedOptionPricing2009]]
 - Authors use quote, tick, Lee and Ready (1991), and Ellis, Michaely, and O’Hara (2000) rule to infer the trade direction of option trades. Also suggest two own rules” (Grauer et al., 2022, p. 0)
 - New rules:
 	1. **Tick size rule:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely.  Accuracy of 80 %. 
@@ -18,8 +19,8 @@ tags: #option-trade-classification #rule-based
 - Reasons why application of stock rules is doubtfull are: “options are more illiquid, trading is spread accross different exchange with nation-wide bid offers” (Grauer et al., 2022, p. 1)
 - Only one similar work (Savickas and Wilson (2003)).” (Grauer et al., 2022, p. 1)
 - “Generally, quote rules outperform tick rules by far.” (Grauer et al., 2022, p. 3)
-- “The highest success rate of 63.92% can be achieved by applying the quote rule first to NBBO and then to ISE quotes, and classifying all remaining trades using the reverse tick rule” (Grauer et al., 2022, p. 3)
-- "Authors hypothesize, that weak performance that sophisticated customers placing limit order instead of market orders cause the poor performance "
+- **Novelty:** 💥 “The highest success rate of 63.92% can be achieved by applying the quote rule first to NBBO and then to ISE quotes, and classifying all remaining trades using the reverse tick rule” (Grauer et al., 2022, p. 3)
+- "Authors hypothesize, that weak performance that sophisticated customers placing limit order instead of market orders cause the poor performance"
 
 ## Importance of option trade classifcation
 - “Particularly, the trade direction is required to determine the information content of trades, the order imbalance and inventory accumulation of liquidity providers, the price impact of transactions, and to calculate many liquidity measures.” (Grauer et al., 2022, p. 1)
