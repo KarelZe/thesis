@@ -13,9 +13,10 @@
 **Data set:**
 - Could I obtain access to the previously used data? What kind of features like volumes at certain exchanges would be available?
 - How many features does the data set contain? `8 categories for buy and sell volumes  x 4 trader types by option series x trading day`. 
-- What should be primary target e. g., classification on `NBBO`?
-- Should the data set remain static or include new samples since publication? Hence, 2017 onwards for the ISE set.
-- Are there certain options to put special emphasis on e. g., index options? Hard to classify trades e. g., large trade sizes or close to mid-spread? (see [[@grauerOptionTradeClassification2022]])
+- What should be primary target e. g., classification on `NBBO`? -> all exchanges
+- Should the data set remain static or include new samples since publication? Hence, 2017 onwards for the ISE set. -> Focus on ISE 
+- Are there certain options to put special emphasis on e. g., index options? Hard to classify trades e. g., large trade sizes or close to mid-spread? (see [[@grauerOptionTradeClassification2022]]) -> all
+- merge data from ise + cboe -> needs features from stock exchanges
 
 **Models:**
 - Are there certain models that must be considered?
@@ -43,6 +44,7 @@
 - Implement reproducible models with reproducible data sets early on. (see [[❓ Questions#^bd4973]])
 - Current rules like the tick test, consider previous prices. Frame problem as time series classification problem, if previous prices/orders are available. Mind the gaps in options data though. Would somewhat contract the poor experiences with the tick rule.
 - Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Implement robustness checks (as in [[@grauerOptionTradeClassification2022]]) early on.
+- If using neural networks, try out feed forward networks or Transformers in the form of TabTransformer. Look into [snapshot ensembles](https://arxiv.org/pdf/1704.00109.pdf).
 - Use classification methods (*probabilistic classifier*) that can return probabilities instead of class-only for better analysis.
 
 
@@ -91,4 +93,12 @@
 - Write after Gopen rules (see [Microsoft Word - Science of Scientific Writing.doc (fu-berlin.de)](http://www.inf.fu-berlin.de/lehre/pmo/eng/ScientificWriting.pdf))
 - Implement a baseline e. g., rules from paper. Do I get the same results?
 - Update readme.
-- Create expose.
+- Create expose -> problem, empirisch, ml algorithmus
+- Think about leakage between sets when doing splits.
+
+- feedback
+	- Ergebnisse ökonomisch einordnet
+	- Zusammenhang zwischen der Arbeiten
+	- Schachtelsätze
+	- Asset-Pricing-Formula -> Intuition 
+	- Am Anfang die Ergebnisse stellen / Hauptlearning am Ende wiederholen
