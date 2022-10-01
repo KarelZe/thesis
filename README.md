@@ -58,8 +58,12 @@ Project Organization
 
 Notes 📜
 ------------
-Notes are stored in the `references` folder in a obsidian vault. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes.
+Notes are stored in the `references` folder in an obsidian vault. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes.
 
+
+Final document 🎓
+------------
+The latest build of the thesis can be found under [`releases`](https://github.com/KarelZe/thesis/releases/).
 
 Set up pre-commit hooks 🐙
 ------------
