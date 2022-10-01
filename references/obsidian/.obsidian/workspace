@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@savickasInferringDirectionOption2003.md",
+                "file": "Classical rules/@grauerOptionTradeClassification2022.md",
                 "mode": "source",
                 "source": false
               }
@@ -23,8 +23,12 @@
             "id": "32388bd8822fdb0a",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "TOC.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ],
@@ -96,7 +100,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📥Inbox/@savickasInferringDirectionOption2003.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -125,15 +129,15 @@
     "direction": "horizontal",
     "width": 300
   },
-  "active": "bfd60c3526085927",
+  "active": "32388bd8822fdb0a",
   "lastOpenFiles": [
-    "❓ Questions.md",
     "📥Inbox/@savickasInferringDirectionOption2003.md",
+    "TOC.md",
+    "❓ Questions.md",
+    "Classical rules/@grauerOptionTradeClassification2022.md",
     "📥Inbox/@owenHyperparameterTuningPython2022.md",
     "Classical rules/@garleanuDemandBasedOptionPricing2009.md",
-    "Classical rules/@grauerOptionTradeClassification2022.md",
     "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
-    "📜 TOC.md",
     "Model Building/draft_model_building.md",
     "Related Works/@basakPredictingDirectionStock2019.md",
     "Pasted image 20220818140122.png"

@@ -35,6 +35,8 @@
 % Mathematics
     \usepackage{amscd,amsfonts,amsmath,amssymb,amsthm,amscd,bbm} % Extends the maths set.
 
+% Markdown
+	\usepackage[hybrid]{markdown}
 
 % --------------------------------- Information on thesis --------------------------------- 
 % Please fill in this information once at the beginning. This way, gaps will be filled in automatically in the following.
@@ -95,10 +97,10 @@
 % Main text section
     \newpage
 	\setcounter{page}{1}\renewcommand{\thepage}{\arabic{page}} % Sets the numbering to arabic.
-	\include{Content/Section1}
-	\include{Content/Section2}
-	\include{Content/Section3}
-	
+	% \include{Content/Section1}
+	% \include{Content/Section2}
+	% \include{Content/Section3}
+	\markdownInput{../references/obsidian/TOC.md}
 % Bibliography
 	\newpage
 	\printbibliography

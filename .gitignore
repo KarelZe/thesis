@@ -401,4 +401,9 @@ TSWLatexianTemp*
 # glossaries
 *.glstex
 
+# tex files from markdown
+*md.tex
+*.lua
+
+# built document
 Template_english.pdf

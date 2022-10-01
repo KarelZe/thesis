@@ -13,6 +13,7 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@master
         with:
+          latexmk_shell_escape: true
           root_file: Template_English.tex
           working_directory: reports
       - name: Release
