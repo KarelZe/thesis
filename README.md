@@ -1,5 +1,5 @@
-![badge thesis](https://github.com/KarelZe/thesis/actions/workflows/action_latex.yaml/badge.svg?event=push)
-![badge code](https://github.com/KarelZe/thesis/actions/workflows/action_python.yaml/badge.svg?event=push)
+![badge thesis](https://github.com/KarelZe/thesis/actions/workflows/action_latex.yaml/badge.svg)
+![badge code](https://github.com/KarelZe/thesis/actions/workflows/action_python.yaml/badge.svg)
 
 thesis
 ==============================
