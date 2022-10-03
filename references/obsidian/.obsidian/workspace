@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📥Inbox/@olbrysEvaluatingTradeSide2018.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,10 +110,10 @@
     "direction": "horizontal",
     "width": 300
   },
-  "active": "32388bd8822fdb0a",
+  "active": "6aba1fdd6b674f4c",
   "lastOpenFiles": [
-    "TOC.md",
     "📥Inbox/@olbrysEvaluatingTradeSide2018.md",
+    "TOC.md",
     "❓ Questions.md",
     "Classical rules/@grauerOptionTradeClassification2022.md",
     "📥Inbox/@savickasInferringDirectionOption2003.md",
