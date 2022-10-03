@@ -4,35 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "dcc945f45a762ae5",
-        "type": "split",
-        "children": [
-          {
-            "id": "bfd60c3526085927",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Classical rules/@grauerOptionTradeClassification2022.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "32388bd8822fdb0a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "TOC.md",
-                "mode": "source",
-                "source": false
-              }
-            }
+        "id": "32388bd8822fdb0a",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "📥Inbox/@olbrysEvaluatingTradeSide2018.md",
+            "mode": "source",
+            "source": false
           }
-        ],
-        "direction": "horizontal"
+        }
       },
       {
         "id": "6aba1fdd6b674f4c",
@@ -40,7 +21,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "❓ Questions.md",
+            "file": "TOC.md",
             "mode": "source",
             "source": false
           }
@@ -100,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "📥Inbox/@olbrysEvaluatingTradeSide2018.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -131,15 +112,15 @@
   },
   "active": "32388bd8822fdb0a",
   "lastOpenFiles": [
-    "📥Inbox/@savickasInferringDirectionOption2003.md",
     "TOC.md",
+    "📥Inbox/@olbrysEvaluatingTradeSide2018.md",
     "❓ Questions.md",
     "Classical rules/@grauerOptionTradeClassification2022.md",
+    "📥Inbox/@savickasInferringDirectionOption2003.md",
     "📥Inbox/@owenHyperparameterTuningPython2022.md",
     "Classical rules/@garleanuDemandBasedOptionPricing2009.md",
     "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
     "Model Building/draft_model_building.md",
-    "Related Works/@basakPredictingDirectionStock2019.md",
-    "Pasted image 20220818140122.png"
+    "Related Works/@basakPredictingDirectionStock2019.md"
   ]
 }

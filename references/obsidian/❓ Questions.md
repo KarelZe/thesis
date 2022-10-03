@@ -90,6 +90,7 @@
 	- Try out research rabbit [ResearchRabbit](https://www.researchrabbit.ai/) 💫
 	- Investigate robustness checks
 	- Research approaches so I can make sure I don't fish for noise.
+	- Investigate how results behave over time. Do they deterioriate?
 - Write after Gopen rules (see [Microsoft Word - Science of Scientific Writing.doc (fu-berlin.de)](http://www.inf.fu-berlin.de/lehre/pmo/eng/ScientificWriting.pdf))
 - Implement a baseline e. g., rules from paper. Do I get the same results?
 - Update readme.
