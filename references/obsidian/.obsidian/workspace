@@ -4,18 +4,6 @@
     "type": "split",
     "children": [
       {
-        "id": "32388bd8822fdb0a",
-        "type": "leaf",
-        "state": {
-          "type": "markdown",
-          "state": {
-            "file": "📥Inbox/@olbrysEvaluatingTradeSide2018.md",
-            "mode": "source",
-            "source": false
-          }
-        }
-      },
-      {
         "id": "6aba1fdd6b674f4c",
         "type": "leaf",
         "state": {
@@ -99,28 +87,38 @@
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
+                "useHierarchy": false
+              }
+            }
+          },
+          {
+            "id": "716b7df63052bda1",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "TOC.md"
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 643.5
   },
   "active": "6aba1fdd6b674f4c",
   "lastOpenFiles": [
-    "📥Inbox/@olbrysEvaluatingTradeSide2018.md",
-    "TOC.md",
     "❓ Questions.md",
+    "TOC.md",
+    "📥Inbox/@owenHyperparameterTuningPython2022.md",
+    "📥Inbox/@arikTabNetAttentiveInterpretable2020.md",
+    "📥Inbox/@olbrysEvaluatingTradeSide2018.md",
     "Classical rules/@grauerOptionTradeClassification2022.md",
     "📥Inbox/@savickasInferringDirectionOption2003.md",
-    "📥Inbox/@owenHyperparameterTuningPython2022.md",
     "Classical rules/@garleanuDemandBasedOptionPricing2009.md",
     "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
-    "Model Building/draft_model_building.md",
-    "Related Works/@basakPredictingDirectionStock2019.md"
+    "Model Building/draft_model_building.md"
   ]
 }
