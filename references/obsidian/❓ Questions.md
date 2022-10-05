@@ -35,6 +35,7 @@
 ### 🧠 Machine Learning-based approaches
 
 #### 🦺 Data pre-processing
+- Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any size with a single line of code. Created by Ram Seshadri. Collaborators Welcome. Permission Granted upon Request. (github.com)](https://github.com/AutoViML/AutoViz) and [lmcinnes/umap: Uniform Manifold Approximation and Projection (github.com)](https://github.com/lmcinnes/umap)
 - The approach of [[@grauerOptionTradeClassification2022]] matches the LiveVol data set, only if there is a matching volume on buyer or seller side. Results in 40 % reconstruction rate [[@grauerOptionTradeClassification2022]](p. 9). One could obtain more **training samples** by:
 - **pseudo-labelling:** e. g., [How To Build an Efficient NLP Model – Weights & Biases (wandb.ai)](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) and [[@leePseudolabelSimpleEfficient]]. Requires solving the issue of obtaining soft probablities.
 - **synthetic data:** Use (unconditional) Generative Adversial Networks to generate tabular data, that is not part of the data set itself but could be used for training. See e. g., [nbsynthetic/vgan.py at master · NextBrain-ml/nbsynthetic (github.com)](https://github.com/NextBrain-ml/nbsynthetic/blob/master/src/nbsynthetic/vgan.py) or [Synthetic Tabular Data Generation | by Javier Marin | Sep, 2022 | Towards Data Science](https://towardsdatascience.com/synthetic-tabular-data-generation-34eb94a992ed)
@@ -46,6 +47,7 @@
 - Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Implement robustness checks (as in [[@grauerOptionTradeClassification2022]]) early on.
 - If using neural networks, try out feed forward networks or Transformers in the form of TabTransformer. Look into [snapshot ensembles](https://arxiv.org/pdf/1704.00109.pdf).
 - Use classification methods (*probabilistic classifier*) that can return probabilities instead of class-only for better analysis.
+- Perform preliminary tests using **adversial validation**, as suggested in [[@banachewiczKaggleBookData2022]]. Do not include in paper.
 
 
 ## 🔔 Tasks
@@ -74,6 +76,9 @@
 - Set up a `obisidian`-`pandoc` workflow.
 - Set up GitHub actions for pdf generation.
 - Write scripts to detect weasel words, fill words, improper title casing etc.
+- Free memory with `gc.collect()` [gc — Garbage Collector interface — Python 3.10.7 documentation](https://docs.python.org/3/library/gc.html)
+- Estimate feature importance in neural net with random imputation + prediction (see [[@banachewiczKaggleBookData2022]])
+- Study feature importance by calculating SHAP values against random features [Ekeany/Boruta-Shap: A Tree based feature selection tool which combines both the Boruta feature selection algorithm with shapley values. (github.com)](https://github.com/Ekeany/Boruta-Shap)
 
 ### ✍️ Content-wise
 - Ask for feedback on previous work. Where are the greatest weaknesses/strengths?

@@ -106,19 +106,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 643.5
+    "width": 396.5
   },
   "active": "6aba1fdd6b674f4c",
   "lastOpenFiles": [
+    "📥Inbox/@banachewiczKaggleBookData2022.md",
     "❓ Questions.md",
     "TOC.md",
+    "Preprocessing.md",
     "📥Inbox/@owenHyperparameterTuningPython2022.md",
     "📥Inbox/@arikTabNetAttentiveInterpretable2020.md",
     "📥Inbox/@olbrysEvaluatingTradeSide2018.md",
     "Classical rules/@grauerOptionTradeClassification2022.md",
     "📥Inbox/@savickasInferringDirectionOption2003.md",
-    "Classical rules/@garleanuDemandBasedOptionPricing2009.md",
-    "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
-    "Model Building/draft_model_building.md"
+    "Classical rules/@garleanuDemandBasedOptionPricing2009.md"
   ]
 }

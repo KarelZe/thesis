@@ -49,6 +49,7 @@
 - Could be supervised if all labels are known
 - Could be semi-supervised if only some of the labels are known. Cover later.
 - Use probabilistic classifier to allow for more in-depth analysis.
+- Search for paper that performed a comparsion between Gradient Boosted Trees and Neural Net on large set of data sets....
 
 ## Selection of Approaches
 - What works in similar use cases? What are similar use cases?
@@ -62,7 +63,7 @@
 ### Weak Learner
 - commonly use decision trees as weak lernrs
 - Compare how CatBoost, LightGBM and xgboost are different
-- Variants of GBM, comparison: [CatBoost vs. LightGBM vs. XGBoost | by Kay Jan Wong | Towards Data Science](https://towardsdatascience.com/catboost-vs-lightgbm-vs-xgboost-c80f40662924) (e. g., symmetric, balanced trees vs. asymetric trees)
+- Variants of GBM, comparison: [CatBoost vs. LightGBM vs. XGBoost | by Kay Jan Wong | Towards Data Science](https://towardsdatascience.com/catboost-vs-lightgbm-vs-xgboost-c80f40662924) (e. g., symmetric, balanced trees vs. asymetric trees) or see kaggle book for differences between lightgbm, catboost etc. [[@banachewiczKaggleBookData2022]]
 - Round off chapter
 ### Gradient Boosting Procedure
 - Motivation for gradient boosted trees
@@ -89,7 +90,11 @@
 ### Extensions in TabNet
 - cover only transformer for tabular data. Explain why.
 - Are there other architectures, that I do not cover? Why is this the case?
+- TabNet uses neural networks to mimic decision trees by placing importance on only a few features at each layer. The attention layers in that model replace the dot-product self-attention with a type of sparse layer that allows only certain features to pass through.
+
 ### Extensions in TabTransformer
+- TabTransformer can't capture correlations between categorical and continous features. See [[@somepalliSAINTImprovedNeural2021]]
+- Investigate whether my dataset even profits from this type of architecture?
 # Semi-Supervised Approaches
 - Instead of covering all possible semi-supervised approaches, do it the other way around. Take all the approaches from the supervised chapter and show how they can be extended to the semi-supervised setting. This will result in a shorter, yet more streamlined thesis, as results of supervised and semi-supervised learning can be directly compared. 
 - Motivation for semi-supervised learning
@@ -109,29 +114,68 @@
 - See [[@huangTabTransformerTabularData2020]] for extensions.
 
 # Empirical Study
+## Environment
+- Reproducability
+- Configuration
+
+```python
+def seed_everything(seed, tensorflow_init=True, pytorch_init=True): 
+""" 
+Seeds basic parameters for reproducibility of results 
+""" 
+random.seed(seed) 
+os.environ["PYTHONHASHSEED"] = str(seed) np.random.seed(seed) 
+if tensorflow_init is True: 
+	tf.random.set_seed(seed) 
+if pytorch_init is True: 
+	torch.manual_seed(seed)
+	torch.cuda.manual_seed(seed)
+	torch.backends.cudnn.deterministic = True
+	torch.backends.cudnn.benchmark = False
+```
+
 ## Data and Data Preparation
 ### CBOE Data Set
 ### ISE Data Set
 - Describe interesting properties of the data set. How are values distributed?
 - What preprocessing have been applied. See [[@grauerOptionTradeClassification2022]]
+- Data range from May 2, 2005 to May 31, 2017 + (new samples)
+
 ### Generation of True Labels
 - Discuss that only a portion of data can be reconstructed. Previous works neglected the unlabeled part. 
 - Discuss how this maps to the notion of supervised and semi-supervised learning
+- Pseudo Labeling?
 
 ### Feature Engineering
 - Previously not done due to use of simple rules only. 
 - Try different encondings e. g., of the spread.
 - Which architectures require what preprocessing? Derive?
 - Perform search?
+- Standardization is necessary for algorithms that are sensitive to the scale of features, such as neural net. [[@banachewiczKaggleBookData2022]]
+- Use simple method to impute missing data like mean. We seldomly require more sophisticated methods. [[@banachewiczKaggleBookData2022]]
+- Look which of the models can handle missing data inherently. How would TabNet or TabTransformer do it?
+- Can some of the features be economically motivated?
 ### Train-Test Split
 - discuss how split is chosen? Try to align with other works.
+- compare distributions of data as part of the data analysis?
+- Use a stratified train-test-split to maintain the distribution of the target variable.
+- use $k$ fold cross validation if possible (see motivation in e. g. [[@banachewiczKaggleBookData2022]] or [[@batesCrossvalidationWhatDoes2022]])
+- A nice way to visualize that the models do not overfit is to show how much errors vary across the test folds.
+- Plot learning curves to estimate whether performance will increase with the number of samples. Use it to motivate semi-supervised learning.  [Plotting Learning Curves — scikit-learn 1.1.2 documentation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html) and [Tutorial: Learning Curves for Machine Learning in Python for Data Science (dataquest.io)](https://www.dataquest.io/blog/learning-curves-machine-learning/)
+![[learning-curves-samples.png]]
+
 ## Training and Tuning
 ### Training of Supervised Models
+- Interesting notebook about TabNet [Introduction to TabNet - Kfold 10 [TRAINING] | Kaggle](https://www.kaggle.com/code/ludovick/introduction-to-tabnet-kfold-10-training/notebook)
 ### Training of Semi-Supervised Models
+
+
 ### Hyperparameter Tuning
 - See e. g., [[@olbrysEvaluatingTradeSide2018]][[@owenHyperparameterTuningPython2022]] for ideas / most adequate application.
 - What optimizer is chosen? Why? Could try out Adam or Adan?
 - For implementations on tab transformer, tabnet and tabmlp see: pytorch wide-deep.
+- Visualize training and validation curves (seimilar to [3.4. Validation curves: plotting scores to evaluate models — scikit-learn 1.1.2 documentation](https://scikit-learn.org/stable/modules/learning_curve.html))
+![[sample-validation-curve.png]]
 
 ## Evaluation
 ### Feature Importance Measure
@@ -147,6 +191,7 @@
 
 # Results
 ## Results of Supervised Models
+- Results for random classifier
 ## Results of Semi-Supervised Models
 ## Robustness Checks
 - Perform binning like in [[@grauerOptionTradeClassification2022]]
