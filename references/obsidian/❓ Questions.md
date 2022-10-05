@@ -71,14 +71,15 @@
 - Replace `pandas` with [`modin`](https://github.com/modin-project/modin)
 - If using neural networks in `pytorch`, develop a deeper understanding of the profiler. See e. g., [OPT-175B: Open Pretrained Transformer | ML Coding Series - YouTube](https://www.youtube.com/watch?v=5RUOrXl3nag). 
 - If using neural networks try out `flax`, [google/flax: Flax is a neural network library for JAX that is designed for flexibility. (github.com)](https://github.com/google/flax)
+- Perform grid search, randomized search etc. using optuna. See e. g., [09_Hyperparameter-Tuning-via-Optuna.ipynb - Colaboratory (google.com)](https://colab.research.google.com/github/PacktPublishing/Hyperparameter-Tuning-with-Python/blob/main/09_Hyperparameter-Tuning-via-Optuna.ipynb#scrollTo=4351b97c-dac3-4aed-936b-55d145c6140a)
 - Improve `tikz` skills for diagrams.
 - ~~Set up pre-commit hooks early on.~~
-- Set up a `obisidian`-`pandoc` workflow.
-- Set up GitHub actions for pdf generation.
+- ~~Set up a `obisidian`-`pandoc` workflow.
+- ~~Set up GitHub actions for pdf generation.
 - Write scripts to detect weasel words, fill words, improper title casing etc.
 - Free memory with `gc.collect()` [gc — Garbage Collector interface — Python 3.10.7 documentation](https://docs.python.org/3/library/gc.html)
 - Estimate feature importance in neural net with random imputation + prediction (see [[@banachewiczKaggleBookData2022]])
-- Study feature importance by calculating SHAP values against random features [Ekeany/Boruta-Shap: A Tree based feature selection tool which combines both the Boruta feature selection algorithm with shapley values. (github.com)](https://github.com/Ekeany/Boruta-Shap)
+- Study feature importance by calculating SHAP values against random features [Ekeany/Boruta-Shap: A Tree based feature selection tool which combines both the Boruta feature selection algorithm with shapley values. (github.com)](https://github.com/Ekeany/Boruta-Shap) or [13_Tracking_Hyperparameter_Tuning_Experiments.ipynb - Colaboratory (google.com)](https://colab.research.google.com/github/PacktPublishing/Hyperparameter-Tuning-with-Python/blob/main/13_Tracking_Hyperparameter_Tuning_Experiments.ipynb#scrollTo=cd66e831-43a4-469f-9eea-443fbea38ce8)
 
 ### ✍️ Content-wise
 - Ask for feedback on previous work. Where are the greatest weaknesses/strengths?
