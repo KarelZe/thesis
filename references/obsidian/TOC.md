@@ -59,27 +59,35 @@
 - Establish criteria for choosing an architecture:
 	- **performance** That is, approach must deliver state-of-the-art performance in similar problems.
 	- **interpretability** Classical approaches are transparent in a sense that we know how the decision was derived. In the best case try to aim for local and global interpretability. Think about how interpretability can be narrowed down? Note supervisor wants to see if her features are also important to the model. 
-	- Perform a model discussion on results from similar domains.
-	- Perform a wide (ensemble) vs. deep (neural net) comparison. 
-	- Show that there is a general concensus, that gradient boosted trees and neural networks work best. Show that there is a great bandwith of opinions and its most promising to try both. Papers: [[@shwartz-zivTabularDataDeep2021]] 
-	- Choose neural network architectures, that are tailored towards tabular data.
+- Perform a model discussion on results from similar domains. Most broadly it's a classification problem on tabular data. Thus, architectures for tabular data should be considered.
+- Perform a wide (ensemble) vs. deep (neural net) comparison. This is commonly done in literature. Possible papers include:
+	- [[@gorishniyRevisitingDeepLearning2021]] compare DL models with Gradient Boosted Decision Trees and conclude that there is still no universally superior solution.
+	- For "shallow" state-of-the-art are ensembles such as GBMs. (see [[@gorishniyRevisitingDeepLearning2021]])
+	- Deep learning for tabular data could potentially yield a higher performance and allow to combine tbular data with non-tabular data such as images, audio or other data that can be easily processed with deep learning. [[@gorishniyRevisitingDeepLearning2021]]
+	- Despite growing number of novel (neural net) architectures, there is still no simple, yet reliable solution that achieves stable performance across many tasks. 
+	- Show that there is a general concensus, that gradient boosted trees and neural networks work best. Show that there is a great bandwith of opinions and its most promising to try both. Papers: [[@shwartz-zivTabularDataDeep2021]]
+	- [[@arikTabNetAttentiveInterpretable2020]] Discuss a number of reasons why decisiion tree esembles dominate neural networks for tabular data.
+	- [[@huangTabTransformerTabularData2020]] argue that tree-based esnembles are the leading approach for tabular data. The base this on the prediction accuracy, the speed of training and the ability to interpret the models. However, they list sever limitations. As such they are not suitabl efor streaming data, multi-modality with tabular data e. g. additional image date and do not support semi-supervised learning by default.
+- Choose neural network architectures, that are tailored towards tabular data.
 ## Gradient Boosted Trees
 - start with "wide" architectures.
 ### Decision Tree
 
 ^5db625
 
-- commonly use decision trees as weak lernrs
+- commonly use decision trees as weak learnrs
 - Compare how CatBoost, LightGBM and xgboost are different
 - Variants of GBM, comparison: [CatBoost vs. LightGBM vs. XGBoost | by Kay Jan Wong | Towards Data Science](https://towardsdatascience.com/catboost-vs-lightgbm-vs-xgboost-c80f40662924) (e. g., symmetric, balanced trees vs. asymetric trees) or see kaggle book for differences between lightgbm, catboost etc. [[@banachewiczKaggleBookData2022]]
+- Describe details necessary to understand both Gradient Boosting and TabNet.
 - Round off chapter
 ### Gradient Boosting Procedure
 - Motivation for gradient boosted trees
 - Introduce notion of tree-based ensemble. Why are sequentially built trees better than parallel ensembles?
 - Start of with gradient boosted trees for regression. Gradient boosted trees for classification are derived from that principle.
 - cover desirable properties of gradient boosted trees
-### Adaptions for Classification
+### Adaptions for Probablistic Classification
 - Explain how the Gradient Boosting Procedure for the regression case, can be extended to the classifcation case
+- Discuss the problem of obtainining good probability estimates from a boosted decision tree. See e. g., [[@caruanaObtainingCalibratedProbabilities]] or [[@friedmanAdditiveLogisticRegression2000]] (Note paper is commenting about boosting, gradient boosting has not been published at the time)
 ## Transformer Networks
 - Go "deep" instead of wide
 - Explain how neural networks can be adjusted to perform binary classification.
@@ -107,6 +115,9 @@
 - See paper [[@huangTabTransformerTabularData2020]] 
 - TabTransformer can't capture correlations between categorical and continous features. See [[@somepalliSAINTImprovedNeural2021]]
 - Investigate whether my dataset even profits from this type of architecture?
+### Extensions in FT-Transformer
+- Variant of the classical transformer, but for tabular data. Published in [[@gorishniyRevisitingDeepLearning2021]]
+- Firstly, Feature Tokenizer transforms features to embeddings. The embeddings are then processed by the Transformer module and the final representation of the (CLS) token is used for prediction.
 # Semi-Supervised Approaches
 
 ^c77130

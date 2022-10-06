@@ -56,7 +56,7 @@
 - Define micro-tasks
 - Sketch a rough timeline. Finalize scope.
 - Schedule meetings
-- Apply for SCC computing resources
+- ~~Apply for SCC computing resources
 - Collect checklists of errors to check for e. g., inconsistent capitalization etc.
 - Investigate printing bug from seminar paper with complex diagrams. Try at copyshop at uni. Try compression.
 
@@ -91,7 +91,7 @@
 - Research works on stock trade classification with ML
 	- What feature engineering is commonly applied? Why?
 	- What approaches deliver the best results?
-	- Search `kaggle` for interesting ideas from (stock) classification challenges
+	- ~~Search `kaggle` for interesting ideas from (stock) classification challenges
 	- Search `google colab` for similar problems
 	- Try out research rabbit [ResearchRabbit](https://www.researchrabbit.ai/) 💫
 	- Investigate robustness checks
