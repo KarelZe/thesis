@@ -7,6 +7,7 @@
 - Do or do not, there is no try
 - Be less wrong. Improving trade site classification with machine learning
 - More than a nudge. Improving options trade site classification with machine learning
+- Limit to view, yet theoretically promising techniques as derived in [[#^d8f019]]
 
 
 # Introduction
@@ -18,6 +19,8 @@
 - Obtain probabilities for further analysis
 
 - Crisp sentence of what ML is and why it is promising here. 
+
+- goal is to outperform existing classical approaches
 
 # Related Work
 - [[@grauerOptionTradeClassification2022]]
@@ -55,6 +58,9 @@
 - Search for paper that performed a comparsion between Gradient Boosted Trees and Neural Net on large set of data sets....
 
 ## Selection of Approaches
+
+^d8f019
+
 - What works in similar use cases? What are similar use cases?
 - Establish criteria for choosing an architecture:
 	- **performance** That is, approach must deliver state-of-the-art performance in similar problems.
@@ -165,6 +171,9 @@ if pytorch_init is True:
 - data comes at a daily frequency
 
 ### ISE Data Set
+- focus is on ISE data set
+- focus on `nbbo`
+- all kind of options are equally important
 - data comes at a daily frequency
 - Describe interesting properties of the data set. How are values distributed?
 - What preprocessing have been applied. See [[@grauerOptionTradeClassification2022]]
@@ -203,6 +212,9 @@ if pytorch_init is True:
 ## Training and Tuning
 ### Training of Supervised Models
 - Interesting notebook about TabNet [Introduction to TabNet - Kfold 10 [TRAINING] | Kaggle](https://www.kaggle.com/code/ludovick/introduction-to-tabnet-kfold-10-training/notebook)
+- Try out Stochastic weight averaging for neural net as done [here.](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) or here [Stochastic Weight Averaging in PyTorch](https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/)
+- Try out adverserial weight perturbation as done [here.][feedback-nn-train | Kaggle](https://www.kaggle.com/code/wht1996/feedback-nn-train/notebook)
+- Try out ensembling as in [[@huangSnapshotEnsemblesTrain2017a]]
 ### Training of Semi-Supervised Models
 - Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 
 - Use learning curves from [[#^d50f5d]].
@@ -246,6 +258,7 @@ if pytorch_init is True:
 - Perform binning like in [[@grauerOptionTradeClassification2022]]
 - Study results over time like in [[@olbrysEvaluatingTradeSide2018]]
 - Are probabilities a good indicator reliability e. g., do high probablities lead to high accuracy.
+- Are there certain types of options that perform esspecially poor?
 ## Feature Importance
 - local vs. global attention
 - Visualize attention
