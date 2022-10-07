@@ -124,6 +124,7 @@
 ### Extensions in FT-Transformer
 - Variant of the classical transformer, but for tabular data. Published in [[@gorishniyRevisitingDeepLearning2021]]
 - Firstly, Feature Tokenizer transforms features to embeddings. The embeddings are then processed by the Transformer module and the final representation of the (CLS) token is used for prediction.
+- Very likely not interpretable...
 # Semi-Supervised Approaches
 
 ^c77130
@@ -142,9 +143,11 @@
 - Problems of tree-based approaches and neural networks in semi-supervised learning. See [[@huangTabTransformerTabularData2020]] or [[@arikTabNetAttentiveInterpretable2020]]and [[@tanhaSemisupervisedSelftrainingDecision2017]]
 ## Extensions to TabNet
 - See [[@arikTabNetAttentiveInterpretable2020]] for extensions.
+- For pratical implementation see [Self Supervised Pretraining - pytorch_widedeep (pytorch-widedeep.readthedocs.io)](https://pytorch-widedeep.readthedocs.io/en/latest/pytorch-widedeep/self_supervised_pretraining.html)
 ## Extensions to TabTransformer
 - See [[@huangTabTransformerTabularData2020]] for extensions.
-
+- Authors use unsupervised pretraining and supervised finetuning. They also try out techniques like pseudo labelling from [[@leePseudolabelSimpleEfficient]] for semi supervised learning among others.
+- For pratical implementation see: - For pratical implementation see [Self Supervised Pretraining - pytorch_widedeep](https://pytorch-widedeep.readthedocs.io/en/latest/pytorch-widedeep/self_supervised_pretraining.html)
 # Empirical Study
 ## Environment
 - Reproducability
