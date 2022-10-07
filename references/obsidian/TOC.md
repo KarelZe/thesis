@@ -167,8 +167,6 @@ if pytorch_init is True:
 ```
 
 ## Data and Data Preparation
-### CBOE Data Set
-- data comes at a daily frequency
 
 ### ISE Data Set
 - focus is on ISE data set
@@ -178,6 +176,9 @@ if pytorch_init is True:
 - Describe interesting properties of the data set. How are values distributed?
 - What preprocessing have been applied. See [[@grauerOptionTradeClassification2022]]
 - Data range from May 2, 2005 to May 31, 2017 + (new samples)
+
+### CBOE Data Set
+- data comes at a daily frequency
 
 ### Generation of True Labels
 - To evaluate the performance of trade classification algoriths the true side of the trade needs to be known. To match LiveVol data, the total customer sell volume or total or total customer buy volume has to match with the transactions in LiveVol. Use unique key of trade date, expiration date, strike price, option type, and root symbol to match the samples. (see [[@grauerOptionTradeClassification2022]]) Notice, that this leads to an imperfect reconstruction!
@@ -212,6 +213,7 @@ if pytorch_init is True:
 ## Training and Tuning
 ### Training of Supervised Models
 - Interesting notebook about TabNet [Introduction to TabNet - Kfold 10 [TRAINING] | Kaggle](https://www.kaggle.com/code/ludovick/introduction-to-tabnet-kfold-10-training/notebook)
+- Use [Captum · Model Interpretability for PyTorch](https://captum.ai/) to learn what the model picks up as a relevant feature.
 - Try out Stochastic weight averaging for neural net as done [here.](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) or here [Stochastic Weight Averaging in PyTorch](https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/)
 - Try out adverserial weight perturbation as done [here.][feedback-nn-train | Kaggle](https://www.kaggle.com/code/wht1996/feedback-nn-train/notebook)
 - Try out ensembling as in [[@huangSnapshotEnsemblesTrain2017a]]
@@ -250,6 +252,7 @@ if pytorch_init is True:
 
 
 # Results
+- What are the findings? Find appropriate visualization (e. g., tables, charts)
 ## Results of Supervised Models
 - Results for random classifier
 - What would happen if the classical rules weren't stacked?
@@ -267,6 +270,10 @@ if pytorch_init is True:
  - How do they selected features relate to what is being used in classical formulas? (see [[#^ce4ff0]]) Could a hybrid formula be derived from the selection by the algorithm?
  - What is the economic intuition?
 # Discussion
+- What does it mean? Point out limitations and e. g., managerial implications or future impact.
 - How do wide models compare to deep models
 - Study sources of missclassification. See e. g., [[@savickasInferringDirectionOption2003]]
 # Conclusion
+- Repeat the problem and its relevance, as well as the contribution (plus quantitative results).
+# Outlook
+- Provide an outlook for further research steps.
