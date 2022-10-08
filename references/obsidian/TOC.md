@@ -33,6 +33,7 @@
 
 # Rule-Based Approaches
 ## Basic Rules
+- See [Quantitative Finance Stack Exchange](https://quant.stackexchange.com/questions/8843/what-are-modern-algorithms-for-trade-classification) for most basic overview
 ### Tick Rule-Based Approach
 ### Quote-Based Approach
 ## Extended Rules
@@ -102,6 +103,7 @@
 - How does the chosen layer and loss function to problem framing
 - How are neural networks optimized?
 - Motivation for Transformers
+- For formal algorithms on Transformers see [[@phuongFormalAlgorithmsTransformers2022]]
 ### Network Architecture
 ### Attention
 - cover dot-product attention and sequential attention
@@ -110,6 +112,7 @@
 ### Positional Encoding
 ### Embeddings
 ### Extensions in TabNet
+- TODO: Check if TabNet can actually be considered a Transformer or if it is just attention-based?
 - See paper [[@arikTabNetAttentiveInterpretable2020]]
 - cover only transformer for tabular data. Explain why.
 - Are there other architectures, that I do not cover? Why is this the case?
@@ -136,6 +139,7 @@
 - Explain the limitations of transductive learning.
 - General we observe performance improvements
 - Labelling of data is costly, sometimes impossible (my case).
+- For overview see 
 ## Extensions to Gradient Boosted Trees
 - Introduce the notion of probilistic classifiers
 - Possible extension could be [[@yarowskyUnsupervisedWordSense1995]]. See also Sklearn Self-Training Classifier.
@@ -220,6 +224,8 @@ if pytorch_init is True:
 - Try out Stochastic weight averaging for neural net as done [here.](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) or here [Stochastic Weight Averaging in PyTorch](https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/)
 - Try out adverserial weight perturbation as done [here.][feedback-nn-train | Kaggle](https://www.kaggle.com/code/wht1996/feedback-nn-train/notebook)
 - Try out ensembling as in [[@huangSnapshotEnsemblesTrain2017a]]
+- Try ADAM optimizer first, try out Adan by [[@xieAdanAdaptiveNesterov2022]] for fun. 
+
 ### Training of Semi-Supervised Models
 - Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 
 - Use learning curves from [[#^d50f5d]].
@@ -228,6 +234,7 @@ if pytorch_init is True:
 - See e. g., [[@olbrysEvaluatingTradeSide2018]][[@owenHyperparameterTuningPython2022]] for ideas / most adequate application.
 - What optimizer is chosen? Why? Could try out Adam or Adan?
 - Start with something simple like GridSearch. Implement in Optuna, so that one can easily switch between grid search, randomized search, Bayesian search etc. [09_Hyperparameter-Tuning-via-Optuna.ipynb - Colaboratory (google.com)](https://colab.research.google.com/github/PacktPublishing/Hyperparameter-Tuning-with-Python/blob/main/09_Hyperparameter-Tuning-via-Optuna.ipynb#scrollTo=580226e9-cc08-4dc7-846b-914876343071) 
+- For optuna integration into weights and biases see [this article.](https://medium.com/optuna/optuna-meets-weights-and-biases-58fc6bab893)
 - Perform comparsion between different samplers to study how sampler effects parameter search. e. g. see best estimate after $n$ trials.
 - Also possible to optimize for multiple objectives e. g., accuracy and ... [optuna.visualization.plot_pareto_front — Optuna 3.0.2 documentation](https://optuna.readthedocs.io/en/stable/reference/visualization/generated/optuna.visualization.plot_pareto_front.html)
 - See reasoning towards Bayesian search in my last paper. (see e. g., [[@shahriariTakingHumanOut2016]]) 
@@ -235,7 +242,8 @@ if pytorch_init is True:
 - for most important hyperparams in litegbm, catboost etc. (see [[@banachewiczKaggleBookData2022]])
 - Visualize training and validation curves (seimilar to [3.4. Validation curves: plotting scores to evaluate models — scikit-learn 1.1.2 documentation](https://scikit-learn.org/stable/modules/learning_curve.html))
 ![[sample-validation-curve.png]]
-
+When using optuna draw a boxplot. optimal value should lie near the median. Some values should be outside the IQR.
+![[optuna-as-boxplot.png]]
 ## Evaluation
 ### Feature Importance Measure
 - Feature Importance of Gradient Boosted Trees
@@ -252,6 +260,7 @@ if pytorch_init is True:
 - Discuss what metrics are reasonable e. g., why is it reasonable to use the accuracy here? Dataset is likely balanced with a 50-50 distribution, metrics like accuracy are fine for this use case.
 - Define the metrics.
 - Accuracy, ROC-curve, area under the curve. Think about statistical Tests e. g., $\chi^2$-Test
+- Introduce concept of a confusion matrix. Are all errors equally problematic?
 
 
 # Results
@@ -259,12 +268,15 @@ if pytorch_init is True:
 ## Results of Supervised Models
 - Results for random classifier
 - What would happen if the classical rules weren't stacked?
+- Confusion matrix
+- ROC curve. See e. g., [this thread](https://stackoverflow.com/a/38467407) for drawing ROC curves
 ## Results of Semi-Supervised Models
 ## Robustness Checks
 - Perform binning like in [[@grauerOptionTradeClassification2022]]
 - Study results over time like in [[@olbrysEvaluatingTradeSide2018]]
 - Are probabilities a good indicator reliability e. g., do high probablities lead to high accuracy.
 - Are there certain types of options that perform esspecially poor?
+- Confusion matrix
 ## Feature Importance
 - local vs. global attention
 - Visualize attention

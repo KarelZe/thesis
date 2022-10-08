@@ -110,15 +110,15 @@
   },
   "active": "6aba1fdd6b674f4c",
   "lastOpenFiles": [
-    "❓ Questions.md",
-    "learning-curves-samples.png",
-    "TOC.md",
-    "Preprocessing.md",
-    "📥Inbox/@banachewiczKaggleBookData2022.md",
-    "📥Inbox/@huangTabTransformerTabularData2020.md",
-    "📥Inbox/@arikTabNetAttentiveInterpretable2020.md",
-    "📥Inbox/@gorishniyRevisitingDeepLearning2021.md",
-    "📥Inbox/@caruanaObtainingCalibratedProbabilities.md",
-    "📥Inbox/@owenHyperparameterTuningPython2022.md"
+    "sample-validation-curve.png",
+    "🍬Implementation/🎯Hyperparameter Tuning/@shahriariTakingHumanOut2016.md",
+    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017a.md",
+    "🍬Implementation/@owenHyperparameterTuningPython2022.md",
+    "🔗Classical rules/@savickasInferringDirectionOption2003.md",
+    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+    "📥Inbox/@guEmpiricalAssetPricing2020.md",
+    "🔗Classical rules/@olbrysEvaluatingTradeSide2018.md",
+    "🧠Deep Learning Methods/Transformer/@shwartz-zivTabularDataDeep2021.md",
+    "Semi-supervised Learning/@somepalliSAINTImprovedNeural2021.md"
   ]
 }
