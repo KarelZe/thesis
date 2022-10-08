@@ -5,6 +5,7 @@
 - What should be the focus? Primary focus on improving prediction quality / bridging the gap? What would be the focus then e. g., beat [[@grauerOptionTradeClassification2022]] or the [[@savickasInferringDirectionOption2003]] in terms of accuracy?  Do a fully-fledged comparison of ML methods? Come up with something creative? (see [[❓ Questions#^f9bb84]])
 - What were the greatest challenges in writing the draft of the paper?
 - Who would co-supervise / grade a thesis? What is his / her special focus e. g., economical inference/interpretability?
+- What to do with [[@hansenApplicationsMachineLearning]]? Does something similar but not officially published. Different techniques / different data set.
 
 **Data set:**
 - Could I obtain access to the previously used data? What kind of features like volumes at certain exchanges would be available?

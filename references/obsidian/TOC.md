@@ -22,20 +22,29 @@
 
 - goal is to outperform existing classical approaches
 
+- [[@rosenthalModelingTradeDirection2012]] lists fields where trade classification is used and what the impact of wrongly classified trades is.
+
+
 # Related Work
 - [[@grauerOptionTradeClassification2022]]
 - [[@savickasInferringDirectionOption2003]]
 - [[@olbrysEvaluatingTradeSide2018]]
+- [[@ronenMachineLearningTrade2022]] / [[@fedeniaMachineLearningCorporate2021]] They employ a machine learning-based approach for trade side classification. Selection of method follows no clear research agenda, so does sample selection or tuning. Also leaves out latest advancements in prediction of tabular data such as GBM or dedicated NN architectures. Data set only spans two days? General saying ML based predictor (random forest) outperforms tick rule and BVC. Still much human inutition is required for feature engineering. Treated as **supervised tasks**. More recent approaches and also ML approaches outperform classical approaches due to a higher trading frequency. Transfer learning not successful. **Note:** Tick rule has been among the poorest predictors in Grauer. **Note:** Check what the actual difference between the two papers are....
 - Which works performed trade side classification for stocks, for options or other products.
+- [[@rosenthalModelingTradeDirection2012]] incorporates different methods into a model for the likelihood a trade was buyer-initiated. It's a simple logistic regresssion. Performed on stocks. 
+- [[@blazejewskiLocalNonparametricModel2005]] compare $k$-nn and logistic regression for trade-side classification. Performed for Australian stocks. Unclear how results compare to classical rules. 
 1. Broader term is **trade site classification** = assign the side to a to a transaction and differentiate between buyer- and seller-initiated transactions
+2. It's also sometimes called trade sign classification
 - There is no single definition / understanding for the one who initiates trades. [[@olbrysEvaluatingTradeSide2018]] distinguish / discuss immediacy and initiator
-
+- Do not compare accuracies across different datasets. This won't work. Might mention [[@grauerOptionTradeClassification2022]] as it is calculated on (partly) the same data set.
+- [[@blazejewskiLocalNonparametricModel2005]] use $k$-nn to infer the sign of a trade on the stock market.
+- 
 
 # Rule-Based Approaches
 ## Basic Rules
 - See [Quantitative Finance Stack Exchange](https://quant.stackexchange.com/questions/8843/what-are-modern-algorithms-for-trade-classification) for most basic overview
-### Tick Rule-Based Approach
-### Quote-Based Approach
+### Tick Test
+### Quote-Rule
 ## Extended Rules
 
 ^ce4ff0
@@ -48,8 +57,11 @@
 - What do we find, if we compare the rules 
 ### Lee and Ready Algorithm
 ### Ellis-Michaely-O’Hara Rule
+### CLNV Method
 ### Reverse Tick Rule 
 ### Trade Size Rule
+### Rosenthal's Rule
+
 # Supervised Approaches
 - Introduce a classifcation that differentiates between supervised, unsupervised, reenforcement learning and semi-supervised learning. 
 - Introduce the concept of classification as a variant of supervised learning. 
@@ -139,7 +151,7 @@
 - Explain the limitations of transductive learning.
 - General we observe performance improvements
 - Labelling of data is costly, sometimes impossible (my case).
-- For overview see 
+- For overview see [[@zhuSemiSupervisedLearningLiterature]]
 ## Extensions to Gradient Boosted Trees
 - Introduce the notion of probilistic classifiers
 - Possible extension could be [[@yarowskyUnsupervisedWordSense1995]]. See also Sklearn Self-Training Classifier.
@@ -183,7 +195,7 @@ if pytorch_init is True:
 - Describe interesting properties of the data set. How are values distributed?
 - What preprocessing have been applied. See [[@grauerOptionTradeClassification2022]]
 - Data range from May 2, 2005 to May 31, 2017 + (new samples)
-
+- Is the delay between trades and quotes relevant here? (See discussion in [[@rosenthalModelingTradeDirection2012]]) Probably not as daily data?
 ### CBOE Data Set
 - data comes at a daily frequency
 
@@ -193,6 +205,12 @@ if pytorch_init is True:
 - Discuss how previously unused data could be used. This maps to the notion of supervised and semi-supervised learning
 - Pseudo Labeling?
 
+### Explanatory Data Analysis
+- Examine the position of trade's prices relative to the quotes. This is of major importance in classical algorithms like LR, EMO or CLNV.
+- Study if classes are imbalanced and require further treatmeant. The work of [[@grauerOptionTradeClassification2022]] suggests that classes are rather balanced.
+- Study correlations between variables
+- Plot KDE plot of tick test, quote test...
+![[kde-tick-rule.png]]
 ### Feature Engineering
 - Previously not done due to use of simple rules only. 
 - Try different encondings e. g., of the spread.
@@ -270,6 +288,7 @@ When using optuna draw a boxplot. optimal value should lie near the median. Some
 - What would happen if the classical rules weren't stacked?
 - Confusion matrix
 - ROC curve. See e. g., [this thread](https://stackoverflow.com/a/38467407) for drawing ROC curves
+- 
 ## Results of Semi-Supervised Models
 ## Robustness Checks
 - Perform binning like in [[@grauerOptionTradeClassification2022]]
@@ -277,6 +296,8 @@ When using optuna draw a boxplot. optimal value should lie near the median. Some
 - Are probabilities a good indicator reliability e. g., do high probablities lead to high accuracy.
 - Are there certain types of options that perform esspecially poor?
 - Confusion matrix
+- create kde plots to investigate misclassified samples further
+- ![[kde-plot-results.png]]
 ## Feature Importance
 - local vs. global attention
 - Visualize attention
