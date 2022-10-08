@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "📥Inbox/@hansenApplicationsMachineLearning.md",
+            "file": "TOC.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📥Inbox/@hansenApplicationsMachineLearning.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,7 +97,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📥Inbox/@hansenApplicationsMachineLearning.md"
+                "file": "TOC.md"
               }
             }
           }
@@ -110,15 +110,15 @@
   },
   "active": "6aba1fdd6b674f4c",
   "lastOpenFiles": [
+    "🔗Classical rules/tick_test.md",
     "TOC.md",
-    "📥Inbox/@blazejewskiLocalNonparametricModel2005.md",
-    "📥Inbox/@rosenthalModelingTradeDirection2012.md",
-    "📥Inbox/@ronenMachineLearningTrade2022.md",
-    "Preprocessing.md",
-    "❓ Questions.md",
-    "📥Inbox/@hansenApplicationsMachineLearning.md",
-    "sample-validation-curve.png",
-    "🍬Implementation/🎯Hyperparameter Tuning/@shahriariTakingHumanOut2016.md",
-    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017a.md"
+    "📥Inbox/@easleyDiscerningInformationTrade2016.md",
+    "📥Inbox/@finucaneDirectTestMethods2000.md",
+    "📥Inbox/@holthausenEffectLargeBlock1987.md",
+    "🔗Classical rules/@grauerOptionTradeClassification2022.md",
+    "👨‍👩‍👧‍👦Related Works/@hansenApplicationsMachineLearning.md",
+    "👨‍👩‍👧‍👦Related Works/@blazejewskiLocalNonparametricModel2005.md",
+    "👨‍👩‍👧‍👦Related Works/@rosenthalModelingTradeDirection2012.md",
+    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md"
   ]
 }

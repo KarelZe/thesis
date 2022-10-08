@@ -9,7 +9,7 @@ tags: #option-trade-classification #rule-based
 - Getting option-trade classification right is central for several applications like the calculation of order imbalances. One Example is: [[@garleanuDemandBasedOptionPricing2009]]
 - Authors use quote, tick, Lee and Ready (1991), and Ellis, Michaely, and O’Hara (2000) rule to infer the trade direction of option trades. Also suggest two own rules” (Grauer et al., 2022, p. 0)
 - New rules:
-	1. **Tick size rule:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely.  Accuracy of 80 %. 
+	1. **Trade size rule:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely.  Accuracy of 80 %. 
 	2. **Depth rule:** classify midspread trades based on the comparison of bid and ask quoted depths. Improves LR algorithm by 0.8 %. Overall accuracy 75 %.
 	3. **New: Depth rule:💥**  As a consequence, we classify midspread trades as buyer-initiated, if the ask size exceeds the bid size, and as seller-initiated, if the bid size is higher than the ask size.
 	4. **New: Trade size rule:💥** classify trades for which the trade size is equal to the quoted bid size as customer buys and those with a trade size equal to the ask size as customer sells.

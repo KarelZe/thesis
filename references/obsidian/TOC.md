@@ -9,6 +9,8 @@
 - More than a nudge. Improving options trade site classification with machine learning
 - Limit to view, yet theoretically promising techniques as derived in [[#^d8f019]]
 
+# Abstract
+- [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
 
 # Introduction
 - see  `writing-a-good-introduction.pdf`
@@ -44,7 +46,21 @@
 ## Basic Rules
 - See [Quantitative Finance Stack Exchange](https://quant.stackexchange.com/questions/8843/what-are-modern-algorithms-for-trade-classification) for most basic overview
 ### Tick Test
+- Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000]] or [[@leeInferringTradeDirection1991]] for similar framing)
+- One of the first works who mention the tick test is [[@holthausenEffectLargeBlock1987]] (referred to as tick classification rule) or [[@hasbrouckTradesQuotesInventories1988]] (referred to as transaction rule)
+- ![[formula-tick-rule.png]]
+	Adapted from [[@olbrysEvaluatingTradeSide2018]]
+- Sources of error in the tick test, when quotes change.
+- ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000]]
+### Reverse tick rule
+- Instead of the previous trade, the reverse tick rule uses the subsequent trade price to classify the current trade. 
+- If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991]])
+
 ### Quote-Rule
+- The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
+
+- ![[formula-quote-rule.png]]
+	Adapted from [[@olbrysEvaluatingTradeSide2018]]. Rewrite to formula
 ## Extended Rules
 
 ^ce4ff0
@@ -209,6 +225,7 @@ if pytorch_init is True:
 - Examine the position of trade's prices relative to the quotes. This is of major importance in classical algorithms like LR, EMO or CLNV.
 - Study if classes are imbalanced and require further treatmeant. The work of [[@grauerOptionTradeClassification2022]] suggests that classes are rather balanced.
 - Study correlations between variables
+- Remove highly correlated features as they also pose problems for feature importance calculation (e. g. feature permutation)
 - Plot KDE plot of tick test, quote test...
 ![[kde-tick-rule.png]]
 ### Feature Engineering
@@ -265,6 +282,7 @@ When using optuna draw a boxplot. optimal value should lie near the median. Some
 ## Evaluation
 ### Feature Importance Measure
 - Feature Importance of Gradient Boosted Trees
+	- Possibilities to calculate feature importances in GBMs [here.](https://blog.tensorflow.org/2019/03/how-to-train-boosted-trees-models-in-tensorflow.html)
 - Feature Importance of TabNet
 	- allows to obtain both local / and global importance
 - Feature Importance of TabTransformer
