@@ -42,6 +42,7 @@
 - [[@blazejewskiLocalNonparametricModel2005]] use $k$-nn to infer the sign of a trade on the stock market.
 
 - Results were very different for the option markets between the studies. Compare the frequency some literature (in the stock market) suggest, that  for higher frequencies classical approaches like the tick test deteriorate.
+> Easley, O’Hara, and Srinivas (1998) use the Lee and Ready approach to test their game theoretic model of informed trading in stock and option markets. It is, therefore, important to determine whether the application of stock trade classification rules to derivatives is valid. [[@savickasInferringDirectionOption2003]]
 
 # Rule-Based Approaches
 ## Basic Rules
@@ -57,6 +58,7 @@
 
 ### Tick Test
 - Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000]] or [[@leeInferringTradeDirection1991]] for similar framing)
+- Consider [[@leeInferringTradeDirection1991]] for citation.
 - One of the first works who mention the tick test is [[@holthausenEffectLargeBlock1987]] (referred to as tick classification rule) or [[@hasbrouckTradesQuotesInventories1988]] (referred to as transaction rule)
 - ![[formula-tick-rule.png]]
 	Adapted from [[@olbrysEvaluatingTradeSide2018]]
@@ -88,29 +90,54 @@ Copied from [[@carrionTradeSigningFast2020]]
 - What are common extensions? How do new algorithms extend the classical ones? What is the intuition? How do they perform? How do the extensions relate? Why do they fail? In which cases do they fail?
 - [[@savickasInferringDirectionOption2003]]
 - [[@grauerOptionTradeClassification2022]]
-- Which do I want to cover? What are their theoretical properties
+- Which do I want to cover? What are their theoretical properties?
 - What are common observations or reasons why authors suggested extensions? How do they integrate to the previous approaches? Could this be visualised for a streamlined overview / discussion. 
 - What do we find, if we compare the rules 
+
+**Interesting observations:**
+![[visualization-of-quote-and-tick.png]]
+(image copied from [[@poppeSensitivityVPINChoice2016]]) 
+- Interestingly, researchers gradually segment the decision surface starting with quote and tick rule, continuing with LR, EMO and CLNV. This is very similar to what is done in a decision tree. Could be used to motivate decision trees.
+- All the hybrid methods could be considered as an ensemble with some sophisticated weighting scheme (look up the correct term)
+
 ### Lee and Ready Algorithm
 
 ^370c50
+- combination of quote and tick rule. Use tick rule to classify trades at midpoint and use the quote rule else where
 
 - LR algorithm
 ![[lr-algorithm-formulae.png]]
 - in the original paper the offset between transaction prices and quotes is set to 5 sec [[@leeInferringTradeDirection1991]]. Subsequent research like [[@bessembinderIssuesAssessingTrade2003]] drop the adjustment. Researchers like [[@carrionTradeSigningFast2020]] perform robustness checks with different, subsequent delays in the robustness checks.
 - See [[@carrionTradeSigningFast2020]] for comparsions in the stock market at different frequencies. The higher the frequency, the better the performance of LR. Similar paper for stock market [[@easleyFlowToxicityLiquidity2012]]
-- **Similar approaches:** hybrid of tick and quote rules when transactions prices are closer to the ask and bid, and the the tick rule when transaction prices are closer to the midpoint [[@chakrabartyTradeClassificationAlgorithms2007]]
+- Also five second delay isn't universal and not even stated so in the paper. See the following comment from [[@rosenthalModelingTradeDirection2012]]
+>Many studies note that trades are published with non-ignorable delays. Lee and Ready (1991) first suggested a five-second delay (now commonly used) for 1988 data, two seconds for 1987 data, and “a different delay . . . for other time periods”. Ellis et al. (2000) note (Section IV.C) that quotes are updated almost immediately while trades are published with delay2. Therefore, determining the quote prevailing at trade time requires finding quotes preceding the trade by some (unknown) delay. Important sources of this delay include time to notify traders of their executions, time to update quotes, and time to publish the executions. For example, an aggressive buy order may trade against sell orders and change the inventory (and quotes) available at one or more prices. Notice is then sent to the buyer and sellers; quotes are updated; and, the trade is made public. This final publishing timestamp is what researchers see in nonproprietary transaction databases. Erlang’s (1909) study of information delays forms the theory for modeling delays. Bessembinder (2003) and Vergote (2005) are probably the best prior studies on delays between trades and quotes.
+
+### Reverse Lee and Ready Algorithm
+- first introduced in [[@grauerOptionTradeClassification2022]] (p 12)
+- combines the quote and reverse tick rule
+- performs fairly well for options as shown in [[@grauerOptionTradeClassification2022]]
 
 ### Ellis-Michaely-O’Hara Rule
+- combination of quote rule and tick rule. Use tick rule to classify all trades except trades at hte ask and bid at which points the quote rule is applied. A trade is classified as  abuy (sell) if it is executed at the ask (bid).
+- turns the principle of LR up-side-down: apply the tick rule to all trades except those at the best bid and ask.
 - EMO Rule
 ![[emo-rule-formulae.png]]
 - classify trades by the quote rule first and then tick rule
+- Based on the observation that trades inside the quotes are poorly classified. Proposed algorithm can improve
+- They perform logistic regression to determin that e. g. , trade size, firm size etc. determines the proablity of correct classification most
+- cite from [[@ellisAccuracyTradeClassification2000]]
+### Chakarabarty-Li-Nguyen-Van-Ness Method
+CLNV-Method is a hybrid of tick and quote rules when transactions prices are closer to the ask and bid, and the the tick rule when transaction prices are closer to the midpoint [[@chakrabartyTradeClassificationAlgorithms2007]]
+- show that CLNV, was invented after the ER and EMO. Thus the improvement, comes from a higher segmented decision surface. (also see graphics [[visualization-of-quote-and-tick.png]])
 
-### CLNV Method
+![[clnv-method-visualization.png]]
+(image copied from [[@chakrabartyTradeClassificationAlgorithms2007]])
+- replace with clear formula
+- for success rate and motivation see  [[@chakrabartyTradeClassificationAlgorithms2007]]
+
 ### Rosenthal's Rule
-
-### Others
-
+- see [[@rosenthalModelingTradeDirection2012]]
+- Seldomly used but ML-like. Would probably be sufficient to cover it under related works.
 
 # Supervised Approaches
 - Introduce a classifcation that differentiates between supervised, unsupervised, reenforcement learning and semi-supervised learning. 
