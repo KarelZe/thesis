@@ -4,7 +4,7 @@
     "type": "split",
     "children": [
       {
-        "id": "3e2ee1d539d0a402",
+        "id": "bb4a5ec8c7531ac1",
         "type": "leaf",
         "state": {
           "type": "markdown",
@@ -108,17 +108,17 @@
     "direction": "horizontal",
     "width": 396.5
   },
-  "active": "3e2ee1d539d0a402",
+  "active": "bb4a5ec8c7531ac1",
   "lastOpenFiles": [
-    "🔗Classical rules/tick_test.md",
+    "📥Inbox/@easleyFlowToxicityLiquidity2012.md",
     "TOC.md",
+    "🔗Classical rules/@grauerOptionTradeClassification2022.md",
+    "🔗Classical rules/@olbrysEvaluatingTradeSide2018 1.md",
+    "🔗Classical rules/@olbrysEvaluatingTradeSide2018.md",
+    "🔗Classical rules/tick_test.md",
     "img/formula-quote-rule.png",
     "img/optuna-as-boxplot.png",
     "img/sample-validation-curve.png",
-    "🔗Classical rules/@easleyDiscerningInformationTrade2016.md",
-    "🔗Classical rules/@finucaneDirectTestMethods2000.md",
-    "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
-    "🔗Classical rules/@grauerOptionTradeClassification2022.md",
-    "👨‍👩‍👧‍👦Related Works/@hansenApplicationsMachineLearning.md"
+    "🔗Classical rules/@easleyDiscerningInformationTrade2016.md"
   ]
 }

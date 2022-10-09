@@ -30,7 +30,7 @@
 # Related Work
 - [[@grauerOptionTradeClassification2022]]
 - [[@savickasInferringDirectionOption2003]]
-- [[@olbrysEvaluatingTradeSide2018 1]]
+- 
 - [[@ronenMachineLearningTrade2022]] / [[@fedeniaMachineLearningCorporate2021]] They employ a machine learning-based approach for trade side classification. Selection of method follows no clear research agenda, so does sample selection or tuning. Also leaves out latest advancements in prediction of tabular data such as GBM or dedicated NN architectures. Data set only spans two days? General saying ML based predictor (random forest) outperforms tick rule and BVC. Still much human inutition is required for feature engineering. Treated as **supervised tasks**. More recent approaches and also ML approaches outperform classical approaches due to a higher trading frequency. Transfer learning not successful. **Note:** Tick rule has been among the poorest predictors in Grauer. **Note:** Check what the actual difference between the two papers are....
 - Which works performed trade side classification for stocks, for options or other products.
 - [[@rosenthalModelingTradeDirection2012]] incorporates different methods into a model for the likelihood a trade was buyer-initiated. It's a simple logistic regresssion. Performed on stocks. 
@@ -40,31 +40,51 @@
 - There is no single definition / understanding for the one who initiates trades. [[@olbrysEvaluatingTradeSide2018 1]] distinguish / discuss immediacy and initiator
 - Do not compare accuracies across different datasets. This won't work. Might mention [[@grauerOptionTradeClassification2022]] as it is calculated on (partly) the same data set.
 - [[@blazejewskiLocalNonparametricModel2005]] use $k$-nn to infer the sign of a trade on the stock market.
-- 
+
+- Results were very different for the option markets between the studies. Compare the frequency some literature (in the stock market) suggest, that  for higher frequencies classical approaches like the tick test deteriorate.
 
 # Rule-Based Approaches
 ## Basic Rules
 - See [Quantitative Finance Stack Exchange](https://quant.stackexchange.com/questions/8843/what-are-modern-algorithms-for-trade-classification) for most basic overview
+
+### Quote-Rule
+- The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
+
+- ![[formula-quote-rule.png]]
+	Adapted from [[@olbrysEvaluatingTradeSide2018]]. Rewrite to formula
+- ![[quote-rule-alternative.png]]
+(copied from [[@carrionTradeSigningFast2020]])
+
 ### Tick Test
 - Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000]] or [[@leeInferringTradeDirection1991]] for similar framing)
 - One of the first works who mention the tick test is [[@holthausenEffectLargeBlock1987]] (referred to as tick classification rule) or [[@hasbrouckTradesQuotesInventories1988]] (referred to as transaction rule)
 - ![[formula-tick-rule.png]]
-	Adapted from [[@olbrysEvaluatingTradeSide2018 1]]
+	Adapted from [[@olbrysEvaluatingTradeSide2018]]
+	![[tick-rule-formulae-alternative.png]]
+Copied from [[@carrionTradeSigningFast2020]]
 - Sources of error in the tick test, when quotes change.
 - ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000]]
 ### Reverse Tick Test
 - Instead of the previous trade, the reverse tick rule uses the subsequent trade price to classify the current trade. 
 - If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991]])
 
-### Quote-Rule
-- The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
-
-- ![[formula-quote-rule.png]]
-	Adapted from [[@olbrysEvaluatingTradeSide2018 1]]. Rewrite to formula
-## Extended Rules
+### Depth Rule
+- classify midspread trades as buyer-initiated, if the ask size exceeds the bid size, and as seller-initiated, if the bid size is higher than the ask size (see [[@grauerOptionTradeClassification2022]])
+- **Intuition:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely. (see [[@grauerOptionTradeClassification2022]])
+- Alternative to handle midspread trades, that can not be classified using the quote rule.
+- Improves LR algorithm by 0.8 %. Overall accuracy 75 %.
+- Performance exceeds that of the LR algorithm, thus the authors assume that the depth rule outperforms the tick test and the reverse tick test, that are used in the LR algorithm for for classifying midspread trades.
+### Trade Size Rule
+- classify trades for which the trade size is equal to the quoted bid size as customer buys and those with a trade size equal to the ask size as customer sells. (see [[@grauerOptionTradeClassification2022]])
+- **Intuition:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely. (see [[@grauerOptionTradeClassification2022]])  
+- Accuracy of 79.92 % on the 22.3 % of the trades that could classified, not all!. (see [[@grauerOptionTradeClassification2022]])
+- Couple with other algorithms if trade sizes and quote sizes do not match / or if the trade size matches both the bid and ask size. For other 
+- Requires other rules, similar to the quote rule, as only a small proportion can be matched.
+- tested on option data / similar data set
+## Hybrid Rules
 
 ^ce4ff0
-
+- use the problems of the single tick test to motivate extended rules like EMO.
 - What are common extensions? How do new algorithms extend the classical ones? What is the intuition? How do they perform? How do the extensions relate? Why do they fail? In which cases do they fail?
 - [[@savickasInferringDirectionOption2003]]
 - [[@grauerOptionTradeClassification2022]]
@@ -72,11 +92,25 @@
 - What are common observations or reasons why authors suggested extensions? How do they integrate to the previous approaches? Could this be visualised for a streamlined overview / discussion. 
 - What do we find, if we compare the rules 
 ### Lee and Ready Algorithm
+
+^370c50
+
+- LR algorithm
+![[lr-algorithm-formulae.png]]
+- in the original paper the offset between transaction prices and quotes is set to 5 sec [[@leeInferringTradeDirection1991]]. Subsequent research like [[@bessembinderIssuesAssessingTrade2003]] drop the adjustment. Researchers like [[@carrionTradeSigningFast2020]] perform robustness checks with different, subsequent delays in the robustness checks.
+- See [[@carrionTradeSigningFast2020]] for comparsions in the stock market at different frequencies. The higher the frequency, the better the performance of LR. Similar paper for stock market [[@easleyFlowToxicityLiquidity2012]]
+- **Similar approaches:** hybrid of tick and quote rules when transactions prices are closer to the ask and bid, and the the tick rule when transaction prices are closer to the midpoint [[@chakrabartyTradeClassificationAlgorithms2007]]
+
 ### Ellis-Michaely-O’Hara Rule
+- EMO Rule
+![[emo-rule-formulae.png]]
+- classify trades by the quote rule first and then tick rule
+
 ### CLNV Method
-### Reverse Tick Rule 
-### Trade Size Rule
 ### Rosenthal's Rule
+
+### Others
+
 
 # Supervised Approaches
 - Introduce a classifcation that differentiates between supervised, unsupervised, reenforcement learning and semi-supervised learning. 
@@ -239,6 +273,7 @@ if pytorch_init is True:
 - Can some of the features be economically motivated?
 - Apply feature transformations that are economically motivated.
 - It might be wise to limit the transformations to ones that are present in the classical rules. Would help with reasoning.
+- Try out features that are inherently used in the depth rule or the trade rule. 
 ### Train-Test Split
 
 ^d50f5d
@@ -309,6 +344,7 @@ When using optuna draw a boxplot. optimal value should lie near the median. Some
 - 
 ## Results of Semi-Supervised Models
 ## Robustness Checks
+- LR-algorithm (see [[#^370c50]]) require an offset between the trade and quote. How does the offset affect the results? Do I even have the metric at different offsets?
 - Perform binning like in [[@grauerOptionTradeClassification2022]]
 - Study results over time like in [[@olbrysEvaluatingTradeSide2018 1]]
 - Are probabilities a good indicator reliability e. g., do high probablities lead to high accuracy.
