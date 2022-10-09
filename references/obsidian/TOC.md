@@ -30,14 +30,14 @@
 # Related Work
 - [[@grauerOptionTradeClassification2022]]
 - [[@savickasInferringDirectionOption2003]]
-- [[@olbrysEvaluatingTradeSide2018]]
+- [[@olbrysEvaluatingTradeSide2018 1]]
 - [[@ronenMachineLearningTrade2022]] / [[@fedeniaMachineLearningCorporate2021]] They employ a machine learning-based approach for trade side classification. Selection of method follows no clear research agenda, so does sample selection or tuning. Also leaves out latest advancements in prediction of tabular data such as GBM or dedicated NN architectures. Data set only spans two days? General saying ML based predictor (random forest) outperforms tick rule and BVC. Still much human inutition is required for feature engineering. Treated as **supervised tasks**. More recent approaches and also ML approaches outperform classical approaches due to a higher trading frequency. Transfer learning not successful. **Note:** Tick rule has been among the poorest predictors in Grauer. **Note:** Check what the actual difference between the two papers are....
 - Which works performed trade side classification for stocks, for options or other products.
 - [[@rosenthalModelingTradeDirection2012]] incorporates different methods into a model for the likelihood a trade was buyer-initiated. It's a simple logistic regresssion. Performed on stocks. 
 - [[@blazejewskiLocalNonparametricModel2005]] compare $k$-nn and logistic regression for trade-side classification. Performed for Australian stocks. Unclear how results compare to classical rules. 
 1. Broader term is **trade site classification** = assign the side to a to a transaction and differentiate between buyer- and seller-initiated transactions
 2. It's also sometimes called trade sign classification
-- There is no single definition / understanding for the one who initiates trades. [[@olbrysEvaluatingTradeSide2018]] distinguish / discuss immediacy and initiator
+- There is no single definition / understanding for the one who initiates trades. [[@olbrysEvaluatingTradeSide2018 1]] distinguish / discuss immediacy and initiator
 - Do not compare accuracies across different datasets. This won't work. Might mention [[@grauerOptionTradeClassification2022]] as it is calculated on (partly) the same data set.
 - [[@blazejewskiLocalNonparametricModel2005]] use $k$-nn to infer the sign of a trade on the stock market.
 - 
@@ -49,10 +49,10 @@
 - Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000]] or [[@leeInferringTradeDirection1991]] for similar framing)
 - One of the first works who mention the tick test is [[@holthausenEffectLargeBlock1987]] (referred to as tick classification rule) or [[@hasbrouckTradesQuotesInventories1988]] (referred to as transaction rule)
 - ![[formula-tick-rule.png]]
-	Adapted from [[@olbrysEvaluatingTradeSide2018]]
+	Adapted from [[@olbrysEvaluatingTradeSide2018 1]]
 - Sources of error in the tick test, when quotes change.
 - ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000]]
-### Reverse tick rule
+### Reverse Tick Test
 - Instead of the previous trade, the reverse tick rule uses the subsequent trade price to classify the current trade. 
 - If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991]])
 
@@ -60,7 +60,7 @@
 - The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
 
 - ![[formula-quote-rule.png]]
-	Adapted from [[@olbrysEvaluatingTradeSide2018]]. Rewrite to formula
+	Adapted from [[@olbrysEvaluatingTradeSide2018 1]]. Rewrite to formula
 ## Extended Rules
 
 ^ce4ff0
@@ -266,7 +266,7 @@ if pytorch_init is True:
 - Use learning curves from [[#^d50f5d]].
 
 ### Hyperparameter Tuning
-- See e. g., [[@olbrysEvaluatingTradeSide2018]][[@owenHyperparameterTuningPython2022]] for ideas / most adequate application.
+- See e. g., [[@olbrysEvaluatingTradeSide2018 1]][[@owenHyperparameterTuningPython2022]] for ideas / most adequate application.
 - What optimizer is chosen? Why? Could try out Adam or Adan?
 - Start with something simple like GridSearch. Implement in Optuna, so that one can easily switch between grid search, randomized search, Bayesian search etc. [09_Hyperparameter-Tuning-via-Optuna.ipynb - Colaboratory (google.com)](https://colab.research.google.com/github/PacktPublishing/Hyperparameter-Tuning-with-Python/blob/main/09_Hyperparameter-Tuning-via-Optuna.ipynb#scrollTo=580226e9-cc08-4dc7-846b-914876343071) 
 - For optuna integration into weights and biases see [this article.](https://medium.com/optuna/optuna-meets-weights-and-biases-58fc6bab893)
@@ -310,7 +310,7 @@ When using optuna draw a boxplot. optimal value should lie near the median. Some
 ## Results of Semi-Supervised Models
 ## Robustness Checks
 - Perform binning like in [[@grauerOptionTradeClassification2022]]
-- Study results over time like in [[@olbrysEvaluatingTradeSide2018]]
+- Study results over time like in [[@olbrysEvaluatingTradeSide2018 1]]
 - Are probabilities a good indicator reliability e. g., do high probablities lead to high accuracy.
 - Are there certain types of options that perform esspecially poor?
 - Confusion matrix

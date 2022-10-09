@@ -12,5 +12,6 @@
     "backpropagation"
   ],
   "legacyEditor": false,
-  "livePreview": true
+  "livePreview": true,
+  "attachmentFolderPath": "img"
 }
