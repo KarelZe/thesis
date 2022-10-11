@@ -42,4 +42,3 @@
 ^bd4973
 Migrated to [Issues · KarelZe/thesis (github.com)](https://github.com/KarelZe/thesis/issues)
 
-

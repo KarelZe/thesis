@@ -1,3 +1,4 @@
+# Title
 - Off being right: trade-side classification of options data with machine learning
 - Trade side classifcation with machine learning: do or don't?
 - Improving trade site classication with machine learning.
@@ -8,6 +9,15 @@
 - Be less wrong. Improving trade site classification with machine learning
 - More than a nudge. Improving options trade site classification with machine learning
 - Limit to view, yet theoretically promising techniques as derived in [[#^d8f019]]
+
+# Contributions
+- One of the first works to perform trade side classification on option data set
+- Achieve a high improvement in accuracy over classical rules 
+- One of the first works to apply machine learning to trade side classification. *The* first to follow a research agenda and apply SOTA algorithms
+- First work to use gradient boosted trees and transformer-based architectures
+- First work to use semi-supervised learning
+- First work to study feature importance across models. E. g., [[@ronenMachineLearningTrade2022]] study the feature importance only for random forests.
+
 
 # Abstract
 - [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
@@ -49,7 +59,7 @@
 - See [Quantitative Finance Stack Exchange](https://quant.stackexchange.com/questions/8843/what-are-modern-algorithms-for-trade-classification) for most basic overview
 
 ### Quote-Rule
-- The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
+- The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991 1]] or [[@finucaneDirectTestMethods2000]])
 
 - ![[formula-quote-rule.png]]
 	Adapted from [[@olbrysEvaluatingTradeSide2018]]. Rewrite to formula
@@ -57,8 +67,8 @@
 (copied from [[@carrionTradeSigningFast2020]])
 
 ### Tick Test
-- Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000]] or [[@leeInferringTradeDirection1991]] for similar framing)
-- Consider [[@leeInferringTradeDirection1991]] for citation.
+- Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000]] or [[@leeInferringTradeDirection1991 1]] for similar framing)
+- Consider [[@leeInferringTradeDirection1991 1]] for citation.
 - One of the first works who mention the tick test is [[@holthausenEffectLargeBlock1987]] (referred to as tick classification rule) or [[@hasbrouckTradesQuotesInventories1988]] (referred to as transaction rule)
 - ![[formula-tick-rule.png]]
 	Adapted from [[@olbrysEvaluatingTradeSide2018]]
@@ -68,7 +78,7 @@ Copied from [[@carrionTradeSigningFast2020]]
 - ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000]]
 ### Reverse Tick Test
 - Instead of the previous trade, the reverse tick rule uses the subsequent trade price to classify the current trade. 
-- If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991]])
+- If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991 1]])
 
 ### Depth Rule
 - classify midspread trades as buyer-initiated, if the ask size exceeds the bid size, and as seller-initiated, if the bid size is higher than the ask size (see [[@grauerOptionTradeClassification2022]])
@@ -107,7 +117,7 @@ Copied from [[@carrionTradeSigningFast2020]]
 
 - LR algorithm
 ![[lr-algorithm-formulae.png]]
-- in the original paper the offset between transaction prices and quotes is set to 5 sec [[@leeInferringTradeDirection1991]]. Subsequent research like [[@bessembinderIssuesAssessingTrade2003]] drop the adjustment. Researchers like [[@carrionTradeSigningFast2020]] perform robustness checks with different, subsequent delays in the robustness checks.
+- in the original paper the offset between transaction prices and quotes is set to 5 sec [[@leeInferringTradeDirection1991 1]]. Subsequent research like [[@bessembinderIssuesAssessingTrade2003]] drop the adjustment. Researchers like [[@carrionTradeSigningFast2020]] perform robustness checks with different, subsequent delays in the robustness checks.
 - See [[@carrionTradeSigningFast2020]] for comparsions in the stock market at different frequencies. The higher the frequency, the better the performance of LR. Similar paper for stock market [[@easleyFlowToxicityLiquidity2012]]
 - Also five second delay isn't universal and not even stated so in the paper. See the following comment from [[@rosenthalModelingTradeDirection2012]]
 >Many studies note that trades are published with non-ignorable delays. Lee and Ready (1991) first suggested a five-second delay (now commonly used) for 1988 data, two seconds for 1987 data, and “a different delay . . . for other time periods”. Ellis et al. (2000) note (Section IV.C) that quotes are updated almost immediately while trades are published with delay2. Therefore, determining the quote prevailing at trade time requires finding quotes preceding the trade by some (unknown) delay. Important sources of this delay include time to notify traders of their executions, time to update quotes, and time to publish the executions. For example, an aggressive buy order may trade against sell orders and change the inventory (and quotes) available at one or more prices. Notice is then sent to the buyer and sellers; quotes are updated; and, the trade is made public. This final publishing timestamp is what researchers see in nonproprietary transaction databases. Erlang’s (1909) study of information delays forms the theory for modeling delays. Bessembinder (2003) and Vergote (2005) are probably the best prior studies on delays between trades and quotes.
@@ -165,6 +175,10 @@ CLNV-Method is a hybrid of tick and quote rules when transactions prices are clo
 	- [[@arikTabNetAttentiveInterpretable2020]] Discuss a number of reasons why decisiion tree esembles dominate neural networks for tabular data.
 	- [[@huangTabTransformerTabularData2020]] argue that tree-based esnembles are the leading approach for tabular data. The base this on the prediction accuracy, the speed of training and the ability to interpret the models. However, they list sever limitations. As such they are not suitabl efor streaming data, multi-modality with tabular data e. g. additional image date and do not support semi-supervised learning by default.
 - Choose neural network architectures, that are tailored towards tabular data.
+
+**Why do ordinary neural networks work poorly on tabular data?
+- got both continous and categorical features
+
 ## Gradient Boosted Trees
 - start with "wide" architectures.
 ### Decision Tree
@@ -315,6 +329,11 @@ if pytorch_init is True:
 ![[learning-curves-samples.png]]
 
 ## Training and Tuning
+- Do less alchemy and more understanding [Ali Rahimi's talk at NIPS(NIPS 2017 Test-of-time award presentation) - YouTube](https://www.youtube.com/watch?v=Qi1Yry33TQE)
+- Keep algorithms / ideas simple. Add complexity only where needed! 
+- Do rigorous testing.
+- Don't chase the benchmark, but aim for explainability of the results.
+
 ### Training of Supervised Models
 - Interesting notebook about TabNet [Introduction to TabNet - Kfold 10 [TRAINING] | Kaggle](https://www.kaggle.com/code/ludovick/introduction-to-tabnet-kfold-10-training/notebook)
 - Use [Captum · Model Interpretability for PyTorch](https://captum.ai/) to learn what the model picks up as a relevant feature.
@@ -368,12 +387,14 @@ When using optuna draw a boxplot. optimal value should lie near the median. Some
 - What would happen if the classical rules weren't stacked?
 - Confusion matrix
 - ROC curve. See e. g., [this thread](https://stackoverflow.com/a/38467407) for drawing ROC curves
-- 
+
+![[visualize-classical-rules-vs-ml.png]]
+(print heatmap with $y$ axis with ask, bid and mid, $x$-axis could be some other criteria e. g. the trade size or none. If LR rule was good fit for options, accuracy should be evenly distributed and green. Visualize accuracy a hue / color)
 ## Results of Semi-Supervised Models
 ## Robustness Checks
 - LR-algorithm (see [[#^370c50]]) require an offset between the trade and quote. How does the offset affect the results? Do I even have the metric at different offsets?
 - Perform binning like in [[@grauerOptionTradeClassification2022]]
-- Study results over time like in [[@olbrysEvaluatingTradeSide2018 1]]
+- Study results over time like in [[@olbrysEvaluatingTradeSide2018]]
 - Are probabilities a good indicator reliability e. g., do high probablities lead to high accuracy.
 - Are there certain types of options that perform esspecially poor?
 - Confusion matrix
