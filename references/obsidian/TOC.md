@@ -382,6 +382,7 @@ When using optuna draw a boxplot. optimal value should lie near the median. Some
 
 # Results
 - What are the findings? Find appropriate visualization (e. g., tables, charts)
+-  For each tuned configuration, we run 15 experiments with different random seeds and report the performance on the test set. For some algorithms, we also report the performance of default configurations without hyperparameter tuning. [[@gorishniyRevisitingDeepLearning2021]]
 ## Results of Supervised Models
 - Results for random classifier
 - What would happen if the classical rules weren't stacked?
