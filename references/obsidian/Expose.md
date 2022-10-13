@@ -14,7 +14,7 @@ Thus . The
 
 So far classical classification rules ... dominated 
 
-neglect state-of-the-art algorithms and follow an unclear, 
+Easly bThe Berkeley Options Data Base does not classify trades as buyer-initiated or seller-initiated
 
 The natural question is, can a predictor improve upon their results using the identical features? Approaching this concern with machine learning is a logical choice due to the ability to deal with high dimensional data 
 
@@ -45,9 +45,9 @@ Next we focus on transformer networks for tabular data. We start by introducing 
 
 The *TabTransformer* [[@huangTabTransformerTabularData2020]] utilizes the afore-mentioned transformers [[🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017]] to learn contextual embeddings of categorical features, whereas continous features are directly input into a feed-forward network.
 
-Another alternative is *Tabnet* ([[@arikTabNetAttentiveInterpretable2020]]), which fuses the concept of *decision trees* and *transformers*. Similar to growing a decision tree severals subnetworks are used to process the input in a sequential, hierarchical fashion. Sequential attention, a variant of attention, is used to decide which features to use in each step. The output of *tabnet* is the aggregate of all subnetworks like an ensemble. Despite its difference, concepts like the encoder or decoder or attention similar to the previous variants. 
+Another variant is *Tabnet* ([[@arikTabNetAttentiveInterpretable2020]]), which fuses the concept of *decision trees* and *transformers* in a neural network. Similar to growing a decision tree several subnetworks are used to process the input in a sequential, hierarchical fashion. Sequential attention, a variant of attention, is used to decide which features to use in each step. The output of *tabnet* is the aggregate of all subnetworks. Despite its distinctive difference, concepts like the encoder or decoder or attention similar to the previous variants. 
 
-Previous research (e. g., [[@arikTabNetAttentiveInterpretable2020]]) could show that both tree-based and neural-network-based approaches can profit from learning on additional, unlabelled data. Thus we demonstrate how the models from above can be enhanced for the semi-supervised setting. For gradient boosted trees, self-training [[@yarowskyUnsupervisedWordSense1995]]  is used to obtain pseudo labels for unlabeled parts of the data set. The ensemble itself is trained on both true and pseudo labels. For the neural networks the scope is limited to separate *pre-training procedures* to maintain consistency with the supervised counterparts. Thus, for *TabNet* we use unsupervised pretraining of the encoder as propagated in [[@arikTabNetAttentiveInterpretable2020]]. Equally, for the *TabTransformer* we pretrain the transformer layers and column embeddings through *masked language modeling* or *replaced token detection* as popularized in [[@devlinBERTPretrainingDeep2019]] and [[@clarkELECTRAPretrainingText2020]] respectively. 
+Previous research (e. g., [[@arikTabNetAttentiveInterpretable2020]]) could show that both tree-based and neural-network-based approaches can profit from learning on additional, unlabelled data. Thus we demonstrate how the models from above can be enhanced for the semi-supervised setting. We decide on the variants *pre-training* and *self-training* after a short discussion. For gradient boosted trees, *self-training* [[@yarowskyUnsupervisedWordSense1995]]  is used to obtain pseudo labels for unlabeled parts of the data set. The final ensemble is trained on both true and pseudo labels. For the neural networks the scope is limited to separate *pre-training procedures* to maintain consistency with the supervised counterparts. Thus, for *TabNet* we use unsupervised pretraining of the encoder as propagated in [[@arikTabNetAttentiveInterpretable2020]]. Equally, for the *TabTransformer* we pretrain the transformer layers and column embeddings through *masked language modeling* or *replaced token detection* as popularized in [[@devlinBERTPretrainingDeep2019]] and [[@clarkELECTRAPretrainingText2020]] respectively. 
 
 **Empirical Study**
 
