@@ -4,37 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "699d50787952002b",
-        "type": "split",
-        "children": [
-          {
-            "id": "f825b6203f6d8412",
-            "type": "leaf",
-            "dimension": 64.03242147923,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Expose.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3086e1e3b05a0737",
-            "type": "leaf",
-            "dimension": 35.96757852077001,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "TOC.md",
-                "mode": "source",
-                "source": false
-              }
-            }
+        "id": "f825b6203f6d8412",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Expose.md",
+            "mode": "source",
+            "source": false
           }
-        ],
-        "direction": "horizontal"
+        }
       }
     ],
     "direction": "vertical"
@@ -133,13 +112,13 @@
   "lastOpenFiles": [
     "TOC.md",
     "Expose.md",
+    "🧞‍♀️Mastermind Group.md",
+    "Semi-supervised Learning/semi-supervised-learning.md",
+    "Semi-supervised Learning/@zhuSemiSupervisedLearningLiterature.md",
     "[.md",
     "🍬Implementation/@banachewiczKaggleBookData2022.md",
     "📥Inbox/@savickasInferringDirectionOption2003.md",
     "🔗Classical rules/@grauerOptionTradeClassification2022.md",
-    "📥Inbox/@grauerOptionTradeClassification2022.md",
-    "Semi-supervised Learning/@zhuSemiSupervisedLearningLiterature.md",
-    "📥Inbox/@ronenMachineLearningTrade2022.md",
-    "🧞‍♀️Mastermind Group.md"
+    "📥Inbox/@grauerOptionTradeClassification2022.md"
   ]
 }

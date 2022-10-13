@@ -175,9 +175,10 @@ CLNV-Method is a hybrid of tick and quote rules when transactions prices are clo
 	- [[@arikTabNetAttentiveInterpretable2020]] Discuss a number of reasons why decisiion tree esembles dominate neural networks for tabular data.
 	- [[@huangTabTransformerTabularData2020]] argue that tree-based esnembles are the leading approach for tabular data. The base this on the prediction accuracy, the speed of training and the ability to interpret the models. However, they list sever limitations. As such they are not suitabl efor streaming data, multi-modality with tabular data e. g. additional image date and do not support semi-supervised learning by default.
 - Choose neural network architectures, that are tailored towards tabular data.
+- Challenges of learning of tabular data can be found in [[@borisovDeepNeuralNetworks2022]] e. g. both 
+- Taxonomy of approaches can be found in [[@borisovDeepNeuralNetworks2022]] 
+![[tabular-learning-architectures.png]]
 
-**Why do ordinary neural networks work poorly on tabular data?
-- got both continous and categorical features
 
 ## Gradient Boosted Trees
 - start with "wide" architectures.
@@ -223,6 +224,7 @@ CLNV-Method is a hybrid of tick and quote rules when transactions prices are clo
 - Draw on chapter decision trees [[#^5db625]]
 - Visualize decision tree-like behaviour
 
+
 ### Extensions in TabTransformer
 - See paper [[@huangTabTransformerTabularData2020]] 
 - TabTransformer can't capture correlations between categorical and continous features. See [[@somepalliSAINTImprovedNeural2021]]
@@ -243,6 +245,7 @@ CLNV-Method is a hybrid of tick and quote rules when transactions prices are clo
 - General we observe performance improvements
 - Labelling of data is costly, sometimes impossible (my case).
 - For overview see [[@zhuSemiSupervisedLearningLiterature]]
+- 
 ## Extensions to Gradient Boosted Trees
 - Introduce the notion of probilistic classifiers
 - Possible extension could be [[@yarowskyUnsupervisedWordSense1995]]. See also Sklearn Self-Training Classifier.
