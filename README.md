@@ -63,6 +63,9 @@ Notes 📜
 ------------
 Notes are stored in the `references` folder in an obsidian vault. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes.
 
+mastermind board 🥷
+------------
+Link to [miro board](https://miro.com/app/board/uXjVPPRCa6s=/)
 
 Final document 🎓
 ------------
