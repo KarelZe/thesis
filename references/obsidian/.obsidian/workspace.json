@@ -4,20 +4,39 @@
     "type": "split",
     "children": [
       {
-        "id": "8d869171d2f99bc0",
-        "type": "tabs",
+        "id": "a99b26cc533614a4",
+        "type": "split",
         "children": [
           {
-            "id": "8d5597261634ee6e",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "img/clnv-method-visualization.png"
+            "id": "8d869171d2f99bc0",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "8d5597261634ee6e",
+                "type": "leaf",
+                "state": {
+                  "type": "graph",
+                  "state": {}
+                }
               }
-            }
+            ]
+          },
+          {
+            "id": "6ef38224c4ad42f6",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "7819b87b3d8a3932",
+                "type": "leaf",
+                "state": {
+                  "type": "empty",
+                  "state": {}
+                }
+              }
+            ]
           }
-        ]
+        ],
+        "direction": "horizontal"
       }
     ],
     "direction": "vertical"
@@ -75,7 +94,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "img/clnv-method-visualization.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,9 +120,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "img/clnv-method-visualization.png"
-              }
+              "state": {}
             }
           }
         ],
@@ -117,17 +133,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "8d5597261634ee6e",
+  "active": "7819b87b3d8a3932",
   "lastOpenFiles": [
+    "Untitled.md",
+    "TOC.md",
+    "img/clnv-method-visualization.png",
     "img/emo-rule-formulae.png",
     "img/formula-quote-rule.png",
     "img/formula-tick-rule.png",
     "img/informative-uniformative-features.png",
     "img/kde-plot-results.png",
     "img/kde-tick-rule.png",
-    "img/learning-curves-samples.png",
-    "img/lr-algorithm-formulae.png",
-    "img/missclassification-trade-rule.png",
-    "img/optuna-as-boxplot.png"
+    "img/learning-curves-samples.png"
   ]
 }

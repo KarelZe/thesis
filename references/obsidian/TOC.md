@@ -142,7 +142,7 @@ Copied from [[@carrionTradeSigningFast2020]]
 - Based on the observation that trades inside the quotes are poorly classified. Proposed algorithm can improve
 - They perform logistic regression to determin that e. g. , trade size, firm size etc. determines the proablity of correct classification most
 - cite from [[@ellisAccuracyTradeClassification2000]]
-### Chakarabarty-Li-Nguyen-Van-Ness Method
+### Chakrabarty-Li-Nguyen-Van-Ness Method
 CLNV-Method is a hybrid of tick and quote rules when transactions prices are closer to the ask and bid, and the the tick rule when transaction prices are closer to the midpoint [[@chakrabartyTradeClassificationAlgorithms2007]]
 - show that CLNV, was invented after the ER and EMO. Thus the improvement, comes from a higher segmented decision surface. (also see graphics [[visualization-of-quote-and-tick.png]])
 
@@ -244,6 +244,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Firstly, Feature Tokenizer transforms features to embeddings. The embeddings are then processed by the Transformer module and the final representation of the (CLS) token is used for prediction.
 - Very likely not interpretable...
 # Semi-Supervised Approaches
+
+## Selection of Approaches
 
 ^c77130
 
