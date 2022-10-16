@@ -16,9 +16,18 @@ jobs:
           latexmk_shell_escape: true
           root_file: expose.tex
           working_directory: reports
+      - name: Set up Git repository
+        uses: actions/checkout@v1
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@master
+        with:
+          latexmk_shell_escape: true
+          root_file: TOC.tex
+          working_directory: reports
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             reports/expose.pdf
+            reports/TOC.pdf
