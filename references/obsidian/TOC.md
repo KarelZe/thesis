@@ -10,6 +10,10 @@
 - More than a nudge. Improving options trade site classification with machine learning
 - Limit to view, yet theoretically promising techniques as derived in [[#^d8f019]]
 
+and its consequences are an important, but understudied, cause for concern.
+
+Commonly stock trade classifcation algorithms are used
+
 # Contributions
 - One of the first works to perform trade side classification on option data set
 - Achieve a high improvement in accuracy over classical rules 
@@ -22,7 +26,9 @@
 # Abstract
 - [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
 
+
 # Introduction
+
 - see  `writing-a-good-introduction.pdf`
 - trade site classification matters for several reasons, market liqudity measures, short sells, study of bid-ask-spreads.
 - Where is trade side classification applied? Why is it important? Do citation search.
@@ -161,6 +167,8 @@ CLNV-Method is a hybrid of tick and quote rules when transactions prices are clo
 
 ^d8f019
 
+See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.html
+
 - What works in similar use cases? What are similar use cases?
 - Establish criteria for choosing an architecture:
 	- **performance** That is, approach must deliver state-of-the-art performance in similar problems.
@@ -182,6 +190,8 @@ CLNV-Method is a hybrid of tick and quote rules when transactions prices are clo
 
 ## Gradient Boosted Trees
 - start with "wide" architectures.
+- Include random forests, if too few models?
+- https://github.com/LeoGrin/tabular-benchmark
 ### Decision Tree
 
 ^5db625
@@ -245,7 +255,7 @@ CLNV-Method is a hybrid of tick and quote rules when transactions prices are clo
 - General we observe performance improvements
 - Labelling of data is costly, sometimes impossible (my case).
 - For overview see [[@zhuSemiSupervisedLearningLiterature]]
-- 
+- for problems / success of semi-supervised learning in tabular data see [[@yoonVIMEExtendingSuccess2020]]
 ## Extensions to Gradient Boosted Trees
 - Introduce the notion of probilistic classifiers
 - Possible extension could be [[@yarowskyUnsupervisedWordSense1995]]. See also Sklearn Self-Training Classifier.
@@ -318,6 +328,7 @@ if pytorch_init is True:
 - Apply feature transformations that are economically motivated.
 - It might be wise to limit the transformations to ones that are present in the classical rules. Would help with reasoning.
 - Try out features that are inherently used in the depth rule or the trade rule. 
+- For imputation look into [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]
 ### Train-Test Split
 
 ^d50f5d
@@ -336,6 +347,7 @@ if pytorch_init is True:
 - Keep algorithms / ideas simple. Add complexity only where needed! 
 - Do rigorous testing.
 - Don't chase the benchmark, but aim for explainability of the results.
+- compare against https://github.com/jktis/Trade-Classification-Algorithms
 
 ### Training of Supervised Models
 - Interesting notebook about TabNet [Introduction to TabNet - Kfold 10 [TRAINING] | Kaggle](https://www.kaggle.com/code/ludovick/introduction-to-tabnet-kfold-10-training/notebook)
@@ -363,6 +375,10 @@ if pytorch_init is True:
 ![[sample-validation-curve.png]]
 When using optuna draw a boxplot. optimal value should lie near the median. Some values should be outside the IQR.
 ![[optuna-as-boxplot.png]]
+
+Repeat search with different random initializations:
+![[random-searches-hyperparms.png]]
+(found in [[@grinsztajnWhyTreebasedModels]])
 ## Evaluation
 ### Feature Importance Measure
 - Feature Importance of Gradient Boosted Trees
@@ -395,6 +411,19 @@ When using optuna draw a boxplot. optimal value should lie near the median. Some
 ![[visualize-classical-rules-vs-ml.png]]
 (print heatmap with $y$ axis with ask, bid and mid, $x$-axis could be some other criteria e. g. the trade size or none. If LR rule was good fit for options, accuracy should be evenly distributed and green. Visualize accuracy a hue / color)
 ## Results of Semi-Supervised Models
+
+## Feature Importance
+- local vs. global attention
+- Visualize attention
+- make models comparable. Find a notion of feature importance that can be shared across models.
+ - compare feature importances between approachaes like in paper
+ - How do they selected features relate to what is being used in classical formulas? (see [[#^ce4ff0]]) Could a hybrid formula be derived from the selection by the algorithm?
+ - What is the economic intuition?
+
+![[informative-uniformative-features.png]]
+[[@grinsztajnWhyTreebasedModels]]
+Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
+
 ## Robustness Checks
 - LR-algorithm (see [[#^370c50]]) require an offset between the trade and quote. How does the offset affect the results? Do I even have the metric at different offsets?
 - Perform binning like in [[@grauerOptionTradeClassification2022]]
@@ -404,13 +433,6 @@ When using optuna draw a boxplot. optimal value should lie near the median. Some
 - Confusion matrix
 - create kde plots to investigate misclassified samples further
 - ![[kde-plot-results.png]]
-## Feature Importance
-- local vs. global attention
-- Visualize attention
-- make models comparable. Find a notion of feature importance that can be shared across models.
- - compare feature importances between approachaes like in paper
- - How do they selected features relate to what is being used in classical formulas? (see [[#^ce4ff0]]) Could a hybrid formula be derived from the selection by the algorithm?
- - What is the economic intuition?
 # Discussion
 - What does it mean? Point out limitations and e. g., managerial implications or future impact.
 - How do wide models compare to deep models

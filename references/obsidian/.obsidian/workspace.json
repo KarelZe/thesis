@@ -4,16 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "f825b6203f6d8412",
-        "type": "leaf",
-        "state": {
-          "type": "markdown",
-          "state": {
-            "file": "Expose.md",
-            "mode": "source",
-            "source": false
+        "id": "8d869171d2f99bc0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8d5597261634ee6e",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "img/clnv-method-visualization.png"
+              }
+            }
           }
-        }
+        ]
       }
     ],
     "direction": "vertical"
@@ -31,7 +35,9 @@
             "type": "leaf",
             "state": {
               "type": "file-explorer",
-              "state": {}
+              "state": {
+                "sortOrder": "alphabetical"
+              }
             }
           },
           {
@@ -69,7 +75,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Expose.md",
+                "file": "img/clnv-method-visualization.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,7 +103,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Expose.md"
+                "file": "img/clnv-method-visualization.png"
               }
             }
           }
@@ -108,17 +114,20 @@
     "direction": "horizontal",
     "width": 396.5
   },
-  "active": "f825b6203f6d8412",
+  "ribbon": {
+    "mostRecentAction": ""
+  },
+  "active": "8d5597261634ee6e",
   "lastOpenFiles": [
-    "TOC.md",
-    "❓ Questions.md",
-    "Expose.md",
-    "🧞‍♀️Mastermind Group.md",
-    "Semi-supervised Learning/semi-supervised-learning.md",
-    "Semi-supervised Learning/@zhuSemiSupervisedLearningLiterature.md",
-    "[.md",
-    "🍬Implementation/@banachewiczKaggleBookData2022.md",
-    "📥Inbox/@savickasInferringDirectionOption2003.md",
-    "🔗Classical rules/@grauerOptionTradeClassification2022.md"
+    "img/emo-rule-formulae.png",
+    "img/formula-quote-rule.png",
+    "img/formula-tick-rule.png",
+    "img/informative-uniformative-features.png",
+    "img/kde-plot-results.png",
+    "img/kde-tick-rule.png",
+    "img/learning-curves-samples.png",
+    "img/lr-algorithm-formulae.png",
+    "img/missclassification-trade-rule.png",
+    "img/optuna-as-boxplot.png"
   ]
 }
