@@ -115,22 +115,6 @@
 % Main text section
     \newpage
 	\setcounter{page}{1}\renewcommand{\thepage}{\arabic{page}} % Sets the numbering to arabic.
-	% \include{Content/Section1}
-	% \include{Content/Section2}
-	% \include{Content/Section3}
-	\markdownInput{../references/obsidian/TOC.md}
-% Bibliography
-	\newpage
-	\printbibliography
-	
-% Appendix (comment out if not necessary)
-	\newpage
-	\appendix % Enumerates appendix with letters.
-	\include{Content/Appendix}
-	
-% Declaration 
-	\newpage\thispagestyle{empty}
-%	\include{Content/Declaration_Thesis} % Exclude title page (with %) that is not being used.
-	\include{Content/Declaration_Seminar}
+	\include{Content/main}
 
 \end{document}
