@@ -62,6 +62,7 @@ Project Organization
 Notes 📜
 ------------
 Notes are stored in the `references` folder in an obsidian vault. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes.
+![obsidian](references/obsidian/img/obsidian.jpg)
 
 mastermind board 🥷
 ------------
@@ -69,7 +70,7 @@ Link to [miro board](https://miro.com/app/board/uXjVPPRCa6s=/)
 
 Final document 🎓
 ------------
-The latest build of the thesis can be found under [`releases`](https://github.com/KarelZe/thesis/releases/).
+The latest builds of the proposal and thesis can be found under [`releases`](https://github.com/KarelZe/thesis/releases/).
 
 Set up pre-commit hooks 🐙
 ------------
