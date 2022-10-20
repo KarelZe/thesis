@@ -4,39 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "a99b26cc533614a4",
-        "type": "split",
+        "id": "53b332421a033315",
+        "type": "tabs",
         "children": [
           {
-            "id": "8d869171d2f99bc0",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "8d5597261634ee6e",
-                "type": "leaf",
-                "state": {
-                  "type": "graph",
-                  "state": {}
-                }
-              }
-            ]
-          },
-          {
-            "id": "6ef38224c4ad42f6",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "7819b87b3d8a3932",
-                "type": "leaf",
-                "state": {
-                  "type": "empty",
-                  "state": {}
-                }
-              }
-            ]
+            "id": "1ff5e2e5af7e7357",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
           }
-        ],
-        "direction": "horizontal"
+        ]
       }
     ],
     "direction": "vertical"
@@ -94,6 +73,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +100,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020.md"
+              }
             }
           }
         ],
@@ -128,22 +110,22 @@
       }
     ],
     "direction": "horizontal",
-    "width": 396.5
+    "width": 707.5
   },
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "7819b87b3d8a3932",
+  "active": "8399eb31ec07fd72",
   "lastOpenFiles": [
-    "Untitled.md",
+    "🔗Classical rules/@aktasTradeClassificationAccuracy2014.md",
     "TOC.md",
-    "img/clnv-method-visualization.png",
-    "img/emo-rule-formulae.png",
-    "img/formula-quote-rule.png",
-    "img/formula-tick-rule.png",
-    "img/informative-uniformative-features.png",
-    "img/kde-plot-results.png",
-    "img/kde-tick-rule.png",
-    "img/learning-curves-samples.png"
+    "uri.md",
+    "@leeInferringTradeDirection1991 1.md",
+    "🧠Deep Learning Methods/@borisovDeepNeuralNetworks2022.md",
+    "🔗Classical rules/@grauerOptionTradeClassification2022 1.md",
+    "🎄Tree-based Methods/@grinsztajnWhyTreebasedModels.md",
+    "🎄Tree-based Methods/@hastietrevorElementsStatisticalLearning2009.md",
+    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
+    "🧠Deep Learning Methods/@huangTabTransformerTabularData2020.md"
   ]
 }

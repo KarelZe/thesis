@@ -16,7 +16,7 @@ year: 2017
 
 “As a consequence, the researchers rely on indirect trade classification rules to infer trade sides.” (Olbrys and Mursztyn, 2018, p. 3)
 
-“To verify the robustness of the obtained results, the comparison of trade side classification rules is provided both in the whole sample from January 3, 2005 to December 30, 2016 (3005 trading days) and over three adjacent sub-periods, each of equal size (436 trading days; see Olbryś and Mursztyn, 2015)”[[@huangTabTransformerTabularData2020]] (Olbrys and Mursztyn, 2018, p. 3)
+“To verify the robustness of the obtained results, the comparison of trade side classification rules is provided both in the whole sample from January 3, 2005 to December 30, 2016 (3005 trading days) and over three adjacent sub-periods, each of equal size (436 trading days; see Olbryś and Mursztyn, 2015)”[[🧠Deep Learning Methods/@huangTabTransformerTabularData2020]] (Olbrys and Mursztyn, 2018, p. 3)
 
 “For example, the so-called “immediacy” definition describes initiators as traders who demand immediate execution (e.g. Lee and Radhakrishna, 2000). According to Odders-White (2000), the initiator of a transaction is the investor (buyer or seller) who placed his/her order last, chronologically (the so called “chronological” definition)” (Olbrys and Mursztyn, 2018, p. 4)
 

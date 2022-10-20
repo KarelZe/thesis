@@ -20,7 +20,7 @@ Commonly stock trade classifcation algorithms are used
 - One of the first works to apply machine learning to trade side classification. *The* first to follow a research agenda and apply SOTA algorithms
 - First work to use gradient boosted trees and transformer-based architectures
 - First work to use semi-supervised learning
-- First work to study feature importance across models. E. g., [[@ronenMachineLearningTrade2022]] study the feature importance only for random forests.
+- First work to study feature importance across models. E. g., [[@ronenMachineLearningTrade2022 1]] study the feature importance only for random forests.
 
 
 # Abstract
@@ -44,28 +44,28 @@ Commonly stock trade classifcation algorithms are used
 
 
 # Related Work
-- [[@grauerOptionTradeClassification2022]]
-- [[@savickasInferringDirectionOption2003]]
+- [[@grauerOptionTradeClassification2022 1]]
+- [[@savickasInferringDirectionOption2003 1]]
 - 
-- [[@ronenMachineLearningTrade2022]] / [[@fedeniaMachineLearningCorporate2021]] They employ a machine learning-based approach for trade side classification. Selection of method follows no clear research agenda, so does sample selection or tuning. Also leaves out latest advancements in prediction of tabular data such as GBM or dedicated NN architectures. Data set only spans two days? General saying ML based predictor (random forest) outperforms tick rule and BVC. Still much human inutition is required for feature engineering. Treated as **supervised tasks**. More recent approaches and also ML approaches outperform classical approaches due to a higher trading frequency. Transfer learning not successful. **Note:** Tick rule has been among the poorest predictors in Grauer. **Note:** Check what the actual difference between the two papers are....
+- [[@ronenMachineLearningTrade2022 1]] / [[@fedeniaMachineLearningCorporate2021]] They employ a machine learning-based approach for trade side classification. Selection of method follows no clear research agenda, so does sample selection or tuning. Also leaves out latest advancements in prediction of tabular data such as GBM or dedicated NN architectures. Data set only spans two days? General saying ML based predictor (random forest) outperforms tick rule and BVC. Still much human inutition is required for feature engineering. Treated as **supervised tasks**. More recent approaches and also ML approaches outperform classical approaches due to a higher trading frequency. Transfer learning not successful. **Note:** Tick rule has been among the poorest predictors in Grauer. **Note:** Check what the actual difference between the two papers are....
 - Which works performed trade side classification for stocks, for options or other products.
 - [[@rosenthalModelingTradeDirection2012]] incorporates different methods into a model for the likelihood a trade was buyer-initiated. It's a simple logistic regresssion. Performed on stocks. 
 - [[@blazejewskiLocalNonparametricModel2005]] compare $k$-nn and logistic regression for trade-side classification. Performed for Australian stocks. Unclear how results compare to classical rules. 
 1. Broader term is **trade site classification** = assign the side to a to a transaction and differentiate between buyer- and seller-initiated transactions
 2. It's also sometimes called trade sign classification
 - There is no single definition / understanding for the one who initiates trades. [[@olbrysEvaluatingTradeSide2018 1]] distinguish / discuss immediacy and initiator
-- Do not compare accuracies across different datasets. This won't work. Might mention [[@grauerOptionTradeClassification2022]] as it is calculated on (partly) the same data set.
+- Do not compare accuracies across different datasets. This won't work. Might mention [[@grauerOptionTradeClassification2022 1]] as it is calculated on (partly) the same data set.
 - [[@blazejewskiLocalNonparametricModel2005]] use $k$-nn to infer the sign of a trade on the stock market.
 
 - Results were very different for the option markets between the studies. Compare the frequency some literature (in the stock market) suggest, that  for higher frequencies classical approaches like the tick test deteriorate.
-> Easley, O’Hara, and Srinivas (1998) use the Lee and Ready approach to test their game theoretic model of informed trading in stock and option markets. It is, therefore, important to determine whether the application of stock trade classification rules to derivatives is valid. [[@savickasInferringDirectionOption2003]]
+> Easley, O’Hara, and Srinivas (1998) use the Lee and Ready approach to test their game theoretic model of informed trading in stock and option markets. It is, therefore, important to determine whether the application of stock trade classification rules to derivatives is valid. [[@savickasInferringDirectionOption2003 1]]
 
 # Rule-Based Approaches
 ## Basic Rules
 - See [Quantitative Finance Stack Exchange](https://quant.stackexchange.com/questions/8843/what-are-modern-algorithms-for-trade-classification) for most basic overview
 
 ### Quote-Rule
-- The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991 1]] or [[@finucaneDirectTestMethods2000]])
+- The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
 
 - ![[formula-quote-rule.png]]
 	Adapted from [[@olbrysEvaluatingTradeSide2018]]. Rewrite to formula
@@ -73,8 +73,8 @@ Commonly stock trade classifcation algorithms are used
 (copied from [[@carrionTradeSigningFast2020]])
 
 ### Tick Test
-- Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000]] or [[@leeInferringTradeDirection1991 1]] for similar framing)
-- Consider [[@leeInferringTradeDirection1991 1]] for citation.
+- Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022 1]] or [[@finucaneDirectTestMethods2000]] or [[@leeInferringTradeDirection1991]] for similar framing)
+- Consider  for citation [[@leeInferringTradeDirection1991]] .
 - One of the first works who mention the tick test is [[@holthausenEffectLargeBlock1987]] (referred to as tick classification rule) or [[@hasbrouckTradesQuotesInventories1988]] (referred to as transaction rule)
 - ![[formula-tick-rule.png]]
 	Adapted from [[@olbrysEvaluatingTradeSide2018]]
@@ -84,18 +84,18 @@ Copied from [[@carrionTradeSigningFast2020]]
 - ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000]]
 ### Reverse Tick Test
 - Instead of the previous trade, the reverse tick rule uses the subsequent trade price to classify the current trade. 
-- If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991 1]])
+- If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022 1]]) (see also [[@leeInferringTradeDirection1991 1]])
 
 ### Depth Rule
-- classify midspread trades as buyer-initiated, if the ask size exceeds the bid size, and as seller-initiated, if the bid size is higher than the ask size (see [[@grauerOptionTradeClassification2022]])
-- **Intuition:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely. (see [[@grauerOptionTradeClassification2022]])
+- classify midspread trades as buyer-initiated, if the ask size exceeds the bid size, and as seller-initiated, if the bid size is higher than the ask size (see [[@grauerOptionTradeClassification2022 1]])
+- **Intuition:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely. (see [[@grauerOptionTradeClassification2022 1]])
 - Alternative to handle midspread trades, that can not be classified using the quote rule.
 - Improves LR algorithm by 0.8 %. Overall accuracy 75 %.
 - Performance exceeds that of the LR algorithm, thus the authors assume that the depth rule outperforms the tick test and the reverse tick test, that are used in the LR algorithm for for classifying midspread trades.
 ### Trade Size Rule
-- classify trades for which the trade size is equal to the quoted bid size as customer buys and those with a trade size equal to the ask size as customer sells. (see [[@grauerOptionTradeClassification2022]])
-- **Intuition:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely. (see [[@grauerOptionTradeClassification2022]])  
-- Accuracy of 79.92 % on the 22.3 % of the trades that could classified, not all!. (see [[@grauerOptionTradeClassification2022]])
+- classify trades for which the trade size is equal to the quoted bid size as customer buys and those with a trade size equal to the ask size as customer sells. (see [[@grauerOptionTradeClassification2022 1]])
+- **Intuition:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely. (see [[@grauerOptionTradeClassification2022 1]])  
+- Accuracy of 79.92 % on the 22.3 % of the trades that could classified, not all!. (see [[@grauerOptionTradeClassification2022 1]])
 - Couple with other algorithms if trade sizes and quote sizes do not match / or if the trade size matches both the bid and ask size. For other 
 - Requires other rules, similar to the quote rule, as only a small proportion can be matched.
 - tested on option data / similar data set
@@ -104,8 +104,8 @@ Copied from [[@carrionTradeSigningFast2020]]
 ^ce4ff0
 - use the problems of the single tick test to motivate extended rules like EMO.
 - What are common extensions? How do new algorithms extend the classical ones? What is the intuition? How do they perform? How do the extensions relate? Why do they fail? In which cases do they fail?
-- [[@savickasInferringDirectionOption2003]]
-- [[@grauerOptionTradeClassification2022]]
+- [[@savickasInferringDirectionOption2003 1]]
+- [[@grauerOptionTradeClassification2022 1]]
 - Which do I want to cover? What are their theoretical properties?
 - What are common observations or reasons why authors suggested extensions? How do they integrate to the previous approaches? Could this be visualised for a streamlined overview / discussion. 
 - What do we find, if we compare the rules 
@@ -123,15 +123,15 @@ Copied from [[@carrionTradeSigningFast2020]]
 
 - LR algorithm
 ![[lr-algorithm-formulae.png]]
-- in the original paper the offset between transaction prices and quotes is set to 5 sec [[@leeInferringTradeDirection1991 1]]. Subsequent research like [[@bessembinderIssuesAssessingTrade2003]] drop the adjustment. Researchers like [[@carrionTradeSigningFast2020]] perform robustness checks with different, subsequent delays in the robustness checks.
+- in the original paper the offset between transaction prices and quotes is set to 5 sec [[@leeInferringTradeDirection1991]]. Subsequent research like [[@bessembinderIssuesAssessingTrade2003]] drop the adjustment. Researchers like [[@carrionTradeSigningFast2020]] perform robustness checks with different, subsequent delays in the robustness checks.
 - See [[@carrionTradeSigningFast2020]] for comparsions in the stock market at different frequencies. The higher the frequency, the better the performance of LR. Similar paper for stock market [[@easleyFlowToxicityLiquidity2012]]
 - Also five second delay isn't universal and not even stated so in the paper. See the following comment from [[@rosenthalModelingTradeDirection2012]]
 >Many studies note that trades are published with non-ignorable delays. Lee and Ready (1991) first suggested a five-second delay (now commonly used) for 1988 data, two seconds for 1987 data, and “a different delay . . . for other time periods”. Ellis et al. (2000) note (Section IV.C) that quotes are updated almost immediately while trades are published with delay2. Therefore, determining the quote prevailing at trade time requires finding quotes preceding the trade by some (unknown) delay. Important sources of this delay include time to notify traders of their executions, time to update quotes, and time to publish the executions. For example, an aggressive buy order may trade against sell orders and change the inventory (and quotes) available at one or more prices. Notice is then sent to the buyer and sellers; quotes are updated; and, the trade is made public. This final publishing timestamp is what researchers see in nonproprietary transaction databases. Erlang’s (1909) study of information delays forms the theory for modeling delays. Bessembinder (2003) and Vergote (2005) are probably the best prior studies on delays between trades and quotes.
 
 ### Reverse Lee and Ready Algorithm
-- first introduced in [[@grauerOptionTradeClassification2022]] (p 12)
+- first introduced in [[@grauerOptionTradeClassification2022 1]] (p 12)
 - combines the quote and reverse tick rule
-- performs fairly well for options as shown in [[@grauerOptionTradeClassification2022]]
+- performs fairly well for options as shown in [[@grauerOptionTradeClassification2022 1]]
 
 ### Ellis-Michaely-O’Hara Rule
 - combination of quote rule and tick rule. Use tick rule to classify all trades except trades at hte ask and bid at which points the quote rule is applied. A trade is classified as  abuy (sell) if it is executed at the ask (bid).
@@ -141,7 +141,7 @@ Copied from [[@carrionTradeSigningFast2020]]
 - classify trades by the quote rule first and then tick rule
 - Based on the observation that trades inside the quotes are poorly classified. Proposed algorithm can improve
 - They perform logistic regression to determin that e. g. , trade size, firm size etc. determines the proablity of correct classification most
-- cite from [[@ellisAccuracyTradeClassification2000]]
+- cite from [[@ellisAccuracyTradeClassification2000 1]]
 ### Chakrabarty-Li-Nguyen-Van-Ness Method
 CLNV-Method is a hybrid of tick and quote rules when transactions prices are closer to the ask and bid, and the the tick rule when transaction prices are closer to the midpoint [[@chakrabartyTradeClassificationAlgorithms2007]]
 - show that CLNV, was invented after the ER and EMO. Thus the improvement, comes from a higher segmented decision surface. (also see graphics [[visualization-of-quote-and-tick.png]])
@@ -180,8 +180,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 	- Deep learning for tabular data could potentially yield a higher performance and allow to combine tbular data with non-tabular data such as images, audio or other data that can be easily processed with deep learning. [[@gorishniyRevisitingDeepLearning2021]]
 	- Despite growing number of novel (neural net) architectures, there is still no simple, yet reliable solution that achieves stable performance across many tasks. 
 	- Show that there is a general concensus, that gradient boosted trees and neural networks work best. Show that there is a great bandwith of opinions and its most promising to try both. Papers: [[@shwartz-zivTabularDataDeep2021]]
-	- [[@arikTabNetAttentiveInterpretable2020]] Discuss a number of reasons why decisiion tree esembles dominate neural networks for tabular data.
-	- [[@huangTabTransformerTabularData2020]] argue that tree-based esnembles are the leading approach for tabular data. The base this on the prediction accuracy, the speed of training and the ability to interpret the models. However, they list sever limitations. As such they are not suitabl efor streaming data, multi-modality with tabular data e. g. additional image date and do not support semi-supervised learning by default.
+	- [[🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020]] Discuss a number of reasons why decisiion tree esembles dominate neural networks for tabular data.
+	- [[🧠Deep Learning Methods/@huangTabTransformerTabularData2020]] argue that tree-based esnembles are the leading approach for tabular data. The base this on the prediction accuracy, the speed of training and the ability to interpret the models. However, they list sever limitations. As such they are not suitabl efor streaming data, multi-modality with tabular data e. g. additional image date and do not support semi-supervised learning by default.
 - Choose neural network architectures, that are tailored towards tabular data.
 - Challenges of learning of tabular data can be found in [[@borisovDeepNeuralNetworks2022]] e. g. both 
 - Taxonomy of approaches can be found in [[@borisovDeepNeuralNetworks2022]] 
@@ -227,7 +227,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 ### Embeddings
 ### Extensions in TabNet
 - TODO: Check if TabNet can actually be considered a Transformer or if it is just attention-based?
-- See paper [[@arikTabNetAttentiveInterpretable2020]]
+- See paper [[🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020]]
 - cover only transformer for tabular data. Explain why.
 - Are there other architectures, that I do not cover? Why is this the case?
 - TabNet uses neural networks to mimic decision trees by placing importance on only a few features at each layer. The attention layers in that model replace the dot-product self-attention with a type of sparse layer that allows only certain features to pass through.
@@ -236,7 +236,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 
 
 ### Extensions in TabTransformer
-- See paper [[@huangTabTransformerTabularData2020]] 
+- See paper [[🧠Deep Learning Methods/@huangTabTransformerTabularData2020]] 
 - TabTransformer can't capture correlations between categorical and continous features. See [[@somepalliSAINTImprovedNeural2021]]
 - Investigate whether my dataset even profits from this type of architecture?
 ### Extensions in FT-Transformer
@@ -260,14 +260,14 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - for problems / success of semi-supervised learning in tabular data see [[@yoonVIMEExtendingSuccess2020]]
 ## Extensions to Gradient Boosted Trees
 - Introduce the notion of probilistic classifiers
-- Possible extension could be [[@yarowskyUnsupervisedWordSense1995]]. See also Sklearn Self-Training Classifier.
-- Discuss why probabilities of gradient boosted trees might be missleading [[@arikTabNetAttentiveInterpretable2020]]
-- Problems of tree-based approaches and neural networks in semi-supervised learning. See [[@huangTabTransformerTabularData2020]] or [[@arikTabNetAttentiveInterpretable2020]]and [[@tanhaSemisupervisedSelftrainingDecision2017]]
+- Possible extension could be [[@yarowskyUnsupervisedWordSense1995 1]]. See also Sklearn Self-Training Classifier.
+- Discuss why probabilities of gradient boosted trees might be missleading [[🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020]]
+- Problems of tree-based approaches and neural networks in semi-supervised learning. See [[🧠Deep Learning Methods/@huangTabTransformerTabularData2020]] or [[🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020]]and [[@tanhaSemisupervisedSelftrainingDecision2017]]
 ## Extensions to TabNet
-- See [[@arikTabNetAttentiveInterpretable2020]] for extensions.
+- See [[🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020]] for extensions.
 - For pratical implementation see [Self Supervised Pretraining - pytorch_widedeep (pytorch-widedeep.readthedocs.io)](https://pytorch-widedeep.readthedocs.io/en/latest/pytorch-widedeep/self_supervised_pretraining.html)
 ## Extensions to TabTransformer
-- See [[@huangTabTransformerTabularData2020]] for extensions.
+- See [[🧠Deep Learning Methods/@huangTabTransformerTabularData2020]] for extensions.
 - Authors use unsupervised pretraining and supervised finetuning. They also try out techniques like pseudo labelling from [[@leePseudolabelSimpleEfficient]] for semi supervised learning among others.
 - For pratical implementation see: - For pratical implementation see [Self Supervised Pretraining - pytorch_widedeep](https://pytorch-widedeep.readthedocs.io/en/latest/pytorch-widedeep/self_supervised_pretraining.html)
 # Empirical Study
@@ -299,21 +299,21 @@ if pytorch_init is True:
 - all kind of options are equally important
 - data comes at a daily frequency
 - Describe interesting properties of the data set. How are values distributed?
-- What preprocessing have been applied. See [[@grauerOptionTradeClassification2022]]
+- What preprocessing have been applied. See [[@grauerOptionTradeClassification2022 1]]
 - Data range from May 2, 2005 to May 31, 2017 + (new samples)
 - Is the delay between trades and quotes relevant here? (See discussion in [[@rosenthalModelingTradeDirection2012]]) Probably not as daily data?
 ### CBOE Data Set
 - data comes at a daily frequency
 
 ### Generation of True Labels
-- To evaluate the performance of trade classification algoriths the true side of the trade needs to be known. To match LiveVol data, the total customer sell volume or total or total customer buy volume has to match with the transactions in LiveVol. Use unique key of trade date, expiration date, strike price, option type, and root symbol to match the samples. (see [[@grauerOptionTradeClassification2022]]) Notice, that this leads to an imperfect reconstruction!
+- To evaluate the performance of trade classification algoriths the true side of the trade needs to be known. To match LiveVol data, the total customer sell volume or total or total customer buy volume has to match with the transactions in LiveVol. Use unique key of trade date, expiration date, strike price, option type, and root symbol to match the samples. (see [[@grauerOptionTradeClassification2022 1]]) Notice, that this leads to an imperfect reconstruction!
 - Discuss that only a portion of data can be reconstructed. Previous works neglected the unlabeled part. 
 - Discuss how previously unused data could be used. This maps to the notion of supervised and semi-supervised learning
 - Pseudo Labeling?
 
 ### Explanatory Data Analysis
 - Examine the position of trade's prices relative to the quotes. This is of major importance in classical algorithms like LR, EMO or CLNV.
-- Study if classes are imbalanced and require further treatmeant. The work of [[@grauerOptionTradeClassification2022]] suggests that classes are rather balanced.
+- Study if classes are imbalanced and require further treatmeant. The work of [[@grauerOptionTradeClassification2022 1]] suggests that classes are rather balanced.
 - Study correlations between variables
 - Remove highly correlated features as they also pose problems for feature importance calculation (e. g. feature permutation)
 - Plot KDE plot of tick test, quote test...
@@ -428,7 +428,7 @@ Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 
 ## Robustness Checks
 - LR-algorithm (see [[#^370c50]]) require an offset between the trade and quote. How does the offset affect the results? Do I even have the metric at different offsets?
-- Perform binning like in [[@grauerOptionTradeClassification2022]]
+- Perform binning like in [[@grauerOptionTradeClassification2022 1]]
 - Study results over time like in [[@olbrysEvaluatingTradeSide2018]]
 - Are probabilities a good indicator reliability e. g., do high probablities lead to high accuracy.
 - Are there certain types of options that perform esspecially poor?
@@ -438,7 +438,7 @@ Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 # Discussion
 - What does it mean? Point out limitations and e. g., managerial implications or future impact.
 - How do wide models compare to deep models
-- Study sources of missclassification. See e. g., [[@savickasInferringDirectionOption2003]]
+- Study sources of missclassification. See e. g., [[@savickasInferringDirectionOption2003 1]]
 # Conclusion
 - Repeat the problem and its relevance, as well as the contribution (plus quantitative results).
 # Outlook

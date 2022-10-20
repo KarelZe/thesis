@@ -1,6 +1,6 @@
 
 
-Transformers have been proposed by [[@vaswaniAttentionAllYou2017]] vor sequence-to-sequence modelling as radical new approach to Recurrent Neural Networks. Among others, the inherent sequential processing bounds the capabilities for learning long sequences and efficient parallel implementations in RNNs. Transformers adress these issues by utilizing a so-called attention mechanism to model dependencies between the input and output sequences of arbitrary length. *Attention* is a pooling mechanism, that uses query vector $\boldsymbol{q}$ to  perform a biased selection over similar keys $\boldsymbol{v}$ to obtain their corresponding values $\boldsymbol{k}$  ([[@zhangDiveDeepLearning]]).
+Transformers have been proposed by [[🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017]] vor sequence-to-sequence modelling as radical new approach to Recurrent Neural Networks. Among others, the inherent sequential processing bounds the capabilities for learning long sequences and efficient parallel implementations in RNNs. Transformers adress these issues by utilizing a so-called attention mechanism to model dependencies between the input and output sequences of arbitrary length. *Attention* is a pooling mechanism, that uses query vector $\boldsymbol{q}$ to  perform a biased selection over similar keys $\boldsymbol{v}$ to obtain their corresponding values $\boldsymbol{k}$  ([[@zhangDiveDeepLearning]]).
 
 On an abstract level, the Transformer consists of an encoder and a decoder.  The encoder maps the input sequence $\left(x_{1}, \ldots, x_{n}\right)$ with $x_{i} \in \mathbb{R}^{d}$, to a sequence of continous representations $\boldsymbol{z}=\left(z_{1}, \ldots, z_{n}\right)$, from which the decoder generates an output sequence of symbols $\boldsymbol{y}=\left(y_{1}, \ldots, y_{m}\right)$. Previously generated parts of the sequence are considered as an additional input, making the model autoregressive.
 
@@ -10,7 +10,7 @@ The decoder obtains the output from the encoded representation. Similarily, it s
 
 Inputs and output tokens for the encoder respective decoder are not  processed as-is, but converted to learned embeddings of vectors with dimension $d_{\text {model }}$ first and enhanced with a positional encoding. We describe positional encoding later in detail later.
 
-The specific attention mechanism used by [[@vaswaniAttentionAllYou2017]] is the *scaled dot product attention*, which is a faster and more space-efficient variant of the *dot-product attention* due to efficient matrix implementation. For this both queries, key and values are grouped into matrices.
+The specific attention mechanism used by [[🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017]] is the *scaled dot product attention*, which is a faster and more space-efficient variant of the *dot-product attention* due to efficient matrix implementation. For this both queries, key and values are grouped into matrices.
 
 $\operatorname{Attention}(\boldsymbol{Q}, \boldsymbol{K}, V)=\sigma\left(\frac{\boldsymbol{Q}\boldsymbol{K}^{T}}{\sqrt{d_{k}}}\right) \boldsymbol{V}$
 
@@ -74,7 +74,7 @@ An attention function can be described as mapping a query and a set of key-value
 
 
 
-- General Introduction: [[@vaswaniAttentionAllYou2017]]
+- General Introduction: [[🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017]]
 - What is Attentition?
 - What is the difference between LSTMs and Transformers? Why are transformers preferable?
 

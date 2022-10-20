@@ -188,7 +188,7 @@ That is, one fits the tree $T$ to the negative gradient values (10.35) by least 
 For squared error loss, the negative gradient is just the ordinary residual $-g_{i m}=y_{i}-f_{m-1}\left(x_{i}\right)$, so that $(10.37)$ on its own is equivalent standard least squares boosting. (p. 360)
 
 ## Random Forests
-Idea was introduced in [[@breimanRandomForests2001]]
+Idea was introduced in [[🎄Tree-based Methods/Random Forests/@breimanRandomForests2001]]
 
 Random Forests are a modification to the Bagging approach, yielding in a large collection of de-correlated trees, and then averaging them. (p. 587)
 

@@ -29,8 +29,8 @@ Growing deeper trees trivially leads to an improvement in the SSE. Considering t
 
 - Concept of decision tree
 - Describe drawback of decision tree
-	- Growing an ensemble of trees leads to an increase in accuracy [[@breimanRandomForests2001]].  Popular approaches include bagging and random forests.
-	- There are multiple ways how to build $k$ trees on a single data set e. g. perform bootstrapping, randomly split, use random subset of features [[@breimanRandomForests2001]] (see section: link between bagging and boosting)
+	- Growing an ensemble of trees leads to an increase in accuracy [[🎄Tree-based Methods/@breimanRandomForests2001]].  Popular approaches include bagging and random forests.
+	- There are multiple ways how to build $k$ trees on a single data set e. g. perform bootstrapping, randomly split, use random subset of features [[🎄Tree-based Methods/@breimanRandomForests2001]] (see section: link between bagging and boosting)
 	- Derive how bagging is the intuitive extension to standard decision trees (see discussion in [[@breimanBaggingPredictors1996]]).
 	- Introduce idea of bootstrapping in bagging [[@breimanBaggingPredictors1996]].
 - Introduce notion of strong learner

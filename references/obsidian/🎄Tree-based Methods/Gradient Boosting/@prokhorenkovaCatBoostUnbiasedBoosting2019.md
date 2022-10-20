@@ -42,7 +42,7 @@ The minimization problem is usually approached by the Newton method using a seco
 $$
 h^{t}=\underset{h \in H}{\arg \min } \mathbb{E}\left(-g^{t}(\mathrm{x}, y)-h(\mathrm{x})\right)^{2}.
 $$
-They cite [[@friedmanGreedyFunctionApproximation2001]]. (p. 2)
+They cite [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]. (p. 2)
 
 ## Link between Gradient Boosting and Decision Trees
 
