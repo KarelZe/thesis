@@ -14,15 +14,6 @@ and its consequences are an important, but understudied, cause for concern.
 
 Commonly stock trade classifcation algorithms are used
 
-# Contributions
-- One of the first works to perform trade side classification on option data set
-- Achieve a high improvement in accuracy over classical rules 
-- One of the first works to apply machine learning to trade side classification. *The* first to follow a research agenda and apply SOTA algorithms
-- First work to use gradient boosted trees and transformer-based architectures
-- First work to use semi-supervised learning
-- First work to study feature importance across models. E. g., [[@ronenMachineLearningTrade2022]] study the feature importance only for random forests.
-
-
 # Abstract
 - [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
 
@@ -43,7 +34,7 @@ Commonly stock trade classifcation algorithms are used
 - [[@rosenthalModelingTradeDirection2012]] lists fields where trade classification is used and what the impact of wrongly classified trades is.
 
 
-# Related Work
+# 👨‍👩‍👧‍👦 Related Work
 - [[@grauerOptionTradeClassification2022]]
 - [[@savickasInferringDirectionOption2003]]
 - 
@@ -53,14 +44,14 @@ Commonly stock trade classifcation algorithms are used
 - [[@blazejewskiLocalNonparametricModel2005]] compare $k$-nn and logistic regression for trade-side classification. Performed for Australian stocks. Unclear how results compare to classical rules. 
 1. Broader term is **trade site classification** = assign the side to a to a transaction and differentiate between buyer- and seller-initiated transactions
 2. It's also sometimes called trade sign classification
-- There is no single definition / understanding for the one who initiates trades. [[@olbrysEvaluatingTradeSide2018 1]] distinguish / discuss immediacy and initiator
-- Do not compare accuracies across different datasets. This won't work. Might mention [[@grauerOptionTradeClassification2022 1]] as it is calculated on (partly) the same data set.
+- There is no single definition / understanding for the one who initiates trades. [[@olbrysEvaluatingTradeSide2018]] distinguish / discuss immediacy and initiator
+- Do not compare accuracies across different datasets. This won't work. Might mention [[@grauerOptionTradeClassification2022]] as it is calculated on (partly) the same data set.
 - [[@blazejewskiLocalNonparametricModel2005]] use $k$-nn to infer the sign of a trade on the stock market.
 
 - Results were very different for the option markets between the studies. Compare the frequency some literature (in the stock market) suggest, that  for higher frequencies classical approaches like the tick test deteriorate.
-> Easley, O’Hara, and Srinivas (1998) use the Lee and Ready approach to test their game theoretic model of informed trading in stock and option markets. It is, therefore, important to determine whether the application of stock trade classification rules to derivatives is valid. [[@savickasInferringDirectionOption2003 1]]
+> Easley, O’Hara, and Srinivas (1998) use the Lee and Ready approach to test their game theoretic model of informed trading in stock and option markets. It is, therefore, important to determine whether the application of stock trade classification rules to derivatives is valid. [[@savickasInferringDirectionOption2003]]
 
-# Rule-Based Approaches
+# 🔗Rule-Based Approaches
 ## Basic Rules
 - See [Quantitative Finance Stack Exchange](https://quant.stackexchange.com/questions/8843/what-are-modern-algorithms-for-trade-classification) for most basic overview
 
@@ -84,7 +75,7 @@ Copied from [[@carrionTradeSigningFast2020]]
 - ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000]]
 ### Reverse Tick Test
 - Instead of the previous trade, the reverse tick rule uses the subsequent trade price to classify the current trade. 
-- If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022 1]]) (see also [[@leeInferringTradeDirection1991 1]])
+- If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991]])
 
 ### Depth Rule
 - classify midspread trades as buyer-initiated, if the ask size exceeds the bid size, and as seller-initiated, if the bid size is higher than the ask size (see [[@grauerOptionTradeClassification2022]])
@@ -156,7 +147,7 @@ CLNV-Method is a hybrid of tick and quote rules when transactions prices are clo
 - see [[@rosenthalModelingTradeDirection2012]]
 - Seldomly used but ML-like. Would probably be sufficient to cover it under related works.
 
-# Supervised Approaches
+# 🧠 Supervised Approaches
 - Introduce a classifcation that differentiates between supervised, unsupervised, reenforcement learning and semi-supervised learning. 
 - Introduce the concept of classification as a variant of supervised learning. 
 - Could be supervised if all labels are known
@@ -228,7 +219,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 ### Embeddings
 ### Extensions in TabNet
 - TODO: Check if TabNet can actually be considered a Transformer or if it is just attention-based?
-- See paper [[🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020]]
+- See paper [[@arikTabNetAttentiveInterpretable2020]]
 - cover only transformer for tabular data. Explain why.
 - Are there other architectures, that I do not cover? Why is this the case?
 - TabNet uses neural networks to mimic decision trees by placing importance on only a few features at each layer. The attention layers in that model replace the dot-product self-attention with a type of sparse layer that allows only certain features to pass through.
@@ -237,7 +228,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 
 
 ### Extensions in TabTransformer
-- See paper [[🧠Deep Learning Methods/@huangTabTransformerTabularData2020]] 
+- See paper [[@huangTabTransformerTabularData2020]]
 - TabTransformer can't capture correlations between categorical and continous features. See [[@somepalliSAINTImprovedNeural2021]]
 - Investigate whether my dataset even profits from this type of architecture?
 ### Extensions in FT-Transformer
@@ -262,20 +253,22 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - **pseudo-labelling:** e. g., [How To Build an Efficient NLP Model – Weights & Biases (wandb.ai)](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) and [[@leePseudolabelSimpleEfficient]]. Requires solving the issue of obtaining soft probablities.
 ## Extensions to Gradient Boosted Trees
 - Introduce the notion of probilistic classifiers
-- Possible extension could be [[@yarowskyUnsupervisedWordSense1995 1]]. See also Sklearn Self-Training Classifier.
-- Discuss why probabilities of gradient boosted trees might be missleading [[🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020]]
-- Problems of tree-based approaches and neural networks in semi-supervised learning. See [[🧠Deep Learning Methods/@huangTabTransformerTabularData2020]] or [[🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020]]and [[@tanhaSemisupervisedSelftrainingDecision2017]]
+- Possible extension could be [[@yarowskyUnsupervisedWordSense1995]]. See also Sklearn Self-Training Classifier.
+- Discuss why probabilities of gradient boosted trees might be missleading [[@arikTabNetAttentiveInterpretable2020]]
+- Problems of tree-based approaches and neural networks in semi-supervised learning. See [[@huangTabTransformerTabularData2020]] or [[@arikTabNetAttentiveInterpretable2020]]and [[@tanhaSemisupervisedSelftrainingDecision2017]]
 ## Extensions to TabNet
-- See [[🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020]] for extensions.
+- See [[@huangTabTransformerTabularData2020]] for extensions.
 - For pratical implementation see [Self Supervised Pretraining - pytorch_widedeep (pytorch-widedeep.readthedocs.io)](https://pytorch-widedeep.readthedocs.io/en/latest/pytorch-widedeep/self_supervised_pretraining.html)
 ## Extensions to TabTransformer
-- See [[🧠Deep Learning Methods/@huangTabTransformerTabularData2020]] for extensions.
+- See [[@huangTabTransformerTabularData2020]] for extensions.
 - Authors use unsupervised pretraining and supervised finetuning. They also try out techniques like pseudo labelling from [[@leePseudolabelSimpleEfficient]] for semi supervised learning among others.
 - For pratical implementation see: - For pratical implementation see [Self Supervised Pretraining - pytorch_widedeep](https://pytorch-widedeep.readthedocs.io/en/latest/pytorch-widedeep/self_supervised_pretraining.html)
 # Empirical Study
 ## Environment
 - Reproducability
 - Configuration
+- Get some inspiration from https://madewithml.com/#mlops
+- Guide on visualizations https://www.nature.com/articles/s41467-020-19160-7
 
 ```python
 def seed_everything(seed, tensorflow_init=True, pytorch_init=True): 
@@ -370,7 +363,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Use [Captum · Model Interpretability for PyTorch](https://captum.ai/) to learn what the model picks up as a relevant feature.
 - Try out Stochastic weight averaging for neural net as done [here.](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) or here [Stochastic Weight Averaging in PyTorch](https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/)
 - Try out adverserial weight perturbation as done [here.][feedback-nn-train | Kaggle](https://www.kaggle.com/code/wht1996/feedback-nn-train/notebook)
-- Try out ensembling as in [[@huangSnapshotEnsemblesTrain2017a]]
+- Try out ensembling as in [[@huangSnapshotEnsemblesTrain2017]]
 - Try ADAM optimizer first, try out Adan by [[@xieAdanAdaptiveNesterov2022]] for fun. 
 
 ### Training of Semi-Supervised Models
@@ -408,6 +401,7 @@ Repeat search with different random initializations:
 	- Open question: How are correlations handled in SHAP?
 	- Think about using kernel-shap. Could work. See e. g., [Feature importance in deep learning - Deep Learning - Deep Learning Course Forums (fast.ai)](https://forums.fast.ai/t/feature-importance-in-deep-learning/42026/91?page=4) and [Census income classification with Keras — SHAP latest documentation](https://shap.readthedocs.io/en/latest/example_notebooks/tabular_examples/neural_networks/Census%20income%20classification%20with%20Keras.html)
 	- If SHAP is to complex, one could just zero-out features like in [[@guEmpiricalAssetPricing2020]], but be aware of drawbacks. Yet similar method is to randomly permutate features "within a column" and see how to prediction changes" (see [[@banachewiczKaggleBookData2022]]) also comes at the advantage that no retraining is needed, but artificially breaks correlations etc. (see my previous seminar paper).
+	- [[@ronenMachineLearningTrade2022]] study the feature importance only for random forests.
 ### Evaluation Metric
 - Discuss what metrics are reasonable e. g., why is it reasonable to use the accuracy here? Dataset is likely balanced with a 50-50 distribution, metrics like accuracy are fine for this use case.
 - Define the metrics.
@@ -449,11 +443,11 @@ Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 - Confusion matrix
 - create kde plots to investigate misclassified samples further
 - ![[kde-plot-results.png]]
-# Discussion
+# 💣Discussion
 - What does it mean? Point out limitations and e. g., managerial implications or future impact.
 - How do wide models compare to deep models
 - Study sources of missclassification. See e. g., [[@savickasInferringDirectionOption2003]]
 # Conclusion
 - Repeat the problem and its relevance, as well as the contribution (plus quantitative results).
-# Outlook
+# 🌄Outlook
 - Provide an outlook for further research steps.
