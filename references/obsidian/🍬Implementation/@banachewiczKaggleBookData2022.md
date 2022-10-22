@@ -1,9 +1,15 @@
----
+
 title: The Kaggle book: data analysis and machine learning for competitive data science
 authors: Konrad Banachewicz, Luca Massaron
 year: 2021
----
+tags :  #supervised-learning #unsupervised-learning #feature-enginering
+status : #📦 
+related: 
+- [[🎄Tree-based Methods/Random Forests/@breimanRandomForests2001]]
+- [[@prokhorenkovaCatBoostUnbiasedBoosting2019]]
+- [[@owenHyperparameterTuningPython2022]]
 
+# Notes
 Time feature processing: Splitting a date into its elements (year, month, day); transforming it into week of the year and weekday; computing differences between dates; computing differences with key events (for instance, holidays). For dates, another common transformation is extracting time elements from a date or a time. Cyclic continuous transformations (based on sine and cosine transformations) are also useful for representing the continuity of time and creating periodic features: 
 ```python
 cycle = 7 

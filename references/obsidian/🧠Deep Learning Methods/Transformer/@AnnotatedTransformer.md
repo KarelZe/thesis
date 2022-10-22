@@ -1,8 +1,8 @@
----
+
 title: The Annotated Transformer
 authors: Havard NLP research group
 year: 2018
----
+
 
 Tags: #Transformer #positional-encoding
 

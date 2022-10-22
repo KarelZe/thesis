@@ -1,8 +1,8 @@
----
+
 title: Revisiting Deep Learning Models for Tabular Data
 authors: Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko
 year: 2020
----
+
 
 ## Tabular format
 Tabular format is characterized by: “In these problems, data points are represented as vectors of heterogeneous features, which is typical for industrial applications and ML competitions, where neural networks have a strong non-deep competitor in the form of GBDT (Chen and Guestrin, 2016; Ke et al., 2017; Prokhorenkova et al., 2018).” (Gorishniy et al., 2021, p. 1)

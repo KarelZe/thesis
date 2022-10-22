@@ -1,8 +1,8 @@
----
+
 title: TabTransformer: Tabular Data Modeling Using Contextual Embeddings
 authors: Xin Huang, Ashish Khetan, Milan Cvitkovic, Zohar Karnin
 year: 2020
----
+
 
 “The state-of-the-art for modeling tabular data is treebased ensemble methods such as the gradient boosted decision trees (GBDT)” (Huang et al., 2020, p. 1)
 

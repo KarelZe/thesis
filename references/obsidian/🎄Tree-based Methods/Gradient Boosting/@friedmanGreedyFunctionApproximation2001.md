@@ -1,8 +1,8 @@
----
+
 title: Greedy function approximation: A gradient boosting machine.
 authors: Jerome H. Friedman
 year: 2001
----
+
 
 ## General Gradient Boosting
 

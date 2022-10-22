@@ -1,8 +1,8 @@
----
+
 title: Gradient Boost Part 2 (of 4): Regression Details
 authors: StatQuest
 year: 2019
----
+
 
 $x_i$s characteristcs, $y_i$s predicted values.
 - loss function evaluates, how well we predict the target variable

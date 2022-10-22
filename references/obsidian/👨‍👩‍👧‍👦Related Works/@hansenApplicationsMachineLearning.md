@@ -1,8 +1,10 @@
----
+
 title: Applications of Machine Learning in High-Frequency Trade Direction Classification
 authors: Jared E Hansen
 year: 2020
----
+tags : #rosenthal #trade-classification #supervised-learning #ml #gradient_boosting 
+status : #📦
+
 “The correct assignment of trades as buyer-initiated or seller-initiated is paramount in many quantitative finance studies. Simple decision rule methods have been used for signing trades since many data sets available to researchers do not include the sign of each trade executed.” (Hansen, p. 5)
 
 “Rosenthal moved from the simplicity of decision rules to a statistical modeling approach, employing logistic regression to predict trade sign ” (Hansen, p. 18)
@@ -14,4 +16,6 @@ year: 2020
 “Drawing from the work of LR, EMO, and CLNV, we also examine the position of trades’ prices relative to quotes.” (Hansen, p. 46)
 
 ## Related works
-[[@rosenthalModelingTradeDirection2012]]
+- [[@rosenthalModelingTradeDirection2012]]
+- [[@fedeniaMachineLearningCorporate2021]]
+- [[@ronenMachineLearningTrade2022]]

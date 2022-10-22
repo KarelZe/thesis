@@ -1,9 +1,9 @@
----
+
 title: Option Trade Classification
 authors: Caroline Grauer, Philipp Schuster, Marliese Uhrig-Homburg
 year: 2021
 tags: #option-trade-classification #rule-based
----
+
 
 ## Key takeaways
 - Getting option-trade classification right is central for several applications like the calculation of order imbalances. One Example is: [[@garleanuDemandBasedOptionPricing2009]]

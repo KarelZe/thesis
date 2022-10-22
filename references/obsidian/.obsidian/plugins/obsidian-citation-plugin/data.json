@@ -2,7 +2,7 @@
   "citationExportFormat": "csl-json",
   "literatureNoteTitleTemplate": "@{{citekey}}",
   "literatureNoteFolder": "📥Inbox",
-  "literatureNoteContentTemplate": "---\ntitle: {{title}}\nauthors: {{authorString}}\nyear: {{year}}\n---\n",
+  "literatureNoteContentTemplate": "*title:* {{title}}\n*authors:* {{authorString}}\n*year:* {{year}}\n*tags:* \n*status:* #📥\n*related:*\n\n# Notes \n\n# Annotations",
   "markdownCitationTemplate": "[@{{citekey}}]",
   "alternativeMarkdownCitationTemplate": "@{{citekey}}",
   "citationExportPath": "C:\\Users\\Markus\\OneDrive\\Documents\\05 - Wissen & Weiterbildung\\obsidian\\bibliography.json"

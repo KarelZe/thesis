@@ -1,8 +1,8 @@
----
+
 title: The effect of large block transactions on security prices: A cross-sectional analysis
 authors: Robert W. Holthausen, Richard W. Leftwich, David Mayers
 year: 1987
----
+
 # Annotations  
 (08/10/2022, 20:50:33)
 

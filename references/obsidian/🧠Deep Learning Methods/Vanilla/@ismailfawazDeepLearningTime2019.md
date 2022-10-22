@@ -1,8 +1,8 @@
----
+
 title: Deep learning for time series classification: a review
 authors: Hassan Ismail Fawaz, Germain Forestier, Jonathan Weber, Lhassane Idoumghar, Pierre-Alain Muller
 year: 2019
----
+
 
 - Authors study the usage of DNN for time series classification
 - Timeseries classification is a difficult task.

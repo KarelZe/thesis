@@ -1,8 +1,8 @@
----
+
 title: Deep Sparse Rectifier Neural Networks
 authors: Xavier Glorot, Antoine Bordes, Yoshua Bengio
 year: 2011
----
+
 
 Tags: #neural_network #activation_function
 

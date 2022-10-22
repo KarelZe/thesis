@@ -4,18 +4,33 @@
     "type": "split",
     "children": [
       {
-        "id": "53b332421a033315",
+        "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
         "children": [
           {
-            "id": "1ff5e2e5af7e7357",
+            "id": "44f4df12fd19c257",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "graph",
+              "state": {},
+              "pinned": true
+            }
+          },
+          {
+            "id": "a87de2191430beca",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "🍬Implementation/🔢Preprocessing/Preprocessing.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -44,8 +59,8 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "steuerrech",
-                "matchingCase": false,
+                "query": "",
+                "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
@@ -73,7 +88,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020.md",
+                "file": "🍬Implementation/🔢Preprocessing/Preprocessing.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,7 +116,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🧠Deep Learning Methods/@arikTabNetAttentiveInterpretable2020.md"
+                "file": "🍬Implementation/🔢Preprocessing/Preprocessing.md"
               }
             }
           }
@@ -110,22 +125,22 @@
       }
     ],
     "direction": "horizontal",
-    "width": 707.5
+    "width": 391.5
   },
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "8399eb31ec07fd72",
+  "active": "a87de2191430beca",
   "lastOpenFiles": [
-    "🔗Classical rules/@aktasTradeClassificationAccuracy2014.md",
+    "🍬Implementation/🚀Results/@lundbergConsistentIndividualizedFeature2019.md",
     "TOC.md",
-    "uri.md",
-    "@leeInferringTradeDirection1991 1.md",
-    "🧠Deep Learning Methods/@borisovDeepNeuralNetworks2022.md",
-    "🔗Classical rules/@grauerOptionTradeClassification2022 1.md",
-    "🎄Tree-based Methods/@grinsztajnWhyTreebasedModels.md",
-    "🎄Tree-based Methods/@hastietrevorElementsStatisticalLearning2009.md",
-    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
-    "🧠Deep Learning Methods/@huangTabTransformerTabularData2020.md"
+    "🍬Implementation/🧪Feature Engineering/@butcherFeatureEngineeringSelection2020.md",
+    "🍬Implementation/🧪Feature Engineering/@zhengFeatureEngineeringMachine.md",
+    "🍬Implementation/🎯Hyperparameter Tuning/@turnerBayesianOptimizationSuperior2021.md",
+    "🍬Implementation/🎯Hyperparameter Tuning/@shahriariTakingHumanOut2016.md",
+    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
+    "🍬Implementation/🎯Hyperparameter Tuning/@batesCrossvalidationWhatDoes2022.md",
+    "🍬Implementation/🎯Hyperparameter Tuning/@owenHyperparameterTuningPython2022.md",
+    "🍬Implementation/🎯Hyperparameter Tuning/@akibaOptunaNextgenerationHyperparameter2019.md"
   ]
 }

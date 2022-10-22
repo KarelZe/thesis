@@ -1,8 +1,11 @@
----
+
 title: Modeling Trade Direction
 authors: D. W. R. Rosenthal
 year: 2012
----
+tags : #rosenthal #trade-classification #lr #tick-rule #quote-rule
+status : #📥
+
+# Notes 
 
 # Annotations  
 (08/10/2022, 13:07:12)

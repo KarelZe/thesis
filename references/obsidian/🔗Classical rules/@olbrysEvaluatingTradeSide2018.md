@@ -1,8 +1,8 @@
----
+
 title: Evaluating Trade Side Classification Algorithms Using Intraday Data from the Warsaw Stock Exchange
 authors: Joanna Olbrys, Michał Mursztyn
 year: 2017
----
+
 
 “Trade side classification algorithms enable us to assign the side that initiates a transaction and to distinguish between the so-called buyer- and seller-initiated trades.” (Olbrys and Mursztyn, 2018, p. 1)
 

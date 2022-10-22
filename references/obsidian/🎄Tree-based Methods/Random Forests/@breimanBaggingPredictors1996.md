@@ -1,8 +1,8 @@
----
+
 title: Bagging predictors
 authors: Leo Breiman
 year: 1996
----
+
 
 Tags: #bagging #dt #decision-trees
 

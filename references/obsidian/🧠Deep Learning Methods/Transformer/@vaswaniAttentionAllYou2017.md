@@ -1,9 +1,9 @@
----
+
 title: Attention Is All You Need
 authors: Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin
 year: 2017
 tags:
----
+
 
 - On a high level network consists of encoder and decoder
 - Multi-headed attention is the key component of transformer

@@ -1,8 +1,8 @@
----
+
 title: Transformer Implementation for Time-series Forecasting
 authors: Natasha Klingenbrunn
 year: 2021
----
+
 
 Tags: #auto_encoder #cyclic_feature #lstm
 

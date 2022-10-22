@@ -1,8 +1,8 @@
----
+
 title: Demand-Based Option Pricing
 authors: Nicolae Gârleanu, Lasse Heje Pedersen, Allen M. Poteshman
 year: 2009
----
+
 ## Key Takeaway
 - “The model shows that **demand pressure** in one option contract increases its price by an amount proportional to the variance of the unhedgeable part of the option. Similarly, the demand pressure increases the price of any other option by an amount proportional to the covariance of their unhedgeable parts.” (Gârleanu et al., 2009, p. 1)
 - “Empirically, we use a unique dataset to identify aggregate daily positions of dealers and end users. In particular, we define dealers as market makers and end users as proprietary traders and customers of brokers. We find that end users have a net long position in S&P500 index options with large net positions in out-of-the-money puts. Hence, since options are in zero net supply, dealers are short index options.” (Gârleanu et al., 2009, p. 3)

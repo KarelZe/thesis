@@ -1,8 +1,8 @@
----
+
 title: Gradient Boost Part 1 (of 4): Regression Main Ideas - YouTube
 authors: StatQuest
 year: 2019
----
+
 
 - Ada-Boost only uses stumps, Gradient Boosting approaches
 - Gradient Boosting starts with a single leaf instead of a tree. Leaf represents inital guess for all weights. First guess is average value
