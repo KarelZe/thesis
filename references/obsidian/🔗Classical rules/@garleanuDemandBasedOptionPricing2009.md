@@ -2,6 +2,10 @@
 title: Demand-Based Option Pricing
 authors: Nicolae Gârleanu, Lasse Heje Pedersen, Allen M. Poteshman
 year: 2009
+tags : #trade-classification 
+status : #📦 
+related:
+- [[@grauerOptionTradeClassification2022]]
 
 ## Key Takeaway
 - “The model shows that **demand pressure** in one option contract increases its price by an amount proportional to the variance of the unhedgeable part of the option. Similarly, the demand pressure increases the price of any other option by an amount proportional to the covariance of their unhedgeable parts.” (Gârleanu et al., 2009, p. 1)

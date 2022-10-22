@@ -2,8 +2,14 @@
 title: On Inferring the Direction of Option Trades
 authors: Robert Savickas, Arthur J Wilson
 year: 2003
-tags: #option-trade-classification #classical-rules
-
+tags : #trade-classification #lr #emo #classical-rules #quote-rule #tick-rule 
+status : #📦 
+related:
+- [[@hasbrouckTradesQuotesInventories1988]]
+- [[@holthausenEffectLargeBlock1987]]
+- [[@ellisAccuracyTradeClassification2000]]
+- [[@chakrabartyTradeClassificationAlgorithms2007]]
+- [[@grauerOptionTradeClassification2022]]
 
 ## Key takeaways
 

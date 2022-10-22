@@ -3,6 +3,9 @@ title: Option Trade Classification
 authors: Caroline Grauer, Philipp Schuster, Marliese Uhrig-Homburg
 year: 2021
 tags: #option-trade-classification #rule-based
+status : #📦 
+related:
+- [[@savickasInferringDirectionOption2003]]
 
 
 ## Key takeaways
