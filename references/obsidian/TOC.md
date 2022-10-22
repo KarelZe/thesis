@@ -115,6 +115,7 @@ Copied from [[@carrionTradeSigningFast2020]]
 (image copied from [[@poppeSensitivityVPINChoice2016]]) 
 - Interestingly, researchers gradually segment the decision surface starting with quote and tick rule, continuing with LR, EMO and CLNV. This is very similar to what is done in a decision tree. Could be used to motivate decision trees.
 - All the hybrid methods could be considered as an ensemble with some sophisticated weighting scheme (look up the correct term)
+- Current hybrid approaches use stacking ([[@grauerOptionTradeClassification2022]] p. 11). Also, due to technical limitations. Why not try out the majority vote/voting classifier with a final estimator? Show how this relates to ML.
 
 ### Lee and Ready Algorithm
 
@@ -258,6 +259,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Labelling of data is costly, sometimes impossible (my case).
 - For overview see [[@zhuSemiSupervisedLearningLiterature]]
 - for problems / success of semi-supervised learning in tabular data see [[@yoonVIMEExtendingSuccess2020]]
+- **pseudo-labelling:** e. g., [How To Build an Efficient NLP Model – Weights & Biases (wandb.ai)](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) and [[@leePseudolabelSimpleEfficient]]. Requires solving the issue of obtaining soft probablities.
 ## Extensions to Gradient Boosted Trees
 - Introduce the notion of probilistic classifiers
 - Possible extension could be [[@yarowskyUnsupervisedWordSense1995 1]]. See also Sklearn Self-Training Classifier.
@@ -302,11 +304,18 @@ if pytorch_init is True:
 - What preprocessing have been applied. See [[@grauerOptionTradeClassification2022]]
 - Data range from May 2, 2005 to May 31, 2017 + (new samples)
 - Is the delay between trades and quotes relevant here? (See discussion in [[@rosenthalModelingTradeDirection2012]]) Probably not as daily data?
+- Could I obtain access to the previously used data? What kind of features like volumes at certain exchanges would be available?
+- How many features does the data set contain? `8 categories for buy and sell volumes  x 4 trader types by option series x trading day`. 
+- What should be primary target e. g., classification on `NBBO`? -> all exchanges
+- Should the data set remain static or include new samples since publication? Hence, 2017 onwards for the ISE set. -> Focus on ISE 
+- merge data from ise + cboe -> needs features from stock exchanges
 ### CBOE Data Set
 - data comes at a daily frequency
 
 ### Generation of True Labels
 - To evaluate the performance of trade classification algoriths the true side of the trade needs to be known. To match LiveVol data, the total customer sell volume or total or total customer buy volume has to match with the transactions in LiveVol. Use unique key of trade date, expiration date, strike price, option type, and root symbol to match the samples. (see [[@grauerOptionTradeClassification2022]]) Notice, that this leads to an imperfect reconstruction!
+- The approach of [[@grauerOptionTradeClassification2022]] matches the LiveVol data set, only if there is a matching volume on buyer or seller side. Results in 40 % reconstruction rate
+- **fuzzy matching:** e. g., match volumes, even if there are small deviations in the volumes e. g. 5 contracts. Similar technique used for time stamps in [[@savickasInferringDirectionOption2003]]. Why might this be a bad idea?
 - Discuss that only a portion of data can be reconstructed. Previous works neglected the unlabeled part. 
 - Discuss how previously unused data could be used. This maps to the notion of supervised and semi-supervised learning
 - Pseudo Labeling?
@@ -318,6 +327,8 @@ if pytorch_init is True:
 - Remove highly correlated features as they also pose problems for feature importance calculation (e. g. feature permutation)
 - Plot KDE plot of tick test, quote test...
 ![[kde-tick-rule.png]]
+Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any size with a single line of code. Created by Ram Seshadri. Collaborators Welcome. Permission Granted upon Request. (github.com)](https://github.com/AutoViML/AutoViz) and [lmcinnes/umap: Uniform Manifold Approximation and Projection (github.com)](https://github.com/lmcinnes/umap)
+- The approach of [[@grauerOptionTradeClassification2022]] matches the LiveVol data set, only if there is a matching volume on buyer or seller side. Results in 40 % reconstruction rate [[@grauerOptionTradeClassification2022]](p. 9). 
 ### Feature Engineering
 - Previously not done due to use of simple rules only. 
 - Try different encondings e. g., of the spread.
@@ -353,6 +364,8 @@ if pytorch_init is True:
 - compare against https://github.com/jktis/Trade-Classification-Algorithms
 
 ### Training of Supervised Models
+- Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Implement robustness checks (as in [[@grauerOptionTradeClassification2022]]) early on.
+- Use classification methods (*probabilistic classifier*) that can return probabilities instead of class-only for better analysis.
 - Interesting notebook about TabNet [Introduction to TabNet - Kfold 10 [TRAINING] | Kaggle](https://www.kaggle.com/code/ludovick/introduction-to-tabnet-kfold-10-training/notebook)
 - Use [Captum · Model Interpretability for PyTorch](https://captum.ai/) to learn what the model picks up as a relevant feature.
 - Try out Stochastic weight averaging for neural net as done [here.](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) or here [Stochastic Weight Averaging in PyTorch](https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/)
