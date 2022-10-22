@@ -1,0 +1,52 @@
+%% Beispiel-Präsentation mit LaTeX Beamer im KIT-Design
+%% entsprechend den Gestaltungsrichtlinien vom 1. August 2020
+%%
+%% Siehe https://sdqweb.ipd.kit.edu/wiki/Dokumentvorlagen
+
+%% Beispiel-Präsentation
+\documentclass[en,]{sdqbeamer} 
+ 
+%% Titelbild
+\titleimage{banner_2020_kit}
+
+%% Gruppenlogo
+\grouplogo{} 
+
+%% Gruppenname und Breite (Standard: 50 mm)
+\groupname{Department of Financial Engineering and Derivatives}
+
+\title[Option Trade Classification using Machine Learning]{Option Trade Classification using Machine Learning}
+\subtitle{Master Thesis} 
+\author[Markus Bilz]{Markus Bilz}
+
+\date[31.\,3.\,2023]{31 March 2023}
+ 
+\usepackage[citestyle=authoryear,bibstyle=numeric,hyperref,backend=biber]{biblatex}
+\addbibresource{../paper/Content/Literaturverzeichnis.bib}
+\bibhang1em
+
+\begin{document}
+
+\KITtitleframe
+
+\begin{frame}[plain]{research-question}
+	\Large
+	\centering
+	Insert research question here.
+\end{frame}
+
+\begin{frame}{Table of Contents}
+	\tableofcontents
+\end{frame}
+
+
+% \appendix
+% \beginbackup
+
+\begin{frame}{Literature}
+	\printbibliography
+\end{frame}
+
+% \backupend
+
+\end{document}
