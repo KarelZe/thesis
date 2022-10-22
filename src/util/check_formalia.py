@@ -132,7 +132,6 @@ def get_acronyms(files: dict) -> list:
     refined_matches = re.findall(r"\{\b[^{}]*?}", "".join(rough_matches))
     # remove brackets and filter every third to skip over long form, convert to lower-case
     acronyms = [re.sub(r"[\{\}]", "", part.lower()) for part in refined_matches[::3]]
-    print(acronyms)
     return acronyms
 
 
