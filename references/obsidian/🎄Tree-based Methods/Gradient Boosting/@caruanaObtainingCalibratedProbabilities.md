@@ -1,7 +1,14 @@
 
 title: Obtaining Calibrated Probabilities from Boosting
 authors: Alexandru Niculescu-Mizil Rich Caruana
-year: 
+year: 2012
+tags :  #supervised-learning #gbm #decision #gradient_boosting #probabilistic-classification
+status : #📥  
+related: 
+- [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]
+- [[@hastietrevorElementsStatisticalLearning2009]]
+
+# Notes
 
 “In a recent evaluation of learning algorithms (Caruana & Niculescu-Mizil 2006), boosted decision trees had excellent performance on metrics such as accuracy, lift, area under the ROC curve, average precision, and precision/recall break even point. However, boosted decision trees had poor squared error and cross-entropy because AdaBoost does not produce good probability estimates.” (Caruana, p. 28)
 

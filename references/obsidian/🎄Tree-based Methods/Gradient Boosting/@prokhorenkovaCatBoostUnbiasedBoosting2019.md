@@ -2,9 +2,12 @@
 title: CatBoost: unbiased boosting with categorical features
 authors: Liudmila Prokhorenkova, Gleb Gusev, Aleksandr Vorobev, Anna Veronika Dorogush, Andrey Gulin
 year: 2019
-
-
-tags: #gbm #catboost #decision-trees
+tags :  #supervised-learning #catboost #gbm #decision #target-leakage #gradient_boosting 
+status : #📦 
+related: 
+- [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]
+- [[@tibshiraniElementsStatisticalLearning]]
+# Notes
 
 ## Gradient Boosting
 Gradient boosting is essentially a process of constructing an ensemble predictor by performing gradient descent in a functional space. (p. 1)

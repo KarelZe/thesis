@@ -2,7 +2,12 @@
 title: Bagging predictors
 authors: Leo Breiman
 year: 1996
-
+tags :  #bagging #dt #decision-trees
+status : #📥  
+related: 
+- [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]
+- [[@tibshiraniElementsStatisticalLearning]]
+- [[🎄Tree-based Methods/Random Forests/@breimanRandomForests2001]]
 
 Tags: #bagging #dt #decision-trees
 

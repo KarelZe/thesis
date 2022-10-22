@@ -1,10 +1,11 @@
 
 title: The Elements of Statistical Learning
 authors: Sami Tibshirani, Harry Friedman, Trevor Hastie
-year:
-
-
-Tags: #bagging, #decision-trees, #dt, #random-forest #gbm #gradient_boosting #cost-complexity-pruning
+year: 2009
+tags :  #bagging, #decision-trees, #dt, #random-forest #gbm #gradient_boosting #cost-complexity-pruning
+status : #📦 
+related: 
+- [[@jamesIntroductionStatisticalLearning2013]] (simpler)
 
 ## Decision Trees
 

@@ -2,11 +2,14 @@
 title: Greedy function approximation: A gradient boosting machine.
 authors: Jerome H. Friedman
 year: 2001
+tags :  #supervised-learning #gbm #decision #gradient_boosting 
+status : #📥  
+related: 
+- [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]
+- [[@hastietrevorElementsStatisticalLearning2009]]
 
+# Notes
 
-## General Gradient Boosting
-
-## Gradient Boosting for regression trees
 
 
 ## Regularization

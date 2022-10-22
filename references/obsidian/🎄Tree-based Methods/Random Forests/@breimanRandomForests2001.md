@@ -2,9 +2,12 @@
 title: Random Forests
 authors: Leo Breiman
 year: 2001
-
-
-Tags: #bagging #boosting #rf
+tags :  #bagging #boosting #rf #supervised-learning #bootstrap
+status : #📦 
+related: 
+- [[@tibshiraniElementsStatisticalLearning]]
+cited in:
+- [[@banachewiczKaggleBookData2022]]
 
 ## Motivation for ensembles
 Growing an ensemble of trees leads to an increase in accuracy.  Popular approaches include bagging and random forests. (p. 5)

@@ -2,9 +2,10 @@
 title: Classification And Regression Trees
 authors: Leo Breiman, Jerome H. Friedman, Richard A. Olshen, Charles J. Stone
 year: 2017
-
-
-Tags: #dt #decision-trees #regression
+tags :  #dt #decision-trees #regression #supervised-learning 
+status : #📦 
+related: 
+- [[@tibshiraniElementsStatisticalLearning]]
 
 Referenced in: [[@prokhorenkovaCatBoostUnbiasedBoosting2019]] [[@tibshiraniElementsStatisticalLearning]]
 
