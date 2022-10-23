@@ -134,15 +134,15 @@
   },
   "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
-    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
+    "🧠Deep Learning Methods/@smithCyclicalLearningRates2017.md",
+    "🧠Deep Learning Methods/@loshchilovSGDRStochasticGradient2017.md",
+    "🧠Deep Learning Methods/@izmailovAveragingWeightsLeads2019.md",
+    "🧠Deep Learning Methods/Vanilla/@ismailfawazDeepLearningTime2019.md",
     "TOC.md",
+    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
     "weinberger.md",
     "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
     "🔗Classical rules/@finucaneDirectTestMethods2000.md",
-    "Semi-supervised Learning/@zhuSemiSupervisedLearningLiterature.md",
-    "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
-    "Semi-supervised Learning/@yoonVIMEExtendingSuccess2020.md",
-    "Semi-supervised Learning/@tanhaSemisupervisedSelftrainingDecision2017.md",
-    "Semi-supervised Learning/@somepalliSAINTImprovedNeural2021.md"
+    "Semi-supervised Learning/@zhuSemiSupervisedLearningLiterature.md"
   ]
 }
