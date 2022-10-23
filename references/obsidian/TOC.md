@@ -296,6 +296,8 @@ if pytorch_init is True:
 
 ## Data and Data Preparation
 
+- convert data to managable size (see [[Preprocessing]])
+
 ### ISE Data Set
 - focus is on ISE data set
 - focus on `nbbo`
