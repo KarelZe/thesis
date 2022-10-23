@@ -178,7 +178,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Challenges of learning of tabular data can be found in [[@borisovDeepNeuralNetworks2022]] e. g. both 
 - Taxonomy of approaches can be found in [[@borisovDeepNeuralNetworks2022]] 
 ![[tabular-learning-architectures.png]]
-
+- Nice formulation and overview of the dominance of GBT and deep learning is given in [[@levinTransferLearningDeep2022]]
 
 ## Gradient Boosted Trees
 - start with "wide" architectures.
@@ -217,6 +217,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - self-attention
 ### Positional Encoding
 ### Embeddings
+- Could include interesting ideas: [[@gorishniyEmbeddingsNumericalFeatures2022]]
 ### Extensions in TabNet
 - TODO: Check if TabNet can actually be considered a Transformer or if it is just attention-based?
 - See paper [[@arikTabNetAttentiveInterpretable2020]]
@@ -229,7 +230,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 
 ### Extensions in TabTransformer
 - See paper [[@huangTabTransformerTabularData2020]]
-- TabTransformer can't capture correlations between categorical and continous features. See [[@somepalliSAINTImprovedNeural2021]]
+- TabTransformer can't capture correlations between categorical and continous features. See [[🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021]]
 - Investigate whether my dataset even profits from this type of architecture?
 ### Extensions in FT-Transformer
 - Variant of the classical transformer, but for tabular data. Published in [[@gorishniyRevisitingDeepLearning2021]]
@@ -251,6 +252,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - For overview see [[@zhuSemiSupervisedLearningLiterature]]
 - for problems / success of semi-supervised learning in tabular data see [[@yoonVIMEExtendingSuccess2020]]
 - **pseudo-labelling:** e. g., [How To Build an Efficient NLP Model – Weights & Biases (wandb.ai)](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) and [[@leePseudolabelSimpleEfficient]]. Requires solving the issue of obtaining soft probablities.
+- For pretraining ofneural net architectures also see argumentation in [[🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021]]
+- See also [[@bahriSCARFSelfSupervisedContrastive2022]], while the paper is not 100 % relevant, it contains interesting citations.
 ## Extensions to Gradient Boosted Trees
 - Introduce the notion of probilistic classifiers
 - Possible extension could be [[@yarowskyUnsupervisedWordSense1995]]. See also Sklearn Self-Training Classifier.
@@ -336,6 +339,8 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Try out features that are inherently used in the depth rule or the trade rule. 
 - For imputation look into [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]
 - for visualizations and approaches see [[@zhengFeatureEngineeringMachine]] and [[@butcherFeatureEngineeringSelection2020]]
+- Positional encoding was achieved using $\sin()$ and $\cos()$ transformation.
+- ![[sine_cosine_transform.png]]
 ### Train-Test Split
 
 ^d50f5d
@@ -365,6 +370,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Try out adverserial weight perturbation as done [here.][feedback-nn-train | Kaggle](https://www.kaggle.com/code/wht1996/feedback-nn-train/notebook)
 - Try out ensembling as in [[@huangSnapshotEnsemblesTrain2017]]
 - Try ADAM optimizer first, try out Adan by [[@xieAdanAdaptiveNesterov2022]] for fun. 
+- Get inspiration for code from https://github.com/kathrinse/TabSurvey e. g., on saving results.
 
 ### Training of Semi-Supervised Models
 - Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 

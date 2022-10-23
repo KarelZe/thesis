@@ -2,7 +2,17 @@
 title: Revisiting Deep Learning Models for Tabular Data
 authors: Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko
 year: 2020
+*tags:* #deep-learning #gradient_boosting #semi-supervised #transformer
+*status:* #📥
+*related:* 
+- [[@borisovDeepNeuralNetworks2022]]
+*code:* [https://github.com/Yura52/rtdl](https://github.com/Yura52/rtdl)
 
+## Notes Sebastian Raschka
+-   In this paper, the researchers discuss the issue of improper baselines in the deep learning for tabular data literature.
+-   The main contributions of this paper are centered around two strong baselines: one is a ResNet-like architecture, and the other is a transformer-based architecture called FT-Transformer (Feature Tokenizer + Transformer).
+-   Across all 11 datasets considered in this study, the FT-Transformer outperforms other deep tabular methods in 6 cases and has the best overall rank. The most competitive deep tabular method is NODE (further below), which outperforms other methods in 4 out of 11 cases.
+-   In comparison with gradient boosted trees such as XGBoost and CatBoost, the FT-Transformer outperforms the former in 7 out of 11 cases; the authors conclude there is no universally superior method.
 
 ## Tabular format
 Tabular format is characterized by: “In these problems, data points are represented as vectors of heterogeneous features, which is typical for industrial applications and ML competitions, where neural networks have a strong non-deep competitor in the form of GBDT (Chen and Guestrin, 2016; Ke et al., 2017; Prokhorenkova et al., 2018).” (Gorishniy et al., 2021, p. 1)
