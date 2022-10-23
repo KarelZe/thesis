@@ -3,15 +3,17 @@ title: Evaluating Trade Side Classification Algorithms Using Intraday Data from 
 authors: Joanna Olbrys, Michał Mursztyn
 year: 2017
 tags : #trade-classification #lr #CLVN #emo 
-status : #📥
+status : #📦 
 related:
 - [[@hasbrouckTradesQuotesInventories1988]]
 - [[@holthausenEffectLargeBlock1987]]
 - [[@ellisAccuracyTradeClassification2000]]
 - [[@chakrabartyTradeClassificationAlgorithms2007]]
 
-# Notes
+## Notes
+- None. Apart from an overview over trade classification algorithms and the formulas with consistent notation the document is of lower quality.
 
+## Annotations
 “Trade side classification algorithms enable us to assign the side that initiates a transaction and to distinguish between the so-called buyer- and seller-initiated trades.” ([Olbrys and Mursztyn, 2018, p. 1](zotero://select/library/items/GH7N94E4)) ([pdf](zotero://open-pdf/library/items/HI224NPR?page=1&annotation=IUVYRLUQ))
 
 “The main motivation for this study is growing interest in market liquidity, dimensions of liquidity, and commonality in liquidity that has emerged in the literature over the recent years.” ([Olbrys and Mursztyn, 2018, p. 2](zotero://select/library/items/GH7N94E4)) ([pdf](zotero://open-pdf/library/items/HI224NPR?page=2&annotation=6JL9LWQ2))

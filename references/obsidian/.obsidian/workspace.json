@@ -32,12 +32,12 @@
             }
           },
           {
-            "id": "dff3a1e2d308a0e8",
+            "id": "507ce1fef88842d4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🔗Classical rules/@easleyOptionVolumeStock1998.md",
+                "file": "🔗Classical rules/@bessembinderIssuesAssessingTrade2003.md",
                 "mode": "source",
                 "source": false
               }
@@ -73,7 +73,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#📥",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -82,8 +82,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -103,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🔗Classical rules/@easleyOptionVolumeStock1998.md",
+                "file": "🔗Classical rules/@bessembinderIssuesAssessingTrade2003.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -131,7 +130,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🔗Classical rules/@easleyOptionVolumeStock1998.md"
+                "file": "🔗Classical rules/@bessembinderIssuesAssessingTrade2003.md"
               }
             }
           }
@@ -145,17 +144,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "6942b2f8be896a2c",
+  "active": "507ce1fef88842d4",
   "lastOpenFiles": [
     "TOC.md",
+    "🔗Classical rules/@bessembinderIssuesAssessingTrade2003.md",
+    "👨‍👩‍👧‍👦Related Works/@hansenApplicationsMachineLearning.md",
+    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
+    "🔗Classical rules/@olbrysEvaluatingTradeSide2018.md",
+    "🔗Classical rules/@chakrabartyEvaluatingTradeClassification2015.md",
+    "🔗Classical rules/@chakrabartyTradeClassificationAlgorithms2012.md",
     "🔗Classical rules/@easleyOptionVolumeStock1998.md",
     "🔗Classical rules/@easleyFlowToxicityLiquidity2012.md",
-    "🔗Classical rules/@easleyDiscerningInformationTrade2016.md",
-    "🔗Classical rules/@ellisAccuracyTradeClassification2000.md",
-    "🔗Classical rules/@garleanuDemandBasedOptionPricing2009.md",
-    "🔗Classical rules/@leeInferringTradeDirection1991.md",
-    "🧠Deep Learning Methods/@smithCyclicalLearningRates2017.md",
-    "🧠Deep Learning Methods/@loshchilovSGDRStochasticGradient2017.md",
-    "🧠Deep Learning Methods/@izmailovAveragingWeightsLeads2019.md"
+    "🔗Classical rules/@easleyDiscerningInformationTrade2016.md"
   ]
 }

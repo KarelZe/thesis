@@ -2,7 +2,27 @@
 title: Issues in assessing trade execution costs
 authors: Hendrik Bessembinder
 year: 2003
-tags : #trade-classification 
-status : #📥
+tags : #trade-classification #lr #offset #nasdaq
+status : #📦 
 related:
+- [[@leeInferringTradeDirection1991]]
+- [[@leeInferringInvestorBehavior2000]]
 
+## Notes
+- One must imperfectly infer whether a trade is buyer or seller iniated as the it's missing in most data sets.
+- Paper compares the estimates for trading costs and suitable offsets between the trade report times and the time of the time of the quote. 
+- The usual rationale is that trade reports are sometimes delayed, so that report times lag actual execution times.
+- "The optimal amount by which to adjust trade times before comparing trade prices to quotes could differ depending on the application. Suppose, for example, that trade report times lag actual trade execution times by **five seconds**, and that quotes tend to be systematically revised in the **fifteen seconds** before trades are completed. Then, comparing trade prices to quotes five seconds before the trade report time would be optimal for inferring trade direction. However, comparing trades to quotes in effect twenty seconds before the trade report time would provide a more accurate measure of trade execution cost, including the effect of pre-trade price impact” ([Bessembinder, 2003, p. 235](zotero://select/library/items/NK6FX9NU)) ([pdf](zotero://open-pdf/library/items/JPDGE6S7?page=3&annotation=FSW8A4F7))
+
+## Annotations
+“One shortcoming of trade and quote data is that whether a trade was initiated by a buyer or a seller must be imperfectly inferred from the data. A second issue is that, although trade prices can be readily compared to quotes in effect at the trade report time, the appropriate comparison might be to quotes in effect at an earlier timesuch as the time of the trading decision or at the time the order arrived at the market, and these times are generally not known. This paper evaluates the practical impact of two methodological choices made when estimating trading costs from public data: the method used to classify trades as resulting from customer buy versus sell orders, and the relationship between trade report times and the time of the quote chosen as a reference point.” ([Bessembinder, 2003, p. 234](zotero://select/library/items/NK6FX9NU)) ([pdf](zotero://open-pdf/library/items/JPDGE6S7?page=2&annotation=327RJ8VQ))
+
+“Researchers who have adopted the five second (or other fixed time) lag recommended by Lee and Ready generally use the adjustment both when inferring whether trades are buyer or seller-initiated and for selecting a quote to be used as a benchmark to measuring effective trade execution costs. However, the optimal amount by which to adjust trade times before comparing trade prices to quotes could differ depending on the application. Suppose, for example, that trade report times lag actual trade execution times by five seconds, and that quotes tend to be systematically revised in the fifteen seconds before trades are completed. Then, comparing trade prices to quotes five seconds before the trade report time would be optimal for inferring trade direction. However, comparing trades to quotes in effect twenty seconds before the trade report time would provide a more accurate measure of trade execution cost, including the effect of pre-trade price impact” ([Bessembinder, 2003, p. 235](zotero://select/library/items/NK6FX9NU)) ([pdf](zotero://open-pdf/library/items/JPDGE6S7?page=3&annotation=FSW8A4F7))
+
+“This study assess the effect on measured trading costs of comparing trade prices to quotes in effect from zero to thirty seconds prior to the trade report time” ([Bessembinder, 2003, p. 235](zotero://select/library/items/NK6FX9NU)) ([pdf](zotero://open-pdf/library/items/JPDGE6S7?page=3&annotation=825Z64XT))
+
+“The results of the study can be summarized as follows. First, measures of rates at which trades are executed at prices better (trades receive ‘‘price improvement’’) or worse (trades receive ‘‘price disimprovement’’) than the quotations are quite sensitive to whether trade prices are compared to contemporaneous or previous quotes. Comparing trade prices to earlier quotes decreases the percentage of trades that appear to receive price improvement while sharply increasing the percentage of trades that appear to be disimproved.” ([Bessembinder, 2003, p. 236](zotero://select/library/items/NK6FX9NU)) ([pdf](zotero://open-pdf/library/items/JPDGE6S7?page=4&annotation=EF7KIQMG))
+
+“Several studies have recently emerged that use specialized datasets containing order information to assess the accuracy of the Lee and Ready algorithm. Finucane (2000), Odders-White (2000) and Lee and Radhakrishna (2000) all use the TORQ dataset, which provides trade, order, and quote data for a sample of 144 NYSElisted stocks during a three-month period in 1990 and 1991. Ellis et al. (2000) use a proprietary sample that includes order data following initial public offerings in 313 Nasdaq stocks during a twelve-month period during 1996 and 1997. Peterson and Sirri use recent NYSE systemorder data. These papers indicate that, while the Lee and Ready algorithmworks fairly well overall, classifying about 85% of trades correctly, alternative algorithms may perform better.” ([Bessembinder, 2003, p. 240](zotero://select/library/items/NK6FX9NU)) ([pdf](zotero://open-pdf/library/items/JPDGE6S7?page=8&annotation=X39EJ3N9))
+
+“The usual rationale is that trade reports are sometimes delayed, so that report times lag actual execution times.” ([Bessembinder, 2003, p. 241](zotero://select/library/items/NK6FX9NU)) ([pdf](zotero://open-pdf/library/items/JPDGE6S7?page=9&annotation=IEZHRV42))
