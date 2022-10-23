@@ -1,10 +1,13 @@
-
-title: Attention Is All You Need
-authors: Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin
-year: 2017
-tags:
-
-
+*title:* Attention is all you need
+*authors:* Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, \L{}ukasz Kaiser, Illia Polosukhin
+*year:* 2016
+*tags:* #transformer #encoder #attention #sequence-modelling
+*status:* #📥
+*related:*
+- [[@arikTabNetAttentiveInterpretable2020]]
+- [[@huangTabTransformerTabularData2020]]
+- [[@gorishniyRevisitingDeepLearning2021]]
+# Notes 
 - On a high level network consists of encoder and decoder
 - Multi-headed attention is the key component of transformer
 - Input is send into three different inputs to the multiheaded attention: values, keys, queries.
@@ -16,3 +19,5 @@ tags:
 - Positional Encoding is responsible for positional encoding as transformer is positional invariant
 - part of the input will be masked, to prevent the decoder from learning simple mapping
 - first then input is split into chunks. A scaled dot-product attention is derived from the queries keys and the values. This is sent to a linear layer which is then the output of the multi-headed attention
+
+# Annotations

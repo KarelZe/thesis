@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Semi-supervised Learning/@bahriSCARFSelfSupervisedContrastive2022.md",
+                "file": "🧠Deep Learning Methods/@keskarLargeBatchTrainingDeep2017.md",
                 "mode": "source",
                 "source": false
               }
@@ -102,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Semi-supervised Learning/@bahriSCARFSelfSupervisedContrastive2022.md",
+                "file": "🧠Deep Learning Methods/@keskarLargeBatchTrainingDeep2017.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +130,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Semi-supervised Learning/@bahriSCARFSelfSupervisedContrastive2022.md"
+                "file": "🧠Deep Learning Methods/@keskarLargeBatchTrainingDeep2017.md"
               }
             }
           }
@@ -144,17 +144,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "8399eb31ec07fd72",
+  "active": "63f44bca9a0489c3",
   "lastOpenFiles": [
-    "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
-    "🧠Deep Learning Methods/Transformer/@kadraWelltunedSimpleNets2021.md",
-    "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
+    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
+    "🧠Deep Learning Methods/@paszkePyTorchImperativeStyle2019.md",
+    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+    "🧠Deep Learning Methods/@glorotDeepSparseRectifier2011.md",
+    "🧠Deep Learning Methods/@borisovDeepNeuralNetworks2022.md",
+    "🧠Deep Learning Methods/@baLayerNormalization2016.md",
+    "🧠Deep Learning Methods/@hintonImprovingNeuralNetworks2012.md",
+    "🧠Deep Learning Methods/Vanilla/@ismailfawazDeepLearningTime2019.md",
     "TOC.md",
-    "🧠Deep Learning Methods/Transformer/@klingenbrunnTransformerImplementationTimeseries2021.md",
-    "🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020.md",
-    "🧠Deep Learning Methods/@levinTransferLearningDeep2022.md",
-    "Semi-supervised Learning/@yoonVIMEExtendingSuccess2020.md",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-    "🧠Deep Learning Methods/@borisovDeepNeuralNetworks2022.md"
+    "🧠Deep Learning Methods/Vanilla/@hornikMultilayerFeedforwardNetworks1989.md"
   ]
 }

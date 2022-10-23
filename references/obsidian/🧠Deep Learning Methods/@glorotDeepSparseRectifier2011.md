@@ -2,10 +2,11 @@
 title: Deep Sparse Rectifier Neural Networks
 authors: Xavier Glorot, Antoine Bordes, Yoshua Bengio
 year: 2011
+*tags:* #neural_network #deep-learning #activation_function
+*status:* #📥
+*related:*
 
-
-Tags: #neural_network #activation_function
-
+## Notes
 - discuss advantages of ReLU
 - The rectifier function rectifier $(x)=\max (0, x)$ is onesided and therefore does not enforce a sign symmetry or antisymmetry : instead, the response to the opposite of an excitatory input pattern is 0 (no response).
 

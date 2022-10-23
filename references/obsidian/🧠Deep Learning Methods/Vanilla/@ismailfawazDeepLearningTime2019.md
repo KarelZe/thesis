@@ -2,8 +2,11 @@
 title: Deep learning for time series classification: a review
 authors: Hassan Ismail Fawaz, Germain Forestier, Jonathan Weber, Lhassane Idoumghar, Pierre-Alain Muller
 year: 2019
+*tags:* #neural_network #deep-learning 
+*status:* #📥
+*related:*
 
-
+## Notes
 - Authors study the usage of DNN for time series classification
 - Timeseries classification is a difficult task.
 - Traditional approach is to use a nearest neighbour classifier coupled with a distance function.
@@ -16,7 +19,7 @@ They consider:
 
 **CNNs:**
 - A convolution can be seen as applying and sliding a filter over the time series. the filters have only one dimension (time). The filter is a generic non-linear transformation of the timeseries.
-- If we apply a filter of length 3 with a univariate time series, by setting the filter values to be qual to [0.33, 0.33, 0.33] The convolution will result in applying a moving average with a sliding window of length 3.
+- If we apply a filter of length 3 with a univariate time series, by setting the filter values to be qual to $\left[0.33, 0.33, 0.33\right]$ The convolution will result in applying a moving average with a sliding window of length 3.
 -  A general form of applying the convolution for a centered time stamp $t$ is given in the following equation:
 $$
 C_{t}=f\left(\omega * X_{t-l / 2: t+l / 2}+b\right) \mid \forall t \in[1, T]
