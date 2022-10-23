@@ -371,7 +371,10 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Try out ensembling as in [[@huangSnapshotEnsemblesTrain2017]]
 - Try ADAM optimizer first, try out Adan by [[@xieAdanAdaptiveNesterov2022]] for fun. 
 - Get inspiration for code from https://github.com/kathrinse/TabSurvey e. g., on saving results.
-
+- use cyclic learning rates as done in [[@huangSnapshotEnsemblesTrain2017]]
+- try cyclic learning rates https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.CyclicLR.html
+- cycling procedure was proposed in [[@loshchilovSGDRStochasticGradient2017]] and [[@smithCyclicalLearningRates2017]]
+- 
 ### Training of Semi-Supervised Models
 - Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 
 - Use learning curves from [[#^d50f5d]].
@@ -453,6 +456,7 @@ Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 - What does it mean? Point out limitations and e. g., managerial implications or future impact.
 - How do wide models compare to deep models
 - Study sources of missclassification. See e. g., [[@savickasInferringDirectionOption2003]]
+- Would assembeling help here? As discussed in [[@huangSnapshotEnsemblesTrain2017]] ensembles can only improve the model, if individual models have a low test error and if models do not overlap in the samples they missclassify.
 # Conclusion
 - Repeat the problem and its relevance, as well as the contribution (plus quantitative results).
 # 🌄Outlook
