@@ -1,6 +1,10 @@
+*title:* Pseudo-Label: The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks
+*authors:* Dong-Hyun Lee
+*year:* 
+*tags:* #semi-supervised #pseudo-labelling #deep-learning 
+*status:* #📥
+*related:*
 
-title: Pseudo-label : the simple and efficient semi-supervised learning method for deep neural networks
-authors: Dong-Hyun Lee
-year: 
+# Notes 
 
-
+# Annotations

@@ -1,8 +1,13 @@
+*title:* On large-batch training for deep learning: generalization gap and sharp minima
+*authors:* Nitish Shirish Keskar, Dheevatsa Mudigere, Jorge Nocedal, Mikhail Smelyanskiy, Ping Tak Peter Tang
+*year:* 2016
+*tags:* #normalization 
+*status:* #📥
+*related:*
 
-title: On Large-Batch Training for Deep Learning: Generalization Gap and Sharp Minima
-authors: Nitish Shirish Keskar, Dheevatsa Mudigere, Jorge Nocedal, Mikhail Smelyanskiy, Ping Tak Peter Tang
-year: 2017
+# Notes 
 
+# Annotations
 
 It has been observed in practice that when using a larger batch there is a degradation in the quality of the model, as measured by its ability to generalize.
 

@@ -1,6 +1,10 @@
+*title:* Unsupervised Word Sense Disambiguation Rivaling Supervised Methods
+*authors:* David Yarowsky
+*year:* 1994
+*tags:* #semi-supervised #classifier #supervised-learning 
+*status:* #📥
+*related:*
 
-title: Unsupervised word sense disambiguation rivaling supervised methods
-authors: David Yarowsky
-year: 1994
+# Notes 
 
-
+# Annotations

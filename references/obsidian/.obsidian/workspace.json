@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/@keskarLargeBatchTrainingDeep2017.md",
+                "file": "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
                 "mode": "source",
                 "source": false
               }
@@ -102,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🧠Deep Learning Methods/@keskarLargeBatchTrainingDeep2017.md",
+                "file": "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,12 +130,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🧠Deep Learning Methods/@keskarLargeBatchTrainingDeep2017.md"
+                "file": "🔗Classical rules/@holthausenEffectLargeBlock1987.md"
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -146,15 +146,15 @@
   },
   "active": "63f44bca9a0489c3",
   "lastOpenFiles": [
-    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
-    "🧠Deep Learning Methods/@paszkePyTorchImperativeStyle2019.md",
-    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
-    "🧠Deep Learning Methods/@glorotDeepSparseRectifier2011.md",
-    "🧠Deep Learning Methods/@borisovDeepNeuralNetworks2022.md",
-    "🧠Deep Learning Methods/@baLayerNormalization2016.md",
-    "🧠Deep Learning Methods/@hintonImprovingNeuralNetworks2012.md",
-    "🧠Deep Learning Methods/Vanilla/@ismailfawazDeepLearningTime2019.md",
-    "TOC.md",
-    "🧠Deep Learning Methods/Vanilla/@hornikMultilayerFeedforwardNetworks1989.md"
+    "🔗Classical rules/@finucaneDirectTestMethods2000.md",
+    "Semi-supervised Learning/@zhuSemiSupervisedLearningLiterature.md",
+    "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
+    "Semi-supervised Learning/@yoonVIMEExtendingSuccess2020.md",
+    "Semi-supervised Learning/@tanhaSemisupervisedSelftrainingDecision2017.md",
+    "Semi-supervised Learning/@somepalliSAINTImprovedNeural2021.md",
+    "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
+    "Semi-supervised Learning/@bahriSCARFSelfSupervisedContrastive2022.md",
+    "Semi-supervised Learning/@clarkELECTRAPretrainingText2020.md",
+    "🧠Deep Learning Methods/@izmailovAveragingWeightsLeads2019.md"
   ]
 }
