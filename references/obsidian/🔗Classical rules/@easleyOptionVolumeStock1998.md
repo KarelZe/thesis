@@ -1,18 +1,24 @@
-
-title: Flow Toxicity and Liquidity in a High-frequency World
-authors: David Easley, Marcos M. López de Prado, Maureen O'Hara
-year: 2012
-tags : #trade-classification 
-status : #📥
-related:
-
+*title:* Option Volume and Stock Prices: Evidence on Where Informed Traders Trade
+*authors:* David Easley, Maureen O'Hara, P.S. Srinivas
+*year:* 1997
+*tags:* #cboe #trade-classification #lr 
+*status:* #📦 
+*related:*
+- [[@grauerOptionTradeClassification2022]]
+- [[@leeInferringTradeDirection1991]]
 
 ## Note
+
 - Authors apply the LR algorithm ([[@leeInferringTradeDirection1991]]) to CBOE data.
+
 - They argue most data bases e. g. Berkley Options Data Base / data sets are missing the indicator whether a trade is buyer-initiated or seller-iniated. So researchers have to rely on quote or trade information.
+
 - They make observations about the lag in LR algorithm for CBOE data.
-- They observe the percentage of trades at the spread midpoint shows a strong downward trend (some time in the '80s). Also, the number the number of buys and sells isn't equal. This indicates that options are more actively bought rather than sold. ➡️ Test if this is also true for my sample. Might require up-/ or down sampling.
+
+- They observe the percentage of trades at the spread midpoint shows a strong downward trend (some time in the '80s). Also, the number the number of buys and sells isn't equal. This indicates that options are more actively bought rather than sold. ➡️ Test if this is also true for my sample. Might require up-/ or down sampling. Ground truth is **unknown**!.
+
 ## Annotations
+
 “The Berkeley Options Data Base does not classify trades as buyer-initiated or seller-initiated. This classification must be done using quote and trade information.” ([Easley et al., 1998, p. 453](zotero://select/library/items/593W67XA)) ([pdf](zotero://open-pdf/library/items/ZBEQIUNK?page=23&annotation=GXHQMKIW))
 
 “For researchers using transactions data, this classification problem is ubiquitous, and a cursory review of empirical papers using equity transaction data reveals many trade classification techniques. Lee and Ready (1991) present an excellent survey of techniques currently in use and evaluate their efficiency using NYSE transactions data.” ([Easley et al., 1998, p. 453](zotero://select/library/items/593W67XA)) ([pdf](zotero://open-pdf/library/items/ZBEQIUNK?page=23&annotation=Q59K9DID))

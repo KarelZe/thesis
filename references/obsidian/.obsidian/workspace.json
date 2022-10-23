@@ -30,9 +30,21 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "dff3a1e2d308a0e8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🔗Classical rules/@easleyOptionVolumeStock1998.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -61,7 +73,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#📥",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -70,7 +82,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -90,7 +103,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "🔗Classical rules/@easleyOptionVolumeStock1998.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +131,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "🔗Classical rules/@easleyOptionVolumeStock1998.md"
               }
             }
           }
@@ -132,17 +145,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "160a03ac0eb0e817",
+  "active": "6942b2f8be896a2c",
   "lastOpenFiles": [
+    "TOC.md",
+    "🔗Classical rules/@easleyOptionVolumeStock1998.md",
+    "🔗Classical rules/@easleyFlowToxicityLiquidity2012.md",
+    "🔗Classical rules/@easleyDiscerningInformationTrade2016.md",
+    "🔗Classical rules/@ellisAccuracyTradeClassification2000.md",
+    "🔗Classical rules/@garleanuDemandBasedOptionPricing2009.md",
+    "🔗Classical rules/@leeInferringTradeDirection1991.md",
     "🧠Deep Learning Methods/@smithCyclicalLearningRates2017.md",
     "🧠Deep Learning Methods/@loshchilovSGDRStochasticGradient2017.md",
-    "🧠Deep Learning Methods/@izmailovAveragingWeightsLeads2019.md",
-    "🧠Deep Learning Methods/Vanilla/@ismailfawazDeepLearningTime2019.md",
-    "TOC.md",
-    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
-    "weinberger.md",
-    "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
-    "🔗Classical rules/@finucaneDirectTestMethods2000.md",
-    "Semi-supervised Learning/@zhuSemiSupervisedLearningLiterature.md"
+    "🧠Deep Learning Methods/@izmailovAveragingWeightsLeads2019.md"
   ]
 }
