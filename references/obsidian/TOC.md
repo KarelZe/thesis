@@ -33,6 +33,7 @@ Commonly stock trade classifcation algorithms are used
 
 - [[@rosenthalModelingTradeDirection2012]] lists fields where trade classification is used and what the impact of wrongly classified trades is.
 - The extent to which inaccurate trade classification biases empirical research dependes on whether misclassifications occur randomly or systematically [[@theissenTestAccuracyLee2000]].
+- over time proposed methods applied more filters / got more sophisticated but didn't substainly improve im some cases. See e. g., [[@finucaneDirectTestMethods2000]] Time to switch to another paradigma and let the data speak?
 
 # 👨‍👩‍👧‍👦 Related Work
 - [[@grauerOptionTradeClassification2022]]
@@ -59,7 +60,7 @@ Commonly stock trade classifcation algorithms are used
 - There are different views of what is considered as buyer / seller iniated i. e. [[@odders-whiteOccurrenceConsequencesInaccurate2000]] vs. [[@ellisAccuracyTradeClassification2000]]
 (see [[@theissenTestAccuracyLee2000]] for more details)
 ### Quote-Rule
-- The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000 1]])
+- The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
 
 - ![[formula-quote-rule.png]]
 	Adapted from [[@olbrysEvaluatingTradeSide2018]]. Rewrite to formula
@@ -67,7 +68,7 @@ Commonly stock trade classifcation algorithms are used
 (copied from [[@carrionTradeSigningFast2020]])
 
 ### Tick Test
-- Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000 1]] or [[@leeInferringTradeDirection1991]] for similar framing)
+- Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000]] or [[@leeInferringTradeDirection1991]] for similar framing)
 - Consider  for citation [[@leeInferringTradeDirection1991]] .
 - One of the first works who mention the tick test is [[@holthausenEffectLargeBlock1987]] (referred to as tick classification rule) or [[@hasbrouckTradesQuotesInventories1988]] (referred to as transaction rule)
 - ![[formula-tick-rule.png]]
@@ -77,6 +78,7 @@ Copied from [[@carrionTradeSigningFast2020]]
 - Sources of error in the tick test, when quotes change.
 - ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000 1]]
 - low data requirements, as only transaction data is needed. (see [[@theissenTestAccuracyLee2000]]) Could be good enough though.
+- Tick test can not handle if two trades do not involve market orders e. g. two limit orders. In such a case the tick rule could be applied, but there is ambiguous. (see [[@finucaneDirectTestMethods2000]])
 ### Reverse Tick Test
 - Instead of the previous trade, the reverse tick rule uses the subsequent trade price to classify the current trade. 
 - If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991]])
@@ -109,9 +111,9 @@ Copied from [[@carrionTradeSigningFast2020]]
 ![[visualization-of-quote-and-tick.png]]
 (image copied from [[@poppeSensitivityVPINChoice2016]]) 
 - Interestingly, researchers gradually segment the decision surface starting with quote and tick rule, continuing with LR, EMO and CLNV. This is very similar to what is done in a decision tree. Could be used to motivate decision trees.
-- All the hybrid methods could be considered as an ensemble with some sophisticated weighting scheme (look up the correct term)
+- All the hybrid methods could be considered as an ensemble with some sophisticated weighting scheme (look up the correct term) -> In recommender the hybrid recommender is called switching.
 - Current hybrid approaches use stacking ([[@grauerOptionTradeClassification2022]] p. 11). Also, due to technical limitations. Why not try out the majority vote/voting classifier with a final estimator? Show how this relates to ML.
-
+- In stock markets applying those filters i. e. going from tick and quote rule did not always improve classification accuracies. The work of [[@finucaneDirectTestMethods2000]] raises critique about it in the stock market.
 ### Lee and Ready Algorithm
 
 ^370c50
@@ -127,6 +129,7 @@ Copied from [[@carrionTradeSigningFast2020]]
 >Many studies note that trades are published with non-ignorable delays. Lee and Ready (1991) first suggested a five-second delay (now commonly used) for 1988 data, two seconds for 1987 data, and “a different delay . . . for other time periods”. Ellis et al. (2000) note (Section IV.C) that quotes are updated almost immediately while trades are published with delay2. Therefore, determining the quote prevailing at trade time requires finding quotes preceding the trade by some (unknown) delay. Important sources of this delay include time to notify traders of their executions, time to update quotes, and time to publish the executions. For example, an aggressive buy order may trade against sell orders and change the inventory (and quotes) available at one or more prices. Notice is then sent to the buyer and sellers; quotes are updated; and, the trade is made public. This final publishing timestamp is what researchers see in nonproprietary transaction databases. Erlang’s (1909) study of information delays forms the theory for modeling delays. Bessembinder (2003) and Vergote (2005) are probably the best prior studies on delays between trades and quotes.
 - For short discussion timing offset in CBOE data see [[@easleyOptionVolumeStock1998]] . For reasoning behind offset (e. g., why it makes senses / is necessary) see [[@bessembinderIssuesAssessingTrade2003]], who study the offset for the NASDAQ. Their conclusion is, that there is no universal optimal offset.
 - for LR on CBOE data set see [[@easleyOptionVolumeStock1998]]
+- LR can not handle the simultanous arrival of market buy and sell orders. Thus, one side will always be wrongly classified. Equally, crossed limit orders are not handled correctly as both sides iniate a trade independent of each other (see [[@finucaneDirectTestMethods2000]]). 
 ### Reverse Lee and Ready Algorithm
 - first introduced in [[@grauerOptionTradeClassification2022]] (p 12)
 - combines the quote and reverse tick rule
@@ -431,6 +434,7 @@ Repeat search with different random initializations:
 # Results
 - What are the findings? Find appropriate visualization (e. g., tables, charts)
 -  For each tuned configuration, we run 15 experiments with different random seeds and report the performance on the test set. For some algorithms, we also report the performance of default configurations without hyperparameter tuning. [[@gorishniyRevisitingDeepLearning2021]]
+- divide sample into zero ticks and non-zero ticks and see how the accuracy behaves. This was e. g. done in [[@finucaneDirectTestMethods2000]]. See also this paper for reasoning on zero tick and non-zero tick trades.
 ## Results of Supervised Models
 - Results for random classifier
 - What would happen if the classical rules weren't stacked?
@@ -453,7 +457,7 @@ Repeat search with different random initializations:
 ![[informative-uniformative-features.png]]
 [[@grinsztajnWhyTreebasedModels]]
 Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
-
+- Most finance papers e. g., [[@finucaneDirectTestMethods2000]] (+ other examples as reported in expose) use logistic regression to find features that affect the classification most. Poor choice due to linearity assumption? How would one handle categorical variables? If I opt to implement logistic regression, also report $\chi^2$.
 ## Robustness Checks
 - LR-algorithm (see [[#^370c50]]) require an offset between the trade and quote. How does the offset affect the results? Do I even have the metric at different offsets?
 - Perform binning like in [[@grauerOptionTradeClassification2022]]
