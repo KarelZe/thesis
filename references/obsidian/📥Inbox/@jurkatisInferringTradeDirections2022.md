@@ -1,0 +1,27 @@
+*title:* Inferring trade directions in fast markets
+*authors:* Simon Jurkatis
+*year:* 2022
+*tags:* #lr #CLVN #result-evaluation
+*stXatus:* #📦 
+- [[@chakrabartyTradeClassificationAlgorithms2012]]
+- [[@leeInferringTradeDirection1991]]
+*code:* https://github.com/jktis/Trade-Classification-Algorithms
+# Notes 
+- Author proposes a new model for trade classification in high frequency markets.
+- Interestingly they perform a portfolio optimization to estimate the impact of false classifications.
+# Annotations
+“The established methods, most notably the algorithms of Lee and Ready (1991) (LR), Ellis et al. (2000) (EMO), and Chakrabarty et al. (2007) (CLNV), classify trades based on the proximity of the transaction price to the quotes in effect at the time of the trade. This is problematic due to the increased frequency of order submission and cancellation. With several quote changes taking place at the time of the trade, it is not clear which quotes to select for the decision rule of the algorithm.” ([Jurkatis, 2022, p. 6](zotero://select/library/items/Z26775ZB)) ([pdf](zotero://open-pdf/library/items/WK7RAQ9I?page=2&annotation=VPZTID52))
+
+“Panayides et al. (2019) use data from Euronext timestamped to seconds in 2007–2008. For data from the LSE in 2017 that is timestamped to the microsecond, the authors find an even worse performance of only 46% accuracy.” ([Jurkatis, 2022, p. 6](zotero://select/library/items/Z26775ZB)) ([pdf](zotero://open-pdf/library/items/WK7RAQ9I?page=2&annotation=758Q9FZ6))
+
+“Older studies analyzing the accuracy of the LR algorithm, as well as the alternative EMO and CLNV algorithms, find classification accuracies ranging from 75% to 93% (e.g., Ellis et al., 2000; Finucane, 2000; Lee and Radhakrishna, 2000; Odders-White, 2000; Theissen, 2001; Chakrabarty et al., 2007).” ([Jurkatis, 2022, p. 6](zotero://select/library/items/Z26775ZB)) ([pdf](zotero://open-pdf/library/items/WK7RAQ9I?page=2&annotation=L5WFVRKN))
+
+“Recent proposals to counter the problem of modern fast markets for trade classification include Easley et al.’s (2012) bulk volume classification (BVC) algorithm and Holden and Jacobsen (2014) interpolation method. The latter interpolates trade and quote times of imprecisely timestamped data before applying one of the traditional algorithms.” ([Jurkatis, 2022, p. 6](zotero://select/library/items/Z26775ZB)) ([pdf](zotero://open-pdf/library/items/WK7RAQ9I?page=2&annotation=V3YNQ98Z))
+
+“To give the improvement in classification accuracy more economic meaning, I apply the trade classification methods to the estimation of transaction costs. The transaction costs in turn are used in a portfolio optimization exercise. The results show that an investor with a mean-variance utility function would be willing to forgo up to 33 bps on yearly returns to use the proposed algorithm to estimate transaction costs instead of the LR algorithm.” ([Jurkatis, 2022, p. 7](zotero://select/library/items/Z26775ZB)) ([pdf](zotero://open-pdf/library/items/WK7RAQ9I?page=3&annotation=468CHMK5))
+
+“With several quote changes occurring at the same time as the trade, however, the choice is less clear. For example, with one trade and three quote changes recorded at the same millisecond, the quotes corresponding to the trade could be the last quotes from before the millisecond or one of the first two recorded at the millisecond. The convention in such a case is to take the last ask and bid from before the time of the trade.” ([Jurkatis, 2022, p. 7](zotero://select/library/items/Z26775ZB)) ([pdf](zotero://open-pdf/library/items/WK7RAQ9I?page=3&annotation=MKU6NEG7))
+
+“An alternative suggested by Holden and Jacobsen (2014) to circumvent the problem of imprecise timestamps is to transform timestamps to a higher precision. This is done by interpolating the recorded times according to: t = s + 2i − 1 2I , i = 1, ... , I, where t is the interpolated timestamp and s is the originally recorded time. I isthenumberoftradesorthenumberofchanges at the ask or bid at time s depending on which timestamp to interpolate. The algorithm then proceeds as described above using the last ask and bid price from before the time of the trade according to the interpolated time.” ([Jurkatis, 2022, p. 7](zotero://select/library/items/Z26775ZB)) ([pdf](zotero://open-pdf/library/items/WK7RAQ9I?page=3&annotation=R7TYV8PH))
+
+“To provide an example of how differences in trade classification can influence the results in an application, I use the competing algorithms (excluding the interpolation method) to estimate transaction costs. These estimates in turn are used in a portfolio optimization exercise assuming an investor with mean-variance utility function.15 The differences in the investor’s utility obtained under the different transaction cost estimates represent the return that the investor would be willing to give up to use one estimate rather than the other. A comparison of the different utilities therefore allows me to put a “price tag” in return units on the different classification algorithms.” ([Jurkatis, 2022, p. 16](zotero://select/library/items/Z26775ZB)) ([pdf](zotero://open-pdf/library/items/WK7RAQ9I?page=12&annotation=JPXVICPZ))

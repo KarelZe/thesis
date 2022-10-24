@@ -114,6 +114,8 @@ Copied from [[@carrionTradeSigningFast2020]]
 - All the hybrid methods could be considered as an ensemble with some sophisticated weighting scheme (look up the correct term) -> In recommender the hybrid recommender is called switching.
 - Current hybrid approaches use stacking ([[@grauerOptionTradeClassification2022]] p. 11). Also, due to technical limitations. Why not try out the majority vote/voting classifier with a final estimator? Show how this relates to ML.
 - In stock markets applying those filters i. e. going from tick and quote rule did not always improve classification accuracies. The work of [[@finucaneDirectTestMethods2000]] raises critique about it in the stock market.
+![[pseudocode-of-algorithms.png]]
+(found in [[@jurkatisInferringTradeDirections2022]]). Overly complex description but helpful for implementation?
 ### Lee and Ready Algorithm
 
 ^370c50
@@ -373,6 +375,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Do rigorous testing.
 - Don't chase the benchmark, but aim for explainability of the results.
 - compare against https://github.com/jktis/Trade-Classification-Algorithms
+- Classical rules could be implemented using https://github.com/jktis/Trade-Classification-Algorithms
 
 ### Training of Supervised Models
 - Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Implement robustness checks (as in [[@grauerOptionTradeClassification2022]]) early on.
@@ -424,6 +427,7 @@ Repeat search with different random initializations:
 	- Think about using kernel-shap. Could work. See e. g., [Feature importance in deep learning - Deep Learning - Deep Learning Course Forums (fast.ai)](https://forums.fast.ai/t/feature-importance-in-deep-learning/42026/91?page=4) and [Census income classification with Keras — SHAP latest documentation](https://shap.readthedocs.io/en/latest/example_notebooks/tabular_examples/neural_networks/Census%20income%20classification%20with%20Keras.html)
 	- If SHAP is to complex, one could just zero-out features like in [[@guEmpiricalAssetPricing2020]], but be aware of drawbacks. Yet similar method is to randomly permutate features "within a column" and see how to prediction changes" (see [[@banachewiczKaggleBookData2022]]) also comes at the advantage that no retraining is needed, but artificially breaks correlations etc. (see my previous seminar paper).
 	- [[@ronenMachineLearningTrade2022]] study the feature importance only for random forests.
+- For explanation on SHAP and difference between pre- and post-model explainability see [[@baptistaRelationPrognosticsPredictor2022]]
 ### Evaluation Metric
 - Discuss what metrics are reasonable e. g., why is it reasonable to use the accuracy here? Dataset is likely balanced with a 50-50 distribution, metrics like accuracy are fine for this use case.
 - Define the metrics.
@@ -435,6 +439,7 @@ Repeat search with different random initializations:
 - What are the findings? Find appropriate visualization (e. g., tables, charts)
 -  For each tuned configuration, we run 15 experiments with different random seeds and report the performance on the test set. For some algorithms, we also report the performance of default configurations without hyperparameter tuning. [[@gorishniyRevisitingDeepLearning2021]]
 - divide sample into zero ticks and non-zero ticks and see how the accuracy behaves. This was e. g. done in [[@finucaneDirectTestMethods2000]]. See also this paper for reasoning on zero tick and non-zero tick trades.
+- Think about stuying the economic impact of false classification trough portfolio construction as done in [[@jurkatisInferringTradeDirections2022]]
 ## Results of Supervised Models
 - Results for random classifier
 - What would happen if the classical rules weren't stacked?
