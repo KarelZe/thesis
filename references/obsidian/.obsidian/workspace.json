@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@perlinPerformanceTickTest2014.md",
+                "file": "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
                 "mode": "source",
                 "source": false
               }
@@ -102,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📥Inbox/@perlinPerformanceTickTest2014.md",
+                "file": "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +130,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📥Inbox/@perlinPerformanceTickTest2014.md"
+                "file": "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md"
               }
             }
           }
@@ -147,6 +147,7 @@
   "active": "6410e545380723e4",
   "lastOpenFiles": [
     "TOC.md",
+    "📥Inbox/@perlinPerformanceTickTest2014.md",
     "📥Inbox/@jurkatisInferringTradeDirections2022.md",
     "🔗Classical rules/@theissenTestAccuracyLee2000.md",
     "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
@@ -154,7 +155,6 @@
     "🔗Classical rules/@finucaneDirectTestMethods2000.md",
     "@finucaneDirectTestMethods2000 1.md",
     "🔗Classical rules/@ellisAccuracyTradeClassification2000.md",
-    "❓ Questions.md",
-    "Semi-supervised Learning/@somepalliSAINTImprovedNeural2021.md"
+    "❓ Questions.md"
   ]
 }

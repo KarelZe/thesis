@@ -223,6 +223,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - How are neural networks optimized?
 - Motivation for Transformers
 - For formal algorithms on Transformers see [[@phuongFormalAlgorithmsTransformers2022]]
+- http://nlp.seas.harvard.edu/2018/04/03/attention.html
 ### Network Architecture
 ### Attention
 - cover dot-product attention and sequential attention
