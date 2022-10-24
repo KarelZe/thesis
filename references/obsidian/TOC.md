@@ -32,7 +32,7 @@ Commonly stock trade classifcation algorithms are used
 - goal is to outperform existing classical approaches
 
 - [[@rosenthalModelingTradeDirection2012]] lists fields where trade classification is used and what the impact of wrongly classified trades is.
-
+- The extent to which inaccurate trade classification biases empirical research dependes on whether misclassifications occur randomly or systematically [[@theissenTestAccuracyLee2000]].
 
 # 👨‍👩‍👧‍👦 Related Work
 - [[@grauerOptionTradeClassification2022]]
@@ -56,9 +56,10 @@ Commonly stock trade classifcation algorithms are used
 # 🔗Rule-Based Approaches
 ## Basic Rules
 - See [Quantitative Finance Stack Exchange](https://quant.stackexchange.com/questions/8843/what-are-modern-algorithms-for-trade-classification) for most basic overview
-
+- There are different views of what is considered as buyer / seller iniated i. e. [[@odders-whiteOccurrenceConsequencesInaccurate2000]] vs. [[@ellisAccuracyTradeClassification2000]]
+(see [[@theissenTestAccuracyLee2000]] for more details)
 ### Quote-Rule
-- The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
+- The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000 1]])
 
 - ![[formula-quote-rule.png]]
 	Adapted from [[@olbrysEvaluatingTradeSide2018]]. Rewrite to formula
@@ -66,7 +67,7 @@ Commonly stock trade classifcation algorithms are used
 (copied from [[@carrionTradeSigningFast2020]])
 
 ### Tick Test
-- Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000]] or [[@leeInferringTradeDirection1991]] for similar framing)
+- Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000 1]] or [[@leeInferringTradeDirection1991]] for similar framing)
 - Consider  for citation [[@leeInferringTradeDirection1991]] .
 - One of the first works who mention the tick test is [[@holthausenEffectLargeBlock1987]] (referred to as tick classification rule) or [[@hasbrouckTradesQuotesInventories1988]] (referred to as transaction rule)
 - ![[formula-tick-rule.png]]
@@ -74,7 +75,8 @@ Commonly stock trade classifcation algorithms are used
 	![[tick-rule-formulae-alternative.png]]
 Copied from [[@carrionTradeSigningFast2020]]
 - Sources of error in the tick test, when quotes change.
-- ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000]]
+- ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000 1]]
+- low data requirements, as only transaction data is needed. (see [[@theissenTestAccuracyLee2000]]) Could be good enough though.
 ### Reverse Tick Test
 - Instead of the previous trade, the reverse tick rule uses the subsequent trade price to classify the current trade. 
 - If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991]])
@@ -114,7 +116,7 @@ Copied from [[@carrionTradeSigningFast2020]]
 
 ^370c50
 - According to [[@bessembinderIssuesAssessingTrade2003]] the most widley used algorithm to categorize trades as buyer or seller-initiated.
-- Accuracy has been tested in [[@odders-whiteOccurrenceConsequencesInaccurate2000]], [[@finucaneDirectTestMethods2000]] and [[@leeInferringInvestorBehavior2000]] on TORQ data set which contains the true label. (see [[@bessembinderIssuesAssessingTrade2003]])
+- Accuracy has been tested in [[@odders-whiteOccurrenceConsequencesInaccurate2000]], [[@finucaneDirectTestMethods2000 1]] and [[@leeInferringInvestorBehavior2000]] on TORQ data set which contains the true label. (see [[@bessembinderIssuesAssessingTrade2003]])
 - combination of quote and tick rule. Use tick rule to classify trades at midpoint and use the quote rule else where
 
 - LR algorithm
@@ -437,6 +439,7 @@ Repeat search with different random initializations:
 
 ![[visualize-classical-rules-vs-ml.png]]
 (print heatmap with $y$ axis with ask, bid and mid, $x$-axis could be some other criteria e. g. the trade size or none. If LR rule was good fit for options, accuracy should be evenly distributed and green. Visualize accuracy a hue / color)
+- calculate $z$-scores / $z$-statistic of classification accuracies to assess if the results are significant. (see e. g., [[@theissenTestAccuracyLee2000]])
 ## Results of Semi-Supervised Models
 
 ## Feature Importance
@@ -465,6 +468,8 @@ Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 - How do wide models compare to deep models
 - Study sources of missclassification. See e. g., [[@savickasInferringDirectionOption2003]]
 - Would assembeling help here? As discussed in [[@huangSnapshotEnsemblesTrain2017]] ensembles can only improve the model, if individual models have a low test error and if models do not overlap in the samples they missclassify.
+- The extent to which inaccurate trade classification biases empirical research dependes on whether misclassifications occur randomly or systematically [[@theissenTestAccuracyLee2000]]. This document also contains ideas how to study the impact of wrong classifications in stock markets. Might different in option markets.
+- Ceveat is that we don't know the true labels, but rather subsets. Could be biased?
 # Conclusion
 - Repeat the problem and its relevance, as well as the contribution (plus quantitative results).
 # 🌄Outlook

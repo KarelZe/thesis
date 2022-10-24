@@ -30,6 +30,18 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "9e429665f62d6488",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🔗Classical rules/@theissenTestAccuracyLee2000.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
         "currentTab": 1
@@ -132,17 +144,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "160a03ac0eb0e817",
+  "active": "8399eb31ec07fd72",
   "lastOpenFiles": [
+    "🔗Classical rules/@theissenTestAccuracyLee2000.md",
+    "TOC.md",
+    "🔗Classical rules/@ellisAccuracyTradeClassification2000.md",
+    "❓ Questions.md",
     "Semi-supervised Learning/@somepalliSAINTImprovedNeural2021.md",
     "🧠Deep Learning Methods/@paszkePyTorchImperativeStyle2019.md",
-    "TOC.md",
     "Semi-supervised Learning/@zhuSemiSupervisedLearningLiterature.md",
     "Semi-supervised Learning/semi-supervised-learning.md",
     "🍬Implementation/🔢Preprocessing/Preprocessing.md",
-    "🔗Classical rules/@bessembinderIssuesAssessingTrade2003.md",
-    "👨‍👩‍👧‍👦Related Works/@hansenApplicationsMachineLearning.md",
-    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
-    "🔗Classical rules/@olbrysEvaluatingTradeSide2018.md"
+    "🔗Classical rules/@bessembinderIssuesAssessingTrade2003.md"
   ]
 }
