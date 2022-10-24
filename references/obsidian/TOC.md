@@ -79,6 +79,7 @@ Copied from [[@carrionTradeSigningFast2020]]
 - ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000 1]]
 - low data requirements, as only transaction data is needed. (see [[@theissenTestAccuracyLee2000]]) Could be good enough though.
 - Tick test can not handle if two trades do not involve market orders e. g. two limit orders. In such a case the tick rule could be applied, but there is ambiguous. (see [[@finucaneDirectTestMethods2000]])
+- [[@perlinPerformanceTickTest2014]] proved that the tick test performs better than random chance. 
 ### Reverse Tick Test
 - Instead of the previous trade, the reverse tick rule uses the subsequent trade price to classify the current trade. 
 - If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991]])
