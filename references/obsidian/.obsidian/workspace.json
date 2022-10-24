@@ -30,21 +30,9 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "6410e545380723e4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -73,7 +61,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#📥",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -102,7 +90,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +118,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md"
+                "file": "TOC.md"
               }
             }
           }
@@ -144,8 +132,10 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "6410e545380723e4",
+  "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
+    "Semi-supervised Learning/@clarkELECTRAPretrainingText2020.md",
+    "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
     "TOC.md",
     "📥Inbox/@perlinPerformanceTickTest2014.md",
     "📥Inbox/@jurkatisInferringTradeDirections2022.md",
@@ -153,8 +143,6 @@
     "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
     "🔗Classical rules/@chakrabartyTradeClassificationAlgorithms2012.md",
     "🔗Classical rules/@finucaneDirectTestMethods2000.md",
-    "@finucaneDirectTestMethods2000 1.md",
-    "🔗Classical rules/@ellisAccuracyTradeClassification2000.md",
-    "❓ Questions.md"
+    "@finucaneDirectTestMethods2000 1.md"
   ]
 }

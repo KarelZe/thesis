@@ -2,7 +2,7 @@
 *authors:* Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova
 *year:* 2018
 *tags:* #semi-supervised #deep-learning #semi-supervised #self-learning 
-*status:* #📥
+*status:* #📦 
 *related:*
 - [[@clarkELECTRAPretrainingText2020]]
 - [[@yoonVIMEExtendingSuccess2020]]
