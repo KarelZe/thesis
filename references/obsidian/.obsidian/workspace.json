@@ -4,68 +4,37 @@
     "type": "split",
     "children": [
       {
-        "id": "91bb037a88670d4d",
-        "type": "split",
+        "id": "ac0c9ffcaad5ed9e",
+        "type": "tabs",
         "children": [
           {
-            "id": "ac0c9ffcaad5ed9e",
-            "type": "tabs",
-            "dimension": 51.356589147286826,
-            "children": [
-              {
-                "id": "44f4df12fd19c257",
-                "type": "leaf",
-                "state": {
-                  "type": "graph",
-                  "state": {}
-                }
+            "id": "160a03ac0eb0e817",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "TOC.md",
+                "mode": "source",
+                "source": false
               },
-              {
-                "id": "160a03ac0eb0e817",
-                "type": "leaf",
-                "pinned": true,
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "TOC.md",
-                    "mode": "source",
-                    "source": false
-                  },
-                  "pinned": true
-                }
-              },
-              {
-                "id": "40450fe5cfb94009",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
-                    "mode": "source",
-                    "source": false
-                  }
-                }
-              }
-            ],
-            "currentTab": 1
+              "pinned": true
+            }
           },
           {
-            "id": "700cdc949b199062",
-            "type": "tabs",
-            "dimension": 48.643410852713174,
-            "children": [
-              {
-                "id": "cbed3b2dda7e02cb",
-                "type": "leaf",
-                "state": {
-                  "type": "graph",
-                  "state": {}
-                }
+            "id": "9dac31c18a42226b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "❓Questions.md",
+                "mode": "source",
+                "source": false
               }
-            ]
+            }
           }
         ],
-        "direction": "horizontal"
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -123,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "❓Questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "❓Questions.md"
               }
             }
           }
@@ -165,17 +134,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "160a03ac0eb0e817",
+  "active": "9dac31c18a42226b",
   "lastOpenFiles": [
     "TOC.md",
+    "archive.org.md",
+    "www.archive.org.md",
+    "❓Questions.md",
     "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
     "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
     "Semi-supervised Learning/@leePseudolabelSimpleEfficient 1.md",
     "🍬Implementation/🚀Results/@baptistaRelationPrognosticsPredictor2022.md",
     "👨‍👩‍👧‍👦Related Works/@boweNewClassicalBayesian.md",
-    "🧠Deep Learning Methods/@hintonImprovingNeuralNetworks2012.md",
-    "pre-training.md",
-    "semi-supervised.md",
-    "🍬Implementation/🚀Results/@JMLR_v9_vandermaaten08a.md"
+    "🧠Deep Learning Methods/@hintonImprovingNeuralNetworks2012.md"
   ]
 }

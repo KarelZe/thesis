@@ -1,8 +1,0 @@
-- Any feedback to toc / expose / first results?
-- What are the expectations I have to meet in order to reach 1.3 or better?
-- Thoughts about weekly release info 📧 (e. g., every sunday) with closed issues and completed tasks + bi-weekly meeting.
-- Who would co-supervise / grade a thesis? What is his / her special focus e. g., economical inference/interpretability?
-- Do you see any problem that trade classification with ML is chasing noise?
-- What to do with low-quality papers e. g., [[@ronenMachineLearningTrade2022]] or [[@blazejewskiLocalNonparametricModel2005]]? Cite, but be critical? Also leave some papers out?
-- What to do with [[@hansenApplicationsMachineLearning]]? Does something similar but not officially published. Different techniques / different data set / focus on EDA.
-- Citations of preprints? Some things in ML have only been published on archive.org.
