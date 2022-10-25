@@ -32,12 +32,12 @@
             }
           },
           {
-            "id": "37f9fd108fb91ad5",
+            "id": "204493695bf755f5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "👨‍👩‍👧‍👦Related Works/@blazejewskiLocalNonparametricModel2005.md",
+                "file": "❓ Questions.md",
                 "mode": "source",
                 "source": false
               }
@@ -102,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "👨‍👩‍👧‍👦Related Works/@blazejewskiLocalNonparametricModel2005.md",
+                "file": "❓ Questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +130,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "👨‍👩‍👧‍👦Related Works/@blazejewskiLocalNonparametricModel2005.md"
+                "file": "❓ Questions.md"
               }
             }
           }
@@ -144,9 +144,10 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "37f9fd108fb91ad5",
+  "active": "204493695bf755f5",
   "lastOpenFiles": [
     "TOC.md",
+    "❓ Questions.md",
     "👨‍👩‍👧‍👦Related Works/@blazejewskiLocalNonparametricModel2005.md",
     "🧠Deep Learning Methods/@smithCyclicalLearningRates2017.md",
     "🧠Deep Learning Methods/@loshchilovSGDRStochasticGradient2017.md",
@@ -154,7 +155,6 @@
     "🔗Classical rules/@muravyevOrderFlowExpected2016.md",
     "🔗Classical rules/@aktasTradeClassificationAccuracy2014.md",
     "🔗Classical rules/@huDoesOptionTrading2014.md",
-    "🔗Classical rules/@garleanuDemandBasedOptionPricing2009.md",
-    "Semi-supervised Learning/@clarkELECTRAPretrainingText2020.md"
+    "🔗Classical rules/@garleanuDemandBasedOptionPricing2009.md"
   ]
 }
