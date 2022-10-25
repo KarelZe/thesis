@@ -30,9 +30,21 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "37f9fd108fb91ad5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "👨‍👩‍👧‍👦Related Works/@blazejewskiLocalNonparametricModel2005.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -90,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "👨‍👩‍👧‍👦Related Works/@blazejewskiLocalNonparametricModel2005.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +130,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "👨‍👩‍👧‍👦Related Works/@blazejewskiLocalNonparametricModel2005.md"
               }
             }
           }
@@ -132,17 +144,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "160a03ac0eb0e817",
+  "active": "37f9fd108fb91ad5",
   "lastOpenFiles": [
-    "🧠Deep Learning Methods/@smithCyclicalLearningRates2017.md",
     "TOC.md",
+    "👨‍👩‍👧‍👦Related Works/@blazejewskiLocalNonparametricModel2005.md",
+    "🧠Deep Learning Methods/@smithCyclicalLearningRates2017.md",
     "🧠Deep Learning Methods/@loshchilovSGDRStochasticGradient2017.md",
     "👨‍👩‍👧‍👦Related Works/@fedeniaMachineLearningCorporate2021.md",
     "🔗Classical rules/@muravyevOrderFlowExpected2016.md",
     "🔗Classical rules/@aktasTradeClassificationAccuracy2014.md",
     "🔗Classical rules/@huDoesOptionTrading2014.md",
     "🔗Classical rules/@garleanuDemandBasedOptionPricing2009.md",
-    "Semi-supervised Learning/@clarkELECTRAPretrainingText2020.md",
-    "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md"
+    "Semi-supervised Learning/@clarkELECTRAPretrainingText2020.md"
   ]
 }
