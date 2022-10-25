@@ -1,0 +1,1 @@
+- The goal of semi-supervised learning is to improve generalization performance using unlabeled data. [[@chapelleSemiSupervisedClassificationLow2005]]

@@ -259,7 +259,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 ## Selection of Approaches
 
 ^c77130
-
+- Start with what the ultimate goal of semi-supervised classification is? See [[@chapelleSemiSupervisedClassificationLow2005]] for catchy introduction. -> We want to find a decision boundary that lies in a low-density region / want to create models that generalize. -> Obtain models that generalize. -> In ultimate consequence avoid overfitting of the model.
 - Instead of covering all possible semi-supervised approaches, do it the other way around. Take all the approaches from the supervised chapter and show how they can be extended to the semi-supervised setting. This will result in a shorter, yet more streamlined thesis, as results of supervised and semi-supervised learning can be directly compared. 
 - Motivation for semi-supervised learning
 - Differentiate semi-supervised learning into its subtypes transductive and inductive learning.
@@ -269,7 +269,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Labelling of data is costly, sometimes impossible (my case).
 - For overview see [[@zhuSemiSupervisedLearningLiterature]]
 - for problems / success of semi-supervised learning in tabular data see [[@yoonVIMEExtendingSuccess2020]]
-- **pseudo-labelling:** e. g., [How To Build an Efficient NLP Model – Weights & Biases (wandb.ai)](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) and [[@leePseudolabelSimpleEfficient]]. Requires solving the issue of obtaining soft probablities.
+- **pseudo-labelling:** e. g., [How To Build an Efficient NLP Model – Weights & Biases (wandb.ai)](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) and [[@leePseudolabelSimpleEfficient]]. Requires solving the issue of obtaining soft probablities. Reason why pseudo-labels are a poor idea -> requires change in neural network architecture -> we aim for comparability.
 - For pretraining ofneural net architectures also see argumentation in [[🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021]]
 - See also [[@bahriSCARFSelfSupervisedContrastive2022]], while the paper is not 100 % relevant, it contains interesting citations.
 ## Extensions to Gradient Boosted Trees
@@ -282,7 +282,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - For pratical implementation see [Self Supervised Pretraining - pytorch_widedeep (pytorch-widedeep.readthedocs.io)](https://pytorch-widedeep.readthedocs.io/en/latest/pytorch-widedeep/self_supervised_pretraining.html)
 ## Extensions to TabTransformer
 - See [[@huangTabTransformerTabularData2020]] for extensions.
-- Authors use unsupervised pretraining and supervised finetuning. They also try out techniques like pseudo labelling from [[@leePseudolabelSimpleEfficient]] for semi supervised learning among others.
+- Authors use unsupervised pretraining and supervised finetuning. They also try out techniques like pseudo labelling from [[@leePseudolabelSimpleEfficient 1]] for semi supervised learning among others.
 - For pratical implementation see: - For pratical implementation see [Self Supervised Pretraining - pytorch_widedeep](https://pytorch-widedeep.readthedocs.io/en/latest/pytorch-widedeep/self_supervised_pretraining.html)
 # Empirical Study
 ## Environment
@@ -456,6 +456,10 @@ Repeat search with different random initializations:
 (print heatmap with $y$ axis with ask, bid and mid, $x$-axis could be some other criteria e. g. the trade size or none. If LR rule was good fit for options, accuracy should be evenly distributed and green. Visualize accuracy a hue / color)
 - calculate $z$-scores / $z$-statistic of classification accuracies to assess if the results are significant. (see e. g., [[@theissenTestAccuracyLee2000]])
 ## Results of Semi-Supervised Models
+
+Use $t$-SNE to assess the output of the supervised vs. the semi-supervised train models. See [[@leePseudolabelSimpleEfficient 1]] and [[@banachewiczKaggleBookData2022]] for how to use it.
+See [[@JMLR_v9_vandermaaten08a]] for original paper.
+![[t-sne-map.png]]
 
 ## Feature Importance
 - local vs. global attention
