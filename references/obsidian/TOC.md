@@ -34,11 +34,13 @@ Commonly stock trade classifcation algorithms are used
 - [[@rosenthalModelingTradeDirection2012]] lists fields where trade classification is used and what the impact of wrongly classified trades is.
 - The extent to which inaccurate trade classification biases empirical research dependes on whether misclassifications occur randomly or systematically [[@theissenTestAccuracyLee2000]].
 - over time proposed methods applied more filters / got more sophisticated but didn't substainly improve im some cases. See e. g., [[@finucaneDirectTestMethods2000]] Time to switch to another paradigma and let the data speak?
+- Works that require trade side classification in option markets:
+	- [[@muravyevOrderFlowExpected2016]]
+	- [[@huDoesOptionTrading2014]]
 
 # 👨‍👩‍👧‍👦 Related Work
-- [[@grauerOptionTradeClassification2022]]
-- [[@savickasInferringDirectionOption2003]]
-- 
+- [[@grauerOptionTradeClassification2022]] perform option trade classification
+- [[@savickasInferringDirectionOption2003]] perform option trade classification
 - [[@ronenMachineLearningTrade2022]] / [[@fedeniaMachineLearningCorporate2021]] They employ a machine learning-based approach for trade side classification. Selection of method follows no clear research agenda, so does sample selection or tuning. Also leaves out latest advancements in prediction of tabular data such as GBM or dedicated NN architectures. Data set only spans two days? General saying ML based predictor (random forest) outperforms tick rule and BVC. Still much human inutition is required for feature engineering. Treated as **supervised tasks**. More recent approaches and also ML approaches outperform classical approaches due to a higher trading frequency. Transfer learning not successful. **Note:** Tick rule has been among the poorest predictors in Grauer. **Note:** Check what the actual difference between the two papers are....
 - Which works performed trade side classification for stocks, for options or other products.
 - [[@rosenthalModelingTradeDirection2012]] incorporates different methods into a model for the likelihood a trade was buyer-initiated. It's a simple logistic regresssion. Performed on stocks. 
