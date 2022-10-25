@@ -4,47 +4,68 @@
     "type": "split",
     "children": [
       {
-        "id": "ac0c9ffcaad5ed9e",
-        "type": "tabs",
+        "id": "91bb037a88670d4d",
+        "type": "split",
         "children": [
           {
-            "id": "44f4df12fd19c257",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "graph",
-              "state": {},
-              "pinned": true
-            }
-          },
-          {
-            "id": "160a03ac0eb0e817",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "TOC.md",
-                "mode": "source",
-                "source": false
+            "id": "ac0c9ffcaad5ed9e",
+            "type": "tabs",
+            "dimension": 51.356589147286826,
+            "children": [
+              {
+                "id": "44f4df12fd19c257",
+                "type": "leaf",
+                "state": {
+                  "type": "graph",
+                  "state": {}
+                }
               },
-              "pinned": true
-            }
+              {
+                "id": "160a03ac0eb0e817",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "TOC.md",
+                    "mode": "source",
+                    "source": false
+                  },
+                  "pinned": true
+                }
+              },
+              {
+                "id": "40450fe5cfb94009",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
+                    "mode": "source",
+                    "source": false
+                  }
+                }
+              }
+            ],
+            "currentTab": 1
           },
           {
-            "id": "40450fe5cfb94009",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
-                "mode": "source",
-                "source": false
+            "id": "700cdc949b199062",
+            "type": "tabs",
+            "dimension": 48.643410852713174,
+            "children": [
+              {
+                "id": "cbed3b2dda7e02cb",
+                "type": "leaf",
+                "state": {
+                  "type": "graph",
+                  "state": {}
+                }
               }
-            }
+            ]
           }
         ],
-        "currentTab": 2
+        "direction": "horizontal"
       }
     ],
     "direction": "vertical"
@@ -102,7 +123,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +151,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md"
+                "file": "TOC.md"
               }
             }
           }
@@ -144,7 +165,7 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "40450fe5cfb94009",
+  "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
     "TOC.md",
     "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
