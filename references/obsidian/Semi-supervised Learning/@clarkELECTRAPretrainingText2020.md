@@ -7,6 +7,8 @@
 - [[@devlinBERTPretrainingDeep2019]]
 - [[@yoonVIMEExtendingSuccess2020]]
 - [[@vaswaniAttentionAllYou2017]]
+*code:*
+- https://github.com/google-research/electra
 ## Notes 
 - More efficient than BERT.
 - Uses a GAN like network consisting of a generator and descriminiator to destinguish real input tokens from generated syhetic replacements. Instead of masking their method replaces some input with tokens from the proposal distribution. This corrcuption procedure solves the mismatchin BERT where the network during pretraining lerns the (MASK) tokens, which are not present during finetuning (see [[@devlinBERTPretrainingDeep2019]])

@@ -30,9 +30,21 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "76d8eabc03d4d974",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@aktasTradeClassificationAccuracy2014.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -90,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "📥Inbox/@aktasTradeClassificationAccuracy2014.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +130,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "📥Inbox/@aktasTradeClassificationAccuracy2014.md"
               }
             }
           }
@@ -132,17 +144,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "160a03ac0eb0e817",
+  "active": "76d8eabc03d4d974",
   "lastOpenFiles": [
+    "TOC.md",
+    "📥Inbox/@aktasTradeClassificationAccuracy2014.md",
+    "🔗Classical rules/@garleanuDemandBasedOptionPricing2009.md",
     "Semi-supervised Learning/@clarkELECTRAPretrainingText2020.md",
     "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
-    "TOC.md",
     "📥Inbox/@perlinPerformanceTickTest2014.md",
     "📥Inbox/@jurkatisInferringTradeDirections2022.md",
     "🔗Classical rules/@theissenTestAccuracyLee2000.md",
     "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
-    "🔗Classical rules/@chakrabartyTradeClassificationAlgorithms2012.md",
-    "🔗Classical rules/@finucaneDirectTestMethods2000.md",
-    "@finucaneDirectTestMethods2000 1.md"
+    "🔗Classical rules/@chakrabartyTradeClassificationAlgorithms2012.md"
   ]
 }
