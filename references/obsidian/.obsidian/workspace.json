@@ -30,21 +30,9 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "76d8eabc03d4d974",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@aktasTradeClassificationAccuracy2014.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -102,7 +90,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📥Inbox/@aktasTradeClassificationAccuracy2014.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +118,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📥Inbox/@aktasTradeClassificationAccuracy2014.md"
+                "file": "TOC.md"
               }
             }
           }
@@ -144,11 +132,11 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "76d8eabc03d4d974",
+  "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
-    "TOC.md",
-    "📥Inbox/@aktasTradeClassificationAccuracy2014.md",
     "🔗Classical rules/@garleanuDemandBasedOptionPricing2009.md",
+    "TOC.md",
+    "🔗Classical rules/@aktasTradeClassificationAccuracy2014.md",
     "Semi-supervised Learning/@clarkELECTRAPretrainingText2020.md",
     "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
     "📥Inbox/@perlinPerformanceTickTest2014.md",
