@@ -30,9 +30,21 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "40450fe5cfb94009",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -90,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +130,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md"
               }
             }
           }
@@ -132,9 +144,10 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "160a03ac0eb0e817",
+  "active": "40450fe5cfb94009",
   "lastOpenFiles": [
     "TOC.md",
+    "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
     "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
     "Semi-supervised Learning/@leePseudolabelSimpleEfficient 1.md",
     "🍬Implementation/🚀Results/@baptistaRelationPrognosticsPredictor2022.md",
@@ -142,7 +155,6 @@
     "🧠Deep Learning Methods/@hintonImprovingNeuralNetworks2012.md",
     "pre-training.md",
     "semi-supervised.md",
-    "🍬Implementation/🚀Results/@JMLR_v9_vandermaaten08a.md",
-    "🎄Tree-based Methods/Random Forests/@breimanBaggingPredictors1996.md"
+    "🍬Implementation/🚀Results/@JMLR_v9_vandermaaten08a.md"
   ]
 }
