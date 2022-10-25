@@ -64,13 +64,17 @@ Notes 📜
 Notes are stored in the `references` folder in an obsidian vault. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes.
 ![obsidian](references/obsidian/%F0%9F%96%BC%EF%B8%8FMedia/obsidian.jpg)
 
+Time schedule ⌚
+------------
+Link to [tasks and mile stones](https://github.com/KarelZe/thesis/milestones?direction=asc&sort=due_date&state=open).
+
 mastermind board 🥷
 ------------
-Link to [miro board](https://miro.com/app/board/uXjVPPRCa6s=/) (requires login)
+Link to [miro board](https://miro.com/app/board/uXjVPPRCa6s=/) (requires login).
 
 Experiments 🧪
 ------------
-Link to [weights & biases](https://wandb.ai/fbv/thesis) (requires login)
+Link to [weights & biases](https://wandb.ai/fbv/thesis) (requires login).
 
 Final document 🎓
 ------------
