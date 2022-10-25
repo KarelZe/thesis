@@ -4,4 +4,4 @@ year: 2018
 *tags:* #deep-learning #library
 *status:* #📦 
 *related:*
-- [[@prokhorenkovaCatBoostUnbiasedBoosting2019]] (published in same journal, also a library)
+- [[@prokhorenkovaCatBoostUnbiasedBoosting2018]] (published in same journal, also a library)

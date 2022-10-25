@@ -6,7 +6,7 @@ tags :  #supervised-learning #catboost #gbm #decision #target-leakage #gradient_
 status : #📦 
 related: 
 - [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]
-- [[@tibshiraniElementsStatisticalLearning]]
+- [[@hastietrevorElementsStatisticalLearning2009]]
 # Notes
 
 ## Gradient Boosting
@@ -33,7 +33,7 @@ h(\mathrm{x})=\sum_{j=1}^{J} b_{j} \mathbb{1}_{\left\{\mathrm{x} \in R_{j}\right
 $$
 where $R_{j}$ are the disjoint regions corresponding to the leaves of the tree. (p. 2) ($b_j$ is probably some constant / weight.)
 
-They cite [[@tibshiraniElementsStatisticalLearning]] and [[@breimanClassificationRegressionTrees2017]].
+They cite [[@hastietrevorElementsStatisticalLearning2009]] and [[@breimanClassificationRegressionTrees2017]].
 
 ## Gradient Boosting
 

@@ -48,7 +48,7 @@ After $M$ iterations we obtain the final estimate calculated as: $\hat{f}(x)=f_{
 
 
 
-Our explanation is based on [[@tibshiraniElementsStatisticalLearning]].
+Our explanation is based on [[@hastietrevorElementsStatisticalLearning2009]].
 
 
 -   Introduce idea of bootstrapping in bagging [[@breimanBaggingPredictors1996]].

@@ -1,12 +1,12 @@
 # Decision Trees
 
-A decision tree splits the feature space $\mathbb{R}^m$  into several disjoint regions $R$ through a sequence recursive splits. For a binary decision tree a single split leads to two new sub-regions, with their shape being dependent on the attribute used for splitting and the previously performed splits. The tree is grown in size until a minimum threshold for the number of samples within a node or some other stopping criterion applies. ([[@breimanClassificationRegressionTrees2017]][[@tibshiraniElementsStatisticalLearning]]) Trees are applicable to both classification and regression tasks. Our introduction focuses on the regression setting only.
+A decision tree splits the feature space $\mathbb{R}^m$  into several disjoint regions $R$ through a sequence recursive splits. For a binary decision tree a single split leads to two new sub-regions, with their shape being dependent on the attribute used for splitting and the previously performed splits. The tree is grown in size until a minimum threshold for the number of samples within a node or some other stopping criterion applies. ([[@breimanClassificationRegressionTrees2017]][[@hastietrevorElementsStatisticalLearning2009]]) Trees are applicable to both classification and regression tasks. Our introduction focuses on the regression setting only.
 
 A region corresponds to a node in the tree. For each terminal node of the tree or unsplit region, the response variable $f(x)$ is constant.  ([[@breimanClassificationRegressionTrees2017]]) That is, for a tree with $M$ regions the response for $x$ can be modelled as:
 $$
 f(x)=\sum_{m=1}^{M} c_{m} \mathbb{1}\left(x \in R_{m}\right),
 $$
-with $\mathbb{1}$ being the indicator function for region conformance and $c_m$ being the region's constant. [[@tibshiraniElementsStatisticalLearning]]  For a regression case $c_m$ is simply the average over all response variables of this particular region. As $c_m$ is shared among all samples within the region, the estimates of the tree are similar to a histogram approximating the true regression surface, as visualized below:
+with $\mathbb{1}$ being the indicator function for region conformance and $c_m$ being the region's constant. [[@hastietrevorElementsStatisticalLearning2009]]  For a regression case $c_m$ is simply the average over all response variables of this particular region. As $c_m$ is shared among all samples within the region, the estimates of the tree are similar to a histogram approximating the true regression surface, as visualized below:
 
 ![[regression_surface_dt.png]] (see [[@breimanClassificationRegressionTrees2017]])
 

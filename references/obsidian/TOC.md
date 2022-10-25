@@ -418,7 +418,7 @@ When using optuna draw a boxplot. optimal value should lie near the median. Some
 
 Repeat search with different random initializations:
 ![[random-searches-hyperparms.png]]
-(found in [[@grinsztajnWhyTreebasedModels]])
+(found in [[@grinsztajnWhyTreebasedModels2022]])
 ## Evaluation
 ### Feature Importance Measure
 - Feature Importance of Gradient Boosted Trees
@@ -466,7 +466,7 @@ Repeat search with different random initializations:
  - What is the economic intuition?
 
 ![[informative-uniformative-features.png]]
-[[@grinsztajnWhyTreebasedModels]]
+[[@grinsztajnWhyTreebasedModels2022]]
 Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 - Most finance papers e. g., [[@finucaneDirectTestMethods2000]] (+ other examples as reported in expose) use logistic regression to find features that affect the classification most. Poor choice due to linearity assumption? How would one handle categorical variables? If I opt to implement logistic regression, also report $\chi^2$.
 ## Robustness Checks

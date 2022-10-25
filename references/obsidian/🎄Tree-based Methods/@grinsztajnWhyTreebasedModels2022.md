@@ -6,7 +6,7 @@ tags :  #gradient_boosting  #dt #neural_network #transformer
 status : #📥  
 related: 
 - [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]
-- [[@tibshiraniElementsStatisticalLearning]]
+- [[@hastietrevorElementsStatisticalLearning2009]]
 - [[🎄Tree-based Methods/Random Forests/@breimanRandomForests2001]]
 - [[🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020]]
 - [[🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020]]

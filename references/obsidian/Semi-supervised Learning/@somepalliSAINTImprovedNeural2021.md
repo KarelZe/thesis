@@ -8,4 +8,4 @@ year: 2021
 - [[@vaswaniAttentionAllYou2017]]
 - [[@huangTabTransformerTabularData2020]]
 - [[@arikTabNetAttentiveInterpretable2020]]
-- [[@grinsztajnWhyTreebasedModels]]
+- [[@grinsztajnWhyTreebasedModels2022]]

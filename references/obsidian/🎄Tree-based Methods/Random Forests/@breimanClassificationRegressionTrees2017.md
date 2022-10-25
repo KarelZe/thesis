@@ -5,9 +5,9 @@ year: 2017
 tags :  #dt #decision-trees #regression #supervised-learning 
 status : #📦 
 related: 
-- [[@tibshiraniElementsStatisticalLearning]]
+- [[@hastietrevorElementsStatisticalLearning2009]]
 
-Referenced in: [[@prokhorenkovaCatBoostUnbiasedBoosting2019]] [[@tibshiraniElementsStatisticalLearning]]
+Referenced in: [[@prokhorenkovaCatBoostUnbiasedBoosting2018]] [[@hastietrevorElementsStatisticalLearning2009]]
 
 ## Regression Trees
 

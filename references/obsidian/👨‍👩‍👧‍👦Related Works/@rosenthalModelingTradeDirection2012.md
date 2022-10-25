@@ -2,16 +2,18 @@
 title: Modeling Trade Direction
 authors: D. W. R. Rosenthal
 year: 2012
-tags : #rosenthal #trade-classification #lr #tick-rule #quote-rule
-status : #📥
+tags : #rosenthal #trade-classification #lr #tick-rule #quote-rule #logistic-regression #ml 
+status : #📦 
 related:
 - [[@leeInferringTradeDirection1991]]
 - [[@ellisAccuracyTradeClassification2000]]
 - [[@chakrabartyTradeClassificationAlgorithms2007]]
+- [[@aitkenIntradayAnalysisProbability1995]] (also use logistic regression)
+- [[@blazejewskiLocalNonparametricModel2005]] (also use logistic regression)
 
-# Notes 
+## Notes 
 
-# Annotations  
+## Annotations  
 
 “Trade classification is used in many different areas and is thus important to many researchers. For example, some event studies seek to determine the balance of buying and selling in response to a release of information or a governmental action.” ([Rosenthal, 2012, p. 1](zotero://select/library/items/DU2BX4UE)) ([pdf](zotero://open-pdf/library/items/EBGQ4ZWP?page=1&annotation=2SHHU2RD))
 
@@ -29,13 +31,13 @@ related:
 
 “Many studies note that trades are published with non-ignorable delays. Lee and Ready (1991) first suggested a five-second delay (now commonly used) for 1988 data, two seconds for 1987 data, and “a different delay . . . for other time periods”. Ellis et al. (2000) note (Section IV.C) that quotes are updated almost immediately while trades are published with delay2. Therefore, determining the quote prevailing at trade time requires finding quotes preceding the trade by some (unknown) delay” ([Rosenthal, 2012, p. 4](zotero://select/library/items/DU2BX4UE)) ([pdf](zotero://open-pdf/library/items/EBGQ4ZWP?page=4&annotation=799HH579))
 
-## Partial Likelihood
+### Partial Likelihood
 The classification model is formally valid when formulated as a partial likelihood as in Cox (1975) and Wong (1986). Since we are classifying a sequence of trades and conditioning on $\mathcal{F}_t, t$ is not random. The randomness in the (conditional) classification model is due only to (i) the unknown amount of time to look backwards for a quote; and, (ii) the unknown trade classification. Were this not so, we would need to condition on the likelihood of each trade happening at its observed time.
 If $t_i$ is the $i$-th trade time and $\mathcal{G}_{i-1}$ is a sigma-field encapsulating trade classifications $1, \ldots, i-1$, the full likelihood ratio can be decomposed as:
 (5) $\mathcal{L}($ all data $)=\prod_{i=1}^n \mathcal{L}\left(B_{t_i} \mid \mathcal{F}_{t_i}, \mathcal{G}_{i-1}\right) \times \prod_{i=1}^n \mathcal{L}\left(\mathcal{F}_{t_i}, \mathcal{G}_{i-1} \mid \mathcal{F}_{t_{i-1}}, \mathcal{G}_{i-1}\right)$
 For inference we only use the first factor, making this a partial likelihood. We assume $B_{t_i}$ is conditionally independent of $\mathcal{G}_{i-1}$ given $\mathcal{F}_{t_i}$, yielding $\mathcal{L}\left(B_{t_i} \mid \mathcal{F}_{t_i}, \mathcal{G}_{i-1}\right)=\mathcal{L}\left(B_{t_i} \mid \mathcal{F}_{t_i}\right)$
 
-## Model Statement. 
+### Model Statement
 Thus we can now state the (conditional) model:
 $P\left(B_{j t}=\operatorname{Buy} \mid \mathcal{F}_t, c_k, d_{k \ell} ; \theta_o, \kappa_o\right)=\pi_{j t} ;$
 $\pi_{j t}=\operatorname{logit}\left(\eta_{j t}\right) ; \quad$ and ,

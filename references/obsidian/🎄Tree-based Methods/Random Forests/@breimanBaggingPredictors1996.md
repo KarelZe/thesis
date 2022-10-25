@@ -6,7 +6,7 @@ tags :  #bagging #dt #decision-trees
 status : #📥  
 related: 
 - [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]
-- [[@tibshiraniElementsStatisticalLearning]]
+- [[@hastietrevorElementsStatisticalLearning2009]]
 - [[🎄Tree-based Methods/Random Forests/@breimanRandomForests2001]]
 
 Tags: #bagging #dt #decision-trees

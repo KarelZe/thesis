@@ -5,7 +5,7 @@ year: 2001
 tags :  #bagging #boosting #rf #supervised-learning #bootstrap
 status : #📦 
 related: 
-- [[@tibshiraniElementsStatisticalLearning]]
+- [[@hastietrevorElementsStatisticalLearning2009]]
 cited in:
 - [[@banachewiczKaggleBookData2022]]
 
@@ -16,7 +16,7 @@ Growing an ensemble of trees leads to an increase in accuracy.  Popular approach
 
 The common element in all of these procedures is that for the $k$ th tree, a random vector $\Theta_{k}$ is generated, independent of the past random vectors $\Theta_{1, \ldots,} \Theta_{k-1}$ but with the same distribution; and a tree is grown using the training set and $\Theta_{k}$, resulting in a classifier $h\left(\mathbf{x}, \Theta_{k}\right)$ where $\mathbf{x}$ is an input vector. For instance, in bagging the random vector $\Theta$ is generated as the counts in $N$ boxes resulting from $N$ darts thrown at random at the boxes, where $N$ is number of examples in the training set. (...). The nature and dimensionality of $\Theta$ depends on its use in tree construction. (p. 6)
 
-(With Random Forests $\Theta$ would be the random sample the features considered for splitting.) (compare algo in [[@tibshiraniElementsStatisticalLearning]], p. 588)
+(With Random Forests $\Theta$ would be the random sample the features considered for splitting.) (compare algo in [[@hastietrevorElementsStatisticalLearning2009]], p. 588)
 
 After a large number of trees is generated, they vote for the most popular class. We call these procedures random forests. (p.6)
 
@@ -25,7 +25,7 @@ A random forest is a classifier consisting of a collection of tree-structured cl
 
 ## Procedure
 
-At each node  a random selection of features is used to determine the split. The question how many features are considered is important (see also [[@tibshiraniElementsStatisticalLearning]]). For guidance internal estimates of the generalization error, the classifier strength and the dependence are computed.
+At each node  a random selection of features is used to determine the split. The question how many features are considered is important (see also [[@hastietrevorElementsStatisticalLearning2009]]). For guidance internal estimates of the generalization error, the classifier strength and the dependence are computed.
 
 
 ## Advantages:

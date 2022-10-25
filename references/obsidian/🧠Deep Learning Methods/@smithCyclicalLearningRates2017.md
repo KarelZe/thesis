@@ -20,7 +20,7 @@
 ![[cyclical-lr.png]]
 ## Annotations
 
-“It is well known that too small a learning rate will make a training algorithm converge slowly while too large a learning rate will make the training algorithm diverge (see Beningo [[@montavonNeuralNetworksTricks2012]])” ([Smith, 2017, p. 1](zotero://select/library/items/7HMX8QTU)) ([pdf](zotero://open-pdf/library/items/KYLZPI9D?page=1&annotation=PBM87L43))
+“It is well known that too small a learning rate will make a training algorithm converge slowly while too large a learning rate will make the training algorithm diverge (see Beningo)” ([Smith, 2017, p. 1](zotero://select/library/items/7HMX8QTU)) ([pdf](zotero://open-pdf/library/items/KYLZPI9D?page=1&annotation=PBM87L43))
 
 “In addition, this cyclical learning rate (CLR) method practically eliminates the need to tune the learning rate yet achieve near optimal classification accuracy.” ([Smith, 2017, p. 1](zotero://select/library/items/7HMX8QTU)) ([pdf](zotero://open-pdf/library/items/KYLZPI9D?page=1&annotation=KL2GXG4R))
 
