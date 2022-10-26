@@ -274,6 +274,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - **pseudo-labelling:** e. g., [How To Build an Efficient NLP Model – Weights & Biases (wandb.ai)](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) and [[@leePseudolabelSimpleEfficient]]. Requires solving the issue of obtaining soft probablities. Reason why pseudo-labels are a poor idea -> requires change in neural network architecture -> we aim for comparability.
 - For pretraining ofneural net architectures also see argumentation in [[🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021]]
 - See also [[@bahriSCARFSelfSupervisedContrastive2022]], while the paper is not 100 % relevant, it contains interesting citations.
+- How does regularization relate to semi-supervised learning? Don't both aim for the same objective?
 ## Extensions to Gradient Boosted Trees
 - Introduce the notion of probilistic classifiers
 - Possible extension could be [[@yarowskyUnsupervisedWordSense1995]]. See also Sklearn Self-Training Classifier.
@@ -384,7 +385,9 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Don't chase the benchmark, but aim for explainability of the results.
 - compare against https://github.com/jktis/Trade-Classification-Algorithms
 - Classical rules could be implemented using https://github.com/jktis/Trade-Classification-Algorithms
-- Motivate the importance of regularized neural nets with [[@kadraWelltunedSimpleNets2021]] papers. Authors state, that the improvements from regualrization of neural nets are very pronounced and highly significant. Discuss which regularization approaches are applied and why.
+- Motivate the importance of regularized neural nets with [[@kadraWelltunedSimpleNets2021]] papers. Authors state, that the improvements from regualrization of neural nets are very pronounced and highly significant. Discuss which regularization approaches are applied and why.  
+- Similarily, [[@heBagTricksImage2018]] show how they can improve the performance of neural nets for computer vision through "tricks" like lr scheduling.
+- Also see [[@shavittRegularizationLearningNetworks2018]] for regularization in neural networks for tabular data.
 
 ### Training of Supervised Models
 - Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Implement robustness checks (as in [[@grauerOptionTradeClassification2022]]) early on.
@@ -462,7 +465,7 @@ Repeat search with different random initializations:
 ## Results of Semi-Supervised Models
 
 Use $t$-SNE to assess the output of the supervised vs. the semi-supervised train models. See [[@leePseudolabelSimpleEfficient 1]] and [[@banachewiczKaggleBookData2022]] for how to use it.
-See [[@JMLR_v9_vandermaaten08a]] for original paper.
+See [[@vandermaatenVisualizingDataUsing2008]] for original paper.
 ![[t-sne-map.png]]
 
 ## Feature Importance

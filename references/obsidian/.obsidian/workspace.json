@@ -20,18 +20,6 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "4d68daea60cb1e5e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
         ]
       }
@@ -135,15 +123,15 @@
   },
   "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
-    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
-    "🧠Deep Learning Methods/Transformer/@kadraWelltunedSimpleNets2021.md",
+    "🍬Implementation/🚀Results/@vandermaatenVisualizingDataUsing2008.md",
     "TOC.md",
+    "🧠Deep Learning Methods/Transformer/@kadraWelltunedSimpleNets2021.md",
+    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
     "👨‍👩‍👧‍👦Related Works/@fedeniaMachineLearningCorporate2021.md",
     "🔗Classical rules/@hasbrouckTradesQuotesInventories1988.md",
     "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
     "🔗Classical rules/@chakrabartyTradeClassificationAlgorithms2012.md",
     "🔗Classical rules/@chakrabartyEvaluatingTradeClassification2015.md",
-    "❓Questions.md",
-    "archive.org.md"
+    "❓Questions.md"
   ]
 }

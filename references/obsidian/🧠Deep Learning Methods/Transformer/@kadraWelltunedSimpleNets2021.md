@@ -10,6 +10,8 @@
 - [[@hintonImprovingNeuralNetworks2012]] (used for regularization)
 - [[@loshchilovSGDRStochasticGradient2017]] (used for regularization)
 *code:* [https://github.com/releaunifreiburg/WellTunedSimpleNets](https://github.com/releaunifreiburg/WellTunedSimpleNets)
+*review:* https://openreview.net/forum?id=2d34y5bRWxB
+
 # Notes Sebastian Raschka
 -   Using a combination of modern regularization techniques, the authors find that simple multi-layer perceptron (MLP) can outperform both specialized neural network architectures (TabNet) and gradient boosting machines (XGBoost and Catboost)
 -   The MLP base architecture consisted of 9-layers with 512 units each (excluding the output layer) and was tuned with a cosine annealing scheduler.
@@ -23,6 +25,7 @@
 - Authors are transparent about how the results were generated e. g., scaling, train-test-split etc.
 - **caveats:** While regularization achieves remarkable achievements with regard to outperformance of the gradient-boosted trees, no TabTransformer has been covered. To TabNet no regularization techniques were applied due to the effort of implementation.
 - Paper doesn't look into imbalanced data sets or semi-supervised learning. -> Could used to relativize results
+- Paper was rejected from ICLR. see https://openreview.net/forum?id=2d34y5bRWxB for reasons.
 
 ## Annotations
 
