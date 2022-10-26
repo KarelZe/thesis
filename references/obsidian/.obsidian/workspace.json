@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "❓Questions.md",
+                "file": "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
                 "mode": "source",
                 "source": false
               }
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "❓Questions.md",
+                "file": "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "❓Questions.md"
+                "file": "🔗Classical rules/@holthausenEffectLargeBlock1987.md"
               }
             }
           }
@@ -136,15 +136,15 @@
   },
   "active": "9dac31c18a42226b",
   "lastOpenFiles": [
+    "🔗Classical rules/@chakrabartyTradeClassificationAlgorithms2012.md",
+    "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
+    "🔗Classical rules/@chakrabartyEvaluatingTradeClassification2015.md",
     "TOC.md",
+    "❓Questions.md",
     "archive.org.md",
     "www.archive.org.md",
-    "❓Questions.md",
     "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
     "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
-    "Semi-supervised Learning/@leePseudolabelSimpleEfficient 1.md",
-    "🍬Implementation/🚀Results/@baptistaRelationPrognosticsPredictor2022.md",
-    "👨‍👩‍👧‍👦Related Works/@boweNewClassicalBayesian.md",
-    "🧠Deep Learning Methods/@hintonImprovingNeuralNetworks2012.md"
+    "Semi-supervised Learning/@leePseudolabelSimpleEfficient 1.md"
   ]
 }
