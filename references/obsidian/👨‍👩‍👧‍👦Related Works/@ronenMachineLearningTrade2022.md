@@ -4,14 +4,18 @@ year: 2021
 tags :  #trade-classification #lr #tick-rule #quote-rule #random-forest #supervised-learning
 status : #📥
 related: 
-- [[@fedeniaMachineLearningCorporate2021]]
+- [[@fedeniaMachineLearningCorporate2021]] (samey)
 - [[@rosenthalModelingTradeDirection2012]]
 
 # Notes
 
-# Annotations  
+**Problems:**
+- Neural net is rather deep 15 layers. (?) Important hyperparameters (e. g., learning rate) or configurations (e. g., capacity) are unknown. Also, its not known if neural nets were regularized, which is important. (see e. g., [[@kadraWelltunedSimpleNets2021]])
+- Similarily for RF only the number of trees is known, not how it was set.
+- Hyperparam search is unclear.
+- Standardization / normalization of data is unclear -> is known to hinder to hinder learning in neural networks.
 
-(08/10/2022, 12:01:54)
+## Annotations
 
 “As trade initiation information is generally not provided in most intraday transaction databases, trade direction is often inferred from local price and/or quote behavior,” ([Ronen et al., 2022, p. 2](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=3&annotation=Q46E2CX6))
 
