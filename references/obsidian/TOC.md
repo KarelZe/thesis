@@ -197,6 +197,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 ![[tabular-learning-architectures.png]]
 - Nice formulation and overview of the dominance of GBT and deep learning is given in [[@levinTransferLearningDeep2022]]
 
+- Sophisticated neural network architectures might not be required, but rather a mix of regularization approaches to regularize MLPs [[@kadraWelltunedSimpleNets2021]].
+
 ## Gradient Boosted Trees
 - start with "wide" architectures.
 - Include random forests, if too few models?

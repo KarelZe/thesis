@@ -10,3 +10,4 @@ Related:
 - [[@rosenthalModelingTradeDirection2012]]
 
 # Notes
+- Basically identical to [[@ronenMachineLearningTrade2022]]. See Difference.pdf in Zotero for minor differences e. g., different footnotes. Thus, same problems as in [[@ronenMachineLearningTrade2022]].
