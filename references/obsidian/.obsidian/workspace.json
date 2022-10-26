@@ -20,21 +20,8 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "9dac31c18a42226b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -92,7 +79,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +107,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🔗Classical rules/@holthausenEffectLargeBlock1987.md"
+                "file": "TOC.md"
               }
             }
           }
@@ -134,17 +121,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "9dac31c18a42226b",
+  "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
-    "🔗Classical rules/@chakrabartyTradeClassificationAlgorithms2012.md",
+    "🔗Classical rules/@hasbrouckTradesQuotesInventories1988.md",
     "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
+    "🔗Classical rules/@chakrabartyTradeClassificationAlgorithms2012.md",
     "🔗Classical rules/@chakrabartyEvaluatingTradeClassification2015.md",
     "TOC.md",
     "❓Questions.md",
     "archive.org.md",
     "www.archive.org.md",
     "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
-    "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
-    "Semi-supervised Learning/@leePseudolabelSimpleEfficient 1.md"
+    "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md"
   ]
 }
