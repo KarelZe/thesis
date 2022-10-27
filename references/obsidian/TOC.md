@@ -201,6 +201,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 
 - semi-supervised learning with pre-training for tabular data improves feature transfer. Also possible if features differ between the upstream and downstream task. [[@levinTransferLearningDeep2022]] 
 
+
 ## Gradient Boosted Trees
 - start with "wide" architectures.
 - Include random forests, if too few models?
@@ -412,7 +413,14 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Use learning curves from [[#^d50f5d]].
 
 ### Hyperparameter Tuning
+
+- there is a trade-off between robustness of results and the computational effort / search space
+
 - Explain the importance why hyperparam tuning deserves its own chapter. - > even simple architectures can obtain SOTA-results with proper hyperparameter settings. -> See in-depth analysis in [[@melisStateArtEvaluation2017]] (found in [[@kadraWelltunedSimpleNets2021]])
+- [[@melisStateArtEvaluation2017]] investigate hyperparam tuning by plotting validation losses against the hyperparams. 
+- ![[validation-loss-vs-hyperparam.png]]
+- [[@melisStateArtEvaluation2017]] also they try out different seeds.
+- 
 - See e. g., [[@olbrysEvaluatingTradeSide2018]][[@owenHyperparameterTuningPython2022]] for ideas / most adequate application.
 - What optimizer is chosen? Why? Could try out Adam or Adan?
 - Start with something simple like GridSearch. Implement in Optuna, so that one can easily switch between grid search, randomized search, Bayesian search etc. [09_Hyperparameter-Tuning-via-Optuna.ipynb - Colaboratory (google.com)](https://colab.research.google.com/github/PacktPublishing/Hyperparameter-Tuning-with-Python/blob/main/09_Hyperparameter-Tuning-via-Optuna.ipynb#scrollTo=580226e9-cc08-4dc7-846b-914876343071) 

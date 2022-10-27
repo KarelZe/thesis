@@ -14,4 +14,4 @@
 
 “We believe that virtually allsuccessful semi-supervised algorithms utilize thecluster assumption, though most ofthetime indirectly.” ([Chapelle and Zien, 2005, p. 1](zotero://select/library/items/3TNHTXNL)) ([pdf](zotero://open-pdf/library/items/RMGB854L?page=1&annotation=53SUKC66))
 
-“According tothe cluster assumption, the decision boundary should preferably notcutclusters.” ([Chapelle and Zien, 2005, p. 2](zotero://select/library/items/3TNHTXNL)) ([pdf](zotero://open-pdf/library/items/RMGB854L?page=2&annotation=HX2BZLVP))
+“According to the cluster assumption, the decision boundary should preferably notcutclusters.” ([Chapelle and Zien, 2005, p. 2](zotero://select/library/items/3TNHTXNL)) ([pdf](zotero://open-pdf/library/items/RMGB854L?page=2&annotation=HX2BZLVP))

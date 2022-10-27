@@ -9,3 +9,5 @@ year: 2021
 - [[@huangTabTransformerTabularData2020]]
 - [[@arikTabNetAttentiveInterpretable2020]]
 - [[@grinsztajnWhyTreebasedModels2022]]
+*review:*
+- paper was rejected. Comparsion not very rigorous. https://openreview.net/forum?id=nL2lDlsrZU

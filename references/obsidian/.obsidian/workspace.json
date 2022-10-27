@@ -22,36 +22,14 @@
             }
           },
           {
-            "id": "3c652019d46d545d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Semi-supervised Learning/@chapelleSemiSupervisedClassificationLow2005.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "1e66b22add40599a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "❓Questions.md",
+                "file": "📥Inbox/@melisStateArtEvaluation2017.md",
                 "mode": "source",
                 "source": false
-              }
-            }
-          },
-          {
-            "id": "36820f2768a278db",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.0.3"
               }
             }
           }
@@ -85,7 +63,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "@chapel",
+                "query": "meli",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -115,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Semi-supervised Learning/@chapelleSemiSupervisedClassificationLow2005.md",
+                "file": "📥Inbox/@melisStateArtEvaluation2017.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -143,7 +121,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Semi-supervised Learning/@chapelleSemiSupervisedClassificationLow2005.md"
+                "file": "📥Inbox/@melisStateArtEvaluation2017.md"
               }
             }
           }
@@ -154,17 +132,17 @@
     "direction": "horizontal",
     "width": 391.5
   },
-  "active": "6942b2f8be896a2c",
+  "active": "1e66b22add40599a",
   "lastOpenFiles": [
-    "📥Inbox/@levinTransferLearningDeep2022.md",
     "TOC.md",
+    "📥Inbox/@melisStateArtEvaluation2017.md",
+    "🧠Deep Learning Methods/@fiedlerSimpleModificationsImprove2021.md",
+    "Semi-supervised Learning/@somepalliSAINTImprovedNeural2021.md",
+    "🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020.md",
+    "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
+    "Semi-supervised Learning/@chapelleSemiSupervisedClassificationLow2005.md",
+    "📥Inbox/@levinTransferLearningDeep2022.md",
     "🍬Implementation/🚀Results/@vandermaatenVisualizingDataUsing2008.md",
-    "🧠Deep Learning Methods/Transformer/@kadraWelltunedSimpleNets2021.md",
-    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
-    "👨‍👩‍👧‍👦Related Works/@fedeniaMachineLearningCorporate2021.md",
-    "🔗Classical rules/@hasbrouckTradesQuotesInventories1988.md",
-    "🔗Classical rules/@holthausenEffectLargeBlock1987.md",
-    "🔗Classical rules/@chakrabartyTradeClassificationAlgorithms2012.md",
-    "🔗Classical rules/@chakrabartyEvaluatingTradeClassification2015.md"
+    "🧠Deep Learning Methods/Transformer/@kadraWelltunedSimpleNets2021.md"
   ]
 }

@@ -12,6 +12,7 @@
 - The model is first pre-trained on unlabelled data on the Wikipedia and BooksCorpus. This model is then fine-tuned on labelled data.
 - The distinctive feature of BERT is that there is only a minimal difference between the pre-trained architecture and the final downstream architecture.
 - In masked language modelling, simply some percentage of the input takens are masked at random and then those masked tokens are predicted. The finall hidden vectors corresponding to the mask tokens are fed into an output softmax over the vocabulary. To avoid mismatches between pre-training and finet-uning through (mask) tokens, which are not present during fine-tuning they do not always replace "masked" words with a (mask) token. They have different variants: replace the $i$-th token with (mask) 80 % of the times, a random token 10 % of the time, and the unchanged $i$-th token 10 % of the time.
+- MLM is sometimes called **stochastic masking** e. g. in [[@kossenSelfAttentionDatapointsGoing2021]]
 
 ![[bert-architecture.png]]
 # Annotations#
