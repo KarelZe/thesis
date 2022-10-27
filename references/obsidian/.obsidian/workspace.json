@@ -20,21 +20,8 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "1e66b22add40599a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🍬Implementation/🎯Hyperparameter Tuning/@batesCrossvalidationWhatDoes2022.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -93,7 +80,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🍬Implementation/🎯Hyperparameter Tuning/@batesCrossvalidationWhatDoes2022.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -121,7 +108,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🍬Implementation/🎯Hyperparameter Tuning/@batesCrossvalidationWhatDoes2022.md"
+                "file": "TOC.md"
               }
             }
           }
@@ -132,17 +119,17 @@
     "direction": "horizontal",
     "width": 391.5
   },
-  "active": "1e66b22add40599a",
+  "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
+    "📥Inbox/@heBagTricksImage2018.md",
     "TOC.md",
+    "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
+    "🍬Implementation/🎯Hyperparameter Tuning/@batesCrossvalidationWhatDoes2022.md",
     "🎄Tree-based Methods/Gradient Boosting/@caruanaObtainingCalibratedProbabilities.md",
     "🍬Implementation/🔢Preprocessing/Preprocessing.md",
     "GCP.md",
     "📥Inbox/@melisStateArtEvaluation2017.md",
     "🧠Deep Learning Methods/@fiedlerSimpleModificationsImprove2021.md",
-    "Semi-supervised Learning/@somepalliSAINTImprovedNeural2021.md",
-    "🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020.md",
-    "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
-    "Semi-supervised Learning/@chapelleSemiSupervisedClassificationLow2005.md"
+    "Semi-supervised Learning/@somepalliSAINTImprovedNeural2021.md"
   ]
 }
