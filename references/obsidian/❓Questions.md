@@ -6,3 +6,8 @@
 - Discuss what to do with low-quality papers e. g., [[@ronenMachineLearningTrade2022]] or [[@blazejewskiLocalNonparametricModel2005]]? Cite, but be critical? Is it ok to also leave some poor papers out?
 - What to do with [[@hansenApplicationsMachineLearning]]? Thesis does something similar but was not published. Mostly different techniques / different data set / focus on EDA.
 - Discuss citations of pre-prints? Some important concepts in ML have only been published on [archive.org](www.archive.org).
+
+ex = ISE
+all_lead = vorherig egal welche Börse
+BEST_BID / BEST_ASK
+ask_ex

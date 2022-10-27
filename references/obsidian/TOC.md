@@ -199,6 +199,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 
 - Sophisticated neural network architectures might not be required, but rather a mix of regularization approaches to regularize MLPs [[@kadraWelltunedSimpleNets2021]].
 
+- semi-supervised learning with pre-training for tabular data improves feature transfer. Also possible if features differ between the upstream and downstream task. [[@levinTransferLearningDeep2022]] 
+
 ## Gradient Boosted Trees
 - start with "wide" architectures.
 - Include random forests, if too few models?
@@ -365,6 +367,8 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - for visualizations and approaches see [[@zhengFeatureEngineeringMachine]] and [[@butcherFeatureEngineeringSelection2020]]
 - Positional encoding was achieved using $\sin()$ and $\cos()$ transformation.
 - ![[sine_cosine_transform.png]]
+
+- Implementation pattern https://www.linkedin.com/posts/sarah-floris_python-pythonprogramming-cleancode-activity-6990302724584087552-6lzF?utm_source=share&utm_medium=member_android
 ### Train-Test Split
 
 ^d50f5d
