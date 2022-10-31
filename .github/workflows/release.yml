@@ -1,0 +1,18 @@
+# .github/release.yml
+
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+    authors:
+      - octocat
+  categories:
+    - title: Empirical Study ⚗️
+      labels:
+        - code
+    - title: Writing 📖
+      labels:
+        - writing
+    - title: Other Changes
+      labels:
+        - "*"
