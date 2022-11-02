@@ -8,8 +8,9 @@ related:
 - [[@banachewiczKaggleBookData2022]]
 - [[@akibaOptunaNextgenerationHyperparameter2019]]
 - [[@gorishniyRevisitingDeepLearning2021]] (found paper here)
+- [[@mockusApplicationBayesianApproach1994]] (discusses Bayesian search in finding hyperparams)
 
-## Notes
+## Notes📍
 
 - Authors organized the first black-box optimization challenge. Only (local) practice were visible to the participants, whereas the feedback and final problems were not. There was a feedback session similar to a public leaderboard, where participants could learn from similar entries. The authors refer to this as warm starting.
 - Two baselines (TuRBO and Randomized Search) were provided. 61 entries outperformed random search and 23 outperformed TuRBO.
@@ -21,7 +22,7 @@ related:
 	- Warm starting (learning on similar problems) yielded large performance gains.
 	- Ensembling can further improve performance. All of the top-ranking participants used ensembles. Some are conceptionally easy and simple to implement.
 
-## Annotations
+## Annotations 📖
 
 “In black-box optimization we aim to solve the problem minx∈Ω f (x), where f is a computationally expensive black-box function and the domain Ω is commonly a hyper-rectangle.” ([Turner et al., 2021, p. 1](zotero://select/library/items/K424VXLR)) ([pdf](zotero://open-pdf/library/items/RCUYWUTK?page=1&annotation=R64GP3FK))
 
