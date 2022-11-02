@@ -1,0 +1,3 @@
+Adversarial validation can help balance training and testing sets, and improve the model performance on testing set. 
+
+feature importance is used in adversarial validation to filter the most inconsistently distributed features sequentially. However, there is a trade-off for this method between the improvement of generalization performance and losing information by dropping features from the model. The proposed method in this paper can improve the generalization performance of the model to the testing set without losing information

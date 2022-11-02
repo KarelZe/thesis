@@ -331,6 +331,8 @@ if pytorch_init is True:
 - What should be primary target e. g., classification on `NBBO`? -> all exchanges
 - Should the data set remain static or include new samples since publication? Hence, 2017 onwards for the ISE set. -> Focus on ISE 
 - merge data from ise + cboe -> needs features from stock exchanges
+- standardize numerical features and apply ordinal encoding to categorical features, but pass to the model which ones are categorical features similar to [[@borisovDeepNeuralNetworks2022]]. Note that [[@grinsztajnWhyTreebasedModels2022]] only applied quantile transformations to all features, thus not utilize special implementations for categorical variables.
+- Perform [[adversarial_validation]]
 ### CBOE Data Set
 - data comes at a daily frequency
 
