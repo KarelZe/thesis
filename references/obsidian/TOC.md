@@ -63,6 +63,7 @@ Commonly stock trade classifcation algorithms are used
 (see [[@theissenTestAccuracyLee2000]] for more details)
 - Different views on iniatiting party (i. e. [[@odders-whiteOccurrenceConsequencesInaccurate2000]] vs. [[@chakrabartyTradeClassificationAlgorithms2012]]) (see [[@aktasTradeClassificationAccuracy2014]] for more details)
 - Submitters of market orders are called liquidity demanders, while submitters of limit orders stored stored in the book are liquidity providers.
+- The BVC paper ([[@easleyDiscerningInformationTrade2016]]) treats trade classification as a probabilistic trade classificatio nproblem. Incorporate this idea into the classical rules section.
 ### Quote-Rule
 - The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
 - See [[@hasbrouckTradesQuotesInventories1988]] . Might be one of the first to mention the quote rule. It is however not very clearly defined. Paper also discusses some (handwavy) approaches to treat midpoint transactions.
@@ -169,7 +170,7 @@ CLNV-Method is a hybrid of tick and quote rules when transactions prices are clo
 - Introduce the concept of classification as a variant of supervised learning. 
 - Could be supervised if all labels are known
 - Could be semi-supervised if only some of the labels are known. Cover later.
-- Use probabilistic classifier to allow for more in-depth analysis.
+- Use probabilistic classifier to allow for more in-depth analysis. Similar to BVC paper. Also explain why probabilistic clf makes sense -> Opens up new chances for evaluations and extensions. But comes with its own problems (see e. g., decision trees)
 - Search for paper that performed a comparsion between Gradient Boosted Trees and Neural Net on large set of data sets....
 
 ## Selection of Approaches
@@ -283,6 +284,10 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Possible extension could be [[@yarowskyUnsupervisedWordSense1995]]. See also Sklearn Self-Training Classifier.
 - Discuss why probabilities of gradient boosted trees might be missleading [[@arikTabNetAttentiveInterpretable2020]]
 - Problems of tree-based approaches and neural networks in semi-supervised learning. See [[@huangTabTransformerTabularData2020]] or [[@arikTabNetAttentiveInterpretable2020]]and [[@tanhaSemisupervisedSelftrainingDecision2017]]
+
+- See [[@tanhaSemisupervisedSelftrainingDecision2017]] for discussion of self-training in conjunction with decision trees and random forests.
+- pseudocode for self-supervised algorithm can be found in [[@tanhaSemisupervisedSelftrainingDecision2017]].![[pseudocode-selftraining.png]]
+
 ## Extensions to TabNet
 - See [[@huangTabTransformerTabularData2020]] for extensions.
 - For pratical implementation see [Self Supervised Pretraining - pytorch_widedeep (pytorch-widedeep.readthedocs.io)](https://pytorch-widedeep.readthedocs.io/en/latest/pytorch-widedeep/self_supervised_pretraining.html)
@@ -403,7 +408,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 
 ### Training of Supervised Models
 - Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Implement robustness checks (as in [[@grauerOptionTradeClassification2022]]) early on.
-- Use classification methods (*probabilistic classifier*) that can return probabilities instead of class-only for better analysis.
+- Use classification methods (*probabilistic classifier*) that can return probabilities instead of class-only for better analysis. Using probabilistic trade classification rules might have been studied in [[@easleyDiscerningInformationTrade2016]]
 - Interesting notebook about TabNet [Introduction to TabNet - Kfold 10 [TRAINING] | Kaggle](https://www.kaggle.com/code/ludovick/introduction-to-tabnet-kfold-10-training/notebook)
 - Use [Captum · Model Interpretability for PyTorch](https://captum.ai/) to learn what the model picks up as a relevant feature.
 - Try out Stochastic weight averaging for neural net as done [here.](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) or here [Stochastic Weight Averaging in PyTorch](https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/)
