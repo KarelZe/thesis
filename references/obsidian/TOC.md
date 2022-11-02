@@ -372,6 +372,9 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - ![[sine_cosine_transform.png]]
 
 - Implementation pattern https://www.linkedin.com/posts/sarah-floris_python-pythonprogramming-cleancode-activity-6990302724584087552-6lzF?utm_source=share&utm_medium=member_android
+- Think about using a frequency of trade feature or so. Also use order imbalances as features. Came up with this idea when reading [[@aitkenIntradayAnalysisProbability1995]]
+- Some feature ideas like order imbalance could be adapted from [[@aitkenIntradayAnalysisProbability1995]].
+- Positional encode trading time throughout the day.
 ### Train-Test Split
 
 ^d50f5d
@@ -382,6 +385,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Use a stratified train-test-split to maintain the distribution of the target variable.
 - use $k$ fold cross validation if possible (see motivation in e. g. [[@banachewiczKaggleBookData2022]] or [[@batesCrossvalidationWhatDoes2022]])
 - A nice way to visualize that the models do not overfit is to show how much errors vary across the test folds.
+- Think about using a $\chi^2$ test to estimate the similarity between train and test set. Came up with this idea while reading [[@aitkenIntradayAnalysisProbability1995]]. Could help finding features or feature transformations that yield a similar train and test set.
 - Plot learning curves to estimate whether performance will increase with the number of samples. Use it to motivate semi-supervised learning.  [Plotting Learning Curves — scikit-learn 1.1.2 documentation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html) and [Tutorial: Learning Curves for Machine Learning in Python for Data Science (dataquest.io)](https://www.dataquest.io/blog/learning-curves-machine-learning/)
 - On cross-validation read [[@batesCrossvalidationWhatDoes2022]]
 ![[learning-curves-samples.png]]

@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@mockusApplicationBayesianApproach1994.md",
+                "file": "👨‍👩‍👧‍👦Related Works/@aitkenIntradayAnalysisProbability1995.md",
                 "mode": "source",
                 "source": false
               }
@@ -80,8 +80,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -101,7 +100,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📥Inbox/@mockusApplicationBayesianApproach1994.md",
+                "file": "👨‍👩‍👧‍👦Related Works/@aitkenIntradayAnalysisProbability1995.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -129,7 +128,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📥Inbox/@mockusApplicationBayesianApproach1994.md"
+                "file": "👨‍👩‍👧‍👦Related Works/@aitkenIntradayAnalysisProbability1995.md"
               }
             }
           }
@@ -138,20 +137,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "active": "53eda9bb5cff0600",
   "lastOpenFiles": [
+    "📥Inbox/@heBagTricksImage2018.md",
+    "👨‍👩‍👧‍👦Related Works/@aitkenIntradayAnalysisProbability1995.md",
+    "📥Inbox/@levinTransferLearningDeep2022.md",
     "TOC.md",
+    "📥Inbox/@mockusApplicationBayesianApproach1994.md",
     "🎄Tree-based Methods/Gradient Boosting/draft_gbm.md",
     "🍬Implementation/🎯Hyperparameter Tuning/@turnerBayesianOptimizationSuperior2021.md",
-    "📥Inbox/@mockusApplicationBayesianApproach1994.md",
     "Bayesian optimization.md",
     "🎄Tree-based Methods/Gradient Boosting/cat_boost.md",
-    "adversarial_validation.md",
-    "assets/visualization-of-quote-and-tick.png",
-    "📥Inbox/@heBagTricksImage2018.md",
-    "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md"
+    "adversarial_validation.md"
   ]
 }
