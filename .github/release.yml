@@ -12,6 +12,7 @@ changelog:
         - code
     - title: Writing 📖
       labels:
+      
         - writing
     - title: Other Changes
       labels:
