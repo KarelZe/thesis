@@ -64,6 +64,7 @@ Commonly stock trade classifcation algorithms are used
 - Different views on iniatiting party (i. e. [[@odders-whiteOccurrenceConsequencesInaccurate2000]] vs. [[@chakrabartyTradeClassificationAlgorithms2012]]) (see [[@aktasTradeClassificationAccuracy2014]] for more details)
 - Submitters of market orders are called liquidity demanders, while submitters of limit orders stored stored in the book are liquidity providers.
 - The BVC paper ([[@easleyDiscerningInformationTrade2016]]) treats trade classification as a probabilistic trade classificatio nproblem. Incorporate this idea into the classical rules section.
+- BVC is illsuited for my task, as we require to sign each trade? (see [[@panayidesComparingTradeFlow2014]])
 ### Quote-Rule
 - The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
 - See [[@hasbrouckTradesQuotesInventories1988]] . Might be one of the first to mention the quote rule. It is however not very clearly defined. Paper also discusses some (handwavy) approaches to treat midpoint transactions.
@@ -81,7 +82,7 @@ Commonly stock trade classifcation algorithms are used
 	![[tick-rule-formulae-alternative.png]]
 Copied from [[@carrionTradeSigningFast2020]]
 - Sources of error in the tick test, when quotes change.
-- ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000 1]]
+- ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000]]
 - low data requirements, as only transaction data is needed. (see [[@theissenTestAccuracyLee2000]]) Could be good enough though.
 - Tick test can not handle if two trades do not involve market orders e. g. two limit orders. In such a case the tick rule could be applied, but there is ambiguous. (see [[@finucaneDirectTestMethods2000]])
 - [[@perlinPerformanceTickTest2014]] proved that the tick test performs better than random chance. 

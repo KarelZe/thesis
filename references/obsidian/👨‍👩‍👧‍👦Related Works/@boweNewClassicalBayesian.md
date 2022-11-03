@@ -13,6 +13,7 @@
 - As their data set does not include true labels, they study the correlation with the tick rule. Baed on an conclusion made in [[@easleyDiscerningInformationTrade2016]] that the tick rule is problematic in periods of high volatility with imbalances in order flow, the authors conclude that their approach is superior, due to a greater divergence from the tick rule. The authors are aware of the fact that the conclusion has to be taken with care. During normal periods their method and the tick rule are highly correlated.
 - The approach is similar to the BVC method of [[@easleyDiscerningInformationTrade2016]] 
 - They test their proposed trade classification method using gold futures at the CME from May - June 2016 during the time of the brexit referendum.
+
 ## Annotations 📖
 “We propose new methods for estimating the effective bid-ask spread and classifying trading intentions without access to quotes.” ([Bowe et al., 2018, p. 1](zotero://select/library/items/74N2TUYU)) ([pdf](zotero://open-pdf/library/items/UBVF223Y?page=1&annotation=8RJZJHED))
 
