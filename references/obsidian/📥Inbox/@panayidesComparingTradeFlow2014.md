@@ -7,6 +7,6 @@
 - [[@panayidesBulkVolumeClassification2019]] (very similar)
 
 ## Notes 📍
-- No notes necessary. Very similar to [[@panayidesBulkVolumeClassification2019]]
+- No notes necessary. Very similar to [[@panayidesBulkVolumeClassification2019]]. Prefer this work due to being published in a journal with higher reputation.
 
 ## Annotations 📖

@@ -13,5 +13,7 @@ related:
 ## Notes
 
 
+![[tick-rule-reverse-tick-rule.png]]
+
 ## Annotations
 

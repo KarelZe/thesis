@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
+                "file": "Semi-supervised Learning/@tanhaSemisupervisedSelftrainingDecision2017.md",
                 "mode": "source",
                 "source": false
               }
@@ -45,7 +45,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -103,7 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "Semi-supervised Learning/@tanhaSemisupervisedSelftrainingDecision2017.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -131,7 +132,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "Semi-supervised Learning/@tanhaSemisupervisedSelftrainingDecision2017.md"
               }
             }
           }
@@ -142,17 +143,17 @@
     "direction": "horizontal",
     "width": 475.5
   },
-  "active": "160a03ac0eb0e817",
+  "active": "0360eb3a0c16d85d",
   "lastOpenFiles": [
-    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
     "TOC.md",
+    "Semi-supervised Learning/@tanhaSemisupervisedSelftrainingDecision2017.md",
+    "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
+    "semi-supervised.md",
+    "📥Inbox/@panayidesComparingTradeFlow2014.md",
+    "🔗Classical rules/@leeInferringTradeDirection1991.md",
+    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
     "🔗Classical rules/@chakrabartyEvaluatingTradeClassification2015.md",
     "🔗Classical rules/@chakrabartyTradeClassificationAlgorithms2012.md",
-    "👨‍👩‍👧‍👦Related Works/@chakrabartyTradeClassificationAlgorithms2007.md",
-    "📥Inbox/@chakrabartyEvaluatingTradeClassification2015.md",
-    "🍬Implementation/🎯Hyperparameter Tuning/@batesCrossvalidationWhatDoes2022.md",
-    "📥Inbox/@panayidesComparingTradeFlow2014.md",
-    "🔗Classical rules/@hasbrouckTradesQuotesInventories1988.md",
-    "🔗Classical rules/@aktasTradeClassificationAccuracy2014.md"
+    "👨‍👩‍👧‍👦Related Works/@chakrabartyTradeClassificationAlgorithms2007.md"
   ]
 }

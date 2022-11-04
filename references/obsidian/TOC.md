@@ -227,6 +227,9 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 ### Adaptions for Probablistic Classification
 - Explain how the Gradient Boosting Procedure for the regression case, can be extended to the classifcation case
 - Discuss the problem of obtainining good probability estimates from a boosted decision tree. See e. g., [[@caruanaObtainingCalibratedProbabilities]] or [[@friedmanAdditiveLogisticRegression2000]] (Note paper is commenting about boosting, gradient boosting has not been published at the time)
+- Observations in [[@tanhaSemisupervisedSelftrainingDecision2017]] on poor probability estimates are equally applicable.
+- See how it solved in [[@prokhorenkovaCatBoostUnbiasedBoosting2018]]
+- Look into gradient boosting papers that adress the problem. Look in this list: https://github.com/benedekrozemberczki/awesome-gradient-boosting-papers
 ## Transformer Networks
 - Go "deep" instead of wide
 - Explain how neural networks can be adjusted to perform binary classification.
