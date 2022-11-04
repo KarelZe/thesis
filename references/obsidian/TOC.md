@@ -218,6 +218,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Compare how CatBoost, LightGBM and xgboost are different
 - Variants of GBM, comparison: [CatBoost vs. LightGBM vs. XGBoost | by Kay Jan Wong | Towards Data Science](https://towardsdatascience.com/catboost-vs-lightgbm-vs-xgboost-c80f40662924) (e. g., symmetric, balanced trees vs. asymetric trees) or see kaggle book for differences between lightgbm, catboost etc. [[@banachewiczKaggleBookData2022]]
 - Describe details necessary to understand both Gradient Boosting and TabNet.
+- How can missing values be handled in decision trees? (see [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] as a primer)
+  How can categorical data be handled in decision trees? 
 - Round off chapter
 ### Gradient Boosting Procedure
 - Motivation for gradient boosted trees
@@ -327,6 +329,7 @@ if pytorch_init is True:
 ## Data and Data Preparation
 
 - convert data to managable size (see [[Preprocessing]])
+- https://github.com/aperezlebel/benchmark_mv_approaches
 
 ### ISE Data Set
 - focus is on ISE data set
@@ -344,6 +347,7 @@ if pytorch_init is True:
 - merge data from ise + cboe -> needs features from stock exchanges
 - standardize numerical features and apply ordinal encoding to categorical features, but pass to the model which ones are categorical features similar to [[@borisovDeepNeuralNetworks2022]]. Note that [[@grinsztajnWhyTreebasedModels2022]] only applied quantile transformations to all features, thus not utilize special implementations for categorical variables.
 - Perform [[adversarial_validation]]
+- Different imputation appraoches are listed in [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]. Basic observation use approaches that can inherently handle missing values. This is a good tradeoff between performance and prediction quality.
 ### CBOE Data Set
 - data comes at a daily frequency
 
@@ -485,6 +489,7 @@ Repeat search with different random initializations:
 -  For each tuned configuration, we run 15 experiments with different random seeds and report the performance on the test set. For some algorithms, we also report the performance of default configurations without hyperparameter tuning. [[@gorishniyRevisitingDeepLearning2021]]
 - divide sample into zero ticks and non-zero ticks and see how the accuracy behaves. This was e. g. done in [[@finucaneDirectTestMethods2000]]. See also this paper for reasoning on zero tick and non-zero tick trades.
 - Think about stuying the economic impact of false classification trough portfolio construction as done in [[@jurkatisInferringTradeDirections2022]]
+- perform friedman test to compare algorithms. (see [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]])
 ## Results of Supervised Models
 - Results for random classifier
 - What would happen if the classical rules weren't stacked?
@@ -495,6 +500,8 @@ Repeat search with different random initializations:
 (print heatmap with $y$ axis with ask, bid and mid, $x$-axis could be some other criteria e. g. the trade size or none. If LR rule was good fit for options, accuracy should be evenly distributed and green. Visualize accuracy a hue / color)
 - calculate $z$-scores / $z$-statistic of classification accuracies to assess if the results are significant. (see e. g., [[@theissenTestAccuracyLee2000]])
 - provide $p$-values. Compare twitter / linkedin posting of S. Raschka on deep learning paper.
+- When ranking algorithms think about using the onesided Wilcoxon signed-rank test and the Friedman test. (see e. g. , code or practical application in [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]])
+- Study removal of features with high degree of missing values with feature permutation. (see idea / code done in [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]])
 ## Results of Semi-Supervised Models
 
 Use $t$-SNE to assess the output of the supervised vs. the semi-supervised train models. See [[@leePseudolabelSimpleEfficient 1]] and [[@banachewiczKaggleBookData2022]] for how to use it.
