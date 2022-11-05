@@ -16,7 +16,7 @@
 	$$
 	where $\eta_{\min}^i$ and $\eta_{\max }^i$ are ranges for the learning rate, and $T_{c u r}$ accounts for how many epochs have been performed since the last restart. 
 
-![[sgd-warm-restarts.png]]
+![[sgd-warm-restarts 1.png]]
 
 ## Annotations
 

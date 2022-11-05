@@ -37,7 +37,7 @@ Recall from chapter (...) that the estimate $\gamma_{jm}$ is constant for the en
 An improved estimate for $x$ is calculated from the previous estimate by adding the tree, fitted on the residuals as shown in equation (...). The later moves the prediction towards the greatest descent and thus improves the overall prediction.
 
 $$
-f_{m}(x)=f_{m-1}(x)+\nu \sum_{j=1}^{J_{m}} \gamma_{j m} \mathbbm{I}\left(x \in R_{j m}\right).
+f_{m}(x)=f_{m-1}(x)+\nu \sum_{j=1}^{J_{m}} \gamma_{j m} \mathbb{I}\left(x \in R_{j m}\right).
 $$
 To avoid overfitting,  only proportional step towards the negative gradient are taken. The pace is controlled by the learning rate $\nu \in \left(0, 1\right]$. While a small learning rate slows down learning, it allows for more different shaped trees to attack the residuals. (james)
 

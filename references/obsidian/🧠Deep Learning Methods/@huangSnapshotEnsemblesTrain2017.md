@@ -13,7 +13,7 @@
 - It takes roughly the same time to train an ensemble as it would take to train a single neural network.
 - Paper contains good references to other techniques such as #dropout
 
-![[visualization-snapshot-ensembles.png]]
+![[visualization-snapshot-ensembles 1.png]]
 
 # Annotations
 

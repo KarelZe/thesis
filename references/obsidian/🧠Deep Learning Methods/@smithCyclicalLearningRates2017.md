@@ -17,7 +17,7 @@
 - paper is predecessor to [[@loshchilovSGDRStochasticGradient2017]]
 - Paper contains some practical advice to set all hyperparameters. Tests are performed in computer vision domain, however.
 
-![[cyclical-lr.png]]
+![[cyclical-lr 1.png]]
 ## Annotations
 
 “It is well known that too small a learning rate will make a training algorithm converge slowly while too large a learning rate will make the training algorithm diverge (see Beningo)” ([Smith, 2017, p. 1](zotero://select/library/items/7HMX8QTU)) ([pdf](zotero://open-pdf/library/items/KYLZPI9D?page=1&annotation=PBM87L43))
