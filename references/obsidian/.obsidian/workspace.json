@@ -27,13 +27,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@shavittRegularizationLearningNetworks2018.md",
+                "file": "🔗Classical rules/@leeInferringTradeDirection1991.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -91,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "🔗Classical rules/@leeInferringTradeDirection1991.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -119,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "🔗Classical rules/@leeInferringTradeDirection1991.md"
               }
             }
           }
@@ -130,17 +131,17 @@
     "direction": "horizontal",
     "width": 255.5
   },
-  "active": "160a03ac0eb0e817",
+  "active": "8f6606bd005730a8",
   "lastOpenFiles": [
-    "📥Inbox/@shavittRegularizationLearningNetworks2018.md",
     "TOC.md",
+    "🔗Classical rules/@leeInferringTradeDirection1991.md",
+    "Semi-supervised Learning/@somepalliSAINTImprovedNeural2021.md",
+    "📥Inbox/@shavittRegularizationLearningNetworks2018.md",
     "📥Inbox/@melisStateArtEvaluation2017.md",
     "🍬Implementation/🔢Preprocessing/@perez-lebelBenchmarkingMissingvaluesApproaches2022.md",
     "Semi-supervised Learning/@tanhaSemisupervisedSelftrainingDecision2017.md",
     "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md",
     "semi-supervised.md",
-    "📥Inbox/@panayidesComparingTradeFlow2014.md",
-    "🔗Classical rules/@leeInferringTradeDirection1991.md",
-    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md"
+    "📥Inbox/@panayidesComparingTradeFlow2014.md"
   ]
 }
