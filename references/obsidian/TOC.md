@@ -432,6 +432,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - try cyclic learning rates https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.CyclicLR.html
 - cycling procedure was proposed in [[@loshchilovSGDRStochasticGradient2017]] and [[@smithCyclicalLearningRates2017]]
 - Test if buys and sells are *really* imbalanced, as indicated by [[@easleyOptionVolumeStock1998]]. Might require up-or downsampling.
+- For implementation see https://www.learnpytorch.io/07_pytorch_experiment_tracking/
 ### Training of Semi-Supervised Models
 - Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 
 - Use learning curves from [[#^d50f5d]].
@@ -443,8 +444,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Explain the importance why hyperparam tuning deserves its own chapter. - > even simple architectures can obtain SOTA-results with proper hyperparameter settings. -> See in-depth analysis in [[@melisStateArtEvaluation2017]] (found in [[@kadraWelltunedSimpleNets2021]])
 - [[@melisStateArtEvaluation2017]] investigate hyperparam tuning by plotting validation losses against the hyperparams. 
 - ![[validation-loss-vs-hyperparam.png]]
-- [[@melisStateArtEvaluation2017]] also they try out different seeds.
-- 
+- [[@melisStateArtEvaluation2017]] also they try out different seeds. Follow their recommendations.
 - See e. g., [[@olbrysEvaluatingTradeSide2018]][[@owenHyperparameterTuningPython2022]] for ideas / most adequate application.
 - What optimizer is chosen? Why? Could try out Adam or Adan?
 - Start with something simple like GridSearch. Implement in Optuna, so that one can easily switch between grid search, randomized search, Bayesian search etc. [09_Hyperparameter-Tuning-via-Optuna.ipynb - Colaboratory (google.com)](https://colab.research.google.com/github/PacktPublishing/Hyperparameter-Tuning-with-Python/blob/main/09_Hyperparameter-Tuning-via-Optuna.ipynb#scrollTo=580226e9-cc08-4dc7-846b-914876343071) 
@@ -462,6 +462,9 @@ When using optuna draw a boxplot. optimal value should lie near the median. Some
 Repeat search with different random initializations:
 ![[random-searches-hyperparms.png]]
 (found in [[@grinsztajnWhyTreebasedModels2022]])
+
+Show differences from different initializations using a violin plot. (suggested in [[@melisStateArtEvaluation2017]])
+
 ## Evaluation
 ### Feature Importance Measure
 - Feature Importance of Gradient Boosted Trees
