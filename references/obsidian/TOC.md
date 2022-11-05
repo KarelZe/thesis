@@ -69,21 +69,21 @@ Commonly stock trade classifcation algorithms are used
 ### Quote-Rule
 - The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
 - See [[@hasbrouckTradesQuotesInventories1988]] . Might be one of the first to mention the quote rule. It is however not very clearly defined. Paper also discusses some (handwavy) approaches to treat midpoint transactions.
-- ![[formula-quote-rule.png]]
+- ![[formula-quote-rule 1.png]]
 	Adapted from [[@olbrysEvaluatingTradeSide2018]]. Rewrite to formula
-- ![[quote-rule-alternative.png]]
+- ![[quote-rule-alternative 1.png]]
 (copied from [[@carrionTradeSigningFast2020]])
 
 ### Tick Test
 - Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-iniated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000]] or [[@leeInferringTradeDirection1991]] for similar framing)
 - Consider  for citation [[@leeInferringTradeDirection1991]] .
 - One of the first works who mention the tick test is [[@holthausenEffectLargeBlock1987]] (referred to as tick classification rule) or [[@hasbrouckTradesQuotesInventories1988]] (referred to as transaction rule)
-- ![[formula-tick-rule.png]]
+- ![[formula-tick-rule 1.png]]
 	Adapted from [[@olbrysEvaluatingTradeSide2018]]
-	![[tick-rule-formulae-alternative.png]]
+	![[tick-rule-formulae-alternative 1.png]]
 Copied from [[@carrionTradeSigningFast2020]]
 - Sources of error in the tick test, when quotes change.
-- ![[missclassification-trade-rule.png]] [[@finucaneDirectTestMethods2000]]
+- ![[missclassification-trade-rule 1.png]] [[@finucaneDirectTestMethods2000]]
 - low data requirements, as only transaction data is needed. (see [[@theissenTestAccuracyLee2000]]) Could be good enough though.
 - Tick test can not handle if two trades do not involve market orders e. g. two limit orders. In such a case the tick rule could be applied, but there is ambiguous. (see [[@finucaneDirectTestMethods2000]])
 - [[@perlinPerformanceTickTest2014]] proved that the tick test performs better than random chance. 
@@ -116,13 +116,13 @@ Copied from [[@carrionTradeSigningFast2020]]
 - What do we find, if we compare the rules 
 
 **Interesting observations:**
-![[visualization-of-quote-and-tick.png]]
+![[visualization-of-quote-and-tick 1.png]]
 (image copied from [[@poppeSensitivityVPINChoice2016]]) 
 - Interestingly, researchers gradually segment the decision surface starting with quote and tick rule, continuing with LR, EMO and CLNV. This is very similar to what is done in a decision tree. Could be used to motivate decision trees.
 - All the hybrid methods could be considered as an ensemble with some sophisticated weighting scheme (look up the correct term) -> In recommender the hybrid recommender is called switching.
 - Current hybrid approaches use stacking ([[@grauerOptionTradeClassification2022]] p. 11). Also, due to technical limitations. Why not try out the majority vote/voting classifier with a final estimator? Show how this relates to ML.
 - In stock markets applying those filters i. e. going from tick and quote rule did not always improve classification accuracies. The work of [[@finucaneDirectTestMethods2000]] raises critique about it in the stock market.
-![[pseudocode-of-algorithms.png]]
+![[pseudocode-of-algorithms 1.png]]
 (found in [[@jurkatisInferringTradeDirections2022]]). Overly complex description but helpful for implementation?
 ### Lee and Ready Algorithm
 
@@ -132,7 +132,7 @@ Copied from [[@carrionTradeSigningFast2020]]
 - combination of quote and tick rule. Use tick rule to classify trades at midpoint and use the quote rule else where
 
 - LR algorithm
-![[lr-algorithm-formulae.png]]
+![[lr-algorithm-formulae 1.png]]
 - in the original paper the offset between transaction prices and quotes is set to 5 sec [[@leeInferringTradeDirection1991]]. Subsequent research like [[@bessembinderIssuesAssessingTrade2003]] drop the adjustment. Researchers like [[@carrionTradeSigningFast2020]] perform robustness checks with different, subsequent delays in the robustness checks.
 - See [[@carrionTradeSigningFast2020]] for comparsions in the stock market at different frequencies. The higher the frequency, the better the performance of LR. Similar paper for stock market [[@easleyFlowToxicityLiquidity2012]]
 - Also five second delay isn't universal and not even stated so in the paper. See the following comment from [[@rosenthalModelingTradeDirection2012]]
@@ -150,16 +150,16 @@ Copied from [[@carrionTradeSigningFast2020]]
 - combination of quote rule and tick rule. Use tick rule to classify all trades except trades at hte ask and bid at which points the quote rule is applied. A trade is classified as  abuy (sell) if it is executed at the ask (bid).
 - turns the principle of LR up-side-down: apply the tick rule to all trades except those at the best bid and ask.
 - EMO Rule
-![[emo-rule-formulae.png]]
+![[emo-rule-formulae 1.png]]
 - classify trades by the quote rule first and then tick rule
 - Based on the observation that trades inside the quotes are poorly classified. Proposed algorithm can improve
 - They perform logistic regression to determin that e. g. , trade size, firm size etc. determines the proablity of correct classification most
 - cite from [[@ellisAccuracyTradeClassification2000]]
 ### Chakrabarty-Li-Nguyen-Van-Ness Method
 CLNV-Method is a hybrid of tick and quote rules when transactions prices are closer to the ask and bid, and the the tick rule when transaction prices are closer to the midpoint [[@chakrabartyTradeClassificationAlgorithms2007]]
-- show that CLNV, was invented after the ER and EMO. Thus the improvement, comes from a higher segmented decision surface. (also see graphics [[visualization-of-quote-and-tick.png]])
+- show that CLNV, was invented after the ER and EMO. Thus the improvement, comes from a higher segmented decision surface. (also see graphics [[visualization-of-quote-and-tick 1.png]])
 
-![[clnv-method-visualization.png]]
+![[clnv-method-visualization 1.png]]
 (image copied from [[@chakrabartyTradeClassificationAlgorithms2007]])
 - replace with clear formula
 - for success rate and motivation see  [[@chakrabartyTradeClassificationAlgorithms2007]]
@@ -198,12 +198,12 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Choose neural network architectures, that are tailored towards tabular data.
 - Challenges of learning of tabular data can be found in [[@borisovDeepNeuralNetworks2022]] e. g. both 
 - Taxonomy of approaches can be found in [[@borisovDeepNeuralNetworks2022]] 
-![[tabular-learning-architectures.png]]
-- Nice formulation and overview of the dominance of GBT and deep learning is given in [[@levinTransferLearningDeep2022]]
+![[tabular-learning-architectures 1.png]]
+- Nice formulation and overview of the dominance of GBT and deep learning is given in [[@levinTransferLearningDeep2022 1]]
 
 - Sophisticated neural network architectures might not be required, but rather a mix of regularization approaches to regularize MLPs [[@kadraWelltunedSimpleNets2021]].
 
-- semi-supervised learning with pre-training for tabular data improves feature transfer. Also possible if features differ between the upstream and downstream task. [[@levinTransferLearningDeep2022]] 
+- semi-supervised learning with pre-training for tabular data improves feature transfer. Also possible if features differ between the upstream and downstream task. [[@levinTransferLearningDeep2022 1]] 
 - reasons why deep learning on tabular data is challenging [[@shavittRegularizationLearningNetworks2018]] (use more as background citation)
 
 ## Gradient Boosted Trees
@@ -365,7 +365,7 @@ if pytorch_init is True:
 - Study correlations between variables
 - Remove highly correlated features as they also pose problems for feature importance calculation (e. g. feature permutation)
 - Plot KDE plot of tick test, quote test...
-![[kde-tick-rule.png]]
+![[kde-tick-rule 1.png]]
 Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any size with a single line of code. Created by Ram Seshadri. Collaborators Welcome. Permission Granted upon Request. (github.com)](https://github.com/AutoViML/AutoViz) and [lmcinnes/umap: Uniform Manifold Approximation and Projection (github.com)](https://github.com/lmcinnes/umap)
 - The approach of [[@grauerOptionTradeClassification2022]] matches the LiveVol data set, only if there is a matching volume on buyer or seller side. Results in 40 % reconstruction rate [[@grauerOptionTradeClassification2022]](p. 9). 
 - In [[@easleyOptionVolumeStock1998]] CBOE options are more often actively bought than sold (53 %). Also, the number of trades at the midpoints is decreasing over time [[@easleyOptionVolumeStock1998]]. Thus the authors reason, that classification with quote data should be sufficient. Compare this with my sample!
@@ -384,7 +384,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - For imputation look into [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]
 - for visualizations and approaches see [[@zhengFeatureEngineeringMachine]] and [[@butcherFeatureEngineeringSelection2020]]
 - Positional encoding was achieved using $\sin()$ and $\cos()$ transformation.
-- ![[sine_cosine_transform.png]]
+- ![[sine_cosine_transform 1.png]]
 - [[@ronenMachineLearningTrade2022]] suggest to use models that can handle time series components. This would limit our choices. Thus we use feature engineering to induce a notion of time into our models.
 
 - Implementation pattern https://www.linkedin.com/posts/sarah-floris_python-pythonprogramming-cleancode-activity-6990302724584087552-6lzF?utm_source=share&utm_medium=member_android
@@ -405,7 +405,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Think about using a $\chi^2$ test to estimate the similarity between train and test set. Came up with this idea while reading [[@aitkenIntradayAnalysisProbability1995]]. Could help finding features or feature transformations that yield a similar train and test set.
 - Plot learning curves to estimate whether performance will increase with the number of samples. Use it to motivate semi-supervised learning.  [Plotting Learning Curves — scikit-learn 1.1.2 documentation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html) and [Tutorial: Learning Curves for Machine Learning in Python for Data Science (dataquest.io)](https://www.dataquest.io/blog/learning-curves-machine-learning/)
 - On cross-validation read [[@batesCrossvalidationWhatDoes2022]]
-![[learning-curves-samples.png]]
+![[learning-curves-samples 1.png]]
 
 ## Training and Tuning
 - Do less alchemy and more understanding [Ali Rahimi's talk at NIPS(NIPS 2017 Test-of-time award presentation) - YouTube](https://www.youtube.com/watch?v=Qi1Yry33TQE)
@@ -443,7 +443,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 
 - Explain the importance why hyperparam tuning deserves its own chapter. - > even simple architectures can obtain SOTA-results with proper hyperparameter settings. -> See in-depth analysis in [[@melisStateArtEvaluation2017]] (found in [[@kadraWelltunedSimpleNets2021]])
 - [[@melisStateArtEvaluation2017]] investigate hyperparam tuning by plotting validation losses against the hyperparams. 
-- ![[validation-loss-vs-hyperparam.png]]
+- ![[validation-loss-vs-hyperparam 1.png]]
 - [[@melisStateArtEvaluation2017]] also they try out different seeds. Follow their recommendations.
 - See e. g., [[@olbrysEvaluatingTradeSide2018]][[@owenHyperparameterTuningPython2022]] for ideas / most adequate application.
 - What optimizer is chosen? Why? Could try out Adam or Adan?
@@ -455,12 +455,12 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - For implementations on tab transformer, tabnet and tabmlp see: pytorch wide-deep package.
 - for most important hyperparams in litegbm, catboost etc. (see [[@banachewiczKaggleBookData2022]])
 - Visualize training and validation curves (seimilar to [3.4. Validation curves: plotting scores to evaluate models — scikit-learn 1.1.2 documentation](https://scikit-learn.org/stable/modules/learning_curve.html))
-![[sample-validation-curve.png]]
+![[sample-validation-curve 1.png]]
 When using optuna draw a boxplot. optimal value should lie near the median. Some values should be outside the IQR.
-![[optuna-as-boxplot.png]]
+![[optuna-as-boxplot 1.png]]
 
 Repeat search with different random initializations:
-![[random-searches-hyperparms.png]]
+![[random-searches-hyperparms 1.png]]
 (found in [[@grinsztajnWhyTreebasedModels2022]])
 
 Show differences from different initializations using a violin plot. (suggested in [[@melisStateArtEvaluation2017]])
@@ -499,7 +499,7 @@ Show differences from different initializations using a violin plot. (suggested 
 - Confusion matrix
 - ROC curve. See e. g., [this thread](https://stackoverflow.com/a/38467407) for drawing ROC curves
 
-![[visualize-classical-rules-vs-ml.png]]
+![[visualize-classical-rules-vs-ml 1.png]]
 (print heatmap with $y$ axis with ask, bid and mid, $x$-axis could be some other criteria e. g. the trade size or none. If LR rule was good fit for options, accuracy should be evenly distributed and green. Visualize accuracy a hue / color)
 - calculate $z$-scores / $z$-statistic of classification accuracies to assess if the results are significant. (see e. g., [[@theissenTestAccuracyLee2000]])
 - provide $p$-values. Compare twitter / linkedin posting of S. Raschka on deep learning paper.
@@ -509,7 +509,7 @@ Show differences from different initializations using a violin plot. (suggested 
 
 Use $t$-SNE to assess the output of the supervised vs. the semi-supervised train models. See [[@leePseudolabelSimpleEfficient 1]] and [[@banachewiczKaggleBookData2022]] for how to use it.
 See [[@vandermaatenVisualizingDataUsing2008]] for original paper.
-![[t-sne-map.png]]
+![[t-sne-map 1.png]]
 
 ## Feature Importance
 - local vs. global attention
@@ -519,7 +519,7 @@ See [[@vandermaatenVisualizingDataUsing2008]] for original paper.
  - How do they selected features relate to what is being used in classical formulas? (see [[#^ce4ff0]]) Could a hybrid formula be derived from the selection by the algorithm?
  - What is the economic intuition?
 
-![[informative-uniformative-features.png]]
+![[informative-uniformative-features 1.png]]
 [[@grinsztajnWhyTreebasedModels2022]]
 Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 - Most finance papers e. g., [[@finucaneDirectTestMethods2000]] (+ other examples as reported in expose) use logistic regression to find features that affect the classification most. Poor choice due to linearity assumption? How would one handle categorical variables? If I opt to implement logistic regression, also report $\chi^2$.
@@ -531,7 +531,7 @@ Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 - Are there certain types of options that perform esspecially poor?
 - Confusion matrix
 - create kde plots to investigate misclassified samples further
-- ![[kde-plot-results.png]]
+- ![[kde-plot-results 1.png]]
 # 💣Discussion
 - What does it mean? Point out limitations and e. g., managerial implications or future impact.
 - How do wide models compare to deep models
