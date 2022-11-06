@@ -80,6 +80,7 @@ Link to [weights & biases](https://wandb.ai/fbv/thesis) (requires login).
 Computing resources ☄️
 ------------
 Link to [runpod](https://www.runpod.io/console/pods) (requires login).
+Link to [gcp](https://console.cloud.google.com/welcome?project=flowing-mantis-239216) (requires login).
 
 Final document 🎓
 ------------
