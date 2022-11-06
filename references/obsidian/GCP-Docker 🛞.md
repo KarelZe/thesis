@@ -1,5 +1,14 @@
 
+## Steps to configure pod
+- vscode extensions
+- install dependencies
+- git config username and email
+- `git clone https://github.com/KarelZe/thesis.git`
+- set up wandb in `./root/.netrc`
+- set up google auth token in `/root/.config/gcloud/application_default_credentials.json`
+- start python script
 
+## Add data from Onedrive to GCP
 In Google Cloud Platform Console:
 
 f the file is bigger than 4.6 GB you can still do it but you need to mount the bucket in your Cloud Shell using gcsfuse:
@@ -31,7 +40,7 @@ wget "https://public.am.files.1drv.com/y4mknFRQq6J1y2ZpJATEx-XFs19E8AsgP43fWyzKk
 ```
 
 
-## Hashes
+## Hashes of files
 ```
 2907e9a03f91a202b17e3a5779e90be9d11f8515  matched_ise_quotes.csv
 ```

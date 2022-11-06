@@ -20,6 +20,8 @@ Commonly stock trade classifcation algorithms are used
 
 # Introduction
 
+- "The validity of many ecomnomic studies hinges on the ability to accuractely classify trades as buyer or seller-initiated." (found in [[@odders-whiteOccurrenceConsequencesInaccurate2000]])
+
 - see  `writing-a-good-introduction.pdf`
 - trade site classification matters for several reasons, market liqudity measures, short sells, study of bid-ask-spreads.
 - Where is trade side classification applied? Why is it important? Do citation search.
@@ -33,6 +35,7 @@ Commonly stock trade classifcation algorithms are used
 
 - [[@rosenthalModelingTradeDirection2012]] lists fields where trade classification is used and what the impact of wrongly classified trades is.
 - The extent to which inaccurate trade classification biases empirical research dependes on whether misclassifications occur randomly or systematically [[@theissenTestAccuracyLee2000]].
+- There is no common sense of who is the iniator of a trade. See discussion in [[@odders-whiteOccurrenceConsequencesInaccurate2000]]
 - over time proposed methods applied more filters / got more sophisticated but didn't substainly improve im some cases. See e. g., [[@finucaneDirectTestMethods2000]] Time to switch to another paradigma and let the data speak?
 - Works that require trade side classification in option markets:
 	- [[@muravyevOrderFlowExpected2016]]
@@ -264,6 +267,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - See paper [[@huangTabTransformerTabularData2020]]
 - TabTransformer can't capture correlations between categorical and continous features. See [[🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021]]
 - Investigate whether my dataset even profits from this type of architecture?
+- See about embedding continous features in [[@somepalliSAINTImprovedNeural2021]]
 ### Extensions in FT-Transformer
 - Variant of the classical transformer, but for tabular data. Published in [[@gorishniyRevisitingDeepLearning2021]]
 - Firstly, Feature Tokenizer transforms features to embeddings. The embeddings are then processed by the Transformer module and the final representation of the (CLS) token is used for prediction.
@@ -330,6 +334,8 @@ if pytorch_init is True:
 
 - convert data to managable size (see [[Preprocessing]])
 - https://github.com/aperezlebel/benchmark_mv_approaches
+- https://www.runpod.io/gpu-instance/pricing
+- https://lambdalabs.com/service/gpu-cloud
 
 ### ISE Data Set
 - focus is on ISE data set
@@ -348,6 +354,7 @@ if pytorch_init is True:
 - standardize numerical features and apply ordinal encoding to categorical features, but pass to the model which ones are categorical features similar to [[@borisovDeepNeuralNetworks2022]]. Note that [[@grinsztajnWhyTreebasedModels2022]] only applied quantile transformations to all features, thus not utilize special implementations for categorical variables.
 - Perform [[adversarial_validation]]
 - Different imputation appraoches are listed in [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]. Basic observation use approaches that can inherently handle missing values. This is a good tradeoff between performance and prediction quality.
+- For implementation of permutation importance see https://www.rasgoml.com/feature-engineering-tutorials/how-to-generate-feature-importance-plots-using-catboost
 ### CBOE Data Set
 - data comes at a daily frequency
 
@@ -493,6 +500,7 @@ Show differences from different initializations using a violin plot. (suggested 
 - divide sample into zero ticks and non-zero ticks and see how the accuracy behaves. This was e. g. done in [[@finucaneDirectTestMethods2000]]. See also this paper for reasoning on zero tick and non-zero tick trades.
 - Think about stuying the economic impact of false classification trough portfolio construction as done in [[@jurkatisInferringTradeDirections2022]]
 - perform friedman test to compare algorithms. (see [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]])
+- See [[@odders-whiteOccurrenceConsequencesInaccurate2000]] she differentiates between a systematic and non-systematic error and studies the impact on the results in other studies. She uses the terms bias and noise. She also performs several robustness checks to see if the results can be maintained at different trade sizes etc.
 ## Results of Supervised Models
 - Results for random classifier
 - What would happen if the classical rules weren't stacked?
@@ -523,6 +531,7 @@ See [[@vandermaatenVisualizingDataUsing2008]] for original paper.
 [[@grinsztajnWhyTreebasedModels2022]]
 Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 - Most finance papers e. g., [[@finucaneDirectTestMethods2000]] (+ other examples as reported in expose) use logistic regression to find features that affect the classification most. Poor choice due to linearity assumption? How would one handle categorical variables? If I opt to implement logistic regression, also report $\chi^2$.
+- Think about approximating SHAP values on a sample or using some improved implementation like https://github.com/linkedin/FastTreeSHAP
 ## Robustness Checks
 - LR-algorithm (see [[#^370c50]]) require an offset between the trade and quote. How does the offset affect the results? Do I even have the metric at different offsets?
 - Perform binning like in [[@grauerOptionTradeClassification2022]]
