@@ -22,12 +22,12 @@
             }
           },
           {
-            "id": "5e5352ad65579d19",
+            "id": "4117c8803c59f5c7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/@heBagTricksImage2018.md",
+                "file": "👨‍👩‍👧‍👦Related Works/@odders-whiteOccurrenceConsequencesInaccurate2000.md",
                 "mode": "source",
                 "source": false
               }
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🧠Deep Learning Methods/@heBagTricksImage2018.md",
+                "file": "👨‍👩‍👧‍👦Related Works/@odders-whiteOccurrenceConsequencesInaccurate2000.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🧠Deep Learning Methods/@heBagTricksImage2018.md"
+                "file": "👨‍👩‍👧‍👦Related Works/@odders-whiteOccurrenceConsequencesInaccurate2000.md"
               }
             }
           }
@@ -131,17 +131,17 @@
     "direction": "horizontal",
     "width": 255.5
   },
-  "active": "5e5352ad65579d19",
+  "active": "4117c8803c59f5c7",
   "lastOpenFiles": [
-    "TOC.md",
-    "🖼️Media/visualize-classical-rules-vs-ml 1.png",
-    "🧠Deep Learning Methods/@shavittRegularizationLearningNetworks2018.md",
-    "🎄Tree-based Methods/@provostTreeInductionProbabilityBased.md",
-    "🍬Implementation/🎯Hyperparameter Tuning/@melisStateArtEvaluation2017.md",
     "🔗Classical rules/@leeInferringTradeDirection1991.md",
-    "Semi-supervised Learning/@somepalliSAINTImprovedNeural2021.md",
-    "🍬Implementation/🔢Preprocessing/@perez-lebelBenchmarkingMissingvaluesApproaches2022.md",
-    "Semi-supervised Learning/@tanhaSemisupervisedSelftrainingDecision2017.md",
-    "Semi-supervised Learning/@yarowskyUnsupervisedWordSense1995.md"
+    "🔗Classical rules/@leeInferringInvestorBehavior2000.md",
+    "👨‍👩‍👧‍👦Related Works/@odders-whiteOccurrenceConsequencesInaccurate2000.md",
+    "👨‍👩‍👧‍👦Related Works/@hansenApplicationsMachineLearning.md",
+    "TOC.md",
+    "GCP-Docker 🛞.md",
+    "pre-training.md",
+    "👨‍👩‍👧‍👦Related Works/@aitkenIntradayAnalysisProbability1995.md",
+    "❓Questions.md",
+    "🧠Deep Learning Methods/@heBagTricksImage2018.md"
   ]
 }

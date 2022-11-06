@@ -12,13 +12,14 @@ related:
 
 ## Notes
 - Most cited paper in journal of finance.
-- Authors propose the LR algorithm to classify individual trades as market buys and sell orders using intraday trade and quote data. Use quote rule in general but apply tick rule to trades at the midpoint spread.
+- Authors propose the LR algorithm to classify individual trades as market buys and sell orders using intraday trade / execution prices and quote data. The LR algorithm fuses two commonly used algorithms. Use quote rule in general (due to performance) but apply tick rule to trades at the midpoint spread.
 - Authors show that the tick test performs alone performs remarkably well, if closer to the bid or ask, but so does the quote rule. Quote rule requires however the tick rule to assign midpoint trades.
-- They identify the two problems with the common approach of comparing trade prices with quote prices at the time of trade. First, quotes are often recorded ahead of the trade, that triggered them and second that trades are often inside the spread.
+- They identify the two problems with the common approach of comparing trade prices with quote prices at the time of trade. First, quotes are often recorded before the trade, that triggered them and second that trades are often inside the spread.
 - To reduce the misclassifications they propose to use an offset of 5 sec. when comparing the trade and the quote. For trades inside the spread they suggest to use the tick test. They demonstrate that the effective spread is often on one side of the quoted spread due to standing order.
-- The tick test is a techniques that infers the trade direction by comparing the trade price aginst the price of preceding trades. Four categories are possible: uptick, downtick, zero-uptick, and zero-downtick.
+- The tick test is a techniques that infers the trade direction by comparing the trade price aginst the price of preceding trades. Four categories are possible: uptick, downtick, zero-uptick, and zero-downtick. Note that "zero-..." ticks can be problamtic, if trades didn't take place for a long time / are stale.
+- Tick test incorporates less information than quote method, that utilizes posted quotes instead. (found in [[@odders-whiteOccurrenceConsequencesInaccurate2000]])
 - In theory all trades can be classified using the tick test. In practice certain trades are not classifiable due to being reported out-of-sequence or sold with special conditions. 
-- Tick test is relatively imprecise according to the authors. This is esspecially evident if the prevailing quote has changed or if the quote is a long time back.
+- Tick test is relatively imprecise when compared with the quote rule. This is esspecially evident if the prevailing quote has changed or if the quote is a long time back.
 - An alternative is the reverse tick test ([[@hasbrouckTradesQuotesInventories1988]]), that compares the trade price against the prices of trades immediately following the trade. If the following price is higher, the reverse tick test classifies the current trade as a sell.
 - I the trade is bracketed by price reversal (price change before the trade is the opposite to the price change after the trade) the reverse tick test and the tick test yield the same results.
 ![[tick-rule-reverse-tick-rule.png]]

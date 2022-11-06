@@ -20,6 +20,8 @@ Commonly stock trade classifcation algorithms are used
 
 # Introduction
 
+- "The validity of many ecomnomic studies hinges on the ability to accuractely classify trades as buyer or seller-initiated." (found in [[@odders-whiteOccurrenceConsequencesInaccurate2000]])
+
 - see  `writing-a-good-introduction.pdf`
 - trade site classification matters for several reasons, market liqudity measures, short sells, study of bid-ask-spreads.
 - Where is trade side classification applied? Why is it important? Do citation search.
@@ -33,6 +35,7 @@ Commonly stock trade classifcation algorithms are used
 
 - [[@rosenthalModelingTradeDirection2012]] lists fields where trade classification is used and what the impact of wrongly classified trades is.
 - The extent to which inaccurate trade classification biases empirical research dependes on whether misclassifications occur randomly or systematically [[@theissenTestAccuracyLee2000]].
+- There is no common sense of who is the iniator of a trade. See discussion in [[@odders-whiteOccurrenceConsequencesInaccurate2000]]
 - over time proposed methods applied more filters / got more sophisticated but didn't substainly improve im some cases. See e. g., [[@finucaneDirectTestMethods2000]] Time to switch to another paradigma and let the data speak?
 - Works that require trade side classification in option markets:
 	- [[@muravyevOrderFlowExpected2016]]
@@ -330,6 +333,8 @@ if pytorch_init is True:
 
 - convert data to managable size (see [[Preprocessing]])
 - https://github.com/aperezlebel/benchmark_mv_approaches
+- https://www.runpod.io/gpu-instance/pricing
+- https://lambdalabs.com/service/gpu-cloud
 
 ### ISE Data Set
 - focus is on ISE data set
@@ -348,6 +353,7 @@ if pytorch_init is True:
 - standardize numerical features and apply ordinal encoding to categorical features, but pass to the model which ones are categorical features similar to [[@borisovDeepNeuralNetworks2022]]. Note that [[@grinsztajnWhyTreebasedModels2022]] only applied quantile transformations to all features, thus not utilize special implementations for categorical variables.
 - Perform [[adversarial_validation]]
 - Different imputation appraoches are listed in [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]. Basic observation use approaches that can inherently handle missing values. This is a good tradeoff between performance and prediction quality.
+- For implementation of permutation importance see https://www.rasgoml.com/feature-engineering-tutorials/how-to-generate-feature-importance-plots-using-catboost
 ### CBOE Data Set
 - data comes at a daily frequency
 
@@ -493,6 +499,7 @@ Show differences from different initializations using a violin plot. (suggested 
 - divide sample into zero ticks and non-zero ticks and see how the accuracy behaves. This was e. g. done in [[@finucaneDirectTestMethods2000]]. See also this paper for reasoning on zero tick and non-zero tick trades.
 - Think about stuying the economic impact of false classification trough portfolio construction as done in [[@jurkatisInferringTradeDirections2022]]
 - perform friedman test to compare algorithms. (see [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]])
+- See [[@odders-whiteOccurrenceConsequencesInaccurate2000]] she differentiates between a systematic and non-systematic error and studies the impact on the results in other studies. She uses the terms bias and noise. She also performs several robustness checks to see if the results can be maintained at different trade sizes etc.
 ## Results of Supervised Models
 - Results for random classifier
 - What would happen if the classical rules weren't stacked?
