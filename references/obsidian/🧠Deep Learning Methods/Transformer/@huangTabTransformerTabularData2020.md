@@ -12,6 +12,10 @@ year: 2020
 -   In addition to the purely supervised regime, the authors propose a semi-supervised approach leveraging unsupervised pre-training.
 -   Looking at the average AUC across 15 datasets, the proposed TabTransformer (82.8) is on par with gradient-boosted trees (82.9).
 
+
+## Notes
+- TabTransformer only learns contextual embeddings on categorical features. Continous features are concatenated with the embeddings and fed into a vanilla neural network. [[@somepalliSAINTImprovedNeural2021]] critize that information about correlations between categorical and continous features are lost, as continous features are not passed through the transformer block.
+
 ## Annotations
 
 “The state-of-the-art for modeling tabular data is treebased ensemble methods such as the gradient boosted decision trees (GBDT)” (Huang et al., 2020, p. 1)
