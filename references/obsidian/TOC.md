@@ -171,6 +171,7 @@ CLNV-Method is a hybrid of tick and quote rules when transactions prices are clo
 - see [[@rosenthalModelingTradeDirection2012]]
 - Seldomly used but ML-like. Would probably be sufficient to cover it under related works.
 
+
 # 🧠 Supervised Approaches
 - Introduce a classifcation that differentiates between supervised, unsupervised, reenforcement learning and semi-supervised learning. 
 - Introduce the concept of classification as a variant of supervised learning. 
