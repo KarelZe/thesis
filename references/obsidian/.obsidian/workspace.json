@@ -20,8 +20,21 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "ae24809d3ce68dfc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🔗Classical rules/@panayidesBulkVolumeClassification2019.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -79,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "🔗Classical rules/@panayidesBulkVolumeClassification2019.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -107,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "🔗Classical rules/@panayidesBulkVolumeClassification2019.md"
               }
             }
           }
@@ -118,12 +131,12 @@
     "direction": "horizontal",
     "width": 255.5
   },
-  "active": "160a03ac0eb0e817",
+  "active": "ae24809d3ce68dfc",
   "lastOpenFiles": [
     "❓Questions.md",
+    "TOC.md",
     "🍬Implementation/🛞GCP-Docker.md",
     "index.md",
-    "TOC.md",
     "👨‍👩‍👧‍👦Related Works/@hansenApplicationsMachineLearning.md",
     "👨‍👩‍👧‍👦Related Works/@rosenthalModelingTradeDirection2012.md",
     "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",

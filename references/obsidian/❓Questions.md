@@ -2,6 +2,7 @@
 - Differences in accuracy for classical rules. Do you assign classes randomly for trades that can not be classified with the quote rule? What floating point precision was used? Did you use different features?
 - Could I please get the current stock price for moneyness? Type of underlying e. g., index to integrate them in my robustness checks?
 - Additional data e. g., sector of underlying instead of symbol. Symbol / root is somewhat problematic, as some are only in the train set or test set.
+- Which offset was used?
 - Access to computing resources requires signature of chair. See: https://www.scc.kit.edu/downloads/ISM/Accessform_bwUniCluster_DE_EN.pdf or  https://www.scc.kit.edu/downloads/ism/Accessform_courses_bwUniCluster_DE_EN.pdf
 
 ## Closed
