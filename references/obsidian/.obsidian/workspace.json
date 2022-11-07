@@ -22,12 +22,12 @@
             }
           },
           {
-            "id": "ae24809d3ce68dfc",
+            "id": "f56b05313eeb6404",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🔗Classical rules/@panayidesBulkVolumeClassification2019.md",
+                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
                 "mode": "source",
                 "source": false
               }
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🔗Classical rules/@panayidesBulkVolumeClassification2019.md",
+                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🔗Classical rules/@panayidesBulkVolumeClassification2019.md"
+                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md"
               }
             }
           }
@@ -131,17 +131,17 @@
     "direction": "horizontal",
     "width": 255.5
   },
-  "active": "ae24809d3ce68dfc",
+  "active": "f56b05313eeb6404",
   "lastOpenFiles": [
-    "❓Questions.md",
+    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
     "TOC.md",
-    "🍬Implementation/🛞GCP-Docker.md",
-    "index.md",
-    "👨‍👩‍👧‍👦Related Works/@hansenApplicationsMachineLearning.md",
-    "👨‍👩‍👧‍👦Related Works/@rosenthalModelingTradeDirection2012.md",
-    "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
-    "🧠Deep Learning Methods/@heBagTricksImage2018.md",
+    "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
     "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-    "Semi-supervised Learning/@somepalliSAINTImprovedNeural2021.md"
+    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+    "🧠Deep Learning Methods/@grinsztajnWhyTreebasedModels2022.md",
+    "🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020.md",
+    "🔗Classical rules/@panayidesBulkVolumeClassification2019.md",
+    "❓Questions.md",
+    "🍬Implementation/🛞GCP-Docker.md"
   ]
 }
