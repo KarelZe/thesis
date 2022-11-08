@@ -1,0 +1,37 @@
+id,display_name,full_name,security_type
+1,NASD,"Nasdaq Exchange","option,equity"
+2,NADF,"Nasdaq Alternative Display Facility",equity
+3,NYSE,"New York Stock Exchange",equity
+4,AMEX,"American Stock Exchange","option,equity"
+5,CBOE,"Chicago Board Options Exchange",option
+6,ISE,"International Securities Exchange",option
+7,ARCA,"NYSE Arca Exchange","option,equity"
+8,NYSENAT,"NYSE National",equity
+9,PHLX,"Philadelphia Stock Exchange","option,equity"
+11,BOX,"Boston Stock Exchange","option,equity"
+14,NQBB,"Nasdaq Bulletin Board",equity
+15,NQOTC,"Nasdaq OTC - Pink Sheets",equity
+17,CHX,"Chicago Stock Exchange",equity
+20,CME,"Chicago Mercantile Exchange",future
+22,MRX,"ISE Mercury",option
+30,DJI,"Dow Jones Indices",equity
+31,GEMX,"ISE Gemini",option
+42,C2,C2,option
+43,MIAX,"MIAX Options Exchange",option
+47,NASDBX,"NASDAQ OMX BX Options",option
+54,CFE,"CBOE Futures Exchange",future
+57,NQNX,"NSX Trade Reporting Facility",equity
+59,NTRF,"NYSE Trade Reporting Facility",equity
+60,BZX,"BATS Trading","option,equity"
+63,BYX,"BATS Trading",equity
+64,EDGA,"Direct Edge A",equity
+65,EDGX,"Direct Edge X","option,equity"
+66,RUSL,"Russell Indices"
+68,IEX,"IEX Stock Exchange",equity
+69,PEARL,"MIAX PEARL","option,equity"
+71,EMLD,"MIAX Emerald Options Exchange",option
+115,CHIXE,"CHI-X Europe ",equity
+117,LTSE,"Long-Term Stock Exchange",equity
+118,FINRAADF,"FINRA Alternative Display Facility (ADF)",equity
+119,NQTRFCH,"FINRA / Nasdaq TRF Chicago",equity
+120,MEMX,"Members Exchange",equity

@@ -76,8 +76,6 @@ target/
 # Jupyter NB Checkpoints
 .ipynb_checkpoints/
 
-# exclude data from source control by default
-/data/
 
 # Mac OS-specific storage files
 .DS_Store
@@ -410,3 +408,9 @@ TSWLatexianTemp*
 TOC.pdf
 expose.pdf
 presentation.pdf
+
+# exclude data formats from source control by default
+*.csv
+*.pkl
+*.parquet
+*.sas7bdat
