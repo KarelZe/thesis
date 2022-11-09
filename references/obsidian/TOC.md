@@ -171,6 +171,7 @@ CLNV-Method is a hybrid of tick and quote rules when transactions prices are clo
 - see [[@rosenthalModelingTradeDirection2012]]
 - Seldomly used but ML-like. Would probably be sufficient to cover it under related works.
 
+
 # 🧠 Supervised Approaches
 - Introduce a classifcation that differentiates between supervised, unsupervised, reenforcement learning and semi-supervised learning. 
 - Introduce the concept of classification as a variant of supervised learning. 
@@ -355,6 +356,8 @@ if pytorch_init is True:
 - Perform [[adversarial_validation]]
 - Different imputation appraoches are listed in [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]. Basic observation use approaches that can inherently handle missing values. This is a good tradeoff between performance and prediction quality.
 - For implementation of permutation importance see https://www.rasgoml.com/feature-engineering-tutorials/how-to-generate-feature-importance-plots-using-catboost
+- Data set is slightly imbalanced. Would not treat, as difference is only minor and makes it harder. Could make my final decision based on [[@japkowiczClassImbalanceProblem2002]] [[@johnsonSurveyDeepLearning2019]]. Some nice background is also in [[@huyenDesigningMachineLearning]]
+- [[@huyenDesigningMachineLearning]] discusses different sampling strategies. -> Could make sense to use stratified sampling or weighted sampling. With weighted sampling we could give classes that are notoriously hard to learn e. g., large trades or index options.
 ### CBOE Data Set
 - data comes at a daily frequency
 
@@ -440,6 +443,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - cycling procedure was proposed in [[@loshchilovSGDRStochasticGradient2017]] and [[@smithCyclicalLearningRates2017]]
 - Test if buys and sells are *really* imbalanced, as indicated by [[@easleyOptionVolumeStock1998]]. Might require up-or downsampling.
 - For implementation see https://www.learnpytorch.io/07_pytorch_experiment_tracking/
+- Visualize learned embeddings for categorical data as done in [[@huangTabTransformerTabularData2020]]
 ### Training of Semi-Supervised Models
 - Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 
 - Use learning curves from [[#^d50f5d]].
@@ -501,6 +505,11 @@ Show differences from different initializations using a violin plot. (suggested 
 - Think about stuying the economic impact of false classification trough portfolio construction as done in [[@jurkatisInferringTradeDirections2022]]
 - perform friedman test to compare algorithms. (see [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]])
 - See [[@odders-whiteOccurrenceConsequencesInaccurate2000]] she differentiates between a systematic and non-systematic error and studies the impact on the results in other studies. She uses the terms bias and noise. She also performs several robustness checks to see if the results can be maintained at different trade sizes etc.
+- [[@huyenDesigningMachineLearning]] suggest to tet for fairness, calibration, robustness etc. through:
+	- perturbation: change data slightly, add noise etc.
+	- invariance: keep features the same, but change some sensitive information
+	- Directional expectation tests. e. g. does a change in the feature has a logical impact on the prediction e. g. very high bid (**could be interesting!**)
+
 ## Results of Supervised Models
 - Results for random classifier
 - What would happen if the classical rules weren't stacked?
@@ -513,6 +522,8 @@ Show differences from different initializations using a violin plot. (suggested 
 - provide $p$-values. Compare twitter / linkedin posting of S. Raschka on deep learning paper.
 - When ranking algorithms think about using the onesided Wilcoxon signed-rank test and the Friedman test. (see e. g. , code or practical application in [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]])
 - Study removal of features with high degree of missing values with feature permutation. (see idea / code done in [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]])
+- How do classical rules compare to a zero rule baseline? Zero rule baseline predicts majority class. (variant of the simple heuristic). The later uses simple heuristics to perform a heuristic. 
+- Compare against "existing solutions" e. g., LR algorithm, depth rule etc.
 ## Results of Semi-Supervised Models
 
 Use $t$-SNE to assess the output of the supervised vs. the semi-supervised train models. See [[@leePseudolabelSimpleEfficient 1]] and [[@banachewiczKaggleBookData2022]] for how to use it.
@@ -532,6 +543,7 @@ See [[@vandermaatenVisualizingDataUsing2008]] for original paper.
 Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 - Most finance papers e. g., [[@finucaneDirectTestMethods2000]] (+ other examples as reported in expose) use logistic regression to find features that affect the classification most. Poor choice due to linearity assumption? How would one handle categorical variables? If I opt to implement logistic regression, also report $\chi^2$.
 - Think about approximating SHAP values on a sample or using some improved implementation like https://github.com/linkedin/FastTreeSHAP
+- Do ablation studies. That is, the removal of one feature shouldn't cause the model to collapse. (idea found in [[@huyenDesigningMachineLearning]])
 ## Robustness Checks
 - LR-algorithm (see [[#^370c50]]) require an offset between the trade and quote. How does the offset affect the results? Do I even have the metric at different offsets?
 - Perform binning like in [[@grauerOptionTradeClassification2022]]
@@ -541,6 +553,7 @@ Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 - Confusion matrix
 - create kde plots to investigate misclassified samples further
 - ![[kde-plot-results 1.png]]
+- What is called robustnesss checks is also refered as **slice-based evaluation**. The data is separated into subsets and your model's performance on each subset is evaluated. A reason why slice-based evaluation is crucial is Simpson's paradox. A trend can exist in several subgroups, but disappear or reverse when the groups are combined. Slicing could happen based on heuristics, errors or a slice finder (See [[@huyenDesigningMachineLearning]])
 # 💣Discussion
 - What does it mean? Point out limitations and e. g., managerial implications or future impact.
 - How do wide models compare to deep models

@@ -6,7 +6,7 @@ year: 2020
 *status:* #📥
 *related:* 
 - [[@borisovDeepNeuralNetworks2022]]
-*code:* [https://github.com/Yura52/rtdl](https://github.com/Yura52/rtdl)
+*code:* [https://github.com/Yura52/rtdl](https://github.com/Yura52/rtdl) (package + baseline)
 
 ## Notes Sebastian Raschka
 -   In this paper, the researchers discuss the issue of improper baselines in the deep learning for tabular data literature.

@@ -9,6 +9,8 @@ year: 2020
 - [[@gorishniyRevisitingDeepLearning2021]]
 - [[@borisovDeepNeuralNetworks2022]]
 - [[@huangTabTransformerTabularData2020]]
+*code:*
+ - See this post for some additional insights on Ghost BatchNorm. https://medium.com/deeplearningmadeeasy/ghost-batchnorm-explained-e0fa9d651e03
 ## Notes Sebastian Raschka
 - Based on my personal experience, TabNet is the first deep learning architecture for tabular data that gained widespread attention (no pun intended).
 - TabNet is based on a sequential attention mechanism, showing that self-supervised learning with unlabeled data can improve the performance over purely supervised training regimes in tabular settings.
