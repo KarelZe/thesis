@@ -1,9 +1,9 @@
-- differnence `ROOT` / `UNDERLYING_SYMBOL`?
-- Differences in accuracy for classical rules. Do you assign classes randomly for trades that can not be classified with the quote rule? What floating point precision was used? Did you use different features?
+- Differences in accuracy for classical rules between the implementations exist. Do you assign classes randomly for trades that can not be classified with the classification rule? (`0` or `np.random.choice([-1, 1]`) How did you define "success rate"?
+- How did you define "others" in table 9? Using special codes?
 - Could I please get the current stock price for moneyness to integrate them in my robustness checks?
-- Additional data e. g., sector of underlying instead of symbol and addditional option data e. g., $\Delta$. Symbol / root is somewhat problematic, as some are only in the train set or test set.
-- Which offset was used?
-- Access to computing resources requires signature of chair. Can I apply? Also possible to server of chair? See: https://www.scc.kit.edu/downloads/ISM/Accessform_bwUniCluster_DE_EN.pdf or  https://www.scc.kit.edu/downloads/ism/Accessform_courses_bwUniCluster_DE_EN.pdf
+- Symbol / root is somewhat problematic, as some are only in the train set or test set. Could still use root and rely on embedding or use special codes as features. Might be wise to use a more generic feature like sector instead.
+- Which offset was used? None?
+- Access to computing resources requires signature of chair. Can I apply? Also possible to access server of chair? See: https://www.scc.kit.edu/downloads/ISM/Accessform_bwUniCluster_DE_EN.pdf or  https://www.scc.kit.edu/downloads/ism/Accessform_courses_bwUniCluster_DE_EN.pdf
 
 ## Closed
 - What are the expectations I have to meet in order to reach $\geq 1.3$?
