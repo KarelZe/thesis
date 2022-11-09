@@ -2,8 +2,7 @@
 - How did you define "others" in table 9? Using special codes?
 - Could I please get the current stock price for moneyness to integrate them in my robustness checks?
 - Symbol / root is somewhat problematic, as some are only in the train set or test set. Could still use root and rely on embedding or use special codes as features. Might be wise to use a more generic feature like sector instead.
-- Which offset was used? None?
-- Access to computing resources requires signature of chair. Can I apply? Also possible to access server of chair? See: https://www.scc.kit.edu/downloads/ISM/Accessform_bwUniCluster_DE_EN.pdf or  https://www.scc.kit.edu/downloads/ism/Accessform_courses_bwUniCluster_DE_EN.pdf
+- Which offset was used when matching transactions and quotes? None?
 
 ## Closed
 - What are the expectations I have to meet in order to reach $\geq 1.3$?
