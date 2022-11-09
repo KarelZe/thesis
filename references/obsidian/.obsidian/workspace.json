@@ -20,21 +20,8 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "f56b05313eeb6404",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "❓Questions.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -92,7 +79,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "❓Questions.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +107,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "❓Questions.md"
+                "file": "TOC.md"
               }
             }
           }
@@ -131,8 +118,9 @@
     "direction": "horizontal",
     "width": 255.5
   },
-  "active": "f56b05313eeb6404",
+  "active": "8399eb31ec07fd72",
   "lastOpenFiles": [
+    "🍬Implementation/@huyenDesigningMachineLearning.md",
     "TOC.md",
     "❓Questions.md",
     "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
@@ -141,7 +129,6 @@
     "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
     "🧠Deep Learning Methods/@grinsztajnWhyTreebasedModels2022.md",
     "🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020.md",
-    "🔗Classical rules/@panayidesBulkVolumeClassification2019.md",
-    "🍬Implementation/🛞GCP-Docker.md"
+    "🔗Classical rules/@panayidesBulkVolumeClassification2019.md"
   ]
 }
