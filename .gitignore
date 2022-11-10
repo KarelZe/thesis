@@ -414,3 +414,4 @@ presentation.pdf
 *.pkl
 *.parquet
 *.sas7bdat
+*.sql
