@@ -1,12 +1,19 @@
+## Login to BwUniCluster2.0
+Preferred login node: `uc2.scc.kit.edu`
 
-## Steps to configure pod
-- vscode extensions
-- install dependencies
-- git config username and email
-- `git clone https://github.com/KarelZe/thesis.git`
-- set up wandb in `./root/.netrc`
-- set up google auth token in `/root/.config/gcloud/application_default_credentials.json`
-- start python script
+```bash
+ssh uloak@uc2.scc.kit.edu
+```
+
+See [docs.](https://wiki.bwhpc.de/e/BwUniCluster2.0/Login)
+
+## Jupyter 🪐
+See [here.](https://uc2-jupyter.scc.kit.edu/)
+
+## Docker 🐳
+- https://wiki.bwhpc.de/e/BwUniCluster2.0/Containers
+https://github.com/runpod/containers
+- https://www.runpod.io/blog/how-to-achieve-true-ssh-on-runpod
 
 ## Add data from Onedrive to GCP
 In Google Cloud Platform Console:

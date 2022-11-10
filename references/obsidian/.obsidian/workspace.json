@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "❓Questions.md",
+                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md",
                 "mode": "source",
                 "source": false
               }
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "❓Questions.md",
+                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "❓Questions.md"
+                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md"
               }
             }
           }
@@ -134,14 +134,14 @@
   "active": "b7f7b5f42d1e34dd",
   "lastOpenFiles": [
     "TOC.md",
-    "🍬Implementation/@huyenDesigningMachineLearning.md",
+    "🍬Implementation/🛞GCP-Docker-Cluster.md",
     "❓Questions.md",
+    "🍬Implementation/@huyenDesigningMachineLearning.md",
     "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
     "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
     "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
     "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
     "🧠Deep Learning Methods/@grinsztajnWhyTreebasedModels2022.md",
-    "🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020.md",
-    "🔗Classical rules/@panayidesBulkVolumeClassification2019.md"
+    "🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020.md"
   ]
 }
