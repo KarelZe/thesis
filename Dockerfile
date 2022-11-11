@@ -35,13 +35,12 @@ RUN pip install\
 
 # Create a netrc file
 # adapted from: https://jwenz723.medium.com/fetching-private-go-modules-during-docker-build-5b76aa690280
-# RUN echo -e "api.wandb.ai\n\
-#     login user\n\
-#     password $WANDB_TOKEN \n\
-#     \n\
-#     "\
-#     >> $HOME/.netrc && \
-#     chmod 600 $HOME/.netrc
+RUN echo -e "\
+    \napi.wandb.ai\n\
+    login user\n\
+    password $WANDB_TOKEN\n\
+    \n" >> $HOME/.netrc && \
+    chmod 600 $HOME/.netrc
 
 # Create gcloud credentials file
 RUN mkdir -p $HOME/.config/gcloud/ &&\
