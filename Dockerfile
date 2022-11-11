@@ -10,6 +10,8 @@ ENV DEBIAN_FRONTEND noninteractive\
     CLIENT_ID\
     CLIENT_SECRET\
     REFRESH_TOKEN\
+    NAME\
+    EMAIL\
     WORKDIR $HOME
 
 RUN apt-get update --yes && \
@@ -32,32 +34,6 @@ RUN pip install\
     jupyterlab \
     ipywidgets \
     jupyter-archive
-
-# Create a netrc file
-# adapted from: https://jwenz723.medium.com/fetching-private-go-modules-during-docker-build-5b76aa690280
-RUN echo -e "\
-    \napi.wandb.ai\n\
-    login user\n\
-    password $WANDB_TOKEN\n\
-    \n" >> $HOME/.netrc && \
-    chmod 600 $HOME/.netrc
-
-# Create gcloud credentials file
-RUN mkdir -p $HOME/.config/gcloud/ &&\
-    echo "{\n\
-    'client_id': '$CLIENT_ID',\n\
-    'client_secret': '$CLIENT_SECRET',\n\
-    'refresh_token': '$REFRESH_TOKEN',\n\
-    'type': 'authorized_user'\n\
-    }"\
-    >> $HOME/.config/gcloud/application_default_credentials.json && \ 
-    chmod 600 $HOME/.config/gcloud/application_default_credentials.json
-
-# try to set up git and clone repo
-RUN git config --global user.name "Markus Bilz" && \
-    git config --global user.email "github@markusbilz.com"
-# git clone https://$GITHUB_TOKEN@github.com/$REPOSITORY --depth=1&&\
-# pip install -r requirements.txt
 
 # Install vscode extension
 # https://github.com/cdr/code-server/issues/171

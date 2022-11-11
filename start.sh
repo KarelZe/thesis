@@ -1,6 +1,36 @@
 #!/bin/bash
 
-echo "pod started"
+# Create a netrc file
+echo "preparing auth tokens..."
+
+# adapted from: https://jwenz723.medium.com/fetching-private-go-modules-during-docker-build-5b76aa690280
+echo -e "\
+\napi.wandb.ai\n\
+login user\n\
+password $WANDB_TOKEN\n\
+\n" >> $HOME/.netrc && \
+chmod 600 $HOME/.netrc
+
+# Create gcloud credentials file
+mkdir -p $HOME/.config/gcloud/ &&\
+echo "{\n\
+'client_id': '$CLIENT_ID',\n\
+'client_secret': '$CLIENT_SECRET',\n\
+'refresh_token': '$REFRESH_TOKEN',\n\
+'type': 'authorized_user'\n\
+}" >> $HOME/.config/gcloud/application_default_credentials.json
+chmod 600 $HOME/.config/gcloud/application_default_credentials.json
+
+# try to set up git and clone repo
+echo "preparing git..."
+
+git config --global user.name $NAME && \
+git config --global user.email $EMAIL &&\
+git clone https://$GITHUB_TOKEN@github.com/$REPOSITORY --depth=1&&\
+cd thesis
+pip install -r requirements.txt
+
+echo "pod started..."
 
 if [[ $PUBLIC_KEY ]]
 then
