@@ -10,7 +10,7 @@ ENV DEBIAN_FRONTEND noninteractive\
     CLIENT_ID\
     CLIENT_SECRET\
     REFRESH_TOKEN\
-WORKDIR $HOME
+    WORKDIR $HOME
 
 RUN apt-get update --yes && \
     # - apt-get upgrade is run to patch known vulnerabilities in apt-get packages as
@@ -53,9 +53,11 @@ RUN mkdir -p $HOME/.config/gcloud/ &&\
     >> $HOME/.config/gcloud/application_default_credentials.json && \ 
     chmod 600 $HOME/.config/gcloud/application_default_credentials.json
 
-# try to clone repo
+# try to set up git and clone repo
 RUN git config --global user.name "Markus Bilz" && \
     git config --global user.email "github@markusbilz.com"
+# git clone https://$GITHUB_TOKEN@github.com/$REPOSITORY --depth=1&&\
+# pip install -r requirements.txt
 
 # Install vscode extension
 # https://github.com/cdr/code-server/issues/171
