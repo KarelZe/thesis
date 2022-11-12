@@ -35,6 +35,14 @@ RUN pip install\
     ipywidgets \
     jupyter-archive
 
+ADD start.sh .
+
+RUN chmod +x start.sh
+
+CMD [ "./start.sh" ]
+
+FROM dev-base as interactive-base
+
 # Install vscode extension
 # https://github.com/cdr/code-server/issues/171
 RUN mkdir -p $HOME/.vscode/extensions/ && \
@@ -55,9 +63,4 @@ RUN mkdir -p $HOME/.vscode/extensions/ && \
     rm njpwerner.autodocstring-latest.zip && \
     mv extension $HOME/.vscode/extensions/njpwerner.autodocstring-latest
 
-ADD start.sh .
-
-RUN chmod +x start.sh
-
-CMD [ "./start.sh" ]
 
