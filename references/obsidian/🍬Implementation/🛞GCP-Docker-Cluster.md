@@ -14,6 +14,15 @@ See [here.](https://uc2-jupyter.scc.kit.edu/)
 - https://wiki.bwhpc.de/e/BwUniCluster2.0/Containers
 https://github.com/runpod/containers
 - https://www.runpod.io/blog/how-to-achieve-true-ssh-on-runpod
+- https://wiki.bwhpc.de/e/BwUniCluster2.0/Containers
+- Images that should work: https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch
+
+```shell
+docker image build -t first-try . 
+docker container run --name first-try
+docker run --env-file .env first-try
+```
+
 
 ## Add data from Onedrive to GCP
 In Google Cloud Platform Console:
