@@ -13,12 +13,12 @@ chmod 600 $HOME/.netrc
 
 # Create gcloud credentials file
 mkdir -p $HOME/.config/gcloud/ &&\
-echo "{\n\
-'client_id': '$CLIENT_ID',\n\
-'client_secret': '$CLIENT_SECRET',\n\
-'refresh_token': '$REFRESH_TOKEN',\n\
-'type': 'authorized_user'\n\
-}" >> $HOME/.config/gcloud/application_default_credentials.json
+echo -e '{
+"client_id": "$CLIENT_ID",
+"client_secret": "$CLIENT_SECRET",
+"refresh_token": "$REFRESH_TOKEN",
+"type": "authorized_user"
+}' >> $HOME/.config/gcloud/application_default_credentials.json
 chmod 600 $HOME/.config/gcloud/application_default_credentials.json
 
 # try to set up git and clone repo
