@@ -3,10 +3,45 @@
 *year:* 2018
 *tags:* #lr #lr-scheduling #sgd #lr-warmup
 #mix-up #weight-decay
-*status:* #📥
+*status:* #📦 
 *related:*
+- [[@loshchilovSGDRStochasticGradient2017]] (cited in paper)
+- [[@shavittRegularizationLearningNetworks2018]] (also aims for generalization)
 
 ## Notes 📍
+- Authors examine a collection refinements in training neural networks commonly used in image classification research and evaluate their impact on the final model accuracy.
+- They use ResNet-50, Inception-V3 and MobileNet as their baseline. Thus study is not 100 % comparable, as
+**Efficient trading:**
+- larger batch sizes degrade the validation performance of the model compared to models with a smaller batch size. Authors discuss the following heuristics to improve accuracy while training on larger batches: 
+	- **Linear scaling learning rate:** Use a coarse learning rate, as due to the larger batch the noise in the gradient of SGD is reduced, but the expectation is the same.
+	- **Learning rate warmup:** Use a small learning rate at the beginning then switch back to initial learning rate once the training process has stabilized.
+	- **Disable bias decay:** Apply no L2 regularization on bias terms and the $\gamma$ and $\beta$ term in batch normalization layers.
+	- **Use FP 16:** Calculate all parameters with floating point (FP16) precision. Can have performance benefit, but might have a narrower range that makes results more likely be out-of-bounds or disturb the training process.
+
+- **Training refinements:**
+	- **Cosine learning rate decay:** Instead of (exponentially) decaying the learning rate after a warm-up phase, use a cosine annealing strategy as proposed in [[@loshchilovSGDRStochasticGradient2017]]. 
+	- **Label smoothing:** Instead of sofmax in the last layer of the image classification network, use an alternative method to calculate the output scores that is less prone to overfitting. Label smoothing changes the construction of the true probability to
+	$$
+		q_i= \begin{cases}1-\varepsilon & \text { if } i=y \\ \varepsilon /(K-1) & \text { otherwise }\end{cases}
+	$$
+		where $\varepsilon$ is a small constant. Now the optimal solution becomes
+		$$
+		z_i^*= \begin{cases}\log ((K-1)(1-\varepsilon) / \varepsilon)+\alpha & \text { if } i=y \\ \alpha & \text { otherwise }\end{cases}
+		$$
+		where $\alpha$ can be an arbitrary real number. This encourages a finite output from the fully-connected layer and can generalize better.
+	- **Knowledge distallation:**
+		-  Use a teacher model to help train the current / the so-called student model. The teacher model is often pre-trained with higher accuracy. Through mimicing  the student model can improve its own accuracy, while the model complexity remains the same. A distillation loss is used.
+	- **Mixup:**
+		- In mixup, each time we randomly sample two examples $\left(x_i, y_i\right)$ and $\left(x_j, y_j\right)$. Then we form a new example by a weighted linear interpolation of these two examples:
+$$
+\begin{aligned}
+&\hat{x}=\lambda x_i+(1-\lambda) x_j, \\
+&\hat{y}=\lambda y_i+(1-\lambda) y_j,
+\end{aligned}
+$$
+				where $\lambda \in[0,1]$ is a random number drawn from the $\operatorname{Beta}(\alpha, \alpha)$ distribution (distribution from 0 to 1). In mixup training, we only use the new example $(\hat{x}, \hat{y})$.
+- **Conclusion:**
+	- Authors apply several techniques that only require minor changes to the architecture such as learning rate scheduling. The techniques can be combined. Stacking improves the accruacy and has strong advantages in transfer learning.
 
 ## Annotations 📖
 

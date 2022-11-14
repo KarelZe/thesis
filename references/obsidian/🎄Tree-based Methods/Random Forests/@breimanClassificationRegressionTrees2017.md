@@ -24,7 +24,7 @@ A tree structured predictor partitions the space $X$ into a sequence of binary s
 **Visualization**
 Due to the predictor $d(x)$ being constant over each terminal node, the tree can be thought of as a histogram estimate of the (true) regression surface (p. 229):
 
-![[regression_surface_dt.png]]
+![[regression_surface_dt 1.png]]
 
 In the regression case the value of $y(t)$ that minimizes $R(d)$ is the average of $y_n$ for all cases $(x_n,y_n)$ falling into a region $t$, that is, minimizing $y(t)$ is:
 $$\bar{y}(t)=\frac{1}{N(t)} \sum_{x_{n} \in t} {y}_{n}$$

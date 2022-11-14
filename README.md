@@ -75,6 +75,12 @@ Link to [miro board](https://miro.com/app/board/uXjVPPRCa6s=/) (requires login).
 Experiments 🧪
 ------------
 Link to [weights & biases](https://wandb.ai/fbv/thesis) (requires login).
+![wandb](references/obsidian/%F0%9F%96%BC%EF%B8%8FMedia/wandb.jpg)
+
+Computing resources ☄️
+------------
+Link to [runpod](https://www.runpod.io/console/pods) (requires login).
+Link to [gcp](https://console.cloud.google.com/welcome?project=flowing-mantis-239216) (requires login).
 
 Final document 🎓
 ------------

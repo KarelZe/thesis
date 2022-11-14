@@ -1,15 +1,40 @@
 *title:* On the State of the Art of Evaluation in Neural Language Models
 *authors:* Gábor Melis, Chris Dyer, Phil Blunsom
 *year:* 2017
-*tags:* 
-*status:* #📥
+*tags:* #nlp #hyperparameter-tuning #bayesian-search #grid-search #google
+*status:* #📦 
 *related:*
+- [[@akibaOptunaNextgenerationHyperparameter2019]] (Optuna Bayesian search)
+- [[@heBagTricksImage2018]]
+- [[@turnerBayesianOptimizationSuperior2021]] (comparison of grid and randomized search)
+*review:* https://openreview.net/forum?id=ByJHuTgA-
+*code:* https://github.com/deepmind/lamb
 
 ## Notes 📍
-
+- Paper by Google.
+- Paper is somewhat a blueprint for tuning hyperparameters in neural networks. It establishes reliable benchmarks that can be benchmarks for later work.
+- Paper is in line with other papers that emphasize replication failures due to poorly controlled variation in hyperparameters.
+- Controlling hyperparameter variation is possible, but at a considerable **computational cost**.
+- In NLP LSTM architectures can, when properly regularised, outperform more recent architectures such as Recurrent Highway Networks and NAS.
+- Authors emphasize the hyperparameter importance. The dependence on hyperparameters is often not controlled within the experiments and leads to empircally unsound claims.
+- Tuning is performed using a blck-box hyperparameter tuner called Google Vizier which uses GP bandits and the expected improvement acquisition function. For small datasets tuners are generally more efficient than grid search.
+- Authors could improve their models on two of three datasets through a careful model specification and hyperparameter optimization. Improvement for the RHN architecture are less pronounced as the architecture's authors used regularisation and grid search.
+- Authors adress the question of overfitting of the tuner. They identify three sources of noise:
+	1. non-deterministic odering of floating-point operations in optimised linear algebra routines
+	2. different initialisation seeds
+	3. validation and test being finite samples from a infinite population
+- To adress the problem, they conduct the following experiment: models with the best hyperparameter setting are retrained from scratch with various initialisation seeds and the validation and test scores are recorded. If a model just got a lucky result due to (1.) and (2.), then results would deminish.
+**Observations:**
+- The effect of (1.) is almost as large as (1.) and (2.) combined. Validation perplexities (a performance measure) of the best checkpoints are about one standard deviation lower than the sample mean of reruns, so the tuner could fit noise only to a limited degree.
+- They train models until apparent convergence. They consider a a gap in perplexity (some performance measure) of 1.0 as statistically robust differnece. Results are normally distributed. Results could be printed as a violin plot.
+- Authors suggest to plot the best validation loss against the hyperparameter setting. 
+- Authors also run a grid search in comparsion to the Bbayesian search. In their setting grid search would require 4x the trails.
+- **Conlusion:**
+	- With enough computation power, noise levels of various origins cna be carfully estimated and models meaningfully compared. However there is a trade-off between computation and reliability.
+	- To make model evaluation cheaper, models must become less sensitive to hyperparameters and the number of hyperparameters viewer.
 
 Validation loss vs. hyperparameters:
- ![[validation-loss-vs-hyperparam.png]]
+ ![[validation-loss-vs-hyperparam 1.png]]
 
 ## Annotations 📖
 

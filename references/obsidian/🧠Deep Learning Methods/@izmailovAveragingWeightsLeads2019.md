@@ -16,10 +16,10 @@
 - After making a large step (every $\mod(i,c)$) with cyclical lr, the optimizer spends several epochs for fine-tuning with decreasing lr. SGD with fixed lr always makes steps with large sizes, which is more efficiently than cyclic lr ❗. 
 - The name stochastic weight averaging comes from the fact, that the average of SGD weights is calculated. SGD proposals are approximately sampling from the loss surface of DNN, leading to stochastic weights.
 
-![[swa-visualization.png]]
+![[swa-visualization 1.png]]
 
 ## Algorithm
-![[stochastic-weight-averaging.png]]
+![[stochastic-weight-averaging 1.png]]
 
 ## Annotations
 “We show that simple averaging of multiple points along the trajectory of SGD, with a cyclical or constant learning rate, leads to better generalization than conventional training.” ([Izmailov et al., 2019, p. 1](zotero://select/library/items/LYLQRDUK)) ([pdf](zotero://open-pdf/library/items/QQHKVF8J?page=1&annotation=A8UJWJNU))

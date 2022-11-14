@@ -14,7 +14,7 @@
 - In masked language modelling, simply some percentage of the input takens are masked at random and then those masked tokens are predicted. The finall hidden vectors corresponding to the mask tokens are fed into an output softmax over the vocabulary. To avoid mismatches between pre-training and finet-uning through (mask) tokens, which are not present during fine-tuning they do not always replace "masked" words with a (mask) token. They have different variants: replace the $i$-th token with (mask) 80 % of the times, a random token 10 % of the time, and the unchanged $i$-th token 10 % of the time.
 - MLM is sometimes called **stochastic masking** e. g. in [[@kossenSelfAttentionDatapointsGoing2021]]
 
-![[bert-architecture.png]]
+![[bert-architecture 1.png]]
 # Annotations#
 “We argue that current techniques restrict the power of the pre-trained representations, especially for the fine-tuning approaches. The major limitation is that standard language models are unidirectional, and this limits the choice of architectures that can be used during pre-training.” ([Devlin et al., 2019, p. 4171](zotero://select/library/items/PA8LRNM4)) ([pdf](zotero://open-pdf/library/items/WVJNKICQ?page=1&annotation=XRLRAYCB))
 

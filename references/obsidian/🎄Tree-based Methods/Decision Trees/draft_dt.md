@@ -8,7 +8,7 @@ f(x)=\sum_{m=1}^{M} c_{m} \mathbb{1}\left(x \in R_{m}\right),
 $$
 with $\mathbb{1}$ being the indicator function for region conformance and $c_m$ being the region's constant. [[@hastietrevorElementsStatisticalLearning2009]]  For a regression case $c_m$ is simply the average over all response variables of this particular region. As $c_m$ is shared among all samples within the region, the estimates of the tree are similar to a histogram approximating the true regression surface, as visualized below:
 
-![[regression_surface_dt.png]] (see [[@breimanClassificationRegressionTrees2017]])
+![[regression_surface_dt 1.png]] (see [[@breimanClassificationRegressionTrees2017]])
 
 So far it remains open, how the best split can be found. From the visual representation it can be seen, that the best split is the one, where the deviation of all regions estimates and the true response variables diminishes. This can be captured for the entire tree in the sum of squares errors given by:
 

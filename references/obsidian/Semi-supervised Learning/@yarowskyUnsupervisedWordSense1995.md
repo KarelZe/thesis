@@ -5,15 +5,21 @@
 *status:* #📦 
 *related:*
 - [[@zhuSemiSupervisedLearningLiterature]]
+- [[@yarowskyUnsupervisedWordSense1995]] (they extend the algorithm. Instead of using just probabilites they also use a distance measure based on the Mahalanobis distance)
 
 ## Notes📍
 - Works with any supervised, probabilistic classification algorithm.
 - Some data is initially labelled and the remainder (typically 85-98 %) remains unlabeled.
+- It's a wrapper algorithm, that is hard to analyze. (found in [[@tanhaSemisupervisedSelftrainingDecision2017]])
 - Steps:
-	1. Train a supversied classifier on labelled data. Apply the classifier to the entire sample. Add examples to the training set, where the predicted class probability is above a threshold. Hence, we obtain pseudo labels.
+	1. Train a supervised classifier on labelled data. Apply the classifier to the entire sample. Add examples to the training set, where the predicted class probability is above a threshold. Hence, we obtain pseudo labels.
 	2. Repeat iteratively. Teh training set will tend to grow, while the residual will tend to shrink.
 	3. Stop. If training parameters are held constant, algorithm will eventually converge on a stable residual set.
 	4. Apply algorithm from final training step on unseen test data.
+- Extension done in [[@tanhaSemisupervisedSelftrainingDecision2017]] for decision trees as base learner: Instead of using probability estimates only to select unlabelled examples authors suggest to select samples using a combination of a distance-based approach and the probability estimation. 
+
+## Pseudocode
+![[self-training-algorithm.png]]
 
 ## Annotations 📖
 
