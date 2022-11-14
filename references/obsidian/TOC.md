@@ -214,6 +214,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - start with "wide" architectures.
 - Include random forests, if too few models?
 - https://github.com/LeoGrin/tabular-benchmark
+- Develop deeper understanding of gradient boosting using papers from https://github.com/benedekrozemberczki/awesome-gradient-boosting-papers
 ### Decision Tree
 
 ^5db625
