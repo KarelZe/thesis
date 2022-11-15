@@ -5,12 +5,35 @@ Adds support for classical rules, GBTs and transformer-based architectures.
 """
 from abc import ABC, abstractmethod
 
+import os
+import random
+
+from catboost import CatBoostClassifier
 import optuna
+import numpy as np
 import pandas as pd
 from sklearn.metrics import accuracy_score
 
 from src.models.classical_classifier import ClassicalClassifier
-from src.models.train_model import set_seed
+
+from typing import List, Optional
+
+
+def set_seed(seed_val: int = 42) -> int:
+    """
+    Seeds basic parameters for reproducibility of results
+
+    Args:
+        seed_val (int, optional): random seed used in rngs. Defaults to 42.
+
+    Returns:
+        int: seed
+    """
+    os.environ["PYTHONHASHSEED"] = str(seed_val)
+    random.seed(seed_val)
+    # pandas and numpy as discussed here: https://stackoverflow.com/a/52375474/5755604
+    np.random.seed(seed_val)
+    return seed_val
 
 
 class Objective(ABC):
@@ -47,6 +70,7 @@ class Objective(ABC):
             y_val,
         )
         self.name = name
+        self._clf = None
 
     @abstractmethod
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
@@ -131,12 +155,12 @@ class ClassicalObjective(Objective):
         layer_4 = mapping[index_layer_4]
 
         layers = [layer_1, layer_2, layer_3, layer_4]
-        clf = ClassicalClassifier(
+        self._clf = ClassicalClassifier(
             layers=layers,
             random_state=set_seed(),
         )
-        clf.fit(X=self.x_train, y=self.y_train)
-        pred = clf.predict(self.x_val)
+        self._clf.fit(X=self.x_train, y=self.y_train)
+        pred = self._clf.predict(self.x_val)
         return accuracy_score(self.y_val, pred)
 
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
@@ -157,3 +181,56 @@ class GradientBoostingObjective(Objective):
     Args:
         Objective (Objective): objective
     """
+
+    def __call__(
+        self,
+        trial: optuna.Trial,
+        features: List[str],
+        cat_features: Optional[List[str]] = None,
+    ) -> float:
+        ignored_features = [
+            x for x in self.x_train.columns.tolist() if x not in features
+        ]
+
+        iterations = trial.suggest_int("iterations", 100, 1500)
+        learning_rate = trial.suggest_float("learning_rate", 0.005, 1, log=True)
+        depth = trial.suggest_int("depth", 1, 8)
+        grow_policy = trial.suggest_categorical(
+            "grow_policy", ["SymmetricTree", "Depthwise"]
+        )
+        params = {
+            "iterations": iterations,
+            "depth": depth,
+            "grow_policy": grow_policy,
+            "learning_rate": learning_rate,
+            "od_type": "Iter",
+            "logging_level": "Silent",
+            "task_type": "GPU",
+            "cat_features": cat_features,
+            "ignored_features": ignored_features,
+            "random_seed": set_seed(),
+        }
+
+        self._clf = CatBoostClassifier(**params)
+        self._clf.fit(
+            self.x_train,
+            self.y_train,
+        )
+        pred = self._clf.predict(self.x_val, prediction_type="Class")
+        return accuracy_score(self.y_val, pred)
+
+    def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
+        """
+        Callback to save models.
+
+        Args:
+            study (optuna.Study): current study.
+            trial (optuna.Trial): current trial.
+        """
+        # FIXME: delete all others from same study first.
+        if study.best_trial == trial:
+            self._clf.save_model(
+                f"gcs://models/{study.study_name}_{self._clf.__class__.__name__}"
+                f"_{self.name}_trial_{trial.number}.cbm",
+                format="cbm",
+            )
