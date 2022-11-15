@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
+                "file": "🍬Implementation/🧜‍♂️Optuna-PyTorch.md",
                 "mode": "source",
                 "source": false
               }
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
+                "file": "🍬Implementation/🧜‍♂️Optuna-PyTorch.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md"
+                "file": "🍬Implementation/🧜‍♂️Optuna-PyTorch.md"
               }
             }
           }
@@ -134,6 +134,7 @@
   "active": "b7f7b5f42d1e34dd",
   "lastOpenFiles": [
     "TOC.md",
+    "🍬Implementation/🧜‍♂️Optuna-PyTorch.md",
     "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
     "🍬Implementation/🛞GCP-Docker-Cluster.md",
     "🍬Implementation/🛞GCP-Docker.md",
@@ -141,7 +142,6 @@
     "🍬Implementation/@huyenDesigningMachineLearning.md",
     "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
     "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
-    "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
-    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md"
+    "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md"
   ]
 }

@@ -477,6 +477,9 @@ Repeat search with different random initializations:
 
 Show differences from different initializations using a violin plot. (suggested in [[@melisStateArtEvaluation2017]])
 
+- For tree-parzen estimator see: https://neptune.ai/blog/optuna-guide-how-to-monitor-hyper-parameter-optimization-runs
+- Framing hyperparameter search as an optimization problem. https://www.h4pz.co/blog/2020/10/3/optuna-and-wandb
+
 ## Evaluation
 ### Feature Importance Measure
 - Feature Importance of Gradient Boosted Trees
