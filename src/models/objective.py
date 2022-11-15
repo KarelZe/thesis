@@ -10,6 +10,7 @@ import random
 
 from catboost import CatBoostClassifier
 import optuna
+from optuna.integration import CatBoostPruningCallback
 import numpy as np
 import pandas as pd
 from sklearn.metrics import accuracy_score
@@ -211,11 +212,17 @@ class GradientBoostingObjective(Objective):
             "random_seed": set_seed(),
         }
 
+        pruning_callback = CatBoostPruningCallback(trial, "Accuracy")
+
         self._clf = CatBoostClassifier(**params)
         self._clf.fit(
             self.x_train,
             self.y_train,
+            callbacks=[pruning_callback],
         )
+
+        pruning_callback.check_pruned()
+
         pred = self._clf.predict(self.x_val, prediction_type="Class")
         return accuracy_score(self.y_val, pred)
 
@@ -228,9 +235,13 @@ class GradientBoostingObjective(Objective):
             trial (optuna.Trial): current trial.
         """
         # FIXME: delete all others from same study first.
+        # FIXME: Save in wandb
         if study.best_trial == trial:
             self._clf.save_model(
                 f"gcs://models/{study.study_name}_{self._clf.__class__.__name__}"
                 f"_{self.name}_trial_{trial.number}.cbm",
                 format="cbm",
             )
+            # model_artifact = wandb.Artifact('cnn', type='model')
+            # model_artifact.add_reference('s3://my-bucket/models/cnn/')
+            # run.log_artifact(model_artifact)
