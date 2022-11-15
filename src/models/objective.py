@@ -3,6 +3,8 @@ Provides objectives for optimizations.
 
 Adds support for classical rules, GBTs and transformer-based architectures.
 """
+from abc import ABC, abstractmethod
+
 import optuna
 import pandas as pd
 from sklearn.metrics import accuracy_score
@@ -11,13 +13,12 @@ from src.models.classical_classifier import ClassicalClassifier
 from src.models.train_model import set_seed
 
 
-class ClassicalObjective(object):
+class Objective(ABC):
     """
-    Implements an optuna optimization objective.
+    Generic implementation of objective.
 
-    See here: https://optuna.readthedocs.io/en/stable/
     Args:
-        object (object): object
+        ABC (abstract): abstract class
     """
 
     def __init__(
@@ -46,6 +47,26 @@ class ClassicalObjective(object):
             y_val,
         )
         self.name = name
+
+    @abstractmethod
+    def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
+        """
+        Callback to save models.
+
+        Args:
+            study (optuna.Study): current study.
+            trial (optuna.Trial): current trial.
+        """
+
+
+class ClassicalObjective(Objective):
+    """
+    Implements an optuna optimization objective.
+
+    See here: https://optuna.readthedocs.io/en/stable/
+    Args:
+        Objective (Objective): objective
+    """
 
     def __call__(self, trial: optuna.Trial) -> float:
         """
@@ -89,7 +110,8 @@ class ClassicalObjective(object):
             "lr_best",
             "lr_ex",
             "rev_lr_best",
-            "rev_lr_ex" "emo_best",
+            "rev_lr_ex",
+            "emo_best",
             "emo_ex",
             "rev_emo_best",
             "rev_emo_ex",
@@ -117,12 +139,21 @@ class ClassicalObjective(object):
         pred = clf.predict(self.x_val)
         return accuracy_score(self.y_val, pred)
 
+    def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
+        """
+        Callback to save models.
 
-class GradientBoostingObjective(object):
+        Args:
+            study (optuna.Study): current study.
+            trial (optuna.Trial): current trial.
+        """
+
+
+class GradientBoostingObjective(Objective):
     """
     Implements an optuna optimization objective.
 
     See here: https://optuna.readthedocs.io/en/stable/
     Args:
-        object (object): object
+        Objective (Objective): objective
     """
