@@ -1,10 +1,13 @@
-import os
 import gc
+import os
+import warnings
 
 import gcsfs
-from optuna.integration.wandb import WeightsAndBiasesCallback
 import optuna
 import pandas as pd
+from optuna.exceptions import ExperimentalWarning
+from optuna.integration.wandb import WeightsAndBiasesCallback
+from optuna.storages import RetryFailedTrialCallback
 
 import wandb
 
@@ -27,7 +30,7 @@ if __name__ == "__main__":
 
     init_gcloud()
 
-    # init new 
+    # init new
     run = wandb.init(project="thesis", entity="fbv", name="ClassicalClassifier")
     artifact = run.use_artifact("train_val_test:v0")
     artifact_dir = artifact.download()
@@ -45,11 +48,23 @@ if __name__ == "__main__":
         wandb_kwargs={"project": "thesis"},
     )
 
+    warnings.filterwarnings("ignore", category=ExperimentalWarning, module="optuna.")
+
+    storage = optuna.storages.RDBStorage(
+        url="postgresql://vvtzcgrpjuvzro:4454a77e98a3cb825d"
+        "080f0161b082e5101d401cd1abb922e673e93e7321b4bf@ec2-52-49-120-150"
+        ".eu-west-1.compute.amazonaws.com:5432/d4d1dtdcorfq8",
+        heartbeat_interval=60,
+        grace_period=120,
+        failed_trial_callback=RetryFailedTrialCallback(max_retry=3),
+    )
+
     # maximize for accuracy
     study = optuna.create_study(
         direction="maximize",
         sampler=optuna.samplers.TPESampler(seed=set_seed()),
-        study_name="study_classical_classifier",
+        study_name=f"{run.id}",
+        storage=storage,
     )
 
     # run garbage collector after each trial. Might impact performance,
@@ -61,7 +76,6 @@ if __name__ == "__main__":
         callbacks=[lambda study, trial: gc.collect(), wandbc],
     )
 
-  
     print(f"best trial: {study.best_trial.number}")
     print(f"params: {study.best_params}")
     print(f"value: {study.best_value}")
