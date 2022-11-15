@@ -4,7 +4,7 @@ Implements classical trade classification rules.
 
 from __future__ import annotations
 
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 import numpy as np
 import pandas as pd
@@ -185,7 +185,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         at_ask_or_bid = at_ask ^ at_bid
         return np.where(at_ask_or_bid, self._quote(subset), self._rev_tick("ex"))
 
-    def _trade_size(self, **kwargs) -> np.ndarray:
+    def _trade_size(self, subset:Optional[Literal["ex", "all", "best"]]=None) -> np.ndarray:
         """
         Classify a trade as a buy (sell) the trade size matches exactly either
         the bid (ask) quote size.
@@ -195,18 +195,18 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Returns:
             np.ndarray: result of the trade size rule. Can be np.NaN.
         """
-        bid_eq_ask = self.X_[f"ask_size_ex"] == self.X_[f"bid_size_ex"]
+        bid_eq_ask = self.X_["ask_size_ex"] == self.X_["bid_size_ex"]
 
         ts_eq_bid = (
-            self.X_["TRADE_SIZE"] == self.X_[f"bid_size_ex"]
+            self.X_["TRADE_SIZE"] == self.X_["bid_size_ex"]
         ) & -bid_eq_ask
         ts_eq_ask = (
-            self.X_["TRADE_SIZE"] == self.X_[f"ask_size_ex"]
+            self.X_["TRADE_SIZE"] == self.X_["ask_size_ex"]
         ) & -bid_eq_ask
 
         return np.where(ts_eq_bid, 1, np.where(ts_eq_ask, -1, np.nan))
 
-    def _depth(self, **kwargs) -> np.ndarray:
+    def _depth(self, subset:Optional[Literal["ex", "all", "best"]]=None) -> np.ndarray:
         """
         Classify midspread trades as buy (sell), if the ask size (bid size)
         exceeds the bid size (ask size).
@@ -217,17 +217,17 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             np.ndarray: result of the trade size rule. Can be np.NaN.
         """
         return np.where(
-            self.X_[f"ask_size_ex"] > self.X_[f"bid_size_ex"],
+            self.X_["ask_size_ex"] > self.X_["bid_size_ex"],
             1,
             np.where(
-                self.X_[f"ask_size_ex"] < self.X_[f"bid_size_ex"],
+                self.X_["ask_size_ex"] < self.X_["bid_size_ex"],
                 -1,
                 np.nan,
             ),
         )
 
     # pylint: disable=W0613
-    def _nan(self, **kwargs) -> np.ndarray:
+    def _nan(self, subset:Optional[Literal["ex", "all", "best"]]=None) -> np.ndarray:
         """
         Classify nothing. Fast forward results from previous classifier.
 

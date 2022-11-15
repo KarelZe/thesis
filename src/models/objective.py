@@ -15,6 +15,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import accuracy_score
 
+
 from src.models.classical_classifier import ClassicalClassifier
 
 from typing import List, Optional
@@ -92,7 +93,6 @@ class ClassicalObjective(Objective):
     Args:
         Objective (Objective): objective
     """
-
     def __call__(self, trial: optuna.Trial) -> float:
         """
         Perform a new search trial in Bayesian search.
