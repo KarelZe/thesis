@@ -182,18 +182,41 @@ class GradientBoostingObjective(Objective):
     Args:
         Objective (Objective): objective
     """
+    def __init__(
+            self,
+            x_train: pd.DataFrame,
+            y_train: pd.Series,
+            x_val: pd.DataFrame,
+            y_val: pd.Series,
+            features:List[str],
+            cat_features:Optional[List[str]] = None,
+            name: str = "default",
+        ):
+        """
+        Initialize objective.
+        Args:
+            x_train (pd.DataFrame): feature matrix (train)
+            y_train (pd.Series): ground truth (train)
+            x_val (pd.DataFrame): feature matrix (val)
+            y_val (pd.Series): ground truth (val)
+            features (List[str]): List of features
+            cat_features (Optional[List[str]], optional): List of categorical features. Defaults to None.
+            name (str, optional): Name of objective. Defaults to "default".
+        """
+        self._features = features
+        self._cat_features = cat_features
+        super().__init__(x_train, y_train, x_val, y_val, name)
+
 
     def __call__(
         self,
-        trial: optuna.Trial,
-        features: List[str],
-        cat_features: Optional[List[str]] = None,
+        trial: optuna.Trial
     ) -> float:
         ignored_features = [
-            x for x in self.x_train.columns.tolist() if x not in features
+            x for x in self.x_train.columns.tolist() if x not in self._features
         ]
 
-        iterations = trial.suggest_int("iterations", 100, 1500)
+        iterations = trial.suggest_int("iterations", 1, 10)
         learning_rate = trial.suggest_float("learning_rate", 0.005, 1, log=True)
         depth = trial.suggest_int("depth", 1, 8)
         grow_policy = trial.suggest_categorical(
@@ -206,22 +229,23 @@ class GradientBoostingObjective(Objective):
             "learning_rate": learning_rate,
             "od_type": "Iter",
             "logging_level": "Silent",
-            "task_type": "GPU",
-            "cat_features": cat_features,
+            "task_type": "CPU",
+            "cat_features": self._cat_features,
             "ignored_features": ignored_features,
             "random_seed": set_seed(),
         }
 
-        pruning_callback = CatBoostPruningCallback(trial, "Accuracy")
+        # pruning_callback = CatBoostPruningCallback(trial, "Accuracy")
 
         self._clf = CatBoostClassifier(**params)
         self._clf.fit(
             self.x_train,
             self.y_train,
-            callbacks=[pruning_callback],
+            eval_set=(self.x_val,self.y_val),
+            # callbacks=[pruning_callback],
         )
 
-        pruning_callback.check_pruned()
+        # pruning_callback.check_pruned()
 
         pred = self._clf.predict(self.x_val, prediction_type="Class")
         return accuracy_score(self.y_val, pred)
@@ -235,13 +259,8 @@ class GradientBoostingObjective(Objective):
             trial (optuna.Trial): current trial.
         """
         # FIXME: delete all others from same study first.
-        # FIXME: Save in wandb
         if study.best_trial == trial:
-            self._clf.save_model(
-                f"gcs://models/{study.study_name}_{self._clf.__class__.__name__}"
-                f"_{self.name}_trial_{trial.number}.cbm",
+            fname = f"models/{study.study_name}_{self._clf.__class__.__name__}_{self.name}_trial_{trial.number}.cbm"
+            self._clf.save_model(fname,
                 format="cbm",
             )
-            # model_artifact = wandb.Artifact('cnn', type='model')
-            # model_artifact.add_reference('s3://my-bucket/models/cnn/')
-            # run.log_artifact(model_artifact)

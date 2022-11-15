@@ -11,10 +11,16 @@ from optuna.storages import RetryFailedTrialCallback
 
 import wandb
 
-from src.models.objective import ClassicalObjective, set_seed
+from src.models.objective import GradientBoostingObjective, set_seed
 
 
-def init_gcloud() -> None:
+def init_gcloud() -> gcsfs.GCSFileSystem:
+    """
+    Connects to Google Cloud Storage.
+
+    Returns:
+        gcsfs.GCSFileSystem: file system
+    """
     # see start.sh for location
     gcloud_config = os.path.abspath(
         os.path.expanduser(
@@ -23,21 +29,21 @@ def init_gcloud() -> None:
     )
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcloud_config
     os.environ["GCLOUD_PROJECT"] = "flowing-mantis-239216"
-    gcsfs.GCSFileSystem(project="thesis", token=gcloud_config)
+    return gcsfs.GCSFileSystem(project="thesis", token=gcloud_config)
 
 
 if __name__ == "__main__":
 
-    init_gcloud()
+    fs = init_gcloud()
 
     # init new
-    run = wandb.init(project="thesis", entity="fbv", name="ClassicalClassifier")
+    run = wandb.init(project="thesis", entity="fbv", name="GradientBoostedTrees")
     artifact = run.use_artifact("train_val_test:v0")
     artifact_dir = artifact.download()
 
     # FIXME: Change later as needed.
     val = pd.read_parquet("artifacts/train_val_test:v0/data_preprocessed_2017")
-    x_train = val.sample(n=10)
+    x_train = val[["bid_ex","ask_ex", "buy_sell"]].sample(n=10)
     x_val = x_train
     y_train = x_train["buy_sell"]
     y_val = y_train
@@ -63,21 +69,36 @@ if __name__ == "__main__":
     study = optuna.create_study(
         direction="maximize",
         sampler=optuna.samplers.TPESampler(seed=set_seed()),
+        pruner=optuna.pruners.MedianPruner(n_warmup_steps=10),
         study_name=f"{run.id}",
         storage=storage,
     )
 
     # run garbage collector after each trial. Might impact performance,
     # but can mitigate out-of-memory errors.
+    objective = GradientBoostingObjective(x_train, y_train, x_val, y_val, features=x_val.columns.tolist())
     study.optimize(
-        ClassicalObjective(x_train, y_train, x_val, y_val),
-        n_trials=100,
+        objective,
+        n_trials=10,
         timeout=600,
-        callbacks=[lambda study, trial: gc.collect(), wandbc],
+        callbacks=[lambda study, trial: gc.collect(), wandbc, objective.save_callback],
+        show_progress_bar=True
     )
+
+    fs.put("./models/","gs://thesis-bucket-option-trade-classification/models/gbt/", recursive=True)
+    model_artifact = wandb.Artifact('gradient-boosted-tree', type='model')
+    model_artifact.add_reference('gs://thesis-bucket-option-trade-classification/models/gbt/')
+    run.log_artifact(model_artifact)
 
     print(f"best trial: {study.best_trial.number}")
     print(f"params: {study.best_params}")
     print(f"value: {study.best_value}")
+
+    # study.optimize(
+    #     ClassicalObjective(x_train, y_train, x_val, y_val),
+    #     n_trials=100,
+    #     timeout=600,
+    #     callbacks=[lambda study, trial: gc.collect(), wandbc],
+    # )
 
     run.finish()
