@@ -1,19 +1,31 @@
 import os
-import random
-import numpy as np
 
-def set_seed(seed_val:int=42)->int:
-    """
-    Seeds basic parameters for reproducibility of results
+import gcsfs
+import optuna
+import pandas as pd
 
-    Args:
-        seed_val (int, optional): random seed used in rngs. Defaults to 42.
+import wandb
 
-    Returns:
-        int: seed
-    """
-    os.environ["PYTHONHASHSEED"] = str(seed_val)
-    random.seed(seed_val)
-    # pandas and numpy as discussed here: https://stackoverflow.com/a/52375474/5755604
-    np.random.seed(seed_val)
-    return seed_val
+
+def init_gcloud()->None:
+    # see start.sh for location
+    gcloud_config = os.path.abspath(
+        os.path.expanduser(
+            os.path.expandvars("~/.config/gcloud/application_default_credentials.json")
+        )
+    )
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = gcloud_config
+    os.environ['GCLOUD_PROJECT'] = "flowing-mantis-239216"
+    gcsfs.GCSFileSystem(project="thesis", token=gcloud_config)
+
+if __name__ == "__main__":
+
+    init_gcloud()
+
+    run = wandb.init(project="thesis",entity="fbv")
+    artifact = run.use_artifact("train_val_test:v0")
+    artifact_dir = artifact.download()
+
+    val = pd.read_parquet("artifacts/train_val_test:v0/val_set_20")
+
+    print(val.head())
