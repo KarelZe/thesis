@@ -51,8 +51,12 @@ def main(
     logger = logging.getLogger(__name__)
     warnings.filterwarnings("ignore", category=ExperimentalWarning)
 
+    # replace missing names with run id
+    if not name:
+        name = str(run.id)
+
     logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
-    run = wandb.init(project="thesis", entity="fbv", name="GradientBoostedTrees")
+    run = wandb.init(project="thesis", entity="fbv", name=name)
     artifact = run.use_artifact("train_val_test:v0")
     artifact_dir = artifact.download()
 
@@ -81,10 +85,6 @@ def main(
         )
     elif model == "classical":
         objective = ClassicalObjective(x_train, y_train, x_val, y_val)
-
-    # replace missing names with run id
-    if not name:
-        name = str(run.id)
 
     storage = optuna.storages.RDBStorage(
         url="postgresql://vvtzcgrpjuvzro:4454a77e98a3cb825d"
@@ -118,8 +118,14 @@ def main(
     )
 
     logger.info("writing artifacts to weights and biases. 🗃️")
+
     wandb.run.summary["best accuracy"] = study.best_trial.value
     wandb.run.summary["best trial"] = study.best_trial.number
+    wandb.run.summary["features"] = features
+    wandb.run.summary["trials"] = trials
+    wandb.run.summary["name"] = name
+    wandb.run.summary["seed"] = seed
+    wandb.run.summary["mode"] = mode
 
     wandb.log(
         {
