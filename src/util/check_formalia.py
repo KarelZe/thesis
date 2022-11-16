@@ -1,3 +1,8 @@
+"""
+Utility script to avoid common errors in LaTeX documents.
+
+TODO: add more tests.
+"""
 import glob
 import os
 import re
@@ -6,8 +11,8 @@ import typer
 
 
 def check_formulae(file_name: str, file_contents: str) -> None:
-    """
-    Check if formula contains \times or \quad.
+    r"""
+    Check if formula contains `\times` or `\quad`.
 
     Args:
         file_name (str): file name
@@ -23,8 +28,8 @@ def check_formulae(file_name: str, file_contents: str) -> None:
 
 
 def check_acronyms(file_name: str, file_contents: str, acronyms: list) -> None:
-    """
-    Check if there are acronyms in text that don't use \gls{acr} or \gls{acr} wrapping.
+    r"""
+    Check for acronyms in text that don't use `\gls{acr}` or `\gls{acr}` wrapping.
 
     Args:
         file_name (str): file name
@@ -75,14 +80,17 @@ def check_hyphens(file_name: str, file_contents: str, vocabulary: list) -> None:
 
 def check_refs(file_name: str, file_contents: str) -> None:
     """
-    Check if there are references to the tables, figures, appendix in lower-case letters.
+    Check if there are references to tables, figures, appendix in lower-case letters.
 
     Args:
         file_name (str): file name
         file_contents (str): file contents
     """
     r = re.compile(
-        r"\sformula\s|\sequation\s|\sseq.\s|\sfigure\s|\sfig.\s|\stable\s|\stab.\s|\sappendix\s|\sapp.\s"
+        (
+            r"\sformula\s|\sequation\s|\sseq.\s|\sfigure\s|"
+            r"\sfig.\s|\stable\s|\stab.\s|\sappendix\s|\sapp.\s"
+        )
     )
     matches = re.findall(r, file_contents)
     if matches:
@@ -100,7 +108,6 @@ def loc_files() -> dict:
     Returns:
         dict: Dict with filename as key and file contents as values.
     """
-
     os.chdir("../../reports")
     files = glob.glob("./**/*.tex", recursive=True)
 
@@ -130,14 +137,14 @@ def get_acronyms(files: dict) -> list:
     """
     rough_matches = re.findall(r"\\newacronym.+", files.get(".\\expose.tex"))
     refined_matches = re.findall(r"\{\b[^{}]*?}", "".join(rough_matches))
-    # remove brackets and filter every third to skip over long form, convert to lower-case
+    # remove brackets and filter every third to skip over long form
     acronyms = [re.sub(r"[\{\}]", "", part.lower()) for part in refined_matches[::3]]
     return acronyms
 
 
 def get_vocabulary(files: dict) -> list:
     """
-    Gets vocabulary in lower-case from files.
+    Get vocabulary in lower-case from files.
 
     Args:
         files (dict): dict with filename and file contents
@@ -153,7 +160,7 @@ def get_vocabulary(files: dict) -> list:
     return vocab
 
 
-def check_formalia(files: dict, vocabulary: list, acronyms: list):
+def check_formalia(files: dict, vocabulary: list, acronyms: list) -> None:
     """
     Check if formalia is fullfilled.
 
@@ -170,9 +177,11 @@ def check_formalia(files: dict, vocabulary: list, acronyms: list):
     typer.echo(msg)
 
 
-def main():
+def main() -> None:
     """
     Locate and check files.
+
+    Parse acronyms from files first, get vocabulary, then apply tests.
     """
     files = loc_files()
     acroynms = get_acronyms(files)

@@ -1,8 +1,8 @@
 import glob
 import os
 import re
-from urllib.request import urlopen
 from urllib.error import HTTPError
+from urllib.request import urlopen
 
 import typer
 
@@ -14,10 +14,12 @@ def loc_urls() -> dict:
     Returns:
         dict: Dict with filename as key and list of urls as values.
     """
-
     # adapted from https://stackoverflow.com/a/2102648/5755604
     r = re.compile(
-        r"\b(?:https?|telnet|gopher|file|wais|ftp):[\w/#~:.?+=&%@!\-.:?\\-]+?(?=[.:?\-,}/]*(?:[^\w/#~:.?+=&%@!\-.:?\-]|$))"
+        (
+            r"\b(?:https?|telnet|gopher|file|wais|ftp):[\w/#~:.?+=&%@!\-.:?\\-]+"
+            r"?(?=[.:?\-,}/]*(?:[^\w/#~:.?+=&%@!\-.:?\-]|$))"
+        )
     )
 
     # find all .bib and .tex files
@@ -50,8 +52,8 @@ def check_urls(urls: dict):
     Args:
         urls (dict): dict with filename as key and list of urls
     """
-    for filename, urls in urls.items():
-        for url in urls:
+    for filename, urls_in_file in urls.items():
+        for url in urls_in_file:
             try:
                 urlopen(url)
             except HTTPError as err:
@@ -65,6 +67,8 @@ def check_urls(urls: dict):
 def main():
     """
     Locate and check urls.
+
+    Urls a relocated from `.tex` files and then parsed and tested.
     """
     urls = loc_urls()
     check_urls(urls)

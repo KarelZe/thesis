@@ -1,3 +1,10 @@
+"""
+Script to perform a hyperparameter search for various models.
+
+Currently classical rules and gradient boosted trees are supported.
+
+"""
+
 import logging
 import warnings
 from pathlib import Path
@@ -11,6 +18,7 @@ from optuna.storages import RetryFailedTrialCallback
 
 import wandb
 from src.models.objective import ClassicalObjective, GradientBoostingObjective, set_seed
+
 
 @click.command()
 @click.option("--trials", default=100, help="No. of trials")
@@ -51,22 +59,39 @@ def main(
     logger = logging.getLogger(__name__)
     warnings.filterwarnings("ignore", category=ExperimentalWarning)
 
+    logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
+    run = wandb.init(project="thesis", entity="fbv", name=name)
+
     # replace missing names with run id
     if not name:
         name = str(run.id)
 
-    logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
-    run = wandb.init(project="thesis", entity="fbv", name=name)
     artifact = run.use_artifact("train_val_test:v0")
     artifact_dir = artifact.download()
 
     logger.info("Start loading artifacts locally. 🐢")
     # FIXME: Change later as needed. Filter later if features are known.
     val = pd.read_parquet(artifact_dir + "/data_preprocessed_2017")
-    x_train = val[[ 'TRADE_SIZE', 'TRADE_PRICE',
-       'BEST_BID', 'BEST_ASK', 'order_id', 'ask_ex', 'bid_ex', 'bid_size_ex',
-       'ask_size_ex', 'price_all_lead', 'price_all_lag', 'optionid', 'day_vol',
-       'price_ex_lead', 'price_ex_lag', 'buy_sell']].sample(n=10)
+    x_train = val[
+        [
+            "TRADE_SIZE",
+            "TRADE_PRICE",
+            "BEST_BID",
+            "BEST_ASK",
+            "order_id",
+            "ask_ex",
+            "bid_ex",
+            "bid_size_ex",
+            "ask_size_ex",
+            "price_all_lead",
+            "price_all_lag",
+            "optionid",
+            "day_vol",
+            "price_ex_lead",
+            "price_ex_lag",
+            "buy_sell",
+        ]
+    ].sample(n=10)
     x_val = x_train
     y_train = x_train["buy_sell"]
     y_val = y_train
@@ -129,15 +154,13 @@ def main(
 
     wandb.log(
         {
-            "optuna_optimization_history": optuna.visualization.plot_optimization_history(
+            "optimization_history": optuna.visualization.plot_optimization_history(
                 study
             ),
             # "optuna_param_importances": optuna.visualization.plot_param_importances(
             #     study
             # ),
-            "optuna_plot_contour": optuna.visualization.plot_contour(
-                study,
-            ),
+            "plot_contour": optuna.visualization.plot_contour(study),
         }
     )
 

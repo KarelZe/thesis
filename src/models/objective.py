@@ -17,14 +17,13 @@ from catboost import CatBoostClassifier
 # from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
 
-import wandb
 from src.data.fs import fs
 from src.models.classical_classifier import ClassicalClassifier
 
 
 def set_seed(seed_val: int = 42) -> int:
     """
-    Seeds basic parameters for reproducibility of results
+    Seeds basic parameters for reproducibility of results.
 
     Args:
         seed_val (int, optional): random seed used in rngs. Defaults to 42.
@@ -65,7 +64,6 @@ class Objective(ABC):
             y_val (pd.Series): ground truth (val)
             name (str, optional): Name of objective. Defaults to "default".
         """
-
         self.x_train, self.y_train, self.x_val, self.y_val, = (
             x_train,
             y_train,
@@ -78,7 +76,7 @@ class Objective(ABC):
     @abstractmethod
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
         """
-        Callback to save models.
+        Save model using callback.
 
         Args:
             study (optuna.Study): current study.
@@ -98,9 +96,8 @@ class ClassicalObjective(Objective):
     def __call__(self, trial: optuna.Trial) -> float:
         """
         Perform a new search trial in Bayesian search.
+
         Hyperarameters are suggested, unless they are fixed.
-
-
         Args:
             trial (optuna.Trial): current trial.
         Returns:
@@ -168,7 +165,7 @@ class ClassicalObjective(Objective):
 
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
         """
-        Callback to save models.
+        Save model with callback.
 
         Args:
             study (optuna.Study): current study.
@@ -197,13 +194,15 @@ class GradientBoostingObjective(Objective):
     ):
         """
         Initialize objective.
+
         Args:
             x_train (pd.DataFrame): feature matrix (train)
             y_train (pd.Series): ground truth (train)
             x_val (pd.DataFrame): feature matrix (val)
             y_val (pd.Series): ground truth (val)
             features (List[str]): List of features
-            cat_features (Optional[List[str]], optional): List of categorical features. Defaults to None.
+            cat_features (Optional[List[str]], optional): List of categorical features.
+            Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
         """
         self._features = features
@@ -211,6 +210,15 @@ class GradientBoostingObjective(Objective):
         super().__init__(x_train, y_train, x_val, y_val, name)
 
     def __call__(self, trial: optuna.Trial) -> float:
+        """
+        Perform a new search trial in Bayesian search.
+
+        Hyperarameters are suggested, unless they are fixed.
+        Args:
+            trial (optuna.Trial): current trial.
+        Returns:
+            float: accuracy of trial on validation set.
+        """
         ignored_features = [
             x for x in self.x_train.columns.tolist() if x not in self._features
         ]
@@ -251,7 +259,7 @@ class GradientBoostingObjective(Objective):
 
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
         """
-        Callback to save models.
+        Save model with callback.
 
         Args:
             study (optuna.Study): current study.
@@ -260,7 +268,10 @@ class GradientBoostingObjective(Objective):
         if study.best_trial == trial:
 
             # e. g. models/dnurtlqv_CatBoostClassifier_default_trial_
-            common_identifier = f"models/{study.study_name}_{self._clf.__class__.__name__}_{self.name}_trial_"
+            common_identifier = (
+                f"models/{study.study_name}_"
+                f"{self._clf.__class__.__name__}_{self.name}_trial_"
+            )
 
             # remove old files on remote first
             outdated_files_remote = fs.glob(
@@ -287,12 +298,6 @@ class GradientBoostingObjective(Objective):
                 "./" + new_file,
                 "gs://thesis-bucket-option-trade-classification/" + new_file,
             )
-
-            # add to existing run using re-init
-            # run = wandb.init(project="thesis", entity="fbv", name="GradientBoostedTrees", reinit=True)
-            # model_artifact = wandb.Artifact('gradient-boosted-tree', type='model')
-            # model_artifact.add_reference('gs://thesis-bucket-option-trade-classification/'+new_file)
-            # run.log_artifact(model_artifact)
 
 
 class TabTransformerObjective(Objective):
