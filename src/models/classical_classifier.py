@@ -185,7 +185,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         at_ask_or_bid = at_ask ^ at_bid
         return np.where(at_ask_or_bid, self._quote(subset), self._rev_tick("ex"))
 
-    def _trade_size(self, subset:Optional[Literal["ex", "all", "best"]]=None) -> np.ndarray:
+    # pylint: disable=W0613
+    def _trade_size(self, *args) -> np.ndarray:
         """
         Classify a trade as a buy (sell) the trade size matches exactly either
         the bid (ask) quote size.
@@ -206,7 +207,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
         return np.where(ts_eq_bid, 1, np.where(ts_eq_ask, -1, np.nan))
 
-    def _depth(self, subset:Optional[Literal["ex", "all", "best"]]=None) -> np.ndarray:
+    # pylint: disable=W0613
+    def _depth(self, *args) -> np.ndarray:
         """
         Classify midspread trades as buy (sell), if the ask size (bid size)
         exceeds the bid size (ask size).
@@ -227,7 +229,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         )
 
     # pylint: disable=W0613
-    def _nan(self, subset:Optional[Literal["ex", "all", "best"]]=None) -> np.ndarray:
+    def _nan(self, *args) -> np.ndarray:
         """
         Classify nothing. Fast forward results from previous classifier.
 
