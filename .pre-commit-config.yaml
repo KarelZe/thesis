@@ -47,10 +47,4 @@ repos:
           - flake8-black
           - flake8-docstrings
           - flake8-bugbear
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.4
-    hooks:
-      - id: bandit
-        exclude: ^tests/
-        args: [--ini, .bandit]
 exclude: '^references/'

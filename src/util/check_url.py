@@ -50,7 +50,7 @@ def loc_urls() -> dict:
     return matches_per_file
 
 
-def check_urls(urls: dict):
+def check_urls(urls: dict) -> None:
     """
     Check if urls can be resolved.
 
@@ -69,7 +69,7 @@ def check_urls(urls: dict):
     typer.echo(msg)
 
 
-def main():
+def main() -> None:
     """
     Locate and check urls.
 

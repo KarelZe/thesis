@@ -6,7 +6,7 @@ Both simple rules like quote rule or tick test or hybrids are included.
 
 from __future__ import annotations
 
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -47,32 +47,17 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         *,
         layers: List[
             Tuple[
-                Literal[
-                    "tick",
-                    "rev_tick",
-                    "quote",
-                    "lr",
-                    "rev_lr",
-                    "emo",
-                    "rev_emo",
-                    "trade_size",
-                    "depth",
-                    "nan",
-                ],
-                Literal["all", "ex", "best"],
+                str,
+                str,
             ]
         ],
-        random_state: float = None,
+        random_state: Optional[float],
     ):
         """
         Initialize a ClassicalClassifier.
 
         Args:
-            layers (List[ Tuple[ Literal[ &quot;tick&quot;, &quot;rev_tick&quot;,
-            &quot;quote&quot;, &quot;lr&quot;, &quot;rev_lr&quot;, &quot;emo&quot;,
-            &quot;rev_emo&quot;, &quot;trade_size&quot;, &quot;depth&quot;,
-            &quot;nan&quot;, ], Literal[&quot;all&quot;, &quot;ex&quot;,
-            &quot;best&quot;], ] ]): Layers of classical rule. Up to four possible.
+            layers (List[Tuple[str, str]]): Layers of classical rule. Up to 4 possible.
             If fewer layers are needed use ("nan","ex").
             random_state (float, optional): random seed. Defaults to None.
         """

@@ -10,7 +10,7 @@ import sys
 REQUIRED_PYTHON = "python3"
 
 
-def main():
+def main() -> None:
     """
     Test, if the development environment is suited.
 
