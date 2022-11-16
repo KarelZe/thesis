@@ -6,9 +6,10 @@ Both simple rules like quote rule or tick test or hybrids are included.
 
 from __future__ import annotations
 
-from typing import List, Optional, Tuple
+from typing import Any, Callable, List, Optional, Tuple
 
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 import scipy.sparse as sp
 from sklearn.base import BaseEstimator, ClassifierMixin
@@ -84,7 +85,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             ),
         )
 
-    def _rev_tick(self, subset: Literal["all", "ex"]) -> np.ndarray:
+    def _rev_tick(self, subset: Literal["all", "ex"]) -> npt.ndarray:
         """
         Classify a trade as a sell (buy) if its trade price is below (above)\
         the closest different price of a subsequent trade.
@@ -94,7 +95,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             'all' or 'ex'.
 
         Returns:
-            np.ndarray: result of reverse tick rule. Can be np.NaN.
+            npt.ndarray: result of reverse tick rule. Can be np.NaN.
         """
         return np.where(
             self.X_[f"price_{subset}_lead"] > self.X_["TRADE_PRICE"],
@@ -104,7 +105,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             ),
         )
 
-    def _quote(self, subset: Literal["best", "ex"]) -> np.ndarray:
+    def _quote(self, subset: Literal["best", "ex"]) -> npt.ndarray:
         """
         Classify a trade as a buy (sell) if its trade price is above (below)\
         the midpoint of the bid and ask spread. Trades executed at the\
@@ -115,7 +116,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             'ex' or 'best'.
 
         Returns:
-            np.ndarray: result of quote rule. Can be np.NaN.
+            npt.ndarray: result of quote rule. Can be np.NaN.
         """
         mid = 0.5 * (self.X_[f"ask_{subset}"] + self.X_[f"bid_{subset}"])
         return np.where(
@@ -124,7 +125,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             np.where(self.X_["TRADE_PRICE"] < mid, -1, np.nan),
         )
 
-    def _lr(self, subset: Literal["best", "ex"]) -> np.ndarray:
+    def _lr(self, subset: Literal["best", "ex"]) -> npt.ndarray:
         """
         Classify a trade as a buy (sell) if its price is above (below) the\
         midpoint (quote rule), and use the tick test to classify midspread\
@@ -136,13 +137,13 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             'ex' or 'best'.
 
         Returns:
-            np.ndarray: result of the lee and ready algorithm with tick rule.
+            npt.ndarray: result of the lee and ready algorithm with tick rule.
             Can be np.NaN.
         """
         q_r = self._quote(subset)
         return np.where(~np.isnan(q_r), q_r, self._tick("ex"))
 
-    def _rev_lr(self, subset: Literal["best", "ex"]) -> np.ndarray:
+    def _rev_lr(self, subset: Literal["best", "ex"]) -> npt.ndarray:
         """
         Classify a trade as a buy (sell) if its price is above (below) the\
         midpoint (quote rule), and use the reverse tick test to classify\
@@ -154,13 +155,13 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             'ex' or 'best'.
 
         Returns:
-            np.ndarray: result of the lee and ready algorithm with reverse tick
+            npt.ndarray: result of the lee and ready algorithm with reverse tick
             rule. Can be np.NaN.
         """
         q_r = self._quote(subset)
         return np.where(~np.isnan(q_r), q_r, self._rev_tick("ex"))
 
-    def _emo(self, subset: Literal["best", "ex"]) -> np.ndarray:
+    def _emo(self, subset: Literal["best", "ex"]) -> npt.ndarray:
         """
         Classify a trade as a buy (sell) if the trade takes place at the ask\
         (bid) quote, and use the tick test to classify all other trades.
@@ -171,7 +172,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             'ex' or 'best'.
 
         Returns:
-            np.ndarray: result of the emo algorithm with tick rule. Can be
+            npt.ndarray: result of the emo algorithm with tick rule. Can be
             np.NaN.
         """
         at_ask = self.X_["TRADE_PRICE"] == self.X_[f"ask_{subset}"]
@@ -179,7 +180,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         at_ask_or_bid = at_ask ^ at_bid
         return np.where(at_ask_or_bid, self._quote(subset), self._tick("ex"))
 
-    def _rev_emo(self, subset: Literal["best", "ex"]) -> np.ndarray:
+    def _rev_emo(self, subset: Literal["best", "ex"]) -> npt.ndarray:
         """
         Classify a trade as a buy (sell) if the trade takes place at the ask\
         (bid) quote, and use the reverse tick test to classify all other\
@@ -191,7 +192,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             i. e., 'ex' or 'best'.
 
         Returns:
-            np.ndarray: result of the emo algorithm with reverse tick rule.
+            npt.ndarray: result of the emo algorithm with reverse tick rule.
             Can be np.NaN.
         """
         at_ask = self.X_["TRADE_PRICE"] == self.X_[f"ask_{subset}"]
@@ -200,7 +201,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         return np.where(at_ask_or_bid, self._quote(subset), self._rev_tick("ex"))
 
     # pylint: disable=W0613
-    def _trade_size(self, *args: str) -> np.ndarray:
+    def _trade_size(self, *args: str) -> npt.ndarray:
         """
         Classify a trade as a buy (sell) the trade size matches exactly either\
         the bid (ask) quote size.
@@ -208,7 +209,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Adapted from Grauer et al. (2022).
 
         Returns:
-            np.ndarray: result of the trade size rule. Can be np.NaN.
+            npt.ndarray: result of the trade size rule. Can be np.NaN.
         """
         bid_eq_ask = self.X_["ask_size_ex"] == self.X_["bid_size_ex"]
 
@@ -218,7 +219,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         return np.where(ts_eq_bid, 1, np.where(ts_eq_ask, -1, np.nan))
 
     # pylint: disable=W0613
-    def _depth(self, *args: str) -> np.ndarray:
+    def _depth(self, *args: str) -> npt.ndarray:
         """
         Classify midspread trades as buy (sell), if the ask size (bid size)\
         exceeds the bid size (ask size).
@@ -226,7 +227,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Adapted from (Grauer et al., 2022).
 
         Returns:
-            np.ndarray: result of the trade size rule. Can be np.NaN.
+            npt.ndarray: result of the trade size rule. Can be np.NaN.
         """
         return np.where(
             self.X_["ask_size_ex"] > self.X_["bid_size_ex"],
@@ -239,12 +240,12 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         )
 
     # pylint: disable=W0613
-    def _nan(self, *args: str) -> np.ndarray:
+    def _nan(self, *args: str) -> npt.ndarray:
         """
         Classify nothing. Fast forward results from previous classifier.
 
         Returns:
-            np.ndarray: result of the trade size rule. Can be np.NaN.
+            npt.ndarray: result of the trade size rule. Can be np.NaN.
         """
         return np.full(shape=(self.X_.shape[0],), fill_value=np.nan)
 
@@ -282,7 +283,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             "depth",
             "nan",
         )
-        funcs = (
+        funcs: Tuple[Callable[[Any], npt.ndarray]] = (
             self._tick,
             self._rev_tick,
             self._quote,
@@ -334,7 +335,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         return self
 
     # pylint: disable=C0103
-    def predict(self, X: pd.DataFrame) -> np.ndarray:
+    def predict(self, X: pd.DataFrame) -> npt.ndarray:
         """
         Perform classification on test vectors X.
 
@@ -345,7 +346,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             ValueError: X must be pd.DataFrame, as labels are required.
 
         Returns:
-            np.ndarray: Predicted traget values for X.
+            npt.ndarray: Predicted traget values for X.
         """
         # check if there are attributes with trailing _
         check_is_fitted(self)
@@ -361,7 +362,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         pred = np.full(shape=(X.shape[0],), fill_value=np.nan)
 
         for func_str, subset in self.layers_:
-            func = self.func_mapping_[func_str]
+            func: Callable[[Any], Any] = self.func_mapping_[func_str]
             pred = np.where(
                 np.isnan(pred),
                 func(subset),

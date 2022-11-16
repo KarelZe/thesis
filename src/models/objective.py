@@ -13,6 +13,7 @@ import numpy as np
 import optuna
 import pandas as pd
 from catboost import CatBoostClassifier
+from sklearn.base import BaseEstimator
 
 # from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
@@ -71,7 +72,7 @@ class Objective(ABC):
             y_val,
         )
         self.name = name
-        self._clf = None
+        self._clf: BaseEstimator
 
     @abstractmethod
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
