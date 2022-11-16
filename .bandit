@@ -1,0 +1,3 @@
+[bandit]
+# skip test for assertations see e. g., https://stackoverflow.com/a/68429294/5755604
+skips = B101

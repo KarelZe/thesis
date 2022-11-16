@@ -53,3 +53,4 @@ repos:
       - id: bandit
         exclude: ^tests/
         args: [--ini, .bandit]
+exclude: '^references/'

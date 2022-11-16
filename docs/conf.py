@@ -1,3 +1,8 @@
+"""
+Script to generate docs.
+
+See https://www.sphinx-doc.org/en/master/ for details.
+"""
 # -*- coding: utf-8 -*-
 #
 # thesis documentation build configuration file, created by

@@ -1,3 +1,8 @@
+"""
+Utility to check for broken links in LaTeX documents.
+
+TODO: Add more functionality.
+"""
 import glob
 import os
 import re
