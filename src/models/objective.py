@@ -13,11 +13,11 @@ import numpy as np
 import optuna
 import pandas as pd
 from catboost import CatBoostClassifier
-import wandb
 
 # from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
 
+import wandb
 from src.data.fs import fs
 from src.models.classical_classifier import ClassicalClassifier
 
@@ -287,8 +287,8 @@ class GradientBoostingObjective(Objective):
                 "./" + new_file,
                 "gs://thesis-bucket-option-trade-classification/" + new_file,
             )
-            
-            # add to existing run using re-init 
+
+            # add to existing run using re-init
             # run = wandb.init(project="thesis", entity="fbv", name="GradientBoostedTrees", reinit=True)
             # model_artifact = wandb.Artifact('gradient-boosted-tree', type='model')
             # model_artifact.add_reference('gs://thesis-bucket-option-trade-classification/'+new_file)
