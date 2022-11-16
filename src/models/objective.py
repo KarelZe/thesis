@@ -262,7 +262,7 @@ class GradientBoostingObjective(Objective):
             # e. g. models/dnurtlqv_CatBoostClassifier_default_trial_
             common_identifier = f"models/{study.study_name}_{self._clf.__class__.__name__}_{self.name}_trial_"
 
-            # remove old files first
+            # remove old files on remote first
             outdated_files_remote = fs.glob(
                 "gs://thesis-bucket-option-trade-classification/"
                 + common_identifier
@@ -276,22 +276,23 @@ class GradientBoostingObjective(Objective):
             if len(outdated_files_local) > 0:
                 os.remove(*outdated_files_local)
 
-            # save classifier
+            # save current best locally
             new_file = common_identifier + f"{trial.number}.cbm"
             self._clf.save_model(
                 "./" + new_file,
                 format="cbm",
             )
+            # save current best remotely
             fs.put(
                 "./" + new_file,
                 "gs://thesis-bucket-option-trade-classification/" + new_file,
             )
             
             # add to existing run using re-init 
-            run = wandb.init(project="thesis", entity="fbv", name="GradientBoostedTrees", reinit=True)
-            model_artifact = wandb.Artifact('gradient-boosted-tree', type='model')
-            model_artifact.add_reference('gs://thesis-bucket-option-trade-classification/'+new_file)
-            run.log_artifact(model_artifact)
+            # run = wandb.init(project="thesis", entity="fbv", name="GradientBoostedTrees", reinit=True)
+            # model_artifact = wandb.Artifact('gradient-boosted-tree', type='model')
+            # model_artifact.add_reference('gs://thesis-bucket-option-trade-classification/'+new_file)
+            # run.log_artifact(model_artifact)
 
 
 class TabTransformerObjective(Objective):
