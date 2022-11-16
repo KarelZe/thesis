@@ -7,6 +7,7 @@ from abc import ABC, abstractmethod
 
 import os
 import random
+import glob
 
 from catboost import CatBoostClassifier
 import optuna
@@ -17,6 +18,7 @@ from sklearn.metrics import accuracy_score
 
 
 from src.models.classical_classifier import ClassicalClassifier
+from src.data.fs import fs
 
 from typing import List, Optional
 
@@ -93,6 +95,7 @@ class ClassicalObjective(Objective):
     Args:
         Objective (Objective): objective
     """
+
     def __call__(self, trial: optuna.Trial) -> float:
         """
         Perform a new search trial in Bayesian search.
@@ -182,16 +185,17 @@ class GradientBoostingObjective(Objective):
     Args:
         Objective (Objective): objective
     """
+
     def __init__(
-            self,
-            x_train: pd.DataFrame,
-            y_train: pd.Series,
-            x_val: pd.DataFrame,
-            y_val: pd.Series,
-            features:List[str],
-            cat_features:Optional[List[str]] = None,
-            name: str = "default",
-        ):
+        self,
+        x_train: pd.DataFrame,
+        y_train: pd.Series,
+        x_val: pd.DataFrame,
+        y_val: pd.Series,
+        features: List[str],
+        cat_features: Optional[List[str]] = None,
+        name: str = "default",
+    ):
         """
         Initialize objective.
         Args:
@@ -207,11 +211,7 @@ class GradientBoostingObjective(Objective):
         self._cat_features = cat_features
         super().__init__(x_train, y_train, x_val, y_val, name)
 
-
-    def __call__(
-        self,
-        trial: optuna.Trial
-    ) -> float:
+    def __call__(self, trial: optuna.Trial) -> float:
         ignored_features = [
             x for x in self.x_train.columns.tolist() if x not in self._features
         ]
@@ -241,7 +241,7 @@ class GradientBoostingObjective(Objective):
         self._clf.fit(
             self.x_train,
             self.y_train,
-            eval_set=(self.x_val,self.y_val),
+            eval_set=(self.x_val, self.y_val),
             # callbacks=[pruning_callback],
         )
 
@@ -258,9 +258,42 @@ class GradientBoostingObjective(Objective):
             study (optuna.Study): current study.
             trial (optuna.Trial): current trial.
         """
-        # FIXME: delete all others from same study first.
         if study.best_trial == trial:
-            fname = f"models/{study.study_name}_{self._clf.__class__.__name__}_{self.name}_trial_{trial.number}.cbm"
-            self._clf.save_model(fname,
+
+            # e. g. models/dnurtlqv_CatBoostClassifier_default_trial_
+            common_identifier = f"models/{study.study_name}_{self._clf.__class__.__name__}_{self.name}_trial_"
+
+            # remove old files first
+            outdated_files_remote = fs.glob(
+                "gs://thesis-bucket-option-trade-classification/"
+                + common_identifier
+                + "*"
+            )
+            if len(outdated_files_remote) > 0:
+                fs.rm(outdated_files_remote)
+
+            # remove local files next
+            outdated_files_local = glob.glob("./" + common_identifier + "*")
+            if len(outdated_files_local) > 0:
+                os.remove(*outdated_files_local)
+
+            # save classifier
+            new_file = common_identifier + f"{trial.number}.cbm"
+            self._clf.save_model(
+                "./" + new_file,
                 format="cbm",
             )
+            fs.put(
+                "./" + new_file,
+                "gs://thesis-bucket-option-trade-classification/" + new_file,
+            )
+
+
+class TabTransformerObjective(Objective):
+    """
+    Implements an optuna optimization objective.
+
+    See here: https://optuna.readthedocs.io/en/stable/
+    Args:
+        Objective (Objective): objective
+    """

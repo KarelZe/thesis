@@ -1,8 +1,5 @@
-import gc
-import os
 import warnings
 
-import gcsfs
 import optuna
 import pandas as pd
 from optuna.exceptions import ExperimentalWarning
@@ -12,29 +9,10 @@ from optuna.storages import RetryFailedTrialCallback
 import wandb
 
 from src.models.objective import GradientBoostingObjective, set_seed
-
-
-def init_gcloud() -> gcsfs.GCSFileSystem:
-    """
-    Connects to Google Cloud Storage.
-
-    Returns:
-        gcsfs.GCSFileSystem: file system
-    """
-    # see start.sh for location
-    gcloud_config = os.path.abspath(
-        os.path.expanduser(
-            os.path.expandvars("~/.config/gcloud/application_default_credentials.json")
-        )
-    )
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcloud_config
-    os.environ["GCLOUD_PROJECT"] = "flowing-mantis-239216"
-    return gcsfs.GCSFileSystem(project="thesis", token=gcloud_config)
+from src.data.fs import fs
 
 
 if __name__ == "__main__":
-
-    fs = init_gcloud()
 
     # init new
     run = wandb.init(project="thesis", entity="fbv", name="GradientBoostedTrees")
@@ -81,14 +59,18 @@ if __name__ == "__main__":
         objective,
         n_trials=10,
         timeout=600,
-        callbacks=[lambda study, trial: gc.collect(), wandbc, objective.save_callback],
+        gc_after_trial=True,
+        callbacks=[wandbc, objective.save_callback],
         show_progress_bar=True
     )
 
-    fs.put("./models/","gs://thesis-bucket-option-trade-classification/models/gbt/", recursive=True)
-    model_artifact = wandb.Artifact('gradient-boosted-tree', type='model')
-    model_artifact.add_reference('gs://thesis-bucket-option-trade-classification/models/gbt/')
-    run.log_artifact(model_artifact)
+
+    # fs.put("./models/","gs://thesis-bucket-option-trade-classification/models/", recursive=True)
+    
+
+    # model_artifact = wandb.Artifact('gradient-boosted-tree', type='model')
+    # model_artifact.add_reference('gs://thesis-bucket-option-trade-classification/models/gbt/')
+    # run.log_artifact(model_artifact)
 
     print(f"best trial: {study.best_trial.number}")
     print(f"params: {study.best_params}")
