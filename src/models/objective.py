@@ -3,24 +3,23 @@ Provides objectives for optimizations.
 
 Adds support for classical rules, GBTs and transformer-based architectures.
 """
-from abc import ABC, abstractmethod
-
+import glob
 import os
 import random
-import glob
+from abc import ABC, abstractmethod
+from typing import List, Optional
 
-from catboost import CatBoostClassifier
-import optuna
-from optuna.integration import CatBoostPruningCallback
 import numpy as np
+import optuna
 import pandas as pd
+from catboost import CatBoostClassifier
+import wandb
+
+# from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
 
-
-from src.models.classical_classifier import ClassicalClassifier
 from src.data.fs import fs
-
-from typing import List, Optional
+from src.models.classical_classifier import ClassicalClassifier
 
 
 def set_seed(seed_val: int = 42) -> int:
@@ -287,6 +286,12 @@ class GradientBoostingObjective(Objective):
                 "./" + new_file,
                 "gs://thesis-bucket-option-trade-classification/" + new_file,
             )
+            
+            # add to existing run using re-init 
+            run = wandb.init(project="thesis", entity="fbv", name="GradientBoostedTrees", reinit=True)
+            model_artifact = wandb.Artifact('gradient-boosted-tree', type='model')
+            model_artifact.add_reference('gs://thesis-bucket-option-trade-classification/'+new_file)
+            run.log_artifact(model_artifact)
 
 
 class TabTransformerObjective(Objective):

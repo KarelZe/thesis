@@ -7,10 +7,7 @@ from optuna.integration.wandb import WeightsAndBiasesCallback
 from optuna.storages import RetryFailedTrialCallback
 
 import wandb
-
 from src.models.objective import GradientBoostingObjective, set_seed
-from src.data.fs import fs
-
 
 if __name__ == "__main__":
 
@@ -21,7 +18,7 @@ if __name__ == "__main__":
 
     # FIXME: Change later as needed.
     val = pd.read_parquet("artifacts/train_val_test:v0/data_preprocessed_2017")
-    x_train = val[["bid_ex","ask_ex", "buy_sell"]].sample(n=10)
+    x_train = val[["bid_ex", "ask_ex", "buy_sell"]].sample(n=10)
     x_val = x_train
     y_train = x_train["buy_sell"]
     y_val = y_train
@@ -54,27 +51,35 @@ if __name__ == "__main__":
 
     # run garbage collector after each trial. Might impact performance,
     # but can mitigate out-of-memory errors.
-    objective = GradientBoostingObjective(x_train, y_train, x_val, y_val, features=x_val.columns.tolist())
+    # Save models using objective.save_callback
+    objective = GradientBoostingObjective(
+        x_train, y_train, x_val, y_val, features=x_val.columns.tolist()
+    )
     study.optimize(
         objective,
         n_trials=10,
         timeout=600,
         gc_after_trial=True,
         callbacks=[wandbc, objective.save_callback],
-        show_progress_bar=True
+        show_progress_bar=True,
     )
 
+    wandb.run.summary["best accuracy"] = study.best_trial.value
+    wandb.run.summary["best trial"] = study.best_trial.number
 
-    # fs.put("./models/","gs://thesis-bucket-option-trade-classification/models/", recursive=True)
-    
-
-    # model_artifact = wandb.Artifact('gradient-boosted-tree', type='model')
-    # model_artifact.add_reference('gs://thesis-bucket-option-trade-classification/models/gbt/')
-    # run.log_artifact(model_artifact)
-
-    print(f"best trial: {study.best_trial.number}")
-    print(f"params: {study.best_params}")
-    print(f"value: {study.best_value}")
+    wandb.log(
+        {
+            "optuna_optimization_history": optuna.visualization.matplotlib.plot_optimization_history(
+                study
+            ),
+            "optuna_param_importances": optuna.visualization.matplotlib.plot_param_importances(
+                study
+            ),
+            "optuna_plot_contour": optuna.visualization.matplotlib.plot_contour(
+                study, ["iterations", "depth", "grow_policy", "learning_rate"]
+            ),
+        }
+    )
 
     # study.optimize(
     #     ClassicalObjective(x_train, y_train, x_val, y_val),
