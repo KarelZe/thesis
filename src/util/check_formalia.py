@@ -135,7 +135,7 @@ def get_acronyms(files: dict) -> list:
     Returns:
         list: list with acroynms
     """
-    rough_matches = re.findall(r"\\newacronym.+", files.get(".\\expose.tex"))
+    rough_matches = re.findall(r"\\newacronym.+", str(files.get(".\\expose.tex")))
     refined_matches = re.findall(r"\{\b[^{}]*?}", "".join(rough_matches))
     # remove brackets and filter every third to skip over long form
     acronyms = [re.sub(r"[\{\}]", "", part.lower()) for part in refined_matches[::3]]
