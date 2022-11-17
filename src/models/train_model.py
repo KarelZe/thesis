@@ -6,6 +6,7 @@ Currently classical rules and gradient boosted trees are supported.
 """
 
 import logging
+import os
 import warnings
 from pathlib import Path
 
@@ -17,6 +18,7 @@ from optuna.integration.wandb import WeightsAndBiasesCallback
 from optuna.storages import RetryFailedTrialCallback
 
 import wandb
+from src.data import const
 from src.models.objective import (
     ClassicalObjective,
     GradientBoostingObjective,
@@ -42,14 +44,26 @@ from src.models.objective import (
 )
 @click.option("--name", required=False, type=str, help="Name of study.")
 @click.option(
+    "--dataset",
+    required=False,
+    default="train_val_test:v0",
+    help="Name of dataset. See W&B Artifacts/Full Name",
+)
+@click.option(
     "--mode",
     type=click.Choice(["resume", "start"], case_sensitive=False),
     default="start",
     help="Start a new study or resume an existing study with given name.",
 )
 def main(
-    trials: int, seed: int, features: str, model: str, name: str, mode: str
-) -> None:  # pragma: no cover
+    trials: int,
+    seed: int,
+    features: str,
+    model: str,
+    name: str,
+    dataset: str,
+    mode: str,
+) -> None:
     """
     Start study.
 
@@ -59,51 +73,61 @@ def main(
         features (str): name of feature set.
         model (str): name of model.
         name (str): name of study.
+        dataset (str): name of data set.
         mode (str): mode to run study on.
     """
     logger = logging.getLogger(__name__)
     warnings.filterwarnings("ignore", category=ExperimentalWarning)
 
+    print(const.WELCOME)
+
     logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
-    run = wandb.init(project="thesis", entity="fbv", name=name)  # type: ignore
+    run = wandb.init(  # type: ignore
+        project=const.WANDB_PROJECT,
+        entity=const.WANDB_ENTITY,
+        name=name,
+    )
 
     # replace missing names with run id
     if not name:
         name = str(run.id)
 
-    artifact = run.use_artifact("train_val_test:v0")
+    artifact = run.use_artifact(dataset)
     artifact_dir = artifact.download()
 
     logger.info("Start loading artifacts locally. 🐢")
-    # FIXME: Change later as needed. Filter later if features are known.
-    val = pd.read_parquet(artifact_dir + "/data_preprocessed_2017")
-    x_train = val[
-        [
-            "TRADE_SIZE",
-            "TRADE_PRICE",
-            "BEST_BID",
-            "BEST_ASK",
-            "order_id",
-            "ask_ex",
-            "bid_ex",
-            "bid_size_ex",
-            "ask_size_ex",
-            "price_all_lead",
-            "price_all_lag",
-            "optionid",
-            "day_vol",
-            "price_ex_lead",
-            "price_ex_lag",
-            "buy_sell",
-        ]
-    ].sample(n=10)
-    x_val = x_train
+
+    # FIXME: Replace later with list from parameter
+    columns = [
+        "TRADE_SIZE",
+        "TRADE_PRICE",
+        "BEST_BID",
+        "BEST_ASK",
+        "ask_ex",
+        "bid_ex",
+        "bid_size_ex",
+        "ask_size_ex",
+        "price_all_lead",
+        "price_all_lag",
+        "day_vol",
+        "price_ex_lead",
+        "price_ex_lag",
+        "buy_sell",
+    ]
+
+    x_train = pd.read_parquet(
+        os.path.join(artifact_dir, "train_set_60"), columns=columns
+    )
     y_train = x_train["buy_sell"]
-    y_val = y_train
+    x_train.drop(columns=["buy_sell"], inplace=True)
+
+    x_val = pd.read_parquet(os.path.join(artifact_dir, "val_set_20"), columns=columns)
+    y_val = x_val["buy_sell"]
+    x_val.drop(columns=["buy_sell"], inplace=True)
 
     wandbc = WeightsAndBiasesCallback(
         metric_name="accuracy",
-        wandb_kwargs={"project": "thesis"},
+        wandb_kwargs={"project": const.WANDB_PROJECT},
     )
 
     logger.info("Start with study. 🦄")
@@ -117,9 +141,7 @@ def main(
         objective = ClassicalObjective(x_train, y_train, x_val, y_val)
 
     storage = optuna.storages.RDBStorage(
-        url="postgresql://vvtzcgrpjuvzro:4454a77e98a3cb825d"
-        "080f0161b082e5101d401cd1abb922e673e93e7321b4bf@ec2-52-49-120-150"
-        ".eu-west-1.compute.amazonaws.com:5432/d4d1dtdcorfq8",
+        url=const.OPTUNA_RDB,
         heartbeat_interval=60,
         grace_period=120,
         failed_trial_callback=RetryFailedTrialCallback(max_retry=3),
@@ -154,6 +176,7 @@ def main(
     wandb.run.summary["features"] = features  # type: ignore
     wandb.run.summary["trials"] = trials  # type: ignore
     wandb.run.summary["name"] = name  # type: ignore
+    wandb.run.summary["dataset"] = dataset  # type: ignore
     wandb.run.summary["seed"] = seed  # type: ignore
     wandb.run.summary["mode"] = mode  # type: ignore
 
@@ -162,9 +185,7 @@ def main(
             "optimization_history": optuna.visualization.plot_optimization_history(
                 study
             ),
-            # "optuna_param_importances": optuna.visualization.plot_param_importances(
-            #     study
-            # ),
+            "param_importances": optuna.visualization.plot_param_importances(study),
             "plot_contour": optuna.visualization.plot_contour(study),
         }
     )

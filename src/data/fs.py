@@ -8,6 +8,8 @@ import os
 
 import gcsfs
 
+from src.data import const
+
 
 def _create_environment() -> gcsfs.GCSFileSystem:
     """
@@ -16,15 +18,12 @@ def _create_environment() -> gcsfs.GCSFileSystem:
     Returns:
         gcsfs.GCSFileSystem: Instance of GCSFileSystem.
     """
-    # see start.sh for location
     gcloud_config = os.path.abspath(
-        os.path.expanduser(
-            os.path.expandvars("~/.config/gcloud/application_default_credentials.json")
-        )
+        os.path.expanduser(os.path.expandvars(const.GCS_CRED_FILE))
     )
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcloud_config
-    os.environ["GCLOUD_PROJECT"] = "flowing-mantis-239216"
-    return gcsfs.GCSFileSystem(project="thesis", token=gcloud_config)
+    os.environ["GCLOUD_PROJECT"] = const.GCS_PROJECT_ID
+    return gcsfs.GCSFileSystem(project=const.GCS_PROJECT_ID, token=gcloud_config)
 
 
 # global object pattern. See https://python-patterns.guide/python/module-globals/

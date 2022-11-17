@@ -18,6 +18,7 @@ from sklearn.base import BaseEstimator
 # from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
 
+from src.data import const
 from src.data.fs import fs
 from src.models.classical_classifier import ClassicalClassifier
 
@@ -224,7 +225,7 @@ class GradientBoostingObjective(Objective):
             x for x in self.x_train.columns.tolist() if x not in self._features
         ]
 
-        iterations = trial.suggest_int("iterations", 1, 10)
+        iterations = trial.suggest_int("iterations", 100, 1500)
         learning_rate = trial.suggest_float("learning_rate", 0.005, 1, log=True)
         depth = trial.suggest_int("depth", 1, 8)
         grow_policy = trial.suggest_categorical(
@@ -237,7 +238,7 @@ class GradientBoostingObjective(Objective):
             "learning_rate": learning_rate,
             "od_type": "Iter",
             "logging_level": "Silent",
-            "task_type": "CPU",
+            "task_type": "GPU",
             "cat_features": self._cat_features,
             "ignored_features": ignored_features,
             "random_seed": set_seed(),
@@ -268,36 +269,32 @@ class GradientBoostingObjective(Objective):
         """
         if study.best_trial == trial:
 
-            # e. g. models/dnurtlqv_CatBoostClassifier_default_trial_
-            common_identifier = (
-                f"models/{study.study_name}_"
+            # e. g. dnurtlqv_CatBoostClassifier_default_trial_
+            prefix_file = (
+                f"{study.study_name}_"
                 f"{self._clf.__class__.__name__}_{self.name}_trial_"
             )
 
             # remove old files on remote first
-            outdated_files_remote = fs.glob(
-                "gs://thesis-bucket-option-trade-classification/"
-                + common_identifier
-                + "*"
-            )
+            outdated_files_remote = fs.glob(const.GCS_BUCKET + prefix_file + "*")
             if len(outdated_files_remote) > 0:
                 fs.rm(outdated_files_remote)
 
             # remove local files next
-            outdated_files_local = glob.glob("./" + common_identifier + "*")
+            outdated_files_local = glob.glob(const.MODEL_DIR_LOCAL + prefix_file + "*")
             if len(outdated_files_local) > 0:
                 os.remove(*outdated_files_local)
 
             # save current best locally
-            new_file = common_identifier + f"{trial.number}.cbm"
+            new_file = prefix_file + f"{trial.number}.cbm"
             self._clf.save_model(
-                "./" + new_file,
+                const.MODEL_DIR_LOCAL + new_file,
                 format="cbm",
             )
             # save current best remotely
             fs.put(
-                "./" + new_file,
-                "gs://thesis-bucket-option-trade-classification/" + new_file,
+                const.MODEL_DIR_LOCAL + new_file,
+                const.GCS_BUCKET + const.MODEL_DIR_REMOTE + new_file,
             )
 
 

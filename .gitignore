@@ -416,5 +416,8 @@ presentation.pdf
 /artifacts/
 
 # catboost
-notebooks/catboost_info/
+(catboost_info/
+
+# models
+models/
 
