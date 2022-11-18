@@ -412,7 +412,11 @@ expose.pdf
 presentation.pdf
 
 # weights and biases
-notebooks/wandb/
+/wandb/
+/artifacts/
 
 # catboost
-notebooks/catboost_info/
+(catboost_info/
+
+# models
+./models/

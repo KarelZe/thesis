@@ -52,7 +52,7 @@ from src.models.objective import (
 @click.option(
     "--dataset",
     required=False,
-    default="train_val_test:v0",
+    default="train_val_test_fe_log_bin:latest",
     help="Name of dataset. See W&B Artifacts/Full Name",
 )
 @click.option(
@@ -105,17 +105,18 @@ def main(
 
     columns = ["buy_sell"]
     if features == "classic":
-        columns.append(features_classical)
+        columns.extend(features_classical)
     elif features == "ml":
-        columns.append(features_ml)
+        columns.extend(features_ml)
 
+    print(columns)
     x_train = pd.read_parquet(
-        os.path.join(artifact_dir, "train_set_60"), columns=columns
+        os.path.join(artifact_dir, "train_set_60.parquet"), columns=columns
     )
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
-    x_val = pd.read_parquet(os.path.join(artifact_dir, "val_set_20"), columns=columns)
+    x_val = pd.read_parquet(os.path.join(artifact_dir, "val_set_20.parquet"), columns=columns)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
@@ -162,7 +163,6 @@ def main(
     study.optimize(
         objective,
         n_trials=trials,
-        timeout=600,
         gc_after_trial=True,
         callbacks=[wandbc, objective.save_callback],
         show_progress_bar=True,
