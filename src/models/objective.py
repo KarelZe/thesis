@@ -155,8 +155,10 @@ class ClassicalObjective(Objective):
         layer_3 = mapping[index_layer_3]
         index_layer_4 = trial.suggest_categorical("layer_4", indices)
         layer_4 = mapping[index_layer_4]
+        index_layer_5 = trial.suggest_categorical("layer_5", indices)
+        layer_5 = mapping[index_layer_5]
 
-        layers = [layer_1, layer_2, layer_3, layer_4]
+        layers = [layer_1, layer_2, layer_3, layer_4, layer_5]
         self._clf = ClassicalClassifier(
             layers=layers,
             random_state=set_seed(),

@@ -104,19 +104,18 @@ def main(
     logger.info("Start loading artifacts locally. 🐢")
 
     columns = ["buy_sell"]
-    if features == "classic":
+    if features == "classical":
         columns.extend(features_classical)
     elif features == "ml":
         columns.extend(features_ml)
 
-    print(columns)
     x_train = pd.read_parquet(
-        os.path.join(artifact_dir, "train_set_60.parquet"), columns=columns
-    )
+        os.path.join(artifact_dir, "train_set_60"), columns=columns
+    ).head(2)
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
-    x_val = pd.read_parquet(os.path.join(artifact_dir, "val_set_20.parquet"), columns=columns)
+    x_val = pd.read_parquet(os.path.join(artifact_dir, "val_set_20"), columns=columns)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
