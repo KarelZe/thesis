@@ -19,6 +19,11 @@ from optuna.storages import RetryFailedTrialCallback
 
 import wandb
 from src.data import const
+from src.features.build_features import (
+    features_classical,
+    features_categorical,
+    features_ml,
+)
 from src.models.objective import (
     ClassicalObjective,
     GradientBoostingObjective,
@@ -32,7 +37,8 @@ from src.models.objective import (
 @click.option("--seed", default=42, required=False, type=int, help="Seed for rng.")
 @click.option(
     "--features",
-    type=click.Choice(["fs1", "fs2", "fs3", "fs4"], case_sensitive=False),
+    type=click.Choice(["classical", "ml"], case_sensitive=False),
+    default="classical",
     help="Feature set to run study on.",
 )
 @click.option(
@@ -97,23 +103,11 @@ def main(
 
     logger.info("Start loading artifacts locally. 🐢")
 
-    # FIXME: Replace later with list from parameter
-    columns = [
-        "TRADE_SIZE",
-        "TRADE_PRICE",
-        "BEST_BID",
-        "BEST_ASK",
-        "ask_ex",
-        "bid_ex",
-        "bid_size_ex",
-        "ask_size_ex",
-        "price_all_lead",
-        "price_all_lag",
-        "day_vol",
-        "price_ex_lead",
-        "price_ex_lag",
-        "buy_sell",
-    ]
+    columns = ["buy_sell"]
+    if features == "classic":
+        columns.append(features_classical)
+    elif features == "ml":
+        columns.append(features_ml)
 
     x_train = pd.read_parquet(
         os.path.join(artifact_dir, "train_set_60"), columns=columns
@@ -135,7 +129,12 @@ def main(
     objective: Objective
     if model == "gbm":
         objective = GradientBoostingObjective(
-            x_train, y_train, x_val, y_val, features=x_val.columns.tolist()
+            x_train,
+            y_train,
+            x_val,
+            y_val,
+            features=x_val.columns.tolist(),
+            cat_features=features_categorical,
         )
     elif model == "classical":
         objective = ClassicalObjective(x_train, y_train, x_val, y_val)
