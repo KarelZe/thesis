@@ -17,18 +17,18 @@ from optuna.integration.wandb import WeightsAndBiasesCallback
 from optuna.storages import RetryFailedTrialCallback
 
 import wandb
-from src.features.build_features import (
+from features.build_features import (
     features_categorical,
     features_classical,
     features_ml,
 )
-from src.models.objective import (
+from models.objective import (
     ClassicalObjective,
     GradientBoostingObjective,
     Objective,
     set_seed,
 )
-from src.utils.config import Settings
+from utils.config import Settings
 
 
 @click.command()

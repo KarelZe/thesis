@@ -9,7 +9,7 @@ from pathlib import Path
 
 import gcsfs
 
-from src.utils.config import Settings
+from utils.config import Settings
 
 
 def _create_environment() -> gcsfs.GCSFileSystem:
