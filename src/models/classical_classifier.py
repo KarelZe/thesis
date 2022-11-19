@@ -6,7 +6,7 @@ Both simple rules like quote rule or tick test or hybrids are included.
 
 from __future__ import annotations
 
-from typing import Any, List, Optional, Tuple
+from typing import Any, List, Optional, Tuple, Literal
 
 import numpy as np
 import numpy.typing as npt
@@ -19,7 +19,6 @@ from sklearn.utils.validation import (
     check_consistent_length,
     check_is_fitted,
 )
-from typing_extensions import Literal
 
 allowed_func_str = (
     "tick",
