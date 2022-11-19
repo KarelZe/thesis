@@ -119,7 +119,7 @@ def main(
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
-    wandbc = WeightsAndBiasesCallback(
+    wand_cb = WeightsAndBiasesCallback(
         metric_name="accuracy",
         wandb_kwargs={"project": const.WANDB_PROJECT},
     )
@@ -162,7 +162,7 @@ def main(
         objective,
         n_trials=trials,
         gc_after_trial=True,
-        callbacks=[wandbc, objective.save_callback],
+        callbacks=[wand_cb, objective.save_callback],
         show_progress_bar=True,
     )
 
