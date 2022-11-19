@@ -13,6 +13,7 @@ import numpy as np
 import optuna
 import pandas as pd
 from catboost import CatBoostClassifier
+from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
 
 # from optuna.integration import CatBoostPruningCallback
@@ -192,7 +193,6 @@ class GradientBoostingObjective(Objective):
         y_train: pd.Series,
         x_val: pd.DataFrame,
         y_val: pd.Series,
-        features: List[str],
         cat_features: Optional[List[str]] = None,
         name: str = "default",
     ):
@@ -204,12 +204,10 @@ class GradientBoostingObjective(Objective):
             y_train (pd.Series): ground truth (train)
             x_val (pd.DataFrame): feature matrix (val)
             y_val (pd.Series): ground truth (val)
-            features (List[str]): List of features
             cat_features (Optional[List[str]], optional): List of categorical features.
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
         """
-        self._features = features
         self._cat_features = cat_features
         super().__init__(x_train, y_train, x_val, y_val, name)
 
@@ -223,9 +221,7 @@ class GradientBoostingObjective(Objective):
         Returns:
             float: accuracy of trial on validation set.
         """
-        ignored_features = [
-            x for x in self.x_train.columns.tolist() if x not in self._features
-        ]
+        task_type = "GPU" if get_gpu_device_count() > 0 else "CPU"
 
         iterations = trial.suggest_int("iterations", 100, 1500)
         learning_rate = trial.suggest_float("learning_rate", 0.005, 1, log=True)
@@ -240,9 +236,8 @@ class GradientBoostingObjective(Objective):
             "learning_rate": learning_rate,
             "od_type": "Iter",
             "logging_level": "Silent",
-            "task_type": "GPU",
+            "task_type": task_type,
             "cat_features": self._cat_features,
-            "ignored_features": ignored_features,
             "random_seed": set_seed(),
         }
 
