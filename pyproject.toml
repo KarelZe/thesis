@@ -47,6 +47,8 @@ dev = [
   "coverage",
   "flake8",
   "pre-commit",
+  "pytest",
+  "pytest-cov",
 ]
 
 
