@@ -18,9 +18,6 @@ classifiers = [
 
 dependencies =[
   "click",
-  "Sphinx",
-  "coverage",
-  "flake8",
   "python-dotenv>=0.5.1",
   "catboost==1.1",
   "fastparquet==0.8.3",
@@ -42,6 +39,16 @@ dependencies =[
   "typing-extensions==4.4.0",
   "wandb==0.13.5"
 ]
+
+[project.optional-dependencies]
+dev = [
+  "Sphinx",
+  "black",
+  "coverage",
+  "flake8",
+  "pre-commit",
+]
+
 
 [project.urls]
 "Homepage" = "https://github.com/KarelZe/thesis"
