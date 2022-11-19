@@ -143,7 +143,7 @@ def main(
             x_val,
             y_val,
             cat_features=features_categorical,
-        )        
+        )
     elif model == "classical":
         objective = ClassicalObjective(x_train, y_train, x_val, y_val)
 

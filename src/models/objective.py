@@ -14,16 +14,16 @@ import numpy as np
 import optuna
 import pandas as pd
 import torch
-
-# import torch.nn as nn
-# import torch.optim as optim
-from torch import tensor, nn, optim
 from catboost import CatBoostClassifier
 from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
 
 # from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
+
+# import torch.nn as nn
+# import torch.optim as optim
+from torch import nn, optim, tensor
 from torch.utils.data import DataLoader, TensorDataset
 
 from data.fs import fs
@@ -166,7 +166,7 @@ class TabTransformerObjective(Objective):
         lr = trial.suggest_float("lr", 1e-6, 1e-3, log=True)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
         # done differntly to borisov; suggest batches
-        batch_size = trial.suggest_categorical("batch_size", [32, 64, 128, 256, 512])
+        batch_size = trial.suggest_categorical("batch_size", [512, 2048, 4096])
 
         # convert to tensor
         x_train = tensor(self.x_train.values).float()
@@ -175,13 +175,12 @@ class TabTransformerObjective(Objective):
         x_val = tensor(self.x_val.values).float()
         y_val = tensor(self.y_val.values).float()
 
-
         # create training and val set
         training_data = TensorDataset(x_train, y_train)
         val_data = TensorDataset(x_val, y_val)
 
-        train_loader = DataLoader(training_data, batch_size=batch_size, shuffle=True)
-        val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=False)
+        train_loader = DataLoader(training_data, batch_size=batch_size, shuffle=True, num_workers=8)
+        val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=False, num_workers=8)
 
         #  use gpu if available
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
