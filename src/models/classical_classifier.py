@@ -6,7 +6,7 @@ Both simple rules like quote rule or tick test or hybrids are included.
 
 from __future__ import annotations
 
-from typing import Any, List, Optional, Tuple, Literal
+from typing import Any, Literal
 
 import numpy as np
 import numpy.typing as npt
@@ -60,13 +60,13 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
     def __init__(
         self,
         *,
-        layers: List[
-            Tuple[
+        layers: list[
+            tuple[
                 str,
                 str,
             ]
         ],
-        random_state: Optional[float],
+        random_state: float | None,
     ):
         """
         Initialize a ClassicalClassifier.
@@ -307,10 +307,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
                 )
             if func_str not in allowed_func_str:
                 raise ValueError(
-                    (
-                        f"Unknown function string: {func_str},"
-                        f"expected one of {allowed_func_str}."
-                    )
+                    f"Unknown function string: {func_str},"
+                    f"expected one of {allowed_func_str}."
                 )
         # pylint: disable=W0201, C0103
         self.layers_ = self.layers

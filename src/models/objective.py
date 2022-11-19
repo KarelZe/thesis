@@ -281,14 +281,14 @@ class GradientBoostingObjective(Objective):
 
             # remove old files on remote first
             outdated_files_remote = fs.glob(
-                "gs://" + Path(settings.GCS_BUCKET, prefix_file, "*")
+                "gs://" + Path(settings.GCS_BUCKET, prefix_file, "*").as_posix()
             )
             if len(outdated_files_remote) > 0:
                 fs.rm(outdated_files_remote)
 
             # remove local files next
             outdated_files_local = glob.glob(
-                Path(settings.MODEL_DIR_LOCAL, prefix_file, "*")
+                Path(settings.MODEL_DIR_LOCAL, prefix_file, "*").as_posix()
             )
             if len(outdated_files_local) > 0:
                 os.remove(*outdated_files_local)
@@ -296,12 +296,15 @@ class GradientBoostingObjective(Objective):
             # save current best locally
             new_file = prefix_file + f"{trial.number}.cbm"
             loc_path = Path(settings.MODEL_DIR_LOCAL, new_file)
-            remote_path = "gs://" + Path(
-                settings.GCS_BUCKET, settings.MODEL_DIR_REMOTE, new_file
+            remote_path = (
+                "gs://"
+                + Path(
+                    settings.GCS_BUCKET, settings.MODEL_DIR_REMOTE, new_file
+                ).as_posix()
             )
-            self._clf.save_model(loc_path,format="cbm")
+            self._clf.save_model(loc_path, format="cbm")
             # save current best remotely
-            fs.put(loc_path,remote_path)
+            fs.put(loc_path, remote_path)
 
 
 class TabTransformerObjective(Objective):

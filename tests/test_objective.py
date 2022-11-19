@@ -1,13 +1,14 @@
 """
 Tests for Objectives.
+
 TODO: Update doc strings
 """
 import datetime as dt
 import os
 import unittest
 
-import optuna
 import numpy as np
+import optuna
 import pandas as pd
 
 from models.objective import GradientBoostingObjective
@@ -16,6 +17,7 @@ from models.objective import GradientBoostingObjective
 class TestObjectives(unittest.TestCase):
     """
     Perform automated tests for objectives.
+
     Args:
         metaclass (_type_, optional): parent. Defaults to abc.ABCMeta.
     """
@@ -23,6 +25,7 @@ class TestObjectives(unittest.TestCase):
     def setUp(self) -> None:
         """
         Set up basic data.
+
         Construct feature matrix and target.
         """
         self._old_cwd = os.getcwd()
@@ -40,6 +43,7 @@ class TestObjectives(unittest.TestCase):
     def test_gradient_boosting_objective(self) -> None:
         """
         Test if gradient boosting objective returns a valid value.
+
         Value obtained is the accuracy. Should lie in [0,1].
         Value may not be NaN.
         """

@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Create application default credentials  
+    - name: Create application default credentials
       run: |
           mkdir -p $HOME/.config/gcloud/
           echo "$APP_CRED" >> $HOME/.config/gcloud/application_default_credentials.json

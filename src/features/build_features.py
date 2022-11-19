@@ -36,14 +36,15 @@ features_trade = [
     "dis_mid_ex",
     "rel_bid_size_ex",
     "rel_ask_size_ex",
-    "diff_ask_bid_size_ex"
+    "diff_ask_bid_size_ex",
 ]
 
 features_categorical = ["ROOT", "OPTION_TYPE"]
 
 features_ml = [*features_trade, *features_date, *features_option]
 
-features_classical = [ "TRADE_SIZE",
+features_classical = [
+    "TRADE_SIZE",
     "TRADE_PRICE",
     "BEST_ASK",
     "BEST_BID",
