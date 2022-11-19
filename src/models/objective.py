@@ -281,21 +281,26 @@ class GradientBoostingObjective(Objective):
 
             # remove old files on remote first
             outdated_files_remote = fs.glob(
-                "gs://" + Path(settings.GCS_BUCKET, prefix_file, "*").as_posix()
+                "gs://"
+                + Path(
+                    settings.GCS_BUCKET, settings.MODEL_DIR_REMOTE, prefix_file + "*"
+                ).as_posix()
             )
+
             if len(outdated_files_remote) > 0:
                 fs.rm(outdated_files_remote)
 
             # remove local files next
             outdated_files_local = glob.glob(
-                Path(settings.MODEL_DIR_LOCAL, prefix_file, "*").as_posix()
+                Path(settings.MODEL_DIR_LOCAL, prefix_file + "*").as_posix()
             )
             if len(outdated_files_local) > 0:
                 os.remove(*outdated_files_local)
 
             # save current best locally
             new_file = prefix_file + f"{trial.number}.cbm"
-            loc_path = Path(settings.MODEL_DIR_LOCAL, new_file)
+            loc_path = Path(settings.MODEL_DIR_LOCAL, new_file).as_posix()
+
             remote_path = (
                 "gs://"
                 + Path(

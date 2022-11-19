@@ -26,7 +26,7 @@ cd thesis
 pip install .
 
 ## run training script
-python src/models/train_model.py --trials=25 --seed=42 --model=gbm --dataset=fbv/thesis/train_val_test_w_log_bin:v0 --features=ml
+python src/models/train_model.py --trials=5 --seed=42 --model=gbm --dataset=fbv/thesis/train_val_test_w_trade_size:v0 --features=ml
 2022-11-18 10:25:50,920 - __main__ - INFO - Connecting to weights & biases. Downloading artifacts. 📦
 2022-11-18 10:25:56,180 - __main__ - INFO - Start loading artifacts locally. 🐢
 2022-11-18 10:26:07,562 - __main__ - INFO - Start with study. 🦄

@@ -12,11 +12,11 @@ from pathlib import Path
 import click
 import optuna
 import pandas as pd
-import wandb
 from optuna.exceptions import ExperimentalWarning
 from optuna.integration.wandb import WeightsAndBiasesCallback
 from optuna.storages import RetryFailedTrialCallback
 
+import wandb
 from features.build_features import (
     features_categorical,
     features_classical,
@@ -109,11 +109,13 @@ def main(
     elif features == "ml":
         columns.extend(features_ml)
 
-    x_train = pd.read_parquet(Path(artifact_dir, "train_set_60"), columns=columns)
+    x_train = pd.read_parquet(
+        Path(artifact_dir, "train_set_60.parquet"), columns=columns
+    )
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
-    x_val = pd.read_parquet(Path(artifact_dir, "val_set_20"), columns=columns)
+    x_val = pd.read_parquet(Path(artifact_dir, "val_set_20.parquet"), columns=columns)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
