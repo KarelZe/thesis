@@ -21,10 +21,8 @@ def loc_urls() -> dict:
     """
     # adapted from https://stackoverflow.com/a/2102648/5755604
     r = re.compile(
-        (
-            r"\b(?:https?|telnet|gopher|file|wais|ftp):[\w/#~:.?+=&%@!\-.:?\\-]+"
-            r"?(?=[.:?\-,}/]*(?:[^\w/#~:.?+=&%@!\-.:?\-]|$))"
-        )
+        r"\b(?:https?|telnet|gopher|file|wais|ftp):[\w/#~:.?+=&%@!\-.:?\\-]+"
+        r"?(?=[.:?\-,}/]*(?:[^\w/#~:.?+=&%@!\-.:?\-]|$))"
     )
 
     # find all .bib and .tex files
@@ -39,7 +37,7 @@ def loc_urls() -> dict:
     matches_per_file = {}
 
     for fname in files:
-        with open(fname, "rt", encoding="utf8") as infile:
+        with open(fname, encoding="utf8") as infile:
             file_contents = infile.read()
             matches = re.findall(r, file_contents)
 

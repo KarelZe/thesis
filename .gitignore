@@ -419,6 +419,4 @@ presentation.pdf
 (catboost_info/
 
 # models
-./models/
-./artifacts/
-/wandb/
+/models/
