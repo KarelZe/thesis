@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Script to pre-process the raw data set.
 

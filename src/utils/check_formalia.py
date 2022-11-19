@@ -87,10 +87,8 @@ def check_refs(file_name: str, file_contents: str) -> None:
         file_contents (str): file contents
     """
     r = re.compile(
-        (
-            r"\sformula\s|\sequation\s|\sseq.\s|\sfigure\s|"
-            r"\sfig.\s|\stable\s|\stab.\s|\sappendix\s|\sapp.\s"
-        )
+        r"\sformula\s|\sequation\s|\sseq.\s|\sfigure\s|"
+        r"\sfig.\s|\stable\s|\stab.\s|\sappendix\s|\sapp.\s"
     )
     matches = re.findall(r, file_contents)
     if matches:
@@ -117,7 +115,7 @@ def loc_files() -> dict:
     matches_per_file = {}
 
     for fname in files:
-        with open(fname, "rt", encoding="utf8") as infile:
+        with open(fname, encoding="utf8") as infile:
             file_contents = infile.read()
             matches_per_file[fname] = file_contents
 
