@@ -110,12 +110,12 @@ def main(
         columns.extend(features_ml)
 
     x_train = pd.read_parquet(
-        os.path.join(artifact_dir, "train_set_60"), columns=columns
-    ).head(2)
+        os.path.join(artifact_dir, "train_set_60*"), columns=columns
+    )
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
-    x_val = pd.read_parquet(os.path.join(artifact_dir, "val_set_20"), columns=columns)
+    x_val = pd.read_parquet(os.path.join(artifact_dir, "val_set_20*"), columns=columns)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
@@ -133,7 +133,6 @@ def main(
             y_train,
             x_val,
             y_val,
-            features=x_val.columns.tolist(),
             cat_features=features_categorical,
         )
     elif model == "classical":
