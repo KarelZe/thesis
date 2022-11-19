@@ -20,6 +20,7 @@ dependencies =[
   "click",
   "python-dotenv>=0.5.1",
   "catboost==1.1",
+  "einsum==0.3.0",
   "fastparquet==0.8.3",
   "gcsfs==2022.11.0",
   "google-cloud-core==2.3.2", # needed by w&b in runpod

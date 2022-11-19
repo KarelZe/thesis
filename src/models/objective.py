@@ -84,7 +84,6 @@ class Objective(ABC):
         self.name = name
         self._clf: Union[BaseEstimator, nn.Module]
 
-
     @abstractmethod
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
         """
@@ -144,6 +143,7 @@ class TabTransformerObjective(Objective):
     def __call__(self, trial: optuna.Trial) -> float:
         """
         Perform a new search trial in Bayesian search.
+
         Hyperarameters are suggested, unless they are fixed.
         Args:
             trial (optuna.Trial): current trial.
@@ -183,7 +183,7 @@ class TabTransformerObjective(Objective):
         #  use gpu if available
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        self._clf = TabTransformer( 
+        self._clf = TabTransformer(
             categories=self._cat_unique,
             num_continuous=len(self._cont_idx),  # number of continuous values
             dim_out=1,
@@ -302,11 +302,13 @@ class TabTransformerObjective(Objective):
         y_pred = np.concatenate(y_pred)
         y_true = np.concatenate(y_true)
 
-        return accuracy_score(y_true, y_pred) # type: ignore
+        return accuracy_score(y_true, y_pred)  # type: ignore
+
 
 class ClassicalObjective(Objective):
     """
     Implements an optuna optimization objective.
+
     See here: https://optuna.readthedocs.io/en/stable/
     Args:
         Objective (Objective): objective
@@ -315,6 +317,7 @@ class ClassicalObjective(Objective):
     def __call__(self, trial: optuna.Trial) -> float:
         """
         Perform a new search trial in Bayesian search.
+
         Hyperarameters are suggested, unless they are fixed.
         Args:
             trial (optuna.Trial): current trial.
@@ -386,6 +389,7 @@ class ClassicalObjective(Objective):
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
         """
         Save model with callback.
+
         Args:
             study (optuna.Study): current study.
             trial (optuna.Trial): current trial.
@@ -395,6 +399,7 @@ class ClassicalObjective(Objective):
 class GradientBoostingObjective(Objective):
     """
     Implements an optuna optimization objective.
+
     See here: https://optuna.readthedocs.io/en/stable/
     Args:
         Objective (Objective): objective
@@ -411,6 +416,7 @@ class GradientBoostingObjective(Objective):
     ):
         """
         Initialize objective.
+
         Args:
             x_train (pd.DataFrame): feature matrix (train)
             y_train (pd.Series): ground truth (train)
@@ -426,6 +432,7 @@ class GradientBoostingObjective(Objective):
     def __call__(self, trial: optuna.Trial) -> float:
         """
         Perform a new search trial in Bayesian search.
+
         Hyperarameters are suggested, unless they are fixed.
         Args:
             trial (optuna.Trial): current trial.
@@ -470,6 +477,7 @@ class GradientBoostingObjective(Objective):
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
         """
         Save model with callback.
+
         Args:
             study (optuna.Study): current study.
             trial (optuna.Trial): current trial.

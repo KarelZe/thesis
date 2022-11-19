@@ -1,7 +1,7 @@
 """
-    TabTransformer: Tabular Data Modeling Using Contextual 
+    TabTransformer: Tabular Data Modeling Using Contextual
     Embeddings (https://arxiv.org/abs/2012.06678)
-    
+
     Code adapted from: https://github.com/lucidrains/tab-transformer-pytorch
     and https://github.com/kathrinse/TabSurvey/blob/main/models/tabtransformer.py
 """
@@ -221,11 +221,10 @@ class TabTransformer(nn.Module):
         # continuous
 
         if exists(continuous_mean_std):
-            assert continuous_mean_std.shape == (
-                num_continuous,
-                2,
-            ), (f"continuous_mean_std must have a shape of ({num_continuous}, 2)" 
-            f"where the last dimension contains the mean and variance respectively")
+            assert continuous_mean_std.shape == (num_continuous, 2,), (
+                f"continuous_mean_std must have a shape of ({num_continuous}, 2)"
+                f"where the last dimension contains the mean and variance respectively"
+            )
         self.register_buffer("continuous_mean_std", continuous_mean_std)
 
         self.norm = nn.LayerNorm(num_continuous)
