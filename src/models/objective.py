@@ -21,8 +21,6 @@ from sklearn.base import BaseEstimator
 # from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
 
-# import torch.nn as nn
-# import torch.optim as optim
 from torch import nn, optim, tensor
 from torch.utils.data import DataLoader, TensorDataset
 
@@ -179,8 +177,12 @@ class TabTransformerObjective(Objective):
         training_data = TensorDataset(x_train, y_train)
         val_data = TensorDataset(x_val, y_val)
 
-        train_loader = DataLoader(training_data, batch_size=batch_size, shuffle=True, num_workers=8)
-        val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=False, num_workers=8)
+        train_loader = DataLoader(
+            training_data, batch_size=batch_size, shuffle=True, num_workers=8
+        )
+        val_loader = DataLoader(
+            val_data, batch_size=batch_size, shuffle=False, num_workers=8
+        )
 
         #  use gpu if available
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
