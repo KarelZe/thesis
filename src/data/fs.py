@@ -21,7 +21,7 @@ def _create_environment() -> gcsfs.GCSFileSystem:
     """
 
     settings = Settings()
-    gcloud_config = Path(settings.GCS_CRED_FILE).expanduser().resolve()
+    gcloud_config = str(Path(settings.GCS_CRED_FILE).expanduser().resolve())
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcloud_config
     os.environ["GCLOUD_PROJECT"] = settings.GCS_PROJECT_ID
     return gcsfs.GCSFileSystem(project=settings.GCS_PROJECT_ID, token=gcloud_config)

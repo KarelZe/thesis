@@ -51,7 +51,7 @@ from utils.config import Settings
 @click.option(
     "--dataset",
     required=False,
-    default="train_val_test_fe_log_bin:latest",
+    default="fbv/thesis/train_val_test:v0",
     help="Name of dataset. See W&B Artifacts/Full Name",
 )
 @click.option(
@@ -110,12 +110,12 @@ def main(
         columns.extend(features_ml)
 
     x_train = pd.read_parquet(
-        Path(artifact_dir, "train_set_60*"), columns=columns
+        Path(artifact_dir, "train_set_60"), columns=columns
     )
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
-    x_val = pd.read_parquet(Path(artifact_dir, "val_set_20*"), columns=columns)
+    x_val = pd.read_parquet(Path(artifact_dir, "val_set_20"), columns=columns)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
