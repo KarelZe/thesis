@@ -7,14 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - id: 'auth'
-      uses: 'google-github-actions/auth@v1'
-      with:
-        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'    
-    - name: 'Set up Cloud SDK'
-      uses: 'google-github-actions/setup-gcloud@v1'
-    - name: 'Use gcloud CLI'
-      run: 'gcloud info'
+    - name: Create application default credentials  
+      run: |
+          echo "$APP_CRED" >> $HOME/.config/gcloud/application_default_credentials.json
+      shell: bash
+      env:
+        APP_CRED: ${{secrets.APPLICATION_DEFAULT_CREDENTIALS}}
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
