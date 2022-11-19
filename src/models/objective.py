@@ -7,6 +7,7 @@ import glob
 import os
 import random
 from abc import ABC, abstractmethod
+from pathlib import Path
 from typing import List, Optional
 
 import numpy as np
@@ -19,9 +20,9 @@ from sklearn.base import BaseEstimator
 # from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
 
-from src.data import const
 from src.data.fs import fs
 from src.models.classical_classifier import ClassicalClassifier
+from src.utils.config import Settings
 
 
 def set_seed(seed_val: int = 42) -> int:
@@ -266,33 +267,41 @@ class GradientBoostingObjective(Objective):
         """
         if study.best_trial == trial:
 
+            settings = Settings()
+
             # e. g. dnurtlqv_CatBoostClassifier_default_trial_
             prefix_file = (
                 f"{study.study_name}_"
                 f"{self._clf.__class__.__name__}_{self.name}_trial_"
             )
 
+            # FIXME: Replace with cloud path. One could directly upload to gcloud
+            # without storing locally.
+            # https://pypi.org/project/cloudpathlib/
+
             # remove old files on remote first
-            outdated_files_remote = fs.glob(const.GCS_BUCKET + prefix_file + "*")
+            outdated_files_remote = fs.glob(
+                "gs://" + Path(settings.GCS_BUCKET, prefix_file, "*")
+            )
             if len(outdated_files_remote) > 0:
                 fs.rm(outdated_files_remote)
 
             # remove local files next
-            outdated_files_local = glob.glob(const.MODEL_DIR_LOCAL + prefix_file + "*")
+            outdated_files_local = glob.glob(
+                Path(settings.MODEL_DIR_LOCAL, prefix_file, "*")
+            )
             if len(outdated_files_local) > 0:
                 os.remove(*outdated_files_local)
 
             # save current best locally
             new_file = prefix_file + f"{trial.number}.cbm"
-            self._clf.save_model(
-                const.MODEL_DIR_LOCAL + new_file,
-                format="cbm",
+            loc_path = Path(settings.MODEL_DIR_LOCAL, new_file)
+            remote_path = "gs://" + Path(
+                settings.GCS_BUCKET, settings.MODEL_DIR_REMOTE, new_file
             )
+            self._clf.save_model(loc_path,format="cbm")
             # save current best remotely
-            fs.put(
-                const.MODEL_DIR_LOCAL + new_file,
-                const.GCS_BUCKET + const.MODEL_DIR_REMOTE + new_file,
-            )
+            fs.put(loc_path,remote_path)
 
 
 class TabTransformerObjective(Objective):

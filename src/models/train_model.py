@@ -6,7 +6,6 @@ Currently classical rules and gradient boosted trees are supported.
 """
 
 import logging
-import os
 import warnings
 from pathlib import Path
 
@@ -18,10 +17,9 @@ from optuna.integration.wandb import WeightsAndBiasesCallback
 from optuna.storages import RetryFailedTrialCallback
 
 import wandb
-from src.data import const
 from src.features.build_features import (
-    features_classical,
     features_categorical,
+    features_classical,
     features_ml,
 )
 from src.models.objective import (
@@ -30,6 +28,7 @@ from src.models.objective import (
     Objective,
     set_seed,
 )
+from src.utils.config import Settings
 
 
 @click.command()
@@ -85,12 +84,13 @@ def main(
     logger = logging.getLogger(__name__)
     warnings.filterwarnings("ignore", category=ExperimentalWarning)
 
-    print(const.WELCOME)
-
     logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
+
+    settings = Settings()
+
     run = wandb.init(  # type: ignore
-        project=const.WANDB_PROJECT,
-        entity=const.WANDB_ENTITY,
+        project=settings.WANDB_PROJECT,
+        entity=settings.WANDB_ENTITY,
         name=name,
     )
 
@@ -110,18 +110,18 @@ def main(
         columns.extend(features_ml)
 
     x_train = pd.read_parquet(
-        os.path.join(artifact_dir, "train_set_60*"), columns=columns
+        Path(artifact_dir, "train_set_60*"), columns=columns
     )
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
-    x_val = pd.read_parquet(os.path.join(artifact_dir, "val_set_20*"), columns=columns)
+    x_val = pd.read_parquet(Path(artifact_dir, "val_set_20*"), columns=columns)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
     wand_cb = WeightsAndBiasesCallback(
         metric_name="accuracy",
-        wandb_kwargs={"project": const.WANDB_PROJECT},
+        wandb_kwargs={"project": settings.WANDB_PROJECT},
     )
 
     logger.info("Start with study. 🦄")
@@ -139,7 +139,7 @@ def main(
         objective = ClassicalObjective(x_train, y_train, x_val, y_val)
 
     storage = optuna.storages.RDBStorage(
-        url=const.OPTUNA_RDB,
+        url=settings.OPTUNA_RDB,
         heartbeat_interval=60,
         grace_period=120,
         failed_trial_callback=RetryFailedTrialCallback(max_retry=3),
