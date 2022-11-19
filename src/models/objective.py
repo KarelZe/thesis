@@ -131,6 +131,7 @@ class TabTransformerObjective(Objective):
         cont_features = [x for x in x_train.columns.tolist() if x not in cat_features]
         self._cont_idx = [features.index(i) for i in cont_features if i in features]
 
+        self._clf: nn.Module
         super().__init__(x_train, y_train, x_val, y_val, name)
 
     def __call__(self, trial: optuna.Trial) -> float:
@@ -176,7 +177,7 @@ class TabTransformerObjective(Objective):
         #  use gpu if available
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        self._clf = TabTransformer(  # type: ignore
+        self._clf = TabTransformer( 
             categories=self._cat_unique,
             num_continuous=len(self._cont_idx),  # number of continuous values
             dim_out=1,
@@ -295,4 +296,4 @@ class TabTransformerObjective(Objective):
         y_pred = np.concatenate(y_pred)
         y_true = np.concatenate(y_true)
 
-        return accuracy_score(y_true, y_pred)
+        return accuracy_score(y_true, y_pred) # type: ignore
