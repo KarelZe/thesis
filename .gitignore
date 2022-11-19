@@ -420,3 +420,6 @@ presentation.pdf
 
 # models
 ./models/
+
+#venv
+.venv/
