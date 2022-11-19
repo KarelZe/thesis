@@ -43,6 +43,7 @@ nosetests.xml
 coverage.xml
 *.cover
 junit/
+cover/
 
 # Translations
 *.mo

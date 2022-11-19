@@ -11,7 +11,7 @@ import numpy as np
 import optuna
 import pandas as pd
 
-from models.objective import GradientBoostingObjective
+from otc.models.objective import GradientBoostingObjective
 
 
 class TestObjectives(unittest.TestCase):
