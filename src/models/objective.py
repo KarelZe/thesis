@@ -14,9 +14,10 @@ import numpy as np
 import optuna
 import pandas as pd
 import torch
-import torch.nn as nn
-import torch.optim as optim
-import torch.tensor as tensor
+
+# import torch.nn as nn
+# import torch.optim as optim
+from torch import tensor, nn, optim
 from catboost import CatBoostClassifier
 from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
@@ -130,9 +131,10 @@ class TabTransformerObjective(Objective):
         self._cat_idx = [features.index(i) for i in cat_features if i in features]
         # FIXME: think about cat features not in training set, otherwise make external
         self._cat_unique = x_train[cat_features].nunique().values
-        if not self._cat_unique:
+        if not self._cat_unique.size:
             self._cat_unique = ()
 
+        print(self._cat_unique)
         # assume columns are duplicate free, which is standard in pandas
         cont_features = [x for x in x_train.columns.tolist() if x not in cat_features]
         self._cont_idx = [features.index(i) for i in cont_features if i in features]
@@ -158,8 +160,8 @@ class TabTransformerObjective(Objective):
         dim = trial.suggest_categorical("dim", [32, 64, 128, 256])
 
         # done similar to borisov
-        depth = (trial.suggest_categorical("depth", [1, 2, 3, 6, 12]),)
-        heads = (trial.suggest_categorical("heads", [2, 4, 8]),)
+        depth = trial.suggest_categorical("depth", [1, 2, 3, 6, 12])
+        heads = trial.suggest_categorical("heads", [2, 4, 8])
         weight_decay = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         lr = trial.suggest_float("lr", 1e-6, 1e-3, log=True)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
@@ -167,11 +169,12 @@ class TabTransformerObjective(Objective):
         batch_size = trial.suggest_categorical("batch_size", [32, 64, 128, 256, 512])
 
         # convert to tensor
-        x_train = tensor(self.x_train).float()
-        y_train = tensor(self.y_train).float()
+        x_train = tensor(self.x_train.values).float()
+        y_train = tensor(self.y_train.values).float()
 
-        x_val = tensor(self.x_val).float()
-        y_val = tensor(self.y_val).float()
+        x_val = tensor(self.x_val.values).float()
+        y_val = tensor(self.y_val.values).float()
+
 
         # create training and val set
         training_data = TensorDataset(x_train, y_train)
@@ -303,6 +306,16 @@ class TabTransformerObjective(Objective):
         y_true = np.concatenate(y_true)
 
         return accuracy_score(y_true, y_pred)  # type: ignore
+
+    def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
+        """
+        Save model with callback.
+
+        Args:
+            study (optuna.Study): current study.
+            trial (optuna.Trial): current trial.
+        """
+        # FIXME: Implement later
 
 
 class ClassicalObjective(Objective):

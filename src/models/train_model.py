@@ -26,6 +26,7 @@ from models.objective import (
     ClassicalObjective,
     GradientBoostingObjective,
     Objective,
+    TabTransformerObjective,
     set_seed,
 )
 from utils.config import Settings
@@ -42,7 +43,7 @@ from utils.config import Settings
 )
 @click.option(
     "--model",
-    type=click.Choice(["classical", "gbm"], case_sensitive=False),
+    type=click.Choice(["classical", "gbm", "tabtransformer"], case_sensitive=False),
     required=True,
     default="classical",
     help="Feature set to run study on.",
@@ -135,6 +136,14 @@ def main(
             y_val,
             cat_features=features_categorical,
         )
+    elif model == "tabtransformer":
+        objective = TabTransformerObjective(
+            x_train,
+            y_train,
+            x_val,
+            y_val,
+            cat_features=features_categorical,
+        )        
     elif model == "classical":
         objective = ClassicalObjective(x_train, y_train, x_val, y_val)
 
