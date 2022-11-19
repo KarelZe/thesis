@@ -19,32 +19,14 @@ This repository contains all the resources for my thesis on option trade classif
 git clone https://github.com/KarelZe/thesis.git --depth=1
 
 # set up consts for wandb + gcp
-nano /thesis/src/data/const.py
+nano prod.env
 
 # install requirements
 cd thesis
-make requirements
 pip install .
 
 ## run training script
 python src/models/train_model.py --trials=25 --seed=42 --model=gbm --dataset=fbv/thesis/train_val_test_w_log_bin:v0 --features=ml
-
- dPYb,,dPYb,
- IP'`YbIP'`Yb
- I8  8II8  8I
- I8  8'I8  8'
- I8 dP I8 dP        ggg    gg
- I8dP  I8dP   88gg d8"Yb   88bg
- I8P   I8P    8I  dP  I8   8I
-,d8b,_,d8b,  ,8I,dP   I8, ,8I
-PI8"888P'"Y88P"'8"     "Y8P"
- I8 `8,
- I8  `8,
- I8   8I
- I8   8I
- I8, ,8'
-  "Y8P'
-
 2022-11-18 10:25:50,920 - __main__ - INFO - Connecting to weights & biases. Downloading artifacts. 📦
 2022-11-18 10:25:56,180 - __main__ - INFO - Start loading artifacts locally. 🐢
 2022-11-18 10:26:07,562 - __main__ - INFO - Start with study. 🦄
@@ -54,7 +36,7 @@ PI8"888P'"Y88P"'8"     "Y8P"
 ## Development
 
 ### Build and run docker image 🐳
-The code is designed to run inside a docker container. See the [`Dockerfile`](https://github.com/KarelZe/thesis/blob/main/Dockerfile). 
+The code is designed to run inside a docker container. See the [`Dockerfile`](https://github.com/KarelZe/thesis/blob/main/Dockerfile).
 ```
 docker build -t thesis-dev .
 docker run --env-file .env thesis-dev
@@ -63,7 +45,7 @@ docker run --env-file .env thesis-dev
 ### Set up git pre-commit hooks 🐙
 Pre-commit hooks are pre-checks to avoid committing error-prone code. The tests are defined in the [`.pre-commit-config.yaml`](https://github.com/KarelZe/thesis/blob/main/.pre-commit-config.yaml). Install them using:
 ```
-pip install pre-commit
+pip install .[dev]
 pre-commit install
 pre-commit run --all-files
 ```
