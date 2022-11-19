@@ -9,7 +9,9 @@ jobs:
     - uses: actions/checkout@v3
     - name: Create application default credentials  
       run: |
+          mkdir -p $HOME/.config/gcloud/
           echo "$APP_CRED" >> $HOME/.config/gcloud/application_default_credentials.json
+          chmod 600 $HOME/.config/gcloud/application_default_credentials.json
       shell: bash
       env:
         APP_CRED: ${{secrets.APPLICATION_DEFAULT_CREDENTIALS}}
