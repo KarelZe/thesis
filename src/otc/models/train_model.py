@@ -22,7 +22,6 @@ from features.build_features import (
 from optuna.exceptions import ExperimentalWarning
 from optuna.integration.wandb import WeightsAndBiasesCallback
 from optuna.storages import RetryFailedTrialCallback
-from otc.utils.config import Settings
 
 from otc.models.objective import (
     ClassicalObjective,
@@ -30,6 +29,7 @@ from otc.models.objective import (
     Objective,
     set_seed,
 )
+from otc.utils.config import Settings
 
 
 @click.command()

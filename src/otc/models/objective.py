@@ -19,10 +19,10 @@ from sklearn.base import BaseEstimator
 
 # from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
-from otc.utils.config import Settings
 
 from otc.data.fs import fs
 from otc.models.classical_classifier import ClassicalClassifier
+from otc.utils.config import Settings
 
 
 def set_seed(seed_val: int = 42) -> int:

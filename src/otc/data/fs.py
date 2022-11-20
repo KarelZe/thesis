@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 
 import gcsfs
+
 from otc.utils.config import Settings
 
 
