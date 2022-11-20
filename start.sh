@@ -25,7 +25,7 @@ git config --global user.name $NAME && \
 git config --global user.email $EMAIL &&\
 git clone https://$GITHUB_TOKEN@github.com/$REPOSITORY --depth=1&&\
 cd thesis
-pip install -r requirements.txt
+pip install .
 
 echo "pod started..."
 
