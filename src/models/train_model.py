@@ -112,11 +112,11 @@ def main(
 
     x_train = pd.read_parquet(
         Path(artifact_dir, "train_set_60.parquet"), columns=columns
-    )
+    ).sample(n=10)
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
-    x_val = pd.read_parquet(Path(artifact_dir, "val_set_20.parquet"), columns=columns)
+    x_val = pd.read_parquet(Path(artifact_dir, "val_set_20.parquet"), columns=columns).sample(n=10)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 

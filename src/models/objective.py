@@ -127,16 +127,18 @@ class TabTransformerObjective(Objective):
         features = x_train.columns.tolist()
         cat_features = [] if not cat_features else cat_features
         self._cat_idx = [features.index(i) for i in cat_features if i in features]
+        print(cat_features)
+        print(self._cat_idx)
         # FIXME: think about cat features not in training set, otherwise make external
-        self._cat_unique = x_train[cat_features].nunique().values
-        if not self._cat_unique.size:
+        self._cat_unique = x_train[cat_features].nunique().to_list()
+        if not self._cat_unique:
             self._cat_unique = ()
 
         print(self._cat_unique)
         # assume columns are duplicate free, which is standard in pandas
         cont_features = [x for x in x_train.columns.tolist() if x not in cat_features]
         self._cont_idx = [features.index(i) for i in cont_features if i in features]
-
+        print(self._cont_idx)
         self._clf: nn.Module
         super().__init__(x_train, y_train, x_val, y_val, name)
 
@@ -155,7 +157,7 @@ class TabTransformerObjective(Objective):
 
         # searchable params
         # done differently in borisov; this should be clearer, as search is not changed
-        dim = trial.suggest_categorical("dim", [32, 64, 128, 256])
+        dim = trial.suggest_categorical("dim", [4,8,12])
 
         # done similar to borisov
         depth = trial.suggest_categorical("depth", [1, 2, 3, 6, 12])
@@ -164,8 +166,10 @@ class TabTransformerObjective(Objective):
         lr = trial.suggest_float("lr", 1e-6, 1e-3, log=True)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
         # done differntly to borisov; suggest batches
-        batch_size = trial.suggest_categorical("batch_size", [512, 2048, 4096])
+        batch_size = trial.suggest_categorical("batch_size", [2, 4])
 
+        # FIXME: fix embedding lookup
+        # see https://discuss.pytorch.org/t/embedding-error-index-out-of-range-in-self/81550/2
         # convert to tensor
         x_train = tensor(self.x_train.values).float()
         y_train = tensor(self.y_train.values).float()
@@ -178,14 +182,14 @@ class TabTransformerObjective(Objective):
         val_data = TensorDataset(x_val, y_val)
 
         train_loader = DataLoader(
-            training_data, batch_size=batch_size, shuffle=True, num_workers=8
+            training_data, batch_size=batch_size, shuffle=False, num_workers=8
         )
         val_loader = DataLoader(
             val_data, batch_size=batch_size, shuffle=False, num_workers=8
         )
 
         #  use gpu if available
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        device = "cpu" #  torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         self._clf = TabTransformer(
             categories=self._cat_unique,
@@ -226,9 +230,11 @@ class TabTransformerObjective(Objective):
                 x_cat = (
                     inputs[:, self._cat_idx].int().to(device) if self._cat_idx else None
                 )
+                print(x_cat)
+
                 x_cont = inputs[:, self._cont_idx].to(device)
                 targets = targets.to(device)
-
+                print(x_cont)
                 # reset the gradients back to zero
                 optimizer.zero_grad()
 
