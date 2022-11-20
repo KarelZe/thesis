@@ -153,29 +153,29 @@ class TabTransformerObjective(Objective):
 
         # searchable params
         # done differently in borisov; this should be clearer, as search is not changed
-        dim = trial.suggest_categorical("dim", [32, 64, 128, 256])
+        dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
 
         # done similar to borisov
-        depth = trial.suggest_categorical("depth", [1, 2, 3, 6, 12])
-        heads = trial.suggest_categorical("heads", [2, 4, 8])
-        weight_decay = trial.suggest_float("weight_decay", 1e-6, 1e-1)
+        depth: int = trial.suggest_categorical("depth", [1, 2, 3, 6, 12])  # type: ignore
+        heads: int = trial.suggest_categorical("heads", [2, 4, 8])  # type: ignore
+        weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
         # done differntly to borisov; suggest batches
-        batch_size = trial.suggest_categorical("batch_size", [512,1024, 2048, 4096])
+        batch_size: int = trial.suggest_categorical("batch_size", [512, 1024, 2048, 4096])  # type: ignore
 
-        # FIXME: fix embedding lookup
-        # see https://discuss.pytorch.org/t/embedding-error-index-out-of-range-in-self/81550/2
+        # FIXME: fix embedding lookup for ROOT / Symbol.
         # convert to tensor
         x_train = tensor(self.x_train.values).float()
-        x_train = torch.nan_to_num(x_train,nan=0)
+        # FIXME: Integrate at another part of the code e. g., pre-processing / data set.
+        x_train = torch.nan_to_num(x_train, nan=0)
 
         y_train = tensor(self.y_train.values).float()
         # FIXME: set -1 to 0, due to rounding before output + binary classification
         y_train[y_train < 0] = 0
 
         x_val = tensor(self.x_val.values).float()
-        x_val = torch.nan_to_num(x_val,nan=0)
+        x_val = torch.nan_to_num(x_val, nan=0)
         y_val = tensor(self.y_val.values).float()
         y_val[y_val < 0] = 0
 
@@ -197,7 +197,7 @@ class TabTransformerObjective(Objective):
             categories=self._cat_unique,
             num_continuous=len(self._cont_idx),  # number of continuous values
             dim_out=1,
-            mlp_act=nn.ReLU(),  # activation for final mlp all layers (here relu) / changed Borisov ; sigmoid of last layer allready included in loss.
+            mlp_act=nn.ReLU(),  # sigmoid of last layer already included in loss.
             dim=dim,
             depth=depth,
             heads=heads,
@@ -241,7 +241,6 @@ class TabTransformerObjective(Objective):
                 optimizer.zero_grad()
 
                 outputs = self._clf(x_cat, x_cont)
-                # e. g. 
                 outputs = outputs.flatten()
 
                 train_loss = criterion(outputs, targets)
@@ -254,8 +253,6 @@ class TabTransformerObjective(Objective):
 
                 # add the mini-batch training loss to epoch loss
                 loss_in_epoch_train += train_loss.item()
-
-                # acc = (outputs.reshape(-1).detach().numpy().round() == targets)
 
             self._clf.eval()
 
@@ -305,8 +302,8 @@ class TabTransformerObjective(Objective):
             x_cont = inputs[:, self._cont_idx].to(device)
             targets = targets.to(device)
             output = self._clf(x_cat, x_cont)
-            
-            #map between zero and one, sigmoid is otherwise included in loss already
+
+            # map between zero and one, sigmoid is otherwise included in loss already
             output = torch.sigmoid(output.squeeze())
             y_pred.append(output.detach().cpu().numpy())
             y_true.append(targets.detach().cpu().numpy())

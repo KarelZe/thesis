@@ -1,36 +1,19 @@
 """
-    TabTransformer: Tabular Data Modeling Using Contextual
-    Embeddings (https://arxiv.org/abs/2012.06678)
+Implementation of a Tab Transformer.
 
-    Code adapted from: https://github.com/lucidrains/tab-transformer-pytorch
-    and https://github.com/kathrinse/TabSurvey/blob/main/models/tabtransformer.py
+Based on paper:
+https://arxiv.org/abs/2012.06678
+
+Implementation adapted from: https://github.com/lucidrains/tab-transformer-pytorch
+and https://github.com/kathrinse/TabSurvey/blob/main/models/tabtransformer.py
 """
-
 import torch
 
-####################################################################################################################
-#
-#  TabTransformer code from
-#  https://github.com/lucidrains/tab-transformer-pytorch/blob/main/tab_transformer_pytorch/tab_transformer_pytorch.py
-#  adapted to work without categorical data
-#
-#####################################################################################################################
 import torch.nn.functional as F
 from einops import rearrange
 from torch import einsum, nn
 
-# helpers
-
-
-def exists(val):
-    return val is not None
-
-
-def default(val, d):
-    return val if exists(val) else d
-
-
-# classes
+from typing import Tuple
 
 
 class Residual(nn.Module):
@@ -38,7 +21,7 @@ class Residual(nn.Module):
         super().__init__()
         self.fn = fn
 
-    def forward(self, x, **kwargs):
+    def forward(self, x: torch.Tensor, **kwargs):
         return self.fn(x, **kwargs) + x
 
 
@@ -48,15 +31,24 @@ class PreNorm(nn.Module):
         self.norm = nn.LayerNorm(dim)
         self.fn = fn
 
-    def forward(self, x, **kwargs):
+    def forward(self, x: torch.Tensor, **kwargs):
         return self.fn(self.norm(x), **kwargs)
 
 
-# attention
-
-
 class GEGLU(nn.Module):
-    def forward(self, x):
+    r"""
+    Implementation of the GeGLU activation function.
+
+    Given by:
+    $\operatorname{GeGLU}(x, W, V, b, c)=\operatorname{GELU}(x W+b) \otimes(x V+c)$
+
+    Proposed in https://arxiv.org/pdf/2002.05202v1.pdf.
+
+    Args:
+        nn (torch.Tensor): _description_
+    """
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         x, gates = x.chunk(2, dim=-1)
         return x * F.gelu(gates)
 
@@ -99,9 +91,6 @@ class Attention(nn.Module):
         out = einsum("b h i j, b h j d -> b h i d", attn, v)
         out = rearrange(out, "b h n d -> b n (h d)", h=h)
         return self.to_out(out)
-
-
-# transformer
 
 
 class Transformer(nn.Module):
@@ -150,26 +139,28 @@ class MLP(nn.Module):
         super().__init__()
         dims_pairs = list(zip(dims[:-1], dims[1:]))
         layers = []
-        for ind, (dim_in, dim_out) in enumerate(dims_pairs):
+        for dim_in, dim_out in dims_pairs:
             # is_last = ind >= (len(dims_pairs) - 1)
             linear = nn.Linear(dim_in, dim_out)
             layers.append(linear)
             layers.append(act)
 
-        print(layers)
         # drop last layer, as a sigmoid layer is included from BCELogitLoss
         del layers[-1]
-        print(layers)
 
         self.mlp = nn.Sequential(*layers)
 
-    def forward(self, x):
-        x = self.mlp(x)
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Forward propagate tensor through MLP.
 
-        return x
+        Args:
+            x (torch.Tensor): input tensor.
 
-
-# main class
+        Returns:
+            torch.Tensor: output tensor.
+        """
+        return self.mlp(x)
 
 
 class TabTransformer(nn.Module):
@@ -177,18 +168,18 @@ class TabTransformer(nn.Module):
         self,
         *,
         categories,
-        num_continuous,
-        dim,
-        depth,
-        heads,
-        dim_head=16,
-        dim_out=1,
-        mlp_hidden_mults=(4, 2),
-        mlp_act = nn.ReLU(),
-        num_special_tokens=2,
+        num_continuous: int,
+        dim: int,
+        depth: int,
+        heads: int,
+        dim_head: int = 16,
+        dim_out: int = 1,
+        mlp_hidden_mults: Tuple[(int, int)] = (4, 2),
+        mlp_act=nn.ReLU(),
+        num_special_tokens: int = 2,
         continuous_mean_std=None,
-        attn_dropout=0.0,
-        ff_dropout=0.0,
+        attn_dropout: float = 0.0,
+        ff_dropout: float = 0.0,
     ):
         super().__init__()
         assert all(
@@ -216,7 +207,7 @@ class TabTransformer(nn.Module):
 
         # continuous
 
-        if exists(continuous_mean_std):
+        if continuous_mean_std is not None:
             assert continuous_mean_std.shape == (num_continuous, 2,), (
                 f"continuous_mean_std must have a shape of ({num_continuous}, 2)"
                 f"where the last dimension contains the mean and variance respectively"
@@ -248,7 +239,17 @@ class TabTransformer(nn.Module):
 
         self.mlp = MLP(all_dimensions, act=mlp_act)
 
-    def forward(self, x_categ, x_cont):
+    def forward(self, x_categ: torch.Tensor, x_cont: torch.Tensor) -> torch.Tensor:
+        """
+        Forward pass of TabTransformer.
+
+        Args:
+            x_categ (torch.Tensor): tensor with categorical data.
+            x_cont (torch.Tensor): tensor with continous data.
+
+        Returns:
+            torch.Tensor: predictions with shape [batch, 1]
+        """
         # Adaptation to work without categorical data
         if x_categ is not None:
             assert x_categ.shape[-1] == self.num_categories, (
@@ -264,7 +265,7 @@ class TabTransformer(nn.Module):
             f"values for your continuous input"
         )
 
-        if exists(self.continuous_mean_std):
+        if self.continuous_mean_std is not None:
             mean, std = self.continuous_mean_std.unbind(dim=-1)
             x_cont = (x_cont - mean) / std
 
