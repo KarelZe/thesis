@@ -36,6 +36,9 @@ repos:
     rev: v0.991
     hooks:
       - id: mypy
+        # yaml requires additional stubs.
+        # Similar to: https://stackoverflow.com/a/73603491/5755604
+        additional_dependencies: ['types-PyYAML']
   - repo: https://github.com/pre-commit/pygrep-hooks
     rev: v1.9.0
     hooks:
@@ -57,7 +60,7 @@ repos:
         args:
           - "--check"
         language_version: python3
-        exclude: ^(tests\/hooks-abort-render\/hooks|docs\/HelloCookieCutter1)
+        exclude: ^(tests\/hooks-abort-render\/hooks|docs)
   - repo: https://github.com/pycqa/flake8
     rev: 5.0.4
     hooks:
@@ -71,4 +74,4 @@ repos:
     rev: v3.2.2
     hooks:
       - id: pyupgrade
-exclude: "^references/"
+exclude: "^(references|reports)"
