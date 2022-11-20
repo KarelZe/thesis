@@ -127,18 +127,14 @@ class TabTransformerObjective(Objective):
         features = x_train.columns.tolist()
         cat_features = [] if not cat_features else cat_features
         self._cat_idx = [features.index(i) for i in cat_features if i in features]
-        print(cat_features)
-        print(self._cat_idx)
+
         # FIXME: think about cat features not in training set, otherwise make external
         self._cat_unique = x_train[cat_features].nunique().to_list()
         if not self._cat_unique:
             self._cat_unique = ()
-
-        print(self._cat_unique)
         # assume columns are duplicate free, which is standard in pandas
         cont_features = [x for x in x_train.columns.tolist() if x not in cat_features]
         self._cont_idx = [features.index(i) for i in cont_features if i in features]
-        print(self._cont_idx)
         self._clf: nn.Module
         super().__init__(x_train, y_train, x_val, y_val, name)
 
@@ -153,29 +149,35 @@ class TabTransformerObjective(Objective):
             float: accuracy of trial on validation set.
         """
         # static params
-        epochs = 1024
+        epochs = 128
 
         # searchable params
         # done differently in borisov; this should be clearer, as search is not changed
-        dim = trial.suggest_categorical("dim", [4,8,12])
+        dim = trial.suggest_categorical("dim", [32, 64, 128, 256])
 
         # done similar to borisov
         depth = trial.suggest_categorical("depth", [1, 2, 3, 6, 12])
         heads = trial.suggest_categorical("heads", [2, 4, 8])
         weight_decay = trial.suggest_float("weight_decay", 1e-6, 1e-1)
-        lr = trial.suggest_float("lr", 1e-6, 1e-3, log=True)
+        lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
         # done differntly to borisov; suggest batches
-        batch_size = trial.suggest_categorical("batch_size", [2, 4])
+        batch_size = trial.suggest_categorical("batch_size", [512,1024, 2048, 4096])
 
         # FIXME: fix embedding lookup
         # see https://discuss.pytorch.org/t/embedding-error-index-out-of-range-in-self/81550/2
         # convert to tensor
         x_train = tensor(self.x_train.values).float()
+        x_train = torch.nan_to_num(x_train,nan=0)
+
         y_train = tensor(self.y_train.values).float()
+        # FIXME: set -1 to 0, due to rounding before output + binary classification
+        y_train[y_train < 0] = 0
 
         x_val = tensor(self.x_val.values).float()
+        x_val = torch.nan_to_num(x_val,nan=0)
         y_val = tensor(self.y_val.values).float()
+        y_val[y_val < 0] = 0
 
         # create training and val set
         training_data = TensorDataset(x_train, y_train)
@@ -189,13 +191,13 @@ class TabTransformerObjective(Objective):
         )
 
         #  use gpu if available
-        device = "cpu" #  torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        print(device)
         self._clf = TabTransformer(
             categories=self._cat_unique,
             num_continuous=len(self._cont_idx),  # number of continuous values
             dim_out=1,
-            mlp_act=nn.ReLU(),  # activation for final mlp (here relu)
+            mlp_act=nn.ReLU(),  # activation for final mlp all layers (here relu) / changed Borisov ; sigmoid of last layer allready included in loss.
             dim=dim,
             depth=depth,
             heads=heads,
@@ -210,6 +212,7 @@ class TabTransformerObjective(Objective):
         )
 
         # see https://stackoverflow.com/a/53628783/5755604
+        # no sigmoid required; numerically more stable
         criterion = nn.BCEWithLogitsLoss()
 
         # keep track of val loss and do early stopping
@@ -230,16 +233,16 @@ class TabTransformerObjective(Objective):
                 x_cat = (
                     inputs[:, self._cat_idx].int().to(device) if self._cat_idx else None
                 )
-                print(x_cat)
 
                 x_cont = inputs[:, self._cont_idx].to(device)
                 targets = targets.to(device)
-                print(x_cont)
+
                 # reset the gradients back to zero
                 optimizer.zero_grad()
 
                 outputs = self._clf(x_cat, x_cont)
-                outputs = outputs.squeeze()
+                # e. g. 
+                outputs = outputs.flatten()
 
                 train_loss = criterion(outputs, targets)
 
@@ -251,6 +254,8 @@ class TabTransformerObjective(Objective):
 
                 # add the mini-batch training loss to epoch loss
                 loss_in_epoch_train += train_loss.item()
+
+                # acc = (outputs.reshape(-1).detach().numpy().round() == targets)
 
             self._clf.eval()
 
@@ -267,15 +272,9 @@ class TabTransformerObjective(Objective):
                     x_cont = inputs[:, self._cont_idx].to(device)
                     targets = targets.to(device)
 
-                    outputs = self._clf(x_cont, x_cat)
-                    outputs = outputs.squeeze()
+                    outputs = self._clf(x_cat, x_cont)
 
-                    val_loss = criterion(outputs, targets)
-
-                    inputs = inputs.to(device)
-                    targets = targets.to(device)
-
-                    outputs = self._clf(x_cont, x_cat)
+                    outputs = outputs.flatten()
 
                     val_loss = criterion(outputs, targets)
                     loss_in_epoch_val += val_loss.item()
@@ -305,13 +304,20 @@ class TabTransformerObjective(Objective):
             x_cat = inputs[:, self._cat_idx].int().to(device) if self._cat_idx else None
             x_cont = inputs[:, self._cont_idx].to(device)
             targets = targets.to(device)
-            prediction = self._clf(x_cont, x_cat)
-            y_pred.append(prediction.detach().cpu().numpy().flatten())
-            y_true.append(targets.detach().cpu().numpy().flatten())
+            output = self._clf(x_cat, x_cont)
+            
+            #map between zero and one, sigmoid is otherwise included in loss already
+            output = torch.sigmoid(output.squeeze())
+            y_pred.append(output.detach().cpu().numpy())
+            y_true.append(targets.detach().cpu().numpy())
 
-        y_pred = np.concatenate(y_pred)
+        # round prediction to nearest int
+        y_pred = np.rint(np.concatenate(y_pred))
         y_true = np.concatenate(y_true)
-
+        # print("pred")
+        print(y_pred)
+        # print("true")
+        print(y_true)
         return accuracy_score(y_true, y_pred)  # type: ignore
 
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:

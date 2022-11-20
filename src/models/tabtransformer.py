@@ -146,30 +146,26 @@ class Transformer(nn.Module):
 
 
 class MLP(nn.Module):
-    def __init__(self, dims, act=None):
+    def __init__(self, dims, act):
         super().__init__()
         dims_pairs = list(zip(dims[:-1], dims[1:]))
         layers = []
         for ind, (dim_in, dim_out) in enumerate(dims_pairs):
-            is_last = ind >= (len(dims_pairs) - 1)
+            # is_last = ind >= (len(dims_pairs) - 1)
             linear = nn.Linear(dim_in, dim_out)
             layers.append(linear)
-
-            if is_last:
-                self.dim_out = dim_out
-                continue
-
-            act = default(act, nn.ReLU())
             layers.append(act)
+
+        print(layers)
+        # drop last layer, as a sigmoid layer is included from BCELogitLoss
+        del layers[-1]
+        print(layers)
 
         self.mlp = nn.Sequential(*layers)
 
     def forward(self, x):
         x = self.mlp(x)
 
-        # Added for multiclass output!
-        if self.dim_out > 1:
-            x = torch.softmax(x, dim=1)
         return x
 
 
@@ -188,7 +184,7 @@ class TabTransformer(nn.Module):
         dim_head=16,
         dim_out=1,
         mlp_hidden_mults=(4, 2),
-        mlp_act=None,
+        mlp_act = nn.ReLU(),
         num_special_tokens=2,
         continuous_mean_std=None,
         attn_dropout=0.0,
@@ -253,7 +249,6 @@ class TabTransformer(nn.Module):
         self.mlp = MLP(all_dimensions, act=mlp_act)
 
     def forward(self, x_categ, x_cont):
-
         # Adaptation to work without categorical data
         if x_categ is not None:
             assert x_categ.shape[-1] == self.num_categories, (
