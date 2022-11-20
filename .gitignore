@@ -417,10 +417,10 @@ presentation.pdf
 /artifacts/
 
 # catboost
-(catboost_info/
+**/catboost_info/
 
 # models
-./models/
+/models/
 
 #venv
 .venv/
