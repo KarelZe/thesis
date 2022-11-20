@@ -4,9 +4,11 @@ Script to pre-process the raw data set.
 See `notebooks/` for further details.
 """
 import logging
+import logging.config
 from pathlib import Path
 
 import click
+import yaml
 from dotenv import find_dotenv, load_dotenv
 
 
@@ -27,8 +29,10 @@ def main(input_filepath: click.Path, output_filepath: click.Path) -> None:
 
 
 if __name__ == "__main__":
-    log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    logging.basicConfig(level=logging.INFO, format=log_fmt)
+
+    with open("logging.yaml") as file:
+        loaded_config = yaml.safe_load(file)
+        logging.config.dictConfig(loaded_config)
 
     # not used in this stub but often useful for finding various files
     project_dir = Path(__file__).resolve().parents[2]

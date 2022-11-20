@@ -37,19 +37,23 @@ python src/models/train_model.py --trials=5 --seed=42 --model=gbm --dataset=fbv/
 
 ### Build and run docker image 🐳
 The code is designed to run inside a docker container. See the [`Dockerfile`](https://github.com/KarelZe/thesis/blob/main/Dockerfile).
-```
+```shell
 docker build -t thesis-dev .
 docker run --env-file .env thesis-dev
 ```
 
 ### Set up git pre-commit hooks 🐙
 Pre-commit hooks are pre-checks to avoid committing error-prone code. The tests are defined in the [`.pre-commit-config.yaml`](https://github.com/KarelZe/thesis/blob/main/.pre-commit-config.yaml). Install them using:
-```
+```shell
 pip install .[dev]
 pre-commit install
 pre-commit run --all-files
 ```
-
+### Run tests🧯
+Tests can be run using [`tox`](https://tox.wiki/en/latest/). Just type:
+```shell
+tox
+```
 ## Acknowledgement
 Our implementation is based on:
 
