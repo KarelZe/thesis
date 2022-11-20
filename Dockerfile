@@ -62,5 +62,3 @@ RUN mkdir -p $HOME/.vscode/extensions/ && \
     unzip - njpwerner.autodocstring-latest.zip extension/* && \
     rm njpwerner.autodocstring-latest.zip && \
     mv extension $HOME/.vscode/extensions/njpwerner.autodocstring-latest
-
-

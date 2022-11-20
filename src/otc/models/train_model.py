@@ -4,31 +4,32 @@ Script to perform a hyperparameter search for various models.
 Currently classical rules and gradient boosted trees are supported.
 
 """
-
 import logging
+import logging.config
 import warnings
 from pathlib import Path
 
 import click
 import optuna
 import pandas as pd
-from optuna.exceptions import ExperimentalWarning
-from optuna.integration.wandb import WeightsAndBiasesCallback
-from optuna.storages import RetryFailedTrialCallback
-
 import wandb
+import yaml
 from features.build_features import (
     features_categorical,
     features_classical,
     features_ml,
 )
-from models.objective import (
+from optuna.exceptions import ExperimentalWarning
+from optuna.integration.wandb import WeightsAndBiasesCallback
+from optuna.storages import RetryFailedTrialCallback
+
+from otc.models.objective import (
     ClassicalObjective,
     GradientBoostingObjective,
     Objective,
     set_seed,
 )
-from utils.config import Settings
+from otc.utils.config import Settings
 
 
 @click.command()
@@ -194,8 +195,9 @@ def main(
 
 if __name__ == "__main__":
 
-    LOG_FMT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    logging.basicConfig(level=logging.INFO, format=LOG_FMT)
+    with open("logging.yaml") as file:
+        loaded_config = yaml.safe_load(file)
+        logging.config.dictConfig(loaded_config)
 
     # not used in this stub but often useful for finding various files
     project_dir = Path(__file__).resolve().parents[2]
