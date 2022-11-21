@@ -1,5 +1,5 @@
 """
-Implementation of a Tab Transformer.
+Implementation of a TabTransformer.
 
 Based on paper:
 https://arxiv.org/abs/2012.06678
@@ -7,7 +7,7 @@ https://arxiv.org/abs/2012.06678
 Implementation adapted from: https://github.com/lucidrains/tab-transformer-pytorch
 and https://github.com/kathrinse/TabSurvey/blob/main/models/tabtransformer.py
 """
-from typing import Callable, List, Optional, Tuple, Union
+from typing import Any, Callable, List, Optional, Tuple, Union
 
 import torch
 import torch.nn.functional as F
@@ -18,21 +18,68 @@ ModuleType = Union[str, Callable[..., nn.Module]]
 
 
 class Residual(nn.Module):
-    def __init__(self, fn):
+    """
+    PyTorch implementation of residual connections.
+
+    Args:
+        nn (nn.Module): module
+    """
+
+    def __init__(self, fn: nn.Module):
+        """
+        Residual connection.
+
+        Args:
+            fn (function): _description_
+        """
         super().__init__()
         self.fn = fn
 
-    def forward(self, x: torch.Tensor, **kwargs):
+    def forward(self, x: torch.Tensor, **kwargs: Any) -> torch.Tensor:
+        """
+        Forward pass of residual connections.
+
+        Args:
+            x (torch.Tensor): input tensor.
+
+        Returns:
+            torch.Tensor: output tensor.
+        """
         return self.fn(x, **kwargs) + x
 
 
 class PreNorm(nn.Module):
-    def __init__(self, dim, fn):
+    """
+    PyTorch implementation of pre-normalization.
+
+    Args:
+        nn (nn.module): module.
+    """
+
+    def __init__(self, dim: int, fn: nn.Module):
+        """
+        Pre-normalization.
+
+        Consists of layer for layer normalization followed by another network.
+
+        Args:
+            dim (int): Number of dimensions of normalized shape.
+            fn (nn.Module): network.
+        """
         super().__init__()
         self.norm = nn.LayerNorm(dim)
         self.fn = fn
 
-    def forward(self, x: torch.Tensor, **kwargs):
+    def forward(self, x: torch.Tensor, **kwargs: Any) -> torch.Tensor:
+        """
+        Forward pass of pre-normalization layers.
+
+        Args:
+            x (torch.Tensor): input tensor.
+
+        Returns:
+            torch.Tensor: output tensor.
+        """
         return self.fn(self.norm(x), **kwargs)
 
 
@@ -50,12 +97,40 @@ class GEGLU(nn.Module):
     """
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Forward pass of GeGlU activation.
+
+        Args:
+            x (torch.Tensor): input tensor.
+
+        Returns:
+            torch.Tensor: output tensor.
+        """
         x, gates = x.chunk(2, dim=-1)
         return x * F.gelu(gates)
 
 
 class FeedForward(nn.Module):
-    def __init__(self, dim, mult=4, dropout=0.0):
+    """
+    PyTorch implementation of feed forward network.
+
+    Args:
+        nn (nn.module): module.
+    """
+
+    def __init__(self, dim: int, mult: int = 4, dropout: float = 0.0):
+        """
+        Feed forward network.
+
+        Network consists of input layer, GEGLU activation, dropout layer,
+        and output layer.
+
+        Args:
+            dim (int): dimension of input and output layer.
+            mult (int, optional): Scaling factor for output dimension of input layer or
+            input dimension of output layer. Defaults to 4.
+            dropout (float, optional): Degree of dropout. Defaults to 0.0.
+        """
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(dim, dim * mult * 2),
@@ -64,16 +139,32 @@ class FeedForward(nn.Module):
             nn.Linear(dim * mult, dim),
         )
 
-    def forward(self, x, **kwargs):
+    def forward(self, x: torch.Tensor, **kwargs: Any) -> torch.Tensor:
+        """
+        Forward pass of feed forward network.
+
+        Args:
+            x (torch.Tensor): input tensor.
+
+        Returns:
+            torch.Tensor: output tensor.
+        """
         return self.net(x)
 
 
 class Attention(nn.Module):
+    """
+    Pytorch implementation of attention.
+
+    Args:
+        nn (nn.Module): module.
+    """
+
     def __init__(
         self, dim: int, heads: int = 8, dim_head: int = 16, dropout: float = 0.0
     ):
         """
-        Attention module.
+        Attention.
 
         Args:
             dim (int): Number of dimensions.
@@ -126,8 +217,27 @@ class Transformer(nn.Module):
     """
 
     def __init__(
-        self, num_tokens, dim, depth, heads, dim_head, attn_dropout, ff_dropout
+        self,
+        num_tokens: int,
+        dim: int,
+        depth: int,
+        heads: int,
+        dim_head: int,
+        attn_dropout: float,
+        ff_dropout: float,
     ):
+        """
+        Classical transformer.
+
+        Args:
+            num_tokens (int): Number of tokens i. e., unique classes + special tokens.
+            dim (int): Number of dimensions.
+            depth (int): Depth of encoder / decoder.
+            heads (int): Number of attention heads.
+            dim_head (int): Dimensions of attention heads.
+            attn_dropout (float): Degree of dropout in attention.
+            ff_dropout (float): Degree of dropout in feed-forward network.
+        """
         super().__init__()
         self.embeds = nn.Embedding(num_tokens, dim)  # (Embed the categorical features.)
         self.layers = nn.ModuleList([])
@@ -152,7 +262,16 @@ class Transformer(nn.Module):
                 )
             )
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Forward pass of transformer.
+
+        Args:
+            x (torch.Tensor): input tensor.
+
+        Returns:
+            torch.Tensor: output tensor.
+        """
         x = self.embeds(x)
 
         for attn, ff in self.layers:  # type: ignore
