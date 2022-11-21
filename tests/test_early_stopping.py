@@ -6,7 +6,7 @@ For early stopping see: https://en.wikipedia.org/wiki/Early_stopping.
 
 import unittest
 
-from src.optim.early_stopping import EarlyStopping
+from otc.optim.early_stopping import EarlyStopping
 
 
 class TestEarlyStopping(unittest.TestCase):
