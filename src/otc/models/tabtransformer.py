@@ -30,7 +30,7 @@ class Residual(nn.Module):
         Residual connection.
 
         Args:
-            fn (function): _description_
+            fn (nn.Module): network.
         """
         super().__init__()
         self.fn = fn
@@ -93,7 +93,7 @@ class GEGLU(nn.Module):
     Proposed in https://arxiv.org/pdf/2002.05202v1.pdf.
 
     Args:
-        nn (torch.Tensor): _description_
+        nn (torch.Tensor): module
     """
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -374,13 +374,14 @@ class TabTransformer(nn.Module):
             dim_head (int, optional): Dimensionality of attention head. Defaults to 16.
             dim_out (int, optional): Dimension of output layer of MLP. Set to one for
             binary classification. Defaults to 1.
-            mlp_hidden_mults (Tuple[, optional): _description_. Defaults to (4, 2).
+            mlp_hidden_mults (Tuple[(int, int)], optional): multipliers for dimensions
+            of hidden layer in MLP. Defaults to (4, 2).
             mlp_act (ModuleType, optional): Activation function used in MLP.
             Defaults to nn.ReLU().
             num_special_tokens (int, optional): Number of special tokens in transformer.
             Defaults to 2.
             continuous_mean_std (Optional[torch.Tensor]): List with mean and
-            std deviation of each continous feature. Shape eq. [num_continous x 2].
+            std deviation of each continous feature. Shape eq. `[num_continous x 2]`.
             Defaults to None.
             attn_dropout (float, optional): Degree of attention dropout used in
             transformer. Defaults to 0.0.
