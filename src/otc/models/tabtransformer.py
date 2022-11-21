@@ -7,13 +7,14 @@ https://arxiv.org/abs/2012.06678
 Implementation adapted from: https://github.com/lucidrains/tab-transformer-pytorch
 and https://github.com/kathrinse/TabSurvey/blob/main/models/tabtransformer.py
 """
-import torch
+from typing import Callable, List, Optional, Tuple, Union
 
+import torch
 import torch.nn.functional as F
 from einops import rearrange
 from torch import einsum, nn
 
-from typing import Tuple
+ModuleType = Union[str, Callable[..., nn.Module]]
 
 
 class Residual(nn.Module):
@@ -68,7 +69,18 @@ class FeedForward(nn.Module):
 
 
 class Attention(nn.Module):
-    def __init__(self, dim, heads=8, dim_head=16, dropout=0.0):
+    def __init__(
+        self, dim: int, heads: int = 8, dim_head: int = 16, dropout: float = 0.0
+    ):
+        """
+        Attention module.
+
+        Args:
+            dim (int): Number of dimensions.
+            heads (int, optional): Number of attention heads. Defaults to 8.
+            dim_head (int, optional): Dimension of attention heads. Defaults to 16.
+            dropout (float, optional): Degree of dropout. Defaults to 0.0.
+        """
         super().__init__()
         inner_dim = dim_head * heads
         self.heads = heads
@@ -79,7 +91,16 @@ class Attention(nn.Module):
 
         self.dropout = nn.Dropout(dropout)
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Forward pass of attention module.
+
+        Args:
+            x (torch.Tensor): input tensor.
+
+        Returns:
+            torch.Tensor: output tensor.
+        """
         h = self.heads
         q, k, v = self.to_qkv(x).chunk(3, dim=-1)
         q, k, v = map(lambda t: rearrange(t, "b n (h d) -> b h n d", h=h), (q, k, v))
@@ -94,6 +115,16 @@ class Attention(nn.Module):
 
 
 class Transformer(nn.Module):
+    """
+    Transformer.
+
+    Based on paper:
+    https://arxiv.org/abs/1706.03762
+
+    Args:
+        nn (nn.Module): Module with transformer.
+    """
+
     def __init__(
         self, num_tokens, dim, depth, heads, dim_head, attn_dropout, ff_dropout
     ):
@@ -124,23 +155,38 @@ class Transformer(nn.Module):
     def forward(self, x):
         x = self.embeds(x)
 
-        for attn, ff in self.layers:
+        for attn, ff in self.layers:  # type: ignore
             x = attn(x)
             x = ff(x)
 
         return x
 
 
-# mlp
-
-
 class MLP(nn.Module):
-    def __init__(self, dims, act):
+    """
+    Pytorch model of a vanilla multi-layer perceptron.
+
+    Args:
+        nn (nn.Module): module with implementation of MLP.
+    """
+
+    def __init__(self, dims: List[int], act: ModuleType):
+        """
+        Multilayer perceptron.
+
+        Depth of network is given by `len(dims)`. Capacity is given by entries
+        of `dim`. Activation function is used after each linear layer. There is
+        no activation function for the final linear layer, as it is sometimes part
+        of the loss function already e. g., `nn.BCEWithLogitsLoss()`.
+
+        Args:
+            dims (List[int]): List with dimensions of layers.
+            act (ModuleType): Activation function of each linear layer.
+        """
         super().__init__()
         dims_pairs = list(zip(dims[:-1], dims[1:]))
         layers = []
         for dim_in, dim_out in dims_pairs:
-            # is_last = ind >= (len(dims_pairs) - 1)
             linear = nn.Linear(dim_in, dim_out)
             layers.append(linear)
             layers.append(act)
@@ -164,23 +210,63 @@ class MLP(nn.Module):
 
 
 class TabTransformer(nn.Module):
+    """
+    PyTorch model of TabTransformer.
+
+    Based on paper:
+    https://arxiv.org/abs/2012.06678
+
+    Args:
+        nn (nn.Module): Module with implementation of TabTransformer.
+    """
+
     def __init__(
         self,
         *,
-        categories,
+        categories: Union[List[int], Tuple[()]],
         num_continuous: int,
-        dim: int,
-        depth: int,
-        heads: int,
+        dim: int = 32,
+        depth: int = 4,
+        heads: int = 8,
         dim_head: int = 16,
         dim_out: int = 1,
         mlp_hidden_mults: Tuple[(int, int)] = (4, 2),
-        mlp_act=nn.ReLU(),
+        mlp_act: ModuleType = nn.ReLU,
         num_special_tokens: int = 2,
-        continuous_mean_std=None,
+        continuous_mean_std: Optional[torch.Tensor] = None,
         attn_dropout: float = 0.0,
         ff_dropout: float = 0.0,
     ):
+        """
+        TabTransformer.
+
+        Originally introduced in https://arxiv.org/abs/2012.06678.
+
+        Args:
+            categories (Union[List[int],Tuple[()]]): List with number of categories
+            for each categorical feature. If no categorical variables are present,
+            use empty tuple. For categorical variables e. g., option type ('C' or 'P'),
+            the list would be `[1]`.
+            num_continuous (int): Number of continous features.
+            dim (int, optional): Dimensionality of transformer. Defaults to 32.
+            depth (int, optional): Depth of encoder / decoder of transformer.
+            Defaults to 4.
+            heads (int, optional): Number of attention heads. Defaults to 8.
+            dim_head (int, optional): Dimensionality of attention head. Defaults to 16.
+            dim_out (int, optional): Dimension of output layer of MLP. Set to one for
+            binary classification. Defaults to 1.
+            mlp_hidden_mults (Tuple[, optional): _description_. Defaults to (4, 2).
+            mlp_act (ModuleType, optional): Activation function used in MLP.
+            Defaults to nn.ReLU().
+            num_special_tokens (int, optional): Number of special tokens in transformer.
+            Defaults to 2.
+            continuous_mean_std (Optional[torch.Tensor]): List with mean and
+            std deviation of each continous feature. Shape eq. [num_continous x 2].
+            Defaults to None.
+            attn_dropout (float, optional): Degree of attention dropout used in
+            transformer. Defaults to 0.0.
+            ff_dropout (float, optional): Dropout in feed forward net. Defaults to 0.0.
+        """
         super().__init__()
         assert all(
             map(lambda n: n > 0, categories)
@@ -232,9 +318,9 @@ class TabTransformer(nn.Module):
         # mlp to logits
 
         input_size = (dim * self.num_categories) + num_continuous
-        l = input_size // 8
+        j = input_size // 8
 
-        hidden_dimensions = list(map(lambda t: l * t, mlp_hidden_mults))
+        hidden_dimensions = list(map(lambda t: j * t, mlp_hidden_mults))
         all_dimensions = [input_size, *hidden_dimensions, dim_out]
 
         self.mlp = MLP(all_dimensions, act=mlp_act)

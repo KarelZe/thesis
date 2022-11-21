@@ -20,7 +20,6 @@ from sklearn.base import BaseEstimator
 
 # from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
-
 from torch import nn, optim, tensor
 from torch.utils.data import DataLoader, TensorDataset
 
@@ -156,13 +155,15 @@ class TabTransformerObjective(Objective):
         dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
 
         # done similar to borisov
-        depth: int = trial.suggest_categorical("depth", [1, 2, 3, 6, 12])  # type: ignore
+        depths = [1, 2, 3, 6, 12]
+        depth: int = trial.suggest_categorical("depth", depths)  # type: ignore
         heads: int = trial.suggest_categorical("heads", [2, 4, 8])  # type: ignore
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
         # done differntly to borisov; suggest batches
-        batch_size: int = trial.suggest_categorical("batch_size", [512, 1024, 2048, 4096])  # type: ignore
+        bs = [512, 1024, 2048, 4096]
+        batch_size: int = trial.suggest_categorical("batch_size", bs)  # type: ignore
 
         # FIXME: fix embedding lookup for ROOT / Symbol.
         # convert to tensor
