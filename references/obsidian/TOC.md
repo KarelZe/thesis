@@ -428,6 +428,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Motivate the importance of regularized neural nets with [[@kadraWelltunedSimpleNets2021]] papers. Authors state, that the improvements from regualrization of neural nets are very pronounced and highly significant. Discuss which regularization approaches are applied and why.  
 - Similarily, [[@heBagTricksImage2018]] show how they can improve the performance of neural nets for computer vision through "tricks" like lr scheduling.
 - Also see [[@shavittRegularizationLearningNetworks2018]] for regularization in neural networks for tabular data.
+- On activation function see [[@shazeerGLUVariantsImprove2020]]
 
 ### Training of Supervised Models
 - Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Implement robustness checks (as in [[@grauerOptionTradeClassification2022]]) early on.
@@ -476,6 +477,9 @@ Repeat search with different random initializations:
 (found in [[@grinsztajnWhyTreebasedModels2022]])
 
 Show differences from different initializations using a violin plot. (suggested in [[@melisStateArtEvaluation2017]])
+
+- For tree-parzen estimator see: https://neptune.ai/blog/optuna-guide-how-to-monitor-hyper-parameter-optimization-runs
+- Framing hyperparameter search as an optimization problem. https://www.h4pz.co/blog/2020/10/3/optuna-and-wandb
 
 ## Evaluation
 ### Feature Importance Measure
