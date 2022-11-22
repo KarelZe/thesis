@@ -22,7 +22,7 @@
             }
           },
           {
-            "id": "b7f7b5f42d1e34dd",
+            "id": "117a2e352192e6b6",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -131,17 +131,17 @@
     "direction": "horizontal",
     "width": 255.5
   },
-  "active": "b7f7b5f42d1e34dd",
+  "active": "117a2e352192e6b6",
   "lastOpenFiles": [
     "TOC.md",
-    "🍬Implementation/@huyenDesigningMachineLearning.md",
+    "🍬Implementation/🧜‍♂️Optuna-PyTorch.md",
+    "🧠Deep Learning Methods/draft_nn.md",
+    "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
+    "🍬Implementation/🛞GCP-Docker-Cluster.md",
+    "🍬Implementation/🛞GCP-Docker.md",
     "❓Questions.md",
+    "🍬Implementation/@huyenDesigningMachineLearning.md",
     "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
-    "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
-    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
-    "🧠Deep Learning Methods/@grinsztajnWhyTreebasedModels2022.md",
-    "🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020.md",
-    "🔗Classical rules/@panayidesBulkVolumeClassification2019.md"
+    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md"
   ]
 }

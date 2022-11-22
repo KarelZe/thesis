@@ -13,7 +13,7 @@ The thesis follows the following structure:
 
 \textbf{Introduction}
 
-In the introduction, we provide motivation and present our key findings. The contributions are three-fold: (I) We employ state-of-the-art machine learning algorithms i.~e., gradient-boosted trees and transformer networks, for trade classification. \textcolor{darkblue}{(...)} outperforms the state-of-the-art trade classification rules by at least \textcolor{darkblue}{(...~\%)}. (II) As part of semi-supervised approaches, we study the impact of incorporating unlabelled trades into the training procedure on trade classification accuracy. (III) We consistently interpret feature contributions to classical trade classification rules and machine learning models with a game-theoretic approach.
+In the introduction, we provide motivation and present our key findings. The contributions are three-fold: (I) We employ state-of-the-art machine learning algorithms i.~e., gradient-boosted trees and transformer networks, for trade classification. Tree-based approaches outperform state-of-the-art trade classification rules in out-of-sample tests. (II) As part of semi-supervised approaches, we study the impact of incorporating unlabelled trades into the training procedure on trade classification accuracy. (III) We consistently interpret feature contributions to classical trade classification rules and machine learning models with a game-theoretic approach.
 
 \textbf{Related Work}
 
@@ -60,7 +60,7 @@ Subsequently, the model is evaluated. Firstly, a comparison between the selected
 
 Secondly, we benchmark \textit{TabNet}, \textit{TabTransformer}, and gradient-boosted trees against the classical trade classification rules. Following a common track in literature, accuracy is the decisive metric. The analysis may be supported with additional metrics like the receiver operator characteristic, area under the curve, or confusion matrices. We expect both semi-supervised and supervised algorithms to outperform the benchmarks with additional performance gains from learning on unlabelled data.
 
-Based on preliminary tests, \textcolor{darkblue}{(...)} outperforms \textcolor{darkblue}{(...)} on the \gls{ISE} data set in terms of classification accuracy with an accuracy of \textcolor{darkblue}{(...~\%)}. The static testing period spans from \textcolor{darkblue}{(...)} to \textcolor{darkblue}{(...)}.
+Based on preliminary tests, gradient-boosted trees outperform classical approaches on the \gls{ISE} data set in terms of classification accuracy with an accuracy of 69.84~\% \footnote{See \url{https://wandb.ai/fbv/thesis/runs/3dpde4cy} for the run configuration.}. The static testing period spans from November 2015 to May 2017.
 
 
 Despite serious counter efforts, our models can still poorly generalize. We use rigorous robustness checks to test if the accuracy is maintained across time, trade sizes, underlyings, and exchanges, among others. The procedure follows \textcites{chakrabartyTradeClassificationAlgorithms2012}{grauerOptionTradeClassification2022}{ronenMachineLearningTrade2022}{savickasInferringDirectionOption2003}. Motivated by research of \textcite{grinsztajnWhyTreebasedModels2022}, we conduct a robustness study of our models to both informative and uninformative features.
