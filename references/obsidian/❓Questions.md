@@ -1,10 +1,10 @@
-- Differences in accuracy for classical rules between the implementations exist. Do you assign classes randomly for trades that can not be classified with the classification rule? (`0` or `np.random.choice([-1, 1]`) How did you define "success rate"?
-- How did you define "others" in table 9? Using special codes?
-- Could I please get the current stock price for moneyness to integrate them in my robustness checks?
-- Symbol / root is somewhat problematic, as some are only in the train set or test set. Could still use root and rely on embedding or use special codes as features. Might be wise to use a more generic feature like sector instead.
-- Which offset was used when matching transactions and quotes? None?
+- Minor differences in accuracy for classical rules between the reported figures from the paper and my implementation. Differences are usually $\leq 1.3~\%$  (see [here.](https://github.com/KarelZe/thesis/blob/main/notebooks/4.0a-mb-classical_rules.ipynb)). I suspect the differences to come from `NaN` values, if e. g., `price_ex_lag` is missing, I would not classify using tick rule and assign a random class using `np.random.choice([-1, 1]`. In Grauer et al. for the tick rule the percentage of unclassified trades is $0~\%$ (see table 3).
+- Do you have a preference regarding eda? I would do it on the training set only, then check if engineered features work on validation set. I currently use the whole data set, but plan to switch (see [here](https://github.com/KarelZe/thesis/blob/feature-engineering/notebooks/3.0a-mb-data_preprocessing_explanatory_data_analysis.ipynb)).  Different views possible (see e. g., [here](https://stats.stackexchange.com/questions/424263/should-exploratory-data-analysis-include-validation-set)) .
 
 ## Closed
+- How did you define "others" in table 9? Using special codes? -> From data on underlying. Will receive the additional feature.
+- Could I please get the current stock price for moneyness to integrate them in my robustness checks? -> Yes, will receive the additional feature.
+- Symbol / root is somewhat problematic, as some are only in the train set or test set. Could still use root and rely on embedding or use special codes as features. Might be wise to use a more generic feature like sector instead.
 - What are the expectations I have to meet in order to reach $\geq 1.3$?
 - Any feedback to toc / expose / first results? -> *It's ok.*
 - Opinions on weekly release info 📧 (e. g., every sunday) with closed issues and completed tasks + short bi-weekly meeting. -> *Meeting scheduled. Release notes sent.*
