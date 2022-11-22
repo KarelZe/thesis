@@ -21,10 +21,8 @@ The goal of my feature set definition is:
 | ask_ex                | quote rule                   | ✅               | ✅                 | ✅               | ✅                 | log         |
 | midpoint_ex           | quote rule / depth rule      | ✅               | ✅                 | ✅               | ✅                 | log         |
 | BEST_MIDPOINT         | quote rule                   |                  |                    | ❓               |                    | log         |
-| rel_mid_ex            | LR / CLNV                    | ✅               | ✅                 | ✅               | ✅                 | standardize |
 | rel_bid_dist_ex       | EMO / CLNV                   | ✅               | ✅                 | ✅               | ✅                 | standardize |
 | rel_ask_dist_ex       | EMO / CLNV                   | ✅               | ✅                 | ✅               | ✅                 | standardize |
-| BEST_rel_mid          | EMO / CLNV                   |                  |                    | ❓               |                    | log         |
 | BEST_rel_bid          | EMO / CLNV                   |                  |                    | ❓               |                    | log         |
 | BEST_rel_ask          | EMO / CLNV                   |                  |                    | ❓               |                    | log         |
 | bid_ask_size_ratio_ex | Depth rule                   |                  | ✅                 | ✅               | ✅                 | standardize |
