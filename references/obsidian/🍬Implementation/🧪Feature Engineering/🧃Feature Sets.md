@@ -3,6 +3,7 @@ The goal of my feature set definition is:
 2. Extend minimal feature set for date time features. →  Makes it easy to transfer our method to other markets, but also take into account temporal info.
 3. Have an extended feature set to calculate SOTA of Grauer et. al. → Makes it easy to compare with previous baseline.
 4. Add time and option features. → Makes sense, as we look at an option data set. Temporal features are easy to derive. 
+5. Scaling is typically not required for gradient boosting, but useful for neural networks. But both $z$-scaling and min-max-scaling don't change the distribution of data. (see [here.](https://stats.stackexchange.com/a/562204/351242)).
 
 | Feature               | Feature Category             | FS 1 (Classical) | FS 2 (F1 + Grauer) | FS 3 (F2 + temp) | FS 3 (F3 + Others) | Transform   |
 | --------------------- | ---------------------------- | ---------------- | ------------------ | ---------------- | ------------------ | ----------- |
