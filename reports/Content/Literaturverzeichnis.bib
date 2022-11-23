@@ -710,6 +710,22 @@
   file = {C\:\\Users\\Markus\\OneDrive\\Documents\\05 - Wissen & Weiterbildung\\paper\\Chen und Sadaoui - Simulation and Veriﬁcation of a Dynamic Online Auc.pdf}
 }
 
+@misc{chenTrainingDeepNets2016,
+  title = {Training {{Deep Nets}} with {{Sublinear Memory Cost}}},
+  author = {Chen, Tianqi and Xu, Bing and Zhang, Chiyuan and Guestrin, Carlos},
+  year = {2016},
+  month = apr,
+  number = {arXiv:1604.06174},
+  eprint = {1604.06174},
+  eprinttype = {arxiv},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  abstract = {We propose a systematic approach to reduce the memory consumption of deep neural network training. Specifically, we design an algorithm that costs O(sqrt(n)) memory to train a n layer network, with only the computational cost of an extra forward pass per mini-batch. As many of the state-of-the-art models hit the upper bound of the GPU memory, our algorithm allows deeper and more complex models to be explored, and helps advance the innovations in deep learning research. We focus on reducing the memory cost to store the intermediate feature maps and gradients during training. Computation graph analysis is used for automatic in-place operation and memory sharing optimizations. We show that it is possible to trade computation for memory - giving a more memory efficient training algorithm with a little extra computation cost. In the extreme case, our analysis also shows that the memory consumption can be reduced to O(log n) with as little as O(n log n) extra cost for forward computation. Our experiments show that we can reduce the memory cost of a 1,000-layer deep residual network from 48G to 7G with only 30 percent additional running time cost on ImageNet problems. Similarly, significant memory cost reduction is observed in training complex recurrent neural networks on very long sequences.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Machine Learning},
+  file = {C\:\\Users\\Markus\\OneDrive\\Documents\\05 - Wissen & Weiterbildung\\paper\\Chen et al. - 2016 - Training Deep Nets with Sublinear Memory Cost.pdf;C\:\\Users\\Markus\\Zotero\\storage\\NG3N3926\\1604.html}
+}
+
 @article{chenXGBoostScalableTree2016,
   title = {{{XGBoost}}: A Scalable Tree Boosting System},
   shorttitle = {{{XGBoost}}},
@@ -3929,6 +3945,24 @@
   isbn = {978-1-59593-609-7},
   langid = {english},
   annotation = {5 citations (Crossref) [2022-10-18]}
+}
+
+@misc{yaoZeroQuantEfficientAffordable2022,
+  title = {{{ZeroQuant}}: {{Efficient}} and {{Affordable Post-Training Quantization}} for {{Large-Scale Transformers}}},
+  shorttitle = {{{ZeroQuant}}},
+  author = {Yao, Zhewei and Aminabadi, Reza Yazdani and Zhang, Minjia and Wu, Xiaoxia and Li, Conglong and He, Yuxiong},
+  year = {2022},
+  month = jun,
+  number = {arXiv:2206.01861},
+  eprint = {2206.01861},
+  eprinttype = {arxiv},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.2206.01861},
+  abstract = {How to efficiently serve ever-larger trained natural language models in practice has become exceptionally challenging even for powerful cloud servers due to their prohibitive memory/computation requirements. In this work, we present an efficient and affordable post-training quantization approach to compress large Transformer-based models, termed as ZeroQuant. ZeroQuant is an end-to-end quantization and inference pipeline with three main components: (1) a fine-grained hardware-friendly quantization scheme for both weight and activations; (2) a novel affordable layer-by-layer knowledge distillation algorithm (LKD) even without the access to the original training data; (3) a highly-optimized quantization system backend support to remove the quantization/dequantization overhead. As such, we are able to show that: (1) ZeroQuant can reduce the precision for weights and activations to INT8 in a cost-free way for both BERT and GPT3-style models with minimal accuracy impact, which leads to up to 5.19x/4.16x speedup on those models compared to FP16 inference; (2) ZeroQuant plus LKD affordably quantize the weights in the fully-connected module to INT4 along with INT8 weights in the attention module and INT8 activations, resulting in 3x memory footprint reduction compared to the FP16 model; (3) ZeroQuant can be directly applied to two of the largest open-sourced language models, including GPT-J6B and GPT-NeoX20, for which our INT8 model achieves similar accuracy as the FP16 model but achieves up to 5.2x better efficiency.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Computation and Language,Computer Science - Machine Learning},
+  file = {C\:\\Users\\Markus\\OneDrive\\Documents\\05 - Wissen & Weiterbildung\\paper\\Yao et al. - 2022 - ZeroQuant Efficient and Affordable Post-Training .pdf;C\:\\Users\\Markus\\Zotero\\storage\\Z2DSHG82\\2206.html}
 }
 
 @inproceedings{yarowskyUnsupervisedWordSense1995,
