@@ -39,5 +39,4 @@ class Settings(BaseSettings):
         env_file_encoding = "utf-8"
 
 
-settings = Settings(_env_file="~/thesis/prod.env", _env_file_encoding="utf-8")
-
+settings = Settings(_env_file="prod.env", _env_file_encoding="utf-8")
