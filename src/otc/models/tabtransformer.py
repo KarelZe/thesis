@@ -342,7 +342,7 @@ class TabTransformer(nn.Module):
     def __init__(
         self,
         *,
-        categories: Union[List[int], Tuple[()]],
+        categories: Union[Tuple[int], Tuple[()]],
         num_continuous: int,
         dim: int = 32,
         depth: int = 4,
@@ -472,7 +472,7 @@ class TabTransformer(nn.Module):
         )
 
         if self.continuous_mean_std is not None:
-            mean, std = self.continuous_mean_std.unbind(dim=-1)
+            mean, std = self.continuous_mean_std.unbind(dim=-1) # type: ignore
             x_cont = (x_cont - mean) / std
 
         normed_cont = self.norm(x_cont)

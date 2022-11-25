@@ -89,7 +89,6 @@ def main(
     logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
 
     settings = Settings()
-
     run = wandb.init(  # type: ignore
         project=settings.WANDB_PROJECT,
         entity=settings.WANDB_ENTITY,

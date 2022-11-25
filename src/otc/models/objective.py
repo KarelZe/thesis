@@ -4,6 +4,8 @@ Provides objectives for optimizations.
 Adds support for classical rules, GBTs and transformer-based architectures.
 """
 import glob
+import logging
+import logging.config
 import os
 import random
 from abc import ABC, abstractmethod
@@ -20,14 +22,18 @@ from sklearn.base import BaseEstimator
 
 # from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
-from torch import nn, optim, tensor
-from torch.utils.data import DataLoader, TensorDataset
-
+from torch import nn, optim
+from otc.data.dataloader import TabDataLoader
+from otc.data.dataset import TabDataset
 from otc.data.fs import fs
 from otc.models.classical_classifier import ClassicalClassifier
 from otc.models.tabtransformer import TabTransformer
 from otc.optim.early_stopping import EarlyStopping
+from otc.utils.colors import Colors
 from otc.utils.config import Settings
+
+logger = logging.getLogger(__name__)
+settings = Settings()
 
 
 def set_seed(seed_val: int = 42) -> int:
@@ -44,6 +50,11 @@ def set_seed(seed_val: int = 42) -> int:
     random.seed(seed_val)
     # pandas and numpy as discussed here: https://stackoverflow.com/a/52375474/5755604
     np.random.seed(seed_val)
+
+    torch.manual_seed(seed_val)
+    torch.cuda.manual_seed(seed_val)
+    torch.cuda.manual_seed_all(seed_val)
+    torch.backends.cudnn.deterministic = True
     return seed_val
 
 
@@ -109,6 +120,7 @@ class TabTransformerObjective(Objective):
         x_val: pd.DataFrame,
         y_val: pd.Series,
         cat_features: Optional[List[str]] = None,
+        cat_unique: Optional[List[int]] = None,
         name: str = "default",
     ):
         """
@@ -121,19 +133,17 @@ class TabTransformerObjective(Objective):
             y_val (pd.Series): ground truth (val)
             cat_features (Optional[List[str]], optional): List of categorical features.
             Defaults to None.
+            cat_unique (Optional[List[int]], optional): Unique counts of categorical features.
+            Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
         """
-        features = x_train.columns.tolist()
-        cat_features = [] if not cat_features else cat_features
-        self._cat_idx = [features.index(i) for i in cat_features if i in features]
 
-        # FIXME: think about cat features not in training set, otherwise make external
-        self._cat_unique = x_train[cat_features].nunique().to_list()
-        if not self._cat_unique:
-            self._cat_unique = ()
-        # assume columns are duplicate free, which is standard in pandas
-        cont_features = [x for x in x_train.columns.tolist() if x not in cat_features]
-        self._cont_idx = [features.index(i) for i in cont_features if i in features]
+        self._cat_features = [] if not cat_features else cat_features
+        self._cat_unique = () if not cat_unique else (*cat_unique,)
+        self._cont_features: List[int] = [
+            x for x in x_train.columns.tolist() if x not in self._cat_features
+        ]
+
         self._clf: nn.Module
         super().__init__(x_train, y_train, x_val, y_val, name)
 
@@ -148,10 +158,9 @@ class TabTransformerObjective(Objective):
             float: accuracy of trial on validation set.
         """
         # static params
-        epochs = 128
+        epochs = 1024
 
         # searchable params
-        # done differently in borisov; this should be clearer, as search is not changed
         dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
 
         # done similar to borisov
@@ -161,44 +170,45 @@ class TabTransformerObjective(Objective):
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
-        # done differntly to borisov; suggest batches
         bs = [512, 1024, 2048, 4096]
         batch_size: int = trial.suggest_categorical("batch_size", bs)  # type: ignore
 
-        # FIXME: fix embedding lookup for ROOT / Symbol.
-        # convert to tensor
-        x_train = tensor(self.x_train.values).float()
-        # FIXME: Integrate at another part of the code e. g., pre-processing / data set.
-        x_train = torch.nan_to_num(x_train, nan=0)
+        use_cuda = torch.cuda.is_available()
+        device = torch.device("cuda" if use_cuda else "cpu")
 
-        y_train = tensor(self.y_train.values).float()
-        # FIXME: set -1 to 0, due to rounding before output + binary classification
-        y_train[y_train < 0] = 0
-
-        x_val = tensor(self.x_val.values).float()
-        x_val = torch.nan_to_num(x_val, nan=0)
-        y_val = tensor(self.y_val.values).float()
-        y_val[y_val < 0] = 0
-
-        # create training and val set
-        training_data = TensorDataset(x_train, y_train)
-        val_data = TensorDataset(x_val, y_val)
-
-        train_loader = DataLoader(
-            training_data, batch_size=batch_size, shuffle=False, num_workers=8
+        training_data = TabDataset(
+            self.x_train, self.y_train, self._cat_features, self._cat_unique
         )
-        val_loader = DataLoader(
-            val_data, batch_size=batch_size, shuffle=False, num_workers=8
+        val_data = TabDataset(
+            self.x_val, self.y_val, self._cat_features, self._cat_unique
         )
 
-        #  use gpu if available
+        # FIXME: some are currently ignored like pinned memory or workers
+        dl_kwargs = (
+            {
+                "num_workers": os.cpu_count(),
+                "pin_memory": True,
+                "batch_size": batch_size,
+                "shuffle": False,
+            }
+            if use_cuda
+            else {"batch_size": batch_size, "shuffle": False}
+        )
+
+        train_loader = TabDataLoader(
+            training_data._X_cat, training_data._X_cont, training_data._y, **dl_kwargs
+        )
+        val_loader = TabDataLoader(
+            val_data._X_cat, val_data._X_cont, val_data._y, **dl_kwargs
+        )
+
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print(device)
+
         self._clf = TabTransformer(
             categories=self._cat_unique,
-            num_continuous=len(self._cont_idx),  # number of continuous values
+            num_continuous=len(self._cont_features),
             dim_out=1,
-            mlp_act=nn.ReLU(),  # sigmoid of last layer already included in loss.
+            mlp_act=nn.ReLU(),
             dim=dim,
             depth=depth,
             heads=heads,
@@ -207,6 +217,8 @@ class TabTransformerObjective(Objective):
             mlp_hidden_mults=(4, 2),
         ).to(device)
 
+        # half precision
+        scaler = torch.cuda.amp.GradScaler()
         # Generate the optimizers
         optimizer = optim.AdamW(
             self._clf.parameters(), lr=lr, weight_decay=weight_decay
@@ -228,14 +240,10 @@ class TabTransformerObjective(Objective):
 
             self._clf.train()
 
-            for inputs, targets in train_loader:
+            for x_cat, x_cont, targets in train_loader:
 
-                # FIXME: refactor to custom data loader
-                x_cat = (
-                    inputs[:, self._cat_idx].int().to(device) if self._cat_idx else None
-                )
-
-                x_cont = inputs[:, self._cont_idx].to(device)
+                x_cat = x_cat.to(device)
+                x_cont = x_cont.to(device)
                 targets = targets.to(device)
 
                 # reset the gradients back to zero
@@ -244,13 +252,15 @@ class TabTransformerObjective(Objective):
                 outputs = self._clf(x_cat, x_cont)
                 outputs = outputs.flatten()
 
-                train_loss = criterion(outputs, targets)
+                with torch.cuda.amp.autocast():
+                    train_loss = criterion(outputs, targets)
 
                 # compute accumulated gradients
-                train_loss.backward()
+                scaler.scale(train_loss).backward()
 
                 # perform parameter update based on current gradients
-                optimizer.step()
+                scaler.step(optimizer)
+                scaler.update()
 
                 # add the mini-batch training loss to epoch loss
                 loss_in_epoch_train += train_loss.item()
@@ -260,14 +270,10 @@ class TabTransformerObjective(Objective):
             loss_in_epoch_val = 0.0
 
             with torch.no_grad():
-                for inputs, targets in val_loader:
+                for x_cat, x_cont, targets in val_loader:
 
-                    x_cat = (
-                        inputs[:, self._cat_idx].int().to(device)
-                        if self._cat_idx
-                        else None
-                    )
-                    x_cont = inputs[:, self._cont_idx].to(device)
+                    x_cat = x_cat.to(device)
+                    x_cont = x_cont.to(device)
                     targets = targets.to(device)
 
                     outputs = self._clf(x_cat, x_cont)
@@ -283,24 +289,25 @@ class TabTransformerObjective(Objective):
             train_history.append(train_loss)
             val_history.append(val_loss)
 
-            print(f"epoch : {epoch + 1}/{epochs},", end=" ")
-            print(f"loss (train) = {train_loss:.8f}, loss (val) = {val_loss:.8f}")
+            logger.info(
+                f"{Colors.OKGREEN}[epoch {epoch + 1}/{epochs}]{Colors.ENDC}"
+                f" {Colors.BOLD}train loss:{Colors.ENDC} {train_loss:.8f}"
+                f" {Colors.BOLD}val loss:{Colors.ENDC} {val_loss:.8f}"
+            )
 
             # return early if val loss doesn't decrease for several iterations
             early_stopping(val_loss)
             if early_stopping.early_stop:
                 break
 
-            trial.report(val_loss, epoch)
-
         # make predictions with final model
         y_pred, y_true = [], []
 
         self._clf.eval()
 
-        for inputs, targets in val_loader:
-            x_cat = inputs[:, self._cat_idx].int().to(device) if self._cat_idx else None
-            x_cont = inputs[:, self._cont_idx].to(device)
+        for x_cat, x_cont, targets in val_loader:
+            x_cat = x_cat.to(device)
+            x_cont = x_cont.to(device)
             targets = targets.to(device)
             output = self._clf(x_cat, x_cont)
 
@@ -312,10 +319,7 @@ class TabTransformerObjective(Objective):
         # round prediction to nearest int
         y_pred = np.rint(np.concatenate(y_pred))
         y_true = np.concatenate(y_true)
-        # print("pred")
-        print(y_pred)
-        # print("true")
-        print(y_true)
+
         return accuracy_score(y_true, y_pred)  # type: ignore
 
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
@@ -326,7 +330,52 @@ class TabTransformerObjective(Objective):
             study (optuna.Study): current study.
             trial (optuna.Trial): current trial.
         """
-        # FIXME: Implement later
+        if study.best_trial == trial:
+
+            # e. g. dnurtlqv_CatBoostClassifier_default_trial_
+            prefix_file = (
+                f"{study.study_name}_"
+                f"{self._clf.__class__.__name__}_{self.name}_trial_"
+            )
+
+            # FIXME: Replace with cloud path. One could directly upload to gcloud
+            # without storing locally.
+            # https://pypi.org/project/cloudpathlib/
+
+            # remove old files on remote first
+            outdated_files_remote = fs.glob(
+                "gs://"
+                + Path(
+                    settings.GCS_BUCKET, settings.MODEL_DIR_REMOTE, prefix_file + "*"
+                ).as_posix()
+            )
+
+            if len(outdated_files_remote) > 0:
+                fs.rm(outdated_files_remote)
+
+            # remove local files next
+            outdated_files_local = glob.glob(
+                Path(settings.MODEL_DIR_LOCAL, prefix_file + "*").as_posix()
+            )
+            if len(outdated_files_local) > 0:
+                os.remove(*outdated_files_local)
+
+            # save current best locally
+            new_file = prefix_file + f"{trial.number}.pth"
+            loc_path = Path(settings.MODEL_DIR_LOCAL, new_file).as_posix()
+
+            remote_path = (
+                "gs://"
+                + Path(
+                    settings.GCS_BUCKET, settings.MODEL_DIR_REMOTE, new_file
+                ).as_posix()
+            )
+            torch.save(
+                self._clf.state_dict(),
+                loc_path,
+            )
+            # save current best remotely
+            fs.put(loc_path, remote_path)
 
 
 class ClassicalObjective(Objective):
@@ -507,8 +556,6 @@ class GradientBoostingObjective(Objective):
             trial (optuna.Trial): current trial.
         """
         if study.best_trial == trial:
-
-            settings = Settings()
 
             # e. g. dnurtlqv_CatBoostClassifier_default_trial_
             prefix_file = (
