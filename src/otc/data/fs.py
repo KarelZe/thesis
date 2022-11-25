@@ -9,7 +9,7 @@ from pathlib import Path
 
 import gcsfs
 
-from otc.utils.config import Settings
+from otc.utils.config import settings
 
 
 def _create_environment() -> gcsfs.GCSFileSystem:
@@ -19,7 +19,6 @@ def _create_environment() -> gcsfs.GCSFileSystem:
     Returns:
         gcsfs.GCSFileSystem: Instance of GCSFileSystem.
     """
-    settings = Settings()
     gcloud_config = str(Path(settings.GCS_CRED_FILE).expanduser().resolve())
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcloud_config
     os.environ["GCLOUD_PROJECT"] = settings.GCS_PROJECT_ID

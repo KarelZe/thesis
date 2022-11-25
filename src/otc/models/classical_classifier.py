@@ -142,7 +142,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
     def _lr(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
         Classify a trade as a buy (sell) if its price is above (below) the\
-        midpoint (quote rule), and use the tick test to classify midspread\
+        midpoint (quote rule), and use the tick test (all) to classify midspread\
         trades.
 
         Adapted from Lee and Ready (1991).
@@ -155,12 +155,12 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             Can be np.NaN.
         """
         q_r = self._quote(subset)
-        return np.where(~np.isnan(q_r), q_r, self._tick("ex"))
+        return np.where(~np.isnan(q_r), q_r, self._tick("all"))
 
     def _rev_lr(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
         Classify a trade as a buy (sell) if its price is above (below) the\
-        midpoint (quote rule), and use the reverse tick test to classify\
+        midpoint (quote rule), and use the reverse tick test (all) to classify\
         midspread trades.
 
         Adapted from Lee and Ready (1991).
@@ -173,12 +173,12 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             rule. Can be np.NaN.
         """
         q_r = self._quote(subset)
-        return np.where(~np.isnan(q_r), q_r, self._rev_tick("ex"))
+        return np.where(~np.isnan(q_r), q_r, self._rev_tick("all"))
 
     def _emo(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
         Classify a trade as a buy (sell) if the trade takes place at the ask\
-        (bid) quote, and use the tick test to classify all other trades.
+        (bid) quote, and use the tick test (all) to classify all other trades.
 
         Adapted from Ellis et al. (2000).
         Args:
@@ -192,12 +192,12 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         at_ask = self.X_["TRADE_PRICE"] == self.X_[f"ask_{subset}"]
         at_bid = self.X_["TRADE_PRICE"] == self.X_[f"bid_{subset}"]
         at_ask_or_bid = at_ask ^ at_bid
-        return np.where(at_ask_or_bid, self._quote(subset), self._tick("ex"))
+        return np.where(at_ask_or_bid, self._quote(subset), self._tick("all"))
 
     def _rev_emo(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
         Classify a trade as a buy (sell) if the trade takes place at the ask\
-        (bid) quote, and use the reverse tick test to classify all other\
+        (bid) quote, and use the reverse tick test (all) to classify all other\
         trades.
 
         Adapted from Ellis et al. (2000).
@@ -212,7 +212,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         at_ask = self.X_["TRADE_PRICE"] == self.X_[f"ask_{subset}"]
         at_bid = self.X_["TRADE_PRICE"] == self.X_[f"bid_{subset}"]
         at_ask_or_bid = at_ask ^ at_bid
-        return np.where(at_ask_or_bid, self._quote(subset), self._rev_tick("ex"))
+        return np.where(at_ask_or_bid, self._quote(subset), self._rev_tick("all"))
 
     # pylint: disable=W0613
     def _trade_size(self, *args: Any) -> npt.NDArray:
@@ -233,21 +233,27 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         return np.where(ts_eq_bid, 1, np.where(ts_eq_ask, -1, np.nan))
 
     # pylint: disable=W0613
-    def _depth(self, *args: Any) -> npt.NDArray:
+    def _depth(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
         Classify midspread trades as buy (sell), if the ask size (bid size)\
         exceeds the bid size (ask size).
 
         Adapted from (Grauer et al., 2022).
 
+        Args:
+            subset (Literal[&quot;best&quot;, &quot;ex&quot;]): subset
+
         Returns:
-            npt.NDArray: result of the trade size rule. Can be np.NaN.
+            npt.NDArray: result of depth rule. Can be np.NaN.
         """
+        mid = 0.5 * (self.X_[f"ask_{subset}"] + self.X_[f"bid_{subset}"])
+        at_mid = mid == self.X_["TRADE_PRICE"]
+
         return np.where(
-            self.X_["ask_size_ex"] > self.X_["bid_size_ex"],
+            at_mid & self.X_["ask_size_ex"] > self.X_["bid_size_ex"],
             1,
             np.where(
-                self.X_["ask_size_ex"] < self.X_["bid_size_ex"],
+                at_mid & self.X_["ask_size_ex"] < self.X_["bid_size_ex"],
                 -1,
                 np.nan,
             ),

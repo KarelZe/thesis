@@ -47,7 +47,6 @@ class TestObjectives(unittest.TestCase):
         Value obtained is the accuracy. Should lie in [0,1].
         Value may not be NaN.
         """
-        os.chdir("./src/")
         params = {
             "iterations": 1,
             "depth": 1,
@@ -63,9 +62,6 @@ class TestObjectives(unittest.TestCase):
 
         study.enqueue_trial(params)
         study.optimize(objective, n_trials=1)
-
-        # set to old cwd
-        os.chdir(self._old_cwd)
 
         # check if accuracy is >= 0 and <=1.0
         self.assertTrue(0.0 <= study.best_value <= 1.0)
