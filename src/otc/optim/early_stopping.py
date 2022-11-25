@@ -5,10 +5,10 @@ Adapted from here: https://bit.ly/3tTnyLU.
 """
 
 
-import math
-
 import logging
 import logging.config
+import math
+
 from otc.utils.colors import Colors
 
 logger = logging.getLogger(__name__)
@@ -53,13 +53,15 @@ class EarlyStopping:
         elif self.best_loss - val_loss <= self.min_delta or math.isnan(val_loss):
             self.counter += 1
             logger.info(
-                f"{Colors.OKBLUE}[early stopping {self.counter}/{self.patience}]{Colors.ENDC}"
+                f"{Colors.OKBLUE}[early stopping {self.counter}/"
+                f"{self.patience}]{Colors.ENDC}"
                 f" Stopping in {self.patience - self.counter} epochs."
             )
 
             if self.counter >= self.patience:
                 logger.info(
-                    f"{Colors.OKBLUE}[early stopping {self.counter}/{self.patience}]{Colors.ENDC}"
+                    f"{Colors.OKBLUE}[early stopping {self.counter}/"
+                    f"{self.patience}]{Colors.ENDC}"
                     f" Stopped early."
                 )
                 self.early_stop = True

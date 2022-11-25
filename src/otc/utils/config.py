@@ -37,3 +37,6 @@ class Settings(BaseSettings):
         case_sensitive = True
         env_file = "prod.env"
         env_file_encoding = "utf-8"
+
+
+settings = Settings(_env_file="prod.env", _env_file_encoding="utf-8")

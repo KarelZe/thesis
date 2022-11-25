@@ -10,7 +10,7 @@ import os
 import random
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
 import optuna
@@ -23,6 +23,7 @@ from sklearn.base import BaseEstimator
 # from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
 from torch import nn, optim
+
 from otc.data.dataloader import TabDataLoader
 from otc.data.dataset import TabDataset
 from otc.data.fs import fs
@@ -131,15 +132,15 @@ class TabTransformerObjective(Objective):
             y_train (pd.Series): ground truth (train)
             x_val (pd.DataFrame): feature matrix (val)
             y_val (pd.Series): ground truth (val)
-            cat_features (Optional[List[str]], optional): List of categorical features.
-            Defaults to None.
-            cat_unique (Optional[List[int]], optional): Unique counts of categorical features.
+            cat_features (Optional[List[str]], optional): List of
+            categorical features. Defaults to None.
+            cat_unique (Optional[List[int]], optional): Unique counts
+            of categorical features.
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
         """
-
         self._cat_features = [] if not cat_features else cat_features
-        self._cat_unique = () if not cat_unique else (*cat_unique,)
+        self._cat_unique = () if not cat_unique else tuple(cat_unique)
         self._cont_features: List[int] = [
             x for x in x_train.columns.tolist() if x not in self._cat_features
         ]
@@ -184,7 +185,7 @@ class TabTransformerObjective(Objective):
         )
 
         # FIXME: some are currently ignored like pinned memory or workers
-        dl_kwargs = (
+        dl_kwargs: Dict[str, Any] = (
             {
                 "num_workers": os.cpu_count(),
                 "pin_memory": True,

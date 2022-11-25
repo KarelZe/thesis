@@ -1,3 +1,9 @@
+"""
+Implementation of a dataset for tabular data.
+
+Supports both categorical and continous data.
+"""
+
 from typing import List, Optional, Tuple
 
 import pandas as pd
@@ -7,6 +13,7 @@ from torch.utils.data import Dataset
 
 class TabDataset(Dataset):
     """PyTorch Dataset for tabular data.
+
     Args:
         Dataset (Dataset): dataset
     """
@@ -16,11 +23,12 @@ class TabDataset(Dataset):
         X: pd.DataFrame,
         y: pd.Series,
         cat_features: Optional[List[str]] = None,
-        cat_unique_counts: Optional[Tuple[int]] = None,
+        cat_unique_counts: Optional[Tuple[int, ...]] = None,
         device: str = "cpu",
     ):
         """
         Tabular data set holding data for the model.
+
         Args:
             X (pd.DataFrame): feature matrix.
             y (pd.Series): target.
@@ -65,6 +73,7 @@ class TabDataset(Dataset):
     def __len__(self) -> int:
         """
         Length of dataset.
+
         Returns:
             int: length
         """
@@ -73,6 +82,7 @@ class TabDataset(Dataset):
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """
         Get sample for model.
+
         Args:
             idx (int): index of prediction (between ``0`` and ``len(dataset) - 1``)
         Returns:
