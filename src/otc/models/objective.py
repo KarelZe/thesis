@@ -47,15 +47,25 @@ def set_seed(seed_val: int = 42) -> int:
     Returns:
         int: seed
     """
+    # python
+    # see https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED
     os.environ["PYTHONHASHSEED"] = str(seed_val)
-    random.seed(seed_val)
-    # pandas and numpy as discussed here: https://stackoverflow.com/a/52375474/5755604
+
+    # pandas and numpy
+    #  https://stackoverflow.com/a/52375474/5755604
     np.random.seed(seed_val)
 
+    # python random module
+    random.seed(seed_val)
+
+    # torch
+    # see https://pytorch.org/docs/stable/notes/randomness.html
     torch.manual_seed(seed_val)
     torch.cuda.manual_seed(seed_val)
     torch.cuda.manual_seed_all(seed_val)
-    torch.backends.cudnn.deterministic = True
+    if torch.cuda.is_available():
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
     return seed_val
 
 
