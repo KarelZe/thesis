@@ -28,6 +28,8 @@ allowed_func_str = (
     "rev_lr",
     "emo",
     "rev_emo",
+    "clnv",
+    "rev_clnv",
     "trade_size",
     "depth",
     "nan",
@@ -48,6 +50,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
     * LR algorithm with reverse tick test
     * EMO algorithm
     * EMO algorithm with reverse tick test
+    * CLNV algorithm
+    * CLNV algorithm with reverse tick test
     * Trade size rule
     * Depth rule
     * nan
@@ -200,7 +204,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         (bid) quote, and use the reverse tick test (all) to classify all other\
         trades.
 
-        Adapted from Ellis et al. (2000).
+        Adapted from Grauer et al. (2022).
         Args:
             subset (Literal[&quot;ex&quot;, &quot;best&quot;]): subset
             i. e., 'ex' or 'best'.
@@ -213,6 +217,70 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         at_bid = self.X_["TRADE_PRICE"] == self.X_[f"bid_{subset}"]
         at_ask_or_bid = at_ask ^ at_bid
         return np.where(at_ask_or_bid, self._quote(subset), self._rev_tick("all"))
+
+    def _clnv(self, subset: Literal["best", "ex"]) -> npt.NDArray:
+        """
+        Classify a trade based on deciles of the bid and ask spread.
+
+        Spread is divided into ten deciles and trades are classified as follows:
+        - use quote rule for at ask until 30 % below ask (upper 3 deciles)
+        - use quote rule for at bid until 30 % above bid (lower 3 deciles)
+        - use tick rule (all) for all other trades (±2 deciles from midpoint; outside
+        bid or ask).
+
+        Adapted from Chakrabarty et al. (2007).
+
+        Args:
+            subset (Literal[&quot;ex&quot;, &quot;best&quot;]): subset i. e.,
+            'ex' or 'best'.
+
+        Returns:
+            npt.NDArray: result of the emo algorithm with tick rule. Can be
+            np.NaN.
+        """
+        in_upper_30 = (
+            0.7 * self.X_[f"ask_{subset}"] + 0.3 * self.X_[f"bid_{subset}"]
+            <= self.X_["TRADE_PRICE"]
+        ) & (self.X_["TRADE_PRICE"] <= self.X_[f"ask_{subset}"])
+        in_lower_30 = (self.X_[f"bid_{subset}"] <= self.X_["TRADE_PRICE"]) & (
+            self.X_["TRADE_PRICE"]
+            <= 0.3 * self.X_[f"ask_{subset}"] + 0.7 * self.X_[f"bid_{subset}"]
+        )
+        return np.where(
+            in_upper_30 | in_lower_30, self._quote(subset), self._tick("all")
+        )
+
+    def _rev_clnv(self, subset: Literal["best", "ex"]) -> npt.NDArray:
+        """
+        Classify a trade based on deciles of the bid and ask spread.
+
+        Spread is divided into ten deciles and trades are classified as follows:
+        - use quote rule for at ask until 30 % below ask (upper 3 deciles)
+        - use quote rule for at bid until 30 % above bid (lower 3 deciles)
+        - use reverse tick rule (all) for all other trades (±2 deciles from midpoint;
+        outside bid or ask).
+
+        Similar to extension of emo algorithm proposed Grauer et al. (2022).
+
+        Args:
+            subset (Literal[&quot;ex&quot;, &quot;best&quot;]): subset i. e.,
+            'ex' or 'best'.
+
+        Returns:
+            npt.NDArray: result of the emo algorithm with tick rule. Can be
+            np.NaN.
+        """
+        in_upper_30 = (
+            0.7 * self.X_[f"ask_{subset}"] + 0.3 * self.X_[f"bid_{subset}"]
+            <= self.X_["TRADE_PRICE"]
+        ) & (self.X_["TRADE_PRICE"] <= self.X_[f"ask_{subset}"])
+        in_lower_30 = (self.X_[f"bid_{subset}"] <= self.X_["TRADE_PRICE"]) & (
+            self.X_["TRADE_PRICE"]
+            <= 0.3 * self.X_[f"ask_{subset}"] + 0.7 * self.X_[f"bid_{subset}"]
+        )
+        return np.where(
+            in_upper_30 | in_lower_30, self._quote(subset), self._rev_tick("all")
+        )
 
     # pylint: disable=W0613
     def _trade_size(self, *args: Any) -> npt.NDArray:
@@ -299,6 +367,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             self._rev_lr,
             self._emo,
             self._rev_emo,
+            self._clnv,
+            self._rev_clnv,
             self._trade_size,
             self._depth,
             self._nan,
