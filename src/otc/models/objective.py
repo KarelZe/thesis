@@ -168,7 +168,7 @@ class TabTransformerObjective(Objective):
             float: accuracy of trial on validation set.
         """
         # static params
-        epochs = 1024
+        epochs = 5
 
         # searchable params
         dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
@@ -180,7 +180,7 @@ class TabTransformerObjective(Objective):
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
-        bs = [512, 1024, 2048, 4096]
+        bs = [8192, 16384, 32768]
         batch_size: int = trial.suggest_categorical("batch_size", bs)  # type: ignore
 
         use_cuda = torch.cuda.is_available()
@@ -206,8 +206,6 @@ class TabTransformerObjective(Objective):
         val_loader = TabDataLoader(
             val_data._x_cat, val_data._x_cont, val_data._y, **dl_kwargs
         )
-
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         self._clf = TabTransformer(
             categories=self._cat_unique,
@@ -246,13 +244,14 @@ class TabTransformerObjective(Objective):
             self._clf.train()
 
             for x_cat, x_cont, targets in train_loader:
-
+                x_cat = x_cat.to(device)
+                x_cont = x_cont.to(device)
+                targets = targets.to(device)
                 # reset the gradients back to zero
                 optimizer.zero_grad()
 
                 outputs = self._clf(x_cat, x_cont)
                 outputs = outputs.flatten()
-
                 with torch.cuda.amp.autocast():
                     train_loss = criterion(outputs, targets)
 
@@ -272,9 +271,10 @@ class TabTransformerObjective(Objective):
 
             with torch.no_grad():
                 for x_cat, x_cont, targets in val_loader:
-
+                    x_cat = x_cat.to(device)
+                    x_cont = x_cont.to(device)
+                    targets = targets.to(device)
                     outputs = self._clf(x_cat, x_cont)
-
                     outputs = outputs.flatten()
 
                     val_loss = criterion(outputs, targets)
@@ -287,7 +287,7 @@ class TabTransformerObjective(Objective):
             val_history.append(val_loss)
 
             logger.info(
-                f"{Colors.OKGREEN}[epoch {epoch + 1}/{epochs}]{Colors.ENDC}"
+                f"{Colors.OKGREEN}[epoch {epoch + 1:04d}/{epochs:04d}]{Colors.ENDC}"
                 f" {Colors.BOLD}train loss:{Colors.ENDC} {train_loss:.8f}"
                 f" {Colors.BOLD}val loss:{Colors.ENDC} {val_loss:.8f}"
             )
@@ -303,6 +303,9 @@ class TabTransformerObjective(Objective):
         self._clf.eval()
 
         for x_cat, x_cont, targets in val_loader:
+            x_cat = x_cat.to(device)
+            x_cont = x_cont.to(device)
+            targets = targets.to(device)
             output = self._clf(x_cat, x_cont)
 
             # map between zero and one, sigmoid is otherwise included in loss already

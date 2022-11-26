@@ -12,17 +12,18 @@ from pathlib import Path
 import click
 import optuna
 import pandas as pd
+import numpy as np
 import wandb
 import yaml
-from features.build_features import (
-    features_categorical,
-    features_classical,
-    features_ml,
-)
 from optuna.exceptions import ExperimentalWarning
 from optuna.integration.wandb import WeightsAndBiasesCallback
 from optuna.storages import RetryFailedTrialCallback
 
+from otc.features.build_features import (
+    features_categorical,
+    features_classical,
+    features_ml,
+)
 from otc.models.objective import (
     ClassicalObjective,
     GradientBoostingObjective,
@@ -111,13 +112,17 @@ def main(
 
     x_train = pd.read_parquet(
         Path(artifact_dir, "train_set_60.parquet"), columns=columns
-    ).sample(n=2**16)
+    )#.sample(frac=0.1)
+    x_train.replace([np.inf, -np.inf], -1, inplace=True)
+    x_train.fillna(-1, inplace=True)
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
     x_val = pd.read_parquet(
         Path(artifact_dir, "val_set_20.parquet"), columns=columns
-    ).sample(n=2**12)
+    )#.sample(frac=0.1)
+    x_val.fillna(-1, inplace=True)
+    x_val.replace([np.inf, -np.inf], -1, inplace=True)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
@@ -143,7 +148,7 @@ def main(
             y_train,
             x_val,
             y_val,
-            cat_features=features_categorical,
+            cat_features=["OPTION_TYPE"],
             cat_unique=[2],
         )
     elif model == "classical":
