@@ -197,6 +197,7 @@ class TabTransformerObjective(Objective):
             "device": device,
             "batch_size": batch_size,
             "shuffle": False,
+            "device":device,
         }
 
         # differentiate between continous features only and mixed.
@@ -244,9 +245,9 @@ class TabTransformerObjective(Objective):
             self._clf.train()
 
             for x_cat, x_cont, targets in train_loader:
-                x_cat = x_cat.to(device)
-                x_cont = x_cont.to(device)
-                targets = targets.to(device)
+                # x_cat = x_cat.to(device)
+                # x_cont = x_cont.to(device)
+                # targets = targets.to(device)
                 # reset the gradients back to zero
                 optimizer.zero_grad()
 
@@ -271,9 +272,9 @@ class TabTransformerObjective(Objective):
 
             with torch.no_grad():
                 for x_cat, x_cont, targets in val_loader:
-                    x_cat = x_cat.to(device)
-                    x_cont = x_cont.to(device)
-                    targets = targets.to(device)
+                    # x_cat = x_cat.to(device)
+                    # x_cont = x_cont.to(device)
+                    # targets = targets.to(device)
                     outputs = self._clf(x_cat, x_cont)
                     outputs = outputs.flatten()
 
@@ -303,9 +304,9 @@ class TabTransformerObjective(Objective):
         self._clf.eval()
 
         for x_cat, x_cont, targets in val_loader:
-            x_cat = x_cat.to(device)
-            x_cont = x_cont.to(device)
-            targets = targets.to(device)
+            # x_cat = x_cat.to(device)
+            # x_cont = x_cont.to(device)
+            # targets = targets.to(device)
             output = self._clf(x_cat, x_cont)
 
             # map between zero and one, sigmoid is otherwise included in loss already

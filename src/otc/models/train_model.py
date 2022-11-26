@@ -112,7 +112,7 @@ def main(
 
     x_train = pd.read_parquet(
         Path(artifact_dir, "train_set_60.parquet"), columns=columns
-    )#.sample(frac=0.1)
+    ).sample(frac=0.1)
     x_train.replace([np.inf, -np.inf], -1, inplace=True)
     x_train.fillna(-1, inplace=True)
     y_train = x_train["buy_sell"]
@@ -120,7 +120,7 @@ def main(
 
     x_val = pd.read_parquet(
         Path(artifact_dir, "val_set_20.parquet"), columns=columns
-    )#.sample(frac=0.1)
+    ).sample(frac=0.1)
     x_val.fillna(-1, inplace=True)
     x_val.replace([np.inf, -np.inf], -1, inplace=True)
     y_val = x_val["buy_sell"]

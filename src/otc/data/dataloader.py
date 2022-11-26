@@ -87,7 +87,7 @@ class TabDataLoader:
 
         # return none + batch if input tensors included non  e.g., when no
         # categorical features are present
-        return batch if self.has_none_tensor else (None,) + batch
+        return (None,) + batch if self.has_none_tensor else batch
 
     def __len__(self) -> int:
         """
