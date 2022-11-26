@@ -194,23 +194,18 @@ class TabTransformerObjective(Objective):
             self.x_val, self.y_val, self._cat_features, self._cat_unique
         )
 
-        # FIXME: some are currently ignored like pinned memory or workers
-        dl_kwargs: Dict[str, Any] = (
-            {
-                "num_workers": os.cpu_count(),
-                "pin_memory": True,
-                "batch_size": batch_size,
-                "shuffle": False,
-            }
-            if use_cuda
-            else {"batch_size": batch_size, "shuffle": False}
-        )
+        dl_kwargs: Dict[str, Any] = {
+            "device": device,
+            "batch_size": batch_size,
+            "shuffle": False,
+        }
 
+        # differentiate between continous features only and mixed.
         train_loader = TabDataLoader(
-            training_data._X_cat, training_data._X_cont, training_data._y, **dl_kwargs
+            training_data._x_cat, training_data._x_cont, training_data._y, **dl_kwargs
         )
         val_loader = TabDataLoader(
-            val_data._X_cat, val_data._X_cont, val_data._y, **dl_kwargs
+            val_data._x_cat, val_data._x_cont, val_data._y, **dl_kwargs
         )
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -253,10 +248,6 @@ class TabTransformerObjective(Objective):
 
             for x_cat, x_cont, targets in train_loader:
 
-                x_cat = x_cat.to(device)
-                x_cont = x_cont.to(device)
-                targets = targets.to(device)
-
                 # reset the gradients back to zero
                 optimizer.zero_grad()
 
@@ -282,10 +273,6 @@ class TabTransformerObjective(Objective):
 
             with torch.no_grad():
                 for x_cat, x_cont, targets in val_loader:
-
-                    x_cat = x_cat.to(device)
-                    x_cont = x_cont.to(device)
-                    targets = targets.to(device)
 
                     outputs = self._clf(x_cat, x_cont)
 
@@ -317,15 +304,12 @@ class TabTransformerObjective(Objective):
         self._clf.eval()
 
         for x_cat, x_cont, targets in val_loader:
-            x_cat = x_cat.to(device)
-            x_cont = x_cont.to(device)
-            targets = targets.to(device)
             output = self._clf(x_cat, x_cont)
 
             # map between zero and one, sigmoid is otherwise included in loss already
             output = torch.sigmoid(output.squeeze())
             y_pred.append(output.detach().cpu().numpy())
-            y_true.append(targets.detach().cpu().numpy())
+            y_true.append(targets.detach().cpu().numpy())  # type: ignore
 
         # round prediction to nearest int
         y_pred = np.rint(np.concatenate(y_pred))

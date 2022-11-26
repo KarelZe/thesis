@@ -4,7 +4,7 @@ Implementation of a dataset for tabular data.
 Supports both categorical and continous data.
 """
 
-from typing import List, Optional, Tuple
+from __future__ import annotations
 
 import pandas as pd
 import torch
@@ -20,37 +20,35 @@ class TabDataset(Dataset):
 
     def __init__(
         self,
-        X: pd.DataFrame,
+        x: pd.DataFrame,
         y: pd.Series,
-        cat_features: Optional[List[str]] = None,
-        cat_unique_counts: Optional[Tuple[int, ...]] = None,
-        device: str = "cpu",
+        cat_features: list[str] | None = None,
+        cat_unique_counts: tuple[int, ...] | None = None,
     ):
         """
         Tabular data set holding data for the model.
 
         Args:
-            X (pd.DataFrame): feature matrix.
+            x (pd.DataFrame): feature matrix.
             y (pd.Series): target.
             cat_features (Optional[List[str]], optional): List with categorical columns.
             Defaults to None.
             cat_unique_counts (Optional[Tuple[int]], optional): Number of categories per
             categorical feature. Defaults to None.
-            device (str, optional): Device for pre-fetching. Defaults to "cpu".
         """
         self._cat_unique_counts = () if not cat_unique_counts else cat_unique_counts
 
         # calculate cat indices
-        features = X.columns.tolist()
+        features = x.columns.tolist()
         cat_features = [] if not cat_features else cat_features
         self._cat_idx = [features.index(i) for i in cat_features if i in features]
 
         # calculate cont indices
-        cont_features = [x for x in features if x not in cat_features]
+        cont_features = [f for f in features if f not in cat_features]
         self._cont_idx = [features.index(i) for i in cont_features if i in features]
 
         assert (
-            X.shape[0] == y.shape[0]
+            x.shape[0] == y.shape[0]
         ), "Length of feature matrix must match length of target."
         assert len(cat_features) == len(
             self._cat_unique_counts
@@ -61,14 +59,10 @@ class TabDataset(Dataset):
         self._y[self._y < 0] = 0
 
         # cut into continous and categorical tensor
-        self._X_cat = torch.tensor(X.iloc[:, self._cat_idx].values).int()
-        self._X_cont = torch.tensor(X.iloc[:, self._cont_idx].values).float()
-
-        # pre-fetch dataset to device
-        # https://discuss.pytorch.org/t/how-to-load-all-data-into-gpu-for-training/27609/15
-        self._y = self._y.to(device)
-        self._X_cat = self._X_cat.to(device)
-        self._X_cont = self._X_cont.to(device)
+        self._x_cat: torch.Tensor | None = None
+        if len(self._cat_idx) > 0:
+            self._x_cat = torch.tensor(x.iloc[:, self._cat_idx].values).int()
+        self._x_cont = torch.tensor(x.iloc[:, self._cont_idx].values).float()
 
     def __len__(self) -> int:
         """
@@ -77,15 +71,23 @@ class TabDataset(Dataset):
         Returns:
             int: length
         """
-        return len(self._X_cont)
+        return len(self._x_cont)
 
-    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    def __getitem__(
+        self, idx: int
+    ) -> tuple[torch.Tensor | None, torch.Tensor, torch.Tensor]:
         """
         Get sample for model.
 
         Args:
-            idx (int): index of prediction (between ``0`` and ``len(dataset) - 1``)
+            idx (int): _description_
+
         Returns:
-            Tuple[torch.Tensor, torch.Tensor, torch.Tensor]: X_cat, X_cont and y.
+            Tuple[torch.Tensor | None, torch.Tensor, torch.Tensor]:
+            x_cat (if present if present otherwise None), x_cont and y.
         """
-        return self._X_cat[idx], self._X_cont[idx], self._y[idx]
+        return (
+            self._x_cat[idx] if self._x_cat else None,
+            self._x_cont[idx],
+            self._y[idx],
+        )

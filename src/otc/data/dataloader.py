@@ -4,9 +4,9 @@ A fast dataloader-like object to load batches of tabular data sets.
 Adapted from here:
 https://discuss.pytorch.org/t/dataloader-much-slower-than-manual-batching/27014/6
 """
+from __future__ import annotations
 
-
-from typing import Any, Tuple
+from typing import Any
 
 import torch
 
@@ -21,10 +21,11 @@ class TabDataLoader:
 
     def __init__(
         self,
-        *tensors: torch.Tensor,
+        *tensors: torch.Tensor | None,
         batch_size: int = 32,
         shuffle: bool = False,
-        **kwargs: Any
+        device: str = "cpu",
+        **kwargs: Any,
     ):
         """
         TabDataLoader.
@@ -33,8 +34,14 @@ class TabDataLoader:
             batch_size (int, optional): size of batch. Defaults to 32.
             shuffle (bool, optional): shuffle data. Defaults to False.
         """
-        assert all(t.shape[0] == tensors[0].shape[0] for t in tensors)
-        self.tensors = tensors
+        self.device = device
+        # check if any tensor is None e. g., when no categorical features are present.
+        self._has_none_tensor = not all(tensors)
+        # filter if for not none tensors
+        self.tensors = tuple(t for t in tensors if t is not None)
+
+        # check if all tensors have same length
+        assert all(t.shape[0] == self.tensors[0].shape[0] for t in self.tensors)
 
         self.dataset_len = self.tensors[0].shape[0]
         self.batch_size = batch_size
@@ -48,7 +55,7 @@ class TabDataLoader:
         self.n_batches = n_batches
 
     # TODO: improve type hint with Self (?)
-    def __iter__(self) -> "TabDataLoader":
+    def __iter__(self) -> TabDataLoader:
         """
         Return itself.
 
@@ -60,7 +67,7 @@ class TabDataLoader:
             self.tensors = tuple(t[r] for t in self.tensors)
         return self
 
-    def __next__(self) -> Tuple[torch.Tensor, ...]:
+    def __next__(self) -> tuple[torch.Tensor | None, ...]:
         """
         Generate next batch with size of 'batch_size'.
 
@@ -70,13 +77,19 @@ class TabDataLoader:
             StopIteration: stopping criterion.
 
         Returns:
-            Tuple[torch.Tensor, ...]: batch with tensors.
+            Tuple[torch.Tensor | None, torch.Tensor, torch.Tensor]: (X_cat), X_cont, y
         """
         if self.i >= self.dataset_len:
             raise StopIteration
         batch = tuple(t[self.i : self.i + self.batch_size] for t in self.tensors)
         self.i += self.batch_size
-        return batch
+
+        # move tensors device
+        batch = tuple(t.to(self.device) for t in batch)
+
+        # return none + batch if input tensors included non  e.g., when no
+        # categorical features are present
+        return batch if self._has_none_tensor else (None,) + batch
 
     def __len__(self) -> int:
         """
