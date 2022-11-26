@@ -4,6 +4,8 @@ Defines feature sets.
 See notebook/3.0b-feature-engineering.ipynb for details.
 """
 
+from typing import List
+
 features_date = [
     "date_month_sin",
     "date_month_cos",
@@ -39,7 +41,7 @@ features_trade = [
     "diff_ask_bid_size_ex",
 ]
 
-features_categorical = ["ROOT", "OPTION_TYPE"]
+features_categorical: List[str] = ["ROOT", "OPTION_TYPE"]
 
 features_ml = [*features_trade, *features_date, *features_option]
 

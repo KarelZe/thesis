@@ -31,10 +31,9 @@ from otc.models.classical_classifier import ClassicalClassifier
 from otc.models.tabtransformer import TabTransformer
 from otc.optim.early_stopping import EarlyStopping
 from otc.utils.colors import Colors
-from otc.utils.config import Settings
+from otc.utils.config import settings
 
 logger = logging.getLogger(__name__)
-settings = Settings()
 
 
 def set_seed(seed_val: int = 42) -> int:
@@ -130,8 +129,8 @@ class TabTransformerObjective(Objective):
         y_train: pd.Series,
         x_val: pd.DataFrame,
         y_val: pd.Series,
-        cat_features: Optional[List[str]] = None,
-        cat_unique: Optional[List[int]] = None,
+        cat_features: Optional[List[str]],
+        cat_unique: Optional[List[int]],
         name: str = "default",
     ):
         """

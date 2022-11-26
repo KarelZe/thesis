@@ -30,7 +30,7 @@ from otc.models.objective import (
     TabTransformerObjective,
     set_seed,
 )
-from otc.utils.config import Settings
+from otc.utils.config import settings
 
 
 @click.command()
@@ -88,7 +88,6 @@ def main(
 
     logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
 
-    settings = Settings()
     run = wandb.init(  # type: ignore
         project=settings.WANDB_PROJECT,
         entity=settings.WANDB_ENTITY,
@@ -144,7 +143,8 @@ def main(
             y_train,
             x_val,
             y_val,
-            cat_features=["OPTION_TYPE"],
+            cat_features=features_categorical,
+            cat_unique=[2],
         )
     elif model == "classical":
         objective = ClassicalObjective(x_train, y_train, x_val, y_val)
