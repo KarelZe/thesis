@@ -368,7 +368,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             self._emo,
             self._rev_emo,
             self._clnv,
-            self._clnv_rev,
+            self._rev_clnv,
             self._trade_size,
             self._depth,
             self._nan,
