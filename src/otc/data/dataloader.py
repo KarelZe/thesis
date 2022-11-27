@@ -83,7 +83,7 @@ class TabDataLoader:
         if self.i >= self.dataset_len:
             raise StopIteration
         mixed_batch: list[torch.Tensor | None] = [
-            t[self.i : self.i + self.batch_size] for t in self.tensors
+            t[self.i : self.i + self.batch_size].to(self.device) for t in self.tensors
         ]
         self.i += self.batch_size
 

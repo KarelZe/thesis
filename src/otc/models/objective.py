@@ -283,7 +283,7 @@ class TabTransformerObjective(Objective):
             val_history.append(val_loss)
 
             logger.info(
-                "%s[epoch %04d/%04d]%s %s train loss:%s %.8f %s val loss:%s %.8f",
+                "%s[epoch %04d/%04d]%s %strain loss:%s %.8f %sval loss:%s %.8f",
                 Colors.OKGREEN,
                 epoch + 1,
                 epochs,
@@ -291,8 +291,8 @@ class TabTransformerObjective(Objective):
                 Colors.BOLD,
                 Colors.ENDC,
                 train_loss,
-                Colors.ENDC,
                 Colors.BOLD,
+                Colors.ENDC,
                 val_loss,
             )
 
@@ -307,12 +307,10 @@ class TabTransformerObjective(Objective):
         self._clf.eval()
 
         for x_cat, x_cont, targets in val_loader:
-            # x_cat = x_cat.to(device)
-            # x_cont = x_cont.to(device)
-            # targets = targets.to(device)
             output = self._clf(x_cat, x_cont)
 
             # map between zero and one, sigmoid is otherwise included in loss already
+            # https://stackoverflow.com/a/66910866/5755604
             output = torch.sigmoid(output.squeeze())
             y_pred.append(output.detach().cpu().numpy())
             y_true.append(targets.detach().cpu().numpy())  # type: ignore
