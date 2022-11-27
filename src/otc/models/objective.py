@@ -3,26 +3,38 @@ Provides objectives for optimizations.
 
 Adds support for classical rules, GBTs and transformer-based architectures.
 """
+
+from __future__ import annotations
+
 import glob
+import logging
+import logging.config
 import os
 import random
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import List, Optional
+from typing import Any
 
 import numpy as np
 import optuna
 import pandas as pd
+import torch
 from catboost import CatBoostClassifier
 from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
-
-# from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
+from torch import nn, optim
 
+from otc.data.dataloader import TabDataLoader
+from otc.data.dataset import TabDataset
 from otc.data.fs import fs
 from otc.models.classical_classifier import ClassicalClassifier
-from otc.utils.config import Settings
+from otc.models.tabtransformer import TabTransformer
+from otc.optim.early_stopping import EarlyStopping
+from otc.utils.colors import Colors
+from otc.utils.config import settings
+
+logger = logging.getLogger(__name__)
 
 
 def set_seed(seed_val: int = 42) -> int:
@@ -35,10 +47,25 @@ def set_seed(seed_val: int = 42) -> int:
     Returns:
         int: seed
     """
+    # python
+    # see https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED
     os.environ["PYTHONHASHSEED"] = str(seed_val)
-    random.seed(seed_val)
-    # pandas and numpy as discussed here: https://stackoverflow.com/a/52375474/5755604
+
+    # pandas and numpy
+    #  https://stackoverflow.com/a/52375474/5755604
     np.random.seed(seed_val)
+
+    # python random module
+    random.seed(seed_val)
+
+    # torch
+    # see https://pytorch.org/docs/stable/notes/randomness.html
+    torch.manual_seed(seed_val)
+    torch.cuda.manual_seed(seed_val)
+    torch.cuda.manual_seed_all(seed_val)
+    if torch.cuda.is_available():
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
     return seed_val
 
 
@@ -75,7 +102,7 @@ class Objective(ABC):
             y_val,
         )
         self.name = name
-        self._clf: BaseEstimator
+        self._clf: BaseEstimator | nn.Module
 
     @abstractmethod
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
@@ -86,6 +113,268 @@ class Objective(ABC):
             study (optuna.Study): current study.
             trial (optuna.Trial): current trial.
         """
+
+
+class TabTransformerObjective(Objective):
+    """
+    Implements an optuna optimization objective.
+
+    See here: https://optuna.readthedocs.io/en/stable/
+    Args:
+        Objective (Objective): objective
+    """
+
+    def __init__(
+        self,
+        x_train: pd.DataFrame,
+        y_train: pd.Series,
+        x_val: pd.DataFrame,
+        y_val: pd.Series,
+        cat_features: list[str] | None,
+        cat_unique: list[int] | None,
+        name: str = "default",
+    ):
+        """
+        Initialize objective.
+
+        Args:
+            x_train (pd.DataFrame): feature matrix (train)
+            y_train (pd.Series): ground truth (train)
+            x_val (pd.DataFrame): feature matrix (val)
+            y_val (pd.Series): ground truth (val)
+            cat_features (Optional[List[str]], optional): List of
+            categorical features. Defaults to None.
+            cat_unique (Optional[List[int]], optional): Unique counts
+            of categorical features.
+            Defaults to None.
+            name (str, optional): Name of objective. Defaults to "default".
+        """
+        self._cat_features = [] if not cat_features else cat_features
+        self._cat_unique = () if not cat_unique else tuple(cat_unique)
+        self._cont_features: list[int] = [
+            x for x in x_train.columns.tolist() if x not in self._cat_features
+        ]
+
+        self._clf: nn.Module
+        super().__init__(x_train, y_train, x_val, y_val, name)
+
+    def __call__(self, trial: optuna.Trial) -> float:
+        """
+        Perform a new search trial in Bayesian search.
+
+        Hyperarameters are suggested, unless they are fixed.
+        Args:
+            trial (optuna.Trial): current trial.
+        Returns:
+            float: accuracy of trial on validation set.
+        """
+        # static params
+        epochs = 1024
+
+        # searchable params
+        dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
+
+        # done similar to borisov
+        depths = [1, 2, 3, 6, 12]
+        depth: int = trial.suggest_categorical("depth", depths)  # type: ignore
+        heads: int = trial.suggest_categorical("heads", [2, 4, 8])  # type: ignore
+        weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
+        lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
+        dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
+        bs = [8192, 16384, 32768]
+        batch_size: int = trial.suggest_categorical("batch_size", bs)  # type: ignore
+
+        use_cuda = torch.cuda.is_available()
+        device = torch.device("cuda" if use_cuda else "cpu")
+
+        training_data = TabDataset(
+            self.x_train, self.y_train, self._cat_features, self._cat_unique
+        )
+        val_data = TabDataset(
+            self.x_val, self.y_val, self._cat_features, self._cat_unique
+        )
+
+        dl_kwargs: dict[str, Any] = {
+            "batch_size": batch_size,
+            "shuffle": False,
+            "device": device,
+        }
+
+        # differentiate between continous features only and mixed.
+        train_loader = TabDataLoader(
+            training_data._x_cat, training_data._x_cont, training_data._y, **dl_kwargs
+        )
+        val_loader = TabDataLoader(
+            val_data._x_cat, val_data._x_cont, val_data._y, **dl_kwargs
+        )
+
+        self._clf = TabTransformer(
+            categories=self._cat_unique,
+            num_continuous=len(self._cont_features),
+            dim_out=1,
+            mlp_act=nn.ReLU(),
+            dim=dim,
+            depth=depth,
+            heads=heads,
+            attn_dropout=dropout,
+            ff_dropout=dropout,
+            mlp_hidden_mults=(4, 2),
+        ).to(device)
+
+        # half precision, see https://pytorch.org/docs/stable/amp.html
+        scaler = torch.cuda.amp.GradScaler()
+        # Generate the optimizers
+        optimizer = optim.AdamW(
+            self._clf.parameters(), lr=lr, weight_decay=weight_decay
+        )
+
+        # see https://stackoverflow.com/a/53628783/5755604
+        # no sigmoid required; numerically more stable
+        criterion = nn.BCEWithLogitsLoss()
+
+        # keep track of val loss and do early stopping
+        early_stopping = EarlyStopping(patience=5)
+
+        train_history, val_history = [], []
+
+        for epoch in range(epochs):
+
+            # perform training
+            loss_in_epoch_train = 0
+
+            self._clf.train()
+
+            for x_cat, x_cont, targets in train_loader:
+
+                # reset the gradients back to zero
+                optimizer.zero_grad()
+
+                outputs = self._clf(x_cat, x_cont)
+                outputs = outputs.flatten()
+                with torch.cuda.amp.autocast():
+                    train_loss = criterion(outputs, targets)
+
+                # compute accumulated gradients
+                scaler.scale(train_loss).backward()
+
+                # perform parameter update based on current gradients
+                scaler.step(optimizer)
+                scaler.update()
+
+                # add the mini-batch training loss to epoch loss
+                loss_in_epoch_train += train_loss.item()
+
+            self._clf.eval()
+
+            loss_in_epoch_val = 0.0
+
+            with torch.no_grad():
+                for x_cat, x_cont, targets in val_loader:
+                    outputs = self._clf(x_cat, x_cont)
+                    outputs = outputs.flatten()
+
+                    val_loss = criterion(outputs, targets)
+                    loss_in_epoch_val += val_loss.item()
+
+            train_loss = loss_in_epoch_train / len(train_loader)
+            val_loss = loss_in_epoch_val / len(val_loader)
+
+            train_history.append(train_loss)
+            val_history.append(val_loss)
+
+            logger.info(
+                "%s[epoch %04d/%04d]%s %strain loss:%s %.8f %sval loss:%s %.8f",
+                Colors.OKGREEN,
+                epoch + 1,
+                epochs,
+                Colors.ENDC,
+                Colors.BOLD,
+                Colors.ENDC,
+                train_loss,
+                Colors.BOLD,
+                Colors.ENDC,
+                val_loss,
+            )
+
+            # return early if val loss doesn't decrease for several iterations
+            early_stopping(val_loss)
+            if early_stopping.early_stop:
+                break
+
+        # make predictions with final model
+        y_pred, y_true = [], []
+
+        self._clf.eval()
+
+        for x_cat, x_cont, targets in val_loader:
+            output = self._clf(x_cat, x_cont)
+
+            # map between zero and one, sigmoid is otherwise included in loss already
+            # https://stackoverflow.com/a/66910866/5755604
+            output = torch.sigmoid(output.squeeze())
+            y_pred.append(output.detach().cpu().numpy())
+            y_true.append(targets.detach().cpu().numpy())  # type: ignore
+
+        # round prediction to nearest int
+        y_pred = np.rint(np.concatenate(y_pred))
+        y_true = np.concatenate(y_true)
+
+        return accuracy_score(y_true, y_pred)  # type: ignore
+
+    def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
+        """
+        Save model with callback.
+
+        Args:
+            study (optuna.Study): current study.
+            trial (optuna.Trial): current trial.
+        """
+        if study.best_trial == trial:
+
+            # e. g. dnurtlqv_CatBoostClassifier_default_trial_
+            prefix_file = (
+                f"{study.study_name}_"
+                f"{self._clf.__class__.__name__}_{self.name}_trial_"
+            )
+
+            # FIXME: Replace with cloud path. One could directly upload to gcloud
+            # without storing locally.
+            # https://pypi.org/project/cloudpathlib/
+
+            # remove old files on remote first
+            outdated_files_remote = fs.glob(
+                "gs://"
+                + Path(
+                    settings.GCS_BUCKET, settings.MODEL_DIR_REMOTE, prefix_file + "*"
+                ).as_posix()
+            )
+
+            if len(outdated_files_remote) > 0:
+                fs.rm(outdated_files_remote)
+
+            # remove local files next
+            outdated_files_local = glob.glob(
+                Path(settings.MODEL_DIR_LOCAL, prefix_file + "*").as_posix()
+            )
+            if len(outdated_files_local) > 0:
+                os.remove(*outdated_files_local)
+
+            # save current best locally
+            new_file = prefix_file + f"{trial.number}.pth"
+            loc_path = Path(settings.MODEL_DIR_LOCAL, new_file).as_posix()
+
+            remote_path = (
+                "gs://"
+                + Path(
+                    settings.GCS_BUCKET, settings.MODEL_DIR_REMOTE, new_file
+                ).as_posix()
+            )
+            torch.save(
+                self._clf.state_dict(),
+                loc_path,
+            )
+            # save current best remotely
+            fs.put(loc_path, remote_path)
 
 
 class ClassicalObjective(Objective):
@@ -202,7 +491,7 @@ class GradientBoostingObjective(Objective):
         y_train: pd.Series,
         x_val: pd.DataFrame,
         y_val: pd.Series,
-        cat_features: Optional[List[str]] = None,
+        cat_features: list[str] | None = None,
         name: str = "default",
     ):
         """
@@ -275,8 +564,6 @@ class GradientBoostingObjective(Objective):
         """
         if study.best_trial == trial:
 
-            settings = Settings()
-
             # e. g. dnurtlqv_CatBoostClassifier_default_trial_
             prefix_file = (
                 f"{study.study_name}_"
@@ -318,13 +605,3 @@ class GradientBoostingObjective(Objective):
             self._clf.save_model(loc_path, format="cbm")
             # save current best remotely
             fs.put(loc_path, remote_path)
-
-
-class TabTransformerObjective(Objective):
-    """
-    Implements an optuna optimization objective.
-
-    See here: https://optuna.readthedocs.io/en/stable/
-    Args:
-        Objective (Objective): objective
-    """
