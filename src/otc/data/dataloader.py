@@ -22,7 +22,7 @@ class TabDataLoader:
     def __init__(
         self,
         *tensors: torch.Tensor | None,
-        batch_size: int = 32,
+        batch_size: int = 4096,
         shuffle: bool = False,
         device: str = "cpu",
         **kwargs: Any,
@@ -30,13 +30,16 @@ class TabDataLoader:
         """
         TabDataLoader.
 
+        Tensors can be None e. g., if there is no categorical data.
+
         Args:
-            batch_size (int, optional): size of batch. Defaults to 32.
+            batch_size (int, optional): size of batch. Defaults to 4096.
             shuffle (bool, optional): shuffle data. Defaults to False.
+            device (str, optional): device where. Defaults to "cpu".
         """
         self.device = device
-        # check if any tensor is None e. g., when no categorical features are present.
-        self.has_none_tensor = None in tensors
+        # check for tensors that are None
+        self.none_mask = tuple(t is None for t in tensors)
         # filter if for not none tensors
         self.tensors = tuple(t for t in tensors if t is not None)
 
@@ -53,7 +56,6 @@ class TabDataLoader:
             n_batches += 1
         self.n_batches = n_batches
 
-    # TODO: improve type hint with Self (?)
     def __iter__(self) -> TabDataLoader:
         """
         Return itself.
@@ -63,7 +65,8 @@ class TabDataLoader:
         """
         if self.shuffle:
             r = torch.randperm(self.dataset_len)
-            self.tensors = tuple(t[r] for t in self.tensors)
+            self.tensors = tuple(t[r] for t in self.tensors if t)
+        # reset counter on new iteration
         self.i = 0
         return self
 
@@ -79,15 +82,17 @@ class TabDataLoader:
         """
         if self.i >= self.dataset_len:
             raise StopIteration
-        batch = tuple(t[self.i : self.i + self.batch_size] for t in self.tensors)
+        mixed_batch: list[torch.Tensor | None] = [
+            t[self.i : self.i + self.batch_size] for t in self.tensors
+        ]
         self.i += self.batch_size
 
-        # move tensors device
-        batch = tuple(t.to(self.device) for t in batch)
+        # tensors + nones if input tensors contained none
+        for i, is_none in enumerate(self.none_mask):
+            if is_none:
+                mixed_batch.insert(i, None)
 
-        # return none + batch if input tensors included non  e.g., when no
-        # categorical features are present
-        return (None,) + batch if self.has_none_tensor else batch
+        return tuple(mixed_batch)
 
     def __len__(self) -> int:
         """

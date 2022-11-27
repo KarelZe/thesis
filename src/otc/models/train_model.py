@@ -10,9 +10,9 @@ import warnings
 from pathlib import Path
 
 import click
+import numpy as np
 import optuna
 import pandas as pd
-import numpy as np
 import wandb
 import yaml
 from optuna.exceptions import ExperimentalWarning

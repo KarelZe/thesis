@@ -3,6 +3,9 @@ Provides objectives for optimizations.
 
 Adds support for classical rules, GBTs and transformer-based architectures.
 """
+
+from __future__ import annotations
+
 import glob
 import logging
 import logging.config
@@ -10,7 +13,7 @@ import os
 import random
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 import numpy as np
 import optuna
@@ -19,8 +22,6 @@ import torch
 from catboost import CatBoostClassifier
 from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
-
-# from optuna.integration import CatBoostPruningCallback
 from sklearn.metrics import accuracy_score
 from torch import nn, optim
 
@@ -101,7 +102,7 @@ class Objective(ABC):
             y_val,
         )
         self.name = name
-        self._clf: Union[BaseEstimator, nn.Module]
+        self._clf: BaseEstimator | nn.Module
 
     @abstractmethod
     def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
@@ -129,8 +130,8 @@ class TabTransformerObjective(Objective):
         y_train: pd.Series,
         x_val: pd.DataFrame,
         y_val: pd.Series,
-        cat_features: Optional[List[str]],
-        cat_unique: Optional[List[int]],
+        cat_features: list[str] | None,
+        cat_unique: list[int] | None,
         name: str = "default",
     ):
         """
@@ -150,7 +151,7 @@ class TabTransformerObjective(Objective):
         """
         self._cat_features = [] if not cat_features else cat_features
         self._cat_unique = () if not cat_unique else tuple(cat_unique)
-        self._cont_features: List[int] = [
+        self._cont_features: list[int] = [
             x for x in x_train.columns.tolist() if x not in self._cat_features
         ]
 
@@ -168,7 +169,7 @@ class TabTransformerObjective(Objective):
             float: accuracy of trial on validation set.
         """
         # static params
-        epochs = 5
+        epochs = 1024
 
         # searchable params
         dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
@@ -193,11 +194,10 @@ class TabTransformerObjective(Objective):
             self.x_val, self.y_val, self._cat_features, self._cat_unique
         )
 
-        dl_kwargs: Dict[str, Any] = {
-            "device": device,
+        dl_kwargs: dict[str, Any] = {
             "batch_size": batch_size,
             "shuffle": False,
-            "device":device,
+            "device": device,
         }
 
         # differentiate between continous features only and mixed.
@@ -221,7 +221,7 @@ class TabTransformerObjective(Objective):
             mlp_hidden_mults=(4, 2),
         ).to(device)
 
-        # half precision
+        # half precision, see https://pytorch.org/docs/stable/amp.html
         scaler = torch.cuda.amp.GradScaler()
         # Generate the optimizers
         optimizer = optim.AdamW(
@@ -245,9 +245,7 @@ class TabTransformerObjective(Objective):
             self._clf.train()
 
             for x_cat, x_cont, targets in train_loader:
-                # x_cat = x_cat.to(device)
-                # x_cont = x_cont.to(device)
-                # targets = targets.to(device)
+
                 # reset the gradients back to zero
                 optimizer.zero_grad()
 
@@ -272,9 +270,6 @@ class TabTransformerObjective(Objective):
 
             with torch.no_grad():
                 for x_cat, x_cont, targets in val_loader:
-                    # x_cat = x_cat.to(device)
-                    # x_cont = x_cont.to(device)
-                    # targets = targets.to(device)
                     outputs = self._clf(x_cat, x_cont)
                     outputs = outputs.flatten()
 
@@ -288,9 +283,17 @@ class TabTransformerObjective(Objective):
             val_history.append(val_loss)
 
             logger.info(
-                f"{Colors.OKGREEN}[epoch {epoch + 1:04d}/{epochs:04d}]{Colors.ENDC}"
-                f" {Colors.BOLD}train loss:{Colors.ENDC} {train_loss:.8f}"
-                f" {Colors.BOLD}val loss:{Colors.ENDC} {val_loss:.8f}"
+                "%s[epoch %04d/%04d]%s %s train loss:%s %.8f %s val loss:%s %.8f",
+                Colors.OKGREEN,
+                epoch + 1,
+                epochs,
+                Colors.ENDC,
+                Colors.BOLD,
+                Colors.ENDC,
+                train_loss,
+                Colors.ENDC,
+                Colors.BOLD,
+                val_loss,
             )
 
             # return early if val loss doesn't decrease for several iterations
@@ -482,7 +485,7 @@ class GradientBoostingObjective(Objective):
         y_train: pd.Series,
         x_val: pd.DataFrame,
         y_val: pd.Series,
-        cat_features: Optional[List[str]] = None,
+        cat_features: list[str] | None = None,
         name: str = "default",
     ):
         """

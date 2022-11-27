@@ -7,14 +7,14 @@ https://arxiv.org/abs/2012.06678
 Implementation adapted from: https://github.com/lucidrains/tab-transformer-pytorch
 and https://github.com/kathrinse/TabSurvey/blob/main/models/tabtransformer.py
 """
-from typing import Any, Callable, List, Optional, Tuple, Union
+from __future__ import annotations
+
+from typing import Any, Callable
 
 import torch
 import torch.nn.functional as F
 from einops import rearrange
 from torch import einsum, nn
-
-ModuleType = Union[str, Callable[..., nn.Module]]
 
 
 class Residual(nn.Module):
@@ -289,7 +289,7 @@ class MLP(nn.Module):
         nn (nn.Module): module with implementation of MLP.
     """
 
-    def __init__(self, dims: List[int], act: ModuleType):
+    def __init__(self, dims: list[int], act: str | Callable[..., nn.Module]):
         """
         Multilayer perceptron.
 
@@ -300,7 +300,8 @@ class MLP(nn.Module):
 
         Args:
             dims (List[int]): List with dimensions of layers.
-            act (ModuleType): Activation function of each linear layer.
+            act (str | Callable[..., nn.Module]): Activation function of each linear
+            layer.
         """
         super().__init__()
         dims_pairs = list(zip(dims[:-1], dims[1:]))
@@ -342,17 +343,17 @@ class TabTransformer(nn.Module):
     def __init__(
         self,
         *,
-        categories: Union[Tuple[int, ...], Tuple[()]],
+        categories: tuple[int, ...] | tuple[()],
         num_continuous: int,
         dim: int = 32,
         depth: int = 4,
         heads: int = 8,
         dim_head: int = 16,
         dim_out: int = 1,
-        mlp_hidden_mults: Tuple[(int, int)] = (4, 2),
-        mlp_act: ModuleType = nn.ReLU,
+        mlp_hidden_mults: tuple[(int, int)] = (4, 2),
+        mlp_act: str | Callable[..., nn.Module] = nn.ReLU,
         num_special_tokens: int = 2,
-        continuous_mean_std: Optional[torch.Tensor] = None,
+        continuous_mean_std: torch.Tensor | None = None,
         attn_dropout: float = 0.0,
         ff_dropout: float = 0.0,
     ):
@@ -362,7 +363,7 @@ class TabTransformer(nn.Module):
         Originally introduced in https://arxiv.org/abs/2012.06678.
 
         Args:
-            categories (Union[List[int],Tuple[()]]): List with number of categories
+            categories ([List[int] | Tuple[()]): List with number of categories
             for each categorical feature. If no categorical variables are present,
             use empty tuple. For categorical variables e. g., option type ('C' or 'P'),
             the list would be `[1]`.
@@ -376,8 +377,8 @@ class TabTransformer(nn.Module):
             binary classification. Defaults to 1.
             mlp_hidden_mults (Tuple[(int, int)], optional): multipliers for dimensions
             of hidden layer in MLP. Defaults to (4, 2).
-            mlp_act (ModuleType, optional): Activation function used in MLP.
-            Defaults to nn.ReLU().
+            mlp_act (str | Callable[..., nn.Module], optional): Activation function used
+            in MLP. Defaults to nn.ReLU().
             num_special_tokens (int, optional): Number of special tokens in transformer.
             Defaults to 2.
             continuous_mean_std (Optional[torch.Tensor]): List with mean and
@@ -478,9 +479,10 @@ class TabTransformer(nn.Module):
         normed_cont = self.norm(x_cont)
 
         # Adaptation to work without categorical data
-        if x_categ is not None:
-            x = torch.cat((flat_categ, normed_cont), dim=-1)
-        else:
-            x = normed_cont
+        x = (
+            torch.cat((flat_categ, normed_cont), dim=-1)
+            if x_categ is not None
+            else normed_cont
+        )
 
         return self.mlp(x)
