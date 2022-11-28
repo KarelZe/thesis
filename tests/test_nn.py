@@ -10,6 +10,7 @@ import unittest
 
 import torch
 import torch.nn as nn
+import torch.optim as optim
 
 from otc.models.objective import set_seed
 from otc.models.tabtransformer import TabTransformer
@@ -30,8 +31,12 @@ class TestNN(unittest.TestCase):
         Returns:
             torch.Tensor: outputs
         """
-        print(self.x_cat)
-        outputs = self.net(self.x_cat, self.x_cont)
+        # TODO: Find out why net changes input.
+        self.x_cat = torch.randint(0, 1, (self.batch_size, self.num_features_cat)).to(
+            "cpu"
+        )
+
+        outputs = self.net(self.x_cat, self.x_cont)  # type: ignore
         return outputs
 
     def setUp(self) -> None:
@@ -45,17 +50,15 @@ class TestNN(unittest.TestCase):
         self.num_unique_cat = tuple([2])
         self.batch_size = 64
         self.epochs = 256
-        self.threshold = 5e-2
+        self.threshold = 1e-3
 
         set_seed()
 
         # lstm moves to device autoamtically, if available. see lstm.py
-        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        self.x_cat = (
-            torch.randint(0, 1, (self.batch_size, self.num_features_cat))
-            .int()
-            .to(device)
+        self.x_cat = torch.randint(0, 1, (self.batch_size, self.num_features_cat)).to(
+            device
         )
         self.x_cont = (
             torch.randn(self.batch_size, self.num_features_cont).float().to(device)
@@ -70,10 +73,10 @@ class TestNN(unittest.TestCase):
             dim_out=1,
             mlp_act=nn.ReLU(),
             dim=32,
-            depth=1,
-            heads=2,
-            attn_dropout=0.5,
-            ff_dropout=0.5,
+            depth=2,
+            heads=6,
+            attn_dropout=0.1,
+            ff_dropout=0.1,
             mlp_hidden_mults=(4, 2),
         ).to(device)
 
@@ -88,28 +91,31 @@ class TestNN(unittest.TestCase):
         outputs = self.get_outputs()
         self.assertEqual(self.expected_outputs.shape, outputs.shape)
 
-    # def test_convergence(self) -> None:
-    #     """
-    #     Tests, whether loss approaches zero for single batch.
-    #     Training on a single batch leads to serious overfitting.
-    #     If loss does not become, this indicates a possible error.
-    #     See: http://karpathy.github.io/2019/04/25/recipe/
-    #     """
-    #     optimizer = optim.Adam(self.net.parameters(), lr=3e-4)
-    #     criterion = nn.BCEWithLogitsLoss()
+    def test_convergence(self) -> None:
+        """
+        Tests, whether loss approaches zero for single batch.
 
-    #     # perform training
-    #     for _ in range(self.epochs):
+        Training on a single batch leads to serious overfitting.
+        If loss does not become, this indicates a possible error.
+        See: http://karpathy.github.io/2019/04/25/recipe/
+        """
+        optimizer = optim.Adam(self.net.parameters(), lr=3e-4)
+        criterion = nn.BCEWithLogitsLoss()
 
-    #         outputs = self.get_outputs()
-    #         optimizer.zero_grad()
+        self.net.train()
 
-    #         loss = criterion(outputs, self.expected_outputs)
+        # perform training
+        for _ in range(self.epochs):
 
-    #         loss.backward()
-    #         optimizer.step()
+            outputs = self.get_outputs()
+            optimizer.zero_grad()
 
-    #     self.assertLessEqual(loss.detach().cpu().numpy(), self.threshold)
+            loss = criterion(outputs, self.expected_outputs)
+
+            loss.backward()
+            optimizer.step()
+
+        self.assertLessEqual(loss.detach().cpu().numpy(), self.threshold)
 
     @unittest.skipIf(not torch.cuda.is_available(), reason="Skip. No gpu found.")
     def test_device_moving(self) -> None:
