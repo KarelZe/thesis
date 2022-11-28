@@ -57,7 +57,7 @@ Commonly stock trade classifcation algorithms are used
 - Results were very different for the option markets between the studies. Compare the frequency some literature (in the stock market) suggest, that  for higher frequencies classical approaches like the tick test deteriorate.
 > Easley, O’Hara, and Srinivas (1998) use the Lee and Ready approach to test their game theoretic model of informed trading in stock and option markets. It is, therefore, important to determine whether the application of stock trade classification rules to derivatives is valid. [[@savickasInferringDirectionOption2003]]
 
-- For classical rule-based approaches see some citations in [[@olbrysEvaluatingTradeSide2018]]. E. g., [[@chakrabartyTradeClassificationAlgorithms2012]] or [[@chakrabartyEvaluatingTradeClassification2015]]
+- For classical rule-based approaches see some citations in [[@olbrysEvaluatingTradeSide2018]]. E. g., [[@chakrabartyTradeClassificationAlgorithms2012]] or [[@chakrabartyEvaluatingTradeClassification2015 1]]
 
 # 🔗Rule-Based Approaches
 ## Basic Rules
@@ -68,7 +68,7 @@ Commonly stock trade classifcation algorithms are used
 - Submitters of market orders are called liquidity demanders, while submitters of limit orders stored stored in the book are liquidity providers.
 - The BVC paper ([[@easleyDiscerningInformationTrade2016]]) treats trade classification as a probabilistic trade classificatio nproblem. Incorporate this idea into the classical rules section.
 - BVC is illsuited for my task, as we require to sign each trade? (see [[@panayidesComparingTradeFlow2014]])
-- Algorithms like LR, tick rule etc. are also available in bulked versions. See e. g., [[@chakrabartyEvaluatingTradeClassification2015]] for a comparsion in the stock market. 
+- Algorithms like LR, tick rule etc. are also available in bulked versions. See e. g., [[@chakrabartyEvaluatingTradeClassification2015 1]] for a comparsion in the stock market. 
 ### Quote-Rule
 - The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
 - See [[@hasbrouckTradesQuotesInventories1988]] . Might be one of the first to mention the quote rule. It is however not very clearly defined. Paper also discusses some (handwavy) approaches to treat midpoint transactions.
@@ -231,6 +231,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Introduce notion of tree-based ensemble. Why are sequentially built trees better than parallel ensembles?
 - Start of with gradient boosted trees for regression. Gradient boosted trees for classification are derived from that principle.
 - cover desirable properties of gradient boosted trees
+- for handling of missing values see [[@twalaGoodMethodsCoping2008]]. Send missing value to whether side, that leads to the largest information gain (Found in [[@josseConsistencySupervisedLearning2020]])
 ### Adaptions for Probablistic Classification
 - Explain how the Gradient Boosting Procedure for the regression case, can be extended to the classifcation case
 - Discuss the problem of obtainining good probability estimates from a boosted decision tree. See e. g., [[@caruanaObtainingCalibratedProbabilities]] or [[@friedmanAdditiveLogisticRegression2000]] (Note paper is commenting about boosting, gradient boosting has not been published at the time)
@@ -406,6 +407,8 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - min-max scaling and $z$ scaling preserve the distribution of the variables  (see [here.](https://stats.stackexchange.com/a/562204/351242)). Applying both cancels out each other (see proof [here.](https://stats.stackexchange.com/a/562204/351242)). 
 - zero imputation might be a poor choice for neural networks. (see practical and theoretical explanation in [[@yiWhyNotUse2020]]).
 - [[@yiWhyNotUse2020]] and [[@smiejaProcessingMissingData2018]] contain various references to papers to impute missing data in neural networks. 
+- Cite [[@rubinInferenceMissingData1976]] for different patterns in missing data.
+- [[@lemorvanWhatGoodImputation2021]] for theoretical work on imputation.
 ### Train-Test Split
 
 ^d50f5d

@@ -2,7 +2,7 @@
 *authors:* Noam Shazeer
 *year:* 2020
 *tags:* #activation_function #transformer #accuracy #tab-transformer #GLU
-*status:* #📥
+*status:* #📦 
 *related:*
 - [[@vaswaniAttentionAllYou2017]] (architecture used)
 - [[@glorotDeepSparseRectifier2011]] (activation function in comparsion)

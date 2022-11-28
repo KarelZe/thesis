@@ -2,7 +2,7 @@
 *authors:* Joonyoung Yi, Juhyuk Lee, Kwang Joon Kim, Sung Ju Hwang, Eunho Yang
 *year:* 2019
 *tags:* #imputation #missing-value #neural_network 
-*status:* #📥
+*status:* #📦 
 *related:*
 - [[@josseConsistencySupervisedLearning2020]]
 - [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] (use native support of model (not possible here) + missing indicator improves model. They also consider MCAR)

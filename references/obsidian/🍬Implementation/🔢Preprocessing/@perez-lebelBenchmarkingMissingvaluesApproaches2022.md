@@ -8,6 +8,7 @@ related:
 - [[@breimanBaggingPredictors1996]] (Bagging is used in some of the approaches)
 - [[@friedmanGreedyFunctionApproximation2001]] (technique used for classification / prediction)
 - [[@josseConsistencySupervisedLearning2020]] (provides some theoretical backgorund on imputation)
+- [[@rubinInferenceMissingData1976]] (This paper uses their classification which is very common).
 code:
 - https://github.com/dirty-data/supervised_missing
 
@@ -17,7 +18,7 @@ code:
 - Native support for missing values in supervised machine learning predicts better than sota imputation with computational cost. Authors give examples how missing values can be treated in decision trees.
 - For prediction after imputation the authors find, that adding an indicator (referred to as missing mask) to express which values have been imputed is important, suggesting that data is not missing at random. 
 - Complex missing-value imputation e. g. $k$-nn can improve upon simpler approaches such as median fill, but the computational effort is often not justified.  An indicator which entries were imputed must be added to the completed data
-- Following Rubin they differentiate missing completely at random, missing at random, probability of missing value only depends on the observed values of other variables, and missing not at random.
+- Following [[@rubinInferenceMissingData1976]] they differentiate missing completely at random, missing at random, probability of missing value only depends on the observed values of other variables, and missing not at random.
 - They use the Friedman test and the Wilcoxon signed-rank test to test statistical significance.
 - **Comparison of strategies:**
 	- Delete missing values. Leads to loss in information in high and even moderate dimensions.
