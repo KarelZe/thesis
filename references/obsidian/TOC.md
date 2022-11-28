@@ -409,6 +409,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - [[@yiWhyNotUse2020]] and [[@smiejaProcessingMissingData2018]] contain various references to papers to impute missing data in neural networks. 
 - Cite [[@rubinInferenceMissingData1976]] for different patterns in missing data.
 - [[@lemorvanWhatGoodImputation2021]] for theoretical work on imputation.
+- For patterns and analysis of imputed data see https://stefvanbuuren.name/fimd/ch-analysis.html
 ### Train-Test Split
 
 ^d50f5d
