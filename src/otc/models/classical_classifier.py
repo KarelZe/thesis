@@ -246,6 +246,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             self.X_["TRADE_PRICE"]
             <= 0.3 * self.X_[f"ask_{subset}"] + 0.7 * self.X_[f"bid_{subset}"]
         )
+
         return np.where(
             in_upper_30 | in_lower_30, self._quote(subset), self._tick("all")
         )
@@ -274,6 +275,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             0.7 * self.X_[f"ask_{subset}"] + 0.3 * self.X_[f"bid_{subset}"]
             <= self.X_["TRADE_PRICE"]
         ) & (self.X_["TRADE_PRICE"] <= self.X_[f"ask_{subset}"])
+
         in_lower_30 = (self.X_[f"bid_{subset}"] <= self.X_["TRADE_PRICE"]) & (
             self.X_["TRADE_PRICE"]
             <= 0.3 * self.X_[f"ask_{subset}"] + 0.7 * self.X_[f"bid_{subset}"]
@@ -317,11 +319,12 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         mid = 0.5 * (self.X_[f"ask_{subset}"] + self.X_[f"bid_{subset}"])
         at_mid = mid == self.X_["TRADE_PRICE"]
 
+        # TODO: what if ask_size_ex == bid_size_ex? We would always classify as buy.
         return np.where(
-            at_mid & self.X_["ask_size_ex"] > self.X_["bid_size_ex"],
+            at_mid & (self.X_["ask_size_ex"] > self.X_["bid_size_ex"]),
             1,
             np.where(
-                at_mid & self.X_["ask_size_ex"] < self.X_["bid_size_ex"],
+                at_mid & (self.X_["ask_size_ex"] < self.X_["bid_size_ex"]),
                 -1,
                 np.nan,
             ),

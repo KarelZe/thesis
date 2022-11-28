@@ -4,6 +4,8 @@ Tests for the classical classifier.
 Use of artificial data to test the classifier.
 """
 import unittest
+
+import numpy as np
 import pandas as pd
 
 from otc.models.classical_classifier import ClassicalClassifier
@@ -38,6 +40,8 @@ class TestClassicalClassifier(unittest.TestCase):
     def test_shapes(self) -> None:
         """
         Test, if shapes of the classifier equal the targets.
+
+        Shapes are usually [no. of samples, 1].
         """
         y_pred = self.random_classifier.predict(self.x_test)
 
@@ -65,7 +69,7 @@ class TestClassicalClassifier(unittest.TestCase):
         """
         Test, if score is correctly calculated..
 
-        For a random classification i. e., `layers=[("nan", "ex")]`, the score 
+        For a random classification i. e., `layers=[("nan", "ex")]`, the score
         should be around 0.5.
         """
         accuracy = self.random_classifier.score(self.x_test, self.y_test)
@@ -81,3 +85,391 @@ class TestClassicalClassifier(unittest.TestCase):
             layers=[("nan", "ex")], random_state=42
         ).fit(self.x_train, self.y_train)
         self.assertTrue(hasattr(fitted_classifier, "layers_"))
+
+    def test_invalid_func(self) -> None:
+        """
+        Test, if only valid function strings can be passed.
+
+        An exception should be raised for invalid function strings.
+        Test for 'foo', which is no valid rule.
+        """
+        classifier = ClassicalClassifier(layers=[("foo", "all")], random_state=42)
+        self.assertRaises(ValueError, classifier.fit, self.x_train, self.y_train)
+
+    def test_invalid_subset(self) -> None:
+        """
+        Test, if only valid subset strings can be passed.
+
+        An exception should be raised for invalid subsets.
+        Test for 'bar', which is no valid subset.
+        """
+        classifier = ClassicalClassifier(layers=[("tick", "bar")], random_state=42)
+        self.assertRaises(ValueError, classifier.fit, self.x_train, self.y_train)
+
+    def test_override(self) -> None:
+        """
+        Test, if classifier does not override valid results from layer one.
+
+        If all data can be classified using first rule, first rule should
+        only be applied.
+        """
+        x_train = pd.DataFrame(
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+            columns=["TRADE_PRICE", "price_ex_lag", "price_all_lead"],
+        )
+        y_train = pd.Series([0, 0, 0])
+        x_test = pd.DataFrame(
+            [[1, 2, 0], [2, 1, 3]],
+            columns=["TRADE_PRICE", "price_ex_lag", "price_all_lead"],
+        )
+        y_test = pd.Series([-1, 1])
+
+        fitted_classifier = ClassicalClassifier(
+            layers=[("tick", "ex"), ("rev_tick", "all")], random_state=7
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
+
+    def test_tick_rule(self) -> None:
+        """
+        Test, if tick rule is correctly applied.
+
+        Tests cases where prev. trade price is higher, lower, equal or missing.
+        """
+        x_train = pd.DataFrame(
+            [[0, 0], [0, 0], [0, 0]], columns=["TRADE_PRICE", "price_ex_lag"]
+        )
+        y_train = pd.Series([0, 0, 0])
+        x_test = pd.DataFrame(
+            [[1, 2], [2, 1], [1, 1], [1, np.nan]],
+            columns=["TRADE_PRICE", "price_ex_lag"],
+        )
+
+        # first two by rule (see p. 28 Grauer et al.), remaining two by random chance.
+        y_test = pd.Series([-1, 1, 1, -1])
+
+        fitted_classifier = ClassicalClassifier(
+            layers=[("tick", "ex")], random_state=7
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
+
+    def test_rev_tick_rule(self) -> None:
+        """
+        Test, if rev. tick rule is correctly applied.
+
+        Tests cases where suc. trade price is higher, lower, equal or missing.
+        """
+        x_train = pd.DataFrame(
+            [[0, 0], [0, 0], [0, 0]], columns=["TRADE_PRICE", "price_all_lead"]
+        )
+        y_train = pd.Series([0, 0, 0])
+        x_test = pd.DataFrame(
+            [[1, 2], [2, 1], [1, 1], [1, np.nan]],
+            columns=["TRADE_PRICE", "price_all_lead"],
+        )
+
+        # first two by rule (see p. 28 Grauer et al.), remaining two by random chance.
+        y_test = pd.Series([-1, 1, 1, -1])
+
+        fitted_classifier = ClassicalClassifier(
+            layers=[("rev_tick", "all")], random_state=7
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
+
+    def test_quote_rule(self) -> None:
+        """
+        Test, if quote rule is correctly applied.
+
+        Tests cases where prev. trade price is higher, lower, equal or missing.
+        """
+        x_train = pd.DataFrame(
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex"],
+        )
+        y_train = pd.Series([0, 0, 0])
+        # first two by rule (see p. 28 Grauer et al.), remaining two by random chance.
+        x_test = pd.DataFrame(
+            [[1, 1, 3], [3, 1, 3], [1, 1, 1], [3, 2, 4]],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex"],
+        )
+        y_test = pd.Series([-1, 1, 1, -1])
+        fitted_classifier = ClassicalClassifier(
+            layers=[("quote", "ex")], random_state=7
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
+
+    def test_quote_rule_missing(self) -> None:
+        """
+        Test, if quote rule handles missing values correctly.
+
+        Calculation of mid should be well behaved. Thus, apply
+        random classification if either 'ask_ex' or 'bid_ex' is missing.
+        """
+        x_train = pd.DataFrame(
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex"],
+        )
+        y_train = pd.Series([0, 0, 0])
+        # first two by rule (see p. 28 Grauer et al.), remaining two by random chance.
+        x_test = pd.DataFrame(
+            [[1, 1, 3], [3, 1, 3], [1, np.nan, 1], [3, np.nan, np.nan]],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex"],
+        )
+        y_test = pd.Series([-1, 1, 1, -1])
+        fitted_classifier = ClassicalClassifier(
+            layers=[("quote", "ex")], random_state=7
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
+
+    def test_lr(self) -> None:
+        """
+        Test, if the lr algorithm is correctly applied.
+
+        Tests cases where both quote rule and tick rule all are used.
+        """
+        x_train = pd.DataFrame(
+            [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex", "price_all_lag"],
+        )
+        y_train = pd.Series([0, 0, 0])
+        # first two by quote rule, remaining two by tick rule.
+        x_test = pd.DataFrame(
+            [[1, 1, 3, 0], [3, 1, 3, 0], [1, 1, 1, 0], [3, 2, 4, 4]],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex", "price_all_lag"],
+        )
+        y_test = pd.Series([-1, 1, 1, -1])
+        fitted_classifier = ClassicalClassifier(
+            layers=[("lr", "ex")], random_state=7
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
+
+    def test_rev_lr(self) -> None:
+        """
+        Test, if the rev. lr algorithm is correctly applied.
+
+        Tests cases where both quote rule and tick rule all are used.
+        """
+        x_train = pd.DataFrame(
+            [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex", "price_all_lead"],
+        )
+        y_train = pd.Series([0, 0, 0])
+        # first two by quote rule, two by tick rule, and two by random chance.
+        x_test = pd.DataFrame(
+            [
+                [1, 1, 3, 0],
+                [3, 1, 3, 0],
+                [1, 1, 1, 0],
+                [3, 2, 4, 4],
+                [1, 1, np.nan, np.nan],
+                [1, 1, np.nan, np.nan],
+            ],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex", "price_all_lead"],
+        )
+        y_test = pd.Series([-1, 1, 1, -1, -1, 1])
+        fitted_classifier = ClassicalClassifier(
+            layers=[("rev_lr", "ex")], random_state=42
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
+
+    def test_emo(self) -> None:
+        """
+        Test, if the emo algorithm is correctly applied.
+
+        Tests cases where both quote rule at bid or ask and tick rule all are used.
+        """
+        x_train = pd.DataFrame(
+            [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex", "price_all_lag"],
+        )
+        y_train = pd.Series([0, 0, 0])
+        # first two by quote rule, two by tick rule, two by random chance.
+        x_test = pd.DataFrame(
+            [
+                [1, 1, 3, 0],
+                [3, 1, 3, 0],
+                [
+                    1,
+                    1,
+                    1,
+                    0,
+                ],
+                [3, 2, 4, 4],
+                [1, 1, np.inf, np.nan],
+                [1, 1, np.nan, np.nan],
+            ],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex", "price_all_lag"],
+        )
+        y_test = pd.Series([-1, 1, 1, -1, -1, 1])
+        fitted_classifier = ClassicalClassifier(
+            layers=[("emo", "ex")], random_state=42
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
+
+    def test_rev_emo(self) -> None:
+        """
+        Test, if the rev. emo algorithm is correctly applied.
+
+        Tests cases where both quote rule at bid or ask and rev. tick rule all are used.
+        """
+        x_train = pd.DataFrame(
+            [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex", "price_all_lead"],
+        )
+        y_train = pd.Series([0, 0, 0])
+        # first two by quote rule, two by tick rule, two by random chance.
+        x_test = pd.DataFrame(
+            [
+                [1, 1, 3, 0],
+                [3, 1, 3, 0],
+                [1, 1, 1, 0],
+                [3, 2, 4, 4],
+                [1, 1, np.inf, np.nan],
+                [1, 1, np.nan, np.nan],
+            ],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex", "price_all_lead"],
+        )
+        y_test = pd.Series([-1, 1, 1, -1, -1, 1])
+        fitted_classifier = ClassicalClassifier(
+            layers=[("rev_emo", "ex")], random_state=42
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
+
+    def test_clnv(self) -> None:
+        """
+        Test, if the clnv algorithm is correctly applied.
+
+        Tests cases where both quote rule and  tick rule all are used.
+        """
+        x_train = pd.DataFrame(
+            [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex", "price_all_lag"],
+        )
+        y_train = pd.Series([0, 0, 0])
+        # first two by quote rule, two by tick rule, two by random chance.
+        x_test = pd.DataFrame(
+            [
+                [5, 3, 1, 0],  # tick rule
+                [0, 3, 1, 1],  # tick rule
+                [2.9, 3, 1, 1],  # quote rule
+                [2.3, 3, 1, 3],  # tick rule
+                [1.7, 3, 1, 0],  # tick rule
+                [1.3, 3, 1, 1],  # quote rule
+            ],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex", "price_all_lag"],
+        )
+        y_test = pd.Series([1, -1, 1, -1, 1, -1])
+        fitted_classifier = ClassicalClassifier(
+            layers=[("clnv", "ex")], random_state=42
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
+
+    def test_rev_clnv(self) -> None:
+        """
+        Test, if the rev. clnv algorithm is correctly applied.
+
+        Tests cases where both quote rule and rev. tick rule all are used.
+        """
+        x_train = pd.DataFrame(
+            [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex", "price_all_lead"],
+        )
+        y_train = pd.Series([0, 0, 0])
+        # .
+        x_test = pd.DataFrame(
+            [
+                [5, 3, 1, 0],  # rev tick rule
+                [0, 3, 1, 1],  # rev tick rule
+                [2.9, 3, 1, 1],  # quote rule
+                [2.3, 3, 1, 3],  # rev tick rule
+                [1.7, 3, 1, 0],  # rev tick rule
+                [1.3, 3, 1, 1],  # quote rule
+            ],
+            columns=["TRADE_PRICE", "ask_ex", "bid_ex", "price_all_lead"],
+        )
+        y_test = pd.Series([1, -1, 1, -1, 1, -1])
+        fitted_classifier = ClassicalClassifier(
+            layers=[("rev_clnv", "ex")], random_state=5
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
+
+    def test_trade_size(self) -> None:
+        """
+        Test, if the trade size algorithm is correctly applied.
+
+        Tests cases where relevant data is present or missing.
+        """
+        x_train = pd.DataFrame(
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+            columns=["TRADE_SIZE", "ask_size_ex", "bid_size_ex"],
+        )
+        y_train = pd.Series([0, 0, 0])
+        # first two by trade size, random, at bid size, random, random.
+        x_test = pd.DataFrame(
+            [
+                [1, 1, 3],
+                [3, 1, 3],
+                [1, 1, 1],
+                [3, np.nan, 3],
+                [1, np.inf, 2],
+                [1, np.inf, 2],
+            ],
+            columns=["TRADE_SIZE", "ask_size_ex", "bid_size_ex"],
+        )
+        y_test = pd.Series([-1, 1, -1, 1, -1, 1])
+        fitted_classifier = ClassicalClassifier(
+            layers=[("trade_size", "ex")], random_state=42
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
+
+    def test_depth(self) -> None:
+        """
+        Test, if the depth rule is correctly applied.
+
+        Tests cases where relevant data is present or missing.
+        """
+        x_train = pd.DataFrame(
+            [[2, 1, 4, 4, 4], [1, 2, 2, 4, 3], [2, 1, 2, 4, 2], [1, 2, 2, 4, 2]],
+            columns=[
+                "ask_size_ex",
+                "bid_size_ex",
+                "ask_ex",
+                "bid_ex",
+                "TRADE_PRICE",
+            ],
+        )
+        y_train = pd.Series([0, 0, 0, 0])
+        # first three by depth, all other random as mid is different from trade price.
+        x_test = pd.DataFrame(
+            [
+                [2, 1, 2, 4, 3],
+                [1, 2, 2, 4, 3],
+                [2, 1, 4, 4, 4],
+                [2, 1, 2, 4, 2],
+                [2, 1, 2, 4, 2],
+            ],
+            columns=[
+                "ask_size_ex",
+                "bid_size_ex",
+                "ask_ex",
+                "bid_ex",
+                "TRADE_PRICE",
+            ],
+        )
+        y_test = pd.Series([1, -1, 1, 1, -1])
+        fitted_classifier = ClassicalClassifier(
+            layers=[("depth", "ex")], random_state=5
+        ).fit(x_train, y_train)
+        y_pred = fitted_classifier.predict(x_test)
+        self.assertTrue((y_pred == y_test).all())
