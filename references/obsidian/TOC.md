@@ -404,6 +404,8 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Positional encode trading time throughout the day.
 - Explain why it is necessary to include lagged data as column -> most ml models for tabular data only read rowise. No notion of previous observations etc. Some approaches however exist like specialized attention mechanisms to develop a notion of proximity.
 - min-max scaling and $z$ scaling preserve the distribution of the variables  (see [here.](https://stats.stackexchange.com/a/562204/351242)). Applying both cancels out each other (see proof [here.](https://stats.stackexchange.com/a/562204/351242)). 
+- zero imputation might be a poor choice for neural networks. (see practical and theoretical explanation in [[@yiWhyNotUse2020]]).
+- [[@yiWhyNotUse2020]] and [[@smiejaProcessingMissingData2018]] contain various references to papers to impute missing data in neural networks. 
 ### Train-Test Split
 
 ^d50f5d

@@ -3462,6 +3462,18 @@
   file = {C\:\\Users\\Markus\\Zotero\\storage\\X6DJUNW7\\Shwartz-Ziv and Armon - 2021 - Tabular Data Deep Learning is Not All You Need.pdf;C\:\\Users\\Markus\\Zotero\\storage\\R8UGVCPL\\2106.html}
 }
 
+@inproceedings{smiejaProcessingMissingData2018,
+  title = {Processing of Missing Data by Neural Networks},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {{\'S}mieja, Marek and Struski, {\L}ukasz and Tabor, Jacek and Zieli{\'n}ski, Bartosz and Spurek, Przemys{\l}aw},
+  year = {2018},
+  volume = {31},
+  publisher = {{Curran Associates, Inc.}},
+  abstract = {We propose a general, theoretically justified mechanism for processing missing data by neural networks. Our idea is to replace typical neuron's response in the first hidden layer by its expected value. This approach can be applied for various types of networks at minimal cost in their modification. Moreover, in contrast to recent approaches, it does not require complete data for training. Experimental results performed on different types of architectures show that our method gives better results than typical imputation strategies and other methods dedicated for incomplete data.},
+  keywords = {⛔ No DOI found},
+  file = {C\:\\Users\\Markus\\OneDrive\\Documents\\05 - Wissen & Weiterbildung\\paper\\Śmieja et al. - 2018 - Processing of missing data by neural networks.pdf}
+}
+
 @misc{smithCyclicalLearningRates2017,
   title = {Cyclical {{Learning Rates}} for {{Training Neural Networks}}},
   author = {Smith, Leslie N.},
@@ -3559,19 +3571,6 @@
   langid = {english},
   keywords = {⛔ No DOI found},
   file = {C\:\\Users\\Markus\\Zotero\\storage\\HUST4G7K\\Stutz - Understanding and Improving Robustness and Uncerta.pdf}
-}
-
-@phdthesis{stutzUnderstandingImprovingRobustness2022,
-  type = {{{doctoralThesis}}},
-  title = {Understanding and Improving Robustness and Uncertainty Estimation in Deep Learning},
-  author = {Stutz, David},
-  year = {2022},
-  doi = {10.22028/D291-37286},
-  abstract = {Deep learning is becoming increasingly relevant for many high-stakes applications such as autonomous driving or medical diagnosis where wrong decisions can have massive impact on human lives. Unfortunately, deep neural networks are typically assessed solely based on generalization, e.g., accuracy on a fixed test set. However, this is clearly insufficient for safe deployment as potential malicious actors and distribution shifts or the effects of quantization and unreliable hardware are disregarded. Thus, recent work additionally evaluates performance on potentially manipulated or corrupted inputs as well as after quantization and deployment on specialized hardware. In such settings, it is also important to obtain reasonable estimates of the model's confidence alongside its predictions. This thesis studies robustness and uncertainty estimation in deep learning along three main directions: First, we consider so-called adversarial examples, slightly perturbed inputs causing severe drops in accuracy. Second, we study weight perturbations, focusing particularly on bit errors in quantized weights. This is relevant for deploying models on special-purpose hardware for efficient inference, so-called accelerators. Finally, we address uncertainty estimation to improve robustness and provide meaningful statistical performance guarantees for safe deployment.  In detail, we study the existence of adversarial examples with respect to the underlying data manifold. In this context, we also investigate adversarial training which improves robustness by augmenting training with adversarial examples at the cost of reduced accuracy. We show that regular adversarial examples leave the data manifold in an almost orthogonal direction. While we find no inherent trade-off between robustness and accuracy, this contributes to a higher sample complexity as well as severe overfitting of adversarial training. Using a novel measure of flatness in the robust loss landscape with respect to weight changes, we also show that robust overfitting is caused by converging to particularly sharp minima. In fact, we find a clear correlation between flatness and good robust generalization.  Further, we study random and adversarial bit errors in quantized weights. In accelerators, random bit errors occur in the memory when reducing voltage with the goal of improving energy-efficiency. Here, we consider a robust quantization scheme, use weight clipping as regularization and perform random bit error training to improve bit error robustness, allowing considerable energy savings without requiring hardware changes. In contrast, adversarial bit errors are maliciously introduced through hardware- or software-based attacks on the memory, with severe consequences on performance. We propose a novel adversarial bit error attack to study this threat and use adversarial bit error training to improve robustness and thereby also the accelerator's security.  Finally, we view robustness in the context of uncertainty estimation. By encouraging low-confidence predictions on adversarial examples, our confidence-calibrated adversarial training successfully rejects adversarial, corrupted as well as out-of-distribution examples at test time. Thereby, we are also able to improve the robustness-accuracy trade-off compared to regular adversarial training. However, even robust models do not provide any guarantee for safe deployment. To address this problem, conformal prediction allows the model to predict confidence sets with user-specified guarantee of including the true label. Unfortunately, as conformal prediction is usually applied after training, the model is trained without taking this calibration step into account. To address this limitation, we propose conformal training which allows training conformal predictors end-to-end with the underlying model. This not only improves the obtained uncertainty estimates but also enables optimizing application-specific objectives without losing the provided guarantee.  Besides our work on robustness or uncertainty, we also address the problem of 3D shape completion of partially observed point clouds. Specifically, we consider an autonomous driving or robotics setting where vehicles are commonly equipped with LiDAR or depth sensors and obtaining a complete 3D representation of the environment is crucial. However, ground truth shapes that are essential for applying deep learning techniques are extremely difficult to obtain. Thus, we propose a weakly-supervised approach that can be trained on the incomplete point clouds while offering efficient inference.  In summary, this thesis contributes to our understanding of robustness against both input and weight perturbations. To this end, we also develop methods to improve robustness alongside uncertainty estimation for safe deployment of deep learning methods in high-stakes applications. In the particular context of autonomous driving, we also address 3D shape completion of sparse point clouds.},
-  langid = {english},
-  school = {Saarl\"andische Universit\"ats- und Landesbibliothek},
-  annotation = {Accepted: 2022-10-10T06:59:57Z},
-  file = {C\:\\Users\\Markus\\Zotero\\storage\\VDSJYHKC\\Stutz - 2022 - Understanding and improving robustness and uncerta.pdf;C\:\\Users\\Markus\\Zotero\\storage\\HPT2JEY5\\33949.html}
 }
 
 @incollection{sunAdaBoostLSTMEnsembleLearning2018,
