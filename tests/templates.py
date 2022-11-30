@@ -30,7 +30,7 @@ class NeuralNetTestsMixin:
     expected_outputs: torch.Tensor
     batch_size: int
 
-    # FIXME: figure out better approach
+    # TODO: figure out better approach
     assertEqual: Any
     assertNotEqual: Any
     assertLessEqual: Any
