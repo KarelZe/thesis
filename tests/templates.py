@@ -7,22 +7,38 @@ http://karpathy.github.io/2019/04/25/recipe/
 https://krokotsch.eu/posts/deep-learning-unit-tests/
 """
 import unittest
+from typing import Any
 
 import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from otc.models.objective import set_seed
-from otc.models.tabtransformer import TabTransformer
 
-
-class TestNN(unittest.TestCase):
+class NeuralNetTestsMixin:
     """
     Perform automated tests for neural networks.
 
     Args:
         metaclass (_type_, optional): parent. Defaults to abc.ABCMeta.
     """
+
+    # https://mypy.readthedocs.io/en/stable/protocols.html
+    # https://stackoverflow.com/a/67679462/5755604
+    net: nn.Module
+    x_cat: torch.Tensor
+    x_cont: torch.Tensor
+    expected_outputs: torch.Tensor
+    batch_size: int
+
+    # TODO: figure out better approach
+    assertEqual: Any
+    assertNotEqual: Any
+    assertLessEqual: Any
+    assertAlmostEqual: Any
+    asertNotEqual: Any
+    assertTrue: Any
+    assertIsNotNone: Any
+    subTest: Any
 
     def get_outputs(self) -> torch.Tensor:
         """
@@ -31,54 +47,7 @@ class TestNN(unittest.TestCase):
         Returns:
             torch.Tensor: outputs
         """
-        # TODO: Find out why net changes input.
-        self.x_cat = torch.randint(0, 1, (self.batch_size, self.num_features_cat)).to(
-            "cpu"
-        )
-
-        outputs = self.net(self.x_cat, self.x_cont)  # type: ignore
-        return outputs
-
-    def setUp(self) -> None:
-        """
-        Set up basic network and data.
-
-        Prepares inputs and expected outputs for testing.
-        """
-        self.num_features_cont = 5
-        self.num_features_cat = 1
-        self.num_unique_cat = tuple([2])
-        self.batch_size = 64
-        self.epochs = 256
-        self.threshold = 1e-3
-
-        set_seed()
-
-        # lstm moves to device autoamtically, if available. see lstm.py
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-        self.x_cat = torch.randint(0, 1, (self.batch_size, self.num_features_cat)).to(
-            device
-        )
-        self.x_cont = (
-            torch.randn(self.batch_size, self.num_features_cont).float().to(device)
-        )
-        self.expected_outputs = (
-            torch.randint(0, 1, (self.batch_size, 1)).float().to(device)
-        )
-
-        self.net = TabTransformer(
-            categories=self.num_unique_cat,
-            num_continuous=self.num_features_cont,
-            dim_out=1,
-            mlp_act=nn.ReLU(),
-            dim=32,
-            depth=2,
-            heads=6,
-            attn_dropout=0.1,
-            ff_dropout=0.1,
-            mlp_hidden_mults=(4, 2),
-        ).to(device)
+        return self.net(self.x_cat.clone(), self.x_cont.clone())
 
     @torch.no_grad()
     def test_shapes(self) -> None:
@@ -105,7 +74,7 @@ class TestNN(unittest.TestCase):
         self.net.train()
 
         # perform training
-        for _ in range(self.epochs):
+        for _ in range(256):
 
             outputs = self.get_outputs()
             optimizer.zero_grad()
@@ -115,9 +84,10 @@ class TestNN(unittest.TestCase):
             loss.backward()
             optimizer.step()
 
-        self.assertLessEqual(loss.detach().cpu().numpy(), self.threshold)
+        self.assertLessEqual(loss.detach().cpu().numpy(), 1e-3)
 
-    @unittest.skipIf(not torch.cuda.is_available(), reason="Skip. No gpu found.")
+    @torch.no_grad()
+    @unittest.skipUnless(torch.cuda.is_available(), "No GPU was detected")
     def test_device_moving(self) -> None:
         """
         Test, if all tensors reside on the gpu / cpu.
@@ -139,6 +109,7 @@ class TestNN(unittest.TestCase):
         Test, if all parameters are updated.
 
         If parameters are not updated this could indicate dead ends.
+
         Adapted from: https://krokotsch.eu/posts/deep-learning-unit-tests/
         """
         optimizer = torch.optim.Adam(self.net.parameters(), lr=3e-4)
@@ -154,3 +125,42 @@ class TestNN(unittest.TestCase):
                     self.assertIsNotNone(param.grad)
                     param_sum = torch.sum(param.grad**2)
                     self.assertNotEqual(torch.tensor(0), param_sum)
+
+    def test_batch_independence(self) -> None:
+        """
+        Checks sample independence by performing of inputs.
+
+        Required as SGD-based algorithms like ADAM work on mini-batches. Batching
+        training samples assumes that your model can process each sample as if they
+        were fed individually. In other words, the samples in  your batch do not
+        influence each other when processed. This assumption is a brittle one and can
+        break with one misplaced reshape or aggregation over a wrong tensor dimension.
+
+        Adapted from: https://krokotsch.eu/posts/deep-learning-unit-tests/
+        """
+        # no gradient for int tensors, only for float tensors
+        self.x_cat.requires_grad = False
+        self.x_cont.requires_grad = True
+        # Compute forward pass in eval mode to deactivate batch norm
+
+        self.net.eval()
+        outputs = self.get_outputs()
+        self.net.train()
+
+        # Mask loss for certain samples in batch
+        mask_idx = torch.randint(0, self.batch_size, ())
+        mask = torch.ones_like(outputs)
+        mask[mask_idx] = 0
+        outputs = outputs * mask
+
+        # Compute backward pass
+        loss = outputs.mean()
+        loss.backward()
+
+        # Check if gradient exists and is zero for masked samples.
+        # Test only for float tensors, as int tensors do not have gradients.
+        for i, grad in enumerate(self.x_cont.grad):
+            if i == mask_idx:
+                self.assertTrue(torch.all(grad == 0).item())
+            else:
+                self.assertTrue(not torch.all(grad == 0))
