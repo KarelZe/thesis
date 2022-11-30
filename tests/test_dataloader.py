@@ -5,8 +5,6 @@ Includes tests for data sets with categorical and without
 categorical data.
 """
 
-import unittest
-
 import numpy as np
 import pandas as pd
 import torch
@@ -15,7 +13,7 @@ from otc.data.dataloader import TabDataLoader
 from otc.data.dataset import TabDataset
 
 
-class TestDataLoader(unittest.TestCase):
+class TestDataLoader:
     """
     Perform automated tests.
 
@@ -74,7 +72,7 @@ class TestDataLoader(unittest.TestCase):
         )
         cat_features, _, _ = next(iter(train_loader))
 
-        self.assertTrue(torch.tensor([[0], [3]]).equal(cat_features))  # type: ignore
+        assert torch.tensor([[0], [3]]).equal(cat_features)  # type: ignore
 
     def test_no_cat_features(self) -> None:
         """
@@ -100,4 +98,4 @@ class TestDataLoader(unittest.TestCase):
         )
         cat_features, _, _ = next(iter(train_loader))
 
-        self.assertIsNone(cat_features)
+        assert cat_features is None
