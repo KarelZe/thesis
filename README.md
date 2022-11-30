@@ -1,5 +1,6 @@
 ![badge thesis](https://github.com/KarelZe/thesis/actions/workflows/action_latex.yaml/badge.svg)
 ![badge code](https://github.com/KarelZe/thesis/actions/workflows/action_python.yaml/badge.svg)
+![badge code coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/KarelZe/e2578f2f3e6322d299f1cb2e294d6b0b/raw/covbadge.json)
 
 # thesis
 
