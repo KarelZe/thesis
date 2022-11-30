@@ -202,10 +202,10 @@ class TabTransformerObjective(Objective):
 
         # differentiate between continous features only and mixed.
         train_loader = TabDataLoader(
-            training_data._x_cat, training_data._x_cont, training_data._y, **dl_kwargs
+            training_data.x_cat, training_data.x_cont, training_data.y, **dl_kwargs
         )
         val_loader = TabDataLoader(
-            val_data._x_cat, val_data._x_cont, val_data._y, **dl_kwargs
+            val_data.x_cat, val_data.x_cont, val_data.y, **dl_kwargs
         )
 
         self._clf = TabTransformer(
