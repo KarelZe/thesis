@@ -31,13 +31,7 @@ class TestNN(unittest.TestCase):
         Returns:
             torch.Tensor: outputs
         """
-        # TODO: Find out why net changes input.
-        self.x_cat = torch.randint(0, 1, (self.batch_size, self.num_features_cat)).to(
-            "cpu"
-        )
-
-        outputs = self.net(self.x_cat, self.x_cont)  # type: ignore
-        return outputs
+        return self.net(self.x_cat.clone(), self.x_cont.clone())  # type: ignore
 
     def setUp(self) -> None:
         """
@@ -54,7 +48,6 @@ class TestNN(unittest.TestCase):
 
         set_seed()
 
-        # lstm moves to device autoamtically, if available. see lstm.py
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         self.x_cat = torch.randint(0, 1, (self.batch_size, self.num_features_cat)).to(
@@ -117,7 +110,8 @@ class TestNN(unittest.TestCase):
 
         self.assertLessEqual(loss.detach().cpu().numpy(), self.threshold)
 
-    @unittest.skipIf(not torch.cuda.is_available(), reason="Skip. No gpu found.")
+    @torch.no_grad()
+    @unittest.skipUnless(torch.cuda.is_available(), "No GPU was detected")
     def test_device_moving(self) -> None:
         """
         Test, if all tensors reside on the gpu / cpu.
