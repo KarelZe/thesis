@@ -11,7 +11,6 @@ import numpy as np
 import pandas as pd
 import torch
 
-from otc.data.dataloader import TabDataLoader
 from otc.data.dataset import TabDataset
 
 
@@ -72,8 +71,8 @@ class TestDataLoader(unittest.TestCase):
         """
         Test, if data loader can be created with categorical features.
 
-        If the data set contains categorical features, the data loader
-        should return a tensor with the categorical features.
+        If the data set contains categorical features, the data set should
+        return a tensor for the attribute `_x_cat`.
         """
         length = 3
         x = pd.DataFrame(
@@ -85,23 +84,17 @@ class TestDataLoader(unittest.TestCase):
         training_data = TabDataset(
             x=x, y=y, cat_features=["a"], cat_unique_counts=tuple([100])
         )
-        train_loader = TabDataLoader(
-            training_data._x_cat,
-            training_data._x_cont,
-            training_data._y,
-            batch_size=2,
-            shuffle=False,
-        )
-        cat_features, _, _ = next(iter(train_loader))
 
-        self.assertTrue(torch.tensor([[0], [3]]).equal(cat_features))  # type: ignore
+        true_x_cat = torch.tensor([[0], [3], [6]])
+
+        self.assertTrue(true_x_cat.equal(training_data.x_cat))  # type: ignore
 
     def test_no_cat_features(self) -> None:
         """
         Test, if data loader can be created without categorical features.
 
-        If data set doesn't contain categorical features, the data loader
-        should return None.
+        If data set doesn't contain categorical features, the data set should
+        assign 'None' to the attribute `_x_cat`.
         """
         length = 3
         x = pd.DataFrame(
@@ -111,13 +104,5 @@ class TestDataLoader(unittest.TestCase):
 
         # no categorical features
         training_data = TabDataset(x=x, y=y, cat_features=None, cat_unique_counts=None)
-        train_loader = TabDataLoader(
-            training_data._x_cat,
-            training_data._x_cont,
-            training_data._y,
-            batch_size=2,
-            shuffle=False,
-        )
-        cat_features, _, _ = next(iter(train_loader))
 
-        self.assertIsNone(cat_features)
+        self.assertIsNone(training_data.x_cat)

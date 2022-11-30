@@ -55,14 +55,14 @@ class TabDataset(Dataset):
         ), "For all categorical features the number of unique entries must be provided."
 
         # adjust target to be either 0 or 1
-        self._y = torch.tensor(y.values).float()
-        self._y[self._y < 0] = 0
+        self.y = torch.tensor(y.values).float()
+        self.y[self.y < 0] = 0
 
         # cut into continous and categorical tensor
-        self._x_cat: torch.Tensor | None = None
+        self.x_cat: torch.Tensor | None = None
         if len(self._cat_idx) > 0:
-            self._x_cat = torch.tensor(x.iloc[:, self._cat_idx].values).int()
-        self._x_cont = torch.tensor(x.iloc[:, self._cont_idx].values).float()
+            self.x_cat = torch.tensor(x.iloc[:, self._cat_idx].values).int()
+        self.x_cont = torch.tensor(x.iloc[:, self._cont_idx].values).float()
 
     def __len__(self) -> int:
         """
@@ -71,7 +71,7 @@ class TabDataset(Dataset):
         Returns:
             int: length
         """
-        return len(self._x_cont)
+        return len(self.x_cont)
 
     def __getitem__(
         self, idx: int
@@ -87,7 +87,7 @@ class TabDataset(Dataset):
             x_cat (if present if present otherwise None), x_cont and y.
         """
         return (
-            self._x_cat[idx] if self._x_cat else None,
-            self._x_cont[idx],
-            self._y[idx],
+            self.x_cat[idx] if self.x_cat else None,
+            self.x_cont[idx],
+            self.y[idx],
         )
