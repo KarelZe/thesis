@@ -7,14 +7,13 @@ http://karpathy.github.io/2019/04/25/recipe/
 https://krokotsch.eu/posts/deep-learning-unit-tests/
 """
 import unittest
-from typing import Any
 
 import torch
 import torch.nn as nn
 import torch.optim as optim
 
 
-class NeuralNetTestsMixin:
+class NeuralNetTestsMixin(unittest.TestCase):
     """
     Perform automated tests for neural networks.
 
@@ -29,16 +28,6 @@ class NeuralNetTestsMixin:
     x_cont: torch.Tensor
     expected_outputs: torch.Tensor
     batch_size: int
-
-    # TODO: figure out better approach
-    assertEqual: Any
-    assertNotEqual: Any
-    assertLessEqual: Any
-    assertAlmostEqual: Any
-    asertNotEqual: Any
-    assertTrue: Any
-    assertIsNotNone: Any
-    subTest: Any
 
     def get_outputs(self) -> torch.Tensor:
         """
