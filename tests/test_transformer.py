@@ -23,7 +23,7 @@ class TestTabTransformer(templates.NeuralNetTestsMixin):
         NeuralNetTestsMixin (neural net mixin): mixin
     """
 
-    def setUp(self) -> None:
+    def setup(self) -> None:
         """
         Set up basic network and data.
 

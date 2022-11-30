@@ -6,14 +6,14 @@ https://thenerdstation.medium.com/how-to-unit-test-machine-learning-code-57cf6fd
 http://karpathy.github.io/2019/04/25/recipe/
 https://krokotsch.eu/posts/deep-learning-unit-tests/
 """
-import unittest
 
+import pytest
 import torch
 import torch.nn as nn
 import torch.optim as optim
 
 
-class NeuralNetTestsMixin(unittest.TestCase):
+class NeuralNetTestsMixin:
     """
     Perform automated tests for neural networks.
 
@@ -47,7 +47,7 @@ class NeuralNetTestsMixin(unittest.TestCase):
         Adapted from: # https://krokotsch.eu/posts/deep-learning-unit-tests/
         """
         outputs = self.get_outputs()
-        self.assertEqual(self.expected_outputs.shape, outputs.shape)
+        assert self.expected_outputs.shape == outputs.shape
 
     def test_convergence(self) -> None:
         """
@@ -73,10 +73,12 @@ class NeuralNetTestsMixin(unittest.TestCase):
             loss.backward()
             optimizer.step()
 
-        self.assertLessEqual(loss.detach().cpu().numpy(), 1e-3)
+        assert loss.detach().cpu().numpy() <= 1e-3
 
     @torch.no_grad()
-    @unittest.skipUnless(torch.cuda.is_available(), "No GPU was detected")
+    @pytest.mark.skipif(
+        torch.cuda.is_available() is False, reason="No GPU was detected"
+    )
     def test_device_moving(self) -> None:
         """
         Test, if all tensors reside on the gpu / cpu.
@@ -90,8 +92,8 @@ class NeuralNetTestsMixin(unittest.TestCase):
         outputs_gpu = net_on_gpu(self.x_cat.to("cuda:0"), self.x_cont.to("cuda:0"))
         outputs_back_on_cpu = net_back_on_cpu(self.x_cat, self.x_cont)
 
-        self.assertAlmostEqual(0.0, torch.sum(outputs_cpu - outputs_gpu.cpu()))
-        self.assertAlmostEqual(0.0, torch.sum(outputs_cpu - outputs_back_on_cpu))
+        assert round(abs(0.0 - torch.sum(outputs_cpu - outputs_gpu.cpu())), 7) == 0
+        assert round(abs(0.0 - torch.sum(outputs_cpu - outputs_back_on_cpu)), 7) == 0
 
     def test_all_parameters_updated(self) -> None:
         """
@@ -108,12 +110,11 @@ class NeuralNetTestsMixin(unittest.TestCase):
         loss.backward()
         optimizer.step()
 
-        for param_name, param in self.net.named_parameters():
+        for _, param in self.net.named_parameters():
             if param.requires_grad:
-                with self.subTest(name=param_name):
-                    self.assertIsNotNone(param.grad)
-                    param_sum = torch.sum(param.grad**2)
-                    self.assertNotEqual(torch.tensor(0), param_sum)
+                assert param.grad is not None
+                param_sum = torch.sum(param.grad**2)
+                assert torch.tensor(0) != param_sum
 
     def test_batch_independence(self) -> None:
         """
@@ -150,6 +151,6 @@ class NeuralNetTestsMixin(unittest.TestCase):
         # Test only for float tensors, as int tensors do not have gradients.
         for i, grad in enumerate(self.x_cont.grad):
             if i == mask_idx:
-                self.assertTrue(torch.all(grad == 0).item())
+                assert torch.all(grad == 0).item()
             else:
-                self.assertTrue(not torch.all(grad == 0))
+                assert not torch.all(grad == 0)
