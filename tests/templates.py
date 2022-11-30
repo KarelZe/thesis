@@ -7,6 +7,7 @@ http://karpathy.github.io/2019/04/25/recipe/
 https://krokotsch.eu/posts/deep-learning-unit-tests/
 """
 import unittest
+from typing import Any
 
 import torch
 import torch.nn as nn
@@ -21,7 +22,6 @@ class NeuralNetTestsMixin:
         metaclass (_type_, optional): parent. Defaults to abc.ABCMeta.
     """
 
-    # type hints when using mixins
     # https://mypy.readthedocs.io/en/stable/protocols.html
     # https://stackoverflow.com/a/67679462/5755604
     net: nn.Module
@@ -30,6 +30,16 @@ class NeuralNetTestsMixin:
     expected_outputs: torch.Tensor
     batch_size: int
 
+    # FIXME: figure out better approach
+    assertEqual: Any
+    assertNotEqual: Any
+    assertLessEqual: Any
+    assertAlmostEqual: Any
+    asertNotEqual: Any
+    assertTrue: Any
+    assertIsNotNone: Any
+    subTest: Any
+
     def get_outputs(self) -> torch.Tensor:
         """
         Return relevant output of model.
@@ -37,7 +47,7 @@ class NeuralNetTestsMixin:
         Returns:
             torch.Tensor: outputs
         """
-        return self.net(self.x_cat.clone(), self.x_cont.clone())  # type: ignore
+        return self.net(self.x_cat.clone(), self.x_cont.clone())
 
     @torch.no_grad()
     def test_shapes(self) -> None:
@@ -149,7 +159,7 @@ class NeuralNetTestsMixin:
 
         # Check if gradient exists and is zero for masked samples.
         # Test only for float tensors, as int tensors do not have gradients.
-        for i, grad in enumerate(self.x_cont.grad):  # type ignore
+        for i, grad in enumerate(self.x_cont.grad):
             if i == mask_idx:
                 self.assertTrue(torch.all(grad == 0).item())
             else:

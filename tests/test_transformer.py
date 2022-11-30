@@ -25,7 +25,7 @@ class TestTabTransformer(unittest.TestCase, templates.NeuralNetTestsMixin):
         NeuralNetTestsMixin (neural net mixin): mixin
     """
 
-    def setUp(self):
+    def setUp(self) -> None:
         """
         Set up basic network and data.
 

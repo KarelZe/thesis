@@ -6,6 +6,8 @@ https://arxiv.org/abs/2012.06678
 
 Implementation adapted from: https://github.com/lucidrains/tab-transformer-pytorch
 and https://github.com/kathrinse/TabSurvey/blob/main/models/tabtransformer.py
+
+Also see: https://pytorch.org/docs/stable/_modules/torch/nn/modules/transformer.html
 """
 from __future__ import annotations
 
