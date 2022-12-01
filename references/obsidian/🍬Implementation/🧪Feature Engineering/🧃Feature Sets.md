@@ -1,9 +1,8 @@
-The goal of my feature set definition is:
-1. Have minimal feature set required to calculate LR, EMO or CLNV. →  Makes it easier to transfer our method to other markets.
-2. Extend minimal feature set for date time features. →  Makes it easy to transfer our method to other markets, but also take into account temporal info.
-3. Have an extended feature set to calculate SOTA of Grauer et. al. → Makes it easy to compare with previous baseline.
+The goal of my feature set definition is: Have a minimal feature set required to calculate LR, EMO or CLNV. →  Makes it easier to transfer our method to other markets.
+2. Extend the minimal feature set for date-time features. →  Makes it easy to transfer our method to other markets, but also takes into account temporal info.
+3. Have an extended feature set to calculate the SOTA of Grauer et. al. → Makes it easy to compare with the previous baseline.
 4. Add time and option features. → Makes sense, as we look at an option data set. Temporal features are easy to derive. 
-5. Scaling is typically not required for gradient boosting, but useful for neural networks. But both $z$-scaling and min-max-scaling don't change the distribution of data. (see [here.](https://stats.stackexchange.com/a/562204/351242)).
+5. Scaling is typically not required for gradient boosting, but is useful for neural networks. But both $z$-scaling and min-max-scaling don't change the distribution of data. (see [here.](https://stats.stackexchange.com/a/562204/351242)).
 
 | Feature               | Feature Category             | FS 1 (Classical) | FS 2 (F1 + Grauer) | FS 3 (F2 + temp) | FS 3 (F3 + Others) | Transform   |
 | --------------------- | ---------------------------- | ---------------- | ------------------ | ---------------- | ------------------ | ----------- |
@@ -31,14 +30,12 @@ The goal of my feature set definition is:
 | ask_size_ex           | Depth rule / Trade size rule |                  | ✅                 | ✅               | ✅                 | standardize |
 | TRADE_SIZE            | Trade size rule              |                  | ✅                 | ✅               | ✅                 | standardize |
 | STR_PRC               | option                       |                  |                    |                  | ✅                 | log         |
-| day_vol               | option                       |                  |                    |                  | ❓                 | standardize |
+| day_vol               | option                       |                  |                    |                  | ✅                 | standardize |
 | ROOT                  | option                       |                  |                    |                  | ✅                 | binarize    |
-| price_underlying      | option                       |                  |                    |                  | ✅                 | log         |
 | time_to_maturity      | option                       |                  |                    |                  | ✅                 | standardize |
-| moneyness             | option                       |                  |                    |                  | ❓                 | standardize |
-| delta                 | option                       |                  |                    |                  | ✅                 | binarize    |
+| moneyness             | option                       |                  |                    |                  | ✅                 | standardize |
 | option-type           | option                       |                  |                    |                  | ✅                 | binarize    |
-| security-type         | option                       |                  |                    |                  | ✅                 | binarize    |
+| issue-type            | option                       |                  |                    |                  | ✅                 | binarize    |
 | date_month_sin        | date                         |                  |                    | ✅               | ✅                 | pos enc     |
 | date_month_cos        | date                         |                  |                    | ✅               | ✅                 | pos enc     |
 | date_time_sin         | date                         |                  |                    | ✅               | ✅                 | pos enc     |
