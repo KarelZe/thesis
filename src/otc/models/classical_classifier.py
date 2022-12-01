@@ -179,6 +179,46 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         q_r = self._quote(subset)
         return np.where(~np.isnan(q_r), q_r, self._rev_tick("all"))
 
+    def _is_at_ask_xor_bid(self, subset: Literal["best", "ex"]) -> pd.Series:
+        """
+        Check if the trade price is at the ask xor bid.
+
+        Args:
+            subset (Literal[&quot;ex&quot;, &quot;best&quot;]): subset i. e.,
+            'ex' or 'best'.
+
+        Returns:
+            pd.Series: boolean series with result.
+        """
+        at_ask = self.X_["TRADE_PRICE"] == self.X_[f"ask_{subset}"]
+        at_bid = self.X_["TRADE_PRICE"] == self.X_[f"bid_{subset}"]
+        return at_ask ^ at_bid
+
+    def _is_at_upper_xor_lower_quantile(
+        self, subset: Literal["best", "ex"], quantiles: float = 0.3
+    ) -> pd.Series:
+        """
+        Check if the trade price is at the ask xor bid.
+
+        Args:
+            subset (Literal[&quot;best&quot;, &quot;ex&quot;]): subset i. e., 'ex'.
+            quantiles (float, optional): percentage of quantiles. Defaults to 0.3.
+
+        Returns:
+            pd.Series: boolean series with result.
+        """
+        in_upper = (
+            (1.0 - quantiles) * self.X_[f"ask_{subset}"]
+            + quantiles * self.X_[f"bid_{subset}"]
+            <= self.X_["TRADE_PRICE"]
+        ) & (self.X_["TRADE_PRICE"] <= self.X_[f"ask_{subset}"])
+        in_lower = (self.X_[f"bid_{subset}"] <= self.X_["TRADE_PRICE"]) & (
+            self.X_["TRADE_PRICE"]
+            <= quantiles * self.X_[f"ask_{subset}"]
+            + (1.0 - quantiles) * self.X_[f"bid_{subset}"]
+        )
+        return in_upper ^ in_lower
+
     def _emo(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
         Classify a trade as a buy (sell) if the trade takes place at the ask\
@@ -193,10 +233,9 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             npt.NDArray: result of the emo algorithm with tick rule. Can be
             np.NaN.
         """
-        at_ask = self.X_["TRADE_PRICE"] == self.X_[f"ask_{subset}"]
-        at_bid = self.X_["TRADE_PRICE"] == self.X_[f"bid_{subset}"]
-        at_ask_or_bid = at_ask ^ at_bid
-        return np.where(at_ask_or_bid, self._quote(subset), self._tick("all"))
+        return np.where(
+            self._is_at_ask_xor_bid(subset), self._quote(subset), self._tick("all")
+        )
 
     def _rev_emo(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
@@ -213,10 +252,9 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             npt.NDArray: result of the emo algorithm with reverse tick rule.
             Can be np.NaN.
         """
-        at_ask = self.X_["TRADE_PRICE"] == self.X_[f"ask_{subset}"]
-        at_bid = self.X_["TRADE_PRICE"] == self.X_[f"bid_{subset}"]
-        at_ask_or_bid = at_ask ^ at_bid
-        return np.where(at_ask_or_bid, self._quote(subset), self._rev_tick("all"))
+        return np.where(
+            self._is_at_ask_xor_bid(subset), self._quote(subset), self._rev_tick("all")
+        )
 
     def _clnv(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
@@ -238,17 +276,10 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             npt.NDArray: result of the emo algorithm with tick rule. Can be
             np.NaN.
         """
-        in_upper_30 = (
-            0.7 * self.X_[f"ask_{subset}"] + 0.3 * self.X_[f"bid_{subset}"]
-            <= self.X_["TRADE_PRICE"]
-        ) & (self.X_["TRADE_PRICE"] <= self.X_[f"ask_{subset}"])
-        in_lower_30 = (self.X_[f"bid_{subset}"] <= self.X_["TRADE_PRICE"]) & (
-            self.X_["TRADE_PRICE"]
-            <= 0.3 * self.X_[f"ask_{subset}"] + 0.7 * self.X_[f"bid_{subset}"]
-        )
-
         return np.where(
-            in_upper_30 | in_lower_30, self._quote(subset), self._tick("all")
+            self._is_at_upper_xor_lower_quantile(subset),
+            self._quote(subset),
+            self._tick("all"),
         )
 
     def _rev_clnv(self, subset: Literal["best", "ex"]) -> npt.NDArray:
@@ -271,17 +302,10 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             npt.NDArray: result of the emo algorithm with tick rule. Can be
             np.NaN.
         """
-        in_upper_30 = (
-            0.7 * self.X_[f"ask_{subset}"] + 0.3 * self.X_[f"bid_{subset}"]
-            <= self.X_["TRADE_PRICE"]
-        ) & (self.X_["TRADE_PRICE"] <= self.X_[f"ask_{subset}"])
-
-        in_lower_30 = (self.X_[f"bid_{subset}"] <= self.X_["TRADE_PRICE"]) & (
-            self.X_["TRADE_PRICE"]
-            <= 0.3 * self.X_[f"ask_{subset}"] + 0.7 * self.X_[f"bid_{subset}"]
-        )
         return np.where(
-            in_upper_30 | in_lower_30, self._quote(subset), self._rev_tick("all")
+            self._is_at_upper_xor_lower_quantile(subset),
+            self._quote(subset),
+            self._rev_tick("all"),
         )
 
     # pylint: disable=W0613
