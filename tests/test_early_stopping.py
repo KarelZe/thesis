@@ -4,12 +4,10 @@ Tests for the early stopping implementation.
 For early stopping see: https://en.wikipedia.org/wiki/Early_stopping.
 """
 
-import unittest
-
 from otc.optim.early_stopping import EarlyStopping
 
 
-class TestEarlyStopping(unittest.TestCase):
+class TestEarlyStopping:
     """
     Perform automated tests for early stopping.
 
@@ -41,7 +39,7 @@ class TestEarlyStopping(unittest.TestCase):
         for _, val in enumerate(test_loss):
             early_stopping(val)
 
-        self.assertTrue(early_stopping.early_stop)
+        assert early_stopping.early_stop
 
     def test_do_not_stop_early_decreasing(self) -> None:
         """
@@ -56,7 +54,7 @@ class TestEarlyStopping(unittest.TestCase):
         for _, val in enumerate(test_loss):
             early_stopping(val)
 
-        self.assertFalse(early_stopping.early_stop)
+        assert not early_stopping.early_stop
 
     def test_best_loss_below_delta(self) -> None:
         """
@@ -71,7 +69,7 @@ class TestEarlyStopping(unittest.TestCase):
         for _, val in enumerate(test_loss):
             early_stopping(val)
 
-        self.assertEqual(early_stopping.best_loss, 1)
+        assert early_stopping.best_loss == 1
 
     def test_best_loss_above_delta(self) -> None:
         """
@@ -94,4 +92,4 @@ class TestEarlyStopping(unittest.TestCase):
         for _, val in enumerate(test_loss):
             early_stopping(val)
 
-        self.assertEqual(early_stopping.best_loss, 70)
+        assert early_stopping.best_loss == 70

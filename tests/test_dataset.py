@@ -5,16 +5,16 @@ Includes tests for data sets with categorical and without
 categorical data.
 """
 
-import unittest
 
 import numpy as np
 import pandas as pd
+import pytest
 import torch
 
 from otc.data.dataset import TabDataset
 
 
-class TestDataLoader(unittest.TestCase):
+class TestDataLoader:
     """
     Perform automated tests.
 
@@ -46,7 +46,8 @@ class TestDataLoader(unittest.TestCase):
         # make y one element longer
         y = pd.Series(np.arange(length + 1))
 
-        self.assertRaises(AssertionError, lambda: TabDataset(x=x, y=y))
+        with pytest.raises(AssertionError):
+            TabDataset(x=x, y=y)
 
     def test_invalid_unique_count(self) -> None:
         """
@@ -60,12 +61,8 @@ class TestDataLoader(unittest.TestCase):
         x = pd.DataFrame(np.arange(30).reshape(length, 3), columns=["a", "b", "c"])
         y = pd.Series(np.arange(length))
 
-        self.assertRaises(
-            AssertionError,
-            lambda: TabDataset(
-                x=x, y=y, cat_features=["a", "b"], cat_unique_counts=tuple([20])
-            ),
-        )
+        with pytest.raises(AssertionError):
+            TabDataset(x=x, y=y, cat_features=["a", "b"], cat_unique_counts=tuple([20]))
 
     def test_with_cat_features(self) -> None:
         """
@@ -87,7 +84,7 @@ class TestDataLoader(unittest.TestCase):
 
         true_x_cat = torch.tensor([[0], [3], [6]])
 
-        self.assertTrue(true_x_cat.equal(training_data.x_cat))  # type: ignore
+        assert true_x_cat.equal(training_data.x_cat)  # type: ignore
 
     def test_no_cat_features(self) -> None:
         """
@@ -105,4 +102,4 @@ class TestDataLoader(unittest.TestCase):
         # no categorical features
         training_data = TabDataset(x=x, y=y, cat_features=None, cat_unique_counts=None)
 
-        self.assertIsNone(training_data.x_cat)
+        assert training_data.x_cat is None

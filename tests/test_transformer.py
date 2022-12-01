@@ -5,8 +5,6 @@ Partly inspired by:
 https://github.com/tilman151/unittest_dl/blob/master/tests/test_model.py
 """
 
-import unittest
-
 import torch
 import torch.nn as nn
 
@@ -15,7 +13,7 @@ from otc.models.tabtransformer import TabTransformer
 from tests import templates
 
 
-class TestTabTransformer(unittest.TestCase, templates.NeuralNetTestsMixin):
+class TestTabTransformer(templates.NeuralNetTestsMixin):
     """
     Perform tests specified in `NeuralNetTestsMixin` for\
     `TabTransformer` model.
@@ -25,7 +23,7 @@ class TestTabTransformer(unittest.TestCase, templates.NeuralNetTestsMixin):
         NeuralNetTestsMixin (neural net mixin): mixin
     """
 
-    def setUp(self) -> None:
+    def setup(self) -> None:
         """
         Set up basic network and data.
 

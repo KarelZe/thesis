@@ -5,7 +5,6 @@ TODO: Update doc strings
 """
 import datetime as dt
 import os
-import unittest
 
 import numpy as np
 import optuna
@@ -14,7 +13,7 @@ import pandas as pd
 from otc.models.objective import GradientBoostingObjective
 
 
-class TestObjectives(unittest.TestCase):
+class TestObjectives:
     """
     Perform automated tests for objectives.
 
@@ -22,7 +21,7 @@ class TestObjectives(unittest.TestCase):
         metaclass (_type_, optional): parent. Defaults to abc.ABCMeta.
     """
 
-    def setUp(self) -> None:
+    def setup(self) -> None:
         """
         Set up basic data.
 
@@ -64,4 +63,4 @@ class TestObjectives(unittest.TestCase):
         study.optimize(objective, n_trials=1)
 
         # check if accuracy is >= 0 and <=1.0
-        self.assertTrue(0.0 <= study.best_value <= 1.0)
+        assert 0.0 <= study.best_value <= 1.0
