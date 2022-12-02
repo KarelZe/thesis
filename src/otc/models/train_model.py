@@ -17,7 +17,6 @@ import wandb
 import yaml
 from optuna.exceptions import ExperimentalWarning
 from optuna.integration.wandb import WeightsAndBiasesCallback
-from optuna.storages import RetryFailedTrialCallback
 
 from otc.features.build_features import (
     features_categorical,
@@ -57,12 +56,6 @@ from otc.utils.config import settings
     default="fbv/thesis/train_val_test:v0",
     help="Name of dataset. See W&B Artifacts/Full Name",
 )
-@click.option(
-    "--mode",
-    type=click.Choice(["resume", "start"], case_sensitive=False),
-    default="start",
-    help="Start a new study or resume an existing study with given name.",
-)
 def main(
     trials: int,
     seed: int,
@@ -70,7 +63,6 @@ def main(
     model: str,
     name: str,
     dataset: str,
-    mode: str,
 ) -> None:
     """
     Start study.
@@ -82,7 +74,6 @@ def main(
         model (str): name of model.
         name (str): name of study.
         dataset (str): name of data set.
-        mode (str): mode to run study on.
     """
     logger = logging.getLogger(__name__)
     warnings.filterwarnings("ignore", category=ExperimentalWarning)
@@ -152,21 +143,12 @@ def main(
     elif model == "classical":
         objective = ClassicalObjective(x_train, y_train, x_val, y_val)
 
-    storage = optuna.storages.RDBStorage(
-        url=settings.OPTUNA_RDB,
-        heartbeat_interval=60,
-        grace_period=120,
-        failed_trial_callback=RetryFailedTrialCallback(max_retry=3),
-    )
-
     # maximize for accuracy
     study = optuna.create_study(
         direction="maximize",
         sampler=optuna.samplers.TPESampler(seed=set_seed(seed)),
         # pruner=optuna.pruners.MedianPruner(n_warmup_steps=10),
         study_name=name,
-        storage=storage,
-        load_if_exists=bool(mode == "resume"),
     )
 
     # run garbage collector after each trial. Might impact performance,
@@ -189,7 +171,6 @@ def main(
     wandb.run.summary["name"] = name  # type: ignore
     wandb.run.summary["dataset"] = dataset  # type: ignore
     wandb.run.summary["seed"] = seed  # type: ignore
-    wandb.run.summary["mode"] = mode  # type: ignore
 
     wandb.log(  # type: ignore
         {

@@ -6,7 +6,7 @@ See also `prod.env`.
 
 from pathlib import Path
 
-from pydantic import BaseSettings, PostgresDsn
+from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -18,7 +18,6 @@ class Settings(BaseSettings):
 
     WANDB_PROJECT: str
     WANDB_ENTITY: str
-    OPTUNA_RDB: PostgresDsn
 
     GCS_PROJECT_ID: str
     GCS_CRED_FILE: Path
