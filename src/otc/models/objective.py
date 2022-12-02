@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import os
 import random
-from abc import ABC
 from typing import Any
 
 import numpy as np
@@ -61,7 +60,7 @@ def set_seed(seed_val: int = 42) -> int:
     return seed_val
 
 
-class Objective(ABC):
+class Objective:
     """
     Generic implementation of objective.
 
@@ -317,6 +316,16 @@ class ClassicalObjective(Objective):
         y_val: pd.Series,
         name: str = "default",
     ):
+        """
+        Initialize objective.
+
+        Args:
+            x_train (pd.DataFrame): feature matrix (train)
+            y_train (pd.Series): ground truth (train)
+            x_val (pd.DataFrame): feature matrix (val)
+            y_val (pd.Series): ground truth (val)
+            name (str, optional): Name of objective. Defaults to "default".
+        """
         self._callbacks = CallbackContainer([])
         super().__init__(x_train, y_train, x_val, y_val, name)
 
