@@ -13,11 +13,11 @@ import click
 import numpy as np
 import optuna
 import pandas as pd
-import wandb
 import yaml
 from optuna.exceptions import ExperimentalWarning
 from optuna.integration.wandb import WeightsAndBiasesCallback
 
+import wandb
 from otc.features.build_features import (
     features_categorical,
     features_classical,
