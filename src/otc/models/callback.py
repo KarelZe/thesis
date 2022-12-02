@@ -80,8 +80,8 @@ class SaveCallback(Callback):
             if len(outdated_files_remote) > 0:
                 fs.rm(outdated_files_remote)
                 logger.info(
-                    "%sRemoved %s%s.",
-                    Colors.OKGREEN,
+                    "%sRemoved %s.%s",
+                    Colors.FAIL,
                     outdated_files_remote,
                     Colors.ENDC,
                 )
@@ -119,7 +119,7 @@ class SaveCallback(Callback):
             model_artifact = wandb.Artifact(name=new_file, type="model")
             model_artifact.add_reference(remote_path, name=new_file)
             self._run.log_artifact(model_artifact)
-            logger.info("%sSaved '%s'%s.", Colors.OKGREEN, new_file, Colors.ENDC)
+            logger.info("%sSaved '%s'.%s", Colors.OKGREEN, new_file, Colors.ENDC)
 
 
 class PrintCallback(Callback):
