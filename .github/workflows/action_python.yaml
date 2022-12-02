@@ -17,8 +17,11 @@ jobs:
         APP_CRED: ${{secrets.APPLICATION_DEFAULT_CREDENTIALS}}
     - name: Set up wandb api key
       run: |
-          export WANDB_API_KEY=${{secrets.WANDB_API_KEY}}
+          echo "$WANDB_API_KEY" >> $HOME/.netrc
+          chmod 600 $HOME/.netrc
       shell: bash
+      env:
+          WANDB_API_KEY: ${{secrets.WANDB_API_KEY}}
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
