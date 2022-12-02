@@ -23,7 +23,6 @@ class Settings(BaseSettings):
     GCS_CRED_FILE: Path
     GCS_BUCKET: str
 
-    MODEL_DIR_LOCAL: Path
     MODEL_DIR_REMOTE: Path
 
     class Config:
