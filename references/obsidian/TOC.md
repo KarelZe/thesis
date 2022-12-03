@@ -1,4 +1,4 @@
-# Title
+[[@fengLogtransformationItsImplications2014]]# Title
 - Off being right: trade-side classification of options data with machine learning
 - Trade side classifcation with machine learning: do or don't?
 - Improving trade site classication with machine learning.
@@ -317,21 +317,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Get some inspiration from https://madewithml.com/#mlops
 - Guide on visualizations https://www.nature.com/articles/s41467-020-19160-7
 
-```python
-def seed_everything(seed, tensorflow_init=True, pytorch_init=True): 
-""" 
-Seeds basic parameters for reproducibility of results 
-""" 
-random.seed(seed) 
-os.environ["PYTHONHASHSEED"] = str(seed) np.random.seed(seed) 
-if tensorflow_init is True: 
-	tf.random.set_seed(seed) 
-if pytorch_init is True: 
-	torch.manual_seed(seed)
-	torch.cuda.manual_seed(seed)
-	torch.backends.cudnn.deterministic = True
-	torch.backends.cudnn.benchmark = False
-```
+
+
 
 ## Data and Data Preparation
 
@@ -410,9 +397,41 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Cite [[@rubinInferenceMissingData1976]] for different patterns in missing data.
 - [[@lemorvanWhatGoodImputation2021]] for theoretical work on imputation.
 - For patterns and analysis of imputed data see https://stefvanbuuren.name/fimd/ch-analysis.html
+
+- What are the drawbacks of feature engineering?
+- Why standardize the data at all?
+- How is the definition of feature sets be motivated?
+- Why does positional encoding make sense?
+- Differentiate between categorical and continous variables?
+- How to handle high number of categorical variables in data set? How does this relate to gradient boosted trees and transformers?
+	- What does it mean for the number of parameters in a transformer model to have one more category?
+	- Use a linear projection: https://www.kaggle.com/code/limerobot/dsb2019-v77-tr-dt-aug0-5-3tta/notebook
+	- https://en.wikipedia.org/wiki/Additive_smoothing
+	- How is the training of the gradient boosted tree affected?
+	- For explosion in parameters also see [[@tunstallNaturalLanguageProcessing2022]]. Could apply their reasoning (calculate no. of parameters) for my work. 
+	- KISS. Dimensionality is probably not so high, that it can not be handled. It's much smaller than common corpi sizes. Mapping to 'UKNWN' character.
+	- The problem of high number of categories is called a high cardinality problem of categoricals see e. g., [[@huangTabTransformerTabularData2020]]
+- Why do we need standardized inputs for neural nets?
+- Why does standardization not affect learning of gbms
+- Motivation for use of $\log$ is turn lognormal distribution into normal distribution or to reduce variability coming from outliers. 
+	- https://datascience.stackexchange.com/questions/40089/what-is-the-reason-behind-taking-log-transformation-of-few-continuous-variables
+	- Test log-normality visually with qq-plots (https://stackoverflow.com/questions/46935289/quantile-quantile-plot-using-seaborn-and-scipy) or using statistical tests e. g.,  log-transform + normality test. https://stats.stackexchange.com/questions/134924/tests-for-lognormal-distribution
+	- Verify that my observation that log transform works only prices but not so much for size features. Could map to the observation that trade prices are log-normally distributed. https://financetrain.com/why-lognormal-distribution-is-used-to-describe-stock-prices
+	- For references to tests for log normality see [[@antoniouLognormalDistributionStock2004]]
+	- handle variables with high cardinality
+- How do to reduce the number of categorical variables?
+- strict assumption as we have out-of-vocabulary tokens e. g., unseen symbols like "TSLA".  (see done differently here https://keras.io/examples/structured_data/tabtransformer/)
+- Idea: Instead of assign an unknown token it could help assign to map the token to random vector. https://stackoverflow.com/questions/45495190/initializing-out-of-vocabulary-oov-tokens
+- Idea: reduce the least frequent root symbols.
+- Apply an idea similar to sentence piece. Here, the number of words in vocabulary is fixed https://github.com/google/sentencepiece. See repo for paper / algorithm.
+- redundant features:
+	- [[@huangSnapshotEnsemblesTrain2017]] argue, that for continous features both quantized, normalized and log scaled can be kept. The say, that this redundant encoding shouldn't lead to overfitting.
+- for final feature set see [[🧃Feature Sets]]
+- combine size features and price features into a ratio. e. g., "normalize" price with volume. Found this idea here [[@antoniouLognormalDistributionStock2004]]
 ### Train-Test Split
 
 ^d50f5d
+
 
 - discuss how split is chosen? Try to align with other works.
 - Discuss / visualize how training, validation and test set compare.
@@ -452,7 +471,8 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - cycling procedure was proposed in [[@loshchilovSGDRStochasticGradient2017]] and [[@smithCyclicalLearningRates2017]]
 - Test if buys and sells are *really* imbalanced, as indicated by [[@easleyOptionVolumeStock1998]]. Might require up-or downsampling.
 - For implementation see https://www.learnpytorch.io/07_pytorch_experiment_tracking/
-- Visualize learned embeddings for categorical data as done in [[@huangTabTransformerTabularData2020]]
+- Visualize learned embeddings for categorical data as done in [[@huangTabTransformerTabularData2020]]. Also see attention masks in [[@borisovDeepNeuralNetworks2022]] code.
+- For improvement of TabTransformer also see https://keras.io/examples/structured_data/tabtransformer/
 ### Training of Semi-Supervised Models
 - Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 
 - Use learning curves from [[#^d50f5d]].
