@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🍬Implementation/🚀Results/@vandermaatenVisualizingDataUsing2008.md",
+                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
                 "mode": "source",
                 "source": false
               }
@@ -56,9 +56,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "284a9c88ac62da52",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "comparsion.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -116,7 +128,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🍬Implementation/🚀Results/@vandermaatenVisualizingDataUsing2008.md",
+                "file": "comparsion.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -144,7 +156,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🍬Implementation/🚀Results/@vandermaatenVisualizingDataUsing2008.md"
+                "file": "comparsion.md"
               }
             }
           }
@@ -155,17 +167,17 @@
     "direction": "horizontal",
     "width": 395.5
   },
-  "active": "9e2cae5715e92d31",
+  "active": "284a9c88ac62da52",
   "lastOpenFiles": [
+    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+    "📥Inbox/@fengLogtransformationItsImplications2014.md",
+    "📥Inbox/@fengDeepLearningPredicting2018.md",
     "TOC.md",
+    "🍬Implementation/🚀Results/@vandermaatenVisualizingDataUsing2008.md",
     "📥Inbox/@antoniouLognormalDistributionStock2004.md",
     "📥Inbox/@tunstallNaturalLanguageProcessing2022.md",
     "🍬Implementation/🔢Preprocessing/@rubinInferenceMissingData1976.md",
     "🍬Implementation/🔢Preprocessing/@perez-lebelBenchmarkingMissingvaluesApproaches2022.md",
-    "🍬Implementation/🔢Preprocessing/@lemorvanWhatGoodImputation2021.md",
-    "🍬Implementation/🔢Preprocessing/@josseConsistencySupervisedLearning2020.md",
-    "Semi-supervised Learning/semi-supervised.md",
-    "🍬Implementation/🔢Preprocessing/@khanBootstrappingMultipleImputation2019.md",
-    "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md"
+    "🍬Implementation/🔢Preprocessing/@lemorvanWhatGoodImputation2021.md"
   ]
 }
