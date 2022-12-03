@@ -96,13 +96,15 @@ class Objective:
         self._clf: BaseEstimator | nn.Module
         self._callbacks: CallbackContainer
 
-    def save_callback(self, study: optuna.Study, trial: optuna.Trial) -> None:
+    def objective_callback(
+        self, study: optuna.Study, trial: optuna.trial.Trial | optuna.trial.FrozenTrial
+    ) -> None:
         """
-        Save model using callback.
+        Perform operations at the end of trail.
 
         Args:
             study (optuna.Study): current study.
-            trial (optuna.Trial): current trial.
+            trial (optuna.trial.Trial | optuna.trial.FrozenTrial): current trial.
         """
         self._callbacks.on_train_end(study, trial, self._clf, self.name)
 
