@@ -153,12 +153,12 @@ def main(
 
     # run garbage collector after each trial. Might impact performance,
     # but can mitigate out-of-memory errors.
-    # Save models using objective.save_callback
+    # Save models in `objective_callback`.
     study.optimize(
         objective,
         n_trials=trials,
         gc_after_trial=True,
-        callbacks=[wand_cb, objective.save_callback],
+        callbacks=[wand_cb, objective.objective_callback],
         show_progress_bar=True,
     )
 
