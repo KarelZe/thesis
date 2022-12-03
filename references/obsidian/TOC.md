@@ -409,7 +409,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 	- https://en.wikipedia.org/wiki/Additive_smoothing
 	- How is the training of the gradient boosted tree affected?
 	- For explosion in parameters also see [[@tunstallNaturalLanguageProcessing2022]]. Could apply their reasoning (calculate no. of parameters) for my work. 
-	- KISS. Dimensionality is probably not so high, that it can not be handled. It's much smaller than common corpi sizes. Mapping to 'UKNWN' character.
+	- KISS. Dimensionality is probably not so high, that it can not be handled. It's much smaller than common corpi sizes. Mapping to 'UKNWN' character. -> Think how this can be done using the current `sklearn` implementation.
 	- The problem of high number of categories is called a high cardinality problem of categoricals see e. g., [[@huangTabTransformerTabularData2020]]
 - Why do we need standardized inputs for neural nets?
 - Why does standardization not affect learning of gbms
@@ -472,7 +472,10 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Test if buys and sells are *really* imbalanced, as indicated by [[@easleyOptionVolumeStock1998]]. Might require up-or downsampling.
 - For implementation see https://www.learnpytorch.io/07_pytorch_experiment_tracking/
 - Visualize learned embeddings for categorical data as done in [[@huangTabTransformerTabularData2020]]. Also see attention masks in [[@borisovDeepNeuralNetworks2022]] code.
-- For improvement of TabTransformer also see https://keras.io/examples/structured_data/tabtransformer/
+- For improvement of TabTransformer
+	- also see https://keras.io/examples/structured_data/tabtransformer/
+	- use einsum that is part of torch already instead of external libary as done in  https://github.com/radi-cho/GatedTabTransformer/blob/master/gated_tab_transformer/gated_tab_transformer.py
+	- Alternatively see https://github.com/timeseriesAI/tsai/blob/be3c787d6e6d0e41839faa3e62d74145c851ef9c/tsai/models/TabTransformer.py#L133
 ### Training of Semi-Supervised Models
 - Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 
 - Use learning curves from [[#^d50f5d]].

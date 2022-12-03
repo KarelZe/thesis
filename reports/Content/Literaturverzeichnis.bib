@@ -1984,7 +1984,7 @@
   abstract = {In many application settings, the data have missing entries which make analysis challenging. An abundant literature addresses missing values in an inferential framework: estimating parameters and their variance from incomplete tables. Here, we consider supervised-learning settings: predicting a target when missing values appear in both training and testing data. We show the consistency of two approaches in prediction. A striking result is that the widely-used method of imputing with a constant, such as the mean prior to learning is consistent when missing values are not informative. This contrasts with inferential settings where mean imputation is pointed at for distorting the distribution of the data. That such a simple approach can be consistent is important in practice. We also show that a predictor suited for complete observations can predict optimally on incomplete data,through multiple imputation.Finally, to compare imputation with learning directly with a model that accounts for missing values, we analyze further decision trees. These can naturally tackle empirical risk minimization with missing values, due to their ability to handle the half-discrete nature of incomplete variables. After comparing theoretically and empirically different missing values strategies in trees, we recommend using the "missing incorporated in attribute" method as it can handle both non-informative and informative missing values.},
   archiveprefix = {arXiv},
   keywords = {💎,Computer Science - Machine Learning,Mathematics - Statistics Theory,Statistics - Machine Learning},
-  file = {C\:\\Users\\Markus\\OneDrive\\Documents\\05 - Wissen & Weiterbildung\\paper\\Josse et al. - 2020 - On the consistency of supervised learning with mis.pdf;C\:\\Users\\Markus\\Zotero\\storage\\9E3XWI2S\\1902.html}
+  file = {C\:\\Users\\Markus\\OneDrive\\Documents\\05 - Wissen & Weiterbildung\\paper\\Josse et al. - 2020 - On the consistency of supervised learning with mis.pdf}
 }
 
 @article{jurkatisInferringTradeDirections2022,
@@ -2569,6 +2569,22 @@
   file = {C\:\\Users\\Markus\\Zotero\\storage\\5MD2YUG6\\how-to-intuitively-explain-what-a-kernel-is.html}
 }
 
+@misc{malininUncertaintyGradientBoosting2021,
+  title = {Uncertainty in {{Gradient Boosting}} via {{Ensembles}}},
+  author = {Malinin, Andrey and Prokhorenkova, Liudmila and Ustimenko, Aleksei},
+  year = {2021},
+  month = apr,
+  number = {arXiv:2006.10562},
+  eprint = {2006.10562},
+  eprinttype = {arxiv},
+  primaryclass = {cs, stat},
+  publisher = {{arXiv}},
+  abstract = {For many practical, high-risk applications, it is essential to quantify uncertainty in a model's predictions to avoid costly mistakes. While predictive uncertainty is widely studied for neural networks, the topic seems to be under-explored for models based on gradient boosting. However, gradient boosting often achieves state-of-the-art results on tabular data. This work examines a probabilistic ensemble-based framework for deriving uncertainty estimates in the predictions of gradient boosting classification and regression models. We conducted experiments on a range of synthetic and real datasets and investigated the applicability of ensemble approaches to gradient boosting models that are themselves ensembles of decision trees. Our analysis shows that ensembles of gradient boosting models successfully detect anomalous inputs while having limited ability to improve the predicted total uncertainty. Importantly, we also propose a concept of a virtual ensemble to get the benefits of an ensemble via only one gradient boosting model, which significantly reduces complexity.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {C\:\\Users\\Markus\\OneDrive\\Documents\\05 - Wissen & Weiterbildung\\paper\\Malinin et al. - 2021 - Uncertainty in Gradient Boosting via Ensembles.pdf;C\:\\Users\\Markus\\Zotero\\storage\\RLYCDY8V\\2006.html}
+}
+
 @article{maraisDeepLearningTabular,
   title = {Deep {{Learning}} for {{Tabular Data}}: {{An Exploratory Study}}},
   author = {Marais, Jan Andr{\'e}},
@@ -2831,6 +2847,22 @@
   langid = {english},
   keywords = {⛔ No DOI found},
   file = {C\:\\Users\\Markus\\Zotero\\storage\\ZTFNRFUF\\Nitsche - Machine Learning in Asset Pricing.pdf}
+}
+
+@misc{noriAccuracyInterpretabilityDifferential2021,
+  title = {Accuracy, {{Interpretability}}, and {{Differential Privacy}} via {{Explainable Boosting}}},
+  author = {Nori, Harsha and Caruana, Rich and Bu, Zhiqi and Shen, Judy Hanwen and Kulkarni, Janardhan},
+  year = {2021},
+  month = jun,
+  number = {arXiv:2106.09680},
+  eprint = {2106.09680},
+  eprinttype = {arxiv},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  abstract = {We show that adding differential privacy to Explainable Boosting Machines (EBMs), a recent method for training interpretable ML models, yields state-of-the-art accuracy while protecting privacy. Our experiments on multiple classification and regression datasets show that DP-EBM models suffer surprisingly little accuracy loss even with strong differential privacy guarantees. In addition to high accuracy, two other benefits of applying DP to EBMs are: a) trained models provide exact global and local interpretability, which is often important in settings where differential privacy is needed; and b) the models can be edited after training without loss of privacy to correct errors which DP noise may have introduced.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Cryptography and Security,Computer Science - Machine Learning},
+  file = {C\:\\Users\\Markus\\OneDrive\\Documents\\05 - Wissen & Weiterbildung\\paper\\Nori et al. - 2021 - Accuracy, Interpretability, and Differential Priva.pdf;C\:\\Users\\Markus\\Zotero\\storage\\RSHHGKGM\\Nori et al. - 2021 - Accuracy, Interpretability, and Differential Priva.pdf;C\:\\Users\\Markus\\Zotero\\storage\\JJDUNEDT\\2106.html}
 }
 
 @inproceedings{nothmanStopWordLists2018,
@@ -3243,16 +3275,6 @@
   isbn = {978-1-80056-579-1},
   langid = {english},
   file = {C\:\\Users\\Markus\\Zotero\\storage\\GLMXG7M9\\Rothman - 2021 - Transformers for Natural Language Processing Buil.pdf}
-}
-
-@misc{rozemberczkiAwesomeGradientBoosting2022,
-  title = {Awesome {{Gradient Boosting Research Papers}}.},
-  author = {Rozemberczki, Benedek},
-  year = {2022},
-  month = oct,
-  abstract = {A curated list of gradient boosting research papers with implementations.},
-  copyright = {CC0-1.0},
-  keywords = {adaboost,boosting,catboost,classification-algorithm,classification-tree,classification-trees,classifier,decision-tree,deep-learning,gradient-boosted-trees,gradient-boosting,gradient-boosting-classifier,gradient-boosting-decision-trees,gradient-boosting-machine,h2o,lightgbm,machine-learning,random-forest,xgboost,xgboost-algorithm}
 }
 
 @misc{rozemberczkiShapleyValueMachine2022,
