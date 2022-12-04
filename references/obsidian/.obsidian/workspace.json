@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+                "file": "🍬Implementation/🧪Feature Engineering/@antoniouLognormalDistributionStock2004.md",
                 "mode": "source",
                 "source": false
               }
@@ -63,7 +63,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "anton",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -72,7 +72,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -92,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+                "file": "🍬Implementation/🧪Feature Engineering/@antoniouLognormalDistributionStock2004.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +121,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md"
+                "file": "🍬Implementation/🧪Feature Engineering/@antoniouLognormalDistributionStock2004.md"
               }
             }
           }
@@ -133,6 +134,7 @@
   },
   "active": "9e2cae5715e92d31",
   "lastOpenFiles": [
+    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
     "🧠Deep Learning Methods/Transformer/@phuongFormalAlgorithmsTransformers2022.md",
     "TOC.md",
     "Semi-supervised Learning/semi-supervised.md",
@@ -141,7 +143,6 @@
     "📥Inbox/@fengDeepLearningPredicting2018.md",
     "🍬Implementation/🧪Feature Engineering/@fengLogtransformationItsImplications2014.md",
     "🧠Deep Learning Methods/Transformer/@tunstallNaturalLanguageProcessing2022.md",
-    "comparsion.md",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md"
+    "comparsion.md"
   ]
 }
