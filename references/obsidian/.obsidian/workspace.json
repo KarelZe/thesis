@@ -20,33 +20,8 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "0b293dfdce692f16",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@fengLogtransformationItsImplications2014.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "9e2cae5715e92d31",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🍬Implementation/🧪Feature Engineering/@antoniouLognormalDistributionStock2004.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -105,7 +80,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📥Inbox/@fengLogtransformationItsImplications2014.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +108,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📥Inbox/@fengLogtransformationItsImplications2014.md"
+                "file": "TOC.md"
               }
             }
           }
@@ -144,17 +119,17 @@
     "direction": "horizontal",
     "width": 395.5
   },
-  "active": "0b293dfdce692f16",
+  "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
+    "🍬Implementation/🔢Preprocessing/@josseConsistencySupervisedLearning2020.md",
     "TOC.md",
+    "📥Inbox/@fengLogtransformationItsImplications2014.md",
     "🍬Implementation/🧪Feature Engineering/@antoniouLognormalDistributionStock2004.md",
     "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
     "🧠Deep Learning Methods/Transformer/@phuongFormalAlgorithmsTransformers2022.md",
     "Semi-supervised Learning/semi-supervised.md",
     "🎄Tree-based Methods/Gradient Boosting/@chenXGBoostScalableTree2016.md",
     "📥Inbox/@fengDeepLearningPredicting2018.md",
-    "🍬Implementation/🧪Feature Engineering/@fengLogtransformationItsImplications2014.md",
-    "🧠Deep Learning Methods/Transformer/@tunstallNaturalLanguageProcessing2022.md",
-    "comparsion.md"
+    "🍬Implementation/🧪Feature Engineering/@fengLogtransformationItsImplications2014.md"
   ]
 }

@@ -384,6 +384,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - It might be wise to limit the transformations to ones that are present in the classical rules. Would help with reasoning.
 - Try out features that are inherently used in the depth rule or the trade rule. 
 - For imputation look into [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]
+- [[@josseConsistencySupervisedLearning2020]] also compare different imputation methods and handling approaches of missing values in tree-based methods.
 - for visualizations and approaches see [[@zhengFeatureEngineeringMachine]] and [[@butcherFeatureEngineeringSelection2020]]
 - Positional encoding was achieved using $\sin()$ and $\cos()$ transformation.
 - ![[sine_cosine_transform 1.png]]
