@@ -232,6 +232,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Start of with gradient boosted trees for regression. Gradient boosted trees for classification are derived from that principle.
 - cover desirable properties of gradient boosted trees
 - for handling of missing values see [[@twalaGoodMethodsCoping2008]]. Send missing value to whether side, that leads to the largest information gain (Found in [[@josseConsistencySupervisedLearning2020]])
+- [[@chenXGBoostScalableTree2016]] use second order methods for optimization.
 ### Adaptions for Probablistic Classification
 - Explain how the Gradient Boosting Procedure for the regression case, can be extended to the classifcation case
 - Discuss the problem of obtainining good probability estimates from a boosted decision tree. See e. g., [[@caruanaObtainingCalibratedProbabilities]] or [[@friedmanAdditiveLogisticRegression2000]] (Note paper is commenting about boosting, gradient boosting has not been published at the time)
@@ -248,6 +249,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Motivation for Transformers
 - For formal algorithms on Transformers see [[@phuongFormalAlgorithmsTransformers2022]]
 - http://nlp.seas.harvard.edu/2018/04/03/attention.html
+- https://www.youtube.com/watch?v=EixI6t5oif0
+- https://transformer-circuits.pub/2021/framework/index.html
 ### Network Architecture
 ### Attention
 - cover dot-product attention and sequential attention
@@ -428,6 +431,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 	- [[@huangSnapshotEnsemblesTrain2017]] argue, that for continous features both quantized, normalized and log scaled can be kept. The say, that this redundant encoding shouldn't lead to overfitting.
 - for final feature set see [[🧃Feature Sets]]
 - combine size features and price features into a ratio. e. g., "normalize" price with volume. Found this idea here [[@antoniouLognormalDistributionStock2004]]
+- log-transform can hamper interpretability [[@fengLogtransformationItsImplications2014]]
 ### Train-Test Split
 
 ^d50f5d
