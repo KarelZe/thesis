@@ -6,7 +6,7 @@ See also `prod.env`.
 
 from pathlib import Path
 
-from pydantic import BaseSettings, PostgresDsn
+from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -18,13 +18,11 @@ class Settings(BaseSettings):
 
     WANDB_PROJECT: str
     WANDB_ENTITY: str
-    OPTUNA_RDB: PostgresDsn
 
     GCS_PROJECT_ID: str
     GCS_CRED_FILE: Path
     GCS_BUCKET: str
 
-    MODEL_DIR_LOCAL: Path
     MODEL_DIR_REMOTE: Path
 
     class Config:
@@ -37,3 +35,6 @@ class Settings(BaseSettings):
         case_sensitive = True
         env_file = "prod.env"
         env_file_encoding = "utf-8"
+
+
+settings = Settings(_env_file="prod.env", _env_file_encoding="utf-8")

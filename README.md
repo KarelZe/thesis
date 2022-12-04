@@ -1,5 +1,6 @@
 ![badge thesis](https://github.com/KarelZe/thesis/actions/workflows/action_latex.yaml/badge.svg)
 ![badge code](https://github.com/KarelZe/thesis/actions/workflows/action_python.yaml/badge.svg)
+![badge code coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/KarelZe/e2578f2f3e6322d299f1cb2e294d6b0b/raw/covbadge.json)
 
 # thesis
 
@@ -26,7 +27,7 @@ cd thesis
 pip install .
 
 ## run training script
-python src/models/train_model.py --trials=5 --seed=42 --model=gbm --dataset=fbv/thesis/train_val_test_w_trade_size:v0 --features=ml
+python src/otc/models/train_model.py --trials=5 --seed=42 --model=gbm --dataset=fbv/thesis/train_val_test_w_trade_size:v0 --features=ml
 2022-11-18 10:25:50,920 - __main__ - INFO - Connecting to weights & biases. Downloading artifacts. 📦
 2022-11-18 10:25:56,180 - __main__ - INFO - Start loading artifacts locally. 🐢
 2022-11-18 10:26:07,562 - __main__ - INFO - Start with study. 🦄

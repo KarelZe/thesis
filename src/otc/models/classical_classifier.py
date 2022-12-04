@@ -28,6 +28,8 @@ allowed_func_str = (
     "rev_lr",
     "emo",
     "rev_emo",
+    "clnv",
+    "rev_clnv",
     "trade_size",
     "depth",
     "nan",
@@ -48,6 +50,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
     * LR algorithm with reverse tick test
     * EMO algorithm
     * EMO algorithm with reverse tick test
+    * CLNV algorithm
+    * CLNV algorithm with reverse tick test
     * Trade size rule
     * Depth rule
     * nan
@@ -142,7 +146,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
     def _lr(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
         Classify a trade as a buy (sell) if its price is above (below) the\
-        midpoint (quote rule), and use the tick test to classify midspread\
+        midpoint (quote rule), and use the tick test (all) to classify midspread\
         trades.
 
         Adapted from Lee and Ready (1991).
@@ -155,12 +159,12 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             Can be np.NaN.
         """
         q_r = self._quote(subset)
-        return np.where(~np.isnan(q_r), q_r, self._tick("ex"))
+        return np.where(~np.isnan(q_r), q_r, self._tick("all"))
 
     def _rev_lr(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
         Classify a trade as a buy (sell) if its price is above (below) the\
-        midpoint (quote rule), and use the reverse tick test to classify\
+        midpoint (quote rule), and use the reverse tick test (all) to classify\
         midspread trades.
 
         Adapted from Lee and Ready (1991).
@@ -173,12 +177,52 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             rule. Can be np.NaN.
         """
         q_r = self._quote(subset)
-        return np.where(~np.isnan(q_r), q_r, self._rev_tick("ex"))
+        return np.where(~np.isnan(q_r), q_r, self._rev_tick("all"))
+
+    def _is_at_ask_xor_bid(self, subset: Literal["best", "ex"]) -> pd.Series:
+        """
+        Check if the trade price is at the ask xor bid.
+
+        Args:
+            subset (Literal[&quot;ex&quot;, &quot;best&quot;]): subset i. e.,
+            'ex' or 'best'.
+
+        Returns:
+            pd.Series: boolean series with result.
+        """
+        at_ask = self.X_["TRADE_PRICE"] == self.X_[f"ask_{subset}"]
+        at_bid = self.X_["TRADE_PRICE"] == self.X_[f"bid_{subset}"]
+        return at_ask ^ at_bid
+
+    def _is_at_upper_xor_lower_quantile(
+        self, subset: Literal["best", "ex"], quantiles: float = 0.3
+    ) -> pd.Series:
+        """
+        Check if the trade price is at the ask xor bid.
+
+        Args:
+            subset (Literal[&quot;best&quot;, &quot;ex&quot;]): subset i. e., 'ex'.
+            quantiles (float, optional): percentage of quantiles. Defaults to 0.3.
+
+        Returns:
+            pd.Series: boolean series with result.
+        """
+        in_upper = (
+            (1.0 - quantiles) * self.X_[f"ask_{subset}"]
+            + quantiles * self.X_[f"bid_{subset}"]
+            <= self.X_["TRADE_PRICE"]
+        ) & (self.X_["TRADE_PRICE"] <= self.X_[f"ask_{subset}"])
+        in_lower = (self.X_[f"bid_{subset}"] <= self.X_["TRADE_PRICE"]) & (
+            self.X_["TRADE_PRICE"]
+            <= quantiles * self.X_[f"ask_{subset}"]
+            + (1.0 - quantiles) * self.X_[f"bid_{subset}"]
+        )
+        return in_upper ^ in_lower
 
     def _emo(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
         Classify a trade as a buy (sell) if the trade takes place at the ask\
-        (bid) quote, and use the tick test to classify all other trades.
+        (bid) quote, and use the tick test (all) to classify all other trades.
 
         Adapted from Ellis et al. (2000).
         Args:
@@ -189,18 +233,17 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             npt.NDArray: result of the emo algorithm with tick rule. Can be
             np.NaN.
         """
-        at_ask = self.X_["TRADE_PRICE"] == self.X_[f"ask_{subset}"]
-        at_bid = self.X_["TRADE_PRICE"] == self.X_[f"bid_{subset}"]
-        at_ask_or_bid = at_ask ^ at_bid
-        return np.where(at_ask_or_bid, self._quote(subset), self._tick("ex"))
+        return np.where(
+            self._is_at_ask_xor_bid(subset), self._quote(subset), self._tick("all")
+        )
 
     def _rev_emo(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
         Classify a trade as a buy (sell) if the trade takes place at the ask\
-        (bid) quote, and use the reverse tick test to classify all other\
+        (bid) quote, and use the reverse tick test (all) to classify all other\
         trades.
 
-        Adapted from Ellis et al. (2000).
+        Adapted from Grauer et al. (2022).
         Args:
             subset (Literal[&quot;ex&quot;, &quot;best&quot;]): subset
             i. e., 'ex' or 'best'.
@@ -209,10 +252,61 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             npt.NDArray: result of the emo algorithm with reverse tick rule.
             Can be np.NaN.
         """
-        at_ask = self.X_["TRADE_PRICE"] == self.X_[f"ask_{subset}"]
-        at_bid = self.X_["TRADE_PRICE"] == self.X_[f"bid_{subset}"]
-        at_ask_or_bid = at_ask ^ at_bid
-        return np.where(at_ask_or_bid, self._quote(subset), self._rev_tick("ex"))
+        return np.where(
+            self._is_at_ask_xor_bid(subset), self._quote(subset), self._rev_tick("all")
+        )
+
+    def _clnv(self, subset: Literal["best", "ex"]) -> npt.NDArray:
+        """
+        Classify a trade based on deciles of the bid and ask spread.
+
+        Spread is divided into ten deciles and trades are classified as follows:
+        - use quote rule for at ask until 30 % below ask (upper 3 deciles)
+        - use quote rule for at bid until 30 % above bid (lower 3 deciles)
+        - use tick rule (all) for all other trades (±2 deciles from midpoint; outside
+        bid or ask).
+
+        Adapted from Chakrabarty et al. (2007).
+
+        Args:
+            subset (Literal[&quot;ex&quot;, &quot;best&quot;]): subset i. e.,
+            'ex' or 'best'.
+
+        Returns:
+            npt.NDArray: result of the emo algorithm with tick rule. Can be
+            np.NaN.
+        """
+        return np.where(
+            self._is_at_upper_xor_lower_quantile(subset),
+            self._quote(subset),
+            self._tick("all"),
+        )
+
+    def _rev_clnv(self, subset: Literal["best", "ex"]) -> npt.NDArray:
+        """
+        Classify a trade based on deciles of the bid and ask spread.
+
+        Spread is divided into ten deciles and trades are classified as follows:
+        - use quote rule for at ask until 30 % below ask (upper 3 deciles)
+        - use quote rule for at bid until 30 % above bid (lower 3 deciles)
+        - use reverse tick rule (all) for all other trades (±2 deciles from midpoint;
+        outside bid or ask).
+
+        Similar to extension of emo algorithm proposed Grauer et al. (2022).
+
+        Args:
+            subset (Literal[&quot;ex&quot;, &quot;best&quot;]): subset i. e.,
+            'ex' or 'best'.
+
+        Returns:
+            npt.NDArray: result of the emo algorithm with tick rule. Can be
+            np.NaN.
+        """
+        return np.where(
+            self._is_at_upper_xor_lower_quantile(subset),
+            self._quote(subset),
+            self._rev_tick("all"),
+        )
 
     # pylint: disable=W0613
     def _trade_size(self, *args: Any) -> npt.NDArray:
@@ -233,21 +327,28 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         return np.where(ts_eq_bid, 1, np.where(ts_eq_ask, -1, np.nan))
 
     # pylint: disable=W0613
-    def _depth(self, *args: Any) -> npt.NDArray:
+    def _depth(self, subset: Literal["best", "ex"]) -> npt.NDArray:
         """
         Classify midspread trades as buy (sell), if the ask size (bid size)\
         exceeds the bid size (ask size).
 
         Adapted from (Grauer et al., 2022).
 
+        Args:
+            subset (Literal[&quot;best&quot;, &quot;ex&quot;]): subset
+
         Returns:
-            npt.NDArray: result of the trade size rule. Can be np.NaN.
+            npt.NDArray: result of depth rule. Can be np.NaN.
         """
+        mid = 0.5 * (self.X_[f"ask_{subset}"] + self.X_[f"bid_{subset}"])
+        at_mid = mid == self.X_["TRADE_PRICE"]
+
+        # TODO: what if ask_size_ex == bid_size_ex? We would always classify as buy.
         return np.where(
-            self.X_["ask_size_ex"] > self.X_["bid_size_ex"],
+            at_mid & (self.X_["ask_size_ex"] > self.X_["bid_size_ex"]),
             1,
             np.where(
-                self.X_["ask_size_ex"] < self.X_["bid_size_ex"],
+                at_mid & (self.X_["ask_size_ex"] < self.X_["bid_size_ex"]),
                 -1,
                 np.nan,
             ),
@@ -293,6 +394,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             self._rev_lr,
             self._emo,
             self._rev_emo,
+            self._clnv,
+            self._rev_clnv,
             self._trade_size,
             self._depth,
             self._nan,

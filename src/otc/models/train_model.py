@@ -10,26 +10,27 @@ import warnings
 from pathlib import Path
 
 import click
+import numpy as np
 import optuna
 import pandas as pd
-import wandb
 import yaml
-from features.build_features import (
+from optuna.exceptions import ExperimentalWarning
+from optuna.integration.wandb import WeightsAndBiasesCallback
+
+import wandb
+from otc.features.build_features import (
     features_categorical,
     features_classical,
     features_ml,
 )
-from optuna.exceptions import ExperimentalWarning
-from optuna.integration.wandb import WeightsAndBiasesCallback
-from optuna.storages import RetryFailedTrialCallback
-
 from otc.models.objective import (
     ClassicalObjective,
     GradientBoostingObjective,
     Objective,
+    TabTransformerObjective,
     set_seed,
 )
-from otc.utils.config import Settings
+from otc.utils.config import settings
 
 
 @click.command()
@@ -43,7 +44,7 @@ from otc.utils.config import Settings
 )
 @click.option(
     "--model",
-    type=click.Choice(["classical", "gbm"], case_sensitive=False),
+    type=click.Choice(["classical", "gbm", "tabtransformer"], case_sensitive=False),
     required=True,
     default="classical",
     help="Feature set to run study on.",
@@ -55,12 +56,6 @@ from otc.utils.config import Settings
     default="fbv/thesis/train_val_test:v0",
     help="Name of dataset. See W&B Artifacts/Full Name",
 )
-@click.option(
-    "--mode",
-    type=click.Choice(["resume", "start"], case_sensitive=False),
-    default="start",
-    help="Start a new study or resume an existing study with given name.",
-)
 def main(
     trials: int,
     seed: int,
@@ -68,7 +63,6 @@ def main(
     model: str,
     name: str,
     dataset: str,
-    mode: str,
 ) -> None:
     """
     Start study.
@@ -80,14 +74,11 @@ def main(
         model (str): name of model.
         name (str): name of study.
         dataset (str): name of data set.
-        mode (str): mode to run study on.
     """
     logger = logging.getLogger(__name__)
     warnings.filterwarnings("ignore", category=ExperimentalWarning)
 
     logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
-
-    settings = Settings()
 
     run = wandb.init(  # type: ignore
         project=settings.WANDB_PROJECT,
@@ -113,10 +104,14 @@ def main(
     x_train = pd.read_parquet(
         Path(artifact_dir, "train_set_60.parquet"), columns=columns
     )
+    x_train.replace([np.inf, -np.inf], -1, inplace=True)
+    x_train.fillna(-1, inplace=True)
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
     x_val = pd.read_parquet(Path(artifact_dir, "val_set_20.parquet"), columns=columns)
+    x_val.fillna(-1, inplace=True)
+    x_val.replace([np.inf, -np.inf], -1, inplace=True)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
@@ -136,15 +131,17 @@ def main(
             y_val,
             cat_features=features_categorical,
         )
+    elif model == "tabtransformer":
+        objective = TabTransformerObjective(
+            x_train,
+            y_train,
+            x_val,
+            y_val,
+            cat_features=["OPTION_TYPE"],
+            cat_unique=[2],
+        )
     elif model == "classical":
         objective = ClassicalObjective(x_train, y_train, x_val, y_val)
-
-    storage = optuna.storages.RDBStorage(
-        url=settings.OPTUNA_RDB,
-        heartbeat_interval=60,
-        grace_period=120,
-        failed_trial_callback=RetryFailedTrialCallback(max_retry=3),
-    )
 
     # maximize for accuracy
     study = optuna.create_study(
@@ -152,18 +149,16 @@ def main(
         sampler=optuna.samplers.TPESampler(seed=set_seed(seed)),
         # pruner=optuna.pruners.MedianPruner(n_warmup_steps=10),
         study_name=name,
-        storage=storage,
-        load_if_exists=bool(mode == "resume"),
     )
 
     # run garbage collector after each trial. Might impact performance,
     # but can mitigate out-of-memory errors.
-    # Save models using objective.save_callback
+    # Save models in `objective_callback`.
     study.optimize(
         objective,
         n_trials=trials,
         gc_after_trial=True,
-        callbacks=[wand_cb, objective.save_callback],
+        callbacks=[wand_cb, objective.objective_callback],
         show_progress_bar=True,
     )
 
@@ -176,7 +171,6 @@ def main(
     wandb.run.summary["name"] = name  # type: ignore
     wandb.run.summary["dataset"] = dataset  # type: ignore
     wandb.run.summary["seed"] = seed  # type: ignore
-    wandb.run.summary["mode"] = mode  # type: ignore
 
     wandb.log(  # type: ignore
         {
