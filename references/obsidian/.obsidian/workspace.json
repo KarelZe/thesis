@@ -6,6 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
+        "dimension": 64.10944206008584,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -20,8 +21,51 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "8115a13e548c9204",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "graph",
+              "state": {},
+              "pinned": true
+            }
           }
-        ]
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "23225d0e89e47501",
+        "type": "tabs",
+        "dimension": 35.89055793991417,
+        "children": [
+          {
+            "id": "e58e5694ff67d0a1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "badce07b53087eca",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🍬Implementation/🔢Preprocessing/@lemorvanWhatGoodImputation2021.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -50,7 +94,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "anton",
+                "query": "tag:#gbdt",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -80,7 +124,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "🍬Implementation/🔢Preprocessing/@lemorvanWhatGoodImputation2021.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,7 +152,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "🍬Implementation/🔢Preprocessing/@lemorvanWhatGoodImputation2021.md"
               }
             }
           }
@@ -119,17 +163,17 @@
     "direction": "horizontal",
     "width": 395.5
   },
-  "active": "160a03ac0eb0e817",
+  "active": "badce07b53087eca",
   "lastOpenFiles": [
     "🍬Implementation/🔢Preprocessing/@josseConsistencySupervisedLearning2020.md",
+    "🍬Implementation/🚀Results/@lundbergConsistentIndividualizedFeature2019.md",
+    "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md",
+    "🍬Implementation/🎯Hyperparameter Tuning/@melisStateArtEvaluation2017.md",
+    "🧠Deep Learning Methods/Transformer/@tunstallNaturalLanguageProcessing2022.md",
+    "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md",
+    "🧠Deep Learning Methods/@baLayerNormalization2016.md",
     "TOC.md",
     "📥Inbox/@fengLogtransformationItsImplications2014.md",
-    "🍬Implementation/🧪Feature Engineering/@antoniouLognormalDistributionStock2004.md",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-    "🧠Deep Learning Methods/Transformer/@phuongFormalAlgorithmsTransformers2022.md",
-    "Semi-supervised Learning/semi-supervised.md",
-    "🎄Tree-based Methods/Gradient Boosting/@chenXGBoostScalableTree2016.md",
-    "📥Inbox/@fengDeepLearningPredicting2018.md",
-    "🍬Implementation/🧪Feature Engineering/@fengLogtransformationItsImplications2014.md"
+    "🍬Implementation/🧪Feature Engineering/@antoniouLognormalDistributionStock2004.md"
   ]
 }

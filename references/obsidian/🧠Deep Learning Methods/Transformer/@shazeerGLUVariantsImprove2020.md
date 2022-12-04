@@ -1,7 +1,7 @@
 *title:* GLU Variants Improve Transformer
 *authors:* Noam Shazeer
 *year:* 2020
-*tags:* #activation_function #transformer #accuracy #tab-transformer #GLU
+*tags:* #activation_function #transformer #accuracy #tab-transformer #GLU #deep-learning 
 *status:* #📦 
 *related:*
 - [[@vaswaniAttentionAllYou2017]] (architecture used)

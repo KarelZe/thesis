@@ -43,7 +43,7 @@
 
 “Surrogate splits Once the best split is chosen via Algorithm 1, surrogate splits search for a split on another variable that induces a data partition close to the original one.” ([Josse et al., 2020, p. 17](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=17&annotation=69AXLE97))
 
-“Probabilistic splits Another option is to propagate missing observations according to a Bernoulli distribution B( #L #L+#R ), where #L (resp. #R) is the number of points already on the left (resp. right) (see Algorithm 3 in Appendix A.3)” ([Josse et al., 2020, p. 18](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=18&annotation=RZ3GTFLX))
+“Probabilistic splits Another option is to propagate missing observations according to a Bernoulli distribuwher(resp.  is the number of points already on the left (resp. right) (see Algorithm 3 in Appendix A.3)” ([Josse et al., 2020, p. 18](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=18&annotation=RZ3GTFLX))
 
 “Block propagation A third option to choose the split on the observed values, and then send all incomplete observations as a block, to a side chosen by minimizing the error (see Algorithm 4 in Appendix A.3). This is the method used in LightGBM (Ke et al., 2017).” ([Josse et al., 2020, p. 18](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=18&annotation=7G6MQTX6))
 
