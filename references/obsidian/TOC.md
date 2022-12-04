@@ -1,4 +1,4 @@
-[[@fengLogtransformationItsImplications2014]]# Title
+# Title
 - Off being right: trade-side classification of options data with machine learning
 - Trade side classifcation with machine learning: do or don't?
 - Improving trade site classication with machine learning.

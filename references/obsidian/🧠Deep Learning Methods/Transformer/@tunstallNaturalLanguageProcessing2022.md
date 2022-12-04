@@ -1,8 +1,8 @@
 *title:* Natural Language Processing with Transformers
 *authors:* Lewis Tunstall
 *year:* 2022
-*tags:* 
-*status:* #📥
+*tags:* #transformer #nlp #tokenization
+*status:* #📦 
 *related:*
 *code:*
 *review:*
