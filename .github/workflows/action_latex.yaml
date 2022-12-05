@@ -1,8 +1,8 @@
 name: Build LaTeX document
 on:
   push:
-    tags:
-      - "v*.*.*"
+    paths:
+    - 'reports/**'
   workflow_dispatch:
 jobs:
   build_latex:
