@@ -8,7 +8,46 @@
 
 \subsubsection{Quote-Rule (0.5~p)}\label{quote-rule}
 
+\begin{algorithm}
+
+  % input/ouput names
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+
+  % caption
+  % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
+  \caption{$\operatorname{\mathtt{quote}}$ \label{alg:quote-rule}}
+
+  \Input{%
+    $t_i$ -- trade price at $i$ \\
+    $a_i$ -- ask price at $i$ \\
+    $b_i$ -- bid price at $i$ \\
+  }
+  \Output{%
+    $o_i \in\{-1,1\}$ -- trade initiator for $i$-th trade \\
+  }
+
+  \BlankLine % blank line for spacing
+
+  % start of the pseudocode
+  $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
+
+  \uIf{$t_i > m_i$}{%
+    \Return{$o_i =1$}
+  }
+  \uElseIf{$t_i < m_i$}{%
+    \Return{$o_i =-1$}
+  }
+  \uElse{%
+    \Return
+  }
+\end{algorithm}
+
+
+
+
 \subsubsection{Tick Test (0.5~p)}\label{tick-test}
+
 
 \subsubsection{Reverse Tick Test (0.5~p)}\label{reverse-tick-test}
 
@@ -52,7 +91,7 @@
     }
   }
   \uElse{
-    \Return
+    \Return \tcc*{apply another secondary rule}
   }
 \end{algorithm}
 
@@ -79,14 +118,14 @@
 
   \BlankLine % blank line for spacing
 
-  \uIf{$\tilde{a}_i = \tilde{t}_i$ \And $\tilde{b}_i \neq \tilde{t}_i$}{
+  \uIf{$\tilde{a}_i = \tilde{t}_i$ \And $\tilde{b}_i \neq \tilde{t}_i$}{%
     \Return{$o_i =-1$}
   }
-  \uElseIf{$\tilde{b}_i = \tilde{t}_i$ \And $\tilde{a}_i \neq \tilde{t}_i$}{
+  \uElseIf{$\tilde{b}_i = \tilde{t}_i$ \And $\tilde{a}_i \neq \tilde{t}_i$}{%
     \Return{$o_i =1$}
   }
-  \uElse{
-    \Return
+  \uElse{%
+    \Return \tcc*{apply another secondary rule}
   }
 \end{algorithm}
 
