@@ -352,6 +352,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - For implementation of permutation importance see https://www.rasgoml.com/feature-engineering-tutorials/how-to-generate-feature-importance-plots-using-catboost
 - Data set is slightly imbalanced. Would not treat, as difference is only minor and makes it harder. Could make my final decision based on [[@japkowiczClassImbalanceProblem2002]] [[@johnsonSurveyDeepLearning2019]]. Some nice background is also in [[@huyenDesigningMachineLearning]]
 - [[@huyenDesigningMachineLearning]] discusses different sampling strategies. -> Could make sense to use stratified sampling or weighted sampling. With weighted sampling we could give classes that are notoriously hard to learn e. g., large trades or index options.
+- In my dataset the previous or subsequent trade price is already added as feature and thus does not have to be searched recursively.
 ### CBOE Data Set
 - data comes at a daily frequency
 
