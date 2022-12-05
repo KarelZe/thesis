@@ -10,4 +10,5 @@
 -   Experiments show that the embeddings are not only beneficial for transformers but other methods as well – multilayer perceptrons are competitive to transformers when trained on the proposed embeddings.
 -   Using the proposed embeddings, ResNet, multilayer perceptrons, and transformers outperform CatBoost and XGBoost on several (but not all) datasets.
 -   Small caveat: I would have liked to see a control experiment where the authors trained CatBoost and XGboost on the proposed embeddings.
+
 # Annotations

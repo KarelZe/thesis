@@ -209,12 +209,14 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 
 - semi-supervised learning with pre-training for tabular data improves feature transfer. Also possible if features differ between the upstream and downstream task. [[@levinTransferLearningDeep2022 1]] 
 - reasons why deep learning on tabular data is challenging [[@shavittRegularizationLearningNetworks2018]] (use more as background citation)
+- selection is hard e. g., in deep learning, as there are no universal benchmarks and robust, battle tested approaches for tabular data compared to other data sources. (see [[@gorishniyRevisitingDeepLearning2021]])
 
 ## Gradient Boosted Trees
 - start with "wide" architectures.
 - Include random forests, if too few models?
 - https://github.com/LeoGrin/tabular-benchmark
 - Develop deeper understanding of gradient boosting using papers from https://github.com/benedekrozemberczki/awesome-gradient-boosting-papers
+- There are several established libraries such as catboost, XGBoost and LightGBM, (that differ in e. g., the growing policy of trees, handling missing values or the calculation of gradients. (see papers also see [[@josseConsistencySupervisedLearning2020]]))  Their performance however, doesn't differ much. (found in [[@gorishniyRevisitingDeepLearning2021]] and cited [[@prokhorenkovaCatBoostUnbiasedBoosting2018]])
 ### Decision Tree
 
 ^5db625
@@ -275,9 +277,9 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Investigate whether my dataset even profits from this type of architecture?
 - See about embedding continous features in [[@somepalliSAINTImprovedNeural2021]]
 ### Extensions in FT-Transformer
-- Variant of the classical transformer, but for tabular data. Published in [[@gorishniyRevisitingDeepLearning2021]]
-- Firstly, Feature Tokenizer transforms features to embeddings. The embeddings are then processed by the Transformer module and the final representation of the (CLS) token is used for prediction.
-- Very likely not interpretable...
+
+
+[[draft_ft_transformer]]
 # Semi-Supervised Approaches
 
 ## Selection of Approaches
@@ -433,6 +435,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - for final feature set see [[🧃Feature Sets]]
 - combine size features and price features into a ratio. e. g., "normalize" price with volume. Found this idea here [[@antoniouLognormalDistributionStock2004]]
 - log-transform can hamper interpretability [[@fengLogtransformationItsImplications2014]]
+- The right word for testing different settings e. g., scalings or imputation approaches is https://en.wikipedia.org/wiki/Ablation_(artificial_intelligence) 
 ### Train-Test Split
 
 ^d50f5d
@@ -507,6 +510,8 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 When using optuna draw a boxplot. optimal value should lie near the median. Some values should be outside the IQR.
 ![[optuna-as-boxplot 1.png]]
 
+- compare results of untuned and tuned models. Similar to [[@gorishniyRevisitingDeepLearning2021]].
+
 Repeat search with different random initializations:
 ![[random-searches-hyperparms 1.png]]
 (found in [[@grinsztajnWhyTreebasedModels2022]])
@@ -515,6 +520,7 @@ Show differences from different initializations using a violin plot. (suggested 
 
 - For tree-parzen estimator see: https://neptune.ai/blog/optuna-guide-how-to-monitor-hyper-parameter-optimization-runs
 - Framing hyperparameter search as an optimization problem. https://www.h4pz.co/blog/2020/10/3/optuna-and-wandb
+- perform ablation study (https://en.wikipedia.org/wiki/Ablation_(artificial_intelligence)) when making important changes to the architecture. This has been done in [[@gorishniyRevisitingDeepLearning2021]].
 
 ## Evaluation
 ### Feature Importance Measure

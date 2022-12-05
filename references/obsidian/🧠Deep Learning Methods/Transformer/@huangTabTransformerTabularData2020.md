@@ -56,8 +56,6 @@ year: 2020
 
 
 ## Annotations
-
-
 “The TabTransformer is built upon self-attention based Transformers. The Transformer layers transform the embeddings of categorical features into robust contextual embeddings to achieve higher prediction accuracy.” ([Huang et al., 2020, p. 1](zotero://select/library/items/MH4GW34I)) ([pdf](zotero://open-pdf/library/items/QYWHEUYE?page=1&annotation=VXCRZEIK))
 
 “Through extensive experiments on fifteen publicly available datasets, we show that the TabTransformer outperforms the state-of-theart deep learning methods for tabular data by at least 1.0% on mean AUC, and matches the performance of tree-based ensemble models.” ([Huang et al., 2020, p. 1](zotero://select/library/items/MH4GW34I)) ([pdf](zotero://open-pdf/library/items/QYWHEUYE?page=1&annotation=9VB46CGG))
