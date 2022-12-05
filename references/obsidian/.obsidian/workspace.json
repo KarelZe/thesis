@@ -22,42 +22,6 @@
             }
           },
           {
-            "id": "88b88a47fa2bbde8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "fea949ac9c5d1604",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "be4438772e7ad838",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "8115a13e548c9204",
             "type": "leaf",
             "pinned": true,
@@ -73,14 +37,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🍬Implementation/🔢Preprocessing/@josseConsistencySupervisedLearning2020.md",
+                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -109,7 +73,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#transformer",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -118,8 +82,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -139,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -167,7 +130,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md"
+                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md"
               }
             }
           }
@@ -178,13 +141,13 @@
     "direction": "horizontal",
     "width": 208.5
   },
-  "active": "6942b2f8be896a2c",
+  "active": "588d2dbca8aeffda",
   "lastOpenFiles": [
     "TOC.md",
-    "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
-    "draft_ft_transformer.md",
     "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+    "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
     "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+    "draft_ft_transformer.md",
     "🍬Implementation/🔢Preprocessing/@josseConsistencySupervisedLearning2020.md",
     "🍬Implementation/🔢Preprocessing/@lemorvanWhatGoodImputation2021.md",
     "🍬Implementation/🚀Results/@lundbergConsistentIndividualizedFeature2019.md",

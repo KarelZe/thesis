@@ -217,6 +217,7 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - https://github.com/LeoGrin/tabular-benchmark
 - Develop deeper understanding of gradient boosting using papers from https://github.com/benedekrozemberczki/awesome-gradient-boosting-papers
 - There are several established libraries such as catboost, XGBoost and LightGBM, (that differ in e. g., the growing policy of trees, handling missing values or the calculation of gradients. (see papers also see [[@josseConsistencySupervisedLearning2020]]))  Their performance however, doesn't differ much. (found in [[@gorishniyRevisitingDeepLearning2021]] and cited [[@prokhorenkovaCatBoostUnbiasedBoosting2018]])
+- See [[@huangTabTransformerTabularData2020]] that point out common problems of comparsions between gbts and dl.
 ### Decision Tree
 
 ^5db625
@@ -277,7 +278,6 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Investigate whether my dataset even profits from this type of architecture?
 - See about embedding continous features in [[@somepalliSAINTImprovedNeural2021]]
 ### Extensions in FT-Transformer
-
 
 [[draft_ft_transformer]]
 # Semi-Supervised Approaches
