@@ -24,10 +24,13 @@ nano prod.env
 
 # install requirements
 cd thesis
+
+python -m venv thesis
+source thesis/bin/activate
 pip install .
 
 ## run training script
-python src/otc/models/train_model.py --trials=5 --seed=42 --model=gbm --dataset=fbv/thesis/train_val_test_w_trade_size:v0 --features=ml
+python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/classical_size_features_log_normalized:v0 --features=classical-size
 2022-11-18 10:25:50,920 - __main__ - INFO - Connecting to weights & biases. Downloading artifacts. 📦
 2022-11-18 10:25:56,180 - __main__ - INFO - Start loading artifacts locally. 🐢
 2022-11-18 10:26:07,562 - __main__ - INFO - Start with study. 🦄
