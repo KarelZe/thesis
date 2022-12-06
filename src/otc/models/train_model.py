@@ -22,6 +22,7 @@ from otc.features.build_features import (
     features_categorical,
     features_classical,
     features_ml,
+    features_classical_size,
 )
 from otc.models.objective import (
     ClassicalObjective,
@@ -38,7 +39,7 @@ from otc.utils.config import settings
 @click.option("--seed", default=42, required=False, type=int, help="Seed for rng.")
 @click.option(
     "--features",
-    type=click.Choice(["classical", "ml"], case_sensitive=False),
+    type=click.Choice(["classical", "ml", "classical-size"], case_sensitive=False),
     default="classical",
     help="Feature set to run study on.",
 )
@@ -100,18 +101,22 @@ def main(
         columns.extend(features_classical)
     elif features == "ml":
         columns.extend(features_ml)
+    elif features == "classical-size":
+        columns.extend(features_classical_size)
 
+    features_categorical_filtered = [x for x in features_categorical if x in columns]
+        
     x_train = pd.read_parquet(
         Path(artifact_dir, "train_set_60.parquet"), columns=columns
     )
-    x_train.replace([np.inf, -np.inf], -1, inplace=True)
-    x_train.fillna(-1, inplace=True)
+    # x_train.replace([np.inf, -np.inf], -1, inplace=True)
+    # x_train.fillna(-1, inplace=True)
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
     x_val = pd.read_parquet(Path(artifact_dir, "val_set_20.parquet"), columns=columns)
-    x_val.fillna(-1, inplace=True)
-    x_val.replace([np.inf, -np.inf], -1, inplace=True)
+    # x_val.fillna(-1, inplace=True)
+    # x_val.replace([np.inf, -np.inf], -1, inplace=True)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
@@ -129,7 +134,7 @@ def main(
             y_train,
             x_val,
             y_val,
-            cat_features=features_categorical,
+            cat_features=features_categorical_filtered,
         )
     elif model == "tabtransformer":
         objective = TabTransformerObjective(
