@@ -22,23 +22,15 @@
             }
           },
           {
-            "id": "866ce512d77720b3",
+            "id": "117a2e352192e6b6",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "🖼️Media/pseudocode-of-algorithms 1.png"
+                "file": "❓Questions.md",
+                "mode": "source",
+                "source": false
               }
-            }
-          },
-          {
-            "id": "8115a13e548c9204",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "graph",
-              "state": {},
-              "pinned": true
             }
           }
         ]
@@ -136,19 +128,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 208.5
+    "width": 255.5
   },
-  "active": "8399eb31ec07fd72",
+  "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
-    "🖼️Media/pseudocode-of-algorithms 1.png",
+    "❓Questions.md",
     "TOC.md",
+    "🍬Implementation/🧜‍♂️Optuna-PyTorch.md",
+    "🧠Deep Learning Methods/draft_nn.md",
+    "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
+    "🍬Implementation/🛞GCP-Docker-Cluster.md",
+    "🍬Implementation/🛞GCP-Docker.md",
+    "🍬Implementation/@huyenDesigningMachineLearning.md",
     "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-    "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
-    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
-    "draft_ft_transformer.md",
-    "🍬Implementation/🔢Preprocessing/@josseConsistencySupervisedLearning2020.md",
-    "🍬Implementation/🔢Preprocessing/@lemorvanWhatGoodImputation2021.md",
-    "🍬Implementation/🚀Results/@lundbergConsistentIndividualizedFeature2019.md",
-    "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md"
+    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md"
   ]
 }

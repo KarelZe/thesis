@@ -95,6 +95,10 @@ Copied from [[@carrionTradeSigningFast2020]]
 - If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991]])
 
 ### Depth Rule
+[[@grauerOptionTradeClassification2022]] promote using trade size information to improve the classification performance of midspread trades. In their >>depth rule<<, they infer the trade initiator from the bid's depth and ask for quotes. Based on the observation that an exceeding bid or ask quote relates to higher liquidity on one side, trades are classified as buyer-iniated for a larger ask size and seller-iniated for a higher bid size.
+
+As shown in Algorithm 2, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for assigning the initiator. To sign the remaining trades, other rules must follow thereafter.
+
 - classify midspread trades as buyer-initiated, if the ask size exceeds the bid size, and as seller-initiated, if the bid size is higher than the ask size (see [[@grauerOptionTradeClassification2022]])
 - **Intuition:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely. (see [[@grauerOptionTradeClassification2022]])
 - Alternative to handle midspread trades, that can not be classified using the quote rule.
@@ -110,7 +114,12 @@ Copied from [[@carrionTradeSigningFast2020]]
 ## Hybrid Rules
 
 ^ce4ff0
+The previous trade classification rules are applicable to certain trades or . To mitigate 
+
+Naturally, 
+
 - use the problems of the single tick test to motivate extended rules like EMO.
+- that lead to a fine-grained  fragmentation 
 - What are common extensions? How do new algorithms extend the classical ones? What is the intuition? How do they perform? How do the extensions relate? Why do they fail? In which cases do they fail?
 - [[@savickasInferringDirectionOption2003]]
 - [[@grauerOptionTradeClassification2022]]

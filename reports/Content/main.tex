@@ -53,6 +53,10 @@
 
 \subsubsection{Depth Rule (0.5~p)}\label{depth-rule}
 
+\textcite{grauerOptionTradeClassification2022} promote an alternative to improve the classification performance of midspread trades. In their \textit{depth rule}, they infer the trade initiator from the depth of the ask and bid. Based on the observation that an exceeding bid or ask size relates to higher liquidity on one side, trades are classified as buyer-initiated for a larger ask size and seller-initiated for a higher bid size.
+
+As shown in Algorithm 2, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for assigning the initiator. To sign the remaining trades, other rules must be employed thereafter.
+
 \begin{algorithm}
 
   % input/ouput names
