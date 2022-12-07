@@ -6,15 +6,16 @@ year: 2020
 *status:* #📦 
 *related:* 
 - [[@borisovDeepNeuralNetworks2022]] 
-- [[@gorishniyRevisitingDeepLearning2021]] (very similar idea)
+- [[@gorishniyRevisitingDeepLearning2021]] (very similar idea, but look at differences)
 *code:*
 - https://github.com/jrzaurin/pytorch-widedeep
 - https://github.com/lucidrains/tab-transformer-pytorch
-
+- https://github.com/autogluon/autogluon/blob/master/tabular/src/autogluon/tabular/models/tab_transformer/tab_transformer.py (autogluon implmentation)
 
 ## Notes
-- TabTransformer is a tansformer-based architecture for tabular data. Using transformer layer ([[@vaswaniAttentionAllYou2017]]) it transforms the parametric embeddings of contextual data into robust contextual embeddings through the use of a sequence of multi-head attention-based transformer layers. The motivation for this step is, that highly correlated features within one column or across columns result in embedding pairs that are close in Euclidean space which could not be learned for a vanilla MLP. Embeddings also increases robustmness.
-- TabTransformer only learns contextual embeddings on categorical features. Continous features are concatenated with the embeddings and fed into a vanilla neural network. [[@somepalliSAINTImprovedNeural2021]] critize that information about correlations between categorical and continous features are lost, as continous features are not passed through the transformer block.
+- TabTransformer is a tansformer-based architecture for tabular data. Using transformer layer ([[@vaswaniAttentionAllYou2017]]) it transforms the parametric embeddings of contextual data into robust contextual embeddings through the use of a sequence of multi-head attention-based transformer layers. The motivation for this step is, that highly correlated features within one column or across columns result in embedding pairs that are close in Euclidean space which could not be learned for a vanilla MLP. Embeddings also increases robustness.
+- TabTransformer only learns contextual embeddings on categorical features. Continous features are concatenated with the embeddings and fed into a vanilla neural network. [[@somepalliSAINTImprovedNeural2021]] critize that information about correlations between categorical and continous features are lost, as continous features are not passed through the transformer block. Approches like FTTransformer (see [[@gorishniyRevisitingDeepLearning2021]]) embed both categorical and continous data and pass it through a transformer.
+- Authors claim that TabTransformer improves by at least 1.0 % over other deep learning method and matches the performance of gbts. Unsupervised pre-training further improves performance with an improvement of 2.1 % over SOTA approaches.
 - **Advantage:** 
 	- The contextual embeddings makes the transformer highly robust against noise (i. e., random values) and missing values.
 	- TabTransformer can be pre-trained using unlabeled data and fine-tuned with labeled data. This is advantage over other methods that require both labeled and unlabeled data in a single training pass.
@@ -23,16 +24,24 @@ year: 2020
 	- fast to train (+)
 	- not suitable for continual training e. g., streaming (-)
 	- not suitable due to their poor ability to estimate probabilities (-)
+	- suboptimal for multi-modality data (e. g., image data + tabular data)
+	- In their basic form not suitable for semi-supervised methods.
+- Authors critize that the comparsion of GBTs and deep learning methods is mostly done on a limited number of datasets and often does not generalize. They actually show that GBTs are superior. 
 - Their study finds that in large scale comparsion GBTs outperform recent architectures like [[@arikTabNetAttentiveInterpretable2020]]. Unsurprisingly TabTransformer shows superior performance to other-state-of-the-art deep learning methods and has a competitive perforance to tree-based ensembles. They test on 15 public data sets. They use five-fold cross validation with a 65/15/20% split. For hyperparameter tuning they make 20 runs for each fold. See hyperapram search space in appendix.
 - **Architecture**
-	- column edding layer for categorical features. Parametric embedding is fed into $N$ transformer layers to obtain a contextual embedding. Each transformer layer consists of a multi-head self-attention layer and a position-wise feed-forward layer.
+	- ![[tabtransformer-architecture.png]]
+	- Architecture is based on the transformer architecture of [[@vaswaniAttentionAllYou2017]]
+	- column embedding layer for categorical features. Parametric embedding is fed into $N$ transformer layers to obtain a contextual embedding. Each transformer layer consists of a multi-head self-attention layer and a position-wise feed-forward layer.
 	- The contextual embeddings are concatenated along with continous features and input into a MLP.  The loss $\mathcal{L}$ is eigher mean square error or cross-entropy for classification.
 	- Transformer uses self-attention / dot-product attention. 
 	- For each categorical feature there is an own embedding lookup table with $d_i +1$ unique values. The additional value is required for missing values. The emeddings are different for each feature.
-	- Architecture does not use positional encoding, as there is no ordering of features in tabular data.
+	- Architecture does not use positional encoding, as there is no ordering of features in tabular data. 
+	- They perform an ablation study for different embedding strategies e. g.different choices for dimensions and adding unique identifiers and feature-value specific embeddings instead of concatenating them.
+
  - **Pre-training:**
 	- They propose to pretrain using masked language modeling ([[@clarkELECTRAPretrainingText2020]]) and replaced token detection ([[@devlinBERTPretrainingDeep2019]])
 	- Pre-training is only used in the semi-supervised scenario. They say, that there is no benefit if the entire data is labeled. Models only profit if unlabeled samples make up a large portion.
+-
 - **Visualization of learned embeddings on categorical features:**
 	- To evaluate the effectiveness of the transformer layers, they visualize the (combined) contextual embeddings using a $t$-SNE plot calculated on the test set. Semantically similar classes are close to each other and form a cluster in the embedding space.
 ![[tab-transformer-embedding.png]]
@@ -41,9 +50,26 @@ year: 2020
 	- They also increase the number of missing values. Transformers are more robust to missing values than MLPs.
 - **Semi-supervised results:**
 	- For large number of unlabeled data pre-trained transformers outperform all other models in terms of AUC.
-	- Tab-Transformer RTD performs better tahn TabTransformer-MLM as pre-training task is just a binary classification instead of a multi-class classification. They say, that the result is consistent with [[@clarkELECTRAPretrainingText2020]]
+	- Tab-Transformer RTD performs better tahn TabTransformer-MLM as pre-training task is just a binary classification instead of a multi-class classification. They say, that the result is consistent with 
+	- [[@clarkELECTRAPretrainingText2020]]
+## Feature Engineering
+- They write that learned embeddings improve performance as long as the cardinality of variables is signifcantly less than the number of datapoints. If not the feature can cause overfitting effects.
+- For scalar features they suggest to include three types of rescaled features and one categorical feature. They argue that redundant encodings for scalars don't cause overfitting, but can help differentiate between useful and unuseful features.
 
-### Comparsion FT-Transformer and TabTransformer
+## Architecture
+Let $(x, y)$ denote a feature-target pair, where $x \equiv$ $\left\{x_{\text {cat }}, x_{\text {cont }}\right\}$. The $x_{\text {cat }}$ denotes all the categorical features and $x_{\text {cont }} \in \mathbb{R}^c$ denotes all of the $c$ continuous features. Let $x_{\text {cat }} \equiv\left\{x_1, x_2, \cdots, x_m\right\}$ with each $x_i$ being a categorical feature, for $i \in\{1, \cdots, m\}$.
+
+We embed each of the $x_i$ categorical features into a parametric embedding of dimension $d$ using Column embedding, which is explained below in detail. Let $e_{\phi_i}\left(x_i\right) \in \mathbb{R}^d$ for $i \in\{1, \cdots, m\}$ be the embedding of the $x_i$ feature, and $E_\phi\left(x_{\mathrm{cat}}\right)=\left\{e_{\phi_1}\left(x_1\right), \cdots, e_{\phi_m}\left(x_m\right)\right\}$ be the set of embeddings for all the categorical features.
+
+Next, these parametric embeddings $\boldsymbol{E}_\phi\left(x_{\text {cat }}\right)$ are inputted to the first Transformer layer. The output of the first Transformer layer is inputted to the second layer Transformer, and so forth. Each parametric embedding is transformed into contextual embedding when outputted from the top layer Transformer, through successive aggregation of context from other embeddings. We denote the sequence of Transformer layers as a function $f_\theta$. The function $f_\theta$ operates on parametric embeddings $\left\{e_{\phi_1}\left(x_1\right), \cdots, e_{\phi_m}\left(x_m\right)\right\}$ and returns the corresponding contextual embeddings $\left\{h_1, \cdots, h_m\right\}$ where $h_i \in \mathbb{R}^d$ for $i \in\{1, \cdots, m\}$
+
+The contextual embeddings $\left\{h_1, \cdots, h_m\right\}$ are concatenated along with the continuous features $x_{\text {cont }}$ to form a vector of dimension $(d \times m+c)$. This vector is inputted to an MLP, denoted by $g_\psi$, to predict the target $y$. Let $H$ be the cross-entropy for classification tasks and mean square error for regression tasks. We minimize the following loss function $\mathcal{L}(x, y)$ to learn all the TabTransformer parameters in an end-to-end learning by the first-order gradient methods. The TabTransformer parameters include $\phi$ for column embedding, $\theta$ for Transformer layers, and $\psi$ for the top MLP layer.
+$$
+\mathcal{L}(\boldsymbol{x}, y) \equiv H\left(g_{\boldsymbol{\psi}}\left(f_{\boldsymbol{\theta}}\left(\boldsymbol{E}_\phi\left(\boldsymbol{x}_{\text {cat }}\right)\right), \boldsymbol{x}_{\text {cont }}\right), y\right) .
+$$
+Below, we explain the Transformer layers and column embedding.
+
+## Comparsion FT-Transformer and TabTransformer
 
 ![[ft-tab-transformer.png]]
 (found here https://preview.redd.it/mk28f629uxw91.png?width=1916&format=png&auto=webp&s=9a801d48189cf7fd9d4039e107e236aaa93f6a6f)
@@ -56,8 +82,6 @@ year: 2020
 
 
 ## Annotations
-
-
 “The TabTransformer is built upon self-attention based Transformers. The Transformer layers transform the embeddings of categorical features into robust contextual embeddings to achieve higher prediction accuracy.” ([Huang et al., 2020, p. 1](zotero://select/library/items/MH4GW34I)) ([pdf](zotero://open-pdf/library/items/QYWHEUYE?page=1&annotation=VXCRZEIK))
 
 “Through extensive experiments on fifteen publicly available datasets, we show that the TabTransformer outperforms the state-of-theart deep learning methods for tabular data by at least 1.0% on mean AUC, and matches the performance of tree-based ensemble models.” ([Huang et al., 2020, p. 1](zotero://select/library/items/MH4GW34I)) ([pdf](zotero://open-pdf/library/items/QYWHEUYE?page=1&annotation=9VB46CGG))

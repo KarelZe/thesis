@@ -23,13 +23,14 @@ dependencies =[
   "click==8.1.3",
   "catboost==1.1",
   "einops==0.6.0",
-  "fastparquet==0.8.3",
+  "fastparquet==2022.12.0",
   "gcsfs==2022.11.0",
-  "google-auth==2.14.1", # needed by w&b in runpod
+  "google-auth==2.15.0", # needed by w&b in runpod
   "modin==0.17.0",
   "numpy==1.23.4",
   "optuna==3.0.3",
   "pandas==1.5.1",
+  "pandas-datareader==0.10.0",
   "psutil==5.9.4", #needed by w&b
   "pydantic==1.10.2",
   "python-dotenv>=0.5.1",
@@ -40,7 +41,7 @@ dependencies =[
   "shap==0.41.0",
   "torch==1.13.0",
   "tqdm==4.64.1",
-  "typer==0.6.1",
+  "typer==0.7.0",
   "wandb==0.13.5",
 ]
 dynamic = ["version"]
