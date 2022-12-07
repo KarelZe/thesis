@@ -46,10 +46,11 @@
 
 
 
-\subsubsection{Tick Test (0.5~p)}\label{tick-test}
+\subsubsection{Tick Test (1~p)}\label{tick-test}
 
 
-\subsubsection{Reverse Tick Test (0.5~p)}\label{reverse-tick-test}
+
+% \subsubsection{Reverse Tick Test (0.5~p)}\label{reverse-tick-test}
 
 \subsubsection{Depth Rule (0.5~p)}\label{depth-rule}
 
@@ -95,7 +96,7 @@ As shown in Algorithm 2, the depth rule classifies midspread trades only, if the
     }
   }
   \uElse{
-    \Return \tcc*{apply another secondary rule}
+    \Return \tcc*{apply secondary rule}
   }
 \end{algorithm}
 
@@ -129,7 +130,7 @@ As shown in Algorithm 2, the depth rule classifies midspread trades only, if the
     \Return{$o_i =1$}
   }
   \uElse{%
-    \Return \tcc*{apply another secondary rule}
+    \Return \tcc*{apply secondary rule}
   }
 \end{algorithm}
 
@@ -138,8 +139,45 @@ As shown in Algorithm 2, the depth rule classifies midspread trades only, if the
 
 \subsubsection{Lee and Ready Algorithm (1 p)}\label{lee-and-ready-algorithm}
 
-\subsubsection{Reverse Lee and Ready
-  Algorithm (0.5~p)}\label{reverse-lee-and-ready-algorithm}
+\begin{algorithm}
+
+  % input/ouput names
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+
+  % caption
+  % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
+  \caption{$\operatorname{\mathtt{lee-ready}}{(t_i, a_i, b_i)}$ \label{alg:lee-ready-algorithm}}
+
+  \Input{%
+    $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
+  }
+  \Output{%
+    $o_i \in\{-1,1\}$ trade initiator at $i$. \\
+  }
+
+  \BlankLine % blank line for spacing
+
+  % start of the pseudocode
+  $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
+
+  \For{$1, \cdots, I$}{
+    \uIf{$t_i > m_i$}{
+      \Return{$o_i = 1$}
+    }
+    \uElseIf{$t_i < m_i$}{
+      \Return{$o_i = -1$}
+    }
+    \Else{
+      \Return{$o_i = \operatorname{\mathtt{tick}}{(t_i, a_i, b_i)}$} \tcc*{see above}
+    }
+  } % end for i
+  % TODO: set input and output params
+\end{algorithm}
+
+
+% \subsubsection{Reverse Lee and Ready
+%   Algorithm (0.5~p)}\label{reverse-lee-and-ready-algorithm}
 
 \subsubsection{Ellis-Michaely-O'Hara
   Rule (0.5~p)}\label{ellis-michaely-ohara-rule}
@@ -155,12 +193,10 @@ As shown in Algorithm 2, the depth rule classifies midspread trades only, if the
   \caption{$\operatorname{\mathtt{emo}}$ \label{alg:emo-rule}}
 
   \Input{%
-    $t_i$ -- trade price at $i$ \\
-    $a_i$ -- ask price at $i$ \\
-    $b_i$ -- bid price at $i$ \\
+    $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
   }
   \Output{%
-    $o_i \in\{-1,1\}$ -- trade initiator for $i$-th trade \\
+    $o_i \in\{-1,1\}$ trade initiator at $i$.
   }
 
   \BlankLine % blank line for spacing
@@ -174,7 +210,7 @@ As shown in Algorithm 2, the depth rule classifies midspread trades only, if the
       \Return{$o_i = -1$}
     }
     \Else{
-      \Return{$o_i = \operatorname{\mathtt{tick}}{(\cdot)}$} \tcc*{see above}
+      \Return{$o_i = \operatorname{\mathtt{tick}}{(t_i, a_i, b_i)}$} \tcc*{see above}
     }
   } % end for i
   % TODO: set input and output params
@@ -182,6 +218,7 @@ As shown in Algorithm 2, the depth rule classifies midspread trades only, if the
 
 \subsubsection{Chakrabarty-Li-Nguyen-Van-Ness
   Method (0.5~p)}\label{chakarabarty-li-nguyen-van-ness-method}
+
 
 \subsubsection{Rosenthal's Rule (0.75~p)}\label{rosenthals-rule}
 
