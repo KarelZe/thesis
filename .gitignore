@@ -410,6 +410,7 @@ TSWLatexianTemp*
 TOC.pdf
 expose.pdf
 presentation.pdf
+thesis.pdf
 
 # weights and biases
 /wandb/
