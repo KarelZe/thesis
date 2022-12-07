@@ -64,6 +64,8 @@ Commonly stock trade classifcation algorithms are used
 The following section introduces common rules for signing option trades. We start by introducing the prevailing quote and tick rule and continue with the recently introduced depth and trade size rule. In section (...) we combine hybrids thereoff. We draw a connection to ensemble learning.
 
 ## Basic Rules
+
+
 - See [Quantitative Finance Stack Exchange](https://quant.stackexchange.com/questions/8843/what-are-modern-algorithms-for-trade-classification) for most basic overview
 - There are different views of what is considered as buyer / seller iniated i. e. [[@odders-whiteOccurrenceConsequencesInaccurate2000]] vs. [[@ellisAccuracyTradeClassification2000]]
 (see [[@theissenTestAccuracyLee2000]] for more details)
@@ -186,6 +188,9 @@ Naturally,
 - Based on the observation that trades inside the quotes are poorly classified. Proposed algorithm can improve
 - They perform logistic regression to determin that e. g. , trade size, firm size etc. determines the proablity of correct classification most
 - cite from [[@ellisAccuracyTradeClassification2000]]
+
+The tick rule can be exchanged for the reverse tick rule, as previously studied in [[@grauerOptionTradeClassification2022]].
+
 ### Chakrabarty-Li-Nguyen-Van-Ness Method
 CLNV-Method is a hybrid of tick and quote rules when transactions prices are closer to the ask and bid, and the the tick rule when transaction prices are closer to the midpoint [[@chakrabartyTradeClassificationAlgorithms2007]]
 - show that CLNV, was invented after the ER and EMO. Thus the improvement, comes from a higher segmented decision surface. (also see graphics [[visualization-of-quote-and-tick 1.png]])
