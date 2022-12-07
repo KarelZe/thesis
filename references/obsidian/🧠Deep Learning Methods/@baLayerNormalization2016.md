@@ -4,7 +4,7 @@
 *tags:* #deep-learning #normalization
 *status:* #📥
 *related:*
-
+- [[@vaswaniAttentionAllYou2017]] (uses layer normalization)
 # Notes 
 
 # Annotations

@@ -1,33 +1,226 @@
 \section{Introduction (2~p)}\label{introduction}
 
+The authors acknowledge support by the state of Baden-Württemberg through \href{https://www.bwhpc.de/}{bwHPC}.
+
 \section{Related Work (3~p)}\label{related-work}
 
+\newpage
 \section{Rule-Based Approaches (5.75~p)}\label{rule-based-approaches}
+
+
+The following section introduces common rules for signing option trades. We start by introducing the classical quote and tick rule and continue with the more recent depth and trade size rule. In section \ref{hybrid-rules} we combine some rules from section \ref{basic-rules} to hybrids thereof. We conclude this chapter by drawing a connection to ensemble learning.
 
 \subsection{Basic Rules (2.5~p)}\label{basic-rules}
 
+Starting with the quote rule, we describe the most common rule for signing option trades, which can either be used as-is or joint in more complex rules.
+
 \subsubsection{Quote-Rule (0.5~p)}\label{quote-rule}
 
-\subsubsection{Tick Test (0.5~p)}\label{tick-test}
+\begin{algorithm}
 
-\subsubsection{Reverse Tick Test (0.5~p)}\label{reverse-tick-test}
+  % input/ouput names
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+
+  % caption
+  % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
+  \caption{$\operatorname{\mathtt{quote}}$ \label{alg:quote-rule}}
+
+  \Input{%
+    $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
+  }
+  \Output{%
+    $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
+  }
+
+  \BlankLine % blank line for spacing
+
+  % start of the pseudocode
+  $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
+
+  \uIf{$t_i > m_i$}{%
+    \Return{$o_i =1$}
+  }
+  \uElseIf{$t_i < m_i$}{%
+    \Return{$o_i =-1$}
+  }
+  \uElse{%
+    \Return
+  }
+\end{algorithm}
+
+
+
+
+\subsubsection{Tick Test (1~p)}\label{tick-test}
+
+
+
+% \subsubsection{Reverse Tick Test (0.5~p)}\label{reverse-tick-test}
 
 \subsubsection{Depth Rule (0.5~p)}\label{depth-rule}
 
+\textcite{grauerOptionTradeClassification2022} promote an alternative to improve the classification performance of midspread trades. In their \textit{depth rule}, they infer the trade initiator from the depth of the ask and bid. Based on the observation that an exceeding bid or ask size relates to higher liquidity on one side, trades are classified as buyer-initiated for a larger ask size and seller-initiated for a higher bid size.
+
+As shown in Algorithm \ref{alg:depth-rule}, the depth rule classifies midspread trades only, if the ask size differs from the bid size, as the ratio between the ask and bid size is the sole criterion for assigning the initiator. To sign the remaining trades, other rules must be employed thereafter.
+
+\begin{algorithm}
+
+  % input/ouput names
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+
+  % caption
+  % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
+  \caption{$\operatorname{\mathtt{depth}}$ \label{alg:depth-rule}}
+
+  \Input{%
+    $t_i$ trade price at $i$, $a_i$ ask price at $i$, $b_i$ bid price at $i$, $\tilde{a}_i$ ask size at $i$, and $\tilde{b}_i$ bid size at $i$.
+  }
+  \Output{%
+    $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
+  }
+
+  \BlankLine % blank line for spacing
+
+  % start of the pseudocode
+  $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
+
+  \uIf{$t_i = m_i$}{
+    \uIf{$\tilde{a}_i > \tilde{b}_i$}{
+      \Return{$o_i =1$}
+    }
+    \uElseIf{$\tilde{a}_i < \tilde{b}_i$}{
+      \Return{$o_i =-1$}
+    }
+    \uElse{
+      \Return
+    }
+  }
+  \uElse{
+    \Return \tcc*{apply secondary rule}
+  }
+\end{algorithm}
+
+In a similar vein, the \textit{trade size rule} reuses the ask and bid quote size to improve the classification performance of trades where the trade size equals the ask quote or bid quote sizes.
+
 \subsubsection{Trade Size Rule (0.5~p)}\label{trade-size-rule}
+
+\begin{algorithm}
+
+  % input/ouput names
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+  \SetKw{And}{\textbf{and}}
+  % caption
+  % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
+  \caption{$\operatorname{\mathtt{tradesize}}(t_i, a_i, b_i)$ \label{alg:tradesize-rule}}
+
+  \Input{%
+    $\tilde{t}_i$ trade size at $i$, $\tilde{a}_i$ ask size at $i$, and $\tilde{b}_i$ bid size at $i$.
+  }
+  \Output{%
+    $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
+  }
+
+  \BlankLine % blank line for spacing
+
+  \uIf{$\tilde{a}_i = \tilde{t}_i$ \And $\tilde{b}_i \neq \tilde{t}_i$}{%
+    \Return{$o_i =-1$}
+  }
+  \uElseIf{$\tilde{b}_i = \tilde{t}_i$ \And $\tilde{a}_i \neq \tilde{t}_i$}{%
+    \Return{$o_i =1$}
+  }
+  \uElse{%
+    \Return \tcc*{apply secondary rule}
+  }
+\end{algorithm}
+
 
 \subsection{Hybrid Rules (3.25~p)}\label{hybrid-rules}
 
 \subsubsection{Lee and Ready Algorithm (1 p)}\label{lee-and-ready-algorithm}
 
-\subsubsection{Reverse Lee and Ready
-Algorithm (0.5~p)}\label{reverse-lee-and-ready-algorithm}
+\begin{algorithm}
+
+  % input/ouput names
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+
+  % caption
+  % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
+  \caption{$\operatorname{\mathtt{lee-ready}}{(t_i, a_i, b_i)}$ \label{alg:lee-ready-algorithm}}
+
+  \Input{%
+    $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
+  }
+  \Output{%
+    $o_i \in\{-1,1\}$ trade initiator at $i$. \\
+  }
+
+  \BlankLine % blank line for spacing
+
+  % start of the pseudocode
+  $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
+
+  \For{$1, \cdots, I$}{
+    \uIf{$t_i > m_i$}{
+      \Return{$o_i = 1$}
+    }
+    \uElseIf{$t_i < m_i$}{
+      \Return{$o_i = -1$}
+    }
+    \Else{
+      \Return{$o_i = \operatorname{\mathtt{tick}}{(t_i, a_i, b_i)}$} \tcc*{see above}
+    }
+  } % end for i
+  % TODO: set input and output params
+\end{algorithm}
+
+
+% \subsubsection{Reverse Lee and Ready
+%   Algorithm (0.5~p)}\label{reverse-lee-and-ready-algorithm}
 
 \subsubsection{Ellis-Michaely-O'Hara
-Rule (0.5~p)}\label{ellis-michaely-ohara-rule}
+  Rule (0.5~p)}\label{ellis-michaely-ohara-rule}
+
+\begin{algorithm}
+
+  % input/ouput names
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+
+  % caption
+  % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
+  \caption{$\operatorname{\mathtt{emo}}$ \label{alg:emo-rule}}
+
+  \Input{%
+    $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
+  }
+  \Output{%
+    $o_i \in\{-1,1\}$ trade initiator at $i$.
+  }
+
+  \BlankLine % blank line for spacing
+
+  % start of the pseudocode
+  \For{$1, \cdots, I$}{
+    \uIf{$t_i = a_i$}{
+      \Return{$o_i = 1$}
+    }
+    \uElseIf{$t_i = b_i$}{
+      \Return{$o_i = -1$}
+    }
+    \Else{
+      \Return{$o_i = \operatorname{\mathtt{tick}}{(t_i, a_i, b_i)}$} \tcc*{see above}
+    }
+  } % end for i
+  % TODO: set input and output params
+\end{algorithm}
 
 \subsubsection{Chakrabarty-Li-Nguyen-Van-Ness
-Method (0.5~p)}\label{chakarabarty-li-nguyen-van-ness-method}
+  Method (0.5~p)}\label{chakarabarty-li-nguyen-van-ness-method}
+
 
 \subsubsection{Rosenthal's Rule (0.75~p)}\label{rosenthals-rule}
 
@@ -41,10 +234,10 @@ Method (0.5~p)}\label{chakarabarty-li-nguyen-van-ness-method}
 \subsubsection{Decision Tree (0.5~p)}\label{decision-tree}
 
 \subsubsection{Gradient Boosting
-Procedure (1 p)}\label{gradient-boosting-procedure}
+  Procedure (1 p)}\label{gradient-boosting-procedure}
 
 \subsubsection{Adaptions for Probabilistic
-Classification (0.5~p)}\label{adaptions-for-probablistic-classification}
+  Classification (0.5~p)}\label{adaptions-for-probablistic-classification}
 
 \subsection{Transformer Networks (8 p)}\label{transformer-networks}
 
@@ -59,7 +252,7 @@ Classification (0.5~p)}\label{adaptions-for-probablistic-classification}
 \subsubsection{Extensions in TabNet (2~p)}\label{extensions-in-tabnet}
 
 \subsubsection{Extensions in
-TabTransformer (2~p)}\label{extensions-in-tabtransformer}
+  TabTransformer (2~p)}\label{extensions-in-tabtransformer}
 
 \newpage
 \section{Semi-Supervised Approaches (8~p)}\label{semi-supervised-approaches}
@@ -67,12 +260,12 @@ TabTransformer (2~p)}\label{extensions-in-tabtransformer}
 \subsection{Selection of Approaches (2~p)}\label{selection-of-approaches-1}
 
 \subsection{Extensions to Gradient Boosted
-Trees (2~p)}\label{extensions-to-gradient-boosted-trees}
+  Trees (2~p)}\label{extensions-to-gradient-boosted-trees}
 
 \subsection{Extensions to TabNet (2~p)}\label{extensions-to-tabnet}
 
 \subsection{Extensions to
-TabTransformer (2~p)}\label{extensions-to-tabtransformer}
+  TabTransformer (2~p)}\label{extensions-to-tabtransformer}
 
 \newpage
 \section{Empirical Study (19.5~p)}\label{empirical-study}
@@ -86,7 +279,7 @@ TabTransformer (2~p)}\label{extensions-to-tabtransformer}
 \subsubsection{CBOE Data Set (0.5~p)}\label{cboe-data-set}
 
 \subsubsection{Generation of True
-Labels (0.5~p)}\label{generation-of-true-labels}
+  Labels (0.5~p)}\label{generation-of-true-labels}
 
 \subsubsection{Feature Engineering (4~p)}\label{feature-engineering}
 
@@ -95,11 +288,11 @@ Labels (0.5~p)}\label{generation-of-true-labels}
 \subsection{Training and Tuning (10~p)}\label{training-and-tuning}
 
 \subsubsection{Training of Supervised
-Models (4~p)}\label{training-of-supervised-models}
+  Models (4~p)}\label{training-of-supervised-models}
 
 
 \subsubsection{Training of Semi-Supervised
-Models (4~p)}\label{training-of-semi-supervised-models}
+  Models (4~p)}\label{training-of-semi-supervised-models}
 
 
 \subsubsection{Hyperparameter Tuning (2~p)}\label{hyperparameter-tuning}
@@ -108,7 +301,7 @@ Models (4~p)}\label{training-of-semi-supervised-models}
 \subsection{Evaluation (3~p)}\label{evaluation}
 
 \subsubsection{Feature Importance
-Measure (2~p)}\label{feature-importance-measure}
+  Measure (2~p)}\label{feature-importance-measure}
 
 \subsubsection{Evaluation Metric (1~p)}\label{evaluation-metric}
 
@@ -116,10 +309,10 @@ Measure (2~p)}\label{feature-importance-measure}
 \section{Results (12~p)}\label{results}
 
 \subsection{Results of Supervised
-Models (3~p)}\label{results-of-supervised-models}
+  Models (3~p)}\label{results-of-supervised-models}
 
 \subsection{Results of Semi-Supervised
-Models (3~p)}\label{results-of-semi-supervised-models}
+  Models (3~p)}\label{results-of-semi-supervised-models}
 
 \subsection{Feature Importance (3~p)}\label{feature-importance}
 

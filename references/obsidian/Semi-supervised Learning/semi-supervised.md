@@ -1,3 +1,4 @@
 - Semi-supervised learning uses both labeled and unlabeled data to construct a classifier. 
 - The goal is to improve classification performance from the unlabeled data with explicit classification information of labeled data. (found in [[@tanhaSemisupervisedSelftrainingDecision2017]]) 
 - The goal of semi-supervised learning is to improve generalization performance using unlabeled data. (found in [[@chapelleSemiSupervisedClassificationLow2005]])
+- Interestingly most existing literature on semi-supervised learning focuses on vision tasks. And instead pre-training + fine-tuning is a more common paradigm for language tasks. (https://lilianweng.github.io/posts/2021-12-05-semi-supervised/)

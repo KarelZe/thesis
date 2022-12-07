@@ -1,7 +1,7 @@
 *title:* On the State of the Art of Evaluation in Neural Language Models
 *authors:* Gábor Melis, Chris Dyer, Phil Blunsom
 *year:* 2017
-*tags:* #nlp #hyperparameter-tuning #bayesian-search #grid-search #google
+*tags:* #nlp #hyperparameter-tuning #bayesian-search #grid-search 
 *status:* #📦 
 *related:*
 - [[@akibaOptunaNextgenerationHyperparameter2019]] (Optuna Bayesian search)

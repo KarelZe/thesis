@@ -57,10 +57,15 @@ Commonly stock trade classifcation algorithms are used
 - Results were very different for the option markets between the studies. Compare the frequency some literature (in the stock market) suggest, that  for higher frequencies classical approaches like the tick test deteriorate.
 > Easley, O’Hara, and Srinivas (1998) use the Lee and Ready approach to test their game theoretic model of informed trading in stock and option markets. It is, therefore, important to determine whether the application of stock trade classification rules to derivatives is valid. [[@savickasInferringDirectionOption2003]]
 
-- For classical rule-based approaches see some citations in [[@olbrysEvaluatingTradeSide2018]]. E. g., [[@chakrabartyTradeClassificationAlgorithms2012]] or [[@chakrabartyEvaluatingTradeClassification2015]]
+- For classical rule-based approaches see some citations in [[@olbrysEvaluatingTradeSide2018]]. E. g., [[@chakrabartyTradeClassificationAlgorithms2012]] or [[@chakrabartyEvaluatingTradeClassification2015 1]]
 
 # 🔗Rule-Based Approaches
+
+The following section introduces common rules for signing option trades. We start by introducing the prevailing quote and tick rule and continue with the recently introduced depth and trade size rule. In section (...) we combine hybrids thereoff. We draw a connection to ensemble learning.
+
 ## Basic Rules
+
+
 - See [Quantitative Finance Stack Exchange](https://quant.stackexchange.com/questions/8843/what-are-modern-algorithms-for-trade-classification) for most basic overview
 - There are different views of what is considered as buyer / seller iniated i. e. [[@odders-whiteOccurrenceConsequencesInaccurate2000]] vs. [[@ellisAccuracyTradeClassification2000]]
 (see [[@theissenTestAccuracyLee2000]] for more details)
@@ -68,7 +73,7 @@ Commonly stock trade classifcation algorithms are used
 - Submitters of market orders are called liquidity demanders, while submitters of limit orders stored stored in the book are liquidity providers.
 - The BVC paper ([[@easleyDiscerningInformationTrade2016]]) treats trade classification as a probabilistic trade classificatio nproblem. Incorporate this idea into the classical rules section.
 - BVC is illsuited for my task, as we require to sign each trade? (see [[@panayidesComparingTradeFlow2014]])
-- Algorithms like LR, tick rule etc. are also available in bulked versions. See e. g., [[@chakrabartyEvaluatingTradeClassification2015]] for a comparsion in the stock market. 
+- Algorithms like LR, tick rule etc. are also available in bulked versions. See e. g., [[@chakrabartyEvaluatingTradeClassification2015 1]] for a comparsion in the stock market. 
 ### Quote-Rule
 - The quote rule classifies a trade as buyer initiated if the trade price is above the midpoint of the buy and ask as buys and if it is below as seller-iniated. Can not classify at the midpoint of the quoted spread. (see e.g., [[@leeInferringTradeDirection1991]] or [[@finucaneDirectTestMethods2000]])
 - See [[@hasbrouckTradesQuotesInventories1988]] . Might be one of the first to mention the quote rule. It is however not very clearly defined. Paper also discusses some (handwavy) approaches to treat midpoint transactions.
@@ -90,17 +95,36 @@ Copied from [[@carrionTradeSigningFast2020]]
 - low data requirements, as only transaction data is needed. (see [[@theissenTestAccuracyLee2000]]) Could be good enough though.
 - Tick test can not handle if two trades do not involve market orders e. g. two limit orders. In such a case the tick rule could be applied, but there is ambiguous. (see [[@finucaneDirectTestMethods2000]])
 - [[@perlinPerformanceTickTest2014]] proved that the tick test performs better than random chance. 
+
+
+The tick rule is very data efficient, as only transaction data ... However, in option markets
+
 ### Reverse Tick Test
+
+A variant of the tick test is the reverse tick test as popularized by [[@leeInferringTradeDirection1991]]. Instead of using the previous distinguishable trade price, the subsequent trade price, that is different from the current trade is used. 
+
 - Instead of the previous trade, the reverse tick rule uses the subsequent trade price to classify the current trade. 
 - If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991]])
 
 ### Depth Rule
+[[@grauerOptionTradeClassification2022]] promote using trade size information to improve the classification performance of midspread trades. In their >>depth rule<<, they infer the trade initiator from the bid's depth and ask for quotes. Based on the observation that an exceeding bid or ask quote relates to higher liquidity on one side, trades are classified as buyer-iniated for a larger ask size and seller-iniated for a higher bid size.
+
+As shown in Algorithm 2, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for assigning the initiator. To sign the remaining trades, other rules must follow thereafter.
+
+In a similar vain the subsequent >>trade size rule<< utilizes the ask and bid quote size to improve classification performance.
+
 - classify midspread trades as buyer-initiated, if the ask size exceeds the bid size, and as seller-initiated, if the bid size is higher than the ask size (see [[@grauerOptionTradeClassification2022]])
 - **Intuition:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely. (see [[@grauerOptionTradeClassification2022]])
 - Alternative to handle midspread trades, that can not be classified using the quote rule.
 - Improves LR algorithm by 0.8 %. Overall accuracy 75 %.
 - Performance exceeds that of the LR algorithm, thus the authors assume that the depth rule outperforms the tick test and the reverse tick test, that are used in the LR algorithm for for classifying midspread trades.
+
+
 ### Trade Size Rule
+Motivated by the deminishing performance of the classical algorithms (such as the previously introduced tick test and quote rule) for option trades, where the trade size matches the bid or ask size, [[@grauerOptionTradeClassification2022]] propose to 
+
+Due to the restrictions on the trade size, this rule needs to be combined with other rules.
+
 - classify trades for which the trade size is equal to the quoted bid size as customer buys and those with a trade size equal to the ask size as customer sells. (see [[@grauerOptionTradeClassification2022]])
 - **Intuition:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely. (see [[@grauerOptionTradeClassification2022]])  
 - Accuracy of 79.92 % on the 22.3 % of the trades that could classified, not all!. (see [[@grauerOptionTradeClassification2022]])
@@ -110,7 +134,13 @@ Copied from [[@carrionTradeSigningFast2020]]
 ## Hybrid Rules
 
 ^ce4ff0
+The previous trade classification rules are applicable to certain trades or come with their own drawbacks. To mitigate 
+these,... through ensembling
+
+Naturally, 
+
 - use the problems of the single tick test to motivate extended rules like EMO.
+- that lead to a fine-grained  fragmentation 
 - What are common extensions? How do new algorithms extend the classical ones? What is the intuition? How do they perform? How do the extensions relate? Why do they fail? In which cases do they fail?
 - [[@savickasInferringDirectionOption2003]]
 - [[@grauerOptionTradeClassification2022]]
@@ -158,6 +188,9 @@ Copied from [[@carrionTradeSigningFast2020]]
 - Based on the observation that trades inside the quotes are poorly classified. Proposed algorithm can improve
 - They perform logistic regression to determin that e. g. , trade size, firm size etc. determines the proablity of correct classification most
 - cite from [[@ellisAccuracyTradeClassification2000]]
+
+The tick rule can be exchanged for the reverse tick rule, as previously studied in [[@grauerOptionTradeClassification2022]].
+
 ### Chakrabarty-Li-Nguyen-Van-Ness Method
 CLNV-Method is a hybrid of tick and quote rules when transactions prices are closer to the ask and bid, and the the tick rule when transaction prices are closer to the midpoint [[@chakrabartyTradeClassificationAlgorithms2007]]
 - show that CLNV, was invented after the ER and EMO. Thus the improvement, comes from a higher segmented decision surface. (also see graphics [[visualization-of-quote-and-tick 1.png]])
@@ -209,12 +242,15 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 
 - semi-supervised learning with pre-training for tabular data improves feature transfer. Also possible if features differ between the upstream and downstream task. [[@levinTransferLearningDeep2022 1]] 
 - reasons why deep learning on tabular data is challenging [[@shavittRegularizationLearningNetworks2018]] (use more as background citation)
+- selection is hard e. g., in deep learning, as there are no universal benchmarks and robust, battle tested approaches for tabular data compared to other data sources. (see [[@gorishniyRevisitingDeepLearning2021]])
 
 ## Gradient Boosted Trees
 - start with "wide" architectures.
 - Include random forests, if too few models?
 - https://github.com/LeoGrin/tabular-benchmark
 - Develop deeper understanding of gradient boosting using papers from https://github.com/benedekrozemberczki/awesome-gradient-boosting-papers
+- There are several established libraries such as catboost, XGBoost and LightGBM, (that differ in e. g., the growing policy of trees, handling missing values or the calculation of gradients. (see papers also see [[@josseConsistencySupervisedLearning2020]]))  Their performance however, doesn't differ much. (found in [[@gorishniyRevisitingDeepLearning2021]] and cited [[@prokhorenkovaCatBoostUnbiasedBoosting2018]])
+- See [[@huangTabTransformerTabularData2020]] that point out common problems of comparsions between gbts and dl.
 ### Decision Tree
 
 ^5db625
@@ -231,6 +267,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Introduce notion of tree-based ensemble. Why are sequentially built trees better than parallel ensembles?
 - Start of with gradient boosted trees for regression. Gradient boosted trees for classification are derived from that principle.
 - cover desirable properties of gradient boosted trees
+- for handling of missing values see [[@twalaGoodMethodsCoping2008]]. Send missing value to whether side, that leads to the largest information gain (Found in [[@josseConsistencySupervisedLearning2020]])
+- [[@chenXGBoostScalableTree2016]] use second order methods for optimization.
 ### Adaptions for Probablistic Classification
 - Explain how the Gradient Boosting Procedure for the regression case, can be extended to the classifcation case
 - Discuss the problem of obtainining good probability estimates from a boosted decision tree. See e. g., [[@caruanaObtainingCalibratedProbabilities]] or [[@friedmanAdditiveLogisticRegression2000]] (Note paper is commenting about boosting, gradient boosting has not been published at the time)
@@ -247,6 +285,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Motivation for Transformers
 - For formal algorithms on Transformers see [[@phuongFormalAlgorithmsTransformers2022]]
 - http://nlp.seas.harvard.edu/2018/04/03/attention.html
+- https://www.youtube.com/watch?v=EixI6t5oif0
+- https://transformer-circuits.pub/2021/framework/index.html
 ### Network Architecture
 ### Attention
 - cover dot-product attention and sequential attention
@@ -271,9 +311,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Investigate whether my dataset even profits from this type of architecture?
 - See about embedding continous features in [[@somepalliSAINTImprovedNeural2021]]
 ### Extensions in FT-Transformer
-- Variant of the classical transformer, but for tabular data. Published in [[@gorishniyRevisitingDeepLearning2021]]
-- Firstly, Feature Tokenizer transforms features to embeddings. The embeddings are then processed by the Transformer module and the final representation of the (CLS) token is used for prediction.
-- Very likely not interpretable...
+
+[[draft_ft_transformer]]
 # Semi-Supervised Approaches
 
 ## Selection of Approaches
@@ -316,21 +355,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Get some inspiration from https://madewithml.com/#mlops
 - Guide on visualizations https://www.nature.com/articles/s41467-020-19160-7
 
-```python
-def seed_everything(seed, tensorflow_init=True, pytorch_init=True): 
-""" 
-Seeds basic parameters for reproducibility of results 
-""" 
-random.seed(seed) 
-os.environ["PYTHONHASHSEED"] = str(seed) np.random.seed(seed) 
-if tensorflow_init is True: 
-	tf.random.set_seed(seed) 
-if pytorch_init is True: 
-	torch.manual_seed(seed)
-	torch.cuda.manual_seed(seed)
-	torch.backends.cudnn.deterministic = True
-	torch.backends.cudnn.benchmark = False
-```
+
+
 
 ## Data and Data Preparation
 
@@ -359,6 +385,7 @@ if pytorch_init is True:
 - For implementation of permutation importance see https://www.rasgoml.com/feature-engineering-tutorials/how-to-generate-feature-importance-plots-using-catboost
 - Data set is slightly imbalanced. Would not treat, as difference is only minor and makes it harder. Could make my final decision based on [[@japkowiczClassImbalanceProblem2002]] [[@johnsonSurveyDeepLearning2019]]. Some nice background is also in [[@huyenDesigningMachineLearning]]
 - [[@huyenDesigningMachineLearning]] discusses different sampling strategies. -> Could make sense to use stratified sampling or weighted sampling. With weighted sampling we could give classes that are notoriously hard to learn e. g., large trades or index options.
+- In my dataset the previous or subsequent trade price is already added as feature and thus does not have to be searched recursively.
 ### CBOE Data Set
 - data comes at a daily frequency
 
@@ -393,6 +420,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - It might be wise to limit the transformations to ones that are present in the classical rules. Would help with reasoning.
 - Try out features that are inherently used in the depth rule or the trade rule. 
 - For imputation look into [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]
+- [[@josseConsistencySupervisedLearning2020]] also compare different imputation methods and handling approaches of missing values in tree-based methods.
 - for visualizations and approaches see [[@zhengFeatureEngineeringMachine]] and [[@butcherFeatureEngineeringSelection2020]]
 - Positional encoding was achieved using $\sin()$ and $\cos()$ transformation.
 - ![[sine_cosine_transform 1.png]]
@@ -403,9 +431,49 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Some feature ideas like order imbalance could be adapted from [[@aitkenIntradayAnalysisProbability1995]].
 - Positional encode trading time throughout the day.
 - Explain why it is necessary to include lagged data as column -> most ml models for tabular data only read rowise. No notion of previous observations etc. Some approaches however exist like specialized attention mechanisms to develop a notion of proximity.
+- min-max scaling and $z$ scaling preserve the distribution of the variables  (see [here.](https://stats.stackexchange.com/a/562204/351242)). Applying both cancels out each other (see proof [here.](https://stats.stackexchange.com/a/562204/351242)). 
+- zero imputation might be a poor choice for neural networks. (see practical and theoretical explanation in [[@yiWhyNotUse2020]]).
+- [[@yiWhyNotUse2020]] and [[@smiejaProcessingMissingData2018]] contain various references to papers to impute missing data in neural networks. 
+- Cite [[@rubinInferenceMissingData1976]] for different patterns in missing data.
+- [[@lemorvanWhatGoodImputation2021]] for theoretical work on imputation.
+- For patterns and analysis of imputed data see https://stefvanbuuren.name/fimd/ch-analysis.html
+
+- What are the drawbacks of feature engineering?
+- Why standardize the data at all?
+- How is the definition of feature sets be motivated?
+- Why does positional encoding make sense?
+- Differentiate between categorical and continous variables?
+- How to handle high number of categorical variables in data set? How does this relate to gradient boosted trees and transformers?
+	- What does it mean for the number of parameters in a transformer model to have one more category?
+	- Use a linear projection: https://www.kaggle.com/code/limerobot/dsb2019-v77-tr-dt-aug0-5-3tta/notebook
+	- https://en.wikipedia.org/wiki/Additive_smoothing
+	- How is the training of the gradient boosted tree affected?
+	- For explosion in parameters also see [[@tunstallNaturalLanguageProcessing2022]]. Could apply their reasoning (calculate no. of parameters) for my work. 
+	- KISS. Dimensionality is probably not so high, that it can not be handled. It's much smaller than common corpi sizes. Mapping to 'UKNWN' character. -> Think how this can be done using the current `sklearn` implementation.
+	- The problem of high number of categories is called a high cardinality problem of categoricals see e. g., [[@huangTabTransformerTabularData2020]]
+- Why do we need standardized inputs for neural nets?
+- Why does standardization not affect learning of gbms
+- Motivation for use of $\log$ is turn lognormal distribution into normal distribution or to reduce variability coming from outliers. 
+	- https://datascience.stackexchange.com/questions/40089/what-is-the-reason-behind-taking-log-transformation-of-few-continuous-variables
+	- Test log-normality visually with qq-plots (https://stackoverflow.com/questions/46935289/quantile-quantile-plot-using-seaborn-and-scipy) or using statistical tests e. g.,  log-transform + normality test. https://stats.stackexchange.com/questions/134924/tests-for-lognormal-distribution
+	- Verify that my observation that log transform works only prices but not so much for size features. Could map to the observation that trade prices are log-normally distributed. https://financetrain.com/why-lognormal-distribution-is-used-to-describe-stock-prices
+	- For references to tests for log normality see [[@antoniouLognormalDistributionStock2004]]
+	- handle variables with high cardinality
+- How do to reduce the number of categorical variables?
+- strict assumption as we have out-of-vocabulary tokens e. g., unseen symbols like "TSLA".  (see done differently here https://keras.io/examples/structured_data/tabtransformer/)
+- Idea: Instead of assign an unknown token it could help assign to map the token to random vector. https://stackoverflow.com/questions/45495190/initializing-out-of-vocabulary-oov-tokens
+- Idea: reduce the least frequent root symbols.
+- Apply an idea similar to sentence piece. Here, the number of words in vocabulary is fixed https://github.com/google/sentencepiece. See repo for paper / algorithm.
+- redundant features:
+	- [[@huangSnapshotEnsemblesTrain2017]] argue, that for continous features both quantized, normalized and log scaled can be kept. The say, that this redundant encoding shouldn't lead to overfitting.
+- for final feature set see [[🧃Feature Sets]]
+- combine size features and price features into a ratio. e. g., "normalize" price with volume. Found this idea here [[@antoniouLognormalDistributionStock2004]]
+- log-transform can hamper interpretability [[@fengLogtransformationItsImplications2014]]
+- The right word for testing different settings e. g., scalings or imputation approaches is https://en.wikipedia.org/wiki/Ablation_(artificial_intelligence) 
 ### Train-Test Split
 
 ^d50f5d
+
 
 - discuss how split is chosen? Try to align with other works.
 - Discuss / visualize how training, validation and test set compare.
@@ -445,7 +513,11 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - cycling procedure was proposed in [[@loshchilovSGDRStochasticGradient2017]] and [[@smithCyclicalLearningRates2017]]
 - Test if buys and sells are *really* imbalanced, as indicated by [[@easleyOptionVolumeStock1998]]. Might require up-or downsampling.
 - For implementation see https://www.learnpytorch.io/07_pytorch_experiment_tracking/
-- Visualize learned embeddings for categorical data as done in [[@huangTabTransformerTabularData2020]]
+- Visualize learned embeddings for categorical data as done in [[@huangTabTransformerTabularData2020]]. Also see attention masks in [[@borisovDeepNeuralNetworks2022]] code.
+- For improvement of TabTransformer
+	- also see https://keras.io/examples/structured_data/tabtransformer/
+	- use einsum that is part of torch already instead of external libary as done in  https://github.com/radi-cho/GatedTabTransformer/blob/master/gated_tab_transformer/gated_tab_transformer.py
+	- Alternatively see https://github.com/timeseriesAI/tsai/blob/be3c787d6e6d0e41839faa3e62d74145c851ef9c/tsai/models/TabTransformer.py#L133 or original implementation https://github.com/autogluon/autogluon/blob/master/tabular/src/autogluon/tabular/models/tab_transformer/tab_transformer.py
 ### Training of Semi-Supervised Models
 - Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 
 - Use learning curves from [[#^d50f5d]].
@@ -472,6 +544,8 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 When using optuna draw a boxplot. optimal value should lie near the median. Some values should be outside the IQR.
 ![[optuna-as-boxplot 1.png]]
 
+- compare results of untuned and tuned models. Similar to [[@gorishniyRevisitingDeepLearning2021]].
+
 Repeat search with different random initializations:
 ![[random-searches-hyperparms 1.png]]
 (found in [[@grinsztajnWhyTreebasedModels2022]])
@@ -480,6 +554,7 @@ Show differences from different initializations using a violin plot. (suggested 
 
 - For tree-parzen estimator see: https://neptune.ai/blog/optuna-guide-how-to-monitor-hyper-parameter-optimization-runs
 - Framing hyperparameter search as an optimization problem. https://www.h4pz.co/blog/2020/10/3/optuna-and-wandb
+- perform ablation study (https://en.wikipedia.org/wiki/Ablation_(artificial_intelligence)) when making important changes to the architecture. This has been done in [[@gorishniyRevisitingDeepLearning2021]].
 
 ## Evaluation
 ### Feature Importance Measure

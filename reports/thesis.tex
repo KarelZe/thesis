@@ -1,11 +1,15 @@
 \documentclass[oneside,a4paper,12pt]{article} % Specifies the page format and font size.
 
-% -------------------------------------- Integration of packages -------------------------------------- 
+% -------------------------------------- Integration of packages --------------------------------------
 % Literature and language
 	\usepackage[english]{babel}
 	\usepackage[style=bwl-FU,backend=bibtex,natbib=true,maxcitenames=2]{biblatex}
 	\addbibresource{Content/Literaturverzeichnis.bib}
-	
+
+% Algorithms
+\input{AlgorithmStyle}
+
+
 % Format and layout
 	\usepackage[left=3cm,right=3cm,bottom=3cm]{geometry} % Specifies left and right side margins.
 	\usepackage{setspace} % Package that enables modifing the line spacing.
@@ -22,7 +26,7 @@
 	\usepackage{nomencl} % Useful to create list of symbols.
 	\usepackage{enumerate} % Useful for enumerations.
 	\usepackage{color} % Enables the definition of colors.
-	
+
 % Tables and Graphs
 	\usepackage{booktabs} % Improves the design of the tables
 	\usepackage{longtable} % Allows tables to be longer than one page.
@@ -30,7 +34,7 @@
 	\usepackage{graphicx} % Allows to implement graphics.
 	\usepackage{subfig} % Enables graphs consisting of several figures.
 	\graphicspath{{./Graphs/}} % Tells LATEX that the images are kept in a folder named images under the directory of the main document.
-	\usepackage[hypcap=false]{caption} % Provides many ways to customise captions.	
+	\usepackage[hypcap=false]{caption} % Provides many ways to customise captions.
 
 % Mathematics
     \usepackage{amscd,amsfonts,amsmath,amssymb,amsthm,amscd,bbm} % Extends the maths set.
@@ -40,7 +44,7 @@
 % Depth
 \setcounter{secnumdepth}{3}
 
-% --------------------------------- Information on thesis --------------------------------- 
+% --------------------------------- Information on thesis ---------------------------------
 % Please fill in this information once at the beginning. This way, gaps will be filled in automatically in the following.
 	\newcommand{\name}{Markus Bilz} % Enter your name.
 	\newcommand{\dateofthesis}{March 31, 2023} % Enter the submission date of your thesis.
@@ -57,12 +61,12 @@
 	\newcommand{\numbertopic}{Topic 8} % Enter the number of the topic of your seminar thesis.
 
 
-% --------------------------------- Definition of hyperlinks --------------------------------- 
+% --------------------------------- Definition of hyperlinks ---------------------------------
 % Hyperreferences
 	\usepackage{hyperref}
 	\definecolor{darkblue}{rgb}{0,0,.5}
 	\hypersetup{
-	    pdfstartview={FitH}, 
+	    pdfstartview={FitH},
         colorlinks=true,
         linkcolor=black,
         citecolor=darkblue,
@@ -76,7 +80,7 @@
 
 	\usepackage[acronym]{glossaries}
 	\makeglossaries
-		
+
 	\newacronym{ANN}{ANN}{artificial neural network}
 	\newacronym{AUC}{AUC}{area under the curve}
 	\newacronym{CRSP}{CRSP}{Center for Research in Securities Prices}
@@ -88,33 +92,37 @@
 	\newacronym{RMSE}{RMSE}{root mean squared error}
 	\newacronym{RF}{RF}{random forest}
 	\newacronym{SSE}{SSE}{sum of squared errors}
-	\newacronym{SHAP}{SHAP}{SHapley Additive exPlanations}		
+	\newacronym{SHAP}{SHAP}{SHapley Additive exPlanations}
 
-% ----------------------------------- Start of document ----------------------------------- 
+% ----------------------------------- Start of document -----------------------------------
 \begin{document}
 	\setcounter{page}{2} % Cover pages and title page are not numbered. Start numbering from page 2.
-	
-% Title page 
+
+% Title page
 \input{Content/Titlepage_Thesis} % Exclude title page (with %) that is not being used.
 
 % Table of contents
 	\setcounter{page}{1}\renewcommand{\thepage}{\roman{page}} % Sets the numbering to roman small.
-	\newpage 
-	\tableofcontents 
+	\newpage
+	\tableofcontents
 
 % List of Figures (comment out if there are no figures in the thesis)
 	\newpage
 	\listoffigures % Inserts the list of figures.
 	\addcontentsline{toc}{section}{List of Figures} % Adds the list of figures to the table of contents.
-	
+
 % List of tables (comment out if there are no tables in the thesis)
 	\newpage
 	\listoftables % Inserts the list of figures.
 	\addcontentsline{toc}{section}{List of Tables} % Adds the list of tables to the table of contents.
-	
+
 % Main text section
     \newpage
 	\setcounter{page}{1}\renewcommand{\thepage}{\arabic{page}} % Sets the numbering to arabic.
 	\include{Content/main}
+
+% Bibliography
+\newpage
+\printbibliography
 
 \end{document}
