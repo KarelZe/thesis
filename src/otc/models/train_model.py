@@ -10,19 +10,18 @@ import warnings
 from pathlib import Path
 
 import click
-import numpy as np
 import optuna
 import pandas as pd
+import wandb
 import yaml
 from optuna.exceptions import ExperimentalWarning
 from optuna.integration.wandb import WeightsAndBiasesCallback
 
-import wandb
 from otc.features.build_features import (
     features_categorical,
     features_classical,
-    features_ml,
     features_classical_size,
+    features_ml,
 )
 from otc.models.objective import (
     ClassicalObjective,
@@ -105,18 +104,14 @@ def main(
         columns.extend(features_classical_size)
 
     features_categorical_filtered = [x for x in features_categorical if x in columns]
-        
+
     x_train = pd.read_parquet(
         Path(artifact_dir, "train_set_60.parquet"), columns=columns
     )
-    # x_train.replace([np.inf, -np.inf], -1, inplace=True)
-    # x_train.fillna(-1, inplace=True)
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
     x_val = pd.read_parquet(Path(artifact_dir, "val_set_20.parquet"), columns=columns)
-    # x_val.fillna(-1, inplace=True)
-    # x_val.replace([np.inf, -np.inf], -1, inplace=True)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
