@@ -8,9 +8,9 @@
 
 This repository contains all the resources for my thesis on option trade classification at Karlsruhe Institute of Technology.
 
-| notes 📜  |schedule ⌚   |mastermind board 🥷   |experiments 🧪   |computing resources ☄️   |document 🎓|
-|---|---|---|---|---|---|
-|See [`references`](https://github.com/KarelZe/thesis/tree/main/references) folder. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes.   | Link to [tasks and mile stones](https://github.com/KarelZe/thesis/milestones?direction=asc&sort=due_date&state=open).  |Link to [miro board](https://miro.com/app/board/uXjVPPRCa6s=/) (requires login).   | Link to [weights & biases](https://wandb.ai/fbv/thesis) (requires login). |Link to [runpod](https://www.runpod.io/console/pods) (requires login) and to [gcp](https://console.cloud.google.com/welcome?project=flowing-mantis-239216) (requires login).|see [`releases`](https://github.com/KarelZe/thesis/releases/).|
+| notes 📜  |schedule ⌚   |experiments 🧪   |computing resources ☄️   |document 🎓|
+|---|---|---|---|---|
+|See [`references`](https://github.com/KarelZe/thesis/tree/main/references) folder. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes.   | Link to [tasks and mile stones](https://github.com/KarelZe/thesis/milestones?direction=asc&sort=due_date&state=open).  | Link to [weights & biases](https://wandb.ai/fbv/thesis) (requires login). |Link to [runpod](https://www.runpod.io/console/pods) (requires login), to [gcp](https://console.cloud.google.com/welcome?project=flowing-mantis-239216) (requires login), and to [bwHPC](https://bwhpc.de/) (requires login).|see [`releases`](https://github.com/KarelZe/thesis/releases/).|
 
 ## How to use
 
@@ -27,7 +27,7 @@ cd thesis
 
 python -m venv thesis
 source thesis/bin/activate
-pip install .
+python -m pip install .
 
 ## run training script
 python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/classical_size_features_log_normalized:v0 --features=classical-size
@@ -59,6 +59,9 @@ Tests can be run using [`tox`](https://tox.wiki/en/latest/). Just type:
 tox
 ```
 ## Acknowledgement
+
+The authors acknowledge support by the state of Baden-Württemberg through [bwHPC](https://bwhpc.de/).
+
 Our implementation is based on:
 
 <div class="csl-bib-body" style="line-height: 2; margin-left: 2em; text-indent:-2em;">
