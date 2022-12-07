@@ -90,9 +90,13 @@ Copied from [[@carrionTradeSigningFast2020]]
 - low data requirements, as only transaction data is needed. (see [[@theissenTestAccuracyLee2000]]) Could be good enough though.
 - Tick test can not handle if two trades do not involve market orders e. g. two limit orders. In such a case the tick rule could be applied, but there is ambiguous. (see [[@finucaneDirectTestMethods2000]])
 - [[@perlinPerformanceTickTest2014]] proved that the tick test performs better than random chance. 
+
+
+The tick rule is very data efficient, as only transaction data ... However, in option markets
+
 ### Reverse Tick Test
 
-
+A variant of the tick test is the reverse tick test as popularized by [[@leeInferringTradeDirection1991]]. Instead of using the previous distinguishable trade price, the subsequent trade price, that is different from the current trade is used. 
 
 - Instead of the previous trade, the reverse tick rule uses the subsequent trade price to classify the current trade. 
 - If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991]])
@@ -102,12 +106,20 @@ Copied from [[@carrionTradeSigningFast2020]]
 
 As shown in Algorithm 2, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for assigning the initiator. To sign the remaining trades, other rules must follow thereafter.
 
+In a similar vain the subsequent >>trade size rule<< utilizes the ask and bid quote size to improve classification performance.
+
 - classify midspread trades as buyer-initiated, if the ask size exceeds the bid size, and as seller-initiated, if the bid size is higher than the ask size (see [[@grauerOptionTradeClassification2022]])
 - **Intuition:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely. (see [[@grauerOptionTradeClassification2022]])
 - Alternative to handle midspread trades, that can not be classified using the quote rule.
 - Improves LR algorithm by 0.8 %. Overall accuracy 75 %.
 - Performance exceeds that of the LR algorithm, thus the authors assume that the depth rule outperforms the tick test and the reverse tick test, that are used in the LR algorithm for for classifying midspread trades.
+
+
 ### Trade Size Rule
+Motivated by the deminishing performance of the classical algorithms (such as the previously introduced tick test and quote rule) for option trades, where the trade size matches the bid or ask size, [[@grauerOptionTradeClassification2022]] propose to 
+
+Due to the restrictions on the trade size, this rule needs to be combined with other rules.
+
 - classify trades for which the trade size is equal to the quoted bid size as customer buys and those with a trade size equal to the ask size as customer sells. (see [[@grauerOptionTradeClassification2022]])
 - **Intuition:** trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely. (see [[@grauerOptionTradeClassification2022]])  
 - Accuracy of 79.92 % on the 22.3 % of the trades that could classified, not all!. (see [[@grauerOptionTradeClassification2022]])
@@ -117,7 +129,8 @@ As shown in Algorithm 2, the depth rule classifies midspread trades only, if the
 ## Hybrid Rules
 
 ^ce4ff0
-The previous trade classification rules are applicable to certain trades or . To mitigate 
+The previous trade classification rules are applicable to certain trades or come with their own drawbacks. To mitigate 
+these,... through ensembling
 
 Naturally, 
 

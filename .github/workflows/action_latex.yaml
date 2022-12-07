@@ -16,7 +16,7 @@ jobs:
           latexmk_shell_escape: true
           root_file: |
             expose.tex
-            TOC.tex
+            thesis.tex
           working_directory: reports
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -24,4 +24,4 @@ jobs:
         with:
           files: |
             reports/expose.pdf
-            reports/TOC.pdf
+            reports/thesis.pdf

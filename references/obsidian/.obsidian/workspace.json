@@ -31,8 +31,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -90,7 +89,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🖼️Media/ft-tab-transformer.png",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +117,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🖼️Media/ft-tab-transformer.png"
+                "file": "TOC.md"
               }
             }
           }
@@ -129,8 +128,9 @@
     "direction": "horizontal",
     "width": 255.5
   },
-  "active": "117a2e352192e6b6",
+  "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
+    "🖼️Media/ft-tab-transformer.png",
     "🖼️Media/tabtransformer-architecture.png",
     "TOC.md",
     "❓Questions.md",
@@ -139,7 +139,6 @@
     "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
     "🍬Implementation/🛞GCP-Docker-Cluster.md",
     "🍬Implementation/🛞GCP-Docker.md",
-    "🍬Implementation/@huyenDesigningMachineLearning.md",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md"
+    "🍬Implementation/@huyenDesigningMachineLearning.md"
   ]
 }

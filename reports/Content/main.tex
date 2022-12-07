@@ -19,12 +19,10 @@
   \caption{$\operatorname{\mathtt{quote}}$ \label{alg:quote-rule}}
 
   \Input{%
-    $t_i$ -- trade price at $i$ \\
-    $a_i$ -- ask price at $i$ \\
-    $b_i$ -- bid price at $i$ \\
+    $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
   }
   \Output{%
-    $o_i \in\{-1,1\}$ -- trade initiator for $i$-th trade \\
+    $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
   }
 
   \BlankLine % blank line for spacing
@@ -56,7 +54,7 @@
 
 \textcite{grauerOptionTradeClassification2022} promote an alternative to improve the classification performance of midspread trades. In their \textit{depth rule}, they infer the trade initiator from the depth of the ask and bid. Based on the observation that an exceeding bid or ask size relates to higher liquidity on one side, trades are classified as buyer-initiated for a larger ask size and seller-initiated for a higher bid size.
 
-As shown in Algorithm 2, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for assigning the initiator. To sign the remaining trades, other rules must be employed thereafter.
+As shown in Algorithm \ref{alg:depth-rule}, the depth rule classifies midspread trades only, if the ask size differs from the bid size, as the ratio between the ask and bid size is the sole criterion for assigning the initiator. To sign the remaining trades, other rules must be employed thereafter.
 
 \begin{algorithm}
 
@@ -69,14 +67,10 @@ As shown in Algorithm 2, the depth rule classifies midspread trades only, if the
   \caption{$\operatorname{\mathtt{depth}}$ \label{alg:depth-rule}}
 
   \Input{%
-    $t_i$ -- trade price at $i$ \\
-    $a_i$ -- ask price at $i$ \\
-    $b_i$ -- bid price at $i$ \\
-    $\tilde{a}_i$ -- ask size at $i$ \\
-    $\tilde{b}_i$ -- bid size at $i$ \\
+    $t_i$ trade price at $i$, $a_i$ ask price at $i$, $b_i$ bid price at $i$, $\tilde{a}_i$ ask size at $i$, and $\tilde{b}_i$ bid size at $i$.
   }
   \Output{%
-    $o_i \in\{-1,1\}$ -- trade initiator for $i$-th trade \\
+    $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
   }
 
   \BlankLine % blank line for spacing
@@ -100,6 +94,8 @@ As shown in Algorithm 2, the depth rule classifies midspread trades only, if the
   }
 \end{algorithm}
 
+In a similar vein, the \textit{trade size rule} reuses the ask and bid quote size to improve the classification performance of trades where the trade size equals the ask quote or bid quote sizes.
+
 \subsubsection{Trade Size Rule (0.5~p)}\label{trade-size-rule}
 
 \begin{algorithm}
@@ -110,15 +106,13 @@ As shown in Algorithm 2, the depth rule classifies midspread trades only, if the
   \SetKw{And}{\textbf{and}}
   % caption
   % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
-  \caption{$\operatorname{\mathtt{tradesize}}$ \label{alg:tradesize-rule}}
+  \caption{$\operatorname{\mathtt{tradesize}}(t_i, a_i, b_i)$ \label{alg:tradesize-rule}}
 
   \Input{%
-    $\tilde{t}_i$ -- trade size at $i$  \\
-    $\tilde{a}_i$ -- ask size at $i$ \\
-    $\tilde{b}_i$ -- bid size at $i$ \\
+    $\tilde{t}_i$ trade size at $i$, $\tilde{a}_i$ ask size at $i$, and $\tilde{b}_i$ bid size at $i$.
   }
   \Output{%
-    $o_i \in\{-1,1\}$ -- trade initiator for $i$-th trade \\
+    $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
   }
 
   \BlankLine % blank line for spacing
