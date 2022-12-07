@@ -43,6 +43,7 @@ nosetests.xml
 coverage.xml
 *.cover
 junit/
+cover/
 
 # Translations
 *.mo
@@ -417,8 +418,10 @@ thesis.pdf
 /artifacts/
 
 # catboost
-(catboost_info/
+**/catboost_info/
 
 # models
-./models/
+/models/
 
+#venv
+.venv/

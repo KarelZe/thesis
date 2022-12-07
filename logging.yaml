@@ -1,0 +1,19 @@
+version: 1
+disable_existing_loggers: False
+formatters:
+  default:
+    class: logging.Formatter
+    format: "%(message)s"
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: default
+    stream: ext://sys.stdout
+loggers:
+  otc:
+    level: INFO
+    propagate: yes
+root:
+  level: NOTSET
+  handlers: [console]
+  propogate: no
