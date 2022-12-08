@@ -1,3 +1,7 @@
+- [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
+- Guide on visualizations https://www.nature.com/articles/s41467-020-19160-7
+- see  `writing-a-good-introduction.pdf`
+
 # Title
 - Off being right: trade-side classification of options data with machine learning
 - Trade side classifcation with machine learning: do or don't?
@@ -14,15 +18,12 @@ and its consequences are an important, but understudied, cause for concern.
 
 Commonly stock trade classifcation algorithms are used
 
-# Abstract
-- [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
+
 
 
 # Introduction
 
 - "The validity of many ecomnomic studies hinges on the ability to accuractely classify trades as buyer or seller-initiated." (found in [[@odders-whiteOccurrenceConsequencesInaccurate2000]])
-
-- see  `writing-a-good-introduction.pdf`
 - trade site classification matters for several reasons, market liqudity measures, short sells, study of bid-ask-spreads.
 - Where is trade side classification applied? Why is it important? Do citation search.
 - Repeat in short the motivation
@@ -99,14 +100,14 @@ Copied from [[@carrionTradeSigningFast2020]]
 
 The tick rule is very data efficient, as only transaction data ... However, in option markets
 
-### Reverse Tick Test
-
+**Reverse Tick Test**
 A variant of the tick test is the reverse tick test as popularized by [[@leeInferringTradeDirection1991]]. Instead of using the previous distinguishable trade price, the subsequent trade price, that is different from the current trade is used. 
 
 - Instead of the previous trade, the reverse tick rule uses the subsequent trade price to classify the current trade. 
 - If the next trade price that is differnet from the current price, is below the current price the trade (on a down tick or zero down tick) is classified as buyer-initiated. If the next distinguishable price is above the current price (up tick or zero up tick), the current price the trade is seller-initiated. (loosely adapted from [[@grauerOptionTradeClassification2022]]) (see also [[@leeInferringTradeDirection1991]])
 
-### Depth Rule
+### Depth Rule 🟢
+
 [[@grauerOptionTradeClassification2022]] promote using trade size information to improve the classification performance of midspread trades. In their >>depth rule<<, they infer the trade initiator from the bid's depth and ask for quotes. Based on the observation that an exceeding bid or ask quote relates to higher liquidity on one side, trades are classified as buyer-iniated for a larger ask size and seller-iniated for a higher bid size.
 
 As shown in Algorithm 2, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for assigning the initiator. To sign the remaining trades, other rules must follow thereafter.
@@ -174,7 +175,7 @@ Naturally,
 - for LR on CBOE data set see [[@easleyOptionVolumeStock1998]]
 - LR can not handle the simultanous arrival of market buy and sell orders. Thus, one side will always be wrongly classified. Equally, crossed limit orders are not handled correctly as both sides iniate a trade independent of each other (see [[@finucaneDirectTestMethods2000]]). 
 - LR is also available in bulked 
-### Reverse Lee and Ready Algorithm
+**Reverse LR algorithm:**
 - first introduced in [[@grauerOptionTradeClassification2022]] (p 12)
 - combines the quote and reverse tick rule
 - performs fairly well for options as shown in [[@grauerOptionTradeClassification2022]]
@@ -348,46 +349,86 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - See [[@huangTabTransformerTabularData2020]] for extensions.
 - Authors use unsupervised pretraining and supervised finetuning. They also try out techniques like pseudo labelling from [[@leePseudolabelSimpleEfficient 1]] for semi supervised learning among others.
 - For pratical implementation see: - For pratical implementation see [Self Supervised Pretraining - pytorch_widedeep](https://pytorch-widedeep.readthedocs.io/en/latest/pytorch-widedeep/self_supervised_pretraining.html)
+- single output neuron, fused loss describe what loss function is used
 # Empirical Study
-## Environment
-- Reproducability
-- Configuration
+- In the subsequent sections we apply methods from (...) in an empirical setting.
+## Environment 🟡
+As we aim for reproducability and configuration. We give a detailed description about the environment in which the experiments were conducted.
+
+> We recommend that authors state the name of the software and specific release version they used, and also cite the paper describing the tool. In cases when an updated version of a tool used has been published, it should be cited to ensure that the precise version used is clear. And when there is doubt, an e-mail to the developers could resolve the issue.
+(found in [[@GivingSoftwareIts2019]])
+
+**Data:** Data set versioning using `SHA256` hash. Data is loaded by key using `wandb` library.
+**Hardware:** Training and inference of our models is performed on the bwHPC cluster. Each node features ... cpus, ... gpus with cuda version ... and Ubuntu ... . If runpods (https://www.runpod.io/gpu-instance/pricing) or lambdalabs (https://lambdalabs.com/service/gpu-cloud) is used, cite it as well. If I use my docker image cite as well. Model training of gradient boosting approach and transformers is performed on accelerates. To guarantee deterministic behaviour (note gradient boosting may operate on samples, initializations of weights happens randomly, cuda runtime may perform non-deterministic optimizations) we fix the random seeds.
+**Software:** Python version (...). Cite packages as "pandas (v1.5.1)". List software packages:
+```python
+# copied from repo at 12/08/2022
+dependencies = [
+  "click==8.1.3",
+  "catboost==1.1",
+  "einops==0.6.0",
+  "fastparquet==2022.12.0",
+  "gcsfs==2022.11.0",
+  "google-auth==2.15.0", # needed by w&b in runpod
+  "modin==0.17.0",
+  "numpy==1.23.4",
+  "optuna==3.0.3",
+  "pandas==1.5.1",
+  "pandas-datareader==0.10.0",
+  "psutil==5.9.4", #needed by w&b
+  "pydantic==1.10.2",
+  "python-dotenv>=0.5.1",
+  "pyyaml==6.0",
+  "requests==2.28.1",
+  "scikit-learn==1.1.3",
+  "seaborn==0.12.1",
+  "shap==0.41.0",
+  "torch==1.13.0",
+  "tqdm==4.64.1",
+  "typer==0.7.0",
+  "wandb==0.13.5",
+]
+```
+
+- source code of experiments and paper is available at https://github.com/KarelZe/thesis/
 - Get some inspiration from https://madewithml.com/#mlops
-- Guide on visualizations https://www.nature.com/articles/s41467-020-19160-7
+
+## Data and Data Preparation 🟡
+
+- present data sets for this study
+- describe applied pre-processing
+- describe and reason about applied feature engineering
+- describe and reason about test and training split
+### ISE Data Set 🟡
+- We construct datasets that suffice (...) and serve as an input to our machine learning models. Refer to chapters (...) for which algorithm requires quote data and which requires price data.
+- the ISE data set is the primary target for the study. Use CBOE data set as backup, if needed.
+- data comes at a intra-day frequency (which resolution?)
+- Data spans from May 2, 2005 to May 31, 2017 + (new samples until 2020). The dates are chosen non-arbitrarily: May 2, 2005 is first day of ISE Open/ Close. May, 31 2017 is last day of availability. We adhere to the data ranges to maintain consistency with [[@grauerOptionTradeClassification2022]]
+- **Data sources from [[@grauerOptionTradeClassification2022]]:**
+	- intraday option price data from `LiveVol` at a transaction level resolution
+	- intraday option quote data from `LiveVol`
+	- end-of-day buy and sell trading volumes from `ISE Open/Close Trade Profile` (daily resolution)
+	- option and underlying characteristics from `Ivy DB OptionMetrics`
+- `LiveVol` dataset contains Specifially, the trade price and trade size / volume, nbbo quotes, quotes and quote sizes of the exchanges where the option is quoted and information on the exchange where the trade is executed (see [[@grauerOptionTradeClassification2022]])
+- Provide summary statistics, but wait until pre-processing and generation of true labels are introduced. May add pre-processing and generation of true labels in this chapter.
+
+TODO: Is the delay between trades and quotes relevant here? Probably not, due to how matching is performed in [[@grauerOptionTradeClassification2022]] (See discussion in [[@rosenthalModelingTradeDirection2012]]) 
 
 
 
+### CBOE Data Set 🟡
+describe if data set is actually used.
 
-## Data and Data Preparation
-
+### Pre-processing
 - convert data to managable size (see [[Preprocessing]])
-- https://github.com/aperezlebel/benchmark_mv_approaches
-- https://www.runpod.io/gpu-instance/pricing
-- https://lambdalabs.com/service/gpu-cloud
 
-### ISE Data Set
-- focus is on ISE data set
-- focus on `nbbo`
-- all kind of options are equally important
-- data comes at a daily frequency
-- Describe interesting properties of the data set. How are values distributed?
+**Filter:**
+- 
 - What preprocessing have been applied. See [[@grauerOptionTradeClassification2022]]
-- Data range from May 2, 2005 to May 31, 2017 + (new samples)
-- Is the delay between trades and quotes relevant here? (See discussion in [[@rosenthalModelingTradeDirection2012]]) Probably not as daily data?
-- Could I obtain access to the previously used data? What kind of features like volumes at certain exchanges would be available?
-- How many features does the data set contain? `8 categories for buy and sell volumes  x 4 trader types by option series x trading day`. 
-- What should be primary target e. g., classification on `NBBO`? -> all exchanges
-- Should the data set remain static or include new samples since publication? Hence, 2017 onwards for the ISE set. -> Focus on ISE 
-- merge data from ise + cboe -> needs features from stock exchanges
-- standardize numerical features and apply ordinal encoding to categorical features, but pass to the model which ones are categorical features similar to [[@borisovDeepNeuralNetworks2022]]. Note that [[@grinsztajnWhyTreebasedModels2022]] only applied quantile transformations to all features, thus not utilize special implementations for categorical variables.
-- Perform [[adversarial_validation]]
-- Different imputation appraoches are listed in [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]. Basic observation use approaches that can inherently handle missing values. This is a good tradeoff between performance and prediction quality.
-- For implementation of permutation importance see https://www.rasgoml.com/feature-engineering-tutorials/how-to-generate-feature-importance-plots-using-catboost
 - Data set is slightly imbalanced. Would not treat, as difference is only minor and makes it harder. Could make my final decision based on [[@japkowiczClassImbalanceProblem2002]] [[@johnsonSurveyDeepLearning2019]]. Some nice background is also in [[@huyenDesigningMachineLearning]]
 - [[@huyenDesigningMachineLearning]] discusses different sampling strategies. -> Could make sense to use stratified sampling or weighted sampling. With weighted sampling we could give classes that are notoriously hard to learn e. g., large trades or index options.
-- In my dataset the previous or subsequent trade price is already added as feature and thus does not have to be searched recursively.
-### CBOE Data Set
-- data comes at a daily frequency
+- standardize numerical features and apply ordinal encoding to categorical features, but pass to the model which ones are categorical features similar to [[@borisovDeepNeuralNetworks2022]]. Note that [[@grinsztajnWhyTreebasedModels2022]] only applied quantile transformations to all features, thus not utilize special implementations for categorical variables.
+- Different imputation appraoches are listed in [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]. Basic observation use approaches that can inherently handle missing values. This is a good tradeoff between performance and prediction quality.
 
 ### Generation of True Labels
 - To evaluate the performance of trade classification algoriths the true side of the trade needs to be known. To match LiveVol data, the total customer sell volume or total or total customer buy volume has to match with the transactions in LiveVol. Use unique key of trade date, expiration date, strike price, option type, and root symbol to match the samples. (see [[@grauerOptionTradeClassification2022]]) Notice, that this leads to an imperfect reconstruction!
@@ -397,7 +438,12 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Discuss how previously unused data could be used. This maps to the notion of supervised and semi-supervised learning
 - Pseudo Labeling?
 
-### Explanatory Data Analysis
+### Exploratory Data Analysis
+
+![[summary_statistics.png]]
+
+
+- Describe interesting properties of the data set. How are values distributed?
 - Examine the position of trade's prices relative to the quotes. This is of major importance in classical algorithms like LR, EMO or CLNV.
 - Study if classes are imbalanced and require further treatmeant. The work of [[@grauerOptionTradeClassification2022]] suggests that classes are rather balanced.
 - Study correlations between variables
@@ -470,10 +516,12 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - combine size features and price features into a ratio. e. g., "normalize" price with volume. Found this idea here [[@antoniouLognormalDistributionStock2004]]
 - log-transform can hamper interpretability [[@fengLogtransformationItsImplications2014]]
 - The right word for testing different settings e. g., scalings or imputation approaches is https://en.wikipedia.org/wiki/Ablation_(artificial_intelligence) 
+- In my dataset the previous or subsequent trade price is already added as feature and thus does not have to be searched recursively.
+
 ### Train-Test Split
 
 ^d50f5d
-
+- Perform [[adversarial_validation]]. 
 
 - discuss how split is chosen? Try to align with other works.
 - Discuss / visualize how training, validation and test set compare.
@@ -524,6 +572,8 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 
 ### Hyperparameter Tuning
 
+- we set a time budget and hyperparameter constraints
+- repeat with different random initializations e. g., use first https://de.wikipedia.org/wiki/Mersenne-Zahl as seeds
 - there is a trade-off between robustness of results and the computational effort / search space
 
 - Explain the importance why hyperparam tuning deserves its own chapter. - > even simple architectures can obtain SOTA-results with proper hyperparameter settings. -> See in-depth analysis in [[@melisStateArtEvaluation2017]] (found in [[@kadraWelltunedSimpleNets2021]])
@@ -555,6 +605,7 @@ Show differences from different initializations using a violin plot. (suggested 
 - For tree-parzen estimator see: https://neptune.ai/blog/optuna-guide-how-to-monitor-hyper-parameter-optimization-runs
 - Framing hyperparameter search as an optimization problem. https://www.h4pz.co/blog/2020/10/3/optuna-and-wandb
 - perform ablation study (https://en.wikipedia.org/wiki/Ablation_(artificial_intelligence)) when making important changes to the architecture. This has been done in [[@gorishniyRevisitingDeepLearning2021]].
+- For implementation of permutation importance see https://www.rasgoml.com/feature-engineering-tutorials/how-to-generate-feature-importance-plots-using-catboost
 
 ## Evaluation
 ### Feature Importance Measure
@@ -634,6 +685,8 @@ Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 - create kde plots to investigate misclassified samples further
 - ![[kde-plot-results 1.png]]
 - What is called robustnesss checks is also refered as **slice-based evaluation**. The data is separated into subsets and your model's performance on each subset is evaluated. A reason why slice-based evaluation is crucial is Simpson's paradox. A trend can exist in several subgroups, but disappear or reverse when the groups are combined. Slicing could happen based on heuristics, errors or a slice finder (See [[@huyenDesigningMachineLearning]])
+![[rankwise-correlations.png]]
+(found in [[@hansenApplicationsMachineLearning]], but also other papers)
 # 💣Discussion
 - What does it mean? Point out limitations and e. g., managerial implications or future impact.
 - How do wide models compare to deep models
