@@ -400,7 +400,8 @@ dependencies = [
 - describe and reason about applied feature engineering
 - describe and reason about test and training split
 ### ISE Data Set 🟡
-- We construct datasets that suffice (...) and serve as an input to our machine learning models. Refer to chapters (...) for which algorithm requires quote data and which requires price data.
+- We construct datasets that suffice (...) and serve as an input to our machine learning models. 
+- Refer to chapters (...) for which algorithm requires quote data (e. g., quote rule) and which requires price data (e. g., tick test).
 - the ISE data set is the primary target for the study. Use CBOE data set as backup, if needed.
 - data comes at a intra-day frequency (which resolution?)
 - Data spans from May 2, 2005 to May 31, 2017 + (new samples until 2020). The dates are chosen non-arbitrarily: May 2, 2005 is first day of ISE Open/ Close. May, 31 2017 is last day of availability. We adhere to the data ranges to maintain consistency with [[@grauerOptionTradeClassification2022]]
@@ -415,20 +416,36 @@ dependencies = [
 TODO: Is the delay between trades and quotes relevant here? Probably not, due to how matching is performed in [[@grauerOptionTradeClassification2022]] (See discussion in [[@rosenthalModelingTradeDirection2012]]) 
 
 
-
 ### CBOE Data Set 🟡
-describe if data set is actually used.
+describe if data set is actually used. Write similarily to 
 
-### Pre-processing
-- convert data to managable size (see [[Preprocessing]])
+### Pre-processing 🟡
+- infer minimimal data types to minimize memory requirements. No data loss happening as required resolution for e. g., mantisse is considered.  (see [here](https://github.com/KarelZe/thesis/blob/main/notebooks/1.0-mb-data_preprocessing_mem_reduce.ipynb) and [here](https://www.kaggle.com/code/gemartin/load-data-reduce-memory-usage/notebook)(not used) or [here](https://www.kaggle.com/code/wkirgsn/fail-safe-parallel-memory-reduction) (not used))
 
 **Filter:**
-- 
-- What preprocessing have been applied. See [[@grauerOptionTradeClassification2022]]
+- What preprocessing have been applied. Minimal set of filters. See [[@grauerOptionTradeClassification2022]]
+**Scaling:**
+- TODO: Why do we perform feature scaling at all?
+- TODO: Try out robust scaler, as data contains outliers. Robust scaler uses the median which is robust to outliers and iqr for scaling. 
+- TODO: Try out different IQR thresholds and report impact. Similarily done here: https://machinelearningmastery.com/robust-scaler-transforms-for-machine-learning/
+- We scale / normalize features to a $\left[-1,1\right]$  scale using statistics estimated on the training set to avoid data leakage. This is also recommended in [[@huyenDesigningMachineLearning]]. Interestingly, she also writes that empirically the interval $\left[-1,1\right]$ works better than $\left[0,1\right]$. Also read about this on stackoverflow for neural networks, which has to do with gradient calculation.
+- Scale to an arbitrary range $\left[a,b\right]$ using the formula from [[@huyenDesigningMachineLearning]]:
+$$
+x^{\prime}=a+\frac{(x-\min (x))(b-a)}{\max (x)-\min (x)}
+$$
+- Feature scaling theoretically shouldn't be relevant for gradient boosting due to the way gbms select split points / not based on distributions. Also in my tests it didn't make much of a difference for gbms but for transformers. (see https://github.com/KarelZe/thesis/blob/main/notebooks/3.0b-mb-comparsion-transformations.ipynb) 
+- [[@ronenMachineLearningTrade2022]] performed no feature scaling.
+- [[@borisovDeepNeuralNetworks2022]] standardize numerical features and apply ordinal encoding to categorical features, but pass to the model which ones are categorical features. 
+- [[@gorishniyRevisitingDeepLearning2021]] (p. 6) use quantile transformation, which is similar to the robust scaler, see https://scikit-learn.org/stable/auto_examples/preprocessing/plot_all_scaling.html#sphx-glr-auto-examples-preprocessing-plot-all-scaling-pyf) Note that [[@grinsztajnWhyTreebasedModels2022]] only applied quantile transformations to all features, thus not utilize special implementations for categorical variables.
+**Class imbalances:**
 - Data set is slightly imbalanced. Would not treat, as difference is only minor and makes it harder. Could make my final decision based on [[@japkowiczClassImbalanceProblem2002]] [[@johnsonSurveyDeepLearning2019]]. Some nice background is also in [[@huyenDesigningMachineLearning]]
 - [[@huyenDesigningMachineLearning]] discusses different sampling strategies. -> Could make sense to use stratified sampling or weighted sampling. With weighted sampling we could give classes that are notoriously hard to learn e. g., large trades or index options.
-- standardize numerical features and apply ordinal encoding to categorical features, but pass to the model which ones are categorical features similar to [[@borisovDeepNeuralNetworks2022]]. Note that [[@grinsztajnWhyTreebasedModels2022]] only applied quantile transformations to all features, thus not utilize special implementations for categorical variables.
+
+**imputation:**
+- Best do a large-scale comparsion as already done for some transformations in  https://github.com/KarelZe/thesis/blob/main/notebooks/3.0b-mb-comparsion-transformations.ipynb. My feeling is that differences are neglectable. 
 - Different imputation appraoches are listed in [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]. Basic observation use approaches that can inherently handle missing values. This is a good tradeoff between performance and prediction quality.
+- simple overview for imputation https://towardsdatascience.com/6-different-ways-to-compensate-for-missing-values-data-imputation-with-examples-6022d9ca0779
+- Refer to previous chapters e. g., on gradient boosting, where handling of missing values should be captured.
 
 ### Generation of True Labels
 - To evaluate the performance of trade classification algoriths the true side of the trade needs to be known. To match LiveVol data, the total customer sell volume or total or total customer buy volume has to match with the transactions in LiveVol. Use unique key of trade date, expiration date, strike price, option type, and root symbol to match the samples. (see [[@grauerOptionTradeClassification2022]]) Notice, that this leads to an imperfect reconstruction!
@@ -454,6 +471,10 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - The approach of [[@grauerOptionTradeClassification2022]] matches the LiveVol data set, only if there is a matching volume on buyer or seller side. Results in 40 % reconstruction rate [[@grauerOptionTradeClassification2022]](p. 9). 
 - In [[@easleyOptionVolumeStock1998]] CBOE options are more often actively bought than sold (53 %). Also, the number of trades at the midpoints is decreasing over time [[@easleyOptionVolumeStock1998]]. Thus the authors reason, that classification with quote data should be sufficient. Compare this with my sample!
 ### Feature Engineering
+- Which features are very different in the training set and the validation set?
+- Which features are most important in adversarial validation?
+- Plot distributions of features from training and validation set. Could also test using https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test test if samples are drawn from the same distribution.
+- See https://neptune.ai/blog/tabular-data-binary-classification-tips-and-tricks-from-5-kaggle-competitions for more ideas
 - Previously not done due to use of simple rules only. 
 - Try different encondings e. g., of the spread.
 - Which architectures require what preprocessing? Derive?
@@ -518,20 +539,48 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - The right word for testing different settings e. g., scalings or imputation approaches is https://en.wikipedia.org/wiki/Ablation_(artificial_intelligence) 
 - In my dataset the previous or subsequent trade price is already added as feature and thus does not have to be searched recursively.
 
-### Train-Test Split
+### Train-Test Split 🟡
 
 ^d50f5d
-- Perform [[adversarial_validation]]. 
+- https://www.coursera.org/learn/machine-learning-projects#syllabus
 
-- discuss how split is chosen? Try to align with other works.
-- Discuss / visualize how training, validation and test set compare.
-- compare distributions of data as part of the data analysis?
-- Use a stratified train-test-split to maintain the distribution of the target variable.
+**How:**
+We perform a split into three disjoint sets.
+**Sets:**
+- Training set is used to fit the model to the data
+- Validation set is there for tuning the hyperparameters. [[@hastietrevorElementsStatisticalLearning2009]] (p. 222) write "to estimate prediction error for model selection"
+- Test set for unbiased, out-of-sample performance estimates. [[@hastietrevorElementsStatisticalLearning2009]] write "estimate generalization error of the model" (p. 222)
+- Common splitting strategy should be dependent on the training sample size and signal-to-noise ratio in the data. [[@hastietrevorElementsStatisticalLearning2009]] (p. 222)
+- A common split is e g. 50-25-25. [[@hastietrevorElementsStatisticalLearning2009]] (p. 222)
+- We use a 60-20-20 split, and assign dates to be either in one set to simplify evaluation.
+
+**Why:**
+The split is required to get unbiased performance estimates of our models. It is not required for classical rules, as these rules have no parameters to estimates or hyperparameters to tune.
+To facilitate a fair comparsion we compare both classical rules and our machine learning approches on the common test set and neglect training and validation data for classical rules.
+
+**Classical split over random split:**
+A classical train test split is advantegous for a number of reasons:
+- We maintain the temporal ordering within the data and avoid data leakage: e. g., from unknown `ROOT`s, as only trailing observations are used. (see similar reasoning in [[@lopezdepradoAdvancesFinancialMachine2018]] for trading strategies).
+- The train set holds the most recent and thus most relevant observations.
+- Work of [[@grauerOptionTradeClassification2022]] showed that the classification performance deterioriates over time. Thus, most recent data poses the most rigorous test conditions due to the identical data basis.
+- Splitting time-correlated data randomly can bias the results and correlations are often non-obvious e. g., `ROOT`s, advent of etfs. She advocates to split data *by time* to avoid leakage (See [[@huyenDesigningMachineLearning]] (p. 137)).
+- [[@ronenMachineLearningTrade2022]] performed a 70-30 % random split. This can be problematic for obvious reasons.
+**Classical split over CV:**
+- computational complexity
+- Observations in finance are often not iid. The test set is used multiple times during model development resulting in a testing and selection bias [[@lopezdepradoAdvancesFinancialMachine2018]]. Serial correlation might be less of an issue here.
 - use $k$ fold cross validation if possible (see motivation in e. g. [[@banachewiczKaggleBookData2022]] or [[@batesCrossvalidationWhatDoes2022]])
 - A nice way to visualize that the models do not overfit is to show how much errors vary across the test folds.
+- On cross-validation cite [[@batesCrossvalidationWhatDoes2022]]
+**Moving window:**
+- Why no moving window. Reason about computational complexity.
+**Evaluate similarity of train, test and validation set:**
+- Perform [[adversarial_validation]] or https://medium.com/mlearning-ai/adversarial-validation-battling-overfitting-334372b950ba. More of a practioner's approach than a scientific approach though. 
+- discuss how split is chosen? Try to align with other works.
+- compare distributions of data as part of the data analysis?
 - Think about using a $\chi^2$ test to estimate the similarity between train and test set. Came up with this idea while reading [[@aitkenIntradayAnalysisProbability1995]]. Could help finding features or feature transformations that yield a similar train and test set.
+- Write how target variable is distributed in each set. 
+ Show that a stratified train-test-split is likely not necessary to maintain the distribution of the target variable.
 - Plot learning curves to estimate whether performance will increase with the number of samples. Use it to motivate semi-supervised learning.  [Plotting Learning Curves — scikit-learn 1.1.2 documentation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html) and [Tutorial: Learning Curves for Machine Learning in Python for Data Science (dataquest.io)](https://www.dataquest.io/blog/learning-curves-machine-learning/)
-- On cross-validation read [[@batesCrossvalidationWhatDoes2022]]
 ![[learning-curves-samples 1.png]]
 
 ## Training and Tuning
@@ -566,6 +615,7 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 	- also see https://keras.io/examples/structured_data/tabtransformer/
 	- use einsum that is part of torch already instead of external libary as done in  https://github.com/radi-cho/GatedTabTransformer/blob/master/gated_tab_transformer/gated_tab_transformer.py
 	- Alternatively see https://github.com/timeseriesAI/tsai/blob/be3c787d6e6d0e41839faa3e62d74145c851ef9c/tsai/models/TabTransformer.py#L133 or original implementation https://github.com/autogluon/autogluon/blob/master/tabular/src/autogluon/tabular/models/tab_transformer/tab_transformer.py
+	- We implement the classical rules as a classifier conforming to the sklearn api
 ### Training of Semi-Supervised Models
 - Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 
 - Use learning curves from [[#^d50f5d]].
