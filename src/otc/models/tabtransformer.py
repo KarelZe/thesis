@@ -18,7 +18,7 @@ import torch.nn.functional as F
 from einops import rearrange
 from torch import einsum, nn
 
-from modules import GeGLU
+from otc.models.activation import GeGLU
 
 class Residual(nn.Module):
     """

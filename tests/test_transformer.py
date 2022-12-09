@@ -62,6 +62,7 @@ class TestTabTransformer(templates.NeuralNetTestsMixin):
             mlp_hidden_mults=(4, 2),
         ).to(device)
 
+
 class TestFTTransformer(templates.NeuralNetTestsMixin):
     """
     Perform tests specified in `NeuralNetTestsMixin` for\
@@ -99,46 +100,36 @@ class TestFTTransformer(templates.NeuralNetTestsMixin):
 
         # https://github.com/Yura52/rtdl/blob/main/rtdl/modules.py
 
-        params_feature_tokenizer = {"d_num_features":self.num_features_cont, "cat_cardinalities":self.num_unique_cat, "d_token": 96}
+        params_feature_tokenizer = {
+            "n_num_features": self.num_features_cont,
+            "cat_cardinalities": self.num_unique_cat,
+            "d_token": 96,
+        }
         feature_tokenizer = FeatureTokenizer(**params_feature_tokenizer)
         params_transformer = {
-            "d_token":,
-            "num_blocks":,
-            'attention_n_heads': 8,
-            'attention_initialization': 'kaiming',
-            'ffn_activation': 'ReGLU',
-            'attention_normalization': 'LayerNorm',
-            'ffn_normalization': 'LayerNorm',
-            'prenormalization': True,
-            'first_prenormalization': False,
-            'last_layer_query_idx': None,
-            'n_tokens': None,
-            'kv_compression_ratio': None,
-            'kv_compression_sharing': None,
-            'head_activation': 'ReLU',
-            'head_normalization': 'LayerNorm',
+            "d_token": 96,
+            "n_blocks": 3,
+            "attention_n_heads": 8,
+            "attention_initialization": "kaiming",
+            "ffn_activation": "ReGLU",
+            "attention_normalization": "LayerNorm",
+            "ffn_normalization": "LayerNorm",
+            "ffn_dropout": 0.1,
+            "ffn_d_hidden": 96 * 2,
+            "attention_dropout": 0.1,
+            'residual_dropout': 0.1,
+            "prenormalization": True,
+            "first_prenormalization": False,
+            "last_layer_query_idx": None,
+            "n_tokens": None,
+            "kv_compression_ratio": None,
+            "kv_compression_sharing": None,
+            "head_activation": "ReLU",
+            "head_normalization": "LayerNorm",
+            "d_out":1
         }
-        grid = {
-            'd_token': [96, 128, 192, 256, 320, 384],
-            'attention_dropout': [0.1, 0.15, 0.2, 0.25, 0.3, 0.35],
-            'ffn_dropout': [0.0, 0.05, 0.1, 0.15, 0.2, 0.25],
-        }
-        arch_subconfig = {k: v[n_blocks - 1] for k, v in grid.items()}  # type: ignore
-        baseline_subconfig = cls.get_baseline_transformer_subconfig()
-        # (4 / 3) for ReGLU/GEGLU activations results in almost the same parameter count
-        # as (2.0) for element-wise activations (e.g. ReLU or GELU; see the "else" branch)
-        ffn_d_hidden_factor = (
-            (4 / 3) if _is_glu_activation(baseline_subconfig['ffn_activation']) else 2.0
-        )
-        return {
-            'n_blocks': n_blocks,
-            'residual_dropout': 0.0,
-            'ffn_d_hidden': int(arch_subconfig['d_token'] * ffn_d_hidden_factor),
-            **arch_subconfig,
-            **baseline_subconfig,
+
 
         transformer = Transformer(**params_transformer)
 
-
         self.net = FTTransformer(feature_tokenizer, transformer).to(device)
-

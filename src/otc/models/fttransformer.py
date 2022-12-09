@@ -793,7 +793,7 @@ class FTTransformer(nn.Module):
         )
         self.transformer = transformer
 
-    def forward(self, x_num: Optional[Tensor], x_cat: Optional[Tensor]) -> Tensor:
+    def forward(self, x_cat: Optional[Tensor], x_num: Optional[Tensor]) -> Tensor:
         x = self.feature_tokenizer(x_num, x_cat)
         x = self.cls_token(x)
         x = self.transformer(x)
