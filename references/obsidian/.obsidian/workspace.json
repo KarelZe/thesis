@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 72.89812067260138,
+        "dimension": 36.26681614349776,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -27,7 +27,7 @@
       {
         "id": "ba8d02bbd18c77cd",
         "type": "tabs",
-        "dimension": 27.101879327398613,
+        "dimension": 63.73318385650224,
         "children": [
           {
             "id": "117a2e352192e6b6",
@@ -135,17 +135,17 @@
     "direction": "horizontal",
     "width": 481.5
   },
-  "active": "6942b2f8be896a2c",
+  "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
+    "TOC.md",
+    "❓Questions.md",
     "🎄Tree-based Methods/Random Forests/@breimanBaggingPredictors1996.md",
     "🍬Implementation/@banachewiczKaggleBookData2022.md",
-    "TOC.md",
     "👨‍👩‍👧‍👦Related Works/@aitkenIntradayAnalysisProbability1995.md",
     "🍬Implementation/🎯Hyperparameter Tuning/@batesCrossvalidationWhatDoes2022.md",
     "🍬Implementation/🔢Preprocessing/Preprocessing.md",
     "🖼️Media/ft-tab-transformer.png",
     "🖼️Media/tabtransformer-architecture.png",
-    "❓Questions.md",
     "🍬Implementation/🧜‍♂️Optuna-PyTorch.md"
   ]
 }
