@@ -25,6 +25,7 @@ from otc.data.dataset import TabDataset
 from otc.models.callback import CallbackContainer, PrintCallback, SaveCallback
 from otc.models.classical_classifier import ClassicalClassifier
 from otc.models.tabtransformer import TabTransformer
+from otc.models.tabnet import TabNet
 from otc.optim.early_stopping import EarlyStopping
 
 
