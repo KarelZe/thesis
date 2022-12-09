@@ -18,6 +18,7 @@ import torch.nn.functional as F
 from einops import rearrange
 from torch import einsum, nn
 
+from modules import GeGLU
 
 class Residual(nn.Module):
     """
@@ -85,32 +86,6 @@ class PreNorm(nn.Module):
         return self.fn(self.norm(x), **kwargs)
 
 
-class GEGLU(nn.Module):
-    r"""
-    Implementation of the GeGLU activation function.
-
-    Given by:
-    $\operatorname{GeGLU}(x, W, V, b, c)=\operatorname{GELU}(x W+b) \otimes(x V+c)$
-
-    Proposed in https://arxiv.org/pdf/2002.05202v1.pdf.
-
-    Args:
-        nn (torch.Tensor): module
-    """
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """
-        Forward pass of GeGlU activation.
-
-        Args:
-            x (torch.Tensor): input tensor.
-
-        Returns:
-            torch.Tensor: output tensor.
-        """
-        x, gates = x.chunk(2, dim=-1)
-        return x * F.gelu(gates)
-
 
 class FeedForward(nn.Module):
     """
@@ -136,7 +111,7 @@ class FeedForward(nn.Module):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(dim, dim * mult * 2),
-            GEGLU(),
+            GeGLU(),
             nn.Dropout(dropout),
             nn.Linear(dim * mult, dim),
         )
