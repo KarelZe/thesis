@@ -432,7 +432,7 @@ class TabTransformer(nn.Module):
             x_cont (torch.Tensor): tensor with continous data.
 
         Returns:
-            torch.Tensor: predictions with shape [batch, 1]
+            torch.Tensor: predictions
         """
         flat_categ: torch.Tensor | None = None
 

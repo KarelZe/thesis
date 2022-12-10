@@ -1,4 +1,6 @@
 """
+Implementation of FTTraansformer model.
+
 Adapted from:
 https://github.com/Yura52/rtdl/
 """
@@ -19,7 +21,13 @@ _INTERNAL_ERROR_MESSAGE = "Internal error. Please, open an issue."
 
 def _is_glu_activation(activation: Callable[..., nn.Module]) -> bool:
     """
-    Checks if the activation is a GLU variant.
+    Check if the activation is a GLU variant.
+
+    Args:
+        activation (Callable[..., nn.Module]): activation function
+
+    Returns:
+        bool: truth value.
     """
     return (
         isinstance(activation, str)
@@ -30,29 +38,20 @@ def _is_glu_activation(activation: Callable[..., nn.Module]) -> bool:
 
 def _all_or_none(values: List[Any]) -> bool:
     """
-    Checks if all values are None or all values are not None.
+    Check if all values are None or all values are not None.
 
     Args:
         values (List[Any]): List with values
 
     Returns:
-        bool: result of check.
+        bool: truth value.
     """
     return all(x is None for x in values) or all(x is not None for x in values)
 
 
 class _TokenInitialization(enum.Enum):
     """
-    Implmentation of TokenInitialization scheme.
-
-    Args:
-        enum (_type_): _description_
-
-    Raises:
-        ValueError: _description_
-
-    Returns:
-        _type_: _description_
+    Implementation of TokenInitialization scheme.
     """
 
     UNIFORM = "uniform"
@@ -67,6 +66,13 @@ class _TokenInitialization(enum.Enum):
             raise ValueError(f"initialization must be one of {valid_values}")
 
     def apply(self, x: torch.Tensor, d: int) -> None:
+        """
+        Initiliaze the tensor.
+
+        Args:
+            x (torch.Tensor): input tensor
+            d (int): degree of quare root
+        """
         d_sqrt_inv = 1 / math.sqrt(d)
         if self == _TokenInitialization.UNIFORM:
             # used in the paper "Revisiting Deep Learning Models for Tabular Data";
@@ -97,6 +103,8 @@ class NumericalFeatureTokenizer(nn.Module):
         initialization: str,
     ) -> None:
         """
+        Initialize the module.
+
         Args:
             n_features: the number of continuous (scalar) features
             d_token: the size of one token
@@ -123,15 +131,24 @@ class NumericalFeatureTokenizer(nn.Module):
 
     @property
     def n_tokens(self) -> int:
-        """The number of tokens."""
+        """Calculate number of tokens."""
         return len(self.weight)
 
     @property
     def d_token(self) -> int:
-        """The size of one token."""
+        """Calculate size of one token."""
         return self.weight.shape[1]
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Perform forward pass.
+
+        Args:
+            x (torch.Tensor): input tensor.
+
+        Returns:
+            torch.Tensor: output tensor.
+        """
         x = self.weight[None] * x[..., None]
         if self.bias is not None:
             x = x + self.bias[None]
@@ -157,6 +174,8 @@ class CategoricalFeatureTokenizer(nn.Module):
         initialization: str,
     ) -> None:
         """
+        Initialize the module.
+
         Args:
             cardinalities: the number of distinct values for each feature. For example,
                 :code:`cardinalities=[3, 4]` describes two features: the first one can
@@ -191,15 +210,28 @@ class CategoricalFeatureTokenizer(nn.Module):
 
     @property
     def n_tokens(self) -> int:
-        """The number of tokens."""
+        """
+        Calculate the number of tokens.
+        """
         return len(self.category_offsets)
 
     @property
     def d_token(self) -> int:
-        """The size of one token."""
+        """
+        Calculate the size of one token.
+        """
         return self.embeddings.embedding_dim
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Perform forward pass.
+
+        Args:
+            x (torch.Tensor): input tensor.
+
+        Returns:
+            torch.Tensor: output tensor.
+        """
         x = self.embeddings(x + self.category_offsets[None])
         if self.bias is not None:
             x = x + self.bias[None]
@@ -227,6 +259,8 @@ class FeatureTokenizer(nn.Module):
         d_token: int,
     ) -> None:
         """
+        Initialize the module.
+
         Args:
             n_num_features: the number of continuous features. Pass :code:`0` if there
                 are no numerical features.
@@ -262,7 +296,7 @@ class FeatureTokenizer(nn.Module):
 
     @property
     def n_tokens(self) -> int:
-        """The number of tokens."""
+        """Calculate the number of tokens."""
         return sum(
             x.n_tokens
             for x in [self.num_tokenizer, self.cat_tokenizer]
@@ -271,7 +305,7 @@ class FeatureTokenizer(nn.Module):
 
     @property
     def d_token(self) -> int:
-        """The size of one token."""
+        """Calculate size of one token."""
         return (
             self.cat_tokenizer.d_token  # type: ignore
             if self.num_tokenizer is None
@@ -326,6 +360,8 @@ class CLSToken(nn.Module):
 
     def __init__(self, d_token: int, initialization: str) -> None:
         """
+        Initialize the module.
+
         Args:
             d_token: the size of token
             initialization: initialization policy for parameters. Must be one of
@@ -345,7 +381,8 @@ class CLSToken(nn.Module):
         initialization_.apply(self.weight, d_token)
 
     def expand(self, *leading_dimensions: int) -> torch.Tensor:
-        """Expand (repeat) the underlying [CLS]-token to a tensor with the given
+        """
+        Expand (repeat) the underlying [CLS]-token to a tensor with the given\
         leading dimensions.
 
         A possible use case is building a batch of [CLS]-tokens. See `CLSToken` for
@@ -365,12 +402,15 @@ class CLSToken(nn.Module):
         return self.weight.view(*new_dims, -1).expand(*leading_dimensions, -1)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """Append self **to the end** of each item in the batch (see `CLSToken`)."""
+        """
+        Append self **to the end** of each item in the batch (see `CLSToken`).
+        """
         return torch.cat([x, self.expand(len(x), 1)], dim=1)
 
 
 class MultiheadAttention(nn.Module):
-    """Multihead Attention (self-/cross-) with optional 'linear' attention.
+    """
+    Multihead Attention (self-/cross-) with optional 'linear' attention.
 
     To learn more about Multihead Attention, see [devlin2018bert].
 
@@ -396,6 +436,8 @@ class MultiheadAttention(nn.Module):
         initialization: str,
     ) -> None:
         """
+        Initialize the module.
+
         Args:
             d_token: the token size. Must be a multiple of :code:`n_heads`.
             n_heads: the number of heads. If greater than 1, then the module will have
@@ -438,6 +480,15 @@ class MultiheadAttention(nn.Module):
             nn.init.zeros_(self.W_out.bias)
 
     def _reshape(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Reshape the input tensor to the shape [].
+
+        Args:
+            x (torch.Tensor): input tensor.
+
+        Returns:
+            torch.Tensor: output tensor.
+        """
         batch_size, n_tokens, d = x.shape
         d_head = d // self.n_heads
         return (
@@ -457,12 +508,15 @@ class MultiheadAttention(nn.Module):
         Perform the forward pass.
 
         Args:
-            x_q: query tokens
-            x_kv: key-value tokens
-            key_compression: Linformer-style compression for keys
-            value_compression: Linformer-style compression for values
+            x_q (torch.Tensor): query tokens
+            x_kv (torch.Tensor): key-value tokens
+            key_compression (Optional[nn.Linear]): Linformer-style compression for keys
+            value_compression (Optional[nn.Linear]): Linformer-style compression for
+            values
+
         Returns:
-            (tokens, attention_stats)
+            Tuple[torch.Tensor, Dict[str, torch.Tensor]]: Tuple with tokens and
+            attention_stats
         """
         assert _all_or_none(
             [key_compression, value_compression]
@@ -518,7 +572,18 @@ class Transformer(nn.Module):
             bias_second: bool,
             dropout: float,
             activation: Callable[..., nn.Module],
-        ):
+        ) -> None:
+            """
+            Initialize the module.
+
+            Args:
+                d_token (int): dimensionality of token.
+                d_hidden (int): dimensionality of hidden layers.
+                bias_first (bool): flag indicating whether to use bias in the first
+                bias_second (bool): flag indicating whether to use bias in the second
+                dropout (float): degree of dropout
+                activation (Callable[..., nn.Module]): activation function.
+            """
             super().__init__()
             self.linear_first = nn.Linear(
                 d_token,
@@ -530,6 +595,15 @@ class Transformer(nn.Module):
             self.linear_second = nn.Linear(d_hidden, d_token, bias_second)
 
         def forward(self, x: torch.Tensor) -> torch.Tensor:
+            """
+            Perform the forward pass.
+
+            Args:
+                x (torch.Tensor): input tensor.
+
+            Returns:
+                torch.Tensor: output tensor.
+            """
             x = self.linear_first(x)
             x = self.activation(x)
             x = self.dropout(x)
@@ -551,12 +625,31 @@ class Transformer(nn.Module):
             normalization: Callable[..., nn.Module],
             d_out: int,
         ):
+            """
+            Initialize the module.
+
+            Args:
+                d_in (int): dimension of the input
+                bias (bool): add bias to the linear layer
+                activation (Callable[..., nn.Module]): activation function
+                normalization (Callable[..., nn.Module]): normalization layer
+                d_out (int): dimension of the output
+            """
             super().__init__()
             self.normalization = normalization(d_in)
             self.activation = activation()
             self.linear = nn.Linear(d_in, d_out, bias)
 
         def forward(self, x: torch.Tensor) -> torch.Tensor:
+            """
+            Perform the forward pass.
+
+            Args:
+                x (torch.Tensor): input tensor.
+
+            Returns:
+                torch.Tensor: output tensor.
+            """
             x = x[:, -1]
             x = self.normalization(x)
             x = self.activation(x)
@@ -587,6 +680,37 @@ class Transformer(nn.Module):
         head_normalization: Callable[..., nn.Module],
         d_out: int,
     ) -> None:
+        """
+        Initialize the module.
+
+        Args:
+            d_token (int): _description_
+            n_blocks (int): _description_
+            attention_n_heads (int): _description_
+            attention_dropout (float): _description_
+            attention_initialization (str): _description_
+            attention_normalization (nn.Module): _description_
+            ffn_d_hidden (int): _description_
+            ffn_dropout (float): _description_
+            ffn_activation (nn.Module): _description_
+            ffn_normalization (nn.Module): _description_
+            residual_dropout (float): _description_
+            prenormalization (bool): _description_
+            first_prenormalization (bool): _description_
+            last_layer_query_idx (Union[None, List[int], slice]): _description_
+            n_tokens (Optional[int]): _description_
+            kv_compression_ratio (Optional[float]): _description_
+            kv_compression_sharing (Optional[str]): _description_
+            head_activation (Callable[..., nn.Module]): _description_
+            head_normalization (Callable[..., nn.Module]): _description_
+            d_out (int): _description_
+
+        Raises:
+            ValueError: _description_
+
+        Returns:
+            _type_: _description_
+        """
         super().__init__()
         if isinstance(last_layer_query_idx, int):
             raise ValueError(
@@ -704,6 +828,15 @@ class Transformer(nn.Module):
         return x
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Perform forward pass.
+
+        Args:
+            x (torch.Tensor): input tensor.
+
+        Returns:
+            torch.Tensor: output tensor.
+        """
         assert (
             x.ndim == 3
         ), "The input must have 3 dimensions: (n_objects, n_tokens, d_token)"
@@ -755,6 +888,13 @@ class FTTransformer(nn.Module):
     def __init__(
         self, feature_tokenizer: FeatureTokenizer, transformer: Transformer
     ) -> None:
+        """
+        Initialize the module.
+
+        Args:
+            feature_tokenizer (FeatureTokenizer): _description_
+            transformer (Transformer): _description_
+        """
         super().__init__()
         self.feature_tokenizer = feature_tokenizer
         self.cls_token = CLSToken(
@@ -765,6 +905,16 @@ class FTTransformer(nn.Module):
     def forward(
         self, x_cat: Optional[torch.Tensor], x_cont: Optional[torch.Tensor]
     ) -> torch.Tensor:
+        """
+        Perform forward pass.
+
+        Args:
+            x_cat (Optional[torch.Tensor]): tensor with categorical data.
+            x_cont (Optional[torch.Tensor]): tensor with continous data.
+
+        Returns:
+            torch.Tensor: predictions
+        """
         x = self.feature_tokenizer(x_cont, x_cat)
         x = self.cls_token(x)
         x = self.transformer(x)

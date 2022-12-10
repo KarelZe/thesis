@@ -369,9 +369,9 @@ class FTTransformerObjective(Objective):
         d_tokens = [96, 128, 192, 256, 320, 384]
         d_token: int = trial.suggest_categorical("d_token", d_tokens)  # type: ignore
         attention_dropouts = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35]
-        attention_dropout: int = trial.suggest_categorical("attention_dropout", attention_dropouts)  # type: ignore
+        attention_dropout: int = trial.suggest_categorical("attention_dropout", attention_dropouts)  # type: ignore # noqa: E501
         ffn_dropouts = [0.0, 0.05, 0.1, 0.15, 0.2, 0.25]
-        ffn_dropout: int = trial.suggest_categorical("ffn_dropout", ffn_dropouts)  # type: ignore
+        ffn_dropout: int = trial.suggest_categorical("ffn_dropout", ffn_dropouts)  # type: ignore # noqa: E501
 
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
@@ -435,7 +435,7 @@ class FTTransformerObjective(Objective):
             "d_out": 1,
         }
 
-        feature_tokenizer = FeatureTokenizer(**feature_tokenizer_kwargs) # type: ignore
+        feature_tokenizer = FeatureTokenizer(**feature_tokenizer_kwargs)  # type: ignore
         transformer = Transformer(**transformer_kwargs)
         self._clf = FTTransformer(feature_tokenizer, transformer).to(device)
 
