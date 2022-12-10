@@ -1,21 +1,14 @@
 """
 Tests for Objectives.
-
-TODO: Update doc strings
 """
 import datetime as dt
 import os
-from unittest.mock import patch
 
 import numpy as np
 import optuna
 import pandas as pd
 
-from otc.models.objective import (
-    FTTransformerObjective,
-    GradientBoostingObjective,
-    TabTransformerObjective,
-)
+from otc.models.objective import GradientBoostingObjective
 
 
 class TestObjectives:
@@ -66,74 +59,6 @@ class TestObjectives:
 
         study.enqueue_trial(params)
         study.optimize(objective, n_trials=1)
-
-        # check if accuracy is >= 0 and <=1.0
-        assert 0.0 <= study.best_value <= 1.0
-
-    def test_fttransformer_objective(self) -> None:
-        """
-        Test if FTTransformer objective returns a valid value.
-
-        Value obtained is the accuracy. Should lie in [0,1].
-        Value may not be NaN.
-        """
-        params = {
-            "n_blocks": 1,
-            "d_token": 96,
-            "attention_dropout": 0.1,
-            "ffn_dropout": 0.1,
-            "weight_decay": 0.01,
-            "learning_rate": 3e-4,
-            "batch_size": 8192,
-        }
-
-        study = optuna.create_study(direction="maximize")
-        objective = FTTransformerObjective(
-            self._x_train,
-            self._y_train,
-            self._x_val,
-            self._y_val,
-            cat_features=[],
-            cat_cardinalities=[],
-        )
-
-        with patch.object(objective, "epochs", 1):
-            study.enqueue_trial(params)
-            study.optimize(objective, n_trials=1)
-
-        # check if accuracy is >= 0 and <=1.0
-        assert 0.0 <= study.best_value <= 1.0
-
-    def test_tabtransformer_objective(self) -> None:
-        """
-        Test if TabTransformer objective returns a valid value.
-
-        Value obtained is the accuracy. Should lie in [0,1].
-        Value may not be NaN.
-        """
-        params = {
-            "dim": 32,
-            "depth": 1,
-            "heads": 8,
-            "weight_decay": 0.01,
-            "learning_rate": 3e-4,
-            "dropout": 0.1,
-            "batch_size": 8192,
-        }
-
-        study = optuna.create_study(direction="maximize")
-        objective = TabTransformerObjective(
-            self._x_train,
-            self._y_train,
-            self._x_val,
-            self._y_val,
-            cat_features=[],
-            cat_cardinalities=[],
-        )
-
-        with patch.object(objective, "epochs", 1):
-            study.enqueue_trial(params)
-            study.optimize(objective, n_trials=1)
 
         # check if accuracy is >= 0 and <=1.0
         assert 0.0 <= study.best_value <= 1.0
