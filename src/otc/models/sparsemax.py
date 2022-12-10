@@ -1,17 +1,23 @@
+# flake8: noqa
+# mypy: ignore-errors
+
+# FIXME: add types and comment if model is actually used.
+
 """
 Adapted from:
 https://github.com/dreamquark-ai/tabnet/blob/develop/pytorch_tabnet/sparsemax.py
 """
 
-from torch import nn
-from torch.autograd import Function
-import torch.nn.functional as F
+from typing import Tuple
 
 import torch
+import torch.nn.functional as F
+from torch import nn
+from torch.autograd import Function
 
 
 # credits to Yandex https://github.com/Qwicen/node/blob/master/lib/nn_utils.py
-def _make_ix_like(input, dim=0):
+def _make_ix_like(input: torch.Tensor, dim: int = 0) -> torch.Tensor:
     d = input.size(dim)
     rho = torch.arange(1, d + 1, device=input.device, dtype=input.dtype)
     view = [1] * input.dim()
@@ -27,7 +33,11 @@ class SparsemaxFunction(Function):
     """
 
     @staticmethod
-    def forward(ctx, input, dim=-1):
+    def forward(
+        ctx: torch.autograd.function._ContextMethodMixin,
+        input: torch.Tensor,
+        dim: int = -1,
+    ) -> torch.Tensor:
         """sparsemax: normalizing sparse transform (a la softmax)
         Parameters
         ----------
@@ -50,7 +60,9 @@ class SparsemaxFunction(Function):
         return output
 
     @staticmethod
-    def backward(ctx, grad_output):
+    def backward(
+        ctx: torch.autograd.function._ContextMethodMixin, grad_output: torch.Tensor
+    ) -> Tuple[torch.Tensor, None]:
         supp_size, output = ctx.saved_tensors
         dim = ctx.dim
         grad_input = grad_output.clone()
@@ -62,7 +74,9 @@ class SparsemaxFunction(Function):
         return grad_input, None
 
     @staticmethod
-    def _threshold_and_support(input, dim=-1):
+    def _threshold_and_support(
+        input: torch.Tensor, dim: int = -1
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
         """Sparsemax building block: compute the threshold
         Parameters
         ----------
@@ -92,12 +106,11 @@ sparsemax = SparsemaxFunction.apply
 
 
 class Sparsemax(nn.Module):
-
-    def __init__(self, dim=-1):
+    def __init__(self, dim: int = -1):
         self.dim = dim
-        super(Sparsemax, self).__init__()
+        super().__init__()
 
-    def forward(self, input):
+    def forward(self, input: torch.Tensor) -> torch.Tensor:
         return sparsemax(input, self.dim)
 
 
@@ -109,7 +122,11 @@ class Entmax15Function(Function):
     """
 
     @staticmethod
-    def forward(ctx, input, dim=-1):
+    def forward(
+        ctx: torch.autograd.function._ContextMethodMixin,
+        input: torch.Tensor,
+        dim: int = -1,
+    ) -> torch.Tensor:
         ctx.dim = dim
 
         max_val, _ = input.max(dim=dim, keepdim=True)
@@ -122,8 +139,10 @@ class Entmax15Function(Function):
         return output
 
     @staticmethod
-    def backward(ctx, grad_output):
-        Y, = ctx.saved_tensors
+    def backward(
+        ctx: torch.autograd.function._ContextMethodMixin, grad_output: torch.Tensor
+    ) -> Tuple[torch.Tensor, None]:
+        (Y,) = ctx.saved_tensors
         gppr = Y.sqrt()  # = 1 / g'' (Y)
         dX = grad_output * gppr
         q = dX.sum(ctx.dim) / gppr.sum(ctx.dim)
@@ -132,13 +151,15 @@ class Entmax15Function(Function):
         return dX, None
 
     @staticmethod
-    def _threshold_and_support(input, dim=-1):
+    def _threshold_and_support(
+        input: torch.Tensor, dim: int = -1
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
         Xsrt, _ = torch.sort(input, descending=True, dim=dim)
 
         rho = _make_ix_like(input, dim)
         mean = Xsrt.cumsum(dim) / rho
-        mean_sq = (Xsrt ** 2).cumsum(dim) / rho
-        ss = rho * (mean_sq - mean ** 2)
+        mean_sq = (Xsrt**2).cumsum(dim) / rho
+        ss = rho * (mean_sq - mean**2)
         delta = (1 - ss) / rho
 
         # NOTE this is not exactly the same as in reference algo
@@ -153,28 +174,34 @@ class Entmax15Function(Function):
 
 
 class Entmoid15(Function):
-    """ A highly optimized equivalent of lambda x: Entmax15([x, 0]) """
+    """
+    A highly optimized equivalent of lambda x: Entmax15([x, 0])
+    """
 
     @staticmethod
-    def forward(ctx, input):
+    def forward(
+        ctx: torch.autograd.function._ContextMethodMixin, input: torch.Tensor
+    ) -> torch.Tensor:
         output = Entmoid15._forward(input)
         ctx.save_for_backward(output)
         return output
 
     @staticmethod
-    def _forward(input):
+    def _forward(input: torch.Tensor) -> torch.Tensor:
         input, is_pos = abs(input), input >= 0
-        tau = (input + torch.sqrt(F.relu(8 - input ** 2))) / 2
+        tau = (input + torch.sqrt(F.relu(8 - input**2))) / 2
         tau.masked_fill_(tau <= input, 2.0)
         y_neg = 0.25 * F.relu(tau - input, inplace=True) ** 2
         return torch.where(is_pos, 1 - y_neg, y_neg)
 
     @staticmethod
-    def backward(ctx, grad_output):
+    def backward(
+        ctx: torch.autograd.function._ContextMethodMixin, grad_output: torch.Tensor
+    ) -> torch.Tensor:
         return Entmoid15._backward(ctx.saved_tensors[0], grad_output)
 
     @staticmethod
-    def _backward(output, grad_output):
+    def _backward(output: torch.Tensor, grad_output: torch.Tensor) -> torch.Tensor:
         gppr0, gppr1 = output.sqrt(), (1 - output).sqrt()
         grad_input = grad_output * gppr0
         q = grad_input / (gppr0 + gppr1)
@@ -187,10 +214,9 @@ entmoid15 = Entmoid15.apply
 
 
 class Entmax15(nn.Module):
-
-    def __init__(self, dim=-1):
+    def __init__(self, dim: int = -1):
         self.dim = dim
-        super(Entmax15, self).__init__()
+        super().__init__()
 
-    def forward(self, input):
+    def forward(self, input: torch.Tensor) -> torch.Tensor:
         return entmax15(input, self.dim)

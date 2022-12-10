@@ -13,8 +13,8 @@ from otc.models.objective import (
     ClassicalObjective,
     FTTransformerObjective,
     GradientBoostingObjective,
+    TabNetObjective,
     TabTransformerObjective,
-    TabNetObjective
 )
 
 
@@ -163,7 +163,6 @@ class TestObjectives:
 
         # check if accuracy is >= 0 and <=1.0
         assert 0.0 <= study.best_value <= 1.0
-
 
     def test_tabnet_objective(self) -> None:
         """

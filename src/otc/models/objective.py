@@ -26,8 +26,8 @@ from otc.models.activation import ReGLU
 from otc.models.callback import CallbackContainer, PrintCallback, SaveCallback
 from otc.models.classical_classifier import ClassicalClassifier
 from otc.models.fttransformer import FeatureTokenizer, FTTransformer, Transformer
-from otc.models.tabtransformer import TabTransformer
 from otc.models.tabnet import TabNet
+from otc.models.tabtransformer import TabTransformer
 from otc.optim.early_stopping import EarlyStopping
 
 
@@ -218,7 +218,7 @@ class TabNetObjective(Objective):
             val_data.x_cat, val_data.x_cont, val_data.y, **dl_kwargs
         )
 
-        self._clf = TabNet(**tabnet_kwargs).to(device)
+        self._clf = TabNet(**tabnet_kwargs).to(device)  # type: ignore
 
         # half precision, see https://pytorch.org/docs/stable/amp.html
         scaler = torch.cuda.amp.GradScaler()

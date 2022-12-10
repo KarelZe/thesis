@@ -5,13 +5,13 @@ Partly inspired by:
 https://github.com/tilman151/unittest_dl/blob/master/tests/test_model.py
 """
 
+import pytest
 import torch
 
 from otc.models.objective import set_seed
 from otc.models.tabnet import TabNet
 from tests import templates
 
-import pytest
 
 class TestTabNet(templates.NeuralNetTestsMixin):
     """
@@ -49,19 +49,26 @@ class TestTabNet(templates.NeuralNetTestsMixin):
         )
 
         params_tabnet = {
-            "input_dim":self.num_features_cont + self.num_features_cat,
-            "output_dim":1,
-            "n_d":64,
-            "n_a":8,
-            "n_steps":8,
-            "gamma":1.0,
-            "cat_idxs":list(range(self.num_features_cat)),
-            "cat_dims":self.num_unique_cat
+            "input_dim": self.num_features_cont + self.num_features_cat,
+            "output_dim": 1,
+            "n_d": 64,
+            "n_a": 8,
+            "n_steps": 8,
+            "gamma": 1.0,
+            "cat_idxs": list(range(self.num_features_cat)),
+            "cat_dims": self.num_unique_cat,
         }
 
-        self.net = TabNet(**params_tabnet).to(device)
+        self.net = TabNet(**params_tabnet).to(device)  # type:ignore
 
     # FIXME: look into this more closely.
-    @pytest.mark.skip(reason="Batch norm (1d) of input does not update gradient. Ok for now.")
+    @pytest.mark.skip(
+        reason="Batch norm (1d) of input does not update gradient. Ok for now."
+    )
     def test_all_parameters_updated(self) -> None:
+        """
+        Test that all parameters are updated.
+
+        See mixin for more details.
+        """
         return super().test_all_parameters_updated()

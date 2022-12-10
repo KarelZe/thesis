@@ -1,23 +1,31 @@
+# flake8: noqa
+# mypy: ignore-errors
+
+# FIXME: add types and comment if model is actually used.
+
 """
 Adapted from:
 https://github.com/dreamquark-ai/tabnet/blob/develop/pytorch_tabnet/tab_network.py
 """
 from __future__ import annotations
 
-import torch
-from torch.nn import Linear, BatchNorm1d, ReLU
 import numpy as np
+import torch
+from torch.nn import BatchNorm1d, Linear, ReLU
+
 from otc.models import sparsemax
 
 
-def initialize_non_glu(module, input_dim, output_dim):
+def initialize_non_glu(
+    module: torch.nn.Module, input_dim: int, output_dim: int
+) -> None:
     gain_value = np.sqrt((input_dim + output_dim) / np.sqrt(4 * input_dim))
     torch.nn.init.xavier_normal_(module.weight, gain=gain_value)
     # torch.nn.init.zeros_(module.bias)
     return
 
 
-def initialize_glu(module, input_dim, output_dim):
+def initialize_glu(module: torch.nn.Module, input_dim: int, output_dim: int) -> None:
     gain_value = np.sqrt((input_dim + output_dim) / np.sqrt(input_dim))
     torch.nn.init.xavier_normal_(module.weight, gain=gain_value)
     # torch.nn.init.zeros_(module.bias)
@@ -30,14 +38,14 @@ class GBN(torch.nn.Module):
     https://arxiv.org/abs/1705.08741
     """
 
-    def __init__(self, input_dim, virtual_batch_size=128, momentum=0.01):
-        super(GBN, self).__init__()
+    def __init__(self, input_dim: int, virtual_batch_size=128, momentum=0.01):
+        super().__init__()
 
         self.input_dim = input_dim
         self.virtual_batch_size = virtual_batch_size
         self.bn = BatchNorm1d(self.input_dim, momentum=momentum)
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor):
         chunks = x.chunk(int(np.ceil(x.shape[0] / self.virtual_batch_size)), 0)
         res = [self.bn(x_) for x_ in chunks]
 
@@ -90,7 +98,7 @@ class TabNetEncoder(torch.nn.Module):
         mask_type : str
             Either "sparsemax" or "entmax" : this is the masking function to use
         """
-        super(TabNetEncoder, self).__init__()
+        super().__init__()
         self.input_dim = input_dim
         self.output_dim = output_dim
         self.is_multi_task = isinstance(output_dim, list)
@@ -132,7 +140,7 @@ class TabNetEncoder(torch.nn.Module):
         self.feat_transformers = torch.nn.ModuleList()
         self.att_transformers = torch.nn.ModuleList()
 
-        for step in range(n_steps):
+        for _ in range(n_steps):
             transformer = FeatTransformer(
                 self.input_dim,
                 n_d + n_a,
@@ -151,7 +159,7 @@ class TabNetEncoder(torch.nn.Module):
             self.feat_transformers.append(transformer)
             self.att_transformers.append(attention)
 
-    def forward(self, x, prior=None):
+    def forward(self, x: torch.Tensor, prior=None):
         x = self.initial_bn(x)
 
         if prior is None:
@@ -240,7 +248,7 @@ class TabNetDecoder(torch.nn.Module):
         momentum : float
             Float value between 0 and 1 which will be used for momentum in all batch norm
         """
-        super(TabNetDecoder, self).__init__()
+        super().__init__()
         self.input_dim = input_dim
         self.n_d = n_d
         self.n_steps = n_steps
@@ -261,7 +269,7 @@ class TabNetDecoder(torch.nn.Module):
         else:
             shared_feat_transform = None
 
-        for step in range(n_steps):
+        for _ in range(n_steps):
             transformer = FeatTransformer(
                 n_d,
                 n_d,
@@ -305,7 +313,7 @@ class TabNetPretraining(torch.nn.Module):
         n_shared_decoder=1,
         n_indep_decoder=1,
     ):
-        super(TabNetPretraining, self).__init__()
+        super().__init__()
 
         self.cat_idxs = cat_idxs or []
         self.cat_dims = cat_dims or []
@@ -386,8 +394,8 @@ class TabNetPretraining(torch.nn.Module):
 class TabNetNoEmbeddings(torch.nn.Module):
     def __init__(
         self,
-        input_dim,
-        output_dim,
+        input_dim: int,
+        output_dim: int | List[int],
         n_d=8,
         n_a=8,
         n_steps=3,
@@ -429,7 +437,7 @@ class TabNetNoEmbeddings(torch.nn.Module):
         mask_type : str
             Either "sparsemax" or "entmax" : this is the masking function to use
         """
-        super(TabNetNoEmbeddings, self).__init__()
+        super().__init__()
         self.input_dim = input_dim
         self.output_dim = output_dim
         self.is_multi_task = isinstance(output_dim, list)
@@ -490,8 +498,8 @@ class TabNetNoEmbeddings(torch.nn.Module):
 class TabNet(torch.nn.Module):
     def __init__(
         self,
-        input_dim,
-        output_dim,
+        input_dim: int,
+        output_dim: int,
         n_d=8,
         n_a=8,
         n_steps=3,
@@ -544,7 +552,7 @@ class TabNet(torch.nn.Module):
         mask_type : str
             Either "sparsemax" or "entmax" : this is the masking function to use
         """
-        super(TabNet, self).__init__()
+        super().__init__()
         self.cat_idxs = cat_idxs or []
         self.cat_dims = cat_dims or []
         self.cat_emb_dim = cat_emb_dim
@@ -583,7 +591,7 @@ class TabNet(torch.nn.Module):
             mask_type,
         )
 
-    def forward(self, x_cat:torch.Tensor | None, x_cont:torch.Tensor):
+    def forward(self, x_cat: torch.Tensor | None, x_cont: torch.Tensor):
         # chain both inputs back together
         # probably not the most efficient way to do this, but least invasive.
         x = torch.cat([x_cat, x_cont], dim=1) if x_cat is not None else x_cont
@@ -600,8 +608,8 @@ class TabNet(torch.nn.Module):
 class AttentiveTransformer(torch.nn.Module):
     def __init__(
         self,
-        input_dim,
-        output_dim,
+        input_dim: int,
+        output_dim: int,
         virtual_batch_size=128,
         momentum=0.02,
         mask_type="sparsemax",
@@ -621,7 +629,7 @@ class AttentiveTransformer(torch.nn.Module):
         mask_type : str
             Either "sparsemax" or "entmax" : this is the masking function to use
         """
-        super(AttentiveTransformer, self).__init__()
+        super().__init__()
         self.fc = Linear(input_dim, output_dim, bias=False)
         initialize_non_glu(self.fc, input_dim, output_dim)
         self.bn = GBN(
@@ -657,7 +665,7 @@ class FeatTransformer(torch.nn.Module):
         virtual_batch_size=128,
         momentum=0.02,
     ):
-        super(FeatTransformer, self).__init__()
+        super().__init__()
         """
         Initialize a feature transformer.
         Parameters
@@ -728,7 +736,7 @@ class GLU_Block(torch.nn.Module):
         virtual_batch_size=128,
         momentum=0.02,
     ):
-        super(GLU_Block, self).__init__()
+        super().__init__()
         self.first = first
         self.shared_layers = shared_layers
         self.n_glu = n_glu
@@ -760,7 +768,7 @@ class GLU_Layer(torch.nn.Module):
     def __init__(
         self, input_dim, output_dim, fc=None, virtual_batch_size=128, momentum=0.02
     ):
-        super(GLU_Layer, self).__init__()
+        super().__init__()
 
         self.output_dim = output_dim
         if fc:
@@ -800,7 +808,7 @@ class EmbeddingGenerator(torch.nn.Module):
             Embedding dimension for each categorical features
             If int, the same embedding dimension will be used for all categorical features
         """
-        super(EmbeddingGenerator, self).__init__()
+        super().__init__()
         if cat_dims == [] and cat_idxs == []:
             self.skip_embedding = True
             self.post_embed_dim = input_dim
@@ -883,7 +891,7 @@ class RandomObfuscator(torch.nn.Module):
         pretraining_ratio : float
             Ratio of feature to randomly discard for reconstruction
         """
-        super(RandomObfuscator, self).__init__()
+        super().__init__()
         self.pretraining_ratio = pretraining_ratio
 
     def forward(self, x):
