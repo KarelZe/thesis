@@ -125,7 +125,7 @@ class TabTransformerObjective(Objective):
         x_val: pd.DataFrame,
         y_val: pd.Series,
         cat_features: list[str] | None,
-        cat_unique: list[int] | None,
+        cat_cardinalities: list[int] | None,
         name: str = "default",
     ):
         """
@@ -136,15 +136,15 @@ class TabTransformerObjective(Objective):
             y_train (pd.Series): ground truth (train)
             x_val (pd.DataFrame): feature matrix (val)
             y_val (pd.Series): ground truth (val)
-            cat_features (Optional[List[str]], optional): List of
+            cat_features (List[str] | None, optional): List of
             categorical features. Defaults to None.
-            cat_unique (Optional[List[int]], optional): Unique counts
+            cat_cardinalities (List[int] | None, optional): Unique counts
             of categorical features.
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
         """
         self._cat_features = [] if not cat_features else cat_features
-        self._cat_unique = () if not cat_unique else tuple(cat_unique)
+        self._cat_cardinalities = () if not cat_cardinalities else tuple(cat_cardinalities)
         self._cont_features: list[int] = [
             x for x in x_train.columns.tolist() if x not in self._cat_features
         ]
@@ -184,10 +184,10 @@ class TabTransformerObjective(Objective):
         device = torch.device("cuda" if use_cuda else "cpu")
 
         training_data = TabDataset(
-            self.x_train, self.y_train, self._cat_features, self._cat_unique
+            self.x_train, self.y_train, self._cat_features, self._cat_cardinalities
         )
         val_data = TabDataset(
-            self.x_val, self.y_val, self._cat_features, self._cat_unique
+            self.x_val, self.y_val, self._cat_features, self._cat_cardinalities
         )
 
         dl_kwargs: dict[str, Any] = {
@@ -205,7 +205,7 @@ class TabTransformerObjective(Objective):
         )
 
         self._clf = TabTransformer(
-            categories=self._cat_unique,
+            ccat_cardinalities=self._cat_cardinalities,
             num_continuous=len(self._cont_features),
             dim_out=1,
             mlp_act=nn.ReLU(),
@@ -438,7 +438,7 @@ class GradientBoostingObjective(Objective):
             y_train (pd.Series): ground truth (train)
             x_val (pd.DataFrame): feature matrix (val)
             y_val (pd.Series): ground truth (val)
-            cat_features (Optional[List[str]], optional): List of categorical features.
+            cat_features (List[str] | None, optional): List of categorical features.
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
         """

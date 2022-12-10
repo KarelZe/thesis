@@ -5,24 +5,21 @@ https://github.com/Yura52/rtdl/
 
 import enum
 import math
-import time
-import warnings
-from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union, cast
+
+from typing import Callable, Dict, List, Optional, Tuple, Union, cast
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim
-from torch import Tensor
 
 from otc.models.activation import ReGLU, GeGLU
 
 
-ModuleType = Union[str, Callable[..., nn.Module]]
 _INTERNAL_ERROR_MESSAGE = "Internal error. Please, open an issue."
 
 
-def _is_glu_activation(activation: ModuleType):
+def _is_glu_activation(activation: Callable[..., nn.Module]):
     return (
         isinstance(activation, str)
         and activation.endswith("GLU")
@@ -46,7 +43,7 @@ class _TokenInitialization(enum.Enum):
             valid_values = [x.value for x in _TokenInitialization]
             raise ValueError(f"initialization must be one of {valid_values}")
 
-    def apply(self, x: Tensor, d: int) -> None:
+    def apply(self, x: torch.Tensor, d: int) -> None:
         d_sqrt_inv = 1 / math.sqrt(d)
         if self == _TokenInitialization.UNIFORM:
             # used in the paper "Revisiting Deep Learning Models for Tabular Data";
@@ -65,14 +62,6 @@ class NumericalFeatureTokenizer(nn.Module):
     * another trainable vector is added
     Note that each feature has its separate pair of trainable vectors, i.e. the vectors
     are not shared between features.
-    Examples:
-        .. testcode::
-            x = torch.randn(4, 2)
-            n_objects, n_features = x.shape
-            d_token = 3
-            tokenizer = NumericalFeatureTokenizer(n_features, d_token, True, 'uniform')
-            tokens = tokenizer(x)
-            assert tokens.shape == (n_objects, n_features, d_token)
     """
 
     def __init__(
@@ -94,12 +83,13 @@ class NumericalFeatureTokenizer(nn.Module):
                 corresponding distributions are :code:`Uniform(-s, s)` and :code:`Normal(0, s)`.
                 In [gorishniy2021revisiting], the 'uniform' initialization was used.
         References:
-            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko, "Revisiting Deep Learning Models for Tabular Data", 2021
+            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko, 
+            "Revisiting Deep Learning Models for Tabular Data", 2021
         """
         super().__init__()
         initialization_ = _TokenInitialization.from_str(initialization)
-        self.weight = nn.Parameter(Tensor(n_features, d_token))
-        self.bias = nn.Parameter(Tensor(n_features, d_token)) if bias else None
+        self.weight = nn.Parameter(torch.Tensor(n_features, d_token))
+        self.bias = nn.Parameter(torch.Tensor(n_features, d_token)) if bias else None
         for parameter in [self.weight, self.bias]:
             if parameter is not None:
                 initialization_.apply(parameter, d_token)
@@ -114,7 +104,7 @@ class NumericalFeatureTokenizer(nn.Module):
         """The size of one token."""
         return self.weight.shape[1]
 
-    def forward(self, x: Tensor) -> Tensor:
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.weight[None] * x[..., None]
         if self.bias is not None:
             x = x + self.bias[None]
@@ -126,26 +116,9 @@ class CategoricalFeatureTokenizer(nn.Module):
     See `FeatureTokenizer` for the illustration.
     The module efficiently implements a collection of `torch.nn.Embedding` (with
     optional biases).
-    Examples:
-        .. testcode::
-            # the input must contain integers. For example, if the first feature can
-            # take 3 distinct values, then its cardinality is 3 and the first column
-            # must contain values from the range `[0, 1, 2]`.
-            cardinalities = [3, 10]
-            x = torch.tensor([
-                [0, 5],
-                [1, 7],
-                [0, 2],
-                [2, 4]
-            ])
-            n_objects, n_features = x.shape
-            d_token = 3
-            tokenizer = CategoricalFeatureTokenizer(cardinalities, d_token, True, 'uniform')
-            tokens = tokenizer(x)
-            assert tokens.shape == (n_objects, n_features, d_token)
     """
 
-    category_offsets: Tensor
+    category_offsets: torch.Tensor
 
     def __init__(
         self,
@@ -170,7 +143,8 @@ class CategoricalFeatureTokenizer(nn.Module):
                 the paper [gorishniy2021revisiting], the 'uniform' initialization was
                 used.
         References:
-            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko, "Revisiting Deep Learning Models for Tabular Data", 2021
+            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko,
+             "Revisiting Deep Learning Models for Tabular Data", 2021
         """
         super().__init__()
         assert cardinalities, "cardinalities must be non-empty"
@@ -180,7 +154,9 @@ class CategoricalFeatureTokenizer(nn.Module):
         category_offsets = torch.tensor([0] + cardinalities[:-1]).cumsum(0)
         self.register_buffer("category_offsets", category_offsets, persistent=False)
         self.embeddings = nn.Embedding(sum(cardinalities), d_token)
-        self.bias = nn.Parameter(Tensor(len(cardinalities), d_token)) if bias else None
+        self.bias = (
+            nn.Parameter(torch.Tensor(len(cardinalities), d_token)) if bias else None
+        )
 
         for parameter in [self.embeddings.weight, self.bias]:
             if parameter is not None:
@@ -196,7 +172,7 @@ class CategoricalFeatureTokenizer(nn.Module):
         """The size of one token."""
         return self.embeddings.embedding_dim
 
-    def forward(self, x: Tensor) -> Tensor:
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.embeddings(x + self.category_offsets[None])
         if self.bias is not None:
             x = x + self.bias[None]
@@ -213,25 +189,14 @@ class FeatureTokenizer(nn.Module):
     .. image:: ../images/feature_tokenizer.png
         :scale: 33%
         :alt: Feature Tokenizer
-    Examples:
-        .. testcode::
-            n_objects = 4
-            n_num_features = 3
-            n_cat_features = 2
-            d_token = 7
-            x_num = torch.randn(n_objects, n_num_features)
-            x_cat = torch.tensor([[0, 1], [1, 0], [0, 2], [1, 1]])
-            # [2, 3] reflects cardinalities fr
-            tokenizer = FeatureTokenizer(n_num_features, [2, 3], d_token)
-            tokens = tokenizer(x_num, x_cat)
-            assert tokens.shape == (n_objects, n_num_features + n_cat_features, d_token)
     References:
-        * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko "Revisiting Deep Learning Models for Tabular Data", 2021
+        * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko 
+        "Revisiting Deep Learning Models for Tabular Data", 2021
     """
 
     def __init__(
         self,
-        n_num_features: int,
+        num_continous: int,
         cat_cardinalities: List[int],
         d_token: int,
     ) -> None:
@@ -245,19 +210,19 @@ class FeatureTokenizer(nn.Module):
             d_token: the size of one token.
         """
         super().__init__()
-        assert n_num_features >= 0, "n_num_features must be non-negative"
+        assert num_continous >= 0, "n_num_features must be non-negative"
         assert (
-            n_num_features or cat_cardinalities
+            num_continous or cat_cardinalities
         ), "at least one of n_num_features or cat_cardinalities must be positive/non-empty"
         self.initialization = "uniform"
         self.num_tokenizer = (
             NumericalFeatureTokenizer(
-                n_features=n_num_features,
+                n_features=num_continous,
                 d_token=d_token,
                 bias=True,
                 initialization=self.initialization,
             )
-            if n_num_features
+            if num_continous
             else None
         )
         self.cat_tokenizer = (
@@ -286,7 +251,9 @@ class FeatureTokenizer(nn.Module):
             else self.num_tokenizer.d_token
         )
 
-    def forward(self, x_num: Optional[Tensor], x_cat: Optional[Tensor]) -> Tensor:
+    def forward(
+        self, x_num: Optional[torch.Tensor], x_cat: Optional[torch.Tensor]
+    ) -> torch.Tensor:
         """Perform the forward pass.
         Args:
             x_num: continuous features. Must be presented if :code:`n_num_features > 0`
@@ -321,18 +288,10 @@ class CLSToken(nn.Module):
     To learn about the [CLS]-based inference, see [devlin2018bert].
     When used as a module, the [CLS]-token is appended **to the end** of each item in
     the batch.
-    Examples:
-        .. testcode::
-            batch_size = 2
-            n_tokens = 3
-            d_token = 4
-            cls_token = CLSToken(d_token, 'uniform')
-            x = torch.randn(batch_size, n_tokens, d_token)
-            x = cls_token(x)
-            assert x.shape == (batch_size, n_tokens + 1, d_token)
-            assert (x[:, -1, :] == cls_token.expand(len(x))).all()
+
     References:
-        * [devlin2018bert] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding" 2018
+        * [devlin2018bert] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova "BERT: 
+        Pre-training of Deep Bidirectional Transformers for Language Understanding" 2018
     """
 
     def __init__(self, d_token: int, initialization: str) -> None:
@@ -345,19 +304,20 @@ class CLSToken(nn.Module):
                 the paper [gorishniy2021revisiting], the 'uniform' initialization was
                 used.
         References:
-            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko "Revisiting Deep Learning Models for Tabular Data", 2021
+            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko
+             "Revisiting Deep Learning Models for Tabular Data", 2021
         """
         super().__init__()
         initialization_ = _TokenInitialization.from_str(initialization)
-        self.weight = nn.Parameter(Tensor(d_token))
+        self.weight = nn.Parameter(torch.Tensor(d_token))
         initialization_.apply(self.weight, d_token)
 
-    def expand(self, *leading_dimensions: int) -> Tensor:
+    def expand(self, *leading_dimensions: int) -> torch.Tensor:
         """Expand (repeat) the underlying [CLS]-token to a tensor with the given leading dimensions.
         A possible use case is building a batch of [CLS]-tokens. See `CLSToken` for
         examples of usage.
         Note:
-            Under the hood, the `torch.Tensor.expand` method is applied to the
+            Under the hood, the `torch.torch.Tensor.expand` method is applied to the
             underlying :code:`weight` parameter, so gradients will be propagated as
             expected.
         Args:
@@ -370,60 +330,20 @@ class CLSToken(nn.Module):
         new_dims = (1,) * (len(leading_dimensions) - 1)
         return self.weight.view(*new_dims, -1).expand(*leading_dimensions, -1)
 
-    def forward(self, x: Tensor) -> Tensor:
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Append self **to the end** of each item in the batch (see `CLSToken`)."""
         return torch.cat([x, self.expand(len(x), 1)], dim=1)
-
-
-def _make_nn_module(module_type: ModuleType, *args) -> nn.Module:
-    if isinstance(module_type, str):
-        if module_type == "ReGLU":
-            return ReGLU()
-        elif module_type == "GEGLU":
-            return GeGLU()
-        else:
-            try:
-                cls = getattr(nn, module_type)
-            except AttributeError as err:
-                raise ValueError(
-                    f"Failed to construct the module {module_type} with the arguments {args}"
-                ) from err
-            return cls(*args)
-    else:
-        return module_type(*args)
-
 
 class MultiheadAttention(nn.Module):
     """Multihead Attention (self-/cross-) with optional 'linear' attention.
     To learn more about Multihead Attention, see [devlin2018bert]. See the implementation
     of `Transformer` and the examples below to learn how to use the compression technique
     from [wang2020linformer] to speed up the module when the number of tokens is large.
-    Examples:
-        .. testcode::
-            n_objects, n_tokens, d_token = 2, 3, 12
-            n_heads = 6
-            a = torch.randn(n_objects, n_tokens, d_token)
-            b = torch.randn(n_objects, n_tokens * 2, d_token)
-            module = MultiheadAttention(
-                d_token=d_token, n_heads=n_heads, dropout=0.2, bias=True, initialization='kaiming'
-            )
-            # self-attention
-            x, attention_stats = module(a, a, None, None)
-            assert x.shape == a.shape
-            assert attention_stats['attention_probs'].shape == (n_objects * n_heads, n_tokens, n_tokens)
-            assert attention_stats['attention_logits'].shape == (n_objects * n_heads, n_tokens, n_tokens)
-            # cross-attention
-            assert module(a, b, None, None)
-            # Linformer self-attention with the 'headwise' sharing policy
-            k_compression = torch.nn.Linear(n_tokens, n_tokens // 4)
-            v_compression = torch.nn.Linear(n_tokens, n_tokens // 4)
-            assert module(a, a, k_compression, v_compression)
-            # Linformer self-attention with the 'key-value' sharing policy
-            kv_compression = torch.nn.Linear(n_tokens, n_tokens // 4)
-            assert module(a, a, kv_compression, kv_compression)
     References:
-        * [devlin2018bert] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding" 2018
-        * [wang2020linformer] Sinong Wang, Belinda Z. Li, Madian Khabsa, Han Fang, Hao Ma "Linformer: Self-Attention with Linear Complexity", 2020
+        * [devlin2018bert] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova "BERT: Pre-training 
+        of Deep Bidirectional Transformers for Language Understanding" 2018
+        * [wang2020linformer] Sinong Wang, Belinda Z. Li, Madian Khabsa, Han Fang, Hao Ma "Linformer: 
+        Self-Attention with Linear Complexity", 2020
     """
 
     def __init__(
@@ -476,7 +396,7 @@ class MultiheadAttention(nn.Module):
         if self.W_out is not None:
             nn.init.zeros_(self.W_out.bias)
 
-    def _reshape(self, x: Tensor) -> Tensor:
+    def _reshape(self, x: torch.Tensor) -> torch.Tensor:
         batch_size, n_tokens, d = x.shape
         d_head = d // self.n_heads
         return (
@@ -487,11 +407,11 @@ class MultiheadAttention(nn.Module):
 
     def forward(
         self,
-        x_q: Tensor,
-        x_kv: Tensor,
+        x_q: torch.Tensor,
+        x_kv: torch.Tensor,
         key_compression: Optional[nn.Linear],
         value_compression: Optional[nn.Linear],
-    ) -> Tuple[Tensor, Dict[str, Tensor]]:
+    ) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
         """Perform the forward pass.
         Args:
             x_q: query tokens
@@ -537,10 +457,11 @@ class MultiheadAttention(nn.Module):
 
 
 class Transformer(nn.Module):
-    """Transformer with extra features.
-    This module is the backbone of `FTTransformer`."""
+    """
+    Transformer with extra features.
 
-    WARNINGS = {"first_prenormalization": True, "prenormalization": True}
+    This module is the backbone of `FTTransformer`.
+    """
 
     class FFN(nn.Module):
         """The Feed-Forward Network module used in every `Transformer` block."""
@@ -553,7 +474,7 @@ class Transformer(nn.Module):
             bias_first: bool,
             bias_second: bool,
             dropout: float,
-            activation: ModuleType,
+            activation: Callable[..., nn.Module],
         ):
             super().__init__()
             self.linear_first = nn.Linear(
@@ -561,11 +482,11 @@ class Transformer(nn.Module):
                 d_hidden * (2 if _is_glu_activation(activation) else 1),
                 bias_first,
             )
-            self.activation = _make_nn_module(activation)
+            self.activation = activation()
             self.dropout = nn.Dropout(dropout)
             self.linear_second = nn.Linear(d_hidden, d_token, bias_second)
 
-        def forward(self, x: Tensor) -> Tensor:
+        def forward(self, x: torch.Tensor) -> torch.Tensor:
             x = self.linear_first(x)
             x = self.activation(x)
             x = self.dropout(x)
@@ -580,16 +501,16 @@ class Transformer(nn.Module):
             *,
             d_in: int,
             bias: bool,
-            activation: ModuleType,
-            normalization: ModuleType,
+            activation: Callable[..., nn.Module],
+            normalization: Callable[..., nn.Module],
             d_out: int,
         ):
             super().__init__()
-            self.normalization = _make_nn_module(normalization, d_in)
-            self.activation = _make_nn_module(activation)
+            self.normalization = normalization(d_in)
+            self.activation = activation()
             self.linear = nn.Linear(d_in, d_out, bias)
 
-        def forward(self, x: Tensor) -> Tensor:
+        def forward(self, x: torch.Tensor) -> torch.Tensor:
             x = x[:, -1]
             x = self.normalization(x)
             x = self.activation(x)
@@ -604,11 +525,11 @@ class Transformer(nn.Module):
         attention_n_heads: int,
         attention_dropout: float,
         attention_initialization: str,
-        attention_normalization: str,
+        attention_normalization: nn.Module,
         ffn_d_hidden: int,
         ffn_dropout: float,
-        ffn_activation: str,
-        ffn_normalization: str,
+        ffn_activation: nn.Module,
+        ffn_normalization: nn.Module,
         residual_dropout: float,
         prenormalization: bool,
         first_prenormalization: bool,
@@ -616,8 +537,8 @@ class Transformer(nn.Module):
         n_tokens: Optional[int],
         kv_compression_ratio: Optional[float],
         kv_compression_sharing: Optional[str],
-        head_activation: ModuleType,
-        head_normalization: ModuleType,
+        head_activation: Callable[..., nn.Module],
+        head_normalization: Callable[..., nn.Module],
         d_out: int,
     ) -> None:
         super().__init__()
@@ -635,38 +556,13 @@ class Transformer(nn.Module):
             "n_tokens, kv_compression_ratio, kv_compression_sharing"
         )
         assert kv_compression_sharing in [None, "headwise", "key-value", "layerwise"]
-        if not prenormalization:
-            if self.WARNINGS["prenormalization"]:
-                warnings.warn(
-                    "prenormalization is set to False. Are you sure about this? "
-                    "The training can become less stable. "
-                    "You can turn off this warning by tweaking the "
-                    "rtdl.Transformer.WARNINGS dictionary.",
-                    UserWarning,
-                )
-            assert (
-                not first_prenormalization
-            ), "If prenormalization is False, then first_prenormalization is ignored and must be set to False"
-        if (
-            prenormalization
-            and first_prenormalization
-            and self.WARNINGS["first_prenormalization"]
-        ):
-            warnings.warn(
-                "first_prenormalization is set to True. Are you sure about this? "
-                "For example, the vanilla FTTransformer with "
-                "first_prenormalization=True performs SIGNIFICANTLY worse. "
-                "You can turn off this warning by tweaking the "
-                "rtdl.Transformer.WARNINGS dictionary.",
-                UserWarning,
-            )
-            time.sleep(3)
 
         def make_kv_compression():
             assert (
                 n_tokens and kv_compression_ratio
             ), _INTERNAL_ERROR_MESSAGE  # for mypy
-            # https://github.com/pytorch/fairseq/blob/1bba712622b8ae4efb3eb793a8a40da386fe11d0/examples/linformer/linformer_src/modules/multihead_linear_attention.py#L83
+            # https://github.com/pytorch/fairseq/blob/1bba712622b8ae4efb3eb793a8a40da386fe11d0/
+            # examples/linformer/linformer_src/modules/multihead_linear_attention.py#L83
             return nn.Linear(n_tokens, int(n_tokens * kv_compression_ratio), bias=False)
 
         self.shared_kv_compression = (
@@ -703,10 +599,8 @@ class Transformer(nn.Module):
                 }
             )
             if layer_idx or not prenormalization or first_prenormalization:
-                layer["attention_normalization"] = _make_nn_module(
-                    attention_normalization, d_token
-                )
-            layer["ffn_normalization"] = _make_nn_module(ffn_normalization, d_token)
+                layer["attention_normalization"] = attention_normalization(d_token)
+            layer["ffn_normalization"] = ffn_normalization(d_token)
             if kv_compression_ratio and self.shared_kv_compression is None:
                 layer["key_compression"] = make_kv_compression()
                 if kv_compression_sharing == "headwise":
@@ -722,7 +616,7 @@ class Transformer(nn.Module):
             d_out=d_out,
             bias=True,
             activation=head_activation,  # type: ignore
-            normalization=head_normalization if prenormalization else "Identity",
+            normalization=head_normalization if prenormalization else nn.Identity(),
         )
 
     def _get_kv_compressions(self, layer):
@@ -753,7 +647,7 @@ class Transformer(nn.Module):
             x = layer[f"{stage}_normalization"](x)
         return x
 
-    def forward(self, x: Tensor) -> Tensor:
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         assert (
             x.ndim == 3
         ), "The input must have 3 dimensions: (n_objects, n_tokens, d_token)"
@@ -793,8 +687,10 @@ class FTTransformer(nn.Module):
         )
         self.transformer = transformer
 
-    def forward(self, x_cat: Optional[Tensor], x_num: Optional[Tensor]) -> Tensor:
-        x = self.feature_tokenizer(x_num, x_cat)
+    def forward(
+        self, x_cat: Optional[torch.Tensor], x_cont: Optional[torch.Tensor]
+    ) -> torch.Tensor:
+        x = self.feature_tokenizer(x_cont, x_cat)
         x = self.cls_token(x)
         x = self.transformer(x)
         return x

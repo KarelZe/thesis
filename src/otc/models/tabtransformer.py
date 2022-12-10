@@ -266,7 +266,7 @@ class MLP(nn.Module):
         nn (nn.Module): module with implementation of MLP.
     """
 
-    def __init__(self, dims: list[int], act: str | Callable[..., nn.Module]):
+    def __init__(self, dims: list[int], act: Callable[..., nn.Module]):
         """
         Multilayer perceptron.
 
@@ -277,7 +277,7 @@ class MLP(nn.Module):
 
         Args:
             dims (List[int]): List with dimensions of layers.
-            act (str | Callable[..., nn.Module]): Activation function of each linear
+            act (Callable[..., nn.Module]): Activation function of each linear
             layer.
         """
         super().__init__()
@@ -286,7 +286,7 @@ class MLP(nn.Module):
         for dim_in, dim_out in dims_pairs:
             linear = nn.Linear(dim_in, dim_out)
             layers.append(linear)
-            layers.append(act)
+            layers.append(act())
 
         # drop last layer, as a sigmoid layer is included from BCELogitLoss
         del layers[-1]
@@ -320,7 +320,7 @@ class TabTransformer(nn.Module):
     def __init__(
         self,
         *,
-        categories: tuple[int, ...] | tuple[()],
+        cat_cardinalities: tuple[int, ...] | tuple[()],
         num_continuous: int,
         dim: int = 32,
         depth: int = 4,
@@ -328,7 +328,7 @@ class TabTransformer(nn.Module):
         dim_head: int = 16,
         dim_out: int = 1,
         mlp_hidden_mults: tuple[(int, int)] = (4, 2),
-        mlp_act: str | Callable[..., nn.Module] = nn.ReLU,
+        mlp_act: Callable[..., nn.Module] = nn.ReLU,
         num_special_tokens: int = 2,
         continuous_mean_std: torch.Tensor | None = None,
         attn_dropout: float = 0.0,
@@ -340,7 +340,7 @@ class TabTransformer(nn.Module):
         Originally introduced in https://arxiv.org/abs/2012.06678.
 
         Args:
-            categories ([List[int] | Tuple[()]): List with number of categories
+            cat_cardinalities ([List[int] | Tuple[()]): List with number of categories
             for each categorical feature. If no categorical variables are present,
             use empty tuple. For categorical variables e. g., option type ('C' or 'P'),
             the list would be `[1]`.
@@ -354,11 +354,11 @@ class TabTransformer(nn.Module):
             binary classification. Defaults to 1.
             mlp_hidden_mults (Tuple[(int, int)], optional): multipliers for dimensions
             of hidden layer in MLP. Defaults to (4, 2).
-            mlp_act (str | Callable[..., nn.Module], optional): Activation function used
+            mlp_act (Callable[..., nn.Module], optional): Activation function used
             in MLP. Defaults to nn.ReLU().
             num_special_tokens (int, optional): Number of special tokens in transformer.
             Defaults to 2.
-            continuous_mean_std (Optional[torch.Tensor]): List with mean and
+            continuous_mean_std (torch.Tensor | None): List with mean and
             std deviation of each continous feature. Shape eq. `[num_continous x 2]`.
             Defaults to None.
             attn_dropout (float, optional): Degree of attention dropout used in
@@ -367,24 +367,24 @@ class TabTransformer(nn.Module):
         """
         super().__init__()
         assert all(
-            map(lambda n: n > 0, categories)
+            map(lambda n: n > 0, cat_cardinalities)
         ), "number of each category must be positive"
 
         # categories related calculations
 
-        self.num_categories = len(categories)
-        self.num_unique_categories = sum(categories)
+        self.num_categories = len(cat_cardinalities)
+        self.cardinality_categories = sum(cat_cardinalities)
 
         # create category embeddings table
 
         self.num_special_tokens = num_special_tokens
-        total_tokens = self.num_unique_categories + num_special_tokens
+        total_tokens = self.cardinality_categories + num_special_tokens
 
         # for automatically offsetting unique category ids to the correct position
         #  in the categories embedding table
 
         categories_offset = F.pad(
-            torch.tensor(list(categories)), (1, 0), value=num_special_tokens
+            torch.tensor(list(cat_cardinalities)), (1, 0), value=num_special_tokens
         )  # Prepend num_special_tokens.
         categories_offset = categories_offset.cumsum(dim=-1)[:-1]
         self.register_buffer("categories_offset", categories_offset)
@@ -423,25 +423,27 @@ class TabTransformer(nn.Module):
 
         self.mlp = MLP(all_dimensions, act=mlp_act)
 
-    def forward(self, x_categ: torch.Tensor, x_cont: torch.Tensor) -> torch.Tensor:
+    def forward(self, x_cat: torch.Tensor | None, x_cont: torch.Tensor) -> torch.Tensor:
         """
         Forward pass of TabTransformer.
 
         Args:
-            x_categ (torch.Tensor): tensor with categorical data.
+            x_cat (torch.Tensor | None): tensor with categorical data.
             x_cont (torch.Tensor): tensor with continous data.
 
         Returns:
             torch.Tensor: predictions with shape [batch, 1]
         """
-        # Adaptation to work without categorical data
-        if x_categ is not None:
-            assert x_categ.shape[-1] == self.num_categories, (
+
+        flat_categ: torch.Tensor | None = None
+
+        if x_cat is not None:
+            assert x_cat.shape[-1] == self.num_categories, (
                 f"you must pass in {self.num_categories} "
                 f"values for your categories input"
             )
-            x_categ += self.categories_offset
-            x = self.transformer(x_categ)
+            x_cat += self.categories_offset
+            x = self.transformer(x_cat)
             flat_categ = x.flatten(1)
 
         assert x_cont.shape[1] == self.num_continuous, (
@@ -456,9 +458,8 @@ class TabTransformer(nn.Module):
         normed_cont = self.norm(x_cont)
 
         # Adaptation to work without categorical data
-        x = (
-            torch.cat((flat_categ, normed_cont), dim=-1)
-            if x_categ is not None
+        x = (torch.cat((flat_categ, normed_cont), dim=-1)
+            if flat_categ is not None
             else normed_cont
         )
 
