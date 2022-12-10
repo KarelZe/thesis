@@ -4,10 +4,11 @@ Implementation of FTTraansformer model.
 Adapted from:
 https://github.com/Yura52/rtdl/
 """
+from __future__ import annotations
 
 import enum
 import math
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union, cast
+from typing import Any, Callable, cast
 
 import torch
 import torch.nn as nn
@@ -21,7 +22,9 @@ _INTERNAL_ERROR_MESSAGE = "Internal error. Please, open an issue."
 
 def _is_glu_activation(activation: Callable[..., nn.Module]) -> bool:
     """
-    Check if the activation is a GLU variant.
+    Check if the activation is a GLU variant i. e., ReGLU and GeGLU.
+
+    See: https://arxiv.org/abs/2002.05202 for details.
 
     Args:
         activation (Callable[..., nn.Module]): activation function
@@ -36,7 +39,7 @@ def _is_glu_activation(activation: Callable[..., nn.Module]) -> bool:
     )
 
 
-def _all_or_none(values: List[Any]) -> bool:
+def _all_or_none(values: list[Any]) -> bool:
     """
     Check if all values are None or all values are not None.
 
@@ -58,7 +61,7 @@ class _TokenInitialization(enum.Enum):
     NORMAL = "normal"
 
     @classmethod
-    def from_str(cls, initialization: str) -> "_TokenInitialization":
+    def from_str(cls, initialization: str) -> _TokenInitialization:
         try:
             return cls(initialization)
         except ValueError:
@@ -67,7 +70,7 @@ class _TokenInitialization(enum.Enum):
 
     def apply(self, x: torch.Tensor, d: int) -> None:
         """
-        Initiliaze the tensor.
+        Initiliaze the tensor with specific initialization scheme.
 
         Args:
             x (torch.Tensor): input tensor
@@ -87,10 +90,10 @@ class NumericalFeatureTokenizer(nn.Module):
     """
     Transforms continuous features to tokens (embeddings).
 
-    See `FeatureTokenizer` for the illustration.
     For one feature, the transformation consists of two steps:
     * the feature is multiplied by a trainable vector
     * another trainable vector is added
+
     Note that each feature has its separate pair of trainable vectors, i.e. the vectors
     are not shared between features.
     """
@@ -109,17 +112,12 @@ class NumericalFeatureTokenizer(nn.Module):
             n_features: the number of continuous (scalar) features
             d_token: the size of one token
             bias: if `False`, then the transformation will include only multiplication.
-                **Warning**: :code:`bias=False` leads to significantly worse results for
+                **Warning**: `bias=False` leads to significantly worse results for
                 Transformer-like (token-based) architectures.
             initialization: initialization policy for parameters. Must be one of
-                :code:`['uniform', 'normal']`. Let :code:`s = d ** -0.5`. Then, the
-                corresponding distributions are :code:`Uniform(-s, s)` and :code:`
-                Normal(0, s)`.
-                In [gorishniy2021revisiting], the 'uniform' initialization was used.
-        References:
-            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin
-            Khrulkov, Artem Babenko,
-            "Revisiting Deep Learning Models for Tabular Data", 2021
+                `['uniform', 'normal']`. Let `s = d ** -0.5`. Then, the corresponding
+                distributions are `Uniform(-s, s)` and `Normal(0, s)`. In the
+                FTTransformer paper, the 'uniform' initialization was used.
         """
         super().__init__()
         initialization_ = _TokenInitialization.from_str(initialization)
@@ -131,17 +129,23 @@ class NumericalFeatureTokenizer(nn.Module):
 
     @property
     def n_tokens(self) -> int:
-        """Calculate number of tokens."""
+        """
+        Calculate number of tokens.
+        """
         return len(self.weight)
 
     @property
     def d_token(self) -> int:
-        """Calculate size of one token."""
+        """
+        Calculate size of one token.
+        """
         return self.weight.shape[1]
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
         Perform forward pass.
+
+        Multiply the input tensor by the weight and add the bias.
 
         Args:
             x (torch.Tensor): input tensor.
@@ -159,7 +163,6 @@ class CategoricalFeatureTokenizer(nn.Module):
     """
     Transforms categorical features to tokens (embeddings).
 
-    See `FeatureTokenizer` for the illustration.
     The module efficiently implements a collection of `torch.nn.Embedding` (with
     optional biases).
     """
@@ -168,7 +171,7 @@ class CategoricalFeatureTokenizer(nn.Module):
 
     def __init__(
         self,
-        cardinalities: List[int],
+        cardinalities: list[int],
         d_token: int,
         bias: bool,
         initialization: str,
@@ -178,19 +181,18 @@ class CategoricalFeatureTokenizer(nn.Module):
 
         Args:
             cardinalities: the number of distinct values for each feature. For example,
-                :code:`cardinalities=[3, 4]` describes two features: the first one can
-                take values in the range :code:`[0, 1, 2]` and the second one can take
-                values in the range :code:`[0, 1, 2, 3]`.
+                `cardinalities=[3, 4]` describes two features: the first one can take
+                values in the range `[0, 1, 2]` and the second one can take values in
+                the range `[0, 1, 2, 3]`.
             d_token: the size of one token.
             bias: if `True`, for each feature, a trainable vector is added to the
                 embedding regardless of feature value. The bias vectors are not shared
                 between features.
             initialization: initialization policy for parameters. Must be one of
-                :code:`['uniform', 'normal']`. Let :code:`s = d ** -0.5`. Then, the
-                corresponding distributions are :code:`Uniform(-s, s)` and
-                :code:`Normal(0, s)`. In
-                the paper [gorishniy2021revisiting], the 'uniform' initialization was
-                used.
+                `['uniform', 'normal']`. Let `s = d ** -0.5`. Then, the
+                corresponding distributions are `Uniform(-s, s)` and
+                `Normal(0, s)`. In the FTTransformer paper, the 'uniform' initialization
+                was used.
         """
         super().__init__()
         assert cardinalities, "cardinalities must be non-empty"
@@ -226,6 +228,8 @@ class CategoricalFeatureTokenizer(nn.Module):
         """
         Perform forward pass.
 
+        Calculate embedding from input vector and category offset and add bias.
+
         Args:
             x (torch.Tensor): input tensor.
 
@@ -242,27 +246,21 @@ class FeatureTokenizer(nn.Module):
     """
     Combines `NumericalFeatureTokenizer` and `CategoricalFeatureTokenizer`.
 
-    The "Feature Tokenizer" module from [gorishniy2021revisiting]. The module transforms
+    The "Feature Tokenizer" module from FTTransformer paper. The module transforms
     continuous and categorical features to tokens (embeddings).
-    In the illustration below, the red module in the upper brackets represents
-    `NumericalFeatureTokenizer` and the green module in the lower brackets represents
-    `CategoricalFeatureTokenizer`.
-    .. image:: ../images/feature_tokenizer.png
-        :scale: 33%
-        :alt: Feature Tokenizer
     """
 
     def __init__(
         self,
         num_continous: int,
-        cat_cardinalities: List[int],
+        cat_cardinalities: list[int],
         d_token: int,
     ) -> None:
         """
         Initialize the module.
 
         Args:
-            n_num_features: the number of continuous features. Pass :code:`0` if there
+            n_num_features: the number of continuous features. Pass `0` if there
                 are no numerical features.
             cat_cardinalities: the number of unique values for each feature. See
                 `CategoricalFeatureTokenizer` for details. Pass an empty list if there
@@ -296,7 +294,9 @@ class FeatureTokenizer(nn.Module):
 
     @property
     def n_tokens(self) -> int:
-        """Calculate the number of tokens."""
+        """
+        Calculate the number of tokens.
+        """
         return sum(
             x.n_tokens
             for x in [self.num_tokenizer, self.cat_tokenizer]
@@ -305,7 +305,9 @@ class FeatureTokenizer(nn.Module):
 
     @property
     def d_token(self) -> int:
-        """Calculate size of one token."""
+        """
+        Calculate size of one token.
+        """
         return (
             self.cat_tokenizer.d_token  # type: ignore
             if self.num_tokenizer is None
@@ -313,15 +315,15 @@ class FeatureTokenizer(nn.Module):
         )
 
     def forward(
-        self, x_num: Optional[torch.Tensor], x_cat: Optional[torch.Tensor]
+        self, x_num: torch.Tensor | None, x_cat: torch.Tensor | None
     ) -> torch.Tensor:
         """Perform the forward pass.
 
         Args:
-            x_num: continuous features. Must be presented if :code:`n_num_features > 0`
+            x_num: continuous features. Must be presented if `n_num_features > 0`
                 was passed to the constructor.
             x_cat: categorical features (see `CategoricalFeatureTokenizer.forward` for
-                details). Must be presented if non-empty :code:`cat_cardinalities` was
+                details). Must be presented if non-empty `cat_cardinalities` was
                 passed to the constructor.
         Returns:
             tokens
@@ -346,11 +348,11 @@ class FeatureTokenizer(nn.Module):
 
 
 class CLSToken(nn.Module):
-    """[CLS]-token for BERT-like inference.
+    """
+    [CLS]-token for BERT-like inference.
 
-    To learn about the [CLS]-based inference, see [devlin2018bert].
-    When used as a module, the [CLS]-token is appended **to the end** of each item in
-    the batch.
+    To learn about the [CLS]-based inference, see [devlin2018bert]. When used as a
+    module, the [CLS]-token is appended **to the end** of each item in the batch.
 
     References:
         * [devlin2018bert] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova
@@ -365,8 +367,8 @@ class CLSToken(nn.Module):
         Args:
             d_token: the size of token
             initialization: initialization policy for parameters. Must be one of
-                :code:`['uniform', 'normal']`. Let :code:`s = d ** -0.5`. Then, the
-                corresponding distributions are :code:`Uniform(-s, s)` and :code:
+                `['uniform', 'normal']`. Let `s = d ** -0.5`. Then, the
+                corresponding distributions are `Uniform(-s, s)` and
                 `Normal(0, s)`. In
                 the paper [gorishniy2021revisiting], the 'uniform' initialization was
                 used.
@@ -389,12 +391,12 @@ class CLSToken(nn.Module):
         examples of usage.
         Note:
             Under the hood, the `torch.torch.Tensor.expand` method is applied to the
-            underlying :code:`weight` parameter, so gradients will be propagated as
+            underlying `weight` parameter, so gradients will be propagated as
             expected.
         Args:
             leading_dimensions: the additional new dimensions
         Returns:
-            tensor of the shape :code:`(*leading_dimensions, len(self.weight))`
+            tensor of the shape `(*leading_dimensions, len(self.weight))`
         """
         if not leading_dimensions:
             return self.weight
@@ -439,7 +441,7 @@ class MultiheadAttention(nn.Module):
         Initialize the module.
 
         Args:
-            d_token: the token size. Must be a multiple of :code:`n_heads`.
+            d_token: the token size. Must be a multiple of `n_heads`.
             n_heads: the number of heads. If greater than 1, then the module will have
                 an addition output layer (so called "mixing" layer).
             dropout: dropout rate for the attention map. The dropout is applied to
@@ -448,7 +450,7 @@ class MultiheadAttention(nn.Module):
             bias.
                 `True` is a reasonable default choice.
             initialization: initialization for input projection layers. Must be one of
-                :code:`['kaiming', 'xavier']`. `kaiming` is a reasonable default choice.
+                `['kaiming', 'xavier']`. `kaiming` is a reasonable default choice.
         Raises:
             AssertionError: if requirements for the inputs are not met.
         """
@@ -501,9 +503,9 @@ class MultiheadAttention(nn.Module):
         self,
         x_q: torch.Tensor,
         x_kv: torch.Tensor,
-        key_compression: Optional[nn.Linear],
-        value_compression: Optional[nn.Linear],
-    ) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
+        key_compression: nn.Linear | None,
+        value_compression: nn.Linear | None,
+    ) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
         """
         Perform the forward pass.
 
@@ -672,10 +674,10 @@ class Transformer(nn.Module):
         residual_dropout: float,
         prenormalization: bool,
         first_prenormalization: bool,
-        last_layer_query_idx: Union[None, List[int], slice],
-        n_tokens: Optional[int],
-        kv_compression_ratio: Optional[float],
-        kv_compression_sharing: Optional[str],
+        last_layer_query_idx: None | list[int] | slice,
+        n_tokens: int | None,
+        kv_compression_ratio: float | None,
+        kv_compression_sharing: str | None,
         head_activation: Callable[..., nn.Module],
         head_normalization: Callable[..., nn.Module],
         d_out: int,
@@ -684,32 +686,39 @@ class Transformer(nn.Module):
         Initialize the module.
 
         Args:
-            d_token (int): _description_
-            n_blocks (int): _description_
-            attention_n_heads (int): _description_
-            attention_dropout (float): _description_
-            attention_initialization (str): _description_
-            attention_normalization (nn.Module): _description_
-            ffn_d_hidden (int): _description_
-            ffn_dropout (float): _description_
-            ffn_activation (nn.Module): _description_
-            ffn_normalization (nn.Module): _description_
-            residual_dropout (float): _description_
-            prenormalization (bool): _description_
-            first_prenormalization (bool): _description_
-            last_layer_query_idx (Union[None, List[int], slice]): _description_
-            n_tokens (Optional[int]): _description_
-            kv_compression_ratio (Optional[float]): _description_
-            kv_compression_sharing (Optional[str]): _description_
-            head_activation (Callable[..., nn.Module]): _description_
-            head_normalization (Callable[..., nn.Module]): _description_
-            d_out (int): _description_
+            d_token (int): dimensionality of token.
+            n_blocks (int): number of blocks.
+            attention_n_heads (int): number of attention heads.
+            attention_dropout (float): degree of attention dropout.
+            attention_initialization (str): initialization strategy for attention
+            weights.
+            attention_normalization (nn.Module): attention normalization layer.
+            ffn_d_hidden (int): capacity of the hidden layers in the FFN.
+            ffn_dropout (float): dropout in the FFN.
+            ffn_activation (nn.Module): activation function in the FFN.
+            ffn_normalization (nn.Module): normalization layer in the FFN.
+            residual_dropout (float): degree of residual dropout.
+            prenormalization (bool): flag to use prenormalization.
+            first_prenormalization (bool): flag to use prenormalization in the first
+            layer.
+            last_layer_query_idx (Union[None, List[int], slice]): query index for the
+            last layer.
+            n_tokens (Optional[int]): number of tokens.
+            kv_compression_ratio (Optional[float]): compression ratio for the key and
+            values.
+            kv_compression_sharing (Optional[str]): strategy for sharing the key and
+            values of compression.
+            head_activation (Callable[..., nn.Module]): activation function in the
+            attention head.
+            head_normalization (Callable[..., nn.Module]): normalization layer in the
+            attention head.
+            d_out (int): dimensionality of the output
 
         Raises:
-            ValueError: _description_
+            ValueError: value error
 
         Returns:
-            _type_: _description_
+            None: None
         """
         super().__init__()
         if isinstance(last_layer_query_idx, int):
@@ -790,8 +799,8 @@ class Transformer(nn.Module):
         )
 
     def _get_kv_compressions(
-        self, layer: Dict[str, Any]
-    ) -> Tuple[Optional[nn.Module], Optional[nn.Module]]:
+        self, layer: dict[str, Any]
+    ) -> tuple[nn.Module | None, nn.Module | None]:
         return (
             (self.shared_kv_compression, self.shared_kv_compression)
             if self.shared_kv_compression is not None
@@ -892,8 +901,8 @@ class FTTransformer(nn.Module):
         Initialize the module.
 
         Args:
-            feature_tokenizer (FeatureTokenizer): _description_
-            transformer (Transformer): _description_
+            feature_tokenizer (FeatureTokenizer): feature tokenizer.
+            transformer (Transformer): transformer.
         """
         super().__init__()
         self.feature_tokenizer = feature_tokenizer
@@ -903,14 +912,14 @@ class FTTransformer(nn.Module):
         self.transformer = transformer
 
     def forward(
-        self, x_cat: Optional[torch.Tensor], x_cont: Optional[torch.Tensor]
+        self, x_cat: torch.Tensor | None, x_cont: torch.Tensor | None
     ) -> torch.Tensor:
         """
         Perform forward pass.
 
         Args:
-            x_cat (Optional[torch.Tensor]): tensor with categorical data.
-            x_cont (Optional[torch.Tensor]): tensor with continous data.
+            x_cat (torch.Tensor | None): tensor with categorical data.
+            x_cont (torch.Tensor | None): tensor with continous data.
 
         Returns:
             torch.Tensor: predictions

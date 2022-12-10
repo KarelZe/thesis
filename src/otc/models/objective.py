@@ -402,8 +402,6 @@ class FTTransformerObjective(Objective):
             val_data.x_cat, val_data.x_cont, val_data.y, **dl_kwargs
         )
 
-        # https://github.com/Yura52/rtdl/blob/main/rtdl/modules.py
-
         feature_tokenizer_kwargs = {
             "num_continous": len(self._cont_features),
             "cat_cardinalities": self._cat_cardinalities,

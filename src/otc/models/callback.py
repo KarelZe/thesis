@@ -85,7 +85,7 @@ class SaveCallback(Callback):
     Callback to save the models.
 
     Args:
-        Callback (_type_): _description_
+        Callback (callback): callback.
     """
 
     def __init__(self, wandb_kwargs: dict[str, Any] | None = None) -> None:

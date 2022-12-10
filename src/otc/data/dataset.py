@@ -80,7 +80,7 @@ class TabDataset(Dataset):
         Get sample for model.
 
         Args:
-            idx (int): _description_
+            idx (int): index of item.
 
         Returns:
             Tuple[torch.Tensor | None, torch.Tensor, torch.Tensor]:
