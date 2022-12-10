@@ -10,7 +10,6 @@ import torch.nn as nn
 
 from otc.models.objective import set_seed
 from otc.models.tabtransformer import TabTransformer
-
 from tests import templates
 
 

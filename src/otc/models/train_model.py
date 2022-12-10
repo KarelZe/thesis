@@ -138,7 +138,7 @@ def main(
             x_val,
             y_val,
             cat_features=features_categorical_filtered,
-            cat_unique=[],
+            cat_cardinalities=[],
         )
     elif model == "classical":
         objective = ClassicalObjective(x_train, y_train, x_val, y_val)

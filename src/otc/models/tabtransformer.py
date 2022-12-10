@@ -20,6 +20,7 @@ from torch import einsum, nn
 
 from otc.models.activation import GeGLU
 
+
 class Residual(nn.Module):
     """
     PyTorch implementation of residual connections.
@@ -84,7 +85,6 @@ class PreNorm(nn.Module):
             torch.Tensor: output tensor.
         """
         return self.fn(self.norm(x), **kwargs)
-
 
 
 class FeedForward(nn.Module):
@@ -434,7 +434,6 @@ class TabTransformer(nn.Module):
         Returns:
             torch.Tensor: predictions with shape [batch, 1]
         """
-
         flat_categ: torch.Tensor | None = None
 
         if x_cat is not None:
@@ -458,7 +457,8 @@ class TabTransformer(nn.Module):
         normed_cont = self.norm(x_cont)
 
         # Adaptation to work without categorical data
-        x = (torch.cat((flat_categ, normed_cont), dim=-1)
+        x = (
+            torch.cat((flat_categ, normed_cont), dim=-1)
             if flat_categ is not None
             else normed_cont
         )

@@ -5,21 +5,22 @@ https://github.com/Yura52/rtdl/
 
 import enum
 import math
-
-from typing import Callable, Dict, List, Optional, Tuple, Union, cast
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union, cast
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim
 
-from otc.models.activation import ReGLU, GeGLU
-
+from otc.models.activation import GeGLU, ReGLU
 
 _INTERNAL_ERROR_MESSAGE = "Internal error. Please, open an issue."
 
 
-def _is_glu_activation(activation: Callable[..., nn.Module]):
+def _is_glu_activation(activation: Callable[..., nn.Module]) -> bool:
+    """
+    Checks if the activation is a GLU variant.
+    """
     return (
         isinstance(activation, str)
         and activation.endswith("GLU")
@@ -27,11 +28,33 @@ def _is_glu_activation(activation: Callable[..., nn.Module]):
     )
 
 
-def _all_or_none(values):
+def _all_or_none(values: List[Any]) -> bool:
+    """
+    Checks if all values are None or all values are not None.
+
+    Args:
+        values (List[Any]): List with values
+
+    Returns:
+        bool: result of check.
+    """
     return all(x is None for x in values) or all(x is not None for x in values)
 
 
 class _TokenInitialization(enum.Enum):
+    """
+    Implmentation of TokenInitialization scheme.
+
+    Args:
+        enum (_type_): _description_
+
+    Raises:
+        ValueError: _description_
+
+    Returns:
+        _type_: _description_
+    """
+
     UNIFORM = "uniform"
     NORMAL = "normal"
 
@@ -55,7 +78,9 @@ class _TokenInitialization(enum.Enum):
 
 
 class NumericalFeatureTokenizer(nn.Module):
-    """Transforms continuous features to tokens (embeddings).
+    """
+    Transforms continuous features to tokens (embeddings).
+
     See `FeatureTokenizer` for the illustration.
     For one feature, the transformation consists of two steps:
     * the feature is multiplied by a trainable vector
@@ -80,10 +105,12 @@ class NumericalFeatureTokenizer(nn.Module):
                 Transformer-like (token-based) architectures.
             initialization: initialization policy for parameters. Must be one of
                 :code:`['uniform', 'normal']`. Let :code:`s = d ** -0.5`. Then, the
-                corresponding distributions are :code:`Uniform(-s, s)` and :code:`Normal(0, s)`.
+                corresponding distributions are :code:`Uniform(-s, s)` and :code:`
+                Normal(0, s)`.
                 In [gorishniy2021revisiting], the 'uniform' initialization was used.
         References:
-            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko, 
+            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin 
+            Khrulkov, Artem Babenko,
             "Revisiting Deep Learning Models for Tabular Data", 2021
         """
         super().__init__()
@@ -112,7 +139,9 @@ class NumericalFeatureTokenizer(nn.Module):
 
 
 class CategoricalFeatureTokenizer(nn.Module):
-    """Transforms categorical features to tokens (embeddings).
+    """
+    Transforms categorical features to tokens (embeddings).
+
     See `FeatureTokenizer` for the illustration.
     The module efficiently implements a collection of `torch.nn.Embedding` (with
     optional biases).
@@ -139,12 +168,10 @@ class CategoricalFeatureTokenizer(nn.Module):
                 between features.
             initialization: initialization policy for parameters. Must be one of
                 :code:`['uniform', 'normal']`. Let :code:`s = d ** -0.5`. Then, the
-                corresponding distributions are :code:`Uniform(-s, s)` and :code:`Normal(0, s)`. In
+                corresponding distributions are :code:`Uniform(-s, s)` and
+                :code:`Normal(0, s)`. In
                 the paper [gorishniy2021revisiting], the 'uniform' initialization was
                 used.
-        References:
-            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko,
-             "Revisiting Deep Learning Models for Tabular Data", 2021
         """
         super().__init__()
         assert cardinalities, "cardinalities must be non-empty"
@@ -180,7 +207,9 @@ class CategoricalFeatureTokenizer(nn.Module):
 
 
 class FeatureTokenizer(nn.Module):
-    """Combines `NumericalFeatureTokenizer` and `CategoricalFeatureTokenizer`.
+    """
+    Combines `NumericalFeatureTokenizer` and `CategoricalFeatureTokenizer`.
+
     The "Feature Tokenizer" module from [gorishniy2021revisiting]. The module transforms
     continuous and categorical features to tokens (embeddings).
     In the illustration below, the red module in the upper brackets represents
@@ -189,9 +218,6 @@ class FeatureTokenizer(nn.Module):
     .. image:: ../images/feature_tokenizer.png
         :scale: 33%
         :alt: Feature Tokenizer
-    References:
-        * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko 
-        "Revisiting Deep Learning Models for Tabular Data", 2021
     """
 
     def __init__(
@@ -213,7 +239,8 @@ class FeatureTokenizer(nn.Module):
         assert num_continous >= 0, "n_num_features must be non-negative"
         assert (
             num_continous or cat_cardinalities
-        ), "at least one of n_num_features or cat_cardinalities must be positive/non-empty"
+        ), "at least one of n_num_features or cat_cardinalities must be positive"
+        "and non-empty"
         self.initialization = "uniform"
         self.num_tokenizer = (
             NumericalFeatureTokenizer(
@@ -255,6 +282,7 @@ class FeatureTokenizer(nn.Module):
         self, x_num: Optional[torch.Tensor], x_cat: Optional[torch.Tensor]
     ) -> torch.Tensor:
         """Perform the forward pass.
+
         Args:
             x_num: continuous features. Must be presented if :code:`n_num_features > 0`
                 was passed to the constructor.
@@ -285,13 +313,15 @@ class FeatureTokenizer(nn.Module):
 
 class CLSToken(nn.Module):
     """[CLS]-token for BERT-like inference.
+
     To learn about the [CLS]-based inference, see [devlin2018bert].
     When used as a module, the [CLS]-token is appended **to the end** of each item in
     the batch.
 
     References:
-        * [devlin2018bert] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova "BERT: 
-        Pre-training of Deep Bidirectional Transformers for Language Understanding" 2018
+        * [devlin2018bert] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova
+         "BERT: Pre-training of Deep Bidirectional Transformers for Language
+         Understanding" 2018
     """
 
     def __init__(self, d_token: int, initialization: str) -> None:
@@ -300,11 +330,13 @@ class CLSToken(nn.Module):
             d_token: the size of token
             initialization: initialization policy for parameters. Must be one of
                 :code:`['uniform', 'normal']`. Let :code:`s = d ** -0.5`. Then, the
-                corresponding distributions are :code:`Uniform(-s, s)` and :code:`Normal(0, s)`. In
+                corresponding distributions are :code:`Uniform(-s, s)` and :code:
+                `Normal(0, s)`. In
                 the paper [gorishniy2021revisiting], the 'uniform' initialization was
                 used.
         References:
-            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko
+            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin
+            Khrulkov, Artem Babenko
              "Revisiting Deep Learning Models for Tabular Data", 2021
         """
         super().__init__()
@@ -313,7 +345,9 @@ class CLSToken(nn.Module):
         initialization_.apply(self.weight, d_token)
 
     def expand(self, *leading_dimensions: int) -> torch.Tensor:
-        """Expand (repeat) the underlying [CLS]-token to a tensor with the given leading dimensions.
+        """Expand (repeat) the underlying [CLS]-token to a tensor with the given
+        leading dimensions.
+
         A possible use case is building a batch of [CLS]-tokens. See `CLSToken` for
         examples of usage.
         Note:
@@ -334,15 +368,21 @@ class CLSToken(nn.Module):
         """Append self **to the end** of each item in the batch (see `CLSToken`)."""
         return torch.cat([x, self.expand(len(x), 1)], dim=1)
 
+
 class MultiheadAttention(nn.Module):
     """Multihead Attention (self-/cross-) with optional 'linear' attention.
-    To learn more about Multihead Attention, see [devlin2018bert]. See the implementation
-    of `Transformer` and the examples below to learn how to use the compression technique
-    from [wang2020linformer] to speed up the module when the number of tokens is large.
+
+    To learn more about Multihead Attention, see [devlin2018bert].
+
+    See the implementation  of `Transformer` and the examples below to learn how to use
+    the compression technique from [wang2020linformer] to speed up the module when the
+    number of tokens is large.
     References:
-        * [devlin2018bert] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova "BERT: Pre-training 
+        * [devlin2018bert] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova
+        "BERT: Pre-training
         of Deep Bidirectional Transformers for Language Understanding" 2018
-        * [wang2020linformer] Sinong Wang, Belinda Z. Li, Madian Khabsa, Han Fang, Hao Ma "Linformer: 
+        * [wang2020linformer] Sinong Wang, Belinda Z. Li, Madian Khabsa, Han Fang, Hao
+        Ma "Linformer:
         Self-Attention with Linear Complexity", 2020
     """
 
@@ -362,7 +402,8 @@ class MultiheadAttention(nn.Module):
                 an addition output layer (so called "mixing" layer).
             dropout: dropout rate for the attention map. The dropout is applied to
                 *probabilities* and do not affect logits.
-            bias: if `True`, then input (and output, if presented) layers also have bias.
+            bias: if `True`, then input (and output, if presented) layers also have
+            bias.
                 `True` is a reasonable default choice.
             initialization: initialization for input projection layers. Must be one of
                 :code:`['kaiming', 'xavier']`. `kaiming` is a reasonable default choice.
@@ -412,7 +453,9 @@ class MultiheadAttention(nn.Module):
         key_compression: Optional[nn.Linear],
         value_compression: Optional[nn.Linear],
     ) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
-        """Perform the forward pass.
+        """
+        Perform the forward pass.
+
         Args:
             x_q: query tokens
             x_kv: key-value tokens
@@ -494,7 +537,10 @@ class Transformer(nn.Module):
             return x
 
     class Head(nn.Module):
-        """The final module of the `Transformer` that performs BERT-like inference."""
+        """
+        The final module of the `Transformer` that performs BERT-like inference.
+
+        """
 
         def __init__(
             self,
@@ -550,19 +596,19 @@ class Transformer(nn.Module):
         if not prenormalization:
             assert (
                 not first_prenormalization
-            ), "If `prenormalization` is False, then `first_prenormalization` must be False"
+            ), "If `prenormalization` is False, then `first_prenormalization`"
+            "must be False"
         assert _all_or_none([n_tokens, kv_compression_ratio, kv_compression_sharing]), (
-            "If any of the following arguments is (not) None, then all of them must (not) be None: "
-            "n_tokens, kv_compression_ratio, kv_compression_sharing"
+            "If any of the following arguments is (not) None, then all of them must "
+            "(not) be None: n_tokens, kv_compression_ratio, kv_compression_sharing"
         )
         assert kv_compression_sharing in [None, "headwise", "key-value", "layerwise"]
 
-        def make_kv_compression():
+        def make_kv_compression() -> nn.Module:
             assert (
                 n_tokens and kv_compression_ratio
             ), _INTERNAL_ERROR_MESSAGE  # for mypy
-            # https://github.com/pytorch/fairseq/blob/1bba712622b8ae4efb3eb793a8a40da386fe11d0/
-            # examples/linformer/linformer_src/modules/multihead_linear_attention.py#L83
+            # https://bit.ly/3h8RdO5
             return nn.Linear(n_tokens, int(n_tokens * kv_compression_ratio), bias=False)
 
         self.shared_kv_compression = (
@@ -619,7 +665,9 @@ class Transformer(nn.Module):
             normalization=head_normalization if prenormalization else nn.Identity(),
         )
 
-    def _get_kv_compressions(self, layer):
+    def _get_kv_compressions(
+        self, layer: Dict[str, Any]
+    ) -> Tuple[Optional[nn.Module], Optional[nn.Module]]:
         return (
             (self.shared_kv_compression, self.shared_kv_compression)
             if self.shared_kv_compression is not None
@@ -630,7 +678,9 @@ class Transformer(nn.Module):
             else (None, None)
         )
 
-    def _start_residual(self, layer, stage, x):
+    def _start_residual(
+        self, layer: torch.ModuleDict, stage: str, x: torch.Tensor
+    ) -> torch.Tensor:
         assert stage in ["attention", "ffn"], _INTERNAL_ERROR_MESSAGE
         x_residual = x
         if self.prenormalization:
@@ -639,7 +689,13 @@ class Transformer(nn.Module):
                 x_residual = layer[norm_key](x_residual)
         return x_residual
 
-    def _end_residual(self, layer, stage, x, x_residual):
+    def _end_residual(
+        self,
+        layer: torch.ModuleDict,
+        stage: str,
+        x: torch.Tensor,
+        x_residual: torch.Tensor,
+    ) -> torch.Tensor:
         assert stage in ["attention", "ffn"], _INTERNAL_ERROR_MESSAGE
         x_residual = layer[f"{stage}_residual_dropout"](x_residual)
         x = x + x_residual
@@ -677,6 +733,25 @@ class Transformer(nn.Module):
 
 
 class FTTransformer(nn.Module):
+    """
+    Implementation of `FTTransformer`.
+
+    @inproceedings{gorishniyRevisitingDeepLearning2021,
+    title = {Revisiting {{Deep Learning Models}} for {{Tabular Data}}},
+    booktitle = {Advances in {{Neural Information Processing Systems}}},
+    author = {Gorishniy, Yury and Rubachev, Ivan and Khrulkov, Valentin and Babenko,
+    Artem},
+    year = {2021},
+    volume = {34},
+    pages = {18932--18943},
+    publisher = {{Curran Associates, Inc.}},
+    address = {{Red Hook, NY}},
+    }
+
+    Args:
+        nn (module): module
+    """
+
     def __init__(
         self, feature_tokenizer: FeatureTokenizer, transformer: Transformer
     ) -> None:

@@ -15,10 +15,10 @@ from typing import Any
 
 import optuna
 import torch
+import wandb
 from catboost import CatBoostClassifier
 from torch import nn
 
-import wandb
 from otc.data.fs import fs
 from otc.utils.colors import Colors
 from otc.utils.config import settings

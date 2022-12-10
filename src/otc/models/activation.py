@@ -1,10 +1,13 @@
 """
+Implementation of GeGLU and ReGLU activation functions.
+
 Adapted from:
 https://github.com/Yura52/rtdl/blob/main/rtdl/functional.py
 """
 import torch
 import torch.nn.functional as F
 from torch import nn
+
 
 class GeGLU(nn.Module):
     r"""

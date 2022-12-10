@@ -5,20 +5,22 @@ Partly inspired by:
 https://github.com/tilman151/unittest_dl/blob/master/tests/test_model.py
 """
 
+from typing import Any, Dict
+
 import torch
 import torch.nn as nn
 
-from otc.models.objective import set_seed
+from otc.models.activation import ReGLU
 from otc.models.fttransformer import (
-    FTTransformer,
-    Transformer,
-    FeatureTokenizer,
-    NumericalFeatureTokenizer,
     CategoricalFeatureTokenizer,
     CLSToken,
+    FeatureTokenizer,
+    FTTransformer,
     MultiheadAttention,
+    NumericalFeatureTokenizer,
+    Transformer,
 )
-from otc.models.activation import ReGLU
+from otc.models.objective import set_seed
 from tests import templates
 
 
@@ -59,7 +61,7 @@ class TestFTTransformer(templates.NeuralNetTestsMixin):
 
         # https://github.com/Yura52/rtdl/blob/main/rtdl/modules.py
 
-        params_feature_tokenizer = {
+        params_feature_tokenizer: Dict[str, Any] = {
             "n_num_features": self.num_features_cont,
             "cat_cardinalities": self.cat_cardinalities,
             "d_token": 96,

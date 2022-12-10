@@ -144,7 +144,9 @@ class TabTransformerObjective(Objective):
             name (str, optional): Name of objective. Defaults to "default".
         """
         self._cat_features = [] if not cat_features else cat_features
-        self._cat_cardinalities = () if not cat_cardinalities else tuple(cat_cardinalities)
+        self._cat_cardinalities = (
+            () if not cat_cardinalities else tuple(cat_cardinalities)
+        )
         self._cont_features: list[int] = [
             x for x in x_train.columns.tolist() if x not in self._cat_features
         ]
@@ -205,7 +207,7 @@ class TabTransformerObjective(Objective):
         )
 
         self._clf = TabTransformer(
-            ccat_cardinalities=self._cat_cardinalities,
+            cat_cardinalities=self._cat_cardinalities,
             num_continuous=len(self._cont_features),
             dim_out=1,
             mlp_act=nn.ReLU(),
