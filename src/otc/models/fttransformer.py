@@ -109,7 +109,7 @@ class NumericalFeatureTokenizer(nn.Module):
                 Normal(0, s)`.
                 In [gorishniy2021revisiting], the 'uniform' initialization was used.
         References:
-            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin 
+            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin
             Khrulkov, Artem Babenko,
             "Revisiting Deep Learning Models for Tabular Data", 2021
         """

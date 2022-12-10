@@ -62,7 +62,7 @@ class TestFTTransformer(templates.NeuralNetTestsMixin):
         # https://github.com/Yura52/rtdl/blob/main/rtdl/modules.py
 
         params_feature_tokenizer: Dict[str, Any] = {
-            "n_num_features": self.num_features_cont,
+            "num_continous": self.num_features_cont,
             "cat_cardinalities": self.cat_cardinalities,
             "d_token": 96,
         }
