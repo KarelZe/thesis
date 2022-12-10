@@ -21,7 +21,7 @@ from torch import nn
 
 from otc.data.fs import fs
 from otc.utils.colors import Colors
-from otc.utils.config import settings
+from otc.config.config import settings
 
 logger = logging.getLogger(__name__)
 

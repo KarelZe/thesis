@@ -30,7 +30,7 @@ from otc.models.objective import (
     TabTransformerObjective,
     set_seed,
 )
-from otc.utils.config import settings
+from otc.config.config import settings
 
 
 @click.command()

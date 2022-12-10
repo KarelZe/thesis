@@ -95,3 +95,10 @@ minversion = 7.0
 addopts = "-ra -p no:warnings -v --cov --cov-report term-missing"
 pythonpath = ["src"]
 testpaths = ["tests"]
+
+[tool.coverage.run]
+omit = [
+    "src/otc/utils*",
+    "debug_*.py",
+    "tests/*",
+]

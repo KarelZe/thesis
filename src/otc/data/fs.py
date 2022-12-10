@@ -9,7 +9,7 @@ from pathlib import Path
 
 import gcsfs
 
-from otc.utils.config import settings
+from otc.config.config import settings
 
 
 def _create_environment() -> gcsfs.GCSFileSystem:
