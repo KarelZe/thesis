@@ -25,6 +25,12 @@ from otc.data.dataset import TabDataset
 from otc.models.callback import CallbackContainer, PrintCallback, SaveCallback
 from otc.models.classical_classifier import ClassicalClassifier
 from otc.models.tabtransformer import TabTransformer
+from otc.models.activation import ReGLU
+from otc.models.fttransformer import (
+    FeatureTokenizer,
+    FTTransformer,
+    Transformer,
+)
 from otc.optim.early_stopping import EarlyStopping
 
 
@@ -154,6 +160,8 @@ class TabTransformerObjective(Objective):
         self._clf: nn.Module
         self._callbacks = CallbackContainer([SaveCallback(), PrintCallback()])
 
+        # static params
+        self.epochs = 1024
         super().__init__(x_train, y_train, x_val, y_val, name)
 
     def __call__(self, trial: optuna.Trial) -> float:
@@ -166,9 +174,6 @@ class TabTransformerObjective(Objective):
         Returns:
             float: accuracy of trial on validation set.
         """
-        # static params
-        epochs = 1024
-
         # searchable params
         dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
 
@@ -210,7 +215,7 @@ class TabTransformerObjective(Objective):
             cat_cardinalities=self._cat_cardinalities,
             num_continuous=len(self._cont_features),
             dim_out=1,
-            mlp_act=nn.ReLU(),
+            mlp_act=nn.ReLU,
             dim=dim,
             depth=depth,
             heads=heads,
@@ -233,7 +238,7 @@ class TabTransformerObjective(Objective):
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=5)
 
-        for epoch in range(epochs):
+        for epoch in range(self.epochs):
 
             # perform training
             loss_in_epoch_train = 0
@@ -275,7 +280,228 @@ class TabTransformerObjective(Objective):
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
 
-            self._callbacks.on_epoch_end(epoch, epochs, train_loss, val_loss)
+            self._callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
+
+            # return early if val loss doesn't decrease for several iterations
+            early_stopping(val_loss)
+            if early_stopping.early_stop:
+                break
+
+        # make predictions with final model
+        y_pred, y_true = [], []
+
+        self._clf.eval()
+
+        for x_cat, x_cont, targets in val_loader:
+            output = self._clf(x_cat, x_cont)
+
+            # map between zero and one, sigmoid is otherwise included in loss already
+            # https://stackoverflow.com/a/66910866/5755604
+            output = torch.sigmoid(output.squeeze())
+            y_pred.append(output.detach().cpu().numpy())
+            y_true.append(targets.detach().cpu().numpy())  # type: ignore
+
+        # round prediction to nearest int
+        y_pred = np.rint(np.concatenate(y_pred))
+        y_true = np.concatenate(y_true)
+
+        return accuracy_score(y_true, y_pred)  # type: ignore
+
+
+class FTTransformerObjective(Objective):
+    """
+    Implements an optuna optimization objective.
+
+    See here: https://optuna.readthedocs.io/en/stable/
+    Args:
+        Objective (Objective): objective
+    """
+
+    def __init__(
+        self,
+        x_train: pd.DataFrame,
+        y_train: pd.Series,
+        x_val: pd.DataFrame,
+        y_val: pd.Series,
+        cat_features: list[str] | None,
+        cat_cardinalities: list[int] | None,
+        name: str = "default",
+    ):
+        """
+        Initialize objective.
+
+        Args:
+            x_train (pd.DataFrame): feature matrix (train)
+            y_train (pd.Series): ground truth (train)
+            x_val (pd.DataFrame): feature matrix (val)
+            y_val (pd.Series): ground truth (val)
+            cat_features (List[str] | None, optional): List of
+            categorical features. Defaults to None.
+            cat_cardinalities (List[int] | None, optional): Unique counts
+            of categorical features.
+            Defaults to None.
+            name (str, optional): Name of objective. Defaults to "default".
+        """
+        self._cat_features = [] if not cat_features else cat_features
+        self._cat_cardinalities = (
+            () if not cat_cardinalities else tuple(cat_cardinalities)
+        )
+        self._cont_features: list[int] = [
+            x for x in x_train.columns.tolist() if x not in self._cat_features
+        ]
+
+        self._clf: nn.Module
+        self._callbacks = CallbackContainer([SaveCallback(), PrintCallback()])
+
+        # static params
+        self.epochs = 1024
+
+        super().__init__(x_train, y_train, x_val, y_val, name)
+
+    def __call__(self, trial: optuna.Trial) -> float:
+        """
+        Perform a new search trial in Bayesian search.
+
+        Hyperarameters are suggested, unless they are fixed.
+        Args:
+            trial (optuna.Trial): current trial.
+        Returns:
+            float: accuracy of trial on validation set.
+        """
+        # searchable params done similar to fttransformer paper
+        n_blocks: int = trial.suggest_int("n_blocks", 1, 6)
+        d_tokens = [96, 128, 192, 256, 320, 384]
+        d_token: int = trial.suggest_categorical("d_token", d_tokens)  # type: ignore
+        attention_dropouts = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35]
+        attention_dropout: int = trial.suggest_categorical("attention_dropout", attention_dropouts)  # type: ignore
+        ffn_dropouts = [0.0, 0.05, 0.1, 0.15, 0.2, 0.25]
+        ffn_dropout: int = trial.suggest_categorical("ffn_dropout", ffn_dropouts)  # type: ignore
+
+        weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
+        lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
+        bs = [8192, 16384, 32768]
+        batch_size: int = trial.suggest_categorical("batch_size", bs)  # type: ignore
+
+        use_cuda = torch.cuda.is_available()
+        device = torch.device("cuda" if use_cuda else "cpu")
+
+        training_data = TabDataset(
+            self.x_train, self.y_train, self._cat_features, self._cat_cardinalities
+        )
+        val_data = TabDataset(
+            self.x_val, self.y_val, self._cat_features, self._cat_cardinalities
+        )
+
+        dl_kwargs: dict[str, Any] = {
+            "batch_size": batch_size,
+            "shuffle": False,
+            "device": device,
+        }
+
+        # differentiate between continous features only and mixed.
+        train_loader = TabDataLoader(
+            training_data.x_cat, training_data.x_cont, training_data.y, **dl_kwargs
+        )
+        val_loader = TabDataLoader(
+            val_data.x_cat, val_data.x_cont, val_data.y, **dl_kwargs
+        )
+
+        # https://github.com/Yura52/rtdl/blob/main/rtdl/modules.py
+
+        feature_tokenizer_kwargs = {
+            "num_continous": len(self._cont_features),
+            "cat_cardinalities": self._cat_cardinalities,
+            "d_token": d_token,
+        }
+        print(feature_tokenizer_kwargs)
+        transformer_kwargs = {
+            "d_token": d_token,
+            "n_blocks": n_blocks,
+            "attention_n_heads": 8,
+            "attention_initialization": "kaiming",
+            "ffn_activation": ReGLU,
+            "attention_normalization": nn.LayerNorm,
+            "ffn_normalization": nn.LayerNorm,
+            "ffn_dropout": ffn_dropout,
+            # minor simplification from original paper, fix at 4/3, as activation
+            # is static with ReGLU / GeGLU
+            "ffn_d_hidden": int(d_token * (4 / 3)),
+            "attention_dropout": attention_dropout,
+            "residual_dropout": 0.0,
+            "prenormalization": True,
+            "first_prenormalization": False,
+            "last_layer_query_idx": None,
+            "n_tokens": None,
+            "kv_compression_ratio": None,
+            "kv_compression_sharing": None,
+            "head_activation": nn.ReLU,
+            "head_normalization": nn.LayerNorm,
+            # fix at 1, due to binary classification
+            "d_out": 1,
+        }
+        print(transformer_kwargs)
+
+        feature_tokenizer = FeatureTokenizer(**feature_tokenizer_kwargs)
+        transformer = Transformer(**transformer_kwargs)
+        self._clf = FTTransformer(feature_tokenizer, transformer).to(device)
+
+        # half precision, see https://pytorch.org/docs/stable/amp.html
+        scaler = torch.cuda.amp.GradScaler()
+        # Generate the optimizers
+        optimizer = optim.AdamW(
+            self._clf.parameters(), lr=lr, weight_decay=weight_decay
+        )
+
+        # see https://stackoverflow.com/a/53628783/5755604
+        # no sigmoid required; numerically more stable
+        criterion = nn.BCEWithLogitsLoss()
+
+        # keep track of val loss and do early stopping
+        early_stopping = EarlyStopping(patience=5)
+
+        for epoch in range(self.epochs):
+
+            # perform training
+            loss_in_epoch_train = 0
+
+            self._clf.train()
+
+            for x_cat, x_cont, targets in train_loader:
+
+                # reset the gradients back to zero
+                optimizer.zero_grad()
+
+                outputs = self._clf(x_cat, x_cont)
+                outputs = outputs.flatten()
+                with torch.cuda.amp.autocast():
+                    train_loss = criterion(outputs, targets)
+
+                # compute accumulated gradients
+                scaler.scale(train_loss).backward()
+
+                # perform parameter update based on current gradients
+                scaler.step(optimizer)
+                scaler.update()
+
+                # add the mini-batch training loss to epoch loss
+                loss_in_epoch_train += train_loss.item()
+
+            self._clf.eval()
+
+            loss_in_epoch_val = 0.0
+
+            with torch.no_grad():
+                for x_cat, x_cont, targets in val_loader:
+                    outputs = self._clf(x_cat, x_cont)
+                    outputs = outputs.flatten()
+
+                    val_loss = criterion(outputs, targets)
+                    loss_in_epoch_val += val_loss.item()
+
+            train_loss = loss_in_epoch_train / len(train_loader)
+            val_loss = loss_in_epoch_val / len(val_loader)
+
+            self._callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
 
             # return early if val loss doesn't decrease for several iterations
             early_stopping(val_loss)
