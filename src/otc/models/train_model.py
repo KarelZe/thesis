@@ -146,6 +146,7 @@ def main(
     # maximize for accuracy
     study = optuna.create_study(
         direction="maximize",
+        pruner=optuna.pruners.MedianPruner(n_warmup_steps=5),
         sampler=optuna.samplers.TPESampler(seed=set_seed(seed)),
         # pruner=optuna.pruners.MedianPruner(n_warmup_steps=10),
         study_name=name,

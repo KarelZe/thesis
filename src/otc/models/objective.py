@@ -16,6 +16,7 @@ import pandas as pd
 import torch
 from catboost import CatBoostClassifier
 from catboost.utils import get_gpu_device_count
+from optuna.integration import CatBoostPruningCallback
 from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score
 from torch import nn, optim
@@ -700,6 +701,12 @@ class FTTransformerObjective(Objective):
             if early_stopping.early_stop:
                 break
 
+        # https://github.com/optuna/optuna-examples/blob/main/pytorch/pytorch_simple.py
+        # Avoid using val loader multiple times
+        # FIXME: Handle pruning based on the intermediate value.
+        # if trial.should_prune():
+        #     raise optuna.TrialPruned()
+
         # make predictions with final model
         y_pred, y_true = [], []
 
@@ -881,9 +888,10 @@ class GradientBoostingObjective(Objective):
         task_type = "GPU" if gpu_count > 0 else "CPU"
         devices = f"0-{gpu_count-1}"
 
-        iterations = trial.suggest_int("iterations", 100, 1500)
-        learning_rate = trial.suggest_float("learning_rate", 0.005, 1, log=True)
-        depth = trial.suggest_int("depth", 1, 8)
+        # https://catboost.ai/en/docs/concepts/parameter-tuning
+        iterations = trial.suggest_int("iterations", 100, 10000)
+        learning_rate = trial.suggest_float("learning_rate", 0.01, 1, log=True)
+        depth = trial.suggest_int("depth", 1, 10)
         grow_policy = trial.suggest_categorical(
             "grow_policy", ["SymmetricTree", "Depthwise"]
         )
@@ -892,7 +900,6 @@ class GradientBoostingObjective(Objective):
             "depth": depth,
             "grow_policy": grow_policy,
             "learning_rate": learning_rate,
-            "od_type": "Iter",
             "logging_level": "Silent",
             "task_type": task_type,
             "devices": devices,
@@ -900,12 +907,22 @@ class GradientBoostingObjective(Objective):
             "random_seed": set_seed(),
         }
 
+        # for pruning see https://github.com/optuna/optuna-examples/
+        # blob/main/catboost/catboost_pruning.py
+        pruning_callback = CatBoostPruningCallback(trial, "Accuracy")
         self._clf = CatBoostClassifier(**params)
         self._clf.fit(
             self.x_train,
             self.y_train,
             eval_set=(self.x_val, self.y_val),
+            early_stopping_rounds=20,
+            callbacks=[pruning_callback],
         )
+
+        # evoke pruning manually. Must be done manually for catboost.
+        # https://optuna.readthedocs.io/en/latest/reference/
+        # generated/optuna.integration.CatBoostPruningCallback.html
+        pruning_callback.check_pruned()
 
         pred = self._clf.predict(self.x_val, prediction_type="Class")
         return accuracy_score(self.y_val, pred)
