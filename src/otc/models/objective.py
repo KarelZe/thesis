@@ -218,7 +218,10 @@ class TabNetObjective(Objective):
             val_data.x_cat, val_data.x_cont, val_data.y, **dl_kwargs
         )
 
-        self._clf = TabNet(**tabnet_kwargs).to(device)  # type: ignore
+        self._clf = TabNet(**tabnet_kwargs)  # type: ignore
+
+        # use multiple gpus, if available
+        self._clf = nn.DataParallel(self._clf).to(device)
 
         # half precision, see https://pytorch.org/docs/stable/amp.html
         scaler = torch.cuda.amp.GradScaler()
@@ -410,7 +413,9 @@ class TabTransformerObjective(Objective):
             attn_dropout=dropout,
             ff_dropout=dropout,
             mlp_hidden_mults=(4, 2),
-        ).to(device)
+        )
+        # use multiple gpus, if available
+        self._clf = nn.DataParallel(self._clf).to(device)
 
         # half precision, see https://pytorch.org/docs/stable/amp.html
         scaler = torch.cuda.amp.GradScaler()
@@ -627,7 +632,10 @@ class FTTransformerObjective(Objective):
 
         feature_tokenizer = FeatureTokenizer(**feature_tokenizer_kwargs)  # type: ignore
         transformer = Transformer(**transformer_kwargs)
-        self._clf = FTTransformer(feature_tokenizer, transformer).to(device)
+        self._clf = FTTransformer(feature_tokenizer, transformer)
+
+        # use multiple gpus, if available
+        self._clf = nn.DataParallel(self._clf).to(device)
 
         # half precision, see https://pytorch.org/docs/stable/amp.html
         scaler = torch.cuda.amp.GradScaler()
@@ -868,7 +876,10 @@ class GradientBoostingObjective(Objective):
         Returns:
             float: accuracy of trial on validation set.
         """
-        task_type = "GPU" if get_gpu_device_count() > 0 else "CPU"
+        # https://catboost.ai/en/docs/features/training-on-gpu
+        gpu_count = get_gpu_device_count()
+        task_type = "GPU" if gpu_count > 0 else "CPU"
+        devices = f"0-{gpu_count-1}"
 
         iterations = trial.suggest_int("iterations", 100, 1500)
         learning_rate = trial.suggest_float("learning_rate", 0.005, 1, log=True)
@@ -884,6 +895,7 @@ class GradientBoostingObjective(Objective):
             "od_type": "Iter",
             "logging_level": "Silent",
             "task_type": task_type,
+            "devices": devices,
             "cat_features": self._cat_features,
             "random_seed": set_seed(),
         }
