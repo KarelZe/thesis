@@ -109,15 +109,16 @@ class NumericalFeatureTokenizer(nn.Module):
         Initialize the module.
 
         Args:
-            n_features: the number of continuous (scalar) features
-            d_token: the size of one token
-            bias: if `False`, then the transformation will include only multiplication.
-                **Warning**: `bias=False` leads to significantly worse results for
-                Transformer-like (token-based) architectures.
-            initialization: initialization policy for parameters. Must be one of
-                `['uniform', 'normal']`. Let `s = d ** -0.5`. Then, the corresponding
-                distributions are `Uniform(-s, s)` and `Normal(0, s)`. In the
-                FTTransformer paper, the 'uniform' initialization was used.
+            n_features (int): number of continuous (scalar) features
+            d_token (int): size of one token
+            bias (bool): if `False`, then the transformation will include only
+            multiplication.
+            **Warning**: `bias=False` leads to significantly worse results for
+            Transformer-like (token-based) architectures.
+            initialization (str): initialization policy for parameters. Must be one of
+            `['uniform', 'normal']`. Let `s = d ** -0.5`. Then, the corresponding
+            distributions are `Uniform(-s, s)` and `Normal(0, s)`. In the FTTransformer
+            paper, the 'uniform' initialization was used.
         """
         super().__init__()
         initialization_ = _TokenInitialization.from_str(initialization)
@@ -130,14 +131,20 @@ class NumericalFeatureTokenizer(nn.Module):
     @property
     def n_tokens(self) -> int:
         """
-        Calculate number of tokens.
+        Calculate the number of tokens.
+
+        Returns:
+            int: no. of tokens.
         """
         return len(self.weight)
 
     @property
     def d_token(self) -> int:
         """
-        Calculate size of one token.
+        Calculate the dimension of the token.
+
+        Returns:
+            int: dimension of token.
         """
         return self.weight.shape[1]
 
@@ -180,19 +187,18 @@ class CategoricalFeatureTokenizer(nn.Module):
         Initialize the module.
 
         Args:
-            cardinalities: the number of distinct values for each feature. For example,
-                `cardinalities=[3, 4]` describes two features: the first one can take
-                values in the range `[0, 1, 2]` and the second one can take values in
-                the range `[0, 1, 2, 3]`.
-            d_token: the size of one token.
-            bias: if `True`, for each feature, a trainable vector is added to the
-                embedding regardless of feature value. The bias vectors are not shared
-                between features.
-            initialization: initialization policy for parameters. Must be one of
-                `['uniform', 'normal']`. Let `s = d ** -0.5`. Then, the
-                corresponding distributions are `Uniform(-s, s)` and
-                `Normal(0, s)`. In the FTTransformer paper, the 'uniform' initialization
-                was used.
+            cardinalities (list[int]): the number of distinct values for each feature.
+            For example, `cardinalities=[3, 4]` describes two features: the first one
+            can take values in the range `[0, 1, 2]` and the second one can take values
+            in the range `[0, 1, 2, 3]`.
+            d_token (int): the size of one token.
+            bias (bool): if `True`, for each feature, a trainable vector is added to the
+            embedding regardless of feature value. The bias vectors are not shared
+            between features.
+            initialization (str): initialization policy for parameters. Must be one of
+            `['uniform', 'normal']`. Let `s = d ** -0.5`. Then, the corresponding
+            distributions are `Uniform(-s, s)` and `Normal(0, s)`. In the FTTransformer
+            paper, the 'uniform' initialization was used.
         """
         super().__init__()
         assert cardinalities, "cardinalities must be non-empty"
@@ -214,13 +220,19 @@ class CategoricalFeatureTokenizer(nn.Module):
     def n_tokens(self) -> int:
         """
         Calculate the number of tokens.
+
+        Returns:
+            int: number of tokens.
         """
         return len(self.category_offsets)
 
     @property
     def d_token(self) -> int:
         """
-        Calculate the size of one token.
+        Calculate the dimension of the token.
+
+        Returns:
+            int: dimension of token.
         """
         return self.embeddings.embedding_dim
 
@@ -260,12 +272,12 @@ class FeatureTokenizer(nn.Module):
         Initialize the module.
 
         Args:
-            n_num_features: the number of continuous features. Pass `0` if there
+            num_continous (int): number of continuous features. Pass `0` if there
                 are no numerical features.
-            cat_cardinalities: the number of unique values for each feature. See
+            cat_cardinalities (list[int]): number of unique values for each feature. See
                 `CategoricalFeatureTokenizer` for details. Pass an empty list if there
                 are no categorical features.
-            d_token: the size of one token.
+            d_token (int): size of one token.
         """
         super().__init__()
         assert num_continous >= 0, "n_num_features must be non-negative"
@@ -296,6 +308,9 @@ class FeatureTokenizer(nn.Module):
     def n_tokens(self) -> int:
         """
         Calculate the number of tokens.
+
+        Returns:
+            int: number of tokens.
         """
         return sum(
             x.n_tokens
@@ -306,7 +321,10 @@ class FeatureTokenizer(nn.Module):
     @property
     def d_token(self) -> int:
         """
-        Calculate size of one token.
+        Calculate the dimension of the token.
+
+        Returns:
+            int: dimension of token.
         """
         return (
             self.cat_tokenizer.d_token  # type: ignore
@@ -317,18 +335,17 @@ class FeatureTokenizer(nn.Module):
     def forward(
         self, x_num: torch.Tensor | None, x_cat: torch.Tensor | None
     ) -> torch.Tensor:
-        """Perform the forward pass.
+        """
+        Perform the forward pass.
 
         Args:
-            x_num: continuous features. Must be presented if `n_num_features > 0`
-                was passed to the constructor.
-            x_cat: categorical features (see `CategoricalFeatureTokenizer.forward` for
-                details). Must be presented if non-empty `cat_cardinalities` was
-                passed to the constructor.
+            x_num (torch.Tensor | None): continuous features. Must be presented
+            if `n_num_features > 0` was passed to the constructor.
+            x_cat (torch.Tensor | None): categorical features
+            (see `CategoricalFeatureTokenizer.forward` for details). Must be presented
+            if non-empty `cat_cardinalities` was passed to the constructor.
         Returns:
-            tokens
-        Raises:
-            AssertionError: if the described requirements for the inputs are not met.
+            torch.Tensor: tokens.
         """
         assert (
             x_num is not None or x_cat is not None
@@ -365,17 +382,11 @@ class CLSToken(nn.Module):
         Initialize the module.
 
         Args:
-            d_token: the size of token
-            initialization: initialization policy for parameters. Must be one of
-                `['uniform', 'normal']`. Let `s = d ** -0.5`. Then, the
-                corresponding distributions are `Uniform(-s, s)` and
-                `Normal(0, s)`. In
-                the paper [gorishniy2021revisiting], the 'uniform' initialization was
-                used.
-        References:
-            * [gorishniy2021revisiting] Yury Gorishniy, Ivan Rubachev, Valentin
-            Khrulkov, Artem Babenko
-             "Revisiting Deep Learning Models for Tabular Data", 2021
+            d_token (int): size of token.
+            initialization (str): initialization policy for parameters. Must be one of
+            `['uniform', 'normal']`. Let `s = d ** -0.5`. Then, the corresponding
+            distributions are `Uniform(-s, s)` and `Normal(0, s)`. In the FTTransformer
+            paper, the 'uniform' initialization was used.
         """
         super().__init__()
         initialization_ = _TokenInitialization.from_str(initialization)
@@ -396,7 +407,7 @@ class CLSToken(nn.Module):
         Args:
             leading_dimensions: the additional new dimensions
         Returns:
-            tensor of the shape `(*leading_dimensions, len(self.weight))`
+            torch.Tensor: tensor with shape [*leading_dimensions, len(self.weight)]
         """
         if not leading_dimensions:
             return self.weight
@@ -406,6 +417,12 @@ class CLSToken(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
         Append self **to the end** of each item in the batch (see `CLSToken`).
+
+        Args:
+            x (torch.Tensor): input tensor.
+
+        Returns:
+            torch.Tensor: output tensor.
         """
         return torch.cat([x, self.expand(len(x), 1)], dim=1)
 
@@ -438,21 +455,18 @@ class MultiheadAttention(nn.Module):
         initialization: str,
     ) -> None:
         """
-        Initialize the module.
+                Initialize the module.
 
         Args:
-            d_token: the token size. Must be a multiple of `n_heads`.
-            n_heads: the number of heads. If greater than 1, then the module will have
-                an addition output layer (so called "mixing" layer).
-            dropout: dropout rate for the attention map. The dropout is applied to
-                *probabilities* and do not affect logits.
-            bias: if `True`, then input (and output, if presented) layers also have
-            bias.
-                `True` is a reasonable default choice.
-            initialization: initialization for input projection layers. Must be one of
-                `['kaiming', 'xavier']`. `kaiming` is a reasonable default choice.
-        Raises:
-            AssertionError: if requirements for the inputs are not met.
+            d_token (int): token size. Must be a multiple of `n_heads`.
+            n_heads (int): the number of heads. If greater than 1, then the module will
+            have an addition output layer (so called "mixing" layer).
+            dropout (float): dropout rate for the attention map. The dropout is applied
+            to *probabilities* and do not affect logits.
+            bias (bool): if `True`, then input (and output, if presented) layers also
+            have bias.
+            initialization (str): initialization for input projection layers. Must be
+            one of `['kaiming', 'xavier']`. `kaiming` is a reasonable default choice.
         """
         super().__init__()
         if n_heads > 1:
@@ -512,8 +526,8 @@ class MultiheadAttention(nn.Module):
         Args:
             x_q (torch.Tensor): query tokens
             x_kv (torch.Tensor): key-value tokens
-            key_compression (Optional[nn.Linear]): Linformer-style compression for keys
-            value_compression (Optional[nn.Linear]): Linformer-style compression for
+            key_compression (nn.Linear | None): Linformer-style compression for keys
+            value_compression (nn.Linear | None): Linformer-style compression for
             values
 
         Returns:
@@ -563,7 +577,9 @@ class Transformer(nn.Module):
     """
 
     class FFN(nn.Module):
-        """The Feed-Forward Network module used in every `Transformer` block."""
+        """
+        The Feed-Forward Network module used in every `Transformer` block.
+        """
 
         def __init__(
             self,
@@ -615,7 +631,6 @@ class Transformer(nn.Module):
     class Head(nn.Module):
         """
         The final module of the `Transformer` that performs BERT-like inference.
-
         """
 
         def __init__(
@@ -879,15 +894,15 @@ class FTTransformer(nn.Module):
     Implementation of `FTTransformer`.
 
     @inproceedings{gorishniyRevisitingDeepLearning2021,
-    title = {Revisiting {{Deep Learning Models}} for {{Tabular Data}}},
-    booktitle = {Advances in {{Neural Information Processing Systems}}},
-    author = {Gorishniy, Yury and Rubachev, Ivan and Khrulkov, Valentin and Babenko,
-    Artem},
-    year = {2021},
-    volume = {34},
-    pages = {18932--18943},
-    publisher = {{Curran Associates, Inc.}},
-    address = {{Red Hook, NY}},
+        title = {Revisiting {{Deep Learning Models}} for {{Tabular Data}}},
+        booktitle = {Advances in {{Neural Information Processing Systems}}},
+        author = {Gorishniy, Yury and Rubachev, Ivan and Khrulkov, Valentin and Babenko,
+        Artem},
+        year = {2021},
+        volume = {34},
+        pages = {18932--18943},
+        publisher = {{Curran Associates, Inc.}},
+        address = {{Red Hook, NY}},
     }
 
     Args:
