@@ -2,6 +2,8 @@
 Adapted from:
 https://github.com/dreamquark-ai/tabnet/blob/develop/pytorch_tabnet/tab_network.py
 """
+from __future__ import annotations
+
 import torch
 from torch.nn import Linear, BatchNorm1d, ReLU
 import numpy as np
@@ -581,9 +583,14 @@ class TabNet(torch.nn.Module):
             mask_type,
         )
 
-    def forward(self, x):
+    def forward(self, x_cat:torch.Tensor | None, x_cont:torch.Tensor):
+        # chain both inputs back together
+        # probably not the most efficient way to do this, but least invasive.
+        x = torch.cat([x_cat, x_cont], dim=1) if x_cat is not None else x_cont
         x = self.embedder(x)
-        return self.tabnet(x)
+        # omit loss
+        out, _ = self.tabnet(x)
+        return out
 
     def forward_masks(self, x):
         x = self.embedder(x)

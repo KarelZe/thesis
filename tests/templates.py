@@ -78,7 +78,7 @@ class NeuralNetTestsMixin:
 
     @torch.no_grad()
     @pytest.mark.skipif(
-        torch.cuda.is_available() is False, reason="No GPU was detected"
+        torch.cuda.is_available() is False, reason="No GPU was detected."
     )
     def test_device_moving(self) -> None:
         """
@@ -104,7 +104,7 @@ class NeuralNetTestsMixin:
 
         Adapted from: https://krokotsch.eu/posts/deep-learning-unit-tests/
         """
-        optimizer = torch.optim.Adam(self.net.parameters(), lr=3e-4)
+        optimizer = torch.optim.AdamW(self.net.parameters(), lr=3e-4)
 
         outputs = self.get_outputs()
         loss = outputs.mean()
