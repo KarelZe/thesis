@@ -67,7 +67,7 @@ class TestFTTransformer(templates.NeuralNetTestsMixin):
             "d_token": 96,
         }
         feature_tokenizer = FeatureTokenizer(**params_feature_tokenizer)
-        params_transformer: Dict[str, Any]  = {
+        params_transformer: Dict[str, Any] = {
             "d_token": 96,
             "n_blocks": 3,
             "attention_n_heads": 8,

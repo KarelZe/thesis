@@ -1,5 +1,5 @@
 [flake8]
 exclude = __init__.py
-extend-ignore = E203
+extend-ignore = E203, D200
 max-complexity = 10
 max-line-length = 88

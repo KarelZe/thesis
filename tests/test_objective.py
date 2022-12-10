@@ -5,17 +5,17 @@ TODO: Update doc strings
 """
 import datetime as dt
 import os
+from unittest.mock import patch
 
 import numpy as np
 import optuna
 import pandas as pd
 
 from otc.models.objective import (
-    GradientBoostingObjective,
     FTTransformerObjective,
+    GradientBoostingObjective,
     TabTransformerObjective,
 )
-from unittest.mock import patch
 
 
 class TestObjectives:
@@ -103,7 +103,6 @@ class TestObjectives:
 
         # check if accuracy is >= 0 and <=1.0
         assert 0.0 <= study.best_value <= 1.0
-
 
     def test_tabtransformer_objective(self) -> None:
         """

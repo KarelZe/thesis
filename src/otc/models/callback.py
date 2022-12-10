@@ -15,13 +15,13 @@ from typing import Any
 
 import optuna
 import torch
-import wandb
 from catboost import CatBoostClassifier
 from torch import nn
 
+import wandb
+from otc.config.config import settings
 from otc.data.fs import fs
 from otc.utils.colors import Colors
-from otc.config.config import settings
 
 logger = logging.getLogger(__name__)
 

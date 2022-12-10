@@ -22,15 +22,11 @@ from torch import nn, optim
 
 from otc.data.dataloader import TabDataLoader
 from otc.data.dataset import TabDataset
+from otc.models.activation import ReGLU
 from otc.models.callback import CallbackContainer, PrintCallback, SaveCallback
 from otc.models.classical_classifier import ClassicalClassifier
+from otc.models.fttransformer import FeatureTokenizer, FTTransformer, Transformer
 from otc.models.tabtransformer import TabTransformer
-from otc.models.activation import ReGLU
-from otc.models.fttransformer import (
-    FeatureTokenizer,
-    FTTransformer,
-    Transformer,
-)
 from otc.optim.early_stopping import EarlyStopping
 
 
@@ -413,7 +409,6 @@ class FTTransformerObjective(Objective):
             "cat_cardinalities": self._cat_cardinalities,
             "d_token": d_token,
         }
-        print(feature_tokenizer_kwargs)
         transformer_kwargs = {
             "d_token": d_token,
             "n_blocks": n_blocks,
@@ -439,9 +434,8 @@ class FTTransformerObjective(Objective):
             # fix at 1, due to binary classification
             "d_out": 1,
         }
-        print(transformer_kwargs)
 
-        feature_tokenizer = FeatureTokenizer(**feature_tokenizer_kwargs)
+        feature_tokenizer = FeatureTokenizer(**feature_tokenizer_kwargs) # type: ignore
         transformer = Transformer(**transformer_kwargs)
         self._clf = FTTransformer(feature_tokenizer, transformer).to(device)
 
