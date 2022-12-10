@@ -49,10 +49,10 @@ class TestTabTransformer(templates.NeuralNetTestsMixin):
         )
 
         self.net = TabTransformer(
-            categories=self.num_unique_cat,
+            cat_cardinalities=self.num_unique_cat,
             num_continuous=self.num_features_cont,
             dim_out=1,
-            mlp_act=nn.ReLU(),
+            mlp_act=nn.ReLU,
             dim=32,
             depth=2,
             heads=6,

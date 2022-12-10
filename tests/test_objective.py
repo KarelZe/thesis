@@ -1,7 +1,5 @@
 """
 Tests for Objectives.
-
-TODO: Update doc strings
 """
 import datetime as dt
 import os
