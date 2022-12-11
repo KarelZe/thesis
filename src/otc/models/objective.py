@@ -239,6 +239,8 @@ class TabNetObjective(Objective):
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=5)
 
+        accuracy = 0.0
+
         for epoch in range(self.epochs):
 
             # perform training
@@ -269,6 +271,7 @@ class TabNetObjective(Objective):
             self._clf.eval()
 
             loss_in_epoch_val = 0.0
+            correct = 0
 
             with torch.no_grad():
                 for x_cat, x_cont, targets in val_loader:
@@ -277,6 +280,10 @@ class TabNetObjective(Objective):
 
                     val_loss = criterion(outputs, targets)
                     loss_in_epoch_val += val_loss.item()
+
+                    # convert to propability, then round to nearest integer
+                    outputs = torch.sigmoid(outputs).round()
+                    correct += (outputs == targets).sum().item()
 
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
@@ -288,25 +295,16 @@ class TabNetObjective(Objective):
             if early_stopping.early_stop:
                 break
 
-        # make predictions with final model
-        y_pred, y_true = [], []
+            # track accuracy on val set for pruning
+            # https://github.com/optuna/optuna-examples/blob/main/pytorch/pytorch_simple.py
+            accuracy = correct / len(val_data)
+            trial.report(accuracy, epoch)
 
-        self._clf.eval()
+            # Handle pruning based on the intermediate value.
+            if trial.should_prune():
+                raise optuna.TrialPruned()
 
-        for x_cat, x_cont, targets in val_loader:
-            output = self._clf(x_cat, x_cont)
-
-            # map between zero and one, sigmoid is otherwise included in loss already
-            # https://stackoverflow.com/a/66910866/5755604
-            output = torch.sigmoid(output.squeeze())
-            y_pred.append(output.detach().cpu().numpy())
-            y_true.append(targets.detach().cpu().numpy())  # type: ignore
-
-        # round prediction to nearest int
-        y_pred = np.rint(np.concatenate(y_pred))
-        y_true = np.concatenate(y_true)
-
-        return accuracy_score(y_true, y_pred)  # type: ignore
+        return accuracy
 
 
 class TabTransformerObjective(Objective):
@@ -432,6 +430,7 @@ class TabTransformerObjective(Objective):
 
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=5)
+        accuracy = 0.0
 
         for epoch in range(self.epochs):
 
@@ -463,6 +462,7 @@ class TabTransformerObjective(Objective):
             self._clf.eval()
 
             loss_in_epoch_val = 0.0
+            correct = 0
 
             with torch.no_grad():
                 for x_cat, x_cont, targets in val_loader:
@@ -471,6 +471,10 @@ class TabTransformerObjective(Objective):
 
                     val_loss = criterion(outputs, targets)
                     loss_in_epoch_val += val_loss.item()
+
+                    # convert to propability, then round to nearest integer
+                    outputs = torch.sigmoid(outputs).round()
+                    correct += (outputs == targets).sum().item()
 
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
@@ -482,25 +486,16 @@ class TabTransformerObjective(Objective):
             if early_stopping.early_stop:
                 break
 
-        # make predictions with final model
-        y_pred, y_true = [], []
+            # track accuracy on val set for pruning
+            # https://github.com/optuna/optuna-examples/blob/main/pytorch/pytorch_simple.py
+            accuracy = correct / len(val_data)
+            trial.report(accuracy, epoch)
 
-        self._clf.eval()
+            # Handle pruning based on the intermediate value.
+            if trial.should_prune():
+                raise optuna.TrialPruned()
 
-        for x_cat, x_cont, targets in val_loader:
-            output = self._clf(x_cat, x_cont)
-
-            # map between zero and one, sigmoid is otherwise included in loss already
-            # https://stackoverflow.com/a/66910866/5755604
-            output = torch.sigmoid(output.squeeze())
-            y_pred.append(output.detach().cpu().numpy())
-            y_true.append(targets.detach().cpu().numpy())  # type: ignore
-
-        # round prediction to nearest int
-        y_pred = np.rint(np.concatenate(y_pred))
-        y_true = np.concatenate(y_true)
-
-        return accuracy_score(y_true, y_pred)  # type: ignore
+        return accuracy
 
 
 class FTTransformerObjective(Objective):
@@ -652,6 +647,7 @@ class FTTransformerObjective(Objective):
 
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=5)
+        accuracy = 0.0
 
         for epoch in range(self.epochs):
 
@@ -683,6 +679,7 @@ class FTTransformerObjective(Objective):
             self._clf.eval()
 
             loss_in_epoch_val = 0.0
+            correct = 0
 
             with torch.no_grad():
                 for x_cat, x_cont, targets in val_loader:
@@ -691,6 +688,10 @@ class FTTransformerObjective(Objective):
 
                     val_loss = criterion(outputs, targets)
                     loss_in_epoch_val += val_loss.item()
+
+                    # convert to propability, then round to nearest integer
+                    outputs = torch.sigmoid(outputs).round()
+                    correct += (outputs == targets).sum().item()
 
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
@@ -701,32 +702,17 @@ class FTTransformerObjective(Objective):
             early_stopping(val_loss)
             if early_stopping.early_stop:
                 break
-        # https://stackoverflow.com/questions/51503851/calculate-the-accuracy-every-epoch-in-pytorch
-        # https://github.com/optuna/optuna-examples/blob/main/pytorch/pytorch_simple.py
-        # Avoid using val loader multiple times
-        # FIXME: Handle pruning based on the intermediate value.
-        # if trial.should_prune():
-        #     raise optuna.TrialPruned()
 
-        # make predictions with final model
-        y_pred, y_true = [], []
+            # track accuracy on val set for pruning
+            # https://github.com/optuna/optuna-examples/blob/main/pytorch/pytorch_simple.py
+            accuracy = correct / len(val_data)
+            trial.report(accuracy, epoch)
 
-        self._clf.eval()
+            # Handle pruning based on the intermediate value.
+            if trial.should_prune():
+                raise optuna.TrialPruned()
 
-        for x_cat, x_cont, targets in val_loader:
-            output = self._clf(x_cat, x_cont)
-
-            # map between zero and one, sigmoid is otherwise included in loss already
-            # https://stackoverflow.com/a/66910866/5755604
-            output = torch.sigmoid(output.squeeze())
-            y_pred.append(output.detach().cpu().numpy())
-            y_true.append(targets.detach().cpu().numpy())  # type: ignore
-
-        # round prediction to nearest int
-        y_pred = np.rint(np.concatenate(y_pred))
-        y_true = np.concatenate(y_true)
-
-        return accuracy_score(y_true, y_pred)  # type: ignore
+        return accuracy
 
 
 class ClassicalObjective(Objective):
