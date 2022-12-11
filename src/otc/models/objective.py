@@ -17,7 +17,6 @@ import torch
 from catboost import CatBoostClassifier
 from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
-from sklearn.metrics import accuracy_score
 from torch import nn, optim
 
 from otc.data.dataloader import TabDataLoader
@@ -78,6 +77,7 @@ class Objective:
         x_val: pd.DataFrame,
         y_val: pd.Series,
         name: str = "default",
+        **kwargs: Any,
     ):
         """
         Initialize objective.
@@ -237,6 +237,8 @@ class TabNetObjective(Objective):
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=5)
 
+        accuracy = 0.0
+
         for epoch in range(self.epochs):
 
             # perform training
@@ -267,6 +269,7 @@ class TabNetObjective(Objective):
             self._clf.eval()
 
             loss_in_epoch_val = 0.0
+            correct = 0
 
             with torch.no_grad():
                 for x_cat, x_cont, targets in val_loader:
@@ -275,6 +278,10 @@ class TabNetObjective(Objective):
 
                     val_loss = criterion(outputs, targets)
                     loss_in_epoch_val += val_loss.item()
+
+                    # convert to propability, then round to nearest integer
+                    outputs = torch.sigmoid(outputs).round()
+                    correct += (outputs == targets).sum().item()
 
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
@@ -286,25 +293,16 @@ class TabNetObjective(Objective):
             if early_stopping.early_stop:
                 break
 
-        # make predictions with final model
-        y_pred, y_true = [], []
+            # track accuracy on val set for pruning
+            # https://github.com/optuna/optuna-examples/blob/main/pytorch/pytorch_simple.py
+            accuracy = correct / len(val_data)
+            trial.report(accuracy, epoch)
 
-        self._clf.eval()
+            # Handle pruning based on the intermediate value.
+            if trial.should_prune():
+                raise optuna.TrialPruned()
 
-        for x_cat, x_cont, targets in val_loader:
-            output = self._clf(x_cat, x_cont)
-
-            # map between zero and one, sigmoid is otherwise included in loss already
-            # https://stackoverflow.com/a/66910866/5755604
-            output = torch.sigmoid(output.squeeze())
-            y_pred.append(output.detach().cpu().numpy())
-            y_true.append(targets.detach().cpu().numpy())  # type: ignore
-
-        # round prediction to nearest int
-        y_pred = np.rint(np.concatenate(y_pred))
-        y_true = np.concatenate(y_true)
-
-        return accuracy_score(y_true, y_pred)  # type: ignore
+        return accuracy
 
 
 class TabTransformerObjective(Objective):
@@ -430,6 +428,7 @@ class TabTransformerObjective(Objective):
 
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=5)
+        accuracy = 0.0
 
         for epoch in range(self.epochs):
 
@@ -461,6 +460,7 @@ class TabTransformerObjective(Objective):
             self._clf.eval()
 
             loss_in_epoch_val = 0.0
+            correct = 0
 
             with torch.no_grad():
                 for x_cat, x_cont, targets in val_loader:
@@ -469,6 +469,10 @@ class TabTransformerObjective(Objective):
 
                     val_loss = criterion(outputs, targets)
                     loss_in_epoch_val += val_loss.item()
+
+                    # convert to propability, then round to nearest integer
+                    outputs = torch.sigmoid(outputs).round()
+                    correct += (outputs == targets).sum().item()
 
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
@@ -480,25 +484,16 @@ class TabTransformerObjective(Objective):
             if early_stopping.early_stop:
                 break
 
-        # make predictions with final model
-        y_pred, y_true = [], []
+            # track accuracy on val set for pruning
+            # https://github.com/optuna/optuna-examples/blob/main/pytorch/pytorch_simple.py
+            accuracy = correct / len(val_data)
+            trial.report(accuracy, epoch)
 
-        self._clf.eval()
+            # Handle pruning based on the intermediate value.
+            if trial.should_prune():
+                raise optuna.TrialPruned()
 
-        for x_cat, x_cont, targets in val_loader:
-            output = self._clf(x_cat, x_cont)
-
-            # map between zero and one, sigmoid is otherwise included in loss already
-            # https://stackoverflow.com/a/66910866/5755604
-            output = torch.sigmoid(output.squeeze())
-            y_pred.append(output.detach().cpu().numpy())
-            y_true.append(targets.detach().cpu().numpy())  # type: ignore
-
-        # round prediction to nearest int
-        y_pred = np.rint(np.concatenate(y_pred))
-        y_true = np.concatenate(y_true)
-
-        return accuracy_score(y_true, y_pred)  # type: ignore
+        return accuracy
 
 
 class FTTransformerObjective(Objective):
@@ -650,6 +645,7 @@ class FTTransformerObjective(Objective):
 
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=5)
+        accuracy = 0.0
 
         for epoch in range(self.epochs):
 
@@ -681,6 +677,7 @@ class FTTransformerObjective(Objective):
             self._clf.eval()
 
             loss_in_epoch_val = 0.0
+            correct = 0
 
             with torch.no_grad():
                 for x_cat, x_cont, targets in val_loader:
@@ -689,6 +686,10 @@ class FTTransformerObjective(Objective):
 
                     val_loss = criterion(outputs, targets)
                     loss_in_epoch_val += val_loss.item()
+
+                    # convert to propability, then round to nearest integer
+                    outputs = torch.sigmoid(outputs).round()
+                    correct += (outputs == targets).sum().item()
 
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
@@ -700,25 +701,16 @@ class FTTransformerObjective(Objective):
             if early_stopping.early_stop:
                 break
 
-        # make predictions with final model
-        y_pred, y_true = [], []
+            # track accuracy on val set for pruning
+            # https://github.com/optuna/optuna-examples/blob/main/pytorch/pytorch_simple.py
+            accuracy = correct / len(val_data)
+            trial.report(accuracy, epoch)
 
-        self._clf.eval()
+            # Handle pruning based on the intermediate value.
+            if trial.should_prune():
+                raise optuna.TrialPruned()
 
-        for x_cat, x_cont, targets in val_loader:
-            output = self._clf(x_cat, x_cont)
-
-            # map between zero and one, sigmoid is otherwise included in loss already
-            # https://stackoverflow.com/a/66910866/5755604
-            output = torch.sigmoid(output.squeeze())
-            y_pred.append(output.detach().cpu().numpy())
-            y_true.append(targets.detach().cpu().numpy())  # type: ignore
-
-        # round prediction to nearest int
-        y_pred = np.rint(np.concatenate(y_pred))
-        y_true = np.concatenate(y_true)
-
-        return accuracy_score(y_true, y_pred)  # type: ignore
+        return accuracy
 
 
 class ClassicalObjective(Objective):
@@ -737,6 +729,7 @@ class ClassicalObjective(Objective):
         x_val: pd.DataFrame,
         y_val: pd.Series,
         name: str = "default",
+        **kwargs: Any,
     ):
         """
         Initialize objective.
@@ -829,7 +822,7 @@ class ClassicalObjective(Objective):
         )
         self._clf.fit(X=self.x_train, y=self.y_train)
         pred = self._clf.predict(self.x_val)
-        return accuracy_score(self.y_val, pred)
+        return (self.y_val == pred).sum() / len(self.y_val)
 
 
 class GradientBoostingObjective(Objective):
@@ -849,6 +842,7 @@ class GradientBoostingObjective(Objective):
         y_val: pd.Series,
         cat_features: list[str] | None = None,
         name: str = "default",
+        **kwargs: Any,
     ):
         """
         Initialize objective.
@@ -881,18 +875,24 @@ class GradientBoostingObjective(Objective):
         task_type = "GPU" if gpu_count > 0 else "CPU"
         devices = f"0-{gpu_count-1}"
 
-        iterations = trial.suggest_int("iterations", 100, 1500)
-        learning_rate = trial.suggest_float("learning_rate", 0.005, 1, log=True)
-        depth = trial.suggest_int("depth", 1, 8)
+        # kaggle book + https://catboost.ai/en/docs/concepts/parameter-tuning
+        learning_rate = trial.suggest_float("learning_rate", 0.001, 1, log=True)
+        depth = trial.suggest_int("depth", 1, 10)
+        l2_leaf_reg = trial.suggest_int("l2_leaf_reg", 2, 30)
+        random_strength = trial.suggest_float("random_strength", 1e-9, 10.0, log=True)
+        bagging_temperature = trial.suggest_float("bagging_temperature", 0.0, 1.0)
         grow_policy = trial.suggest_categorical(
             "grow_policy", ["SymmetricTree", "Depthwise"]
         )
-        params = {
-            "iterations": iterations,
-            "depth": depth,
-            "grow_policy": grow_policy,
+        kwargs_cat = {
+            "iterations": 10000,
             "learning_rate": learning_rate,
-            "od_type": "Iter",
+            "depth": depth,
+            "l2_leaf_reg": l2_leaf_reg,
+            "random_strength": random_strength,
+            "bagging_temperature": bagging_temperature,
+            "grow_policy": grow_policy,
+            "border_count": 254,
             "logging_level": "Silent",
             "task_type": task_type,
             "devices": devices,
@@ -900,12 +900,15 @@ class GradientBoostingObjective(Objective):
             "random_seed": set_seed(),
         }
 
-        self._clf = CatBoostClassifier(**params)
+        # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
+        self._clf = CatBoostClassifier(**kwargs_cat)
         self._clf.fit(
             self.x_train,
             self.y_train,
             eval_set=(self.x_val, self.y_val),
+            early_stopping_rounds=20,
+            callbacks=None,
         )
 
         pred = self._clf.predict(self.x_val, prediction_type="Class")
-        return accuracy_score(self.y_val, pred)
+        return (self.y_val == pred.flatten()).sum() / len(self.y_val)

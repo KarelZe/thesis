@@ -78,11 +78,13 @@ class TestObjectives:
         Value may not be NaN.
         """
         params = {
-            "iterations": 1,
             "depth": 1,
-            "grow_policy": "SymmetricTree",
-            "learning_rate": 0.05,
+            "learning_rate": 0.9,
             "cat_features": None,
+            "l2_leaf_reg": 3,
+            "random_strength": 1e-08,
+            "bagging_temperature": 0.1,
+            "grow_policy": "SymmetricTree",
         }
 
         study = optuna.create_study(direction="maximize")
