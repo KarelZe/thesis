@@ -16,9 +16,7 @@ import pandas as pd
 import torch
 from catboost import CatBoostClassifier
 from catboost.utils import get_gpu_device_count
-from optuna.integration import CatBoostPruningCallback
 from sklearn.base import BaseEstimator
-from sklearn.metrics import accuracy_score
 from torch import nn, optim
 
 from otc.data.dataloader import TabDataLoader
@@ -824,7 +822,7 @@ class ClassicalObjective(Objective):
         )
         self._clf.fit(X=self.x_train, y=self.y_train)
         pred = self._clf.predict(self.x_val)
-        return accuracy_score(self.y_val, pred)
+        return (self.y_val == pred).sum() / len(self.y_val)
 
 
 class GradientBoostingObjective(Objective):
@@ -902,22 +900,15 @@ class GradientBoostingObjective(Objective):
             "random_seed": set_seed(),
         }
 
-        # for pruning see https://github.com/optuna/optuna-examples/
-        # blob/main/catboost/catboost_pruning.py
-        pruning_callback = CatBoostPruningCallback(trial, "Accuracy")
+        # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
         self._clf = CatBoostClassifier(**kwargs_cat)
         self._clf.fit(
             self.x_train,
             self.y_train,
             eval_set=(self.x_val, self.y_val),
             early_stopping_rounds=20,
-            callbacks=[pruning_callback],
+            callbacks=None,
         )
 
-        # evoke pruning manually. Must be done manually for catboost.
-        # https://optuna.readthedocs.io/en/latest/reference/
-        # generated/optuna.integration.CatBoostPruningCallback.html
-        pruning_callback.check_pruned()
-
         pred = self._clf.predict(self.x_val, prediction_type="Class")
-        return accuracy_score(self.y_val, pred)
+        return (self.y_val == pred.flatten()).sum() / len(self.y_val)
