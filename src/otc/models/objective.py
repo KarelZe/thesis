@@ -745,7 +745,7 @@ class ClassicalObjective(Objective):
         x_val: pd.DataFrame,
         y_val: pd.Series,
         name: str = "default",
-        **kwargs: Any
+        **kwargs: Any,
     ):
         """
         Initialize objective.
@@ -858,7 +858,7 @@ class GradientBoostingObjective(Objective):
         y_val: pd.Series,
         cat_features: list[str] | None = None,
         name: str = "default",
-        **kwargs: Any
+        **kwargs: Any,
     ):
         """
         Initialize objective.
@@ -891,18 +891,24 @@ class GradientBoostingObjective(Objective):
         task_type = "GPU" if gpu_count > 0 else "CPU"
         devices = f"0-{gpu_count-1}"
 
-        # https://catboost.ai/en/docs/concepts/parameter-tuning
-        iterations = trial.suggest_int("iterations", 100, 10000)
-        learning_rate = trial.suggest_float("learning_rate", 0.01, 1, log=True)
+        # kaggle book + https://catboost.ai/en/docs/concepts/parameter-tuning
+        learning_rate = trial.suggest_float("learning_rate", 0.001, 1, log=True)
         depth = trial.suggest_int("depth", 1, 10)
+        l2_leaf_reg = trial.suggest_int("l2_leaf_reg", 2, 30)
+        random_strength = trial.suggest_float("random_strength", 1e-9, 10.0, log=True)
+        bagging_temperature = trial.suggest_float("bagging_temperature", 0.0, 1.0)
         grow_policy = trial.suggest_categorical(
             "grow_policy", ["SymmetricTree", "Depthwise"]
         )
-        params = {
-            "iterations": iterations,
-            "depth": depth,
-            "grow_policy": grow_policy,
+        kwargs_cat = {
+            "iterations": 10000,
             "learning_rate": learning_rate,
+            "depth": depth,
+            "l2_leaf_reg": l2_leaf_reg,
+            "random_strength": random_strength,
+            "bagging_temperature": bagging_temperature,
+            "grow_policy": grow_policy,
+            "border_count": 254,
             "logging_level": "Silent",
             "task_type": task_type,
             "devices": devices,
@@ -913,7 +919,7 @@ class GradientBoostingObjective(Objective):
         # for pruning see https://github.com/optuna/optuna-examples/
         # blob/main/catboost/catboost_pruning.py
         pruning_callback = CatBoostPruningCallback(trial, "Accuracy")
-        self._clf = CatBoostClassifier(**params)
+        self._clf = CatBoostClassifier(**kwargs_cat)
         self._clf.fit(
             self.x_train,
             self.y_train,
