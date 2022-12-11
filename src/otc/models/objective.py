@@ -79,6 +79,7 @@ class Objective:
         x_val: pd.DataFrame,
         y_val: pd.Series,
         name: str = "default",
+        **kwargs: Any,
     ):
         """
         Initialize objective.
@@ -700,7 +701,7 @@ class FTTransformerObjective(Objective):
             early_stopping(val_loss)
             if early_stopping.early_stop:
                 break
-
+        # https://stackoverflow.com/questions/51503851/calculate-the-accuracy-every-epoch-in-pytorch
         # https://github.com/optuna/optuna-examples/blob/main/pytorch/pytorch_simple.py
         # Avoid using val loader multiple times
         # FIXME: Handle pruning based on the intermediate value.
@@ -744,6 +745,7 @@ class ClassicalObjective(Objective):
         x_val: pd.DataFrame,
         y_val: pd.Series,
         name: str = "default",
+        **kwargs: Any
     ):
         """
         Initialize objective.
@@ -856,6 +858,7 @@ class GradientBoostingObjective(Objective):
         y_val: pd.Series,
         cat_features: list[str] | None = None,
         name: str = "default",
+        **kwargs: Any
     ):
         """
         Initialize objective.
