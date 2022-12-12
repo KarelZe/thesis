@@ -907,7 +907,7 @@ class GradientBoostingObjective(Objective):
             self.x_train,
             self.y_train,
             eval_set=(self.x_val, self.y_val),
-            #early_stopping_rounds=100,
+            early_stopping_rounds=20,
             callbacks=None,
         )
 

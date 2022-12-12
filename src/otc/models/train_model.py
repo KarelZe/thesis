@@ -124,7 +124,6 @@ def main(
     if cat_features_sub:
         cat_features, cat_cardinalities = tuple(list(t) for t in zip(*cat_features_sub))
 
-    print(columns)
     # load data
     x_train = pd.read_parquet(
         Path(artifact_dir, "train_set_60.parquet"), columns=columns
