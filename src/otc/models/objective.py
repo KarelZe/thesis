@@ -14,7 +14,7 @@ import numpy as np
 import optuna
 import pandas as pd
 import torch
-from catboost import CatBoostClassifier
+from catboost import CatBoostClassifier, Pool, metrics
 from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
 from torch import nn, optim
@@ -856,8 +856,15 @@ class GradientBoostingObjective(Objective):
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
         """
-        self._cat_features = cat_features
-        super().__init__(x_train, y_train, x_val, y_val, name)
+        # FIXME: Remove in data set and here and handle in pre-processing notebook.
+        # https://catboost.ai/en/docs/concepts/python-reference_pool#label
+        x_train[x_train < 0] = 0
+        x_val[x_val < 0] = 0
+
+        # save to pool for faster memory access
+        self._train_pool = Pool(data=x_train, label=y_train, cat_features=cat_features)
+        self._val_pool = Pool(data=x_val, label=y_val, cat_features=cat_features)
+        self.name = name
         self._callbacks = CallbackContainer([SaveCallback()])
 
     def __call__(self, trial: optuna.Trial) -> float:
@@ -896,20 +903,18 @@ class GradientBoostingObjective(Objective):
             "logging_level": "Silent",
             "task_type": task_type,
             "devices": devices,
-            "cat_features": self._cat_features,
             "random_seed": set_seed(),
-            "early_stopping_rounds":100,
+            "early_stopping_rounds": 50,
+            "custom_loss": [metrics.Accuracy()],  # type: ignore
         }
 
         # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
-        self._clf = CatBoostClassifier(**kwargs_cat)
+        self._clf = CatBoostClassifier(**kwargs_cat)  # type: ignore
         self._clf.fit(
-            self.x_train,
-            self.y_train,
-            eval_set=(self.x_val, self.y_val),
-            early_stopping_rounds=20,
+            self._train_pool,
+            eval_set=self._val_pool,
             callbacks=None,
         )
 
-        pred = self._clf.predict(self.x_val, prediction_type="Class")
-        return (self.y_val == pred.flatten()).sum() / len(self.y_val)
+        # calculate accuracy
+        return self._clf.score(self._val_pool)  # type: ignore
