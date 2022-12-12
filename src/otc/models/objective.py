@@ -898,6 +898,7 @@ class GradientBoostingObjective(Objective):
             "devices": devices,
             "cat_features": self._cat_features,
             "random_seed": set_seed(),
+            "early_stopping_rounds":100,
         }
 
         # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
@@ -906,7 +907,7 @@ class GradientBoostingObjective(Objective):
             self.x_train,
             self.y_train,
             eval_set=(self.x_val, self.y_val),
-            early_stopping_rounds=20,
+            #early_stopping_rounds=100,
             callbacks=None,
         )
 

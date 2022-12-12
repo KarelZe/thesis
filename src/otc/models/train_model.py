@@ -115,12 +115,16 @@ def main(
 
     # select right feature set
     columns = ["buy_sell"]
-    columns.append(FEATURE_SETS[features][0])
+    columns.extend(FEATURE_SETS[features])
 
     # filter categorical features that are in subset and get cardinality
     cat_features_sub = [tup for tup in features_categorical if tup[0] in columns]
-    cat_features, cat_cardinalities = tuple(list(t) for t in zip(*cat_features_sub))
+    
+    cat_features, cat_cardinalities = [], []
+    if cat_features_sub:
+        cat_features, cat_cardinalities = tuple(list(t) for t in zip(*cat_features_sub))
 
+    print(columns)
     # load data
     x_train = pd.read_parquet(
         Path(artifact_dir, "train_set_60.parquet"), columns=columns
@@ -152,7 +156,7 @@ def main(
     # maximize for accuracy
     study = optuna.create_study(
         direction="maximize",
-        pruner=optuna.pruners.MedianPruner(n_warmup_steps=5),
+        # pruner=optuna.pruners.MedianPruner(n_warmup_steps=5),
         sampler=optuna.samplers.TPESampler(seed=set_seed(seed)),
         study_name=name,
     )
