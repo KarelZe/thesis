@@ -858,8 +858,8 @@ class GradientBoostingObjective(Objective):
         """
         # FIXME: Remove in data set and here and handle in pre-processing notebook.
         # https://catboost.ai/en/docs/concepts/python-reference_pool#label
-        x_train[x_train < 0] = 0
-        x_val[x_val < 0] = 0
+        y_train[y_train < 0] = 0
+        y_val[y_val < 0] = 0
 
         # save to pool for faster memory access
         self._train_pool = Pool(data=x_train, label=y_train, cat_features=cat_features)
