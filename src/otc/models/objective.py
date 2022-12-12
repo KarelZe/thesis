@@ -905,7 +905,7 @@ class GradientBoostingObjective(Objective):
             "devices": devices,
             "random_seed": set_seed(),
             "early_stopping_rounds": 50,
-            "custom_loss": [metrics.Accuracy()],  # type: ignore
+            "eval_metric":metrics.Accuracy()  # type: ignore
         }
 
         # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
@@ -916,5 +916,6 @@ class GradientBoostingObjective(Objective):
             callbacks=None,
         )
 
+        print(self._clf.get_all_params())
         # calculate accuracy
         return self._clf.score(self._val_pool)  # type: ignore
