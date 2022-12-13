@@ -892,7 +892,7 @@ class GradientBoostingObjective(Objective):
             "grow_policy", ["SymmetricTree", "Depthwise"]
         )
         kwargs_cat = {
-            "iterations": 10000,
+            "iterations": 2000,
             "learning_rate": learning_rate,
             "depth": depth,
             "l2_leaf_reg": l2_leaf_reg,
