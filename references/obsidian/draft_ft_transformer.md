@@ -3,3 +3,8 @@
 - Very likely interpretable... 
 - Work out differences between the three:
 ![[comparison.png]]
+
+
+On different embeddings check my understanding against:
+- https://towardsdatascience.com/transformers-for-tabular-data-part-3-piecewise-linear-periodic-encodings-1fc49c4bd7bc
+- 

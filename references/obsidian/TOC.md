@@ -1,5 +1,6 @@
 - [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
 - Guide on visualizations https://www.nature.com/articles/s41467-020-19160-7
+- Guide on storytelling with data https://www.practicedataviz.com/pdv-evd-mvp#PDV-EVD-mvp-g
 - see  `writing-a-good-introduction.pdf`
 
 # Title
@@ -261,7 +262,8 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - Variants of GBM, comparison: [CatBoost vs. LightGBM vs. XGBoost | by Kay Jan Wong | Towards Data Science](https://towardsdatascience.com/catboost-vs-lightgbm-vs-xgboost-c80f40662924) (e. g., symmetric, balanced trees vs. asymetric trees) or see kaggle book for differences between lightgbm, catboost etc. [[@banachewiczKaggleBookData2022]]
 - Describe details necessary to understand both Gradient Boosting and TabNet.
 - How can missing values be handled in decision trees? (see [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] as a primer)
-  How can categorical data be handled in decision trees? 
+  How can categorical data be handled in decision trees?
+- See how weighting (`weight` in CatBoost) would be incorporated to the formula. Where does `timestamp` become relevant.
 - Round off chapter
 ### Gradient Boosting Procedure
 - Motivation for gradient boosted trees
@@ -288,7 +290,12 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 - http://nlp.seas.harvard.edu/2018/04/03/attention.html
 - https://www.youtube.com/watch?v=EixI6t5oif0
 - https://transformer-circuits.pub/2021/framework/index.html
+- On efficiency of transformers see: https://arxiv.org/pdf/2009.06732.pdf
+- Mathematical foundation of the transformer architecture: https://transformer-circuits.pub/2021/framework/index.html
+- Detailed explanation and implementation. Check my understanding against it: https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html
+- On implementation aspects see: https://arxiv.org/pdf/2007.00072.pdf
 ### Network Architecture
+
 ### Attention
 - cover dot-product attention and sequential attention
 - multi-headed attention
@@ -454,6 +461,7 @@ $$
 - Discuss that only a portion of data can be reconstructed. Previous works neglected the unlabeled part. 
 - Discuss how previously unused data could be used. This maps to the notion of supervised and semi-supervised learning
 - Pseudo Labeling?
+- We assign sells the label `0` and buys the label `1`. This has the advantage that the calculation from the logloss doesn't require any mapping. Easy interpretation as probability.
 
 ### Exploratory Data Analysis
 
@@ -470,7 +478,16 @@ $$
 Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any size with a single line of code. Created by Ram Seshadri. Collaborators Welcome. Permission Granted upon Request. (github.com)](https://github.com/AutoViML/AutoViz) and [lmcinnes/umap: Uniform Manifold Approximation and Projection (github.com)](https://github.com/lmcinnes/umap)
 - The approach of [[@grauerOptionTradeClassification2022]] matches the LiveVol data set, only if there is a matching volume on buyer or seller side. Results in 40 % reconstruction rate [[@grauerOptionTradeClassification2022]](p. 9). 
 - In [[@easleyOptionVolumeStock1998]] CBOE options are more often actively bought than sold (53 %). Also, the number of trades at the midpoints is decreasing over time [[@easleyOptionVolumeStock1998]]. Thus the authors reason, that classification with quote data should be sufficient. Compare this with my sample!
+- In adversarial validation it became obvious, that time plays a huge role. There are multiple options how to go from here:
+	- Drop old data. Probably not the way to go. Would cause a few questions. Also it's hard to say, where to make the cut-off.
+	- Dynamic retraining. Problematic i. e., in conjunction with pretrained models.
+	- Use Weighting. Yes! Exponentially or linearily or date-based. Weights could be used in all models, as a feature or through penelization. CatBoost supports this through `Pool(weight=...)`. For PyTorch one could construct a weight tensor and used it when calculating the loss (https://stackoverflow.com/questions/66374709/adding-custom-weights-to-training-data-in-pytorch).
 ### Feature Engineering
+- Some features are more difficult to learn for decision trees and neural nets. Provide aid. https://www.kaggle.com/code/jeffheaton/generate-feature-engineering-dataset/notebook
+- Two aspects should drive the feature selection / creation:
+	- Use features, that are used in classical rules
+	- Apply transformers, that are best suited for the models.
+	- Create larger feature sets to find the very best feature set.
 - Which features are very different in the training set and the validation set?
 - Which features are most important in adversarial validation?
 - Plot distributions of features from training and validation set. Could also test using https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test test if samples are drawn from the same distribution.
@@ -538,6 +555,9 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - log-transform can hamper interpretability [[@fengLogtransformationItsImplications2014]]
 - The right word for testing different settings e. g., scalings or imputation approaches is https://en.wikipedia.org/wiki/Ablation_(artificial_intelligence) 
 - In my dataset the previous or subsequent trade price is already added as feature and thus does not have to be searched recursively.
+- Motivation for scaling features to $[-1,1]$ range or zero mean. https://stats.stackexchange.com/questions/249378/is-scaling-data-0-1-necessary-when-batch-normalization-is-used
+- If needed tokenization support: https://github.com/google/sentencepiece
+- 
 
 ### Train-Test Split 🟡
 
@@ -616,6 +636,12 @@ A classical train test split is advantegous for a number of reasons:
 	- use einsum that is part of torch already instead of external libary as done in  https://github.com/radi-cho/GatedTabTransformer/blob/master/gated_tab_transformer/gated_tab_transformer.py
 	- Alternatively see https://github.com/timeseriesAI/tsai/blob/be3c787d6e6d0e41839faa3e62d74145c851ef9c/tsai/models/TabTransformer.py#L133 or original implementation https://github.com/autogluon/autogluon/blob/master/tabular/src/autogluon/tabular/models/tab_transformer/tab_transformer.py
 	- We implement the classical rules as a classifier conforming to the sklearn api
+- Compare TabTransformer implementations with:
+	- https://github.com/aruberts/TabTransformerTF/blob/main/tabtransformertf/models/tabtransformer.py
+	- https://github.com/manujosephv/pytorch_tabular/blob/main/pytorch_tabular/models/tab_transformer/tab_transformer.py
+	- Simplify / cross-validate implementation of TabTransfromer and FTTransformer against https://pytorch.org/tutorials/beginner/transformer_tutorial
+	- Can use to gather some ideas for TabNet: https://www.kaggle.com/code/medali1992/amex-tabnetclassifier-feature-eng-0-791/notebook and TabTransformer https://www.kaggle.com/code/yekenot/amex-pytorch-tabtransformer
+	- 
 ### Training of Semi-Supervised Models
 - Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 
 - Use learning curves from [[#^d50f5d]].

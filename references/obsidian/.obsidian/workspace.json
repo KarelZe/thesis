@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 36.26681614349776,
+        "dimension": 56.6271018793274,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -21,13 +21,37 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "f41759cedf5b605a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "draft_ft_transformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7c2b5c1065479947",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Paper 2 movie 🍿.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ]
       },
       {
         "id": "ba8d02bbd18c77cd",
         "type": "tabs",
-        "dimension": 63.73318385650224,
+        "dimension": 43.3728981206726,
         "children": [
           {
             "id": "117a2e352192e6b6",
@@ -75,8 +99,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -137,15 +160,15 @@
   },
   "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
+    "draft_ft_transformer.md",
     "TOC.md",
+    "Paper 2 movie 🍿.md",
     "❓Questions.md",
     "🎄Tree-based Methods/Random Forests/@breimanBaggingPredictors1996.md",
     "🍬Implementation/@banachewiczKaggleBookData2022.md",
     "👨‍👩‍👧‍👦Related Works/@aitkenIntradayAnalysisProbability1995.md",
     "🍬Implementation/🎯Hyperparameter Tuning/@batesCrossvalidationWhatDoes2022.md",
     "🍬Implementation/🔢Preprocessing/Preprocessing.md",
-    "🖼️Media/ft-tab-transformer.png",
-    "🖼️Media/tabtransformer-architecture.png",
-    "🍬Implementation/🧜‍♂️Optuna-PyTorch.md"
+    "🖼️Media/ft-tab-transformer.png"
   ]
 }
