@@ -1,20 +1,20 @@
-\section{Introduction (2~p)}\label{introduction}
+\section{Introduction (2~p)}\label{sec:introduction}
 
 The authors acknowledge support by the state of Baden-Württemberg through \href{https://www.bwhpc.de/}{bwHPC}.
 
-\section{Related Work (3~p)}\label{related-work}
+\section{Related Work (3~p)}\label{sec:related-work}
 
 \newpage
-\section{Rule-Based Approaches (5.75~p)}\label{rule-based-approaches}
+\section{Rule-Based Approaches (5.75~p)}\label{sec:rule-based-approaches}
 
 
 The following section introduces common rules for signing option trades. We start by introducing the classical quote and tick rule and continue with the more recent depth and trade size rule. In section \ref{hybrid-rules} we combine some rules from section \ref{basic-rules} to hybrids thereof. We conclude this chapter by drawing a connection to ensemble learning.
 
-\subsection{Basic Rules (2.5~p)}\label{basic-rules}
+\subsection{Basic Rules (2.5~p)}\label{sec:basic-rules}
 
 Starting with the quote rule, we describe the most common rule for signing option trades, which can either be used as-is or joint in more complex rules.
 
-\subsubsection{Quote-Rule (0.5~p)}\label{quote-rule}
+\subsubsection{Quote-Rule (0.5~p)}\label{sec:quote-rule}
 
 \begin{algorithm}
 
@@ -24,7 +24,7 @@ Starting with the quote rule, we describe the most common rule for signing optio
 
   % caption
   % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
-  \caption{$\operatorname{\mathtt{quote}}$ \label{alg:quote-rule}}
+  \caption{$\operatorname{\mathtt{quote}}$ \label{sec:alg:quote-rule}}
 
   \Input{%
     $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
@@ -52,13 +52,13 @@ Starting with the quote rule, we describe the most common rule for signing optio
 
 
 
-\subsubsection{Tick Test (1~p)}\label{tick-test}
+\subsubsection{Tick Test (1~p)}\label{sec:tick-test}
 
 
 
-% \subsubsection{Reverse Tick Test (0.5~p)}\label{reverse-tick-test}
+% \subsubsection{Reverse Tick Test (0.5~p)}\label{sec:reverse-tick-test}
 
-\subsubsection{Depth Rule (0.5~p)}\label{depth-rule}
+\subsubsection{Depth Rule (0.5~p)}\label{sec:depth-rule}
 
 \textcite{grauerOptionTradeClassification2022} promote an alternative to improve the classification performance of midspread trades. In their \textit{depth rule}, they infer the trade initiator from the depth of the ask and bid. Based on the observation that an exceeding bid or ask size relates to higher liquidity on one side, trades are classified as buyer-initiated for a larger ask size and seller-initiated for a higher bid size.
 
@@ -72,7 +72,7 @@ As shown in Algorithm \ref{alg:depth-rule}, the depth rule classifies midspread 
 
   % caption
   % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
-  \caption{$\operatorname{\mathtt{depth}}$ \label{alg:depth-rule}}
+  \caption{$\operatorname{\mathtt{depth}}$ \label{sec:alg:depth-rule}}
 
   \Input{%
     $t_i$ trade price at $i$, $a_i$ ask price at $i$, $b_i$ bid price at $i$, $\tilde{a}_i$ ask size at $i$, and $\tilde{b}_i$ bid size at $i$.
@@ -104,7 +104,7 @@ As shown in Algorithm \ref{alg:depth-rule}, the depth rule classifies midspread 
 
 In a similar vein, the \textit{trade size rule} reuses the ask and bid quote size to improve the classification performance of trades where the trade size equals the ask quote or bid quote sizes.
 
-\subsubsection{Trade Size Rule (0.5~p)}\label{trade-size-rule}
+\subsubsection{Trade Size Rule (0.5~p)}\label{sec:trade-size-rule}
 
 \begin{algorithm}
 
@@ -114,7 +114,7 @@ In a similar vein, the \textit{trade size rule} reuses the ask and bid quote siz
   \SetKw{And}{\textbf{and}}
   % caption
   % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
-  \caption{$\operatorname{\mathtt{tradesize}}(t_i, a_i, b_i)$ \label{alg:tradesize-rule}}
+  \caption{$\operatorname{\mathtt{tradesize}}(t_i, a_i, b_i)$ \label{sec:alg:tradesize-rule}}
 
   \Input{%
     $\tilde{t}_i$ trade size at $i$, $\tilde{a}_i$ ask size at $i$, and $\tilde{b}_i$ bid size at $i$.
@@ -137,9 +137,9 @@ In a similar vein, the \textit{trade size rule} reuses the ask and bid quote siz
 \end{algorithm}
 
 
-\subsection{Hybrid Rules (3.25~p)}\label{hybrid-rules}
+\subsection{Hybrid Rules (3.25~p)}\label{sec:hybrid-rules}
 
-\subsubsection{Lee and Ready Algorithm (1 p)}\label{lee-and-ready-algorithm}
+\subsubsection{Lee and Ready Algorithm (1 p)}\label{sec:lee-and-ready-algorithm}
 
 \begin{algorithm}
 
@@ -149,7 +149,7 @@ In a similar vein, the \textit{trade size rule} reuses the ask and bid quote siz
 
   % caption
   % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
-  \caption{$\operatorname{\mathtt{lee-ready}}{(t_i, a_i, b_i)}$ \label{alg:lee-ready-algorithm}}
+  \caption{$\operatorname{\mathtt{lee-ready}}{(t_i, a_i, b_i)}$ \label{sec:alg:lee-ready-algorithm}}
 
   \Input{%
     $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
@@ -171,7 +171,7 @@ In a similar vein, the \textit{trade size rule} reuses the ask and bid quote siz
       \Return{$o_i = -1$}
     }
     \Else{
-      \Return{$o_i = \operatorname{\mathtt{tick}}{(t_i, a_i, b_i)}$} \tcc*{see above}
+      \Return{$o_i = \operatorname{\mathtt{tick}}{(t_i, a_i, b_i)}$} \tcc*{see Section \ref{sec:tick-test}.}
     }
   } % end for i
   % TODO: set input and output params
@@ -179,10 +179,10 @@ In a similar vein, the \textit{trade size rule} reuses the ask and bid quote siz
 
 
 % \subsubsection{Reverse Lee and Ready
-%   Algorithm (0.5~p)}\label{reverse-lee-and-ready-algorithm}
+%   Algorithm (0.5~p)}\label{sec:reverse-lee-and-ready-algorithm}
 
 \subsubsection{Ellis-Michaely-O'Hara
-  Rule (0.5~p)}\label{ellis-michaely-ohara-rule}
+  Rule (0.5~p)}\label{sec:ellis-michaely-ohara-rule}
 
 \begin{algorithm}
 
@@ -192,7 +192,7 @@ In a similar vein, the \textit{trade size rule} reuses the ask and bid quote siz
 
   % caption
   % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
-  \caption{$\operatorname{\mathtt{emo}}$ \label{alg:emo-rule}}
+  \caption{$\operatorname{\mathtt{emo}}$ \label{sec:alg:emo-rule}}
 
   \Input{%
     $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
@@ -212,118 +212,214 @@ In a similar vein, the \textit{trade size rule} reuses the ask and bid quote siz
       \Return{$o_i = -1$}
     }
     \Else{
-      \Return{$o_i = \operatorname{\mathtt{tick}}{(t_i, a_i, b_i)}$} \tcc*{see above}
+      \Return{$o_i = \operatorname{\mathtt{tick}}{(t_i, a_i, b_i)}$} \tcc*{see Section \ref{sec:tick-test}.}
     }
   } % end for i
   % TODO: set input and output params
 \end{algorithm}
 
 \subsubsection{Chakrabarty-Li-Nguyen-Van-Ness
-  Method (0.5~p)}\label{chakarabarty-li-nguyen-van-ness-method}
+  Method (0.5~p)}\label{sec:chakarabarty-li-nguyen-van-ness-method}
 
 
-\subsubsection{Rosenthal's Rule (0.75~p)}\label{rosenthals-rule}
+\subsubsection{Rosenthal's Rule (0.75~p)}\label{sec:rosenthals-rule}
 
 \newpage
-\section{Supervised Approaches (12~p)}\label{supervised-approaches}
+\section{Supervised Approaches (12~p)}\label{sec:supervised-approaches}
 
-\subsection{Selection of Approaches (2~p)}\label{selection-of-approaches}
+\subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches}
 
-\subsection{Gradient Boosted Trees (2~p)}\label{gradient-boosted-trees}
+\subsection{Gradient Boosted Trees (2~p)}\label{sec:gradient-boosted-trees}
 
-\subsubsection{Decision Tree (0.5~p)}\label{decision-tree}
+\subsubsection{Decision Tree (0.5~p)}\label{sec:decision-tree}
+
+A decision tree splits the feature space $\mathbb{R}^m$ into several disjoint regions $R$ through a sequence of recursive splits. A single split leads to two new sub-regions for a binary decision tree, whose shape depends on the attribute used for splitting and the previously performed splits. The tree is grown in size until a minimum threshold for the number of samples within a node or some other stopping criterion applies \autocite{breimanClassificationRegressionTrees2017}.
+Trees can be utilised for classification and regression tasks. Our introduction focuses on the regression setting only.
+
+A region corresponds to a node in the tree. For each terminal node of the tree or unsplit region, the response variable $f(x)$ is constant \autocite{breimanClassificationRegressionTrees2017}. For a tree with $M$ regions, the response for $x$ can be modelled as
+$$
+  f(x)=\sum_{m=1}^{M} \gamma_{m} \mathbbm{1}\left(x \in R_{m}\right),
+$$
+with $\mathbbm{1}$ being the indicator function for region conformance and $\gamma_m$ being the region's constant \autocite{hastietrevorElementsStatisticalLearning2009}. In the regression case, $\gamma_m$ is simply the average overall response variables of this particular region. As $\gamma_m$ is shared among all samples within the region, the estimates of the tree are similar to a histogram approximating the true regression surface.
+
+So far, it remains open how the best split can be found. The best split is where the deviation of all regions estimates and the true response variables diminishes. Over the entire tree, this error can be captured in the \gls{SSE} given by
+
+$$
+  E(M)=\frac{1}{N} \sum_{m \in M} \sum_{i \in R_m}\left(y_{i}-f(x_i)\right)^{2},
+$$
+
+which is subsequently minimized \autocite{breimanClassificationRegressionTrees2017}. Following \textcite{breimanClassificationRegressionTrees2017} we scan all combinations of possible $m$ and potential split values $s$ and choose the split, that leads to the largest improvement in the error of the child nodes compared to their parent node $E(m)$:
+
+$$
+  \Delta E(s, m)=E(m)-E\left(m_{l}\right)-E\left(m_{r}\right).
+$$
+
+
+Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample is in its region, the tree would achieve the highest fit but perform poorly on unseen data. For trees that generalise, \textit{cost complexity pruning} procedures are employed. If pruned, their ability to capture non-linearities and adaptability to numerical and categorical data makes trees a flexible estimator.
+
 
 \subsubsection{Gradient Boosting
-  Procedure (1 p)}\label{gradient-boosting-procedure}
+  Procedure (1 p)}\label{sec:gradient-boosting-procedure}
+
+  One approach that aims to reduce the bias is \textit{gradient boosting}, which was popularised for regression by \textcite{friedmanGreedyFunctionApproximation2001}. Gradient boosting sequentially combines the approximations of several over-simplified models (so-called
+  \textit{weak-learners}) to an ensemble estimate. Shallow decision trees are commonly used weak learners.
+  
+  The following introduction is adapted from \textcite{hastietrevorElementsStatisticalLearning2009}. For a \textit{boosted tree} several decision trees are combined through summation:
+  
+  $$
+    f_{M}(x)=\sum_{m=1}^{M} T\left(x ; \Theta_{m}\right).
+  $$
+  
+  Here, $M$ sets the number of iterations or trees being built. Instead of fitting trees directly to the data, the model in the $m$-th iteration is fitted to the residuals of the previous model. In this greedy approach, previously built trees remain unaltered while being the foundations for trees in later iterations.
+  
+  At each iteration, one seeks to find the optimal parameter set $\Theta_{m}=\left\{R_{j m}, \gamma_{j m}\right\}_{1}^{J_{m}}$ for the $m$-th iteration, that minimizes the loss $\mathcal{L}$ between the true value and the composite prediction from the current model $f_{m-1}\left(x_{i}\right)$ and the tree, updating the residuals:
+  
+  \begin{equation}
+    \label{eq:boosting-min-loss}
+    \hat{\Theta}_{m}=\arg \min _{\Theta_{m}} \sum_{i=1}^{N} \mathcal{L}\left(y_{i}, f_{m-1}\left(x_{i}\right)+T\left(x_{i} ; \Theta_{m}\right)\right).
+  \end{equation}
+  
+  A common loss function for regression is the \textit{squared error loss}, which can be solved analytically by taking the derivative and setting it equal to zero. The predictions of a tree $T\left(x_{i}; \Theta_{m}\right)$, that yields the maximum decrease of Equation \ref{eq:boosting-min-loss} are similar to the components of the \textit{negative gradient descent}. However, the major drawback is that the gradient is only defined for data points $x_i$ seen during training, contradicting the creation of a generalising model $f_{M}(x)$. A more robust approach can be found in \textit{gradient boosting}.
+  
+  Focusing only on the update step, which is executed $m = 1,\ldots, M$-times, \textit{gradient boosting} starts by calculating the negative gradient of the loss between the observed value for the $i$-th sample and its current predicted value:
+  $$
+    r_{i m}=-{\left[\frac{\partial \mathcal{L}\left(y_{i}, f\left(x_{i}\right)\right)}{\partial f\left(x_{i}\right)}\right]}_{f=f_{m-1}}.
+  $$
+  The components of the negative gradient are referred to as \textit{pseudo residuals}. Subsequently, a regression tree is then fit on these pseudo residuals. The $m$-th regression tree contains $J$ terminal regions denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. The predicted estimate $\gamma_{j,m}$ for the $j$-th region is obtained by minimising a loss such as the squared loss:
+  
+  $$
+    \gamma_{j m}=\arg \min _{\gamma} \sum_{x_{i} \in R_{j m}} \mathcal{L}\left(y_{i}, f_{m-1}\left(x_{i}\right)+\gamma\right).
+  $$
+  
+  Recall from Section
+   \ref{sec:decision-tree} that the estimate $\gamma_{jm}$ is constant for the entire region. As before, the best estimate is simply the average of all residuals within a region.
+  
+  An improved estimate for $x$ is calculated from the previous estimate by adding the trees fitted on the residuals, as shown in Equation \ref{eq:boosting-final-estimate}. The latter moves the prediction towards the greatest descent and thus improves the overall prediction:
+  
+  \begin{equation}\label{eq:boosting-final-estimate}
+    f_{m}(x)=f_{m-1}(x)+\nu \sum_{j=1}^{J_{m}} \gamma_{j m} \mathbbm{1}\left(x \in R_{j m}\right).
+  \end{equation}
+  
+  Only proportional steps towards the negative gradient are taken to prevent overfitting. The pace is controlled by the learning rate $\nu \in (0, 1]$. While a small learning rate slows down learning, it allows more differently shaped trees to attack the residuals. After $M$ iterations we obtain the final estimate calculated as: $\hat{f}(x)=f_{M}(x)$.
+  
 
 \subsubsection{Adaptions for Probabilistic
-  Classification (0.5~p)}\label{adaptions-for-probablistic-classification}
+  Classification (0.5~p)}\label{sec:adaptions-for-probablistic-classification}
 
-\subsection{Transformer Networks (8 p)}\label{transformer-networks}
+\subsection{Transformer Networks (8 p)}\label{sec:transformer-networks}
 
-\subsubsection{Network Architecture (2.5~p)}\label{network-architecture}
+\subsubsection{Network Architecture (2.5~p)}\label{sec:network-architecture}
 
-\subsubsection{Attention (0.5~p)}\label{attention}
+\subsubsection{Attention (0.5~p)}\label{sec:attention}
 
-\subsubsection{Positional Encoding (0.5~p)}\label{positional-encoding}
+\begin{equation}
+  \t{softmax}( \m{A})[t_\mathrm{z}, t_\mathrm{x}] ~:=~ \frac{\exp A[t_\mathrm{z},t_\mathrm{x}]}{ \sum_{t} \exp A[t,t_\mathrm{x}]},
+\end{equation}
+\begin{equation}\label{eq:mask}
+  \text{Mask}[t_\t{z},t_\t{x}] = \left\{{1~~~ \text{for bidirectional attention} 
+                                 \atop [\![t_\t{z}\!≤\!t_\t{x}]\!]~~ \text{for unidirectional att.}}\right.
+\end{equation}
 
-\subsubsection{Embeddings (0.5~p)}\label{embeddings}
+%-------------------------------%
+\begin{algorithm}[h] % Attention
+%-------------------------------%
+  \caption{$\m{\tilde V}\gets$~\texttt{Attention}$(\m{X},\m{Z}|\bmcWqkv,\text{Mask})$}
+  \label{algo:attention}
+  \KwIn{$\m{X}\in\mathbb{R}^{d_\t{x}\times\ell_\t{x}}, \m{Z}\in\mathbb{R}^{d_\t{z}\times\ell_\t{z}}$, vector representations of primary and context  sequence.}
+  \KwOut{$\m{\tilde V}\in\mathbb{R}^{d_\t{out}\times\ell_\t{x}} $, updated representations of tokens in $\m{X}$, folding in information from tokens in $\m{Z}$.}
+  \KwParam{$\bmcWqkv$ consisting of: 
+          $\m{W_q}\in\mathbb{R}^{d_\t{attn}\times d_\t{x}}$, $\v{b_q}\in\mathbb{R}^{d_\t{attn}}$
+           $\m{W_k}\in\mathbb{R}^{d_\t{attn}\times d_\t{z}}$, $\v{b_k}\in\mathbb{R}^{d_\t{attn}}$
+           $\m{W_v}\in\mathbb{R}^{d_\t{out}\times d_\t{z}}$, ~$\v{b_v}\in\mathbb{R}^{d_\t{out}}$.}
+  \KwHyper{Mask$\in\!\!\{0,\!1\}^{\ell_\t{z}\times\ell_\t{x}}$} %$\uparrow$\eqref{eq:mask}}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  $\m{Q} \gets \m{W_q} \m{X} + \v{b_q} \v{1}^\intercal$ ~ [\![$\m{Q}\t{uery}\in\mathbb{R}^{d_\t{attn}\times\ell_\t{x}}$]\!] \;
+  $\m{K} \gets \m{W_k} \m{Z} + \v{b_k} \v{1}^\intercal$ ~ [\![$\m{K}\t{ey}\in\mathbb{R}^{d_\t{attn}\times\ell_\t{z}}$]\!] \;
+  $\m{V} \gets \m{W_v} \m{Z} + \v{b_v} \v{1}^\intercal$ ~ [\![$\m{V}\t{alue}\in\mathbb{R}^{d_\t{out}\times\ell_\t{z}}$]\!] \;
+  $\m{S} \gets \m{K}^\intercal \m{Q}$ ~ [\![$\m{S}\t{core}\in\mathbb{R}^{\ell_\t{z}\times\ell_\t{x}}$]\!] \;
+  $\forall t_\t{z}, t_\t{x},$ if $\neg$Mask$[t_\t{z},t_\t{x}]$ then $S[t_\t{z},t_\t{x}] \gets -\infty  $ \;
+  \Return $\m{\tilde V} = \m{V}\cdot \t{softmax}\left( \m{S} / \sqrt{d_\t{attn}} \right)$    
+\end{algorithm}
 
-\subsubsection{Extensions in TabNet (2~p)}\label{extensions-in-tabnet}
+\subsubsection{Positional Encoding (0.5~p)}\label{sec:positional-encoding}
+
+\subsubsection{Embeddings (0.5~p)}\label{sec:embeddings}
+
+\subsubsection{Extensions in TabNet (2~p)}\label{sec:extensions-in-tabnet}
 
 \subsubsection{Extensions in
-  TabTransformer (2~p)}\label{extensions-in-tabtransformer}
+  TabTransformer (2~p)}\label{sec:extensions-in-tabtransformer}
 
 \newpage
-\section{Semi-Supervised Approaches (8~p)}\label{semi-supervised-approaches}
+\section{Semi-Supervised Approaches (8~p)}\label{sec:semi-supervised-approaches}
 
-\subsection{Selection of Approaches (2~p)}\label{selection-of-approaches-1}
+\subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches-1}
 
 \subsection{Extensions to Gradient Boosted
-  Trees (2~p)}\label{extensions-to-gradient-boosted-trees}
+  Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
 
-\subsection{Extensions to TabNet (2~p)}\label{extensions-to-tabnet}
+\subsection{Extensions to TabNet (2~p)}\label{sec:extensions-to-tabnet}
 
 \subsection{Extensions to
-  TabTransformer (2~p)}\label{extensions-to-tabtransformer}
+  TabTransformer (2~p)}\label{sec:extensions-to-tabtransformer}
 
 \newpage
-\section{Empirical Study (19.5~p)}\label{empirical-study}
+\section{Empirical Study (19.5~p)}\label{sec:empirical-study}
 
-\subsection{Environment (0.5~p)}\label{environment}
+\subsection{Environment (0.5~p)}\label{sec:environment}
 
-\subsection{Data and Data Preparation (6 p)}\label{data-and-data-preparation}
+\subsection{Data and Data Preparation (6 p)}\label{sec:data-and-data-preparation}
 
-\subsubsection{ISE Data Set (0.5~p)}\label{ise-data-set}
+\subsubsection{ISE Data Set (0.5~p)}\label{sec:ise-data-set}
 
-\subsubsection{CBOE Data Set (0.5~p)}\label{cboe-data-set}
+\subsubsection{CBOE Data Set (0.5~p)}\label{sec:cboe-data-set}
 
 \subsubsection{Generation of True
-  Labels (0.5~p)}\label{generation-of-true-labels}
+  Labels (0.5~p)}\label{sec:generation-of-true-labels}
 
-\subsubsection{Feature Engineering (4~p)}\label{feature-engineering}
+\subsubsection{Feature Engineering (4~p)}\label{sec:feature-engineering}
 
-\subsubsection{Train-Test Split (0.5~p)}\label{train-test-split}
+\subsubsection{Train-Test Split (0.5~p)}\label{sec:train-test-split}
 
-\subsection{Training and Tuning (10~p)}\label{training-and-tuning}
+\subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 
 \subsubsection{Training of Supervised
-  Models (4~p)}\label{training-of-supervised-models}
+  Models (4~p)}\label{sec:training-of-supervised-models}
 
 
 \subsubsection{Training of Semi-Supervised
-  Models (4~p)}\label{training-of-semi-supervised-models}
+  Models (4~p)}\label{sec:training-of-semi-supervised-models}
 
 
-\subsubsection{Hyperparameter Tuning (2~p)}\label{hyperparameter-tuning}
+\subsubsection{Hyperparameter Tuning (2~p)}\label{sec:hyperparameter-tuning}
 
 
-\subsection{Evaluation (3~p)}\label{evaluation}
+\subsection{Evaluation (3~p)}\label{sec:evaluation}
 
 \subsubsection{Feature Importance
-  Measure (2~p)}\label{feature-importance-measure}
+  Measure (2~p)}\label{sec:feature-importance-measure}
 
-\subsubsection{Evaluation Metric (1~p)}\label{evaluation-metric}
+\subsubsection{Evaluation Metric (1~p)}\label{sec:evaluation-metric}
 
 \newpage
-\section{Results (12~p)}\label{results}
+\section{Results (12~p)}\label{sec:results}
 
 \subsection{Results of Supervised
-  Models (3~p)}\label{results-of-supervised-models}
+  Models (3~p)}\label{sec:results-of-supervised-models}
 
 \subsection{Results of Semi-Supervised
-  Models (3~p)}\label{results-of-semi-supervised-models}
+  Models (3~p)}\label{sec:results-of-semi-supervised-models}
 
-\subsection{Feature Importance (3~p)}\label{feature-importance}
+\subsection{Feature Importance (3~p)}\label{sec:feature-importance}
 
-\subsection{Robustness Checks (3~p)}\label{robustness-checks}
-
-\newpage
-\section{Discussion (3~p)}\label{discussion}
+\subsection{Robustness Checks (3~p)}\label{sec:robustness-checks}
 
 \newpage
-\section{Conclusion (2~p)}\label{conclusion}
+\section{Discussion (3~p)}\label{sec:discussion}
 
 \newpage
-\section{Outlook (0.5~p=67.75~p)}\label{outlook}
+\section{Conclusion (2~p)}\label{sec:conclusion}
+
+\newpage
+\section{Outlook (0.5~p=67.75~p)}\label{sec:outlook}
 
