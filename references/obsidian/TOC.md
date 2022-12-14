@@ -256,28 +256,27 @@ See also https://sebastianraschka.com/blog/2022/deep-learning-for-tabular-data.h
 ### Decision Tree
 
 ^5db625
-
-- commonly use decision trees as weak learnrs
-- Compare how CatBoost, LightGBM and xgboost are different
-- Variants of GBM, comparison: [CatBoost vs. LightGBM vs. XGBoost | by Kay Jan Wong | Towards Data Science](https://towardsdatascience.com/catboost-vs-lightgbm-vs-xgboost-c80f40662924) (e. g., symmetric, balanced trees vs. asymetric trees) or see kaggle book for differences between lightgbm, catboost etc. [[@banachewiczKaggleBookData2022]]
-- Describe details necessary to understand both Gradient Boosting and TabNet.
-- How can missing values be handled in decision trees? (see [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] as a primer)
-  How can categorical data be handled in decision trees?
-- See how weighting (`weight` in CatBoost) would be incorporated to the formula. Where does `timestamp` become relevant.
-- Round off chapter
+[[Decision Trees]]
 ### Gradient Boosting Procedure
+
+That differ
+
 - Motivation for gradient boosted trees
 - Introduce notion of tree-based ensemble. Why are sequentially built trees better than parallel ensembles?
 - Start of with gradient boosted trees for regression. Gradient boosted trees for classification are derived from that principle.
 - cover desirable properties of gradient boosted trees
 - for handling of missing values see [[@twalaGoodMethodsCoping2008]]. Send missing value to whether side, that leads to the largest information gain (Found in [[@josseConsistencySupervisedLearning2020]])
 - [[@chenXGBoostScalableTree2016]] use second order methods for optimization.
+- See also the stochastic gradient boosting paper of friedman
+- On weighting see: https://catboost.ai/en/docs/concepts/loss-functions-classification#Logit
 ### Adaptions for Probablistic Classification
 - Explain how the Gradient Boosting Procedure for the regression case, can be extended to the classifcation case
 - Discuss the problem of obtainining good probability estimates from a boosted decision tree. See e. g., [[@caruanaObtainingCalibratedProbabilities]] or [[@friedmanAdditiveLogisticRegression2000]] (Note paper is commenting about boosting, gradient boosting has not been published at the time)
 - Observations in [[@tanhaSemisupervisedSelftrainingDecision2017]] on poor probability estimates are equally applicable.
 - See how it solved in [[@prokhorenkovaCatBoostUnbiasedBoosting2018]]
 - Look into gradient boosting papers that adress the problem. Look in this list: https://github.com/benedekrozemberczki/awesome-gradient-boosting-papers
+- https://catboost.ai/news/catboost-enables-fast-gradient-boosting-on-decision-trees-using-gpus
+
 ## Transformer Networks
 - Go "deep" instead of wide
 - Explain how neural networks can be adjusted to perform binary classification.

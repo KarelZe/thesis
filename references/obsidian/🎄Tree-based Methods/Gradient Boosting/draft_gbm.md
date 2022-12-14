@@ -1,7 +1,7 @@
 One approach that aims to reduce the bias, is *gradient boosting*, which was popularized by (Friedman...). *Gradient Boosting* is different from the afore-mentioned appraoches, as it sequentially adds the approximations of several over-simplified models (so-called
 *weak-lerners*) to an ensemble estimate. Shallow trees are commonly used as weak learners. Due to the sequential ensemble building, the construction of the tree is dependent on the trees already built.
 
-Recall from section [[draft_dt]] that a tree can be expressed as
+Recall from section [[Decision Trees]] that a tree can be expressed as
 
 $$
 T(x ; \Theta)=\sum_{j=1}^{J} \gamma_{j} I\left(x \in R_{j}\right).
@@ -49,16 +49,20 @@ After $M$ iterations we obtain the final estimate calculated as: $\hat{f}(x)=f_{
 
 
 Our explanation is based on [[@hastietrevorElementsStatisticalLearning2009]].
-
-
 -   Introduce idea of bootstrapping in bagging [[@breimanBaggingPredictors1996]].
 - Introduce notion of strong learner
-- Transfer to Gradient Boosting
-- What problem does it solve, that Random Forests can not solve?
 - ensemble of weak prediction models (most oftenly trees)
 - Simple explanation given in [[@guEmpiricalAssetPricing2020]]
 - Explanation [[@rossiMachineLearning]]
 
+- commonly use decision trees as weak learnrs
+- Compare how CatBoost, LightGBM and xgboost are different
+- Variants of GBM, comparison: [CatBoost vs. LightGBM vs. XGBoost | by Kay Jan Wong | Towards Data Science](https://towardsdatascience.com/catboost-vs-lightgbm-vs-xgboost-c80f40662924) (e. g., symmetric, balanced trees vs. asymetric trees) or see kaggle book for differences between lightgbm, catboost etc. [[@banachewiczKaggleBookData2022]]
+- Describe details necessary to understand both Gradient Boosting and TabNet.
+- How can missing values be handled in decision trees? (see [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] as a primer)
+  How can categorical data be handled in decision trees?
+- See how weighting (`weight` in CatBoost) would be incorporated to the formula. Where does `timestamp` become relevant.
+- Round off chapter
 
 
 **Flash cards**
