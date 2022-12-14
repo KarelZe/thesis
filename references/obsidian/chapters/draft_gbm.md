@@ -1,7 +1,7 @@
 One approach that aims to reduce the bias, is *gradient boosting*, which was popularized by (Friedman...). *Gradient Boosting* is different from the afore-mentioned appraoches, as it sequentially adds the approximations of several over-simplified models (so-called
 *weak-lerners*) to an ensemble estimate. Shallow trees are commonly used as weak learners. Due to the sequential ensemble building, the construction of the tree is dependent on the trees already built.
 
-Recall from section [[Decision Trees]] that a tree can be expressed as
+Recall from section [[🎄decison_trees]] that a tree can be expressed as
 
 $$
 T(x ; \Theta)=\sum_{j=1}^{J} \gamma_{j} I\left(x \in R_{j}\right).
@@ -77,3 +77,25 @@ $$
 
 
 
+
+
+
+That differ
+- https://developers.google.com/machine-learning/decision-forests/gradient-boosting
+
+- Motivation for gradient boosted trees
+- Introduce notion of tree-based ensemble. Why are sequentially built trees better than parallel ensembles?
+- Start of with gradient boosted trees for regression. Gradient boosted trees for classification are derived from that principle.
+- cover desirable properties of gradient boosted trees
+- for handling of missing values see [[@twalaGoodMethodsCoping2008]]. Send missing value to whether side, that leads to the largest information gain (Found in [[@josseConsistencySupervisedLearning2020]])
+- [[@chenXGBoostScalableTree2016]] use second order methods for optimization.
+- See also the stochastic gradient boosting paper of friedman
+- On weighting see: https://catboost.ai/en/docs/concepts/loss-functions-classification#Logit
+### Adaptions for Probablistic Classification
+- Explain how the Gradient Boosting Procedure for the regression case, can be extended to the classifcation case
+- Discuss the problem of obtainining good probability estimates from a boosted decision tree. See e. g., [[@caruanaObtainingCalibratedProbabilities]] or [[@friedmanAdditiveLogisticRegression2000]] (Note paper is commenting about boosting, gradient boosting has not been published at the time)
+- Observations in [[@tanhaSemisupervisedSelftrainingDecision2017]] on poor probability estimates are equally applicable.
+- See how it solved in [[@prokhorenkovaCatBoostUnbiasedBoosting2018]]
+- Look into gradient boosting papers that adress the problem. Look in this list: https://github.com/benedekrozemberczki/awesome-gradient-boosting-papers
+- https://catboost.ai/news/catboost-enables-fast-gradient-boosting-on-decision-trees-using-gpus
+- https://developer.nvidia.com/blog/gradient-boosting-decision-trees-xgboost-cuda/

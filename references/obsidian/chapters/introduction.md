@@ -1,19 +1,4 @@
-
-title: An Introduction to Statistical Learning
-authors: Gareth James, Daniela Witten, Trevor Hastie, Robert Tibshirani
-year: 2012
-tags :  #supervised-learning #gbm #decision #gradient_boosting 
-status : #📦 
-related: 
-- [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]
-- [[@hastietrevorElementsStatisticalLearning2009]]
-
-## Boosting
-
-- Boosting approaches learn slowly. Instead of fitting trees hard to the data, the  model is fit to the residuals of the model. A new decission tree is added into the fitted function to update the residuals. (James et. al; 2013)
-- The learning rate slows the learning process down, allowing more and ifferent shaped trees to attack the residuals.
-- Unlike bagging, the construction of trees is **dependent** on trees already grown.
-
+- Limit to view, yet theoretically promising techniques as derived in [[#^d8f019]]
 - "The validity of many ecomnomic studies hinges on the ability to accuractely classify trades as buyer or seller-initiated." (found in [[@odders-whiteOccurrenceConsequencesInaccurate2000]])
 - trade site classification matters for several reasons, market liqudity measures, short sells, study of bid-ask-spreads.
 - Where is trade side classification applied? Why is it important? Do citation search.
@@ -32,3 +17,5 @@ related:
 - Works that require trade side classification in option markets:
 	- [[@muravyevOrderFlowExpected2016]]
 	- [[@huDoesOptionTrading2014]]
+- and its consequences are an important, but understudied, cause for concern.
+- Commonly stock trade classifcation algorithms are used

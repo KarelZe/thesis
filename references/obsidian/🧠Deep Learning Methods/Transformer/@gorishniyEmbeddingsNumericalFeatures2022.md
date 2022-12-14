@@ -12,3 +12,5 @@
 -   Small caveat: I would have liked to see a control experiment where the authors trained CatBoost and XGboost on the proposed embeddings.
 
 # Annotations
+
+- Could include interesting ideas: [[@gorishniyEmbeddingsNumericalFeatures2022]]
