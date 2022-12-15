@@ -112,6 +112,7 @@ git checkout -q -f --detach $commit > /dev/null
 
 # Compile tex with references
 
+
 pdflatex -synctex=1 -interaction=nonstopmode $filename.tex > /dev/null
 
 bibtex $filename.aux > /dev/null

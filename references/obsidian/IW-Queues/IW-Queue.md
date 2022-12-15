@@ -46,7 +46,7 @@ interval: 1
 | [[basic_rules]]                     |     97.5 |       |        1 | 1970-01-01 |
 | [[adversarial_validation]]          |        0 |       |        2 | 2022-12-15 |
 | [[draft_rf]]                        |      2.5 |       |        2 | 2022-12-15 |
-| [[gradient-boosting]]                       |        5 |       |        2 | 2022-12-15 |
+| [[🐈gradient-boosting]]                       |        5 |       |        2 | 2022-12-15 |
 | [[cat_boost]]                       |      7.5 |       |        2 | 2022-12-15 |
 | [[🎄decison_trees]]                 |       10 |       |        2 | 2022-12-15 |
 | [[🤖transformer]]               |     12.5 |       |        2 | 2022-12-15 |

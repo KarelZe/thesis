@@ -2,7 +2,7 @@
 
 As stated previously, decision trees suffer from a number of drawbacks. One of them being prone to overfitting. To mitigate the high variance, several trees can be combined to form an *ensemble* of trees. The final prediction is then jointly estimated from all member within the ensemble.
 
-Popular ensemble methods for trees include bagging and random forests [[🎄Tree-based Methods/Random Forests/@breimanRandomForests2001]]. Also, Boosting is another approach that learns a sequence base learners such as simplified decision trees. [[@hastietrevorElementsStatisticalLearning2009]] (p. 587) We present boosting as part of section [[gradient-boosting]].
+Popular ensemble methods for trees include bagging and random forests [[🎄Tree-based Methods/Random Forests/@breimanRandomForests2001]]. Also, Boosting is another approach that learns a sequence base learners such as simplified decision trees. [[@hastietrevorElementsStatisticalLearning2009]] (p. 587) We present boosting as part of section [[🐈gradient-boosting]].
 
 Bagged trees and Random Forests have in common to learn $B$ independent trees. However, they differ in whether learning is performed on a random subset of data or whether splits consider only a portion of all features.
 
