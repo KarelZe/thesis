@@ -17,13 +17,15 @@ import torch
 from catboost import CatBoostClassifier
 from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
-from sklearn.metrics import accuracy_score
 from torch import nn, optim
 
 from otc.data.dataloader import TabDataLoader
 from otc.data.dataset import TabDataset
+from otc.models.activation import ReGLU
 from otc.models.callback import CallbackContainer, PrintCallback, SaveCallback
 from otc.models.classical_classifier import ClassicalClassifier
+from otc.models.fttransformer import FeatureTokenizer, FTTransformer, Transformer
+from otc.models.tabnet import TabNet
 from otc.models.tabtransformer import TabTransformer
 from otc.optim.early_stopping import EarlyStopping
 
@@ -75,6 +77,7 @@ class Objective:
         x_val: pd.DataFrame,
         y_val: pd.Series,
         name: str = "default",
+        **kwargs: Any,
     ):
         """
         Initialize objective.
@@ -109,7 +112,7 @@ class Objective:
         self._callbacks.on_train_end(study, trial, self._clf, self.name)
 
 
-class TabTransformerObjective(Objective):
+class TabNetObjective(Objective):
     """
     Implements an optuna optimization objective.
 
@@ -125,7 +128,7 @@ class TabTransformerObjective(Objective):
         x_val: pd.DataFrame,
         y_val: pd.Series,
         cat_features: list[str] | None,
-        cat_unique: list[int] | None,
+        cat_cardinalities: list[int] | None,
         name: str = "default",
     ):
         """
@@ -136,15 +139,17 @@ class TabTransformerObjective(Objective):
             y_train (pd.Series): ground truth (train)
             x_val (pd.DataFrame): feature matrix (val)
             y_val (pd.Series): ground truth (val)
-            cat_features (Optional[List[str]], optional): List of
+            cat_features (List[str] | None, optional): List of
             categorical features. Defaults to None.
-            cat_unique (Optional[List[int]], optional): Unique counts
+            cat_cardinalities (List[int] | None, optional): Unique counts
             of categorical features.
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
         """
         self._cat_features = [] if not cat_features else cat_features
-        self._cat_unique = () if not cat_unique else tuple(cat_unique)
+        self._cat_cardinalities = (
+            () if not cat_cardinalities else tuple(cat_cardinalities)
+        )
         self._cont_features: list[int] = [
             x for x in x_train.columns.tolist() if x not in self._cat_features
         ]
@@ -152,6 +157,8 @@ class TabTransformerObjective(Objective):
         self._clf: nn.Module
         self._callbacks = CallbackContainer([SaveCallback(), PrintCallback()])
 
+        # static params
+        self.epochs = 1024
         super().__init__(x_train, y_train, x_val, y_val, name)
 
     def __call__(self, trial: optuna.Trial) -> float:
@@ -164,33 +171,40 @@ class TabTransformerObjective(Objective):
         Returns:
             float: accuracy of trial on validation set.
         """
-        # static params
-        epochs = 1024
+        # searchable params, done similar to borisov
+        tabnet_kwargs = {
+            "input_dim": len(self._cat_features) + len(self._cont_features),
+            "output_dim": 1,
+            # first indices are categorical, then continuous
+            "cat_idxs": list(range(len(self._cat_features))),
+            "cat_dims": list(self._cat_cardinalities),
+            "n_d": trial.suggest_int("n_d", 8, 64),
+            "n_steps": trial.suggest_int("n_steps", 3, 10),
+            "gamma": trial.suggest_float("gamma", 1.0, 2.0),
+            "cat_emb_dim": trial.suggest_int("cat_emb_dim", 1, 3),
+            "n_independent": trial.suggest_int("n_independent", 1, 5),
+            "n_shared": trial.suggest_int("n_shared", 1, 5),
+            "momentum": trial.suggest_float("momentum", 0.001, 0.4, log=True),
+            "mask_type": trial.suggest_categorical(
+                "mask_type", ["sparsemax", "entmax"]
+            ),
+        }
 
-        # searchable params
-        dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
-
-        # done similar to borisov
-        depths = [1, 2, 3, 6, 12]
-        depth: int = trial.suggest_categorical("depth", depths)  # type: ignore
-        heads: int = trial.suggest_categorical("heads", [2, 4, 8])  # type: ignore
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
-        dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
-        bs = [8192, 16384, 32768]
-        batch_size: int = trial.suggest_categorical("batch_size", bs)  # type: ignore
+        batch_size: int = trial.suggest_categorical("batch_size", [8192, 16384, 32768])  # type: ignore # noqa: E501
 
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
 
         training_data = TabDataset(
-            self.x_train, self.y_train, self._cat_features, self._cat_unique
+            self.x_train, self.y_train, self._cat_features, self._cat_cardinalities
         )
         val_data = TabDataset(
-            self.x_val, self.y_val, self._cat_features, self._cat_unique
+            self.x_val, self.y_val, self._cat_features, self._cat_cardinalities
         )
 
-        dl_kwargs: dict[str, Any] = {
+        dl_kwargs = {
             "batch_size": batch_size,
             "shuffle": False,
             "device": device,
@@ -204,18 +218,10 @@ class TabTransformerObjective(Objective):
             val_data.x_cat, val_data.x_cont, val_data.y, **dl_kwargs
         )
 
-        self._clf = TabTransformer(
-            categories=self._cat_unique,
-            num_continuous=len(self._cont_features),
-            dim_out=1,
-            mlp_act=nn.ReLU(),
-            dim=dim,
-            depth=depth,
-            heads=heads,
-            attn_dropout=dropout,
-            ff_dropout=dropout,
-            mlp_hidden_mults=(4, 2),
-        ).to(device)
+        self._clf = TabNet(**tabnet_kwargs)  # type: ignore
+
+        # use multiple gpus, if available
+        self._clf = nn.DataParallel(self._clf).to(device)
 
         # half precision, see https://pytorch.org/docs/stable/amp.html
         scaler = torch.cuda.amp.GradScaler()
@@ -231,7 +237,9 @@ class TabTransformerObjective(Objective):
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=5)
 
-        for epoch in range(epochs):
+        accuracy = 0.0
+
+        for epoch in range(self.epochs):
 
             # perform training
             loss_in_epoch_train = 0
@@ -261,6 +269,7 @@ class TabTransformerObjective(Objective):
             self._clf.eval()
 
             loss_in_epoch_val = 0.0
+            correct = 0
 
             with torch.no_grad():
                 for x_cat, x_cont, targets in val_loader:
@@ -270,35 +279,438 @@ class TabTransformerObjective(Objective):
                     val_loss = criterion(outputs, targets)
                     loss_in_epoch_val += val_loss.item()
 
+                    # convert to propability, then round to nearest integer
+                    outputs = torch.sigmoid(outputs).round()
+                    correct += (outputs == targets).sum().item()
+
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
 
-            self._callbacks.on_epoch_end(epoch, epochs, train_loss, val_loss)
+            self._callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
 
             # return early if val loss doesn't decrease for several iterations
             early_stopping(val_loss)
             if early_stopping.early_stop:
                 break
 
-        # make predictions with final model
-        y_pred, y_true = [], []
+            # track accuracy on val set for pruning
+            # https://github.com/optuna/optuna-examples/blob/main/pytorch/pytorch_simple.py
+            accuracy = correct / len(val_data)
+            trial.report(accuracy, epoch)
 
-        self._clf.eval()
+            # Handle pruning based on the intermediate value.
+            if trial.should_prune():
+                raise optuna.TrialPruned()
 
-        for x_cat, x_cont, targets in val_loader:
-            output = self._clf(x_cat, x_cont)
+        return accuracy
 
-            # map between zero and one, sigmoid is otherwise included in loss already
-            # https://stackoverflow.com/a/66910866/5755604
-            output = torch.sigmoid(output.squeeze())
-            y_pred.append(output.detach().cpu().numpy())
-            y_true.append(targets.detach().cpu().numpy())  # type: ignore
 
-        # round prediction to nearest int
-        y_pred = np.rint(np.concatenate(y_pred))
-        y_true = np.concatenate(y_true)
+class TabTransformerObjective(Objective):
+    """
+    Implements an optuna optimization objective.
 
-        return accuracy_score(y_true, y_pred)  # type: ignore
+    See here: https://optuna.readthedocs.io/en/stable/
+    Args:
+        Objective (Objective): objective
+    """
+
+    def __init__(
+        self,
+        x_train: pd.DataFrame,
+        y_train: pd.Series,
+        x_val: pd.DataFrame,
+        y_val: pd.Series,
+        cat_features: list[str] | None,
+        cat_cardinalities: list[int] | None,
+        name: str = "default",
+    ):
+        """
+        Initialize objective.
+
+        Args:
+            x_train (pd.DataFrame): feature matrix (train)
+            y_train (pd.Series): ground truth (train)
+            x_val (pd.DataFrame): feature matrix (val)
+            y_val (pd.Series): ground truth (val)
+            cat_features (List[str] | None, optional): List of
+            categorical features. Defaults to None.
+            cat_cardinalities (List[int] | None, optional): Unique counts
+            of categorical features.
+            Defaults to None.
+            name (str, optional): Name of objective. Defaults to "default".
+        """
+        self._cat_features = [] if not cat_features else cat_features
+        self._cat_cardinalities = (
+            () if not cat_cardinalities else tuple(cat_cardinalities)
+        )
+        self._cont_features: list[int] = [
+            x for x in x_train.columns.tolist() if x not in self._cat_features
+        ]
+
+        self._clf: nn.Module
+        self._callbacks = CallbackContainer([SaveCallback(), PrintCallback()])
+
+        # static params
+        self.epochs = 1024
+        super().__init__(x_train, y_train, x_val, y_val, name)
+
+    def __call__(self, trial: optuna.Trial) -> float:
+        """
+        Perform a new search trial in Bayesian search.
+
+        Hyperarameters are suggested, unless they are fixed.
+        Args:
+            trial (optuna.Trial): current trial.
+        Returns:
+            float: accuracy of trial on validation set.
+        """
+        # searchable params
+        dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
+
+        # done similar to borisov
+        depths = [1, 2, 3, 6, 12]
+        depth: int = trial.suggest_categorical("depth", depths)  # type: ignore
+        heads: int = trial.suggest_categorical("heads", [2, 4, 8])  # type: ignore
+        weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
+        lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
+        dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
+        batch_size: int = trial.suggest_categorical("batch_size", [8192, 16384, 32768])  # type: ignore # noqa: E501
+
+        use_cuda = torch.cuda.is_available()
+        device = torch.device("cuda" if use_cuda else "cpu")
+
+        training_data = TabDataset(
+            self.x_train, self.y_train, self._cat_features, self._cat_cardinalities
+        )
+        val_data = TabDataset(
+            self.x_val, self.y_val, self._cat_features, self._cat_cardinalities
+        )
+
+        dl_kwargs: dict[str, Any] = {
+            "batch_size": batch_size,
+            "shuffle": False,
+            "device": device,
+        }
+
+        # differentiate between continous features only and mixed.
+        train_loader = TabDataLoader(
+            training_data.x_cat, training_data.x_cont, training_data.y, **dl_kwargs
+        )
+        val_loader = TabDataLoader(
+            val_data.x_cat, val_data.x_cont, val_data.y, **dl_kwargs
+        )
+
+        self._clf = TabTransformer(
+            cat_cardinalities=self._cat_cardinalities,
+            num_continuous=len(self._cont_features),
+            dim_out=1,
+            mlp_act=nn.ReLU,
+            dim=dim,
+            depth=depth,
+            heads=heads,
+            attn_dropout=dropout,
+            ff_dropout=dropout,
+            mlp_hidden_mults=(4, 2),
+        )
+        # use multiple gpus, if available
+        self._clf = nn.DataParallel(self._clf).to(device)
+
+        # half precision, see https://pytorch.org/docs/stable/amp.html
+        scaler = torch.cuda.amp.GradScaler()
+        # Generate the optimizers
+        optimizer = optim.AdamW(
+            self._clf.parameters(), lr=lr, weight_decay=weight_decay
+        )
+
+        # see https://stackoverflow.com/a/53628783/5755604
+        # no sigmoid required; numerically more stable
+        criterion = nn.BCEWithLogitsLoss()
+
+        # keep track of val loss and do early stopping
+        early_stopping = EarlyStopping(patience=5)
+        accuracy = 0.0
+
+        for epoch in range(self.epochs):
+
+            # perform training
+            loss_in_epoch_train = 0
+
+            self._clf.train()
+
+            for x_cat, x_cont, targets in train_loader:
+
+                # reset the gradients back to zero
+                optimizer.zero_grad()
+
+                outputs = self._clf(x_cat, x_cont)
+                outputs = outputs.flatten()
+                with torch.cuda.amp.autocast():
+                    train_loss = criterion(outputs, targets)
+
+                # compute accumulated gradients
+                scaler.scale(train_loss).backward()
+
+                # perform parameter update based on current gradients
+                scaler.step(optimizer)
+                scaler.update()
+
+                # add the mini-batch training loss to epoch loss
+                loss_in_epoch_train += train_loss.item()
+
+            self._clf.eval()
+
+            loss_in_epoch_val = 0.0
+            correct = 0
+
+            with torch.no_grad():
+                for x_cat, x_cont, targets in val_loader:
+                    outputs = self._clf(x_cat, x_cont)
+                    outputs = outputs.flatten()
+
+                    val_loss = criterion(outputs, targets)
+                    loss_in_epoch_val += val_loss.item()
+
+                    # convert to propability, then round to nearest integer
+                    outputs = torch.sigmoid(outputs).round()
+                    correct += (outputs == targets).sum().item()
+
+            train_loss = loss_in_epoch_train / len(train_loader)
+            val_loss = loss_in_epoch_val / len(val_loader)
+
+            self._callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
+
+            # return early if val loss doesn't decrease for several iterations
+            early_stopping(val_loss)
+            if early_stopping.early_stop:
+                break
+
+            # track accuracy on val set for pruning
+            # https://github.com/optuna/optuna-examples/blob/main/pytorch/pytorch_simple.py
+            accuracy = correct / len(val_data)
+            trial.report(accuracy, epoch)
+
+            # Handle pruning based on the intermediate value.
+            if trial.should_prune():
+                raise optuna.TrialPruned()
+
+        return accuracy
+
+
+class FTTransformerObjective(Objective):
+    """
+    Implements an optuna optimization objective.
+
+    See here: https://optuna.readthedocs.io/en/stable/
+    Args:
+        Objective (Objective): objective
+    """
+
+    def __init__(
+        self,
+        x_train: pd.DataFrame,
+        y_train: pd.Series,
+        x_val: pd.DataFrame,
+        y_val: pd.Series,
+        cat_features: list[str] | None,
+        cat_cardinalities: list[int] | None,
+        name: str = "default",
+    ):
+        """
+        Initialize objective.
+
+        Args:
+            x_train (pd.DataFrame): feature matrix (train)
+            y_train (pd.Series): ground truth (train)
+            x_val (pd.DataFrame): feature matrix (val)
+            y_val (pd.Series): ground truth (val)
+            cat_features (List[str] | None, optional): List of
+            categorical features. Defaults to None.
+            cat_cardinalities (List[int] | None, optional): Unique counts
+            of categorical features.
+            Defaults to None.
+            name (str, optional): Name of objective. Defaults to "default".
+        """
+        self._cat_features = [] if not cat_features else cat_features
+        self._cat_cardinalities = (
+            () if not cat_cardinalities else tuple(cat_cardinalities)
+        )
+        self._cont_features: list[int] = [
+            x for x in x_train.columns.tolist() if x not in self._cat_features
+        ]
+
+        self._clf: nn.Module
+        self._callbacks = CallbackContainer([SaveCallback(), PrintCallback()])
+
+        # static params
+        self.epochs = 1024
+
+        super().__init__(x_train, y_train, x_val, y_val, name)
+
+    def __call__(self, trial: optuna.Trial) -> float:
+        """
+        Perform a new search trial in Bayesian search.
+
+        Hyperarameters are suggested, unless they are fixed.
+        Args:
+            trial (optuna.Trial): current trial.
+        Returns:
+            float: accuracy of trial on validation set.
+        """
+        # searchable params done similar to fttransformer paper
+        n_blocks: int = trial.suggest_int("n_blocks", 1, 6)
+        d_tokens = [96, 128, 192, 256, 320, 384]
+        d_token: int = trial.suggest_categorical("d_token", d_tokens)  # type: ignore
+        attention_dropouts = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35]
+        attention_dropout: int = trial.suggest_categorical("attention_dropout", attention_dropouts)  # type: ignore # noqa: E501
+        ffn_dropouts = [0.0, 0.05, 0.1, 0.15, 0.2, 0.25]
+        ffn_dropout: int = trial.suggest_categorical("ffn_dropout", ffn_dropouts)  # type: ignore # noqa: E501
+
+        weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
+        lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
+        bs = [8192, 16384, 32768]
+        batch_size: int = trial.suggest_categorical("batch_size", bs)  # type: ignore
+
+        use_cuda = torch.cuda.is_available()
+        device = torch.device("cuda" if use_cuda else "cpu")
+
+        training_data = TabDataset(
+            self.x_train, self.y_train, self._cat_features, self._cat_cardinalities
+        )
+        val_data = TabDataset(
+            self.x_val, self.y_val, self._cat_features, self._cat_cardinalities
+        )
+
+        dl_kwargs: dict[str, Any] = {
+            "batch_size": batch_size,
+            "shuffle": False,
+            "device": device,
+        }
+
+        # differentiate between continous features only and mixed.
+        train_loader = TabDataLoader(
+            training_data.x_cat, training_data.x_cont, training_data.y, **dl_kwargs
+        )
+        val_loader = TabDataLoader(
+            val_data.x_cat, val_data.x_cont, val_data.y, **dl_kwargs
+        )
+
+        feature_tokenizer_kwargs = {
+            "num_continous": len(self._cont_features),
+            "cat_cardinalities": self._cat_cardinalities,
+            "d_token": d_token,
+        }
+        transformer_kwargs = {
+            "d_token": d_token,
+            "n_blocks": n_blocks,
+            "attention_n_heads": 8,
+            "attention_initialization": "kaiming",
+            "ffn_activation": ReGLU,
+            "attention_normalization": nn.LayerNorm,
+            "ffn_normalization": nn.LayerNorm,
+            "ffn_dropout": ffn_dropout,
+            # minor simplification from original paper, fix at 4/3, as activation
+            # is static with ReGLU / GeGLU
+            "ffn_d_hidden": int(d_token * (4 / 3)),
+            "attention_dropout": attention_dropout,
+            "residual_dropout": 0.0,
+            "prenormalization": True,
+            "first_prenormalization": False,
+            "last_layer_query_idx": None,
+            "n_tokens": None,
+            "kv_compression_ratio": None,
+            "kv_compression_sharing": None,
+            "head_activation": nn.ReLU,
+            "head_normalization": nn.LayerNorm,
+            # fix at 1, due to binary classification
+            "d_out": 1,
+        }
+
+        feature_tokenizer = FeatureTokenizer(**feature_tokenizer_kwargs)  # type: ignore
+        transformer = Transformer(**transformer_kwargs)
+        self._clf = FTTransformer(feature_tokenizer, transformer)
+
+        # use multiple gpus, if available
+        self._clf = nn.DataParallel(self._clf).to(device)
+
+        # half precision, see https://pytorch.org/docs/stable/amp.html
+        scaler = torch.cuda.amp.GradScaler()
+        # Generate the optimizers
+        optimizer = optim.AdamW(
+            self._clf.parameters(), lr=lr, weight_decay=weight_decay
+        )
+
+        # see https://stackoverflow.com/a/53628783/5755604
+        # no sigmoid required; numerically more stable
+        criterion = nn.BCEWithLogitsLoss()
+
+        # keep track of val loss and do early stopping
+        early_stopping = EarlyStopping(patience=5)
+        accuracy = 0.0
+
+        for epoch in range(self.epochs):
+
+            # perform training
+            loss_in_epoch_train = 0
+
+            self._clf.train()
+
+            for x_cat, x_cont, targets in train_loader:
+
+                # reset the gradients back to zero
+                optimizer.zero_grad()
+
+                outputs = self._clf(x_cat, x_cont)
+                outputs = outputs.flatten()
+                with torch.cuda.amp.autocast():
+                    train_loss = criterion(outputs, targets)
+
+                # compute accumulated gradients
+                scaler.scale(train_loss).backward()
+
+                # perform parameter update based on current gradients
+                scaler.step(optimizer)
+                scaler.update()
+
+                # add the mini-batch training loss to epoch loss
+                loss_in_epoch_train += train_loss.item()
+
+            self._clf.eval()
+
+            loss_in_epoch_val = 0.0
+            correct = 0
+
+            with torch.no_grad():
+                for x_cat, x_cont, targets in val_loader:
+                    outputs = self._clf(x_cat, x_cont)
+                    outputs = outputs.flatten()
+
+                    val_loss = criterion(outputs, targets)
+                    loss_in_epoch_val += val_loss.item()
+
+                    # convert to propability, then round to nearest integer
+                    outputs = torch.sigmoid(outputs).round()
+                    correct += (outputs == targets).sum().item()
+
+            train_loss = loss_in_epoch_train / len(train_loader)
+            val_loss = loss_in_epoch_val / len(val_loader)
+
+            self._callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
+
+            # return early if val loss doesn't decrease for several iterations
+            early_stopping(val_loss)
+            if early_stopping.early_stop:
+                break
+
+            # track accuracy on val set for pruning
+            # https://github.com/optuna/optuna-examples/blob/main/pytorch/pytorch_simple.py
+            accuracy = correct / len(val_data)
+            trial.report(accuracy, epoch)
+
+            # Handle pruning based on the intermediate value.
+            if trial.should_prune():
+                raise optuna.TrialPruned()
+
+        return accuracy
 
 
 class ClassicalObjective(Objective):
@@ -317,6 +729,7 @@ class ClassicalObjective(Objective):
         x_val: pd.DataFrame,
         y_val: pd.Series,
         name: str = "default",
+        **kwargs: Any,
     ):
         """
         Initialize objective.
@@ -409,7 +822,7 @@ class ClassicalObjective(Objective):
         )
         self._clf.fit(X=self.x_train, y=self.y_train)
         pred = self._clf.predict(self.x_val)
-        return accuracy_score(self.y_val, pred)
+        return (self.y_val == pred).sum() / len(self.y_val)
 
 
 class GradientBoostingObjective(Objective):
@@ -429,6 +842,7 @@ class GradientBoostingObjective(Objective):
         y_val: pd.Series,
         cat_features: list[str] | None = None,
         name: str = "default",
+        **kwargs: Any,
     ):
         """
         Initialize objective.
@@ -438,7 +852,7 @@ class GradientBoostingObjective(Objective):
             y_train (pd.Series): ground truth (train)
             x_val (pd.DataFrame): feature matrix (val)
             y_val (pd.Series): ground truth (val)
-            cat_features (Optional[List[str]], optional): List of categorical features.
+            cat_features (List[str] | None, optional): List of categorical features.
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
         """
@@ -456,32 +870,45 @@ class GradientBoostingObjective(Objective):
         Returns:
             float: accuracy of trial on validation set.
         """
-        task_type = "GPU" if get_gpu_device_count() > 0 else "CPU"
+        # https://catboost.ai/en/docs/features/training-on-gpu
+        gpu_count = get_gpu_device_count()
+        task_type = "GPU" if gpu_count > 0 else "CPU"
+        devices = f"0-{gpu_count-1}"
 
-        iterations = trial.suggest_int("iterations", 100, 1500)
-        learning_rate = trial.suggest_float("learning_rate", 0.005, 1, log=True)
-        depth = trial.suggest_int("depth", 1, 8)
+        # kaggle book + https://catboost.ai/en/docs/concepts/parameter-tuning
+        learning_rate = trial.suggest_float("learning_rate", 0.001, 1, log=True)
+        depth = trial.suggest_int("depth", 1, 10)
+        l2_leaf_reg = trial.suggest_int("l2_leaf_reg", 2, 30)
+        random_strength = trial.suggest_float("random_strength", 1e-9, 10.0, log=True)
+        bagging_temperature = trial.suggest_float("bagging_temperature", 0.0, 1.0)
         grow_policy = trial.suggest_categorical(
             "grow_policy", ["SymmetricTree", "Depthwise"]
         )
-        params = {
-            "iterations": iterations,
-            "depth": depth,
-            "grow_policy": grow_policy,
+        kwargs_cat = {
+            "iterations": 10000,
             "learning_rate": learning_rate,
-            "od_type": "Iter",
+            "depth": depth,
+            "l2_leaf_reg": l2_leaf_reg,
+            "random_strength": random_strength,
+            "bagging_temperature": bagging_temperature,
+            "grow_policy": grow_policy,
+            "border_count": 254,
             "logging_level": "Silent",
             "task_type": task_type,
+            "devices": devices,
             "cat_features": self._cat_features,
             "random_seed": set_seed(),
         }
 
-        self._clf = CatBoostClassifier(**params)
+        # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
+        self._clf = CatBoostClassifier(**kwargs_cat)
         self._clf.fit(
             self.x_train,
             self.y_train,
             eval_set=(self.x_val, self.y_val),
+            early_stopping_rounds=20,
+            callbacks=None,
         )
 
         pred = self._clf.predict(self.x_val, prediction_type="Class")
-        return accuracy_score(self.y_val, pred)
+        return (self.y_val == pred.flatten()).sum() / len(self.y_val)

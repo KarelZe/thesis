@@ -8,9 +8,9 @@
 
 This repository contains all the resources for my thesis on option trade classification at Karlsruhe Institute of Technology.
 
-| notes 📜  |schedule ⌚   |mastermind board 🥷   |experiments 🧪   |computing resources ☄️   |document 🎓|
-|---|---|---|---|---|---|
-|See [`references`](https://github.com/KarelZe/thesis/tree/main/references) folder. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes.   | Link to [tasks and mile stones](https://github.com/KarelZe/thesis/milestones?direction=asc&sort=due_date&state=open).  |Link to [miro board](https://miro.com/app/board/uXjVPPRCa6s=/) (requires login).   | Link to [weights & biases](https://wandb.ai/fbv/thesis) (requires login). |Link to [runpod](https://www.runpod.io/console/pods) (requires login) and to [gcp](https://console.cloud.google.com/welcome?project=flowing-mantis-239216) (requires login).|see [`releases`](https://github.com/KarelZe/thesis/releases/).|
+| notes 📜  |schedule ⌚   |experiments 🧪   |computing resources ☄️   |document 🎓|
+|---|---|---|---|---|
+|See [`references`](https://github.com/KarelZe/thesis/tree/main/references) folder. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes.   | Link to [tasks and mile stones](https://github.com/KarelZe/thesis/milestones?direction=asc&sort=due_date&state=open).  | Link to [weights & biases](https://wandb.ai/fbv/thesis) (requires login). |Link to [runpod](https://www.runpod.io/console/pods) (requires login), to [gcp](https://console.cloud.google.com/welcome?project=flowing-mantis-239216) (requires login), and to [bwHPC](https://bwhpc.de/) (requires login).|see [`releases`](https://github.com/KarelZe/thesis/releases/).|
 
 ## How to use
 
@@ -24,10 +24,13 @@ nano prod.env
 
 # install requirements
 cd thesis
-pip install .
+
+python -m venv thesis
+source thesis/bin/activate
+python -m pip install .
 
 ## run training script
-python src/otc/models/train_model.py --trials=5 --seed=42 --model=gbm --dataset=fbv/thesis/train_val_test_w_trade_size:v0 --features=ml
+python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/classical_size_features_log_normalized:v0 --features=classical-size
 2022-11-18 10:25:50,920 - __main__ - INFO - Connecting to weights & biases. Downloading artifacts. 📦
 2022-11-18 10:25:56,180 - __main__ - INFO - Start loading artifacts locally. 🐢
 2022-11-18 10:26:07,562 - __main__ - INFO - Start with study. 🦄
@@ -56,11 +59,18 @@ Tests can be run using [`tox`](https://tox.wiki/en/latest/). Just type:
 tox
 ```
 ## Acknowledgement
+
+The authors acknowledge support by the state of Baden-Württemberg through [bwHPC](https://bwhpc.de/).
+
 Our implementation is based on:
 
 <div class="csl-bib-body" style="line-height: 2; margin-left: 2em; text-indent:-2em;">
   <div class="csl-entry">Borisov, V., Leemann, T., Seßler, K., Haug, J., Pawelczyk, M., &amp; Kasneci, G. (2022). <i>Deep Neural Networks and Tabular Data: A Survey</i> (arXiv:2110.01889). arXiv. <a href="http://arxiv.org/abs/2110.01889">http://arxiv.org/abs/2110.01889</a></div>
   <span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft.type=preprint&amp;rft.title=Deep%20Neural%20Networks%20and%20Tabular%20Data%3A%20A%20Survey&amp;rft.identifier=http%3A%2F%2Farxiv.org%2Fabs%2F2110.01889&amp;rft.aufirst=Vadim&amp;rft.aulast=Borisov&amp;rft.au=Vadim%20Borisov&amp;rft.au=Tobias%20Leemann&amp;rft.au=Kathrin%20Se%C3%9Fler&amp;rft.au=Johannes%20Haug&amp;rft.au=Martin%20Pawelczyk&amp;rft.au=Gjergji%20Kasneci&amp;rft.date=2022"></span>
+</div>
+<div class="csl-bib-body" style="line-height: 2; margin-left: 2em; text-indent:-2em;">
+  <div class="csl-entry">Gorishniy, Y., Rubachev, I., Khrulkov, V., &amp; Babenko, A. (2021). Revisiting Deep Learning Models for Tabular Data. <i>Advances in Neural Information Processing Systems</i>, <i>34</i>, 18932–18943.</div>
+  <span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.genre=proceeding&amp;rft.atitle=Revisiting%20Deep%20Learning%20Models%20for%20Tabular%20Data&amp;rft.btitle=Advances%20in%20Neural%20Information%20Processing%20Systems&amp;rft.place=Red%20Hook%2C%20NY&amp;rft.publisher=Curran%20Associates%2C%20Inc.&amp;rft.aufirst=Yury&amp;rft.aulast=Gorishniy&amp;rft.au=Yury%20Gorishniy&amp;rft.au=Ivan%20Rubachev&amp;rft.au=Valentin%20Khrulkov&amp;rft.au=Artem%20Babenko&amp;rft.date=2021&amp;rft.pages=18932%E2%80%9318943&amp;rft.spage=18932&amp;rft.epage=18943"></span>
 </div>
 <div class="csl-bib-body" style="line-height: 2; margin-left: 2em; text-indent:-2em;">
   <div class="csl-entry">Prokhorenkova, L., Gusev, G., Vorobev, A., Dorogush, A. V., &amp; Gulin, A. (2018). CatBoost: Unbiased boosting with categorical features. <i>Proceedings of the 32nd International Conference on Neural Information Processing Systems</i>, <i>32</i>, 6639–6649.</div>

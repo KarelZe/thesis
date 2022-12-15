@@ -19,9 +19,9 @@ from catboost import CatBoostClassifier
 from torch import nn
 
 import wandb
+from otc.config.config import settings
 from otc.data.fs import fs
 from otc.utils.colors import Colors
-from otc.utils.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -85,7 +85,7 @@ class SaveCallback(Callback):
     Callback to save the models.
 
     Args:
-        Callback (_type_): _description_
+        Callback (callback): callback.
     """
 
     def __init__(self, wandb_kwargs: dict[str, Any] | None = None) -> None:

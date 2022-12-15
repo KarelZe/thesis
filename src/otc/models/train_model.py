@@ -10,7 +10,6 @@ import warnings
 from pathlib import Path
 
 import click
-import numpy as np
 import optuna
 import pandas as pd
 import yaml
@@ -18,19 +17,35 @@ from optuna.exceptions import ExperimentalWarning
 from optuna.integration.wandb import WeightsAndBiasesCallback
 
 import wandb
+from otc.config.config import settings
 from otc.features.build_features import (
     features_categorical,
     features_classical,
+    features_classical_size,
     features_ml,
 )
 from otc.models.objective import (
     ClassicalObjective,
     GradientBoostingObjective,
-    Objective,
     TabTransformerObjective,
+    FTTransformerObjective,
+    TabNetObjective,
     set_seed,
 )
-from otc.utils.config import settings
+
+OBJECTIVES = {
+    "gbm": GradientBoostingObjective,
+    "classical": ClassicalObjective,
+    "tabtransformer": TabTransformerObjective,
+    "fttransformer": FTTransformerObjective,
+    "tabnet": TabNetObjective,
+}
+
+FEATURE_SETS = {
+    "classical": features_classical,
+    "ml": features_ml,
+    "classical-size": features_classical_size,
+}
 
 
 @click.command()
@@ -38,13 +53,16 @@ from otc.utils.config import settings
 @click.option("--seed", default=42, required=False, type=int, help="Seed for rng.")
 @click.option(
     "--features",
-    type=click.Choice(["classical", "ml"], case_sensitive=False),
+    type=click.Choice(["classical", "ml", "classical-size"], case_sensitive=False),
     default="classical",
     help="Feature set to run study on.",
 )
 @click.option(
     "--model",
-    type=click.Choice(["classical", "gbm", "tabtransformer"], case_sensitive=False),
+    type=click.Choice(
+        ["classical", "gbm", "tabtransformer", "fttransformer", "tabnet"],
+        case_sensitive=False,
+    ),
     required=True,
     default="classical",
     help="Feature set to run study on.",
@@ -95,23 +113,22 @@ def main(
 
     logger.info("Start loading artifacts locally. 🐢")
 
+    # select right feature set
     columns = ["buy_sell"]
-    if features == "classical":
-        columns.extend(features_classical)
-    elif features == "ml":
-        columns.extend(features_ml)
+    columns.append(FEATURE_SETS[features][0])
 
+    # filter categorical features that are in subset and get cardinality
+    cat_features_sub = [tup for tup in features_categorical if tup[0] in columns]
+    cat_features, cat_cardinalities = tuple(list(t) for t in zip(*cat_features_sub))
+
+    # load data
     x_train = pd.read_parquet(
         Path(artifact_dir, "train_set_60.parquet"), columns=columns
     )
-    x_train.replace([np.inf, -np.inf], -1, inplace=True)
-    x_train.fillna(-1, inplace=True)
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
     x_val = pd.read_parquet(Path(artifact_dir, "val_set_20.parquet"), columns=columns)
-    x_val.fillna(-1, inplace=True)
-    x_val.replace([np.inf, -np.inf], -1, inplace=True)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
@@ -122,32 +139,21 @@ def main(
 
     logger.info("Start with study. 🦄")
 
-    objective: Objective
-    if model == "gbm":
-        objective = GradientBoostingObjective(
-            x_train,
-            y_train,
-            x_val,
-            y_val,
-            cat_features=features_categorical,
-        )
-    elif model == "tabtransformer":
-        objective = TabTransformerObjective(
-            x_train,
-            y_train,
-            x_val,
-            y_val,
-            cat_features=["OPTION_TYPE"],
-            cat_unique=[2],
-        )
-    elif model == "classical":
-        objective = ClassicalObjective(x_train, y_train, x_val, y_val)
+    # select right objective based on model nome, constructor might be overloaded
+    objective = OBJECTIVES[model](
+        x_train,
+        y_train,
+        x_val,
+        y_val,
+        cat_features=cat_features,
+        cat_cardinalities=cat_cardinalities,
+    )
 
     # maximize for accuracy
     study = optuna.create_study(
         direction="maximize",
+        pruner=optuna.pruners.MedianPruner(n_warmup_steps=5),
         sampler=optuna.samplers.TPESampler(seed=set_seed(seed)),
-        # pruner=optuna.pruners.MedianPruner(n_warmup_steps=10),
         study_name=name,
     )
 
@@ -164,20 +170,27 @@ def main(
 
     logger.info("writing artifacts to weights and biases. 🗃️")
 
-    wandb.run.summary["best accuracy"] = study.best_trial.value  # type: ignore
-    wandb.run.summary["best trial"] = study.best_trial.number  # type: ignore
-    wandb.run.summary["features"] = features  # type: ignore
-    wandb.run.summary["trials"] = trials  # type: ignore
-    wandb.run.summary["name"] = name  # type: ignore
-    wandb.run.summary["dataset"] = dataset  # type: ignore
-    wandb.run.summary["seed"] = seed  # type: ignore
+    # provide summary statistics
+    wandb.run.summary.update(  # type: ignore
+        {
+            "best_accuracy": study.best_trial.value,
+            "best_trial": study.best_trial.number,
+            "features": features,
+            "trials": trials,
+            "name": name,
+            "dataset": dataset,
+            "seed": seed,
+        }
+    )
 
     wandb.log(  # type: ignore
         {
-            "optimization_history": optuna.visualization.plot_optimization_history(
+            "plot_optimization_history": optuna.visualization.plot_optimization_history(
                 study
             ),
-            "param_importances": optuna.visualization.plot_param_importances(study),
+            "plot_param_importances": optuna.visualization.plot_param_importances(
+                study
+            ),
             "plot_contour": optuna.visualization.plot_contour(study),
         }
     )
