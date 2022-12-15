@@ -1,3 +1,5 @@
+![[lr-algo.png]]
+
 - According to [[@bessembinderIssuesAssessingTrade2003]] the most widley used algorithm to categorize trades as buyer or seller-initiated.
 - Accuracy has been tested in [[@odders-whiteOccurrenceConsequencesInaccurate2000]], [[@finucaneDirectTestMethods2000 1]] and [[@leeInferringInvestorBehavior2000]] on TORQ data set which contains the true label. (see [[@bessembinderIssuesAssessingTrade2003]])
 - combination of quote and tick rule. Use tick rule to classify trades at midpoint and use the quote rule else where

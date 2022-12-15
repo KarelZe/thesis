@@ -62,14 +62,14 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ^5db625
 ![[🎄decison_trees]]
 ### Gradient Boosting Procedure
-[[draft_gbm]]
+[[gradient-boosting]]
 ## Transformer Networks
 
 [[transformer_networks]]
 ### Network Architecture
 
 ### Attention
-[[@vaswaniAttentionAllYou2017]]
+[[attention]]
 ### Positional Encoding
 ### Embeddings
 [[embeddings]]
@@ -143,7 +143,7 @@ describe if data set is actually used. Write similarily to
 # Results
 [[results]]
 ## Results of Supervised Models
-[[results_of_semisupervised]]
+[[results_of_supervised]]
 ## Results of Semi-Supervised Models
 [[results_of_semisupervised]]
 ## Feature Importance

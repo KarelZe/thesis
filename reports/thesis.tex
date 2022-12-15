@@ -78,18 +78,12 @@
 % Please fill in this information once at the beginning. This way, gaps will be filled in automatically in the following.
 	\newcommand{\name}{Markus Bilz} % Enter your name.
 	\newcommand{\dateofthesis}{March 31, 2023} % Enter the submission date of your thesis.
-	\newcommand{\titleofthesis}{Option Trade Classification using Machine Learning} % Enter the title of your thesis.
+	\newcommand{\titleofthesis}{Forget About the Rules: Improving Option Trade Classification Using Machine Learning} % Enter the title of your thesis.
 	\newcommand{\streetadress}{Mathystr.~14-16 // XI-11} % Enter your street adress.
 	\newcommand{\postalcode}{76133} % Enter your postal code.
 	\newcommand{\city}{Karlsruhe} % Enter your city/town.
 	\newcommand{\email}{markus.bilz@student.kit.edu} % Enter your email adress.
 	\newcommand{\typeofthesis}{Master Thesis} % specify the type of thesis: Seminar Thesis, Bachelor Thesis, Master Thesis.
-
-% The following fields only need to be completed in the case of a seminar thesis.
-	\newcommand{\topicseminarseries}{Business practices in the EU} % Enter the topic of the seminar series.
-	\newcommand{\semester}{WS 2021/2022} % Enter the semester of the seminar thesis.
-	\newcommand{\numbertopic}{Topic 8} % Enter the number of the topic of your seminar thesis.
-
 
 % --------------------------------- Definition of hyperlinks ---------------------------------
 % Hyperreferences
@@ -145,6 +139,12 @@
 	\setcounter{page}{1}\renewcommand{\thepage}{\roman{page}} % Sets the numbering to roman small.
 	\newpage
 	\tableofcontents
+
+% List of Algorithms (comment out if there are no figures in the thesis)
+\newpage
+\listofalgorithms % Inserts the list of algorithms from algorithm package
+\addcontentsline{toc}{section}{List of Algorithms} % Adds the list of figures to the table of contents.
+
 
 % List of Figures (comment out if there are no figures in the thesis)
 	\newpage

@@ -22,19 +22,43 @@
             }
           },
           {
-            "id": "bda36a07185b4b60",
+            "id": "0f472cfdbe577965",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/tradesize_rule.md",
+                "file": "TOC.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "ba5f7fbdc359d4f4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "results_of_supervised.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c0692e0325285bd7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "TOC.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -92,7 +116,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/tradesize_rule.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +144,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/tradesize_rule.md"
+                "file": "TOC.md"
               }
             }
           }
@@ -131,17 +155,17 @@
     "direction": "horizontal",
     "width": 326.5
   },
-  "active": "bda36a07185b4b60",
+  "active": "c0692e0325285bd7",
   "lastOpenFiles": [
-    "chapters/train-test-split.md",
-    "chapters/draft_transformer.md",
-    "chapters/🎄decison_trees.md",
-    "chapters/cat_boost.md",
-    "chapters/draft_gbm.md",
+    "chapters/transformer_networks.md",
+    "chapters/discussion.md",
+    "results_of_supervised.md",
     "TOC.md",
-    "chapters/depth_rule.md",
-    "chapters/draft_nn.md",
-    "IW-Queues/IW-Queue.md",
-    "chapters/draft_rf.md"
+    "chapters/results.md",
+    "attention.md",
+    "chapters/results_of_semisupervised.md",
+    "❓Questions.md",
+    "chapters/gradient-boosting.md",
+    "chapters/extensions-to-gradient-boosting.md"
   ]
 }

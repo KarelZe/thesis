@@ -1,3 +1,5 @@
+![[emo-algo.png]]
+
 - combination of quote rule and tick rule. Use tick rule to classify all trades except trades at hte ask and bid at which points the quote rule is applied. A trade is classified as  abuy (sell) if it is executed at the ask (bid).
 - turns the principle of LR up-side-down: apply the tick rule to all trades except those at the best bid and ask.
 - EMO Rule

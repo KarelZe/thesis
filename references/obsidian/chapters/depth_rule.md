@@ -3,6 +3,8 @@
 
 As shown in Algorithm 2, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for assigning the initiator. To sign the remaining trades, other rules must follow thereafter.
 
+![[depth-rule-algo.png]]
+
 In a similar vain the subsequent *trade size rule* utilizes the ask and bid quote size to improve classification performance.
 
 - classify midspread trades as buyer-initiated, if the ask size exceeds the bid size, and as seller-initiated, if the bid size is higher than the ask size (see [[@grauerOptionTradeClassification2022]])

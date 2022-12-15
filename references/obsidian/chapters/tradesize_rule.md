@@ -1,5 +1,7 @@
 Motivated by the deminishing performance of the classical algorithms (such as the previously introduced tick test and quote rule) for option trades, where the trade size matches the bid or ask size, [[@grauerOptionTradeClassification2022]] propose to 
 
+![[tradesize-rule.png]]
+
 Due to the restrictions on the trade size, this rule needs to be combined with other rules.
 
 - classify trades for which the trade size is equal to the quoted bid size as customer buys and those with a trade size equal to the ask size as customer sells. (see [[@grauerOptionTradeClassification2022]])
