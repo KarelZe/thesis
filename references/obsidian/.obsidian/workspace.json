@@ -22,12 +22,24 @@
             }
           },
           {
+            "id": "0538eac49b478be0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/feature_importance_measure.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "a8e0780286ede500",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🎄decison_trees.md",
+                "file": "chapters/training-of-supervised-models.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,7 +81,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -98,7 +111,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "robust scaler",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -107,7 +120,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -127,7 +141,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "chapters/feature_importance_measure.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -155,7 +169,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "chapters/feature_importance_measure.md"
               }
             }
           }
@@ -166,17 +180,17 @@
     "direction": "horizontal",
     "width": 500.5
   },
-  "active": "160a03ac0eb0e817",
+  "active": "0538eac49b478be0",
   "lastOpenFiles": [
-    "chapters/🐈gradient-boosting.md",
     "TOC.md",
-    "chapters/🎄decison_trees.md",
-    "🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001.md",
-    "results_of_supervised.md",
-    "🍿Paper 2 movie.md",
-    "chapters/transformer_networks.md",
+    "chapters/training-of-supervised-models.md",
     "chapters/discussion.md",
-    "chapters/results.md",
-    "attention.md"
+    "chapters/ise-dataset.md",
+    "chapters/🐈gradient-boosting.md",
+    "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
+    "🧠Deep Learning Methods/@grinsztajnWhyTreebasedModels2022.md",
+    "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
+    "📥Inbox/@shazeerGLUVariantsImprove2020.md",
+    "🧠Deep Learning Methods/Transformer/@phuongFormalAlgorithmsTransformers2022.md"
   ]
 }
