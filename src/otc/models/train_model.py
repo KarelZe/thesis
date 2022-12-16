@@ -12,11 +12,11 @@ from pathlib import Path
 import click
 import optuna
 import pandas as pd
+import wandb
 import yaml
 from optuna.exceptions import ExperimentalWarning
 from optuna.integration.wandb import WeightsAndBiasesCallback
 
-import wandb
 from otc.config.config import settings
 from otc.features.build_features import (
     features_categorical,
@@ -26,10 +26,10 @@ from otc.features.build_features import (
 )
 from otc.models.objective import (
     ClassicalObjective,
-    GradientBoostingObjective,
-    TabTransformerObjective,
     FTTransformerObjective,
+    GradientBoostingObjective,
     TabNetObjective,
+    TabTransformerObjective,
     set_seed,
 )
 
@@ -119,13 +119,13 @@ def main(
 
     # filter categorical features that are in subset and get cardinality
     cat_features_sub = [tup for tup in features_categorical if tup[0] in columns]
-    
+
     cat_features, cat_cardinalities = [], []
     if cat_features_sub:
         cat_features, cat_cardinalities = tuple(list(t) for t in zip(*cat_features_sub))
 
     print(columns)
-        
+
     # load data
     x_train = pd.read_parquet(
         Path(artifact_dir, "train_set_60.parquet"), columns=columns

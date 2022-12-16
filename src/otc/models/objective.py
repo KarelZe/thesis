@@ -860,14 +860,20 @@ class GradientBoostingObjective(Objective):
         # https://catboost.ai/en/docs/concepts/python-reference_pool#label
         y_train[y_train < 0] = 0
         y_val[y_val < 0] = 0
-        
+
         # decay weight of very old observations in training set. See eda notebook.
         weight = np.geomspace(0.001, 1, num=len(y_train))
         # keep ordering of data
-        timestamp = np.linspace(0,1, len(y_train))
+        timestamp = np.linspace(0, 1, len(y_train))
 
         # save to pool for faster memory access
-        self._train_pool = Pool(data=x_train, label=y_train, cat_features=cat_features, weight=weight, timestamp=timestamp)
+        self._train_pool = Pool(
+            data=x_train,
+            label=y_train,
+            cat_features=cat_features,
+            weight=weight,
+            timestamp=timestamp,
+        )
         self._val_pool = Pool(data=x_val, label=y_val, cat_features=cat_features)
         self.name = name
         self._callbacks = CallbackContainer([SaveCallback()])
@@ -910,7 +916,7 @@ class GradientBoostingObjective(Objective):
             "devices": devices,
             "random_seed": set_seed(),
             "early_stopping_rounds": 50,
-            "eval_metric":metrics.Accuracy()  # type: ignore
+            "eval_metric": metrics.Accuracy(),  # type: ignore
         }
 
         # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
