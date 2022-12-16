@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import logging
 import logging.config
+import os
 import pickle
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -15,10 +16,10 @@ from typing import Any
 
 import optuna
 import torch
+import wandb
 from catboost import CatBoostClassifier
 from torch import nn
 
-import wandb
 from otc.config.config import settings
 from otc.data.fs import fs
 from otc.utils.colors import Colors
@@ -143,34 +144,17 @@ class SaveCallback(Callback):
         """
         if study.best_trial == trial:
 
-            prefix_file = (
-                f"{study.study_name}_" f"{model.__class__.__name__}_{name}_trial_"
-            )
-
-            # remove old files on remote
-            outdated_files_remote = fs.glob(
-                "gs://"
-                + Path(
-                    settings.GCS_BUCKET, settings.MODEL_DIR_REMOTE, prefix_file + "*"
-                ).as_posix()
-            )
-            if len(outdated_files_remote) > 0:
-                fs.rm(outdated_files_remote)
-                logger.info(
-                    "%sRemoved %s.%s",
-                    Colors.FAIL,
-                    outdated_files_remote,
-                    Colors.ENDC,
-                )
+            prefix_file = f"{study.study_name}_" f"{model.__class__.__name__}_{name}"
 
             uri_model: str
             file_model: str
 
+            m_artifact: wandb.Artifact  # type: ignore
+
             # write new files on remote
             if isinstance(model, CatBoostClassifier):
-                # https://catboost.ai/en/docs/concepts/python\
-                # -reference_catboost_save_model
-                file_model = prefix_file + f"{trial.number}.cbm"
+                # log trained model
+                file_model = prefix_file + ".cbm"
                 uri_model = (
                     "gs://"
                     + Path(
@@ -179,42 +163,67 @@ class SaveCallback(Callback):
                 )
                 with fs.open(uri_model, "wb") as f:
                     f.write(model._serialize_model())
+
+                # log "catboost_info/catboost_training.json" containing loss + accuracy
+                file_training_stats = prefix_file + "_training.json"
+                uri_training_stats = (
+                    "gs://"
+                    + Path(
+                        settings.GCS_BUCKET,
+                        settings.MODEL_DIR_REMOTE,
+                        file_training_stats,
+                    ).as_posix()
+                )
+                loc_training_stats = Path(
+                    os.getcwd(), "catboost_info", "catboost_training.json"
+                ).as_posix()
+
+                fs.put(loc_training_stats, uri_training_stats)
+                m_artifact = wandb.Artifact(name=file_model, type="model")
+
+                m_artifact.add_reference(uri_training_stats, name=file_training_stats)
+                logger.info(
+                    "%sSaved '%s'.%s", Colors.OKGREEN, file_training_stats, Colors.ENDC
+                )
+
             elif isinstance(model, nn.Module):
-                file_model = prefix_file + f"{trial.number}.pth"
+                file_model = prefix_file + ".pth"
                 uri_model = (
                     "gs://"
                     + Path(
                         settings.GCS_BUCKET, settings.MODEL_DIR_REMOTE, file_model
                     ).as_posix()
                 )
+
                 # https://stackoverflow.com/a/72511896/5755604
                 with fs.open(uri_model, "wb") as f:
                     torch.save(model.state_dict(), f)
+
+                m_artifact = wandb.Artifact(name=file_model, type="model")
             else:
                 return
 
-            m_artifact = wandb.Artifact(name=file_model, type="model")  # type: ignore
+            # add reference to model file
             m_artifact.add_reference(uri_model, name=file_model)
             self._run.log_artifact(m_artifact)  # type: ignore
             logger.info("%sSaved '%s'.%s", Colors.OKGREEN, file_model, Colors.ENDC)
 
-        # save study object at last trial.
+        # save study object in every trial.
         # https://optuna.readthedocs.io/en/stable/faq.html#how-can-i-save-and-resume-studies
-        if len(study.trials) == trial.number + 1:
-            file_study = f"{study.study_name}.optuna"
-            uri_study = (
-                "gs://"
-                + Path(
-                    settings.GCS_BUCKET, settings.MODEL_DIR_REMOTE, file_study
-                ).as_posix()
-            )
-            with fs.open(uri_study, "wb") as f:
-                pickle.dump(study, f, protocol=4)  # type: ignore
+        file_study = f"{study.study_name}.optuna"
+        uri_study = (
+            "gs://"
+            + Path(
+                settings.GCS_BUCKET, settings.MODEL_DIR_REMOTE, file_study
+            ).as_posix()
+        )
+        with fs.open(uri_study, "wb") as f:
+            pickle.dump(study, f, protocol=4)  # type: ignore
 
-            s_artifact = wandb.Artifact(name=file_study, type="study")  # type: ignore
-            s_artifact.add_reference(uri_study, name=file_study)
-            self._run.log_artifact(s_artifact)  # type: ignore
-            logger.info("%sSaved '%s'.%s", Colors.OKGREEN, file_study, Colors.ENDC)
+        s_artifact = wandb.Artifact(name=file_study, type="study")  # type: ignore
+        s_artifact.add_reference(uri_study, name=file_study)
+        self._run.log_artifact(s_artifact)  # type: ignore
+        logger.info("%sSaved '%s'.%s", Colors.OKGREEN, file_study, Colors.ENDC)
 
 
 class PrintCallback(Callback):
