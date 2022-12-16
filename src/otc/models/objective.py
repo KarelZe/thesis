@@ -14,7 +14,7 @@ import numpy as np
 import optuna
 import pandas as pd
 import torch
-from catboost import CatBoostClassifier, Pool, metrics
+from catboost import CatBoostClassifier
 from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
 from torch import nn, optim
@@ -856,26 +856,8 @@ class GradientBoostingObjective(Objective):
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
         """
-        # FIXME: Remove in data set and here and handle in pre-processing notebook.
-        # https://catboost.ai/en/docs/concepts/python-reference_pool#label
-        y_train[y_train < 0] = 0
-        y_val[y_val < 0] = 0
-
-        # decay weight of very old observations in training set. See eda notebook.
-        weight = np.geomspace(0.001, 1, num=len(y_train))
-        # keep ordering of data
-        timestamp = np.linspace(0, 1, len(y_train))
-
-        # save to pool for faster memory access
-        self._train_pool = Pool(
-            data=x_train,
-            label=y_train,
-            cat_features=cat_features,
-            weight=weight,
-            timestamp=timestamp,
-        )
-        self._val_pool = Pool(data=x_val, label=y_val, cat_features=cat_features)
-        self.name = name
+        self._cat_features = cat_features
+        super().__init__(x_train, y_train, x_val, y_val, name)
         self._callbacks = CallbackContainer([SaveCallback()])
 
     def __call__(self, trial: optuna.Trial) -> float:
@@ -914,19 +896,19 @@ class GradientBoostingObjective(Objective):
             "logging_level": "Silent",
             "task_type": task_type,
             "devices": devices,
+            "cat_features": self._cat_features,
             "random_seed": set_seed(),
-            "early_stopping_rounds": 50,
-            "eval_metric": metrics.Accuracy(),  # type: ignore
         }
 
         # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
-        self._clf = CatBoostClassifier(**kwargs_cat)  # type: ignore
+        self._clf = CatBoostClassifier(**kwargs_cat)
         self._clf.fit(
-            self._train_pool,
-            eval_set=self._val_pool,
+            self.x_train,
+            self.y_train,
+            eval_set=(self.x_val, self.y_val),
+            early_stopping_rounds=20,
             callbacks=None,
         )
 
-        print(self._clf.get_all_params())
-        # calculate accuracy
-        return self._clf.score(self._val_pool)  # type: ignore
+        pred = self._clf.predict(self.x_val, prediction_type="Class")
+        return (self.y_val == pred.flatten()).sum() / len(self.y_val)
