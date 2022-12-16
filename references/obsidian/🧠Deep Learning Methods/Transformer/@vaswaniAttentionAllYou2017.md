@@ -21,3 +21,7 @@
 - first then input is split into chunks. A scaled dot-product attention is derived from the queries keys and the values. This is sent to a linear layer which is then the output of the multi-headed attention
 
 # Annotations
+
+- cover dot-product attention and sequential attention
+- multi-headed attention
+- self-attention

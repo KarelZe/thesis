@@ -217,3 +217,45 @@ For regression, the default value for $m$ is $\lfloor p / 3\rfloor$ and the mini
 
 Variable importance can be retrieved from the forest. At each split in each tree, the improvement in the split-criterion is the importance measure attributed to the splitting variable, and is accumulated
 over all the trees in the forest separately for each variable. (p. 593)
+
+
+## Annotations
+
+# Annotations  
+(14/12/2022, 06:57:13)
+
+“It is difficult to give a general rule on how to choose the number of observations in each of the three parts, as this depends on the signal-tonoise ratio in the data and the training sample size. A typical split might be 50% for training, and 25% each for validation and testing:” ([Hastie, Trevor et al., 2009, p. 241](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=241&annotation=MLMYR5JW))
+
+“Of course, the main caveat here is “independent,” and bagged trees are not. Figure 8.11 illustrates the power of a consensus vote in a simulated example, where only 30% of the voters have some knowledge. In Chapter 15 we see how random forests improve on bagging by reducing the correlation between the sampled trees. Note that when we bag a model, any simple structure in the model is lost. As an example, a bagged tree is no longer a tree. For interpretation of the model this is clearly a drawback. More stable procedures like nearest neighbors are typically not affected much by bagging. Unfortunately, the unstable models most helped by bagging are unstable because of the emphasis on interpretability, and this is lost in the bagging process.” ([Hastie, Trevor et al., 2009, p. 305](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=305&annotation=4LX84RFV))
+
+“Tree-based methods partition the feature space into a set of rectangles, and then fit a simple model (like a constant) in each one.” ([Hastie, Trevor et al., 2009, p. 324](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=324&annotation=A27D7VJP))
+
+“Let’s consider a regression problem with continuous response Y and inputs X1 and X2,” ([Hastie, Trevor et al., 2009, p. 324](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=324&annotation=MVXY4839))
+
+“To simplify matters, we restrict attention to recursive binary partitions like that in the top right panel” ([Hastie, Trevor et al., 2009, p. 324](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=324&annotation=6XLICF4M))
+
+“We first split the space into two regions, and model the response by the mean of Y in each region.” ([Hastie, Trevor et al., 2009, p. 324](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=324&annotation=RUKJDW6J))
+
+“We now turn to the question of how to grow a regression tree. Our data consists of p inputs and a response, for each of N observations: that is, (xi, yi) for i = 1, 2, . . . , N , with xi = (xi1, xi2, . . . , xip). The algorithm needs to automatically decide on the splitting variables and split points, and also what topology (shape) the tree should have. Suppose first that we have a partition into M regions R1, R2, . . . , RM , and we model the response as a constant cm in each region: f (x) = M ∑ m=1” ([Hastie, Trevor et al., 2009, p. 326](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=326&annotation=9JDM8LEL))
+
+“∑(yi − f (xi))2, it is easy to see that the best ˆ cm is just the average of yi in region Rm: ˆ cm = ave(yi|xi ∈” ([Hastie, Trevor et al., 2009, p. 326](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=326&annotation=NA9G7NDT))
+
+“Now finding the best binary partition in terms of minimum sum of squares is generally computationally infeasible. Hence we proceed with a greedy algorithm. Starting with all of the data, consider a splitting variable j and split point s,” ([Hastie, Trevor et al., 2009, p. 326](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=326&annotation=MIYD4IEF))
+
+“For each splitting variable, the determination of the split point s can be done very quickly and hence by scanning through all of the inputs, determination of the best pair (j, s) is feasible.” ([Hastie, Trevor et al., 2009, p. 326](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=326&annotation=28H5RAJP))
+
+“Having found the best split, we partition the data into the two resulting regions and repeat the splitting process on each of the two regions. Then this process is repeated on all of the resulting regions.” ([Hastie, Trevor et al., 2009, p. 326](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=326&annotation=7G75HKWE))
+
+“How large should we grow the tree? Clearly a very large tree might overfit the data, while a small tree might not capture the important structure.” ([Hastie, Trevor et al., 2009, p. 326](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=326&annotation=NDK97SAQ))
+
+“Then this large tree is pruned using cost-complexity pruning, which we now describe.” ([Hastie, Trevor et al., 2009, p. 327](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=327&annotation=LJVZXUAN))
+
+“Besides the size of the constituent trees, J, the other meta-parameter of gradient boosting is the number of boosting iterations M . Each iteration usually reduces the training risk L(fM ), so that for M large enough this risk can be made arbitrarily small. However, fitting the training data too well can lead to overfitting, which degrades the risk on future predictions. Thus, there is an optimal number M ∗ minimizing future risk that is application dependent. A convenient way to estimate M ∗ is to monitor prediction risk as a function of M on a validation sample. The value of M that minimizes this risk is taken to be an estimate of M ∗. This is analogous to the early stopping strategy often used with neural networks (Section 11.4)” ([Hastie, Trevor et al., 2009, p. 383](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=383&annotation=XPVQIJ7W))
+
+“10.12.1 Shrinkage Controlling the value of M is not the only possible regularization strategy. As with ridge regression and neural networks, shrinkage techniques can be employed as well (see Sections 3.4.1 and 11.5). The simplest implementation of shrinkage in the context of boosting is to scale the contribution of each tree by a factor 0 < ν < 1 when it is added to the current approximation. That is, line 2(d) of Algorithm 10.3 is replaced by fm(x) = fm−1(x) + ν · J ∑ j=1 γjmI(x ∈ Rjm). (10.41) The parameter ν can be regarded as controlling the learning rate of the boosting procedure. Smaller values of ν (more shrinkage) result in larger training risk for the same number of iterations M . Thus, both ν and M control prediction risk on the training data. However, these parameters d” ([Hastie, Trevor et al., 2009, p. 383](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=383&annotation=EQTQJLT3))
+
+“10.12 Regularization 365 not operate independently. Smaller values of ν lead to larger values of M for the same training risk, so that there is a tradeoff between them.” ([Hastie, Trevor et al., 2009, p. 384](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=384&annotation=WTWRE2XE))
+
+“Empirically it has been found (Friedman, 2001) that smaller values of ν favor better test error, and require correspondingly larger values of M . In fact, the best strategy appears to be to set ν to be very small (ν < 0.1) and then choose M by early stopping.” ([Hastie, Trevor et al., 2009, p. 384](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=384&annotation=DXHCNIPE))
+
+“We saw in Section 8.7 that bootstrap averaging (bagging) improves the performance of a noisy classifier through averaging. Chapter 15 discusses in some detail the variance-reduction mechanism of this sampling followed by averaging. We can exploit the same device in gradient boosting, both to improve performance and computational efficiency. With stochastic gradient boosting (Friedman, 1999), at each iteration we sample a fraction η of the training observations (without replacement), and grow the next tree using that subsample. The rest of the algorithm is identical. A typical value for η can be 1 2 , although for large N , η can be substantially smaller than 1 2.” ([Hastie, Trevor et al., 2009, p. 384](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=384&annotation=LHRLAS5P))

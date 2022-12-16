@@ -18,7 +18,7 @@ def check_formulae(file_name: str, file_contents: str) -> None:
         file_name (str): file name
         file_contents (str): contents of file
     """
-    matches = re.findall(r"\\times|\\quad", file_contents)
+    matches = re.findall(r"\\times|\\quad|×", file_contents)
     if matches:
         msg = typer.style(
             f"{file_name}: {matches} (prefer \\cdot over \\times)",

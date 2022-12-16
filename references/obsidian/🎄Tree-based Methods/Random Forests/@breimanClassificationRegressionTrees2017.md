@@ -52,4 +52,16 @@ Formally, the best split $s^{*}$ to be a split such that (p. 232)
 
 $\Delta R\left(\mathfrak{s}^{*}, t \right)=\max _{\mathfrak{s} \in S} \Delta R(\Delta, t)$
 
-## Pruning
+## Connection between regression and binary classification trees
+
+An alternative form of the criterion is interesting. Let $\mathrm{p}(\mathrm{t})=N(\mathrm{t}) / N$ be the resubstitution estimate for the probability that a case chosen at random from the underlying theoretical distribution falls into node t. Define
+so that $R(t)=\mathrm{s}^2(t) p(t)$, and
+$$
+s^2(t)=\frac{1}{N(t)} \sum_{x_n \in t}\left(y_n-\bar{y}(t)\right)^2
+$$
+Note that $s^2(t)$ is the sample variance of the $y_n$ values in the node $t$. Then the best split of $t$ minimizes the weighted variance
+$$
+p_L s^2\left(t_L\right)+p_R s^2\left(t_R\right),
+$$
+where $p_L$ and $p_R$ are the proportion of cases in $t$ that go left and right, respectively.
+<mark style="background: #D2B3FFA6;">We noted in Chapter 3 that in two-class problems, the impurity criterion given by $p(1 \mid t) p(2 \mid t)$ is equal to the node variance computed by assigning the value 0 to every class 1 object, and 1 to every class 2 object. Therefore, there is a strong family connection between two-class trees and regression trees.</mark>

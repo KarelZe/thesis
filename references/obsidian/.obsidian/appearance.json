@@ -1,5 +1,6 @@
 {
   "baseFontSize": 26,
   "translucency": false,
-  "accentColor": ""
+  "accentColor": "",
+  "monospaceFontFamily": "Cascadia Code"
 }

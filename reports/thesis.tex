@@ -4,10 +4,41 @@
 % Literature and language
 	\usepackage[english]{babel}
 	\usepackage[style=bwl-FU,backend=bibtex,natbib=true,maxcitenames=2]{biblatex}
-	\addbibresource{Content/Literaturverzeichnis.bib}
+	\addbibresource{Content/bibliography.bib}
 
-% Algorithms
-\input{AlgorithmStyle}
+% --------------------------------- Algorithm ---------------------------------
+\usepackage[linesnumbered, ruled]{algorithm2e}
+
+% change algorithm font size
+\SetAlFnt{\normalsize}
+
+% change algorithm caption style
+\newcommand{\xAlCapSty}[1]{\small\sffamily\bfseries#1}
+\SetAlCapSty{xAlCapSty}
+
+\SetAlCapSkip{1em}
+\SetKwInput{KwParam}{Parameters}
+\SetKwInput{KwHyper}{Hyperparameters}
+
+% comment style (algorithms)
+\newcommand{\xCommentSty}[1]{\ttfamily\textcolor{blue}{#1}}
+\SetCommentSty{xCommentSty}
+
+% change line number style
+\newcommand\mynlfont[1]{\scriptsize\sffamily\textcolor{gray}{#1}}
+\SetNlSty{mynlfont}{}{}
+
+ % add the line numbers
+\LinesNumbered
+
+% comments right justified
+\SetSideCommentRight
+
+% don't print semicolon
+\DontPrintSemicolon
+
+% ruled algorithm
+\RestyleAlgo{algoruled}
 
 
 % Format and layout
@@ -24,8 +55,7 @@
 	\usepackage{eurosym} % Usage of €
 	\usepackage{acronym} % Enables the incorporation of a list of abbreviations.
 	\usepackage{nomencl} % Useful to create list of symbols.
-	\usepackage{enumerate} % Useful for enumerations.
-	\usepackage{color} % Enables the definition of colors.
+	\usepackage{xcolor} % Enables the definition of more colors.
 
 % Tables and Graphs
 	\usepackage{booktabs} % Improves the design of the tables
@@ -47,19 +77,13 @@
 % --------------------------------- Information on thesis ---------------------------------
 % Please fill in this information once at the beginning. This way, gaps will be filled in automatically in the following.
 	\newcommand{\name}{Markus Bilz} % Enter your name.
-	\newcommand{\dateofthesis}{March 31, 2023} % Enter the submission date of your thesis.
-	\newcommand{\titleofthesis}{Option Trade Classification using Machine Learning} % Enter the title of your thesis.
+	\newcommand{\dateofthesis}{15 April 2023} % Enter the submission date of your thesis.
+	\newcommand{\titleofthesis}{Forget About the Rules: Improving Option Trade Classification With Machine Learning} % Enter the title of your thesis.
 	\newcommand{\streetadress}{Mathystr.~14-16 // XI-11} % Enter your street adress.
 	\newcommand{\postalcode}{76133} % Enter your postal code.
 	\newcommand{\city}{Karlsruhe} % Enter your city/town.
 	\newcommand{\email}{markus.bilz@student.kit.edu} % Enter your email adress.
-	\newcommand{\typeofthesis}{Master Thesis} % specify the type of thesis: Seminar Thesis, Bachelor Thesis, Master Thesis.
-
-% The following fields only need to be completed in the case of a seminar thesis.
-	\newcommand{\topicseminarseries}{Business practices in the EU} % Enter the topic of the seminar series.
-	\newcommand{\semester}{WS 2021/2022} % Enter the semester of the seminar thesis.
-	\newcommand{\numbertopic}{Topic 8} % Enter the number of the topic of your seminar thesis.
-
+	\newcommand{\typeofthesis}{Master's Thesis} % specify the type of thesis: Seminar Thesis, Bachelor Thesis, Master Thesis.
 
 % --------------------------------- Definition of hyperlinks ---------------------------------
 % Hyperreferences
@@ -94,6 +118,16 @@
 	\newacronym{SSE}{SSE}{sum of squared errors}
 	\newacronym{SHAP}{SHAP}{SHapley Additive exPlanations}
 
+% --------------------------------- Definition of macros ---------------------------------
+\def\v#1{{\boldsymbol{#1}}} % vector style (italics bf)
+\def\m#1{{\boldsymbol{#1}}} % matrix style (italics bf)
+\def\t{\mathrm} % text-style for multi-letter math (Algorithm style messes up \text)
+\def\vth{{\boldsymbol\theta}} % vector theta
+\def\vbe{{\boldsymbol\beta}} % vector theta
+\def\vga{{\boldsymbol\gamma}} % vector theta
+\def\bmcW{{\boldsymbol{\mathcal{W}}}} % bold calligraphic W
+\def\bmcWqkv{\boldsymbol{\mathcal{W}}_{\!\!\boldsymbol{qkv}}} % bold calligraphic W_qkv
+
 % ----------------------------------- Start of document -----------------------------------
 \begin{document}
 	\setcounter{page}{2} % Cover pages and title page are not numbered. Start numbering from page 2.
@@ -105,6 +139,12 @@
 	\setcounter{page}{1}\renewcommand{\thepage}{\roman{page}} % Sets the numbering to roman small.
 	\newpage
 	\tableofcontents
+
+% List of Algorithms (comment out if there are no figures in the thesis)
+\newpage
+\listofalgorithms % Inserts the list of algorithms from algorithm package
+\addcontentsline{toc}{section}{List of Algorithms} % Adds the list of figures to the table of contents.
+
 
 % List of Figures (comment out if there are no figures in the thesis)
 	\newpage
