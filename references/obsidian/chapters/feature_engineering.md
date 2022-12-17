@@ -72,4 +72,7 @@
 - In my dataset the previous or subsequent trade price is already added as feature and thus does not have to be searched recursively.
 - Motivation for scaling features to $[-1,1]$ range or zero mean. https://stats.stackexchange.com/questions/249378/is-scaling-data-0-1-necessary-when-batch-normalization-is-used
 - If needed tokenization support: https://github.com/google/sentencepiece
-- 
+- Visualize behaviour over time e. g., appearing `ROOT`s and calculate statistics. How many of the clients / percentage are in the train set and how many are just in the test set?
+![[uuid_over_time.png]]
+(found at https://www.kaggle.com/competitions/ieee-fraud-detection/discussion/111284)
+- Add date features such as season

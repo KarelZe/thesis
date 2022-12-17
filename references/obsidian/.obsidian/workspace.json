@@ -22,6 +22,18 @@
             }
           },
           {
+            "id": "29031fe02005ea55",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/feature_engineering.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "0538eac49b478be0",
             "type": "leaf",
             "state": {
@@ -58,6 +70,18 @@
             }
           },
           {
+            "id": "52fc1ea3d0892ab8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🍬Implementation/😺CatBoost.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "0ce5a5e45e59dd65",
             "type": "leaf",
             "state": {
@@ -82,7 +106,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -120,8 +144,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -141,7 +164,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/feature_importance_measure.md",
+                "file": "🍬Implementation/😺CatBoost.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,7 +192,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/feature_importance_measure.md"
+                "file": "🍬Implementation/😺CatBoost.md"
               }
             }
           }
@@ -180,17 +203,17 @@
     "direction": "horizontal",
     "width": 500.5
   },
-  "active": "0538eac49b478be0",
+  "active": "52fc1ea3d0892ab8",
   "lastOpenFiles": [
+    "chapters/🐈gradient-boosting.md",
     "TOC.md",
+    "chapters/feature_engineering.md",
+    "🍬Implementation/😺CatBoost.md",
+    "chapters/feature_importance_measure.md",
     "chapters/training-of-supervised-models.md",
     "chapters/discussion.md",
     "chapters/ise-dataset.md",
-    "chapters/🐈gradient-boosting.md",
     "🧠Deep Learning Methods/@huangSnapshotEnsemblesTrain2017.md",
-    "🧠Deep Learning Methods/@grinsztajnWhyTreebasedModels2022.md",
-    "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
-    "📥Inbox/@shazeerGLUVariantsImprove2020.md",
-    "🧠Deep Learning Methods/Transformer/@phuongFormalAlgorithmsTransformers2022.md"
+    "🧠Deep Learning Methods/@grinsztajnWhyTreebasedModels2022.md"
   ]
 }
