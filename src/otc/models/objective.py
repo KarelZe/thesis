@@ -894,29 +894,27 @@ class GradientBoostingObjective(Objective):
         devices = f"0-{gpu_count-1}"
 
         # kaggle book + https://catboost.ai/en/docs/concepts/parameter-tuning
-        learning_rate = trial.suggest_float("learning_rate", 0.001, 1, log=True)
+        # friedman paper
+        learning_rate = trial.suggest_float("learning_rate", 0.001, 0.125, log=True)
         depth = trial.suggest_int("depth", 1, 10)
         l2_leaf_reg = trial.suggest_int("l2_leaf_reg", 2, 30)
         random_strength = trial.suggest_float("random_strength", 1e-9, 10.0, log=True)
         bagging_temperature = trial.suggest_float("bagging_temperature", 0.0, 1.0)
-        grow_policy = trial.suggest_categorical(
-            "grow_policy", ["SymmetricTree", "Depthwise"]
-        )
         kwargs_cat = {
-            "iterations": 10000,
+            "iterations": 25000,
             "learning_rate": learning_rate,
             "depth": depth,
             "l2_leaf_reg": l2_leaf_reg,
             "random_strength": random_strength,
             "bagging_temperature": bagging_temperature,
-            "grow_policy": grow_policy,
+            "grow_policy": "Lossguide",
             "border_count": 254,
             "logging_level": "Silent",
             "task_type": task_type,
             "devices": devices,
             "random_seed": set_seed(),
-            "early_stopping_rounds": 50,
-            "eval_metric": metrics.Accuracy(),  # type: ignore
+            "eval_metric": "Accuracy",
+            "early_stopping_rounds":100,
         }
 
         # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
