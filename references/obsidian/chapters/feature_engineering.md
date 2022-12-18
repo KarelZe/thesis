@@ -76,3 +76,25 @@
 ![[uuid_over_time.png]]
 (found at https://www.kaggle.com/competitions/ieee-fraud-detection/discussion/111284)
 - Add date features such as season
+
+
+Tree-based models can handle both at arbitrary feature scales, as the splitting process is based on the purity of the split not the scale of the splitting value . Also missing values can be handled through by sending down `[NaN]` values at one side of the tree. Recent literature indicates that handling missing inside the algorithm, slightly improves over ... 
+
+Neural networks can not handle missing values, as a $\mathtt{[NaN]}$ can not be propagated through the network. As such, missing values must be substituted beforehand. Also, neural networks are known to train faster, ....
+
+In order to prepare common datasets for *all* our models, we both scale and impute data. Like in the chapter [[preprocessing]] our feature scaling aims to be least intrusive, while facilitating an efficient training for all our machine learning models.
+
+Missing values are imputed with zeros. This simple, one-pass  strategy minimizes the bias from imputation, avoids data leakage, and allows tree-based learners and neural networks to separate imputed values from observed ones. While the imputation with constants is simple, it is on par with more complex approaches as (...).  
+
+To address concerns, that the imputation or scaling negatively impacts the performance of gbms, we perform an ablation study in chapter [[ablation_study]], and retrain our models on the unscaled and unimputed data set.
+
+
+Tree-based learners, 
+However, neural nets with zero mean and unit variance
+
+
+We prepossessed the data in the same way for every machine learning model by applying zeromean, unit-variance normalization to the numerical features and an ordinal encoding to the categorical ones. The missing values were substituted with zeros for the linear regression and models based on pure neural networks since these methods cannot accept them otherwise. We apply the ordinal encoding to categorical values for all models. According to the work [54], the chosen encoding strategy shows comparable performance to more advanced methods.
+
+Due to the montonous nature of the $\log(\cdot)$ distributions are preserved. Likewise, normalization as given in formula (...) maintains the distribution of the data, altering only the range. 
+
+We stay away from 
