@@ -896,12 +896,12 @@ class GradientBoostingObjective(Objective):
         # kaggle book + https://catboost.ai/en/docs/concepts/parameter-tuning
         # friedman paper
         learning_rate = trial.suggest_float("learning_rate", 0.001, 0.125, log=True)
-        depth = trial.suggest_int("depth", 1, 10)
+        depth = trial.suggest_int("depth", 1, 12)
         l2_leaf_reg = trial.suggest_int("l2_leaf_reg", 2, 30)
         random_strength = trial.suggest_float("random_strength", 1e-9, 10.0, log=True)
         bagging_temperature = trial.suggest_float("bagging_temperature", 0.0, 1.0)
         kwargs_cat = {
-            "iterations": 25000,
+            "iterations": 2000,
             "learning_rate": learning_rate,
             "depth": depth,
             "l2_leaf_reg": l2_leaf_reg,
