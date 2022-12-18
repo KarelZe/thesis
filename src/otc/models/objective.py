@@ -14,7 +14,7 @@ import numpy as np
 import optuna
 import pandas as pd
 import torch
-from catboost import CatBoostClassifier
+from catboost import CatBoostClassifier, Pool, metrics
 from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
 from torch import nn, optim
@@ -856,8 +856,26 @@ class GradientBoostingObjective(Objective):
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
         """
-        self._cat_features = cat_features
-        super().__init__(x_train, y_train, x_val, y_val, name)
+        # FIXME: Remove in data set and here and handle in pre-processing notebook.
+        # https://catboost.ai/en/docs/concepts/python-reference_pool#label
+        y_train[y_train < 0] = 0
+        y_val[y_val < 0] = 0
+
+        # decay weight of very old observations in training set. See eda notebook.
+        weight = np.geomspace(0.001, 1, num=len(y_train))
+        # keep ordering of data
+        timestamp = np.linspace(0, 1, len(y_train))
+
+        # save to pool for faster memory access
+        self._train_pool = Pool(
+            data=x_train,
+            label=y_train,
+            cat_features=cat_features,
+            weight=weight,
+            timestamp=timestamp,
+        )
+        self._val_pool = Pool(data=x_val, label=y_val, cat_features=cat_features)
+        self.name = name
         self._callbacks = CallbackContainer([SaveCallback()])
 
     def __call__(self, trial: optuna.Trial) -> float:
@@ -876,39 +894,37 @@ class GradientBoostingObjective(Objective):
         devices = f"0-{gpu_count-1}"
 
         # kaggle book + https://catboost.ai/en/docs/concepts/parameter-tuning
-        learning_rate = trial.suggest_float("learning_rate", 0.001, 1, log=True)
-        depth = trial.suggest_int("depth", 1, 10)
+        # friedman paper
+        learning_rate = trial.suggest_float("learning_rate", 0.001, 0.125, log=True)
+        depth = trial.suggest_int("depth", 1, 12)
         l2_leaf_reg = trial.suggest_int("l2_leaf_reg", 2, 30)
         random_strength = trial.suggest_float("random_strength", 1e-9, 10.0, log=True)
         bagging_temperature = trial.suggest_float("bagging_temperature", 0.0, 1.0)
-        grow_policy = trial.suggest_categorical(
-            "grow_policy", ["SymmetricTree", "Depthwise"]
-        )
         kwargs_cat = {
-            "iterations": 10000,
+            "iterations": 2000,
             "learning_rate": learning_rate,
             "depth": depth,
             "l2_leaf_reg": l2_leaf_reg,
             "random_strength": random_strength,
             "bagging_temperature": bagging_temperature,
-            "grow_policy": grow_policy,
+            "grow_policy": "Lossguide",
             "border_count": 254,
             "logging_level": "Silent",
             "task_type": task_type,
             "devices": devices,
-            "cat_features": self._cat_features,
             "random_seed": set_seed(),
+            "eval_metric": "Accuracy",
+            "early_stopping_rounds":100,
         }
 
         # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
-        self._clf = CatBoostClassifier(**kwargs_cat)
+        self._clf = CatBoostClassifier(**kwargs_cat)  # type: ignore
         self._clf.fit(
-            self.x_train,
-            self.y_train,
-            eval_set=(self.x_val, self.y_val),
-            early_stopping_rounds=20,
+            self._train_pool,
+            eval_set=self._val_pool,
             callbacks=None,
         )
 
-        pred = self._clf.predict(self.x_val, prediction_type="Class")
-        return (self.y_val == pred.flatten()).sum() / len(self.y_val)
+        print(self._clf.get_all_params())
+        # calculate accuracy
+        return self._clf.score(self._val_pool)  # type: ignore
