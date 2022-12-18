@@ -22,12 +22,48 @@
             }
           },
           {
-            "id": "9257fbd8f188b5ea",
+            "id": "a8e0780286ede500",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/feature_engineering.md",
+                "file": "chapters/🎄decison_trees.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c2a18dcad40a635c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🐈gradient-boosting.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "0ce5a5e45e59dd65",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "ba5f7fbdc359d4f4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "results_of_supervised.md",
                 "mode": "source",
                 "source": false
               }
@@ -103,7 +139,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "robust scaler",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -116,8 +152,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 401.5110321044922,
-    "collapsed": true
+    "width": 401.5110321044922
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -174,15 +209,15 @@
   },
   "active": "9257fbd8f188b5ea",
   "lastOpenFiles": [
-    "TOC.md",
-    "chapters/environment.md",
-    "🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001.md",
-    "🍬Implementation/😺CatBoost.md",
     "chapters/🐈gradient-boosting.md",
-    "chapters/feature_engineering.md",
-    "chapters/feature_importance_measure.md",
-    "chapters/training-of-supervised-models.md",
+    "TOC.md",
+    "chapters/🎄decison_trees.md",
+    "🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001.md",
+    "results_of_supervised.md",
+    "🍿Paper 2 movie.md",
+    "chapters/transformer_networks.md",
     "chapters/discussion.md",
-    "chapters/ise-dataset.md"
+    "chapters/results.md",
+    "attention.md"
   ]
 }
