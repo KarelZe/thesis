@@ -30,7 +30,7 @@ source thesis/bin/activate
 python -m pip install .
 
 ## run training script
-python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/classical_size_features_log_normalized:v0 --features=classical-size
+python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/ise_classic_size_log_normalized:v0 --features=classical-size
 2022-11-18 10:25:50,920 - __main__ - INFO - Connecting to weights & biases. Downloading artifacts. 📦
 2022-11-18 10:25:56,180 - __main__ - INFO - Start loading artifacts locally. 🐢
 2022-11-18 10:26:07,562 - __main__ - INFO - Start with study. 🦄

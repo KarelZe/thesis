@@ -35,5 +35,6 @@ dependencies = [
 ]
 ```
 
+- For presentation of chapter see: [[@prokhorenkovaCatBoostUnbiasedBoosting2018]]
 - source code of experiments and paper is available at https://github.com/KarelZe/thesis/
 - Get some inspiration from https://madewithml.com/#mlops
