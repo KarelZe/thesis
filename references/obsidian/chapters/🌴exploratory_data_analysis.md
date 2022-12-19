@@ -16,3 +16,9 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 	- Drop old data. Probably not the way to go. Would cause a few questions. Also it's hard to say, where to make the cut-off.
 	- Dynamic retraining. Problematic i. e., in conjunction with pretrained models.
 	- Use Weighting. Yes! Exponentially or linearily or date-based. Weights could be used in all models, as a feature or through penelization. CatBoost supports this through `Pool(weight=...)`. For PyTorch one could construct a weight tensor and used it when calculating the loss (https://stackoverflow.com/questions/66374709/adding-custom-weights-to-training-data-in-pytorch).
+
+- Visualize behaviour over time e. g., appearing `ROOT`s and calculate statistics. How many of the clients / percentage are in the train set and how many are just in the test set?
+![[uuid_over_time.png]]
+(found at https://www.kaggle.com/competitions/ieee-fraud-detection/discussion/111284)
+
+- See https://neptune.ai/blog/tabular-data-binary-classification-tips-and-tricks-from-5-kaggle-competitions for more ideas

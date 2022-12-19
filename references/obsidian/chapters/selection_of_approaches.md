@@ -31,3 +31,5 @@
 
 - There are several established libraries such as catboost, XGBoost and LightGBM, (that differ in e. g., the growing policy of trees, handling missing values or the calculation of gradients. (see papers also see [[@josseConsistencySupervisedLearning2020]]))  Their performance however, doesn't differ much. (found in [[@gorishniyRevisitingDeepLearning2021]] and cited [[@prokhorenkovaCatBoostUnbiasedBoosting2018]])
 - See [[@huangTabTransformerTabularData2020]] that point out common problems of comparsions between gbts and dl.
+- On definitions what categorical data is, see [[@hancockSurveyCategoricalData2020]]
+- a nice explanation why handling label encoded variables is not straight forward in neural nets is found in [[@hancockSurveyCategoricalData2020]]. Label encoding is still a valid way of preparing data for the model.
