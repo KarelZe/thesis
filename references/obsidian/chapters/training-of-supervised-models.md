@@ -24,3 +24,5 @@
 	- Simplify / cross-validate implementation of TabTransfromer and FTTransformer against https://pytorch.org/tutorials/beginner/transformer_tutorial
 	- Can use to gather some ideas for TabNet: https://www.kaggle.com/code/medali1992/amex-tabnetclassifier-feature-eng-0-791/notebook and TabTransformer https://www.kaggle.com/code/yekenot/amex-pytorch-tabtransformer
 	- 
+
+To inform our models which features are categorical, we pass the index the index of categorical features and the their cardinality to the models.

@@ -33,7 +33,7 @@ interval: 1
 | [[extensions-to-tabtransformer]]    |       65 |       |        1 | 1970-01-01 |
 | [[extensions-to-tabnet]]            |     67.5 |       |        1 | 1970-01-01 |
 | [[extensions-to-gradient-boosting]] |       70 |       |        1 | 1970-01-01 |
-| [[exploratory_data_analysis]]       |     72.5 |       |        1 | 1970-01-01 |
+| [[🌴exploratory_data_analysis]]       |     72.5 |       |        1 | 1970-01-01 |
 | [[evaluation_metric]]               |       75 |       |        1 | 1970-01-01 |
 | [[environment]]                     |     77.5 |       |        1 | 1970-01-01 |
 | [[emo_rule]]                        |       80 |       |        1 | 1970-01-01 |

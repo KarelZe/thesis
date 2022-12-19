@@ -77,24 +77,40 @@
 (found at https://www.kaggle.com/competitions/ieee-fraud-detection/discussion/111284)
 - Add date features such as season
 
+## Problem of missing values and categoricals
+The required pre-processing is minimal for tree-based learners. Missing values can be handled by sending down `[NaN]` values at one side of the tree. Recent literature indicates that handling missing data inside the algorithm slightly improves over ... simpler approaches over . Also, some tree-based learners can handle categorical data without prior pre-processing, as shown in our chapter on ordered boosting ([[🐈gradient-boosting]]).
 
-Tree-based models can handle both at arbitrary feature scales, as the splitting process is based on the purity of the split not the scale of the splitting value . Also missing values can be handled through by sending down `[NaN]` values at one side of the tree. Recent literature indicates that handling missing inside the algorithm, slightly improves over ... 
+Neural networks can not inherently handle missing values, as a $\mathtt{[NaN]}$ value can not be propagated through the network. As such, missing values must be addressed beforehand. Similarily, categorical features, like the issue type, require an encoding <mark style="background: #FF5582A6;">(can not be input into the network)</mark>, as no gradient can be calculated on categories <mark style="background: #FF5582A6;">(such as $\mathtt{'C'}$ or $\mathtt{'P'}$)</mark>.
 
-Neural networks can not handle missing values, as a $\mathtt{[NaN]}$ can not be propagated through the network. As such, missing values must be substituted beforehand. Also, neural networks are known to train faster, ....
+## Solution to missing values and categoricals
+In order to prepare a common datasets for *all* our models, we need to impute, scale and encode the data. Like in the chapter [[preprocessing]] our feature scaling aims to be minimal intrusive, while facilitating an efficient training for all our machine learning models.
 
-In order to prepare common datasets for *all* our models, we both scale and impute data. Like in the chapter [[preprocessing]] our feature scaling aims to be least intrusive, while facilitating an efficient training for all our machine learning models.
+Missing values are imputed with zeros. This simple, one-pass  strategy ~~minimizes the bias from imputation~~, avoids data leakage, and allows tree-based learners and neural networks to separate imputed values from observed ones. While the imputation with constants is simple, it is on-par with more complex approaches as (...) while minimizing the bias from imputatation. 
 
-Missing values are imputed with zeros. This simple, one-pass  strategy minimizes the bias from imputation, avoids data leakage, and allows tree-based learners and neural networks to separate imputed values from observed ones. While the imputation with constants is simple, it is on par with more complex approaches as (...).  
+As introduced in the chapters [[🐈gradient-boosting]] and [[🤖transformer]] both architectures are known to be robust to missing values. In conjunction with the low degree of missing values (compare chapter [[🌴exploratory_data_analysis]]), we therefore expect the impact from missing values to be minor. To address concerns, that the imputation or scaling negatively impacts the performance of gradient boosted trees, we perform an ablation study in chapter [[🎋ablation_study]], and retrain our models on the unscaled and unimputed data set.
 
-To address concerns, that the imputation or scaling negatively impacts the performance of gbms, we perform an ablation study in chapter [[ablation_study]], and retrain our models on the unscaled and unimputed data set.
+## Problem of feature scales
+
+Tree-based models can handle arbitrary feature scales, as the splitting process is based on the purity of the split but not on the scale of the splitting value. 
+
+Also, neural networks are known to train faster, .... <mark style="background: #BBFABBA6;">normalized / standardized data</mark> . problems with convergence etc.
+
+## Solution of feature scales
+
+Continous and categorical variable require a differentiated approach. 
+
+Price and size-related features exhibit a positive skewness, as brought up in chapter [[🌴exploratory_data_analysis]].  We apply a common $x^{\prime}=\log(x)$ transform to mitigate skewness with the effect of compressing large values and expanding smaller ones. More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero <mark style="background: #FFB86CA6;">and improve numerical stability in floating point calculations. (See e. g., https://numpy.org/doc/stable/reference/generated/numpy.log1p.html).</mark>
+Due to the montonous nature of the $\log(\cdot)$, the distribution of the feature is preserved. 
+
+Likewise, normalization as given in formula (...) maintains the distribution of the data, thereby altering only the range. 
+
+If you want your feature to be in an arbitrary range $[a, b]$-empirically, I find the range $[-1,1]$ to work better than the range $[0,1]$-you can use the following formula:
+$$
+x^{\prime}=a+\frac{(x-\min (x))(b-a)}{\max (x)-\min (x)}
+$$
 
 
-Tree-based learners, 
-However, neural nets with zero mean and unit variance
+<mark style="background: #ADCCFFA6;">he missing values were substituted with zeros for the linear regression and models based on pure neural networks since these methods cannot accept them otherwise. We apply the ordinal encoding to categorical values for all models. According to the work [54], the chosen encoding strategy shows comparable performance to more advanced methods.
+</mark>
 
-
-We prepossessed the data in the same way for every machine learning model by applying zeromean, unit-variance normalization to the numerical features and an ordinal encoding to the categorical ones. The missing values were substituted with zeros for the linear regression and models based on pure neural networks since these methods cannot accept them otherwise. We apply the ordinal encoding to categorical values for all models. According to the work [54], the chosen encoding strategy shows comparable performance to more advanced methods.
-
-Due to the montonous nature of the $\log(\cdot)$ distributions are preserved. Likewise, normalization as given in formula (...) maintains the distribution of the data, altering only the range. 
-
-We stay away from 
+One problem that remains open, is the high cardinality of categorical features. We derive strategies in chapter [[training-of-supervised-models]]. The chapter also provides further insights on handling categories not seen during training.

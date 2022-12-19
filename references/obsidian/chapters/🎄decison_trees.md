@@ -12,6 +12,8 @@ Following [[@breimanClassificationRegressionTrees2017]] we scan all combinations
 
 <mark style="background: #FF5582A6;">FIXME: Introduce idea of bias and variance trade-off more throughly using [[@hastietrevorElementsStatisticalLearning2009]]; a catchy definition can also be found in [[@schapireBoostingMarginNew1998]])</mark>
 
+<mark style="background: #ABF7F7A6;">TODO: Why do we use quantization in practice?</mark>
+
 Trivially, growing deeper trees leads to an improvement in the SSE. Considering the extreme, where each sample is in its region, the tree would achieve the highest fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence *variance*, *cost complexity pruning* procedures are employed. Yet, if the decision tree is too simplistic, consequently underfits the data, a high bias contributes to the model's overall expected error. 
 
 <mark style="background: #FF5582A6;">FIXME: Make drawbacks clearer. Trees are grown greedily. Thus, only the current split is being considered. </mark>

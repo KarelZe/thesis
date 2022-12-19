@@ -34,12 +34,24 @@
             }
           },
           {
+            "id": "87646046e1f646a9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/feature_engineering.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "c2a18dcad40a635c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🐈gradient-boosting.md",
+                "file": "🍬Implementation/@huyenDesigningMachineLearning.md",
                 "mode": "source",
                 "source": false
               }
@@ -68,49 +80,9 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "29031fe02005ea55",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "0538eac49b478be0",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "a8e0780286ede500",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "c2a18dcad40a635c",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "ba5f7fbdc359d4f4",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -207,17 +179,17 @@
     "direction": "horizontal",
     "width": 500.5
   },
-  "active": "9257fbd8f188b5ea",
+  "active": "87646046e1f646a9",
   "lastOpenFiles": [
+    "chapters/🎋ablation_study.md",
+    "🍬Implementation/@huyenDesigningMachineLearning.md",
+    "chapters/feature_engineering.md",
     "chapters/🐈gradient-boosting.md",
-    "TOC.md",
     "chapters/🎄decison_trees.md",
+    "TOC.md",
     "🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001.md",
     "results_of_supervised.md",
     "🍿Paper 2 movie.md",
-    "chapters/transformer_networks.md",
-    "chapters/discussion.md",
-    "chapters/results.md",
-    "attention.md"
+    "chapters/transformer_networks.md"
   ]
 }
