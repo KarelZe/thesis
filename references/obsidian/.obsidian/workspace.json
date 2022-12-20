@@ -26,21 +26,9 @@
             "type": "leaf",
             "pinned": true,
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🪛feature engineering.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "pinned": true
-            }
-          },
-          {
-            "id": "f5862b85a8ef92fa",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {}
             }
           },
           {
@@ -49,38 +37,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/selection_of_approaches.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ecd5352368d561c9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@heatonEmpiricalAnalysisFeature2016.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "68c5f97f96fcfc9a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
+                "file": "❓Questions.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -138,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🪛feature engineering.md",
+                "file": "❓Questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -166,7 +130,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🪛feature engineering.md"
+                "file": "❓Questions.md"
               }
             }
           }
@@ -177,17 +141,17 @@
     "direction": "horizontal",
     "width": 500.5
   },
-  "active": "29c4e6012b8e154b",
+  "active": "5084583c350a9e8b",
   "lastOpenFiles": [
     "TOC.md",
-    "chapters/🪛feature engineering.md",
-    "🎄Tree-based Methods/@twalaGoodMethodsCoping2008.md",
-    "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
-    "chapters/selection_of_approaches.md",
-    "chapters/🌴exploratory_data_analysis.md",
     "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
-    "📥Inbox/@heatonEmpiricalAnalysisFeature2016.md",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-    "chapters/🎄decison_trees.md"
+    "❓Questions.md",
+    "chapters/depth_rule.md",
+    "📥Inbox/@blackPricingOptionsCorporate1973.md",
+    "📥Inbox/@devlinBERTPretrainingDeep2019.md",
+    "📥Inbox/@GivingSoftwareIts2019.md",
+    "🎄Tree-based Methods/Gradient Boosting/@schapireStrengthWeakLearnability1990.md",
+    "chapters/🪛feature engineering.md",
+    "🎄Tree-based Methods/@twalaGoodMethodsCoping2008.md"
   ]
 }
