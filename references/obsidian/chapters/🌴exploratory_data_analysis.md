@@ -23,5 +23,6 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 
 - See https://neptune.ai/blog/tabular-data-binary-classification-tips-and-tricks-from-5-kaggle-competitions for more ideas
 - exploratory data analysis has been first introduced / coined by Tuckey. Found in [[@kuhnFeatureEngineeringSelection2020]]
+- Cite [[@rubinInferenceMissingData1976]] for different patterns in missing data.
 - on missingness see [[@kuhnFeatureEngineeringSelection2020]]
 - ![[visualization-of-missingness.png]]
