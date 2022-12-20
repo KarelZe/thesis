@@ -22,95 +22,29 @@
             }
           },
           {
-            "id": "a8e0780286ede500",
+            "id": "29c4e6012b8e154b",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "empty",
+              "state": {},
+              "pinned": true
+            }
+          },
+          {
+            "id": "5084583c350a9e8b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🎄decison_trees.md",
+                "file": "❓Questions.md",
                 "mode": "source",
                 "source": false
               }
-            }
-          },
-          {
-            "id": "c2a18dcad40a635c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🐈gradient-boosting.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0ce5a5e45e59dd65",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ba5f7fbdc359d4f4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "results_of_supervised.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "29031fe02005ea55",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "0538eac49b478be0",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "a8e0780286ede500",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "c2a18dcad40a635c",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "ba5f7fbdc359d4f4",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -139,7 +73,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "robust scaler",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -152,7 +86,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 401.5110321044922
+    "width": 296.5
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -168,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/feature_engineering.md",
+                "file": "❓Questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -196,7 +130,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/feature_engineering.md"
+                "file": "❓Questions.md"
               }
             }
           }
@@ -207,17 +141,17 @@
     "direction": "horizontal",
     "width": 500.5
   },
-  "active": "9257fbd8f188b5ea",
+  "active": "5084583c350a9e8b",
   "lastOpenFiles": [
-    "chapters/🐈gradient-boosting.md",
     "TOC.md",
-    "chapters/🎄decison_trees.md",
-    "🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001.md",
-    "results_of_supervised.md",
-    "🍿Paper 2 movie.md",
-    "chapters/transformer_networks.md",
-    "chapters/discussion.md",
-    "chapters/results.md",
-    "attention.md"
+    "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
+    "❓Questions.md",
+    "chapters/depth_rule.md",
+    "📥Inbox/@blackPricingOptionsCorporate1973.md",
+    "📥Inbox/@devlinBERTPretrainingDeep2019.md",
+    "📥Inbox/@GivingSoftwareIts2019.md",
+    "🎄Tree-based Methods/Gradient Boosting/@schapireStrengthWeakLearnability1990.md",
+    "chapters/🪛feature engineering.md",
+    "🎄Tree-based Methods/@twalaGoodMethodsCoping2008.md"
   ]
 }

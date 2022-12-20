@@ -1,6 +1,6 @@
-*title:* Giving software its due
-*authors:* 
-*year:* 2019
+*title:* Designing Machine Learning Systems
+*authors:* Chip Huyen
+*year:* 
 *tags:* 
 *status:* #📥
 *related:*
