@@ -1,15 +1,16 @@
 In the following chapter, we motivate feature engineering, present our feature sets and discuss strategies for transforming features into a form that accelerates and advances the training of our models.
 
 ## Goal of feature engineering
-Classical algorithms ([[basic_rules]] or [[hybrid_rules]]) infer the initiator of the trade from price and quote data. ~~To establish a common ground, we derive three sets of features from raw data. ~~
+Classical algorithms ([[basic_rules]] or [[hybrid_rules]]) infer the initiator of the trade from price and quote data. 
 
-Instead of learning our models on unprocessed data directly, we perform *feature engineering* to convert input data into a form that can be digested by the models and expectedly improves their convergence behaviour. Feature engineering is also contributing to the model's performance. ~~, as it helps to unravel relationships between the predictors and the response variable [[@kuhnFeatureEngineeringSelection2020]] (xi).~~ Despite gradient-boosted trees and neural networks being flexible estimators, the empirical work of [[@heatonEmpiricalAnalysisFeature2016]] (p. 5-6) reveals limitations with regard to their synthesizing capabilities of engineered features. In particular, ratios, standard deviations and differences for gradient boosting as well as differences for neural networks and must therefore be engineered beforehand. This underpins the necessity for feature engineering.
+Instead of learning our models on unprocessed data directly, we perform *feature engineering* to convert input data into a form that can be digested by the models and expectedly improves their convergence behaviour. Feature engineering is also contributing towards the model's performance. ~~, as it helps to unravel relationships between the predictors and the response variable [[@kuhnFeatureEngineeringSelection2020]] (xi).~~ Despite gradient-boosted trees and neural networks being flexible estimators, they can not the empirical work of [[@heatonEmpiricalAnalysisFeature2016]] (p. 5-6) reveals limitations with regard to their synthesizing capabilities of engineered features. In particular, ratios, standard deviations and differences for gradient boosting as well as differences for neural networks and must therefore be engineered beforehand. This underpins the necessity for feature engineering.
 
 While feature engineering aids our model's performance we restrict ourself to simple, non-distructive transformations. This allows for a fair comparsion between the algorithms and improves the transferability of our results. Ultimately, all features are derived from quote and price data, used inherently in the classical algorithms, as shown in the next section. The only exception is feature set 3 (see [[🧃Feature Sets]]), that adds additional option characteristics and date features. 
 
 ## Feature set definition
 
 The featue sets are are to a large extend inspired by the decision rules used in ...
+To establish a common ground, we derive three sets of features from raw data....
 
 <mark style="background: #ABF7F7A6;">TODO: Add to each feature, where it has been used.
 TODO: Point out some interesting features here in the text.
@@ -22,14 +23,14 @@ TODO: Plot distributions of features from training and validation set. Could als
 All feature set, the their definition and origin is documented in Appendix [[🍬appendix#^7c0162]].
 
 ## Problem of missing values and categoricals
-The required pre-processing is minimal for tree-based learners. Missing values can be handled by sending down `[NaN]` values at one side of the tree. Recent literature indicates that handling missing data inside the algorithm slightly improves over <mark style="background: #ABF7F7A6;">... simpler approaches over .</mark> <mark style="background: #FF5582A6;">See [[@breimanClassificationRegressionTrees2017]] on surrogate splits</mark>. Also, some tree-based learners can handle categorical data without prior pre-processing, as shown in our chapter on ordered boosting ([[🐈gradient-boosting]]).
+The required pre-processing is minimal for tree-based learners. As one of few predictive models, trees can be extended to handle `[NaN]` values. Either by discarding missing values in the splitting procedure  (e. g.,[[@breimanClassificationRegressionTrees2017]] (p. 150 ff.)%% or [[@keLightGBMHighlyEfficient2017]])%% or by incorporating missing values into the splitting criterion (e. g., [[@twalaGoodMethodsCoping2008]]) (p. 951). Recent literature for gradient boosting suggests, that handling missing data inside the algorithm slightly improves the accuracy over fitting trees on imputed data ([[@josseConsistencySupervisedLearning2020]] (p. 24) or [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] (p. 6)). Also, some tree-based learners can handle categorical data without prior pre-processing, as shown in our chapter on ordered boosting ([[🐈gradient-boosting]]).
 
-Neural networks can not inherently handle missing values, as a $\mathtt{[NaN]}$ value can not be propagated through the network. As such, missing values must be addressed beforehand. Similarily, categorical features, like the issue type, require an encoding, as no gradient can be calculated on categories.
+However, neural networks can not inherently handle missing values, as a $\mathtt{[NaN]}$ value can not be propagated through the network. As such, missing values must be addressed beforehand. Similarily, categorical features, like the issue type, require an encoding, as no gradient can be calculated on categories.
 
 ## Solution to missing values and categoricals
 In order to prepare a common datasets for *all* our models, we need to impute, scale and encode the data. Like in the chapter [[preprocessing]] our feature scaling aims to be minimal intrusive, while facilitating efficient training for all our machine learning models.
 
-Missing values are imputed with zeros. This simple, one-pass  strategy ~~minimizes the bias from imputation~~, avoids data leakage, and allows tree-based learners and neural networks to separate imputed values from observed ones. While the imputation with constants is simple, it is on-par with more complex approaches as <mark style="background: #FF5582A6;">(...)</mark> while minimizing the bias from imputatation. <mark style="background: #FF5582A6;">There are controversies(Note zero imputation can be problematic for neural nets, as shown in [[@yiWhyNotUse2020]] paper)</mark>
+Following a common track, we train our predictive model on imputed data.  values are imputed with zeros. This simple, one-pass  strategy ~~minimizes the bias from imputation~~, avoids data leakage, and allows tree-based learners and neural networks to separate imputed values from observed ones. While the imputation with constants is simple, it is on-par with more complex approaches as <mark style="background: #FF5582A6;">(...)</mark> while minimizing the bias from imputatation. <mark style="background: #FF5582A6;">There are controversies(Note zero imputation can be problematic for neural nets, as shown in [[@yiWhyNotUse2020]] paper)</mark>
 <mark style="background: #FF5582A6;">- For imputation look into [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]
 - [[@josseConsistencySupervisedLearning2020]] also compare different imputation methods and handling approaches of missing values in tree-based methods.
 - for visualizations and approaches see [[@zhengFeatureEngineeringMachine]] and [[@butcherFeatureEngineeringSelection2020]]</mark>
@@ -41,9 +42,7 @@ Missing values are imputed with zeros. This simple, one-pass  strategy ~~minimiz
 - We impute prior to scaling, as the imputation can affect the statistics
 - normalization scales, but does not change the distribution. See. e. g., [[@kuhnFeatureEngineeringSelection2020]]
 
-As introduced in the chapters [[🐈gradient-boosting]] and [[🤖transformer]] both architectures have found to be robust to missing values. 
-
-In conjunction with the low degree of missing values (compare chapter [[🌴exploratory_data_analysis]]), we therefore expect the impact from missing values to be minor. To address concerns, that the imputation or scaling negatively impacts the performance of gradient boosted trees, we perform an ablation study in chapter [[🎋ablation_study]], and retrain our models on the unscaled and unimputed data set.
+As introduced in the chapters [[🐈gradient-boosting]] and [[🤖transformer]] both architectures have found to be robust to missing values.  In conjunction with the low degree of missing values (compare chapter [[🌴exploratory_data_analysis]]), we therefore expect the impact from missing values to be minor. To address concerns, that the imputation or scaling negatively impacts the performance of gradient boosted trees, we perform an ablation study in chapter [[🎋ablation_study]], and retrain our models on the unscaled and unimputed data set.
 
 ## Problem of feature scales
 
@@ -71,6 +70,7 @@ We adhere to a notation found in [[@kuhnFeatureEngineeringSelection2020]]
 Test log-normality visually with qq-plots (https://stackoverflow.com/questions/46935289/quantile-quantile-plot-using-seaborn-and-scipy) or using statistical tests e. g.,  log-transform + normality test. https://stats.stackexchange.com/questions/134924/tests-for-lognormal-distribution
 
 <mark style="background: #FFB8EBA6;">Based on the (Box Cox test?),-> dates </mark> [[@boxAnalysisTransformations2022]] we apply a common $x^{\prime}=\log(x)$ transform to mitigate the skewness with the result of compressing large values and expanding smaller ones. More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations[^1]. Due to the montonous nature of the logarithm, the splits of tree-based learners remain unaffected from this transformation.
+- for implementation of box-cox in scipy see[[@zhengFeatureEngineeringMachine]] book.
 
 <mark style="background: #FFB86CA6;">log-transform can hamper interpretability [[@fengLogtransformationItsImplications2014]]</mark>
 
