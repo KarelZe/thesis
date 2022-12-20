@@ -118,7 +118,7 @@ describe if data set is actually used. Write similarily to
 ### Exploratory Data Analysis
 [[🌴exploratory_data_analysis]]
 ### Feature Engineering 🟡
-![[🪛feature_engineering]]
+![[🪛feature engineering]]
 
 ### Train-Test Split 🟡
 
