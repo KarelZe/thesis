@@ -13,3 +13,4 @@
 - Mathematical foundation of the transformer architecture: https://transformer-circuits.pub/2021/framework/index.html
 - Detailed explanation and implementation. Check my understanding against it: https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html
 - On implementation aspects see: https://arxiv.org/pdf/2007.00072.pdf
+- batch nromalization is not fully understood. See [[@zhangDiveDeepLearning2021]] (p. 277)

@@ -22,18 +22,6 @@
             }
           },
           {
-            "id": "5cf1f3efa968b13e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/selection_of_approaches.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "d59b6b0cf7a2c957",
             "type": "leaf",
             "state": {
@@ -52,78 +40,6 @@
               "type": "markdown",
               "state": {
                 "file": "chapters/🎄decison_trees.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "87646046e1f646a9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@tunstallNaturalLanguageProcessing2022.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c2a18dcad40a635c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🍬Implementation/@huyenDesigningMachineLearning.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0ce5a5e45e59dd65",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ba5f7fbdc359d4f4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/training-of-supervised-models.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "66b20c30f68d61b5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🍬appendix.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "09f610a7e1bd34ca",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🍬appendix.md",
                 "mode": "source",
                 "source": false
               }
@@ -167,12 +83,11 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 401.5110321044922
+    "width": 296.5
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -229,15 +144,15 @@
   },
   "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
-    "chapters/training-of-supervised-models.md",
-    "TOC.md",
-    "chapters/feature_engineering.md",
+    "chapters/🎄decison_trees.md",
     "chapters/🌴exploratory_data_analysis.md",
-    "🍬Implementation/@banachewiczKaggleBookData2022.md",
-    "🍬Implementation/🔢Preprocessing/@yiWhyNotUse2020.md",
-    "chapters/🍬appendix.md",
-    "🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001.md",
-    "results_of_supervised.md",
-    "chapters/selection_of_approaches.md"
+    "TOC.md",
+    "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
+    "📥Inbox/@boxAnalysisTransformations2022.md",
+    "🍬Implementation/🧪Feature Engineering/@zhengFeatureEngineeringMachine.md",
+    "chapters/extensions-to-tabtransformer.md",
+    "chapters/🪛feature_engineering.md",
+    "chapters/🐈gradient-boosting.md",
+    "🧠Deep Learning Methods/Transformer/@tunstallNaturalLanguageProcessing2022.md"
   ]
 }

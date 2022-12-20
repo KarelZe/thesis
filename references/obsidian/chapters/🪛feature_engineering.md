@@ -1,4 +1,4 @@
-## Motivation of feature engineering
+[[@boxAnalysisTransformations2022]]## Goal of feature engineering
 
 <mark style="background: #ABF7F7A6;">- Some features are more difficult to learn for decision trees and neural nets. Provide aid. https://www.kaggle.com/code/jeffheaton/generate-feature-engineering-dataset/notebook
 </mark>
@@ -17,24 +17,28 @@
 
 - Explain why it is necessary to include lagged data as column -> most ml models for tabular data only read rowise. No notion of previous observations etc. Some approaches however exist like specialized attention mechanisms to develop a notion of proximity.</mark>
 
- All feature set, the their definition and origin is documented in Appendix [[🍬appendix#^7c0162]].
+- explain why we don't discretice / bin encode 
+
+
+All feature set, the their definition and origin is documented in Appendix [[🍬appendix#^7c0162]].
 
 ## Problem of missing values and categoricals
-The required pre-processing is minimal for tree-based learners. Missing values can be handled by sending down `[NaN]` values at one side of the tree. Recent literature indicates that handling missing data inside the algorithm slightly improves over ... simpler approaches over . Also, some tree-based learners can handle categorical data without prior pre-processing, as shown in our chapter on ordered boosting ([[🐈gradient-boosting]]).
+The required pre-processing is minimal for tree-based learners. Missing values can be handled by sending down `[NaN]` values at one side of the tree. Recent literature indicates that handling missing data inside the algorithm slightly improves over <mark style="background: #ABF7F7A6;">... simpler approaches over .</mark> <mark style="background: #FF5582A6;">See [[@breimanClassificationRegressionTrees2017]] on surrogate splits</mark>. Also, some tree-based learners can handle categorical data without prior pre-processing, as shown in our chapter on ordered boosting ([[🐈gradient-boosting]]).
 
 Neural networks can not inherently handle missing values, as a $\mathtt{[NaN]}$ value can not be propagated through the network. As such, missing values must be addressed beforehand. Similarily, categorical features, like the issue type, require an encoding, as no gradient can be calculated on categories.
 
 ## Solution to missing values and categoricals
-In order to prepare a common datasets for *all* our models, we need to impute, scale and encode the data. Like in the chapter [[preprocessing]] our feature scaling aims to be minimal intrusive, while facilitating an efficient training for all our machine learning models.
+In order to prepare a common datasets for *all* our models, we need to impute, scale and encode the data. Like in the chapter [[preprocessing]] our feature scaling aims to be minimal intrusive, while facilitating efficient training for all our machine learning models.
 
-Missing values are imputed with zeros. This simple, one-pass  strategy ~~minimizes the bias from imputation~~, avoids data leakage, and allows tree-based learners and neural networks to separate imputed values from observed ones. While the imputation with constants is simple, it is on-par with more complex approaches as <mark style="background: #FF5582A6;">(...)</mark> while minimizing the bias from imputatation. <mark style="background: #FF5582A6;">(Note zero imputation can be problematic for neural nets, as shown in [[@yiWhyNotUse2020]] paper)</mark>
+Missing values are imputed with zeros. This simple, one-pass  strategy ~~minimizes the bias from imputation~~, avoids data leakage, and allows tree-based learners and neural networks to separate imputed values from observed ones. While the imputation with constants is simple, it is on-par with more complex approaches as <mark style="background: #FF5582A6;">(...)</mark> while minimizing the bias from imputatation. <mark style="background: #FF5582A6;">There are controversies(Note zero imputation can be problematic for neural nets, as shown in [[@yiWhyNotUse2020]] paper)</mark>
 <mark style="background: #FF5582A6;">- For imputation look into [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]
 - [[@josseConsistencySupervisedLearning2020]] also compare different imputation methods and handling approaches of missing values in tree-based methods.
 - for visualizations and approaches see [[@zhengFeatureEngineeringMachine]] and [[@butcherFeatureEngineeringSelection2020]]</mark>
-<mark style="background: #FF5582A6;">[[@yiWhyNotUse2020]] and [[@smiejaProcessingMissingData2018]] contain various references to papers to impute missing data in neural networks. 
+<mark style="background: #FF5582A6;">- [[@yiWhyNotUse2020]] and [[@smiejaProcessingMissingData2018]] contain various references to papers to impute missing data in neural networks. 
+- add no missing indicator to keep the number of parameters small.
 </mark>
-- [[@lemorvanWhatGoodImputation2021]] for theoretical work on imputation.
-- For patterns and analysis of imputed data see https://stefvanbuuren.name/fimd/ch-analysis.html
+<mark style="background: #BBFABBA6;">- [[@lemorvanWhatGoodImputation2021]] for theoretical work on imputation.
+- For patterns and analysis of imputed data see https://stefvanbuuren.name/fimd/ch-analysis.html</mark>
 As introduced in the chapters [[🐈gradient-boosting]] and [[🤖transformer]] both architectures have found to be robust to missing values. 
 
 In conjunction with the low degree of missing values (compare chapter [[🌴exploratory_data_analysis]]), we therefore expect the impact from missing values to be minor. To address concerns, that the imputation or scaling negatively impacts the performance of gradient boosted trees, we perform an ablation study in chapter [[🎋ablation_study]], and retrain our models on the unscaled and unimputed data set.
@@ -44,15 +48,27 @@ In conjunction with the low degree of missing values (compare chapter [[🌴expl
 Tree-based models can handle arbitrary feature scales, as the splitting process is based on the purity of the split but not on the scale of the splitting value. 
 
 <mark style="background: #FFB86CA6;">
-Also, neural networks are known to train faster, .... normalized / standardized data . problems with convergence etc. Motivation for scaling features to $[-1,1]$ range or zero mean. https://stats.stackexchange.com/questions/249378/is-scaling-data-0-1-necessary-when-batch-normalization-is-used</mark>
+Also, neural networks are known to train faster, .... normalized / standardized data . problems with convergence etc. Motivation for scaling features to $[-1,1]$ range or zero mean. https://stats.stackexchange.com/questions/249378/is-scaling-data-0-1-necessary-when-batch-normalization-is-used -></mark>
+
+
+Also see [[@kuhnFeatureEngineeringSelection2020]]
 
 ## Solution of feature scales
 
 Continous and categorical variable require different treatment, as derived below. 
 
-Price and size-related features exhibit a positive skewness, as brought up in chapter [[🌴exploratory_data_analysis]]. <mark style="background: #FFB8EBA6;">Based on the (Box Cox test?),</mark> we apply a common $x^{\prime}=\log(x)$ transform to mitigate the skewness with the result of compressing large values and expanding smaller ones. More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations[^1]. Due to the montonous nature of the logarithm, the splits of tree-based learners remain unaffected from this transformation.
+Price and size-related features exhibit a positive skewness, as brought up in chapter [[🌴exploratory_data_analysis]].
 
-Our largest feature set als contains dates and times of the trade. In contrast to other continous features, the features are inherently cyclic. We exploit this fact for hours, dates and months and apply a fourier transform to convert the features into a smooth variable using formula [[#^773161]].
+<mark style="background: #D2B3FFA6;">A Box-Cox transformation (Box and Cox, 1964) was used to estimate this transformation. The Box-Cox procedure, originally intended as a transformation of a model's outcome, uses maximum likelihood estimation to estimate a transformation parameter $\lambda$ in the equation
+$$
+x^*= \begin{cases}\frac{x^\lambda-1}{\lambda \tilde{x}^{\lambda-1}}, & \lambda \neq 0 \\ \tilde{x} \log x, & \lambda=0\end{cases}
+$$
+where $\tilde{x}$ is the geometric mean of the predictor data. In this procedure, $\lambda$ is estimated from the data. Because the parameter of interest is in the exponent, this type of transformation is called a power transformation. Some values of $\lambda$ map to common transformations, such as $\lambda=1$ (no transformation), $\lambda=0(\log ), \lambda=0.5$ (square root), and $\lambda=-1$ (inverse). As you can see, the Box-Cox transformation is quite flexible in its ability to address many different data distributions. For the data in</mark> [[@kuhnFeatureEngineeringSelection2020]]
+
+
+<mark style="background: #FFB8EBA6;">Based on the (Box Cox test?),-> dates </mark> [[@boxAnalysisTransformations2022]] we apply a common $x^{\prime}=\log(x)$ transform to mitigate the skewness with the result of compressing large values and expanding smaller ones. More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations[^1]. Due to the montonous nature of the logarithm, the splits of tree-based learners remain unaffected from this transformation.
+
+Our largest feature set als contains dates and times of the trade. In contrast to other continous features, the features are inherently cyclic. We exploit this property for hours, days, and months and apply a fourier transform to convert the features into a smooth variable using formula [[#^773161]].
 
 $$
 \begin{aligned}
@@ -60,7 +76,7 @@ x' &= \sin\left(\frac{2\pi x}{86400} \right)\\
 x'' &= \cos\left(\frac{2\pi x}{86400} \right)
 \end{aligned}
 $$
-<mark style="background: #BBFABBA6;">TODO: make formula generic to for date, month, hour etc.  Put into a broader scope.</mark>
+<mark style="background: #BBFABBA6;">TODO: make formula generic to for date, month, hour etc.  Put into a broader scope. -> See Kuhn?</mark>
 ^773161
 
 This cyclic continous enconding, has the effect of preserving temporal proximity, as shown in Figure [[#^278944]]. As visualized for dates, the month's ultimo and the next month's first are close to each other in the individual features and on the unit circle. [^3]
@@ -68,13 +84,31 @@ This cyclic continous enconding, has the effect of preserving temporal proximity
 ![[positional_encoding.png]]
 (found here similarily: https://www.researchgate.net/figure/A-unit-circle-example-of-frequency-encoding-of-spatial-data-using-the-Fourier-series-a_fig2_313829438) ^278944
 
-To address the problem of <mark style="background: #FF5582A6;">(...)</mark> of our transformer-based architectures, we normalize all continous features into a range of $[-1,1]$ using formula [[#^5d5445]]:
+To address the problem of convergence of our transformer-based architectures, we normalize the data set using $z$-score normalization given by formula [[#^5d5445]]: ~~we normalize all continous features into a range of $[-1,1]$ using formula [[#^5d5445]]:
 
 $$
 x^{\prime}=-1+\frac{2(x-\min (x))}{\max (x)-\min (x)} \tag{1}
 $$
+$$
+X_{n o r m}=\frac{X-X_{\min }}{X_{\max }-X_{\min }}
+$$
 
+Standardization:
+$$
+z=\frac{x-\mu}{\sigma}\tag{1}
+$$
+with mean
+$$
+\mu=\frac{1}{N} \sum_{i=1}^N\left(x_i\right)
+$$
+and standard deviation
+$$
+\sigma=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(x_i-\mu\right)^2}.
+$$
 ^5d5445
+
+<mark style="background: #D2B3FFA6;">Most algorithms based on gradient descent require data to be scaled.The presence of feature value X in the formula will affect the step size of the gradient descent. The difference in ranges of features will cause different step sizes for each feature. Having features on a similar scale can help the gradient descent to converge. Why is this not true for gradient boosting? https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/</mark>
+
 <mark style="background: #FFB8EBA6;">- min-max scaling and $z$ scaling preserve the distribution of the variables  (see [here.](https://stats.stackexchange.com/a/562204/351242)). Applying both cancels out each other (see proof [here.](https://stats.stackexchange.com/a/562204/351242)). </mark>
 
 Normalization has the advantage of preserving the data distribution, which is an important property when comparing our machine learning based models against their classical counterparts in chapter [[feature_importance]]. 
@@ -96,8 +130,6 @@ An overview of all feature transformations is added to Appendix [[🍬appendix#^
 
 - Cite [[@rubinInferenceMissingData1976]] for different patterns in missing data.
 
-
-- What are the drawbacks of feature engineering?
 
 - How is the definition of feature sets be motivated?
 - Why does positional encoding make sense?
@@ -121,8 +153,6 @@ An overview of all feature transformations is added to Appendix [[🍬appendix#^
 - combine size features and price features into a ratio. e. g., "normalize" price with volume. Found this idea here [[@antoniouLognormalDistributionStock2004]]
 - log-transform can hamper interpretability [[@fengLogtransformationItsImplications2014]]
 - The right word for testing different settings e. g., scalings or imputation approaches is https://en.wikipedia.org/wiki/Ablation_(artificial_intelligence) 
-- In my dataset the previous or subsequent trade price is already added as feature and thus does not have to be searched recursively.
-kenization support: https://github.com/google/sentencepiece
 
 
 [^1]: See e. g., https://numpy.org/doc/stable/reference/generated/numpy.log1p.html

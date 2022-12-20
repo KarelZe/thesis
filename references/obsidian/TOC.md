@@ -117,8 +117,8 @@ describe if data set is actually used. Write similarily to
 [[generation-of-true-labels]]
 ### Exploratory Data Analysis
 [[🌴exploratory_data_analysis]]
-### Feature Engineering
-![[feature_engineering]]
+### Feature Engineering 🟡
+![[🪛feature_engineering]]
 
 ### Train-Test Split 🟡
 
