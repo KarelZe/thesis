@@ -112,7 +112,7 @@ class TestObjectives:
             "ffn_dropout": 0.1,
             "weight_decay": 0.01,
             "learning_rate": 3e-4,
-            "batch_size": 8192,
+            "batch_size": 16192,
         }
 
         study = optuna.create_study(direction="maximize")
@@ -146,7 +146,7 @@ class TestObjectives:
             "dropout": 0.1,
             "weight_decay": 0.01,
             "learning_rate": 3e-4,
-            "batch_size": 8192,
+            "batch_size": 16192,
         }
 
         study = optuna.create_study(direction="maximize")
@@ -184,7 +184,7 @@ class TestObjectives:
             "mask_type": "entmax",
             "weight_decay": 0.01,
             "learning_rate": 3e-4,
-            "batch_size": 8192,
+            "batch_size": 16192,
         }
 
         study = optuna.create_study(direction="maximize")
