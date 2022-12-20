@@ -14,7 +14,7 @@ import numpy as np
 import optuna
 import pandas as pd
 import torch
-from catboost import CatBoostClassifier, Pool, metrics
+from catboost import CatBoostClassifier, Pool
 from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
 from torch import nn, optim
@@ -192,8 +192,9 @@ class TabNetObjective(Objective):
 
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
-        batch_size: int = trial.suggest_categorical("batch_size", [8192, 16384, 32768])  # type: ignore # noqa: E501
+        batch_size: int = trial.suggest_categorical("batch_size", [16192, 32768, 65536])  # type: ignore # noqa: E501
 
+        no_devices = torch.cuda.device_count()
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
 
@@ -205,7 +206,8 @@ class TabNetObjective(Objective):
         )
 
         dl_kwargs = {
-            "batch_size": batch_size,
+            "batch_size": batch_size
+            * no_devices,  # dataparallel splits tensors across devices by dim 1.
             "shuffle": False,
             "device": device,
         }
@@ -374,8 +376,9 @@ class TabTransformerObjective(Objective):
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
-        batch_size: int = trial.suggest_categorical("batch_size", [8192, 16384, 32768])  # type: ignore # noqa: E501
+        batch_size: int = trial.suggest_categorical("batch_size", [16192, 32768, 65536])  # type: ignore # noqa: E501
 
+        no_devices = torch.cuda.device_count()
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
 
@@ -387,7 +390,8 @@ class TabTransformerObjective(Objective):
         )
 
         dl_kwargs: dict[str, Any] = {
-            "batch_size": batch_size,
+            "batch_size": batch_size
+            * no_devices,  # dataparallel splits tensors across devices by dim 1.
             "shuffle": False,
             "device": device,
         }
@@ -567,11 +571,11 @@ class FTTransformerObjective(Objective):
 
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
-        bs = [8192, 16384, 32768]
-        batch_size: int = trial.suggest_categorical("batch_size", bs)  # type: ignore
+        batch_size: int = trial.suggest_categorical("batch_size", [16192, 32768, 65536])  # type: ignore # noqa: E501
 
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
+        no_devices = torch.cuda.device_count()
 
         training_data = TabDataset(
             self.x_train, self.y_train, self._cat_features, self._cat_cardinalities
@@ -581,7 +585,8 @@ class FTTransformerObjective(Objective):
         )
 
         dl_kwargs: dict[str, Any] = {
-            "batch_size": batch_size,
+            "batch_size": batch_size
+            * no_devices,  # dataprallel splits batches across devices
             "shuffle": False,
             "device": device,
         }
@@ -914,7 +919,7 @@ class GradientBoostingObjective(Objective):
             "devices": devices,
             "random_seed": set_seed(),
             "eval_metric": "Accuracy",
-            "early_stopping_rounds":100,
+            "early_stopping_rounds": 100,
         }
 
         # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
