@@ -9,7 +9,7 @@ The goal of my feature set definition is: Have a minimal feature set required to
 - [[@ronenMachineLearningTrade2022]] suggest to use models that can handle time series components. This would limit our choices. Thus we use feature engineering to induce a notion of time into our models.
 
 
-| Feature               | Feature Category             | FS 1 (Classical) | FS 2 (F1 + Grauer) | FS 3 (F2 + temp) | FS 3 (F3 + Others) | Transform   |
+| Feature               | Feature Category             | FS 1 (Classical) | FS 2 (F1 + Grauer) | FS 3 (F2 + temp) | FS 4 (F3 + Others) | Transform   |
 | --------------------- | ---------------------------- | ---------------- | ------------------ | ---------------- | ------------------ | ----------- |
 | TRADE_PRICE           | tick rule                    | ✅               | ✅                 | ✅               | ✅                 | log         |
 | price_ex_lag          | tick rule                    | ✅               | ✅                 | ✅               | ✅                 | log         |

@@ -22,12 +22,12 @@
             }
           },
           {
-            "id": "d60b91526c498c65",
+            "id": "3852a2023409df60",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/tradesize_rule.md",
+                "file": "chapters/🪛feature engineering.md",
                 "mode": "source",
                 "source": false
               }
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/tradesize_rule.md",
+                "file": "chapters/🪛feature engineering.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/tradesize_rule.md"
+                "file": "chapters/🪛feature engineering.md"
               }
             }
           }
@@ -141,13 +141,13 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "d60b91526c498c65",
+  "active": "3852a2023409df60",
   "lastOpenFiles": [
-    "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
-    "chapters/clnv_method.md",
     "TOC.md",
-    "chapters/tradesize_rule.md",
     "chapters/🪛feature engineering.md",
+    "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
+    "chapters/tradesize_rule.md",
+    "chapters/clnv_method.md",
     "chapters/🌴exploratory_data_analysis.md",
     "chapters/quote_rule.md",
     "chapters/tick_test.md",
