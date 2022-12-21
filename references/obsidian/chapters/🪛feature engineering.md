@@ -39,8 +39,10 @@ Following a common track, we train our predictive model on imputed data.  values
 - For patterns and analysis of imputed data see https://stefvanbuuren.name/fimd/ch-analysis.html</mark>
 - We impute prior to scaling, as the imputation can affect the statistics
 - normalization scales, but does not change the distribution. See. e. g., [[@kuhnFeatureEngineeringSelection2020]]
+- Why is skewness bad in neural networks 
+- https://stats.stackexchange.com/questions/483187/difference-between-log-transformation-and-standardization#:~:text=Standardization%20does%20not%20change%20the%20skew%20of%20the%20distribution.
 
-As introduced in the chapters [[🐈gradient-boosting]] and [[🤖transformer]] both architectures have found to be robust to missing values.  In conjunction with the low degree of missing values (compare chapter [[🌴exploratory_data_analysis]]), we therefore expect the impact from missing values to be minor. To address concerns, that the imputation or scaling negatively impacts the performance of gradient boosted trees, we perform an ablation study in chapter [[🎋ablation_study]], and retrain our models on the unscaled and unimputed data set.
+As introduced in the chapters [[🐈gradient-boosting]] and [[🤖transformer]] both architectures have found to be robust to missing values.  In conjunction with the low degree of missing values (compare chapter [[🌴exploratory_data_analysis]]), we therefore expect the impact from missing values to be minor. To address concerns, that the imputation or scaling negatively impacts the performance of gradient boosted trees, we perform an ablation study in chapter [[🎋ablation_study]], and retrain our models on the un-scaled and un-imputed data set.
 
 ## Problem of feature scales
 

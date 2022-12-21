@@ -20,8 +20,21 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "d60b91526c498c65",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/tradesize_rule.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -79,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "chapters/tradesize_rule.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -107,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "chapters/tradesize_rule.md"
               }
             }
           }
@@ -128,17 +141,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "160a03ac0eb0e817",
+  "active": "d60b91526c498c65",
   "lastOpenFiles": [
-    "chapters/🌴exploratory_data_analysis.md",
-    "chapters/🪛feature engineering.md",
-    "TOC.md",
     "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
+    "chapters/clnv_method.md",
+    "TOC.md",
+    "chapters/tradesize_rule.md",
+    "chapters/🪛feature engineering.md",
+    "chapters/🌴exploratory_data_analysis.md",
     "chapters/quote_rule.md",
     "chapters/tick_test.md",
-    "chapters/tradesize_rule.md",
     "chapters/results.md",
-    "chapters/lr_algorithm.md",
-    "chapters/related_work.md"
+    "chapters/lr_algorithm.md"
   ]
 }
