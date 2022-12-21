@@ -2,7 +2,8 @@
 - Guide on visualizations https://www.nature.com/articles/s41467-020-19160-7
 - Guide on storytelling with data https://www.practicedataviz.com/pdv-evd-mvp#PDV-EVD-mvp-g
 - see  `writing-a-good-introduction.pdf`
-
+- Prepare final pdf https://github.com/google-research/arxiv-latex-cleaner
+- Adhere to best practices http://www.sigplan.org/Resources/EmpiricalEvaluation/
 %%
 # Title
 - <mark style="background: #BBFABBA6;">Forget the rules: Improving trade side classification using machine learning</mark>

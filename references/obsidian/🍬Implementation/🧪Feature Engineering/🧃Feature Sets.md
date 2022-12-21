@@ -13,19 +13,24 @@ The goal of my feature set definition is: Have a minimal feature set required to
 | --------------------- | ---------------------------- | ---------------- | ------------------ | ---------------- | ------------------ | ----------- |
 | TRADE_PRICE           | tick rule                    | ✅               | ✅                 | ✅               | ✅                 | log         |
 | price_ex_lag          | tick rule                    | ✅               | ✅                 | ✅               | ✅                 | log         |
-| price_all_lag         | tick rule                    |                  |                    | ❓               |                    | log         |
+| price_all_lag         | tick rule                    |                  | ✅                 | ❓               |                    | log         |
 | chg_ex_lag            | tick rule                    | ✅               | ✅                 | ✅               | ✅                 | standardize |
-| chg_all_lag           | tick rule                    |                  |                    | ❓               |                    | standardize |
+| chg_all_lag           | tick rule                    |                  | ✅                  | ❓               |                    | standardize |
 | price_ex_lead         | reverse tick rule            | ✅               | ✅                 | ✅               | ✅                 | log         |
-| price_all_lead        | reverse tick rule            |                  |                    | ❓               |                    | log         |
+| price_all_lead        | reverse tick rule            |                  | ✅                  | ❓               |                    | log         |
 | chg_ex_lead           | reverse tick rule            | ✅               | ✅                 | ✅               | ✅                 | standardize |
-| chg_all_lead          | reverse tick rule            |                  |                    | ❓               |                    | standardize |
-| BEST_BID              | quote rule                   |                  |                    | ❓               |                    | log         |
+| chg_all_lead          | reverse tick rule            |                  | ✅                  | ❓               |                    | standardize |
+| BEST_BID              | quote rule                   |                  | ✅                  | ❓               |                    | log         |
 | bid_ex                | quote rule                   | ✅               | ✅                 | ✅               | ✅                 | log         |
-| BEST_ASK              | quote rule                   |                  |                    | ❓               |                    | log         |
+| BEST_ASK              | quote rule                   |                  | ✅                  | ❓               |                    | log         |
 | ask_ex                | quote rule                   | ✅               | ✅                 | ✅               | ✅                 | log         |
-| midpoint_ex           | quote rule / depth rule      | ✅               | ✅                 | ✅               | ✅                 | log         |
-| BEST_MIDPOINT         | quote rule                   |                  |                    | ❓               |                    | log         |
+| bid_ask_ratio_ex      | Ratio of ask and bid 🆕      |                  | ✅                 | ✅               | ✅                 | standardize |
+| spread_ex             | Absolute spread 🆕           |                  | ✅                 | ✅               | ✅                 | standardize |
+| spread_best           | Absolute spread 🆕           |                  | ✅                 | ✅               | ✅                 | standardize |
+| price_rel_nbb         | Tradeprice rel to nbb 🆕     |                  | ✅                 | ✅               | ✅                 | standardize |
+| price_rel_nbo         | Tradeprice rel to nbo 🆕     |                  | ✅                 | ✅               | ✅                 | standardize |
+| midpoint_ex           | quote rule / depth rule      |                  |                     |                | ✅                 | log         |
+| BEST_MIDPOINT         | quote rule                   |                  |                     |                |                    | log         |
 | rel_bid_dist_ex       | EMO / CLNV                   | ✅               | ✅                 | ✅               | ✅                 | standardize |
 | rel_ask_dist_ex       | EMO / CLNV                   | ✅               | ✅                 | ✅               | ✅                 | standardize |
 | BEST_rel_bid          | EMO / CLNV                   |                  |                    | ❓               |                    | log         |

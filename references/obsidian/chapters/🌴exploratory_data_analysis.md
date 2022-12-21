@@ -26,3 +26,5 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - Cite [[@rubinInferenceMissingData1976]] for different patterns in missing data.
 - on missingness see [[@kuhnFeatureEngineeringSelection2020]]
 - ![[visualization-of-missingness.png]]
+
+- Investigate skewness and outliers. See e. g., https://scientistcafe.com/ids/resolve-skewness.html and https://scientistcafe.com/ids/outliers.html.
