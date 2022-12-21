@@ -3,12 +3,13 @@
 - Guide on storytelling with data https://www.practicedataviz.com/pdv-evd-mvp#PDV-EVD-mvp-g
 - see  `writing-a-good-introduction.pdf`
 
+%%
 # Title
 - <mark style="background: #BBFABBA6;">Forget the rules: Improving trade side classification using machine learning</mark>
 - Off being right: trade-side classification of options data with machine learning
 - Trade side classifcation with machine learning: do or don't?
 - <mark style="background: #BBFABBA6;">Be less wrong. Improving trade side classification with machine learning</mark>
-
+%%
 # Introduction
 
 [[introduction]]
@@ -22,7 +23,7 @@ The following section introduces common rules for signing option trades. We star
 ## Basic Rules
 
 [[basic_rules]]
-### Quote-Rule
+### Quote Rule
 [[quote_rule]]
 ### Tick Test
 [[tick_test]]
@@ -78,10 +79,10 @@ In our attempt to compare shallow with deep architectures for trade classificati
 
 ### Extensions in TabTransformer
 [[extensions-to-tabtransformer]]
-### Extensions in FT-Transformer
+### Extensions in FTTransformer
+[[🤖pretraining-FTTransformer]]
 
-[[draft_ft_transformer]]
-# Semi-Supervised Approaches
+# 👽 Semi-Supervised Approaches
 
 ## Selection of Approaches
 
@@ -94,7 +95,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ## Extensions to TabTransformer
 [[extensions-to-tabtransformer]]
 ## Extension to FTTransformer
-# Empirical Study
+# 👒 Empirical Study
 - In the subsequent sections we apply methods from (...) in an empirical setting.
 ## Environment 🟡
 [[environment]]
@@ -111,12 +112,12 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### CBOE Data Set 🟡
 describe if data set is actually used. Write similarily to 
 
-### Pre-processing 🟡
-[[preprocessing]]
-### Generation of True Labels
-[[generation-of-true-labels]]
 ### Exploratory Data Analysis
 [[🌴exploratory_data_analysis]]
+
+### Data Pre-Processing 🟡
+[[preprocessing]]
+
 ### Feature Engineering 🟡
 ![[🪛feature engineering]]
 
@@ -140,16 +141,26 @@ describe if data set is actually used. Write similarily to
 ### Evaluation Metric
 [[evaluation_metric]]
 
-# Results
+# 🏁 Results
 [[results]]
 ## Results of Supervised Models
 [[results_of_supervised]]
 ## Results of Semi-Supervised Models
 [[results_of_semisupervised]]
+
+## Robustness of Results
+[[robustness]]
+
 ## Feature Importance
 [[feature_importance]]
-## Robustness Checks
-[[robustness]]
+
+## Ablation Study of Models
+
+# 🍕 Application in Transaction Cost Estimation
+[[🍕Application study]]
+## Simulation Setup
+## Simulation Results
+
 # 💣Discussion
 [[discussion]]
 # Conclusion

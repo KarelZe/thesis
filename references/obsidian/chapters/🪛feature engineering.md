@@ -8,9 +8,7 @@ Instead of learning our models on unprocessed data directly, we perform *feature
 While feature engineering aids our model's performance we restrict ourself to simple, non-distructive transformations. This allows for a fair comparsion between the algorithms and improves the transferability of our results. Ultimately, all features are derived from quote and price data, used inherently in the classical algorithms, as shown in the next section. The only exception is feature set 3 (see [[🧃Feature Sets]]), that adds additional option characteristics and date features. 
 
 ## Feature set definition
-
-The featue sets are are to a large extend inspired by the decision rules used in ...
-To establish a common ground, we derive three sets of features from raw data....
+To establish a common ground, we derive three sets of features from raw data. The featue sets are are to a large extend inspired by the decision rules used in ...
 
 <mark style="background: #ABF7F7A6;">TODO: Add to each feature, where it has been used.
 TODO: Point out some interesting features here in the text.
@@ -23,7 +21,7 @@ TODO: Plot distributions of features from training and validation set. Could als
 All feature set, the their definition and origin is documented in Appendix [[🍬appendix#^7c0162]].
 
 ## Problem of missing values and categoricals
-The required pre-processing is minimal for tree-based learners. As one of few predictive models, trees can be extended to handle `[NaN]` values. Either by discarding missing values in the splitting procedure  (e. g.,[[@breimanClassificationRegressionTrees2017]] (p. 150 ff.)%% or [[@keLightGBMHighlyEfficient2017]])%% or by incorporating missing values into the splitting criterion (e. g., [[@twalaGoodMethodsCoping2008]]) (p. 951). Recent literature for gradient boosting suggests, that handling missing data inside the algorithm slightly improves the accuracy over fitting trees on imputed data ([[@josseConsistencySupervisedLearning2020]] (p. 24) or [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] (p. 6)). Also, some tree-based learners can handle categorical data without prior pre-processing, as shown in our chapter on ordered boosting ([[🐈gradient-boosting]]).
+The required pre-processing is minimal for tree-based learners. As one of few predictive models, trees can be extended to handle $\mathtt{[NaN]}$ values. Either by discarding missing values in the splitting procedure  (e. g.,[[@breimanClassificationRegressionTrees2017]] (p. 150 ff.)%% or [[@keLightGBMHighlyEfficient2017]])%% or by incorporating missing values into the splitting criterion (e. g., [[@twalaGoodMethodsCoping2008]]) (p. 951). Recent literature for gradient boosting suggests, that handling missing data inside the algorithm slightly improves the accuracy over fitting trees on imputed data ([[@josseConsistencySupervisedLearning2020]] (p. 24) or [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] (p. 6)). Also, some tree-based learners can handle categorical data without prior pre-processing, as shown in our chapter on ordered boosting ([[🐈gradient-boosting]]).
 
 However, neural networks can not inherently handle missing values, as a $\mathtt{[NaN]}$ value can not be propagated through the network. As such, missing values must be addressed beforehand. Similarily, categorical features, like the issue type, require an encoding, as no gradient can be calculated on categories.
 
@@ -67,7 +65,6 @@ Could map to the observation that trade prices are log-normally distributed. htt
 
 We adhere to a notation found in [[@kuhnFeatureEngineeringSelection2020]]
 
-Test log-normality visually with qq-plots (https://stackoverflow.com/questions/46935289/quantile-quantile-plot-using-seaborn-and-scipy) or using statistical tests e. g.,  log-transform + normality test. https://stats.stackexchange.com/questions/134924/tests-for-lognormal-distribution
 
 <mark style="background: #FFB8EBA6;">Based on the (Box Cox test?),-> dates </mark> [[@boxAnalysisTransformations2022]] we apply a common $x^{\prime}=\log(x)$ transform to mitigate the skewness with the result of compressing large values and expanding smaller ones. More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations[^1]. Due to the montonous nature of the logarithm, the splits of tree-based learners remain unaffected from this transformation.
 - for implementation of box-cox in scipy see[[@zhengFeatureEngineeringMachine]] book.
@@ -115,8 +112,6 @@ $$
 
 <mark style="background: #D2B3FFA6;">Most algorithms based on gradient descent require data to be scaled.The presence of feature value X in the formula will affect the step size of the gradient descent. The difference in ranges of features will cause different step sizes for each feature. Having features on a similar scale can help the gradient descent to converge. Why is this not true for gradient boosting? https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/</mark>
 
-<mark style="background: #FFB8EBA6;">- min-max scaling and $z$ scaling preserve the distribution of the variables  (see [here.](https://stats.stackexchange.com/a/562204/351242)). Applying both cancels out each other (see proof [here.](https://stats.stackexchange.com/a/562204/351242)). </mark>
-
 Normalization has the advantage of preserving the data distribution, which is an important property when comparing our machine learning based models against their classical counterparts in chapter [[feature_importance]]. 
 
 As for the categorical variables a transformation is required. We perform a label encoding by randomly mapping every unique value onto an integer key. As an example, the option type in the set $\{\text{'C'},\text{'P'}\}$ would be randomly mapped onto $\{1,0\}$. This basic transformation allows to defer handling of categorical data to the model [[@hancockSurveyCategoricalData2020]] (p. 10). Also, it minimizes target leakage. Classes not seen during are mapped to the key of a $\mathtt{[UNK]}$ token.
@@ -130,3 +125,22 @@ An overview of all feature transformations is added to Appendix [[🍬appendix#^
 [^1]: See e. g., https://numpy.org/doc/stable/reference/generated/numpy.log1p.html
 [^2]: See chapter on ordered boosting, tabtransformer, or the fttransformer.
 [^3]: Notice the similarities to the positional encoding used in [[@vaswaniAttentionAllYou2017]].
+
+
+**imputation:**
+**Scaling:**
+- TODO: Why do we perform feature scaling at all?
+- TODO: Try out robust scaler, as data contains outliers. Robust scaler uses the median which is robust to outliers and iqr for scaling. 
+- TODO: Try out different IQR thresholds and report impact. Similarily done here: https://machinelearningmastery.com/robust-scaler-transforms-for-machine-learning/
+- We scale / normalize features to a $\left[-1,1\right]$  scale using statistics estimated on the training set to avoid data leakage. This is also recommended in [[@huyenDesigningMachineLearning]]. Interestingly, she also writes that empirically the interval $\left[-1,1\right]$ works better than $\left[0,1\right]$. Also read about this on stackoverflow for neural networks, which has to do with gradient calculation.
+- Scale to an arbitrary range $\left[a,b\right]$ using the formula from [[@huyenDesigningMachineLearning]]:
+$$
+x^{\prime}=a+\frac{(x-\min (x))(b-a)}{\max (x)-\min (x)}
+$$
+- Feature scaling theoretically shouldn't be relevant for gradient boosting due to the way gbms select split points / not based on distributions. Also in my tests it didn't make much of a difference for gbms but for transformers. (see https://github.com/KarelZe/thesis/blob/main/notebooks/3.0b-mb-comparsion-transformations.ipynb) 
+- [[@ronenMachineLearningTrade2022]] performed no feature scaling.
+- [[@borisovDeepNeuralNetworks2022]] standardize numerical features and apply ordinal encoding to categorical features, but pass to the model which ones are categorical features. 
+- [[@gorishniyRevisitingDeepLearning2021]] (p. 6) use quantile transformation, which is similar to the robust scaler, see https://scikit-learn.org/stable/auto_examples/preprocessing/plot_all_scaling.html#sphx-glr-auto-examples-preprocessing-plot-all-scaling-pyf) Note that [[@grinsztajnWhyTreebasedModels2022]] only applied quantile transformations to all features, thus not utilize special implementations for categorical variables.
+- Best do a large-scale comparsion as already done for some transformations in  https://github.com/KarelZe/thesis/blob/main/notebooks/3.0b-mb-comparsion-transformations.ipynb. My feeling is that differences are neglectable. 
+- Different imputation appraoches are listed in [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]. Basic observation use approaches that can inherently handle missing values. This is a good tradeoff between performance and prediction quality.
+- simple overview for imputation https://towardsdatascience.com/6-different-ways-to-compensate-for-missing-values-data-imputation-with-examples-6022d9ca0779
