@@ -27,6 +27,18 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "❓Questions.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1e52354404ef27d3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "chapters/🪛feature engineering.md",
                 "mode": "source",
                 "source": false
@@ -92,7 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🪛feature engineering.md",
+                "file": "❓Questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +132,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🪛feature engineering.md"
+                "file": "❓Questions.md"
               }
             }
           }
@@ -144,14 +156,14 @@
   "active": "3852a2023409df60",
   "lastOpenFiles": [
     "TOC.md",
-    "chapters/🪛feature engineering.md",
+    "chapters/depth_rule.md",
+    "❓Questions.md",
     "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
+    "Semi-supervised Learning/@clarkELECTRAPretrainingText2020.md",
+    "chapters/🪛feature engineering.md",
+    "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
     "chapters/tradesize_rule.md",
     "chapters/clnv_method.md",
-    "chapters/🌴exploratory_data_analysis.md",
-    "chapters/quote_rule.md",
-    "chapters/tick_test.md",
-    "chapters/results.md",
-    "chapters/lr_algorithm.md"
+    "chapters/🌴exploratory_data_analysis.md"
   ]
 }
