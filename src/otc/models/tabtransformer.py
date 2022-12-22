@@ -15,7 +15,6 @@ from typing import Any, Callable
 
 import torch
 import torch.nn.functional as F
-from einops import rearrange
 from torch import einsum, nn
 
 from otc.models.activation import GeGLU
@@ -169,16 +168,18 @@ class Attention(nn.Module):
         Returns:
             torch.Tensor: output tensor.
         """
-        h = self.heads
         q, k, v = self.to_qkv(x).chunk(3, dim=-1)
-        q, k, v = map(lambda t: rearrange(t, "b n (h d) -> b h n d", h=h), (q, k, v))
+        b, n, _ = q.shape
+        # reshape and permute: b n (h d) -> b h n d
+        q, k, v = map(
+            lambda t: t.reshape(b, n, self.heads, -1).permute(0, 2, 1, 3), (q, k, v)
+        )
         sim = einsum("b h i d, b h j d -> b h i j", q, k) * self.scale
-
         attn = sim.softmax(dim=-1)
         attn = self.dropout(attn)
-
         out = einsum("b h i j, b h j d -> b h i d", attn, v)
-        out = rearrange(out, "b h n d -> b n (h d)", h=h)
+        # reshape and permute: b h i j, b h j d -> b h i d
+        out = out.permute(0, 2, 1, 3).reshape(b, n, -1)
         return self.to_out(out)
 
 
@@ -414,7 +415,6 @@ class TabTransformer(nn.Module):
         )
 
         # mlp to logits
-
         input_size = (dim * self.num_categories) + num_continuous
         j = input_size // 8
 

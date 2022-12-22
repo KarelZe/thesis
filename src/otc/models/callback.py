@@ -16,10 +16,10 @@ from typing import Any
 
 import optuna
 import torch
-import wandb
 from catboost import CatBoostClassifier
 from torch import nn
 
+import wandb
 from otc.config.config import settings
 from otc.data.fs import fs
 from otc.utils.colors import Colors
@@ -179,7 +179,7 @@ class SaveCallback(Callback):
                 ).as_posix()
 
                 fs.put(loc_training_stats, uri_training_stats)
-                m_artifact = wandb.Artifact(name=file_model, type="model")
+                m_artifact = wandb.Artifact(name=file_model, type="model")  # type: ignore # noqa: E501
 
                 m_artifact.add_reference(uri_training_stats, name=file_training_stats)
                 logger.info(
@@ -199,7 +199,7 @@ class SaveCallback(Callback):
                 with fs.open(uri_model, "wb") as f:
                     torch.save(model.state_dict(), f)
 
-                m_artifact = wandb.Artifact(name=file_model, type="model")
+                m_artifact = wandb.Artifact(name=file_model, type="model")  # type: ignore # noqa: E501
             else:
                 return
 

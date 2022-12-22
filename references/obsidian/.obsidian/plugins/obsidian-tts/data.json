@@ -1,0 +1,15 @@
+{
+  "defaultVoice": "Microsoft Hazel - English (United Kingdom)",
+  "pitch": 1,
+  "rate": 1.5,
+  "volume": 1,
+  "speakLinks": false,
+  "speakFrontmatter": false,
+  "speakSyntax": false,
+  "speakTitle": true,
+  "speakCodeblocks": false,
+  "speakEmoji": false,
+  "speakComments": false,
+  "languageVoices": [],
+  "stopPlaybackWhenNoteChanges": false
+}
