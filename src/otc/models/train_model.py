@@ -28,7 +28,6 @@ from otc.models.objective import (
     ClassicalObjective,
     FTTransformerObjective,
     GradientBoostingObjective,
-    TabNetObjective,
     TabTransformerObjective,
     set_seed,
 )
@@ -38,7 +37,6 @@ OBJECTIVES = {
     "classical": ClassicalObjective,
     "tabtransformer": TabTransformerObjective,
     "fttransformer": FTTransformerObjective,
-    "tabnet": TabNetObjective,
 }
 
 FEATURE_SETS = {
@@ -60,7 +58,7 @@ FEATURE_SETS = {
 @click.option(
     "--model",
     type=click.Choice(
-        ["classical", "gbm", "tabtransformer", "fttransformer", "tabnet"],
+        ["classical", "gbm", "tabtransformer", "fttransformer"],
         case_sensitive=False,
     ),
     required=True,
