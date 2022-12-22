@@ -407,6 +407,10 @@ TSWLatexianTemp*
 *md.tex
 *.lua
 
+# metadata files
+*.timestamp
+*.xmpdata
+
 # built document
 TOC.pdf
 expose.pdf
