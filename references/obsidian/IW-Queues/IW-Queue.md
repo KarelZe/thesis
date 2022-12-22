@@ -29,11 +29,11 @@ interval: 1
 | [[generation-of-true-labels]]       |       55 |       |        1 | 1970-01-01 |
 | [[feature_importance_measure]]      |     57.5 |       |        1 | 1970-01-01 |
 | [[feature_importance]]              |       60 |       |        1 | 1970-01-01 |
-| [[feature_engineering]]             |     62.5 |       |        1 | 1970-01-01 |
+| [[🪛feature engineering]]             |     62.5 |       |        1 | 1970-01-01 |
 | [[extensions-to-tabtransformer]]    |       65 |       |        1 | 1970-01-01 |
 | [[extensions-to-tabnet]]            |     67.5 |       |        1 | 1970-01-01 |
 | [[extensions-to-gradient-boosting]] |       70 |       |        1 | 1970-01-01 |
-| [[exploratory_data_analysis]]       |     72.5 |       |        1 | 1970-01-01 |
+| [[🌴exploratory_data_analysis]]       |     72.5 |       |        1 | 1970-01-01 |
 | [[evaluation_metric]]               |       75 |       |        1 | 1970-01-01 |
 | [[environment]]                     |     77.5 |       |        1 | 1970-01-01 |
 | [[emo_rule]]                        |       80 |       |        1 | 1970-01-01 |

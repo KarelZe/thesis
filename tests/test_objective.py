@@ -13,7 +13,6 @@ from otc.models.objective import (
     ClassicalObjective,
     FTTransformerObjective,
     GradientBoostingObjective,
-    TabNetObjective,
     TabTransformerObjective,
 )
 
@@ -151,44 +150,6 @@ class TestObjectives:
 
         study = optuna.create_study(direction="maximize")
         objective = TabTransformerObjective(
-            self._x_train,
-            self._y_train,
-            self._x_val,
-            self._y_val,
-            cat_features=[],
-            cat_cardinalities=[],
-        )
-
-        with patch.object(objective, "epochs", 1):
-            study.enqueue_trial(params)
-            study.optimize(objective, n_trials=1)
-
-        # check if accuracy is >= 0 and <=1.0
-        assert 0.0 <= study.best_value <= 1.0
-
-    def test_tabnet_objective(self) -> None:
-        """
-        Test if TabNet objective returns a valid value.
-
-        Value obtained is the accuracy. Should lie in [0,1].
-        Value may not be NaN.
-        """
-        params = {
-            "n_d": 8,
-            "n_steps": 3,
-            "gamma": 1,
-            "cat_emb_dim": 0.01,
-            "n_independent": 3e-4,
-            "n_shared": 1,
-            "momentum": 0.001,
-            "mask_type": "entmax",
-            "weight_decay": 0.01,
-            "learning_rate": 3e-4,
-            "batch_size": 16192,
-        }
-
-        study = optuna.create_study(direction="maximize")
-        objective = TabNetObjective(
             self._x_train,
             self._y_train,
             self._x_val,
