@@ -195,7 +195,9 @@ class TabTransformerObjective(Objective):
 
         dl_kwargs: dict[str, Any] = {
             "batch_size": batch_size
-            * no_devices,  # dataparallel splits tensors across devices by dim 1.
+            * max(
+                no_devices, 1
+            ),  # dataparallel splits tensors across devices by dim 1.
             "shuffle": False,
             "device": device,
         }
@@ -390,7 +392,7 @@ class FTTransformerObjective(Objective):
 
         dl_kwargs: dict[str, Any] = {
             "batch_size": batch_size
-            * no_devices,  # dataprallel splits batches across devices
+            * max(no_devices, 1),  # dataprallel splits batches across devices
             "shuffle": False,
             "device": device,
         }

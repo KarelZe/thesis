@@ -33,7 +33,7 @@ class TestObjectives:
         """
         self._old_cwd = os.getcwd()
         start = dt.datetime(2020, 1, 1).replace(tzinfo=dt.timezone.utc)
-        end = dt.datetime(2020, 12, 31).replace(tzinfo=dt.timezone.utc)
+        end = dt.datetime(2021, 12, 31).replace(tzinfo=dt.timezone.utc)
         index = pd.date_range(start=start, end=end, freq="15min")
 
         # make 1 const feature and 1 non-const feature, as catboost requires non-const
