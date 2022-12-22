@@ -168,11 +168,12 @@ class Attention(nn.Module):
         Returns:
             torch.Tensor: output tensor.
         """
-        h = 8
         q, k, v = self.to_qkv(x).chunk(3, dim=-1)
         b, n, _ = q.shape
         # reshape and permute: b n (h d) -> b h n d
-        q, k, v = map(lambda t: t.reshape(b, n, h, -1).permute(0, 2, 1, 3), (q, k, v))
+        q, k, v = map(
+            lambda t: t.reshape(b, n, self.heads, -1).permute(0, 2, 1, 3), (q, k, v)
+        )
         sim = einsum("b h i d, b h j d -> b h i j", q, k) * self.scale
         attn = sim.softmax(dim=-1)
         attn = self.dropout(attn)
