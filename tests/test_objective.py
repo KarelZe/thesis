@@ -33,7 +33,7 @@ class TestObjectives:
         """
         self._old_cwd = os.getcwd()
         start = dt.datetime(2020, 1, 1).replace(tzinfo=dt.timezone.utc)
-        end = dt.datetime(2020, 12, 31).replace(tzinfo=dt.timezone.utc)
+        end = dt.datetime(2021, 12, 31).replace(tzinfo=dt.timezone.utc)
         index = pd.date_range(start=start, end=end, freq="15min")
 
         # make 1 const feature and 1 non-const feature, as catboost requires non-const
@@ -111,7 +111,7 @@ class TestObjectives:
             "ffn_dropout": 0.1,
             "weight_decay": 0.01,
             "learning_rate": 3e-4,
-            "batch_size": 8192,
+            "batch_size": 16192,
         }
 
         study = optuna.create_study(direction="maximize")
@@ -145,7 +145,7 @@ class TestObjectives:
             "dropout": 0.1,
             "weight_decay": 0.01,
             "learning_rate": 3e-4,
-            "batch_size": 8192,
+            "batch_size": 16192,
         }
 
         study = optuna.create_study(direction="maximize")
