@@ -6,7 +6,7 @@ Both simple rules like quote rule or tick test or hybrids are included.
 
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import Any, Literal, List
 
 import numpy as np
 import numpy.typing as npt
@@ -70,6 +70,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
                 str,
             ]
         ],
+        columns: List[str],
         random_state: float | None,
     ):
         """
@@ -80,8 +81,9 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             If fewer layers are needed use ("nan","ex").
             random_state (float, optional): random seed. Defaults to None.
         """
-        self.layers = layers
-        self.random_state = random_state
+        self.layers_ = layers
+        self.random_state_ = random_state
+        self.columns_ = columns
 
     def _tick(self, subset: Literal["all", "ex"]) -> npt.NDArray:
         """
@@ -366,7 +368,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
     # pylint: disable=C0103
     def fit(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: npt.NDArray = None
+        self, X: npt.NDArray | pd.DataFrame, y: npt.NDArray | pd.Series, sample_weight: npt.NDArray = None
     ) -> ClassicalClassifier:
         """
         Fit the classifier.
@@ -403,7 +405,12 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         # pylint: disable=W0201
         self.func_mapping_ = dict(zip(allowed_func_str, funcs))
 
-        for func_str, subset in self.layers:
+        if X.shape[1] != len(self.columns_):
+            raise ValueError(
+                f"Expected {len(self.columns_)} columns, got {X.shape[1]}."
+            )
+
+        for func_str, subset in self.layers_:
             if subset not in allowed_subsets:
                 raise ValueError(
                     f"Unknown subset: {subset}, expected one of {allowed_subsets}."
@@ -414,7 +421,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
                     f"expected one of {allowed_func_str}."
                 )
         # pylint: disable=W0201, C0103
-        self.layers_ = self.layers
+        self.layers_ = self.layers_
 
         # pylint: disable=W0201, C0103
         self.sparse_output_ = sp.issparse(y)
@@ -436,7 +443,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         return self
 
     # pylint: disable=C0103
-    def predict(self, X: pd.DataFrame) -> npt.NDArray:
+    def predict(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
         """
         Perform classification on test vectors X.
 
@@ -452,13 +459,18 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         # check if there are attributes with trailing _
         check_is_fitted(self)
 
-        rs = check_random_state(self.random_state)
+        rs = check_random_state(self.random_state_)
 
-        if not isinstance(X, pd.DataFrame):
-            raise ValueError("X must be pd.DataFrame, as labels are required.")
+        self.X_ : pd.DataFrame
+        if isinstance(X, np.ndarray):
+            self.X_ = pd.DataFrame(data=X, columns=self.columns_)
+        else:
+            self.X_ = X
+
+
         mapping_cols = {"BEST_ASK": "ask_best", "BEST_BID": "bid_best"}
         # pylint: disable=W0201, C0103
-        self.X_ = X.rename(columns=mapping_cols)
+        self.X_.rename(columns=mapping_cols, inplace=True)
 
         pred = np.full(shape=(X.shape[0],), fill_value=np.nan)
 

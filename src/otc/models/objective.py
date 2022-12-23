@@ -25,7 +25,7 @@ from otc.models.activation import ReGLU
 from otc.models.callback import CallbackContainer, PrintCallback, SaveCallback
 from otc.models.classical_classifier import ClassicalClassifier
 from otc.models.fttransformer import FeatureTokenizer, FTTransformer, Transformer
-from otc.models.tabtransformer import TransformerClassifier, TabTransformer
+from otc.models.tabtransformer import TabTransformer, TransformerClassifier
 from otc.optim.early_stopping import EarlyStopping
 
 
@@ -182,6 +182,7 @@ class TabTransformerObjective(Objective):
         batch_size: int = trial.suggest_categorical("batch_size", [16192, 32768, 65536])  # type: ignore # noqa: E501
 
 
+
         self._clf = TransformerClassifier(module=TabTransformer)
 
         self._clf.fit(
@@ -189,7 +190,7 @@ class TabTransformerObjective(Objective):
             self.y_train.values,
             eval_set=(self.x_val.values, self.y_val.values),
         )
-        
+
         return self._clf.score(self.x_val, self.y_val)
 
 
@@ -517,9 +518,10 @@ class ClassicalObjective(Objective):
         self._clf = ClassicalClassifier(
             layers=layers,
             random_state=set_seed(),
+            columns=self.x_train.columns.tolist(),
         )
         self._clf.fit(X=self.x_train, y=self.y_train)
-        return self._clf.score(self._x_val, self._y_val)
+        return self._clf.score(self.x_val, self.y_val)
 
 
 class GradientBoostingObjective(Objective):
