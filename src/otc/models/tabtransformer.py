@@ -13,11 +13,60 @@ from __future__ import annotations
 
 from typing import Any, Callable
 
+import numpy as np
+
 import torch
 import torch.nn.functional as F
 from torch import einsum, nn
 
 from otc.models.activation import GeGLU
+from otc.data.data_loader import TabDataLoader
+from otc.data.dataset import TabDataset
+
+from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.utils.validation import (
+    check_is_fitted,
+)
+
+
+class TabTransformerClassifier(BaseEstimator, ClassifierMixin):
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.model = None
+
+    def _ndarray_2_dataloader(self, X: np.ndarray, y: np.ndarray | None) -> TabDataLoader:
+        pass
+
+
+    def fit(self, X: np.ndarray, y: np.ndarray, eval_set=None):
+
+
+        return self
+
+    def predict(self, X:np.ndarray) -> np.ndarray:
+        probs = self.predict_proba(X)
+        # convert probs to classes
+        return np.where(probs > 0.5, 1, -1)
+
+    def predict_proba(self, X: np.ndarray) -> np.ndarray:
+        # check if there are attributes with trailing _        
+        check_is_fitted(self)
+
+        dl = self._ndarray_2_dataloader(X, None)
+        
+        self.model.eval()
+
+        probabilites = []
+        with torch.no_grad():
+            for x_cat, x_cont, _ in dl:
+                probability = self.model(x_cat, x_cont)
+                probability = probability.flatten()
+                probability = torch.sigmoid(probability)
+                probabilites.append(probability.detach().cpu().numpy())
+        
+        return np.concatenate(probabilites)
+
 
 
 class Residual(nn.Module):
@@ -432,7 +481,7 @@ class TabTransformer(nn.Module):
             x_cont (torch.Tensor): tensor with continous data.
 
         Returns:
-            torch.Tensor: predictions
+            torch.Tensor: probabilitys
         """
         flat_categ: torch.Tensor | None = None
 
