@@ -181,8 +181,6 @@ class TabTransformerObjective(Objective):
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
         batch_size: int = trial.suggest_categorical("batch_size", [16192, 32768, 65536])  # type: ignore # noqa: E501
 
-
-
         self._clf = TransformerClassifier(module=TabTransformer)
 
         self._clf.fit(

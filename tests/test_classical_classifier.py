@@ -127,8 +127,6 @@ class TestClassicalClassifier:
         with pytest.raises(ValueError):
             classifier.fit(self.x_train, self.y_train)
 
-
-
     def test_override(self) -> None:
         """
         Test, if classifier does not override valid results from layer one.

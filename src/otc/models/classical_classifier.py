@@ -6,7 +6,7 @@ Both simple rules like quote rule or tick test or hybrids are included.
 
 from __future__ import annotations
 
-from typing import Any, Literal, List
+from typing import Any, List, Literal
 
 import numpy as np
 import numpy.typing as npt
@@ -70,7 +70,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
                 str,
             ]
         ],
-        columns: List[str],
+        columns: list[str],
         random_state: float | None,
     ):
         """
@@ -368,7 +368,10 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
     # pylint: disable=C0103
     def fit(
-        self, X: npt.NDArray | pd.DataFrame, y: npt.NDArray | pd.Series, sample_weight: npt.NDArray = None
+        self,
+        X: npt.NDArray | pd.DataFrame,
+        y: npt.NDArray | pd.Series,
+        sample_weight: npt.NDArray = None,
     ) -> ClassicalClassifier:
         """
         Fit the classifier.
@@ -461,12 +464,11 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
         rs = check_random_state(self.random_state_)
 
-        self.X_ : pd.DataFrame
+        self.X_: pd.DataFrame
         if isinstance(X, np.ndarray):
             self.X_ = pd.DataFrame(data=X, columns=self.columns_)
         else:
             self.X_ = X
-
 
         mapping_cols = {"BEST_ASK": "ask_best", "BEST_BID": "bid_best"}
         # pylint: disable=W0201, C0103
