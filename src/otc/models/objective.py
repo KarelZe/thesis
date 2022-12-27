@@ -169,7 +169,7 @@ class TabTransformerObjective(Objective):
         dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
 
         # done similar to borisov
-        depth: int = trial.suggest_categorical("depth", [1, 2, 3, 6, 12])  # type: ignore ignore # noqa: E501
+        depth: int = trial.suggest_categorical("depth", [1, 2, 3, 6, 12])  # type: ignore # noqa: E501
         heads: int = trial.suggest_categorical("heads", [2, 4, 8])  # type: ignore
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
@@ -204,7 +204,12 @@ class TabTransformerObjective(Objective):
         optim_params = {"lr": lr, "weight_decay": weight_decay}
 
         self._clf = TransformerClassifier(
-            module=TabTransformer, module_params=module_params, optim_params=optim_params, dl_params=dl_params, features=self.x_train.columns.tolist(), callbacks=self._callbacks  # type: ignore
+            module=TabTransformer,  # type: ignore
+            module_params=module_params,
+            optim_params=optim_params,
+            dl_params=dl_params,
+            features=self.x_train.columns.tolist(),
+            callbacks=self._callbacks,
         )
 
         self._clf.fit(
@@ -329,8 +334,8 @@ class FTTransformerObjective(Objective):
         }
 
         module_params = {
-            "transformer": Transformer(**transformer_kwargs),
-            "feature_tokenizer": FeatureTokenizer(**feature_tokenizer_kwargs),
+            "transformer": Transformer(**transformer_kwargs),  # type: ignore
+            "feature_tokenizer": FeatureTokenizer(**feature_tokenizer_kwargs),  # type: ignore # noqa: E501
             "cat_features": self._cat_features,
             "cat_cardinalities": self._cat_cardinalities,
         }

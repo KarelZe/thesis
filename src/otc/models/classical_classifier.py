@@ -6,7 +6,7 @@ Both simple rules like quote rule or tick test or hybrids are included.
 
 from __future__ import annotations
 
-from typing import Any, List, Literal
+from typing import Any, Literal
 
 import numpy as np
 import numpy.typing as npt
@@ -377,8 +377,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Fit the classifier.
 
         Args:
-            X (pd.DataFrame): features
-            y (pd.Series): ground truth (ignored)
+            X (npt.NDArray | pd.DataFrame): features
+            y (npt.NDArray | pd.Series): ground truth (ignored)
             sample_weight (npt.NDArray, optional): Sample weights. Defaults to None.
 
         Raises:
@@ -451,7 +451,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Perform classification on test vectors X.
 
         Args:
-            X (pd.DataFrame): Feature matrix.
+            X (npt.NDArray | pd.DataFrame): Feature matrix.
 
         Raises:
             ValueError: X must be pd.DataFrame, as labels are required.
@@ -490,7 +490,6 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         # fill NaNs randomly with -1 and 1
         mask = np.isnan(pred)
         pred[mask] = rs.choice([-1, 1], pred.shape)[mask]
-
 
         # reset self.X_ to empty frame to minify memory usage
         self.X_ = pd.DataFrame()
