@@ -35,7 +35,7 @@ class TestClassicalClassifier:
         self.y_test = pd.Series([1, 1, -1, -1])
         self.columns = self.x_train.columns.tolist()
         self.random_classifier = ClassicalClassifier(
-            layers=[("nan", "ex")], random_state=42, columns=self.columns
+            layers=[("nan", "ex")], random_state=42, features=self.columns
         ).fit(self.x_train, self.y_train)
 
     def test_shapes(self) -> None:
@@ -55,12 +55,12 @@ class TestClassicalClassifier:
         Two classifiers with the same random state should give the same results.
         """
         first_classifier = ClassicalClassifier(
-            layers=[("nan", "ex")], random_state=50, columns=self.columns
+            layers=[("nan", "ex")], random_state=50, features=self.columns
         ).fit(self.x_train, self.y_train)
         first_y_pred = first_classifier.predict(self.x_test)
 
         second_classifier = ClassicalClassifier(
-            layers=[("nan", "ex")], random_state=50, columns=self.columns
+            layers=[("nan", "ex")], random_state=50, features=self.columns
         ).fit(self.x_train, self.y_train)
         second_y_pred = second_classifier.predict(self.x_test)
 
@@ -83,7 +83,7 @@ class TestClassicalClassifier:
         A fitted classifier should have an attribute `layers_`.
         """
         fitted_classifier = ClassicalClassifier(
-            layers=[("nan", "ex")], random_state=42, columns=self.columns
+            layers=[("nan", "ex")], random_state=42, features=self.columns
         ).fit(self.x_train, self.y_train)
         assert hasattr(fitted_classifier, "layers_")
 
@@ -95,7 +95,7 @@ class TestClassicalClassifier:
         Test for 'foo', which is no valid rule.
         """
         classifier = ClassicalClassifier(
-            layers=[("foo", "all")], random_state=42, columns=self.columns
+            layers=[("foo", "all")], random_state=42, features=self.columns
         )
         with pytest.raises(ValueError):
             classifier.fit(self.x_train, self.y_train)
@@ -108,7 +108,7 @@ class TestClassicalClassifier:
         Test for 'bar', which is no valid subset.
         """
         classifier = ClassicalClassifier(
-            layers=[("tick", "bar")], random_state=42, columns=self.columns
+            layers=[("tick", "bar")], random_state=42, features=self.columns
         )
         with pytest.raises(ValueError):
             classifier.fit(self.x_train, self.y_train)
@@ -122,7 +122,7 @@ class TestClassicalClassifier:
         Test for columns list of length 2, which does not match the data.
         """
         classifier = ClassicalClassifier(
-            layers=[("tick", "all")], random_state=42, columns=["one"]
+            layers=[("tick", "all")], random_state=42, features=["one"]
         )
         with pytest.raises(ValueError):
             classifier.fit(self.x_train, self.y_train)
@@ -148,7 +148,7 @@ class TestClassicalClassifier:
         fitted_classifier = ClassicalClassifier(
             layers=[("tick", "ex"), ("rev_tick", "all")],
             random_state=7,
-            columns=columns,
+            features=columns,
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -169,7 +169,7 @@ class TestClassicalClassifier:
         fitted_classifier = ClassicalClassifier(
             layers=[("tick", "ex"), ("rev_tick", "all")],
             random_state=7,
-            columns=columns,
+            features=columns,
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -197,7 +197,7 @@ class TestClassicalClassifier:
         y_test = pd.Series([-1, 1, 1, -1])
         columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("tick", subset)], random_state=7, columns=columns
+            layers=[("tick", subset)], random_state=7, features=columns
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -225,7 +225,7 @@ class TestClassicalClassifier:
         y_test = pd.Series([-1, 1, 1, -1])
         columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("rev_tick", subset)], random_state=7, columns=columns
+            layers=[("rev_tick", subset)], random_state=7, features=columns
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -260,7 +260,7 @@ class TestClassicalClassifier:
         y_test = pd.Series([-1, 1, 1, -1, -1, 1])
         columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("quote", subset)], random_state=45, columns=columns
+            layers=[("quote", subset)], random_state=45, features=columns
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -288,7 +288,7 @@ class TestClassicalClassifier:
         y_test = pd.Series([-1, 1, 1, -1])
         columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("lr", subset)], random_state=7, columns=columns
+            layers=[("lr", subset)], random_state=7, features=columns
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -323,7 +323,7 @@ class TestClassicalClassifier:
         y_test = pd.Series([-1, 1, 1, -1, -1, 1])
         columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("rev_lr", subset)], random_state=42, columns=columns
+            layers=[("rev_lr", subset)], random_state=42, features=columns
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -363,7 +363,7 @@ class TestClassicalClassifier:
         y_test = pd.Series([-1, 1, 1, -1, -1, 1])
         columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("emo", subset)], random_state=42, columns=columns
+            layers=[("emo", subset)], random_state=42, features=columns
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -398,7 +398,7 @@ class TestClassicalClassifier:
         y_test = pd.Series([-1, 1, 1, -1, -1, 1])
         columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("rev_emo", subset)], random_state=42, columns=columns
+            layers=[("rev_emo", subset)], random_state=42, features=columns
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -433,7 +433,7 @@ class TestClassicalClassifier:
         y_test = pd.Series([1, -1, 1, -1, 1, -1])
         columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("clnv", subset)], random_state=42, columns=columns
+            layers=[("clnv", subset)], random_state=42, features=columns
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -468,7 +468,7 @@ class TestClassicalClassifier:
         y_test = pd.Series([1, -1, 1, -1, 1, -1])
         columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("rev_clnv", subset)], random_state=5, columns=columns
+            layers=[("rev_clnv", subset)], random_state=5, features=columns
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -499,7 +499,7 @@ class TestClassicalClassifier:
         y_test = pd.Series([-1, 1, -1, 1, -1, 1])
         columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("trade_size", "ex")], random_state=42, columns=columns
+            layers=[("trade_size", "ex")], random_state=42, features=columns
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -541,7 +541,7 @@ class TestClassicalClassifier:
         y_test = pd.Series([1, -1, 1, 1, -1])
         columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("depth", "ex")], random_state=5, columns=columns
+            layers=[("depth", "ex")], random_state=5, features=columns
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()

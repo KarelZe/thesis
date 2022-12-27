@@ -32,7 +32,7 @@ class TestDataLoader:
         x = pd.DataFrame(np.arange(30).reshape(length, 3))
         y = pd.Series(np.arange(length))
 
-        training_data = TabDataset(x=x, y=y)
+        training_data = TabDataset(x=x, y=y, features=["a", "b", "c"])
         assert len(training_data) == length
 
     def test_invalid_len(self) -> None:
@@ -47,7 +47,7 @@ class TestDataLoader:
         y = pd.Series(np.arange(length + 1))
 
         with pytest.raises(AssertionError):
-            TabDataset(x=x, y=y)
+            TabDataset(x=x, y=y, features = ["a", "b", "c"])
 
     def test_invalid_unique_count(self) -> None:
         """
@@ -62,7 +62,7 @@ class TestDataLoader:
         y = pd.Series(np.arange(length))
 
         with pytest.raises(AssertionError):
-            TabDataset(x=x, y=y, cat_features=["a", "b"], cat_unique_counts=tuple([20]))
+            TabDataset(x=x, y=y, features=["a", "b", "c"], cat_features=["a", "b"], cat_unique_counts=tuple([20]))
 
     def test_with_cat_features(self) -> None:
         """
@@ -79,7 +79,7 @@ class TestDataLoader:
 
         # column a is categorical
         training_data = TabDataset(
-            x=x, y=y, cat_features=["a"], cat_unique_counts=tuple([100])
+            x=x, y=y, features=["a", "b", "c"], cat_features=["a"], cat_unique_counts=tuple([100])
         )
 
         true_x_cat = torch.tensor([[0], [3], [6]])
@@ -100,6 +100,6 @@ class TestDataLoader:
         y = pd.Series(np.arange(length))
 
         # no categorical features
-        training_data = TabDataset(x=x, y=y, cat_features=None, cat_unique_counts=None)
+        training_data = TabDataset(x=x, y=y, features=["a", "b", "c"], cat_features=None, cat_unique_counts=None)
 
         assert training_data.x_cat is None

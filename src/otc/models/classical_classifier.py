@@ -70,7 +70,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
                 str,
             ]
         ],
-        columns: list[str],
+        features: list[str],
         random_state: float | None,
     ):
         """
@@ -83,7 +83,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         """
         self.layers_ = layers
         self.random_state_ = random_state
-        self.columns_ = columns
+        self.features_ = features
 
     def _tick(self, subset: Literal["all", "ex"]) -> npt.NDArray:
         """
@@ -408,9 +408,9 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         # pylint: disable=W0201
         self.func_mapping_ = dict(zip(allowed_func_str, funcs))
 
-        if X.shape[1] != len(self.columns_):
+        if X.shape[1] != len(self.features_):
             raise ValueError(
-                f"Expected {len(self.columns_)} columns, got {X.shape[1]}."
+                f"Expected {len(self.features_)} columns, got {X.shape[1]}."
             )
 
         for func_str, subset in self.layers_:
@@ -466,7 +466,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
         self.X_: pd.DataFrame
         if isinstance(X, np.ndarray):
-            self.X_ = pd.DataFrame(data=X, columns=self.columns_)
+            self.X_ = pd.DataFrame(data=X, columns=self.features_)
         else:
             self.X_ = X
 
@@ -490,4 +490,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         # fill NaNs randomly with -1 and 1
         mask = np.isnan(pred)
         pred[mask] = rs.choice([-1, 1], pred.shape)[mask]
+
+
+        # reset self.X_ to empty frame to minify memory usage
+        self.X_ = pd.DataFrame()
         return pred

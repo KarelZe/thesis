@@ -20,89 +20,80 @@ from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.utils.validation import check_is_fitted
 from torch import einsum, nn
 
-from otc.data.data_loader import TabDataLoader
+import pandas as pd
+
+from otc.data.dataloader import TabDataLoader
 from otc.models.activation import GeGLU
 
 
+from torch import nn, optim
+
+from otc.data.dataloader import TabDataLoader
+from otc.data.dataset import TabDataset
+from otc.optim.early_stopping import EarlyStopping
+
+
 class TransformerClassifier(BaseEstimator, ClassifierMixin):
-    def __init__(self, module: nn.Module, module_params, dl_params) -> None:
+    def __init__(
+        self,
+        module: nn.Module,
+        module_params: Any,
+        dl_params: Any,
+        features: list[str],
+        callbacks,
+    ) -> None:
         self.module = module
 
         super().__init__()
-        self.model = None
 
-    def _ndarray_2_dataloader(
-        self, X: np.ndarray, y: np.ndarray | None
+        self._clf: nn.Module
+        self._module_params = module_params
+        self._dl_params = dl_params
+        self._features = features
+        self._callbacks = callbacks
+        self._epochs = 1024
+
+    def array_to_dataloader(
+        self, X: np.ndarray | pd.DataFrame, y: np.ndarray | pd.Series
     ) -> TabDataLoader:
-        pass
 
-    def fit(self, X: np.ndarray, y: np.ndarray, eval_set:Tuple[np.ndarray, np.ndarray] | None):
+        data = TabDataset(
+            X,
+            y,
+            self._module_params["cat_features"],
+            self._module_params["cat_cardinalities"],
+        )
 
+        return TabDataLoader(data.x_cat, data.x_cont, data.y, **self._dl_params)
 
-        dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
+    def fit(
+        self,
+        X: np.ndarray | pd.DataFrame,
+        y: np.ndarray | pd.Series,
+        eval_set: Tuple[np.ndarray, np.ndarray] | Tuple[pd.DataFrame, pd.Series] | None,
+    ):
 
-        # done similar to borisov
-        depth: int = trial.suggest_categorical("depth", [1, 2, 3, 6, 12])  # type: ignore ignore # noqa: E501
-        heads: int = trial.suggest_categorical("heads", [2, 4, 8])  # type: ignore
-        weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
-        lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
-        dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
-        batch_size: int = trial.suggest_categorical("batch_size", [16192, 32768, 65536])  # type: ignore # noqa: E501
-
-        no_devices = torch.cuda.device_count()
-        use_cuda = torch.cuda.is_available()
-        device = torch.device("cuda" if use_cuda else "cpu")
-
-
+        # use insample instead of validation set, if None is passed
         if eval_set is not None:
-        X_val, y_val = eval_set
+            X_val, y_val = eval_set
+        else:
+            X_val, y_val = X, y
 
-        train_loader = self._ndarray_2_dataloader(X, y)
+        train_loader = self.array_to_dataloader(X, y)
+        val_loader = self.array_to_dataloader(X_val, y_val)
 
-        training_data = TabDataset(
-            self.x_train, self.y_train, self._cat_features, self._cat_cardinalities
-        )
-        val_data = TabDataset(
-            self.x_val, self.y_val, self._cat_features, self._cat_cardinalities
-        )
+        self._clf = self.module(**self._module_params)
 
-        dl_kwargs: dict[str, Any] = {
-            "batch_size": batch_size
-            * max(
-                no_devices, 1
-            ),  # dataparallel splits tensors across devices by dim 1.
-            "shuffle": False,
-            "device": device,
-        }
-
-        # differentiate between continous features only and mixed.
-        train_loader = TabDataLoader(
-            training_data.x_cat, training_data.x_cont, training_data.y, **dl_kwargs
-        )
-        val_loader = TabDataLoader(
-            val_data.x_cat, val_data.x_cont, val_data.y, **dl_kwargs
-        )
-
-        self._clf = TabTransformer(
-            cat_cardinalities=self._cat_cardinalities,
-            num_continuous=len(self._cont_features),
-            dim_out=1,
-            mlp_act=nn.ReLU,
-            dim=dim,
-            depth=depth,
-            heads=heads,
-            attn_dropout=dropout,
-            ff_dropout=dropout,
-            mlp_hidden_mults=(4, 2),
-        )
         # use multiple gpus, if available
-        self._clf = nn.DataParallel(self._clf).to(device)
+        self._clf = nn.DataParallel(self._clf).to(self._dl_params["device"])
 
         # half precision, see https://pytorch.org/docs/stable/amp.html
         scaler = torch.cuda.amp.GradScaler()
         # Generate the optimizers
         optimizer = optim.AdamW(
-            self._clf.parameters(), lr=lr, weight_decay=weight_decay
+            self._clf.parameters(),
+            lr=self._module_params["lr"],
+            weight_decay=self._module_params["weight_decay"],
         )
 
         # see https://stackoverflow.com/a/53628783/5755604
@@ -111,9 +102,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=5)
-        accuracy = 0.0
 
-        for epoch in range(self.epochs):
+        for epoch in range(self._epochs):
 
             # perform training
             loss_in_epoch_train = 0
@@ -143,7 +133,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             self._clf.eval()
 
             loss_in_epoch_val = 0.0
-            correct = 0
+            # correct = 0
 
             with torch.no_grad():
                 for x_cat, x_cont, targets in val_loader:
@@ -153,108 +143,22 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                     val_loss = criterion(outputs, targets)
                     loss_in_epoch_val += val_loss.item()
 
-                    # convert to propability, then round to nearest integer
-                    outputs = torch.sigmoid(outputs).round()
-                    correct += (outputs == targets).sum().item()
+                    # # convert to propability, then round to nearest integer
+                    # outputs = torch.sigmoid(outputs).round()
+                    # correct += (outputs == targets).sum().item()
 
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
 
-            self._callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
+            self._callbacks.on_epoch_end(epoch, self._epochs, train_loss, val_loss)
 
             # return early if val loss doesn't decrease for several iterations
             early_stopping(val_loss)
             if early_stopping.early_stop:
                 break
 
-
-
-        self._clf = TabTransformer(
-            cat_cardinalities=self._cat_cardinalities,
-            num_continuous=len(self._cont_features),
-            dim_out=1,
-            mlp_act=nn.ReLU,
-            dim=dim,
-            depth=depth,
-            heads=heads,
-            attn_dropout=dropout,
-            ff_dropout=dropout,
-            mlp_hidden_mults=(4, 2),
-        )
-
-        # use multiple gpus, if available
-        self._clf = nn.DataParallel(self._clf).to(device)
-
-        # half precision, see https://pytorch.org/docs/stable/amp.html
-        scaler = torch.cuda.amp.GradScaler()
-        # Generate the optimizers
-        optimizer = optim.AdamW(
-            self._clf.parameters(), lr=lr, weight_decay=weight_decay
-        )
-
-        # see https://stackoverflow.com/a/53628783/5755604
-        # no sigmoid required; numerically more stable
-        criterion = nn.BCEWithLogitsLoss()
-
-        # keep track of val loss and do early stopping
-        early_stopping = EarlyStopping(patience=5)
-        accuracy = 0.0
-
-        for epoch in range(self.epochs):
-
-            # perform training
-            loss_in_epoch_train = 0
-
-            self._clf.train()
-
-            for x_cat, x_cont, targets in train_loader:
-
-                # reset the gradients back to zero
-                optimizer.zero_grad()
-
-                outputs = self._clf(x_cat, x_cont)
-                outputs = outputs.flatten()
-                with torch.cuda.amp.autocast():
-                    train_loss = criterion(outputs, targets)
-
-                # compute accumulated gradients
-                scaler.scale(train_loss).backward()
-
-                # perform parameter update based on current gradients
-                scaler.step(optimizer)
-                scaler.update()
-
-                # add the mini-batch training loss to epoch loss
-                loss_in_epoch_train += train_loss.item()
-
-            self._clf.eval()
-
-            loss_in_epoch_val = 0.0
-            correct = 0
-
-            with torch.no_grad():
-                for x_cat, x_cont, targets in val_loader:
-                    outputs = self._clf(x_cat, x_cont)
-                    outputs = outputs.flatten()
-
-                    val_loss = criterion(outputs, targets)
-                    loss_in_epoch_val += val_loss.item()
-
-                    # convert to propability, then round to nearest integer
-                    outputs = torch.sigmoid(outputs).round()
-                    correct += (outputs == targets).sum().item()
-
-            train_loss = loss_in_epoch_train / len(train_loader)
-            val_loss = loss_in_epoch_val / len(val_loader)
-
-            self._callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
-
-            # return early if val loss doesn't decrease for several iterations
-            early_stopping(val_loss)
-            if early_stopping.early_stop:
-                return self
-
-
+        # is fitted flag
+        self.is_fitted_ = True
         return self
 
     def predict(self, X: np.ndarray) -> np.ndarray:
@@ -265,14 +169,13 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         # check if there are attributes with trailing _
         check_is_fitted(self)
-
-        dl = self._ndarray_2_dataloader(X, None)
+        test_loader = self.array_to_dataloader(X, pd.Series(np.zeros(len(X))))
 
         self._clf.eval()
 
         probabilites = []
         with torch.no_grad():
-            for x_cat, x_cont, _ in dl:
+            for x_cat, x_cont, _ in test_loader:
                 probability = self._clf(x_cat, x_cont)
                 probability = probability.flatten()
                 probability = torch.sigmoid(probability)
