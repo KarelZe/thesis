@@ -494,3 +494,17 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         # reset self.X_ to empty frame to minify memory usage
         self.X_ = pd.DataFrame()
         return pred
+
+    def predict_proba(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
+        """
+        Predict class probabilities for X.
+
+        Probabilities are either 0 or 1 depending on the class.
+
+        Args:
+            X (npt.NDArray): feature matrix
+
+        Returns:
+            npt.NDArray: probabilities
+        """
+        return np.where(self.predict(X) < 0, 0, 1)

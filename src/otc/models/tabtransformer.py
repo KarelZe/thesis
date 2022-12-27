@@ -25,7 +25,6 @@ from torch import einsum, nn, optim
 from otc.data.dataloader import TabDataLoader
 from otc.data.dataset import TabDataset
 from otc.models.activation import GeGLU
-from otc.models.callback import CallbackContainer
 from otc.optim.early_stopping import EarlyStopping
 
 
@@ -50,7 +49,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         optim_params: dict[str, Any],
         dl_params: dict[str, Any],
         features: list[str],
-        callbacks: CallbackContainer,
+        callbacks: Any,
     ) -> None:
         """
         Initialize the model.
@@ -206,12 +205,12 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self.is_fitted_ = True
         return self
 
-    def predict(self, X: npt.NDArray) -> npt.NDArray:
+    def predict(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
         """
         Predict class labels for X.
 
         Args:
-            X (npt.NDArray): feature matrix
+            X (npt.NDArray | pd.DataFrame): feature matrix
 
         Returns:
             npt.NDArray: labels
@@ -220,12 +219,12 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         # convert probs to classes
         return np.where(probs > 0.5, 1, -1)
 
-    def predict_proba(self, X: npt.NDArray) -> npt.NDArray:
+    def predict_proba(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
         """
         Predict class probabilities for X.
 
         Args:
-            X (npt.NDArray): feature matrix
+            X (npt.NDArray | pd.DataFrame): feature matrix
 
         Returns:
             npt.NDArray: probabilities
