@@ -267,6 +267,7 @@ class FeatureTokenizer(nn.Module):
         num_continous: int,
         cat_cardinalities: list[int],
         d_token: int,
+        **kwargs: Any,
     ) -> None:
         """
         Initialize the module.
@@ -696,6 +697,7 @@ class Transformer(nn.Module):
         head_activation: Callable[..., nn.Module],
         head_normalization: Callable[..., nn.Module],
         d_out: int,
+        **kwargs: Any,
     ) -> None:
         """
         Initialize the module.
@@ -910,7 +912,10 @@ class FTTransformer(nn.Module):
     """
 
     def __init__(
-        self, feature_tokenizer: FeatureTokenizer, transformer: Transformer
+        self,
+        feature_tokenizer: FeatureTokenizer,
+        transformer: Transformer,
+        **kwargs: Any,
     ) -> None:
         """
         Initialize the module.

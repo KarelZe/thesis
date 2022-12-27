@@ -11,33 +11,31 @@ Also see: https://pytorch.org/docs/stable/_modules/torch/nn/modules/transformer.
 """
 from __future__ import annotations
 
-from typing import Any, Callable, Tuple
+from typing import Any, Callable
 
 import numpy as np
+import pandas as pd
 import torch
 import torch.nn.functional as F
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.utils.validation import check_is_fitted
-from torch import einsum, nn
-
-import pandas as pd
-
-from otc.data.dataloader import TabDataLoader
-from otc.models.activation import GeGLU
-
-
-from torch import nn, optim
+from torch import einsum, nn, optim
 
 from otc.data.dataloader import TabDataLoader
 from otc.data.dataset import TabDataset
+from otc.models.activation import GeGLU
 from otc.optim.early_stopping import EarlyStopping
 
 
 class TransformerClassifier(BaseEstimator, ClassifierMixin):
+
+    epochs = 1024
+
     def __init__(
         self,
         module: nn.Module,
         module_params: Any,
+        optim_params: Any,
         dl_params: Any,
         features: list[str],
         callbacks,
@@ -48,10 +46,10 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         self._clf: nn.Module
         self._module_params = module_params
+        self._optim_params = optim_params
         self._dl_params = dl_params
         self._features = features
         self._callbacks = callbacks
-        self._epochs = 1024
 
     def array_to_dataloader(
         self, X: np.ndarray | pd.DataFrame, y: np.ndarray | pd.Series
@@ -60,8 +58,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         data = TabDataset(
             X,
             y,
-            self._module_params["cat_features"],
-            self._module_params["cat_cardinalities"],
+            features=self._features,
+            cat_features=self._module_params["cat_features"],
+            cat_unique_counts=self._module_params["cat_cardinalities"],
         )
 
         return TabDataLoader(data.x_cat, data.x_cont, data.y, **self._dl_params)
@@ -70,11 +69,11 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self,
         X: np.ndarray | pd.DataFrame,
         y: np.ndarray | pd.Series,
-        eval_set: Tuple[np.ndarray, np.ndarray] | Tuple[pd.DataFrame, pd.Series] | None,
+        eval_set: tuple[np.ndarray, np.ndarray] | tuple[pd.DataFrame, pd.Series] | None,
     ):
 
         # use insample instead of validation set, if None is passed
-        if eval_set is not None:
+        if eval_set:
             X_val, y_val = eval_set
         else:
             X_val, y_val = X, y
@@ -92,8 +91,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         # Generate the optimizers
         optimizer = optim.AdamW(
             self._clf.parameters(),
-            lr=self._module_params["lr"],
-            weight_decay=self._module_params["weight_decay"],
+            lr=self._optim_params["lr"],
+            weight_decay=self._optim_params["weight_decay"],
         )
 
         # see https://stackoverflow.com/a/53628783/5755604
@@ -103,7 +102,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=5)
 
-        for epoch in range(self._epochs):
+        for epoch in range(self.epochs):
 
             # perform training
             loss_in_epoch_train = 0
@@ -150,7 +149,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
 
-            self._callbacks.on_epoch_end(epoch, self._epochs, train_loss, val_loss)
+            self._callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
 
             # return early if val loss doesn't decrease for several iterations
             early_stopping(val_loss)
@@ -498,6 +497,7 @@ class TabTransformer(nn.Module):
         continuous_mean_std: torch.Tensor | None = None,
         attn_dropout: float = 0.0,
         ff_dropout: float = 0.0,
+        **kwargs: Any,
     ):
         """
         TabTransformer.

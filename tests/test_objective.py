@@ -15,6 +15,7 @@ from otc.models.objective import (
     GradientBoostingObjective,
     TabTransformerObjective,
 )
+from otc.models.tabtransformer import TransformerClassifier
 
 
 class TestObjectives:
@@ -124,7 +125,7 @@ class TestObjectives:
             cat_cardinalities=[],
         )
 
-        with patch.object(objective, "epochs", 1):
+        with patch.object(TransformerClassifier, "epochs", 1):
             study.enqueue_trial(params)
             study.optimize(objective, n_trials=1)
 
@@ -158,7 +159,7 @@ class TestObjectives:
             cat_cardinalities=[],
         )
 
-        with patch.object(objective, "epochs", 1):
+        with patch.object(TransformerClassifier, "epochs", 1):
             study.enqueue_trial(params)
             study.optimize(objective, n_trials=1)
 

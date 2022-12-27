@@ -153,8 +153,6 @@ class TabTransformerObjective(Objective):
         self._callbacks = CallbackContainer([SaveCallback(), PrintCallback()])
         self._clf: BaseEstimator
 
-        # static params
-        self.epochs = 1024
         super().__init__(x_train, y_train, x_val, y_val, name)
 
     def __call__(self, trial: optuna.Trial) -> float:
@@ -198,15 +196,15 @@ class TabTransformerObjective(Objective):
             "mlp_hidden_mults": (4, 2),
             "attn_dropout": dropout,
             "ff_dropout": dropout,
-            "weight_decay": weight_decay,
-            "lr": lr,
             "cat_features": self._cat_features,
             "cat_cardinalities": self._cat_cardinalities,
-            "num_continous": len(self._cont_features),
+            "num_continuous": len(self._cont_features),
         }
 
+        optim_params = {"lr": lr, "weight_decay": weight_decay}
+
         self._clf = TransformerClassifier(
-            module=TabTransformer, module_params=module_params, dl_params=dl_params, features=self.x_train.columns.tolist(), callbacks=self._callbacks  # type: ignore
+            module=TabTransformer, module_params=module_params, optim_params=optim_params, dl_params=dl_params, features=self.x_train.columns.tolist(), callbacks=self._callbacks  # type: ignore
         )
 
         self._clf.fit(
@@ -262,9 +260,6 @@ class FTTransformerObjective(Objective):
 
         self._clf: BaseEstimator
         self._callbacks = CallbackContainer([SaveCallback(), PrintCallback()])
-
-        # static params
-        self.epochs = 1024
 
         super().__init__(x_train, y_train, x_val, y_val, name)
 
@@ -334,17 +329,18 @@ class FTTransformerObjective(Objective):
         }
 
         module_params = {
-            "weight_decay": weight_decay,
-            "lr": lr,
             "transformer": Transformer(**transformer_kwargs),
             "feature_tokenizer": FeatureTokenizer(**feature_tokenizer_kwargs),
             "cat_features": self._cat_features,
             "cat_cardinalities": self._cat_cardinalities,
         }
 
+        optim_params = {"lr": lr, "weight_decay": weight_decay}
+
         self._clf = TransformerClassifier(
             module=FTTransformer,
             module_params=module_params,
+            optim_params=optim_params,
             dl_params=dl_params,
             features=self.x_train.columns.tolist(),
             callbacks=self._callbacks,  # type: ignore # noqa: E501
@@ -387,7 +383,7 @@ class ClassicalObjective(Objective):
             y_val (pd.Series): ground truth (val)
             name (str, optional): Name of objective. Defaults to "default".
         """
-        self._callbacks = CallbackContainer([])
+        self._callbacks = CallbackContainer([SaveCallback()])
         super().__init__(x_train, y_train, x_val, y_val, name)
 
     def __call__(self, trial: optuna.Trial) -> float:
@@ -566,6 +562,5 @@ class GradientBoostingObjective(Objective):
             callbacks=None,
         )
 
-        print(self._clf.get_all_params())
         # calculate accuracy
         return self._clf.score(self._val_pool)  # type: ignore
