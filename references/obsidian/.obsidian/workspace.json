@@ -22,18 +22,6 @@
             }
           },
           {
-            "id": "3852a2023409df60",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "❓Questions.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "1e52354404ef27d3",
             "type": "leaf",
             "state": {
@@ -45,8 +33,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -104,7 +91,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "❓Questions.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -132,7 +119,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "❓Questions.md"
+                "file": "TOC.md"
               }
             }
           }
@@ -153,17 +140,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "3852a2023409df60",
+  "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
+    "❓Questions.md",
+    "empty files.md",
+    "orphaned files output.md",
+    "files without tags.md",
+    "broken links output.md",
+    "🖼️Media/attention-algo.png",
+    "chapters/comparsion.md",
     "TOC.md",
     "chapters/depth_rule.md",
-    "❓Questions.md",
-    "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
-    "Semi-supervised Learning/@clarkELECTRAPretrainingText2020.md",
-    "chapters/🪛feature engineering.md",
-    "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
-    "chapters/tradesize_rule.md",
-    "chapters/clnv_method.md",
-    "chapters/🌴exploratory_data_analysis.md"
+    "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md"
   ]
 }
