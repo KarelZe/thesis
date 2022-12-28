@@ -13,6 +13,7 @@ import numpy.typing as npt
 import pandas as pd
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.utils import check_random_state
+from sklearn.utils.multiclass import check_classification_targets
 from sklearn.utils.validation import (
     _check_sample_weight,
     check_array,
@@ -93,9 +94,14 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
         See: https://scikit-learn.org/stable/developers/develop.html#estimator-tags
         """
-        # FIXME: Try enabling _skip_test again. Skip tests, as there is no option to
-        # get test right if there is just one class.
-        return {"allow_nan": True, "binary_only": True, "_skip_test": True}
+        # FIXME: Try enabling _skip_test again. Skip tests, as prediction is not
+        # invariant and parameters immutable.
+        return {
+            "allow_nan": True,
+            "binary_only": True,
+            "_skip_test": True,
+            "poor_score": True,
+        }
 
     def _tick(self, subset: Literal["all", "ex"]) -> npt.NDArray:
         """
@@ -421,25 +427,26 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         # pylint: disable=W0201
         self.func_mapping_ = dict(zip(allowed_func_str, funcs))
 
-        # get features from pd.DataFrame
+        # create working copy to be altered and try to get columns from df
+        self.columns_ = self.features
         if isinstance(X, pd.DataFrame):
-            self.features = X.columns.tolist()
+            self.columns_ = X.columns.tolist()
+
+        check_classification_targets(y)
 
         X, y = check_X_y(
             X, y, multi_output=False, accept_sparse=False, force_all_finite=False
         )
 
-        # if no features are provided or inferred, use default
-        if not self.features:
-            self.features = [str(i) for i in range(X.shape[1])]
+        self.classes_ = np.unique(y)
 
-        if (
-            self.features
-            and len(self.features) > 0
-            and X.shape[1] != len(self.features)
-        ):
+        # if no features are provided or inferred, use default
+        if not self.columns_:
+            self.columns_ = [str(i) for i in range(X.shape[1])]
+
+        if len(self.columns_) > 0 and X.shape[1] != len(self.columns_):
             raise ValueError(
-                f"Expected {len(self.features)} columns, got {X.shape[1]}."
+                f"Expected {len(self.columns_)} columns, got {X.shape[1]}."
             )
 
         for func_str, subset in self.layers:
@@ -472,7 +479,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
         X = check_array(X, accept_sparse=False, force_all_finite=False)
 
-        self.X_ = pd.DataFrame(data=X, columns=self.features)
+        self.X_ = pd.DataFrame(data=X, columns=self.columns_)
 
         mapping_cols = {"BEST_ASK": "ask_best", "BEST_BID": "bid_best"}
         # pylint: disable=W0201, C0103
@@ -486,6 +493,10 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
                 np.isnan(pred),
                 func(subset),  # type: ignore
                 pred,
+                #     ).astype(self.classes_.dtype)
+                # # fill NaNs randomly with classes e. g., [-1, 1]
+                # mask = np.isnan(pred)
+                # pred[mask] = rs.choice(self.classes_, pred.shape)[mask]
             )
 
         # fill NaNs randomly with -1 and 1
@@ -493,7 +504,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         pred[mask] = rs.choice([-1, 1], pred.shape)[mask]
 
         # reset self.X_ to empty frame to minify memory usage
-        self.X_ = pd.DataFrame()
+        del self.X_
         return pred
 
     def predict_proba(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
@@ -508,4 +519,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Returns:
             npt.NDArray: probabilities
         """
-        return np.where(self.predict(X) < 0, 0, 1)
+        indices = np.where(self.predict(X)[:, None] == self.classes_[None, :])[1]
+        n_classes = np.max(self.classes_) + 1
+
+        return np.identity(n_classes)[indices]

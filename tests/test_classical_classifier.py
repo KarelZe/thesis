@@ -94,7 +94,7 @@ class TestClassicalClassifier:
         Probabilities should be 0 for class -1 and 1 for class 1.
         """
         proba = self.random_classifier.predict_proba(self.x_test)
-        true_proba = np.where(self.y_test < 0, 0, 1)
+        true_proba = np.array([[0, 1], [1, 0], [0, 1], [1, 0]])
         assert (proba == true_proba).all()
 
     def test_fit(self) -> None:
@@ -163,7 +163,7 @@ class TestClassicalClassifier:
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
             columns=["TRADE_PRICE", "price_ex_lag", "price_all_lead"],
         )
-        y_train = pd.Series([0, 0, 0])
+        y_train = pd.Series([-1, 1, -1])
         x_test = pd.DataFrame(
             [[1, 2, 0], [2, 1, 3]],
             columns=["TRADE_PRICE", "price_ex_lag", "price_all_lead"],
@@ -210,7 +210,7 @@ class TestClassicalClassifier:
         x_train = pd.DataFrame(
             [[0, 0], [0, 0], [0, 0]], columns=["TRADE_PRICE", f"price_{subset}_lag"]
         )
-        y_train = pd.Series([0, 0, 0])
+        y_train = pd.Series([-1, 1, -1])
         x_test = pd.DataFrame(
             [[1, 2], [2, 1], [1, 1], [1, np.nan]],
             columns=["TRADE_PRICE", f"price_{subset}_lag"],
@@ -238,7 +238,7 @@ class TestClassicalClassifier:
         x_train = pd.DataFrame(
             [[0, 0], [0, 0], [0, 0]], columns=["TRADE_PRICE", f"price_{subset}_lead"]
         )
-        y_train = pd.Series([0, 0, 0])
+        y_train = pd.Series([-1, 1, -1])
         x_test = pd.DataFrame(
             [[1, 2], [2, 1], [1, 1], [1, np.nan]],
             columns=["TRADE_PRICE", f"price_{subset}_lead"],
@@ -266,7 +266,7 @@ class TestClassicalClassifier:
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}"],
         )
-        y_train = pd.Series([0, 0, 0])
+        y_train = pd.Series([-1, 1, -1])
         # first two by rule (see p. 28 Grauer et al.), remaining four by random chance.
         x_test = pd.DataFrame(
             [
@@ -300,7 +300,7 @@ class TestClassicalClassifier:
             [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}", "price_all_lag"],
         )
-        y_train = pd.Series([0, 0, 0])
+        y_train = pd.Series([-1, 1, -1])
         # first two by quote rule, remaining two by tick rule.
         x_test = pd.DataFrame(
             [[1, 1, 3, 0], [3, 1, 3, 0], [1, 1, 1, 0], [3, 2, 4, 4]],
@@ -327,7 +327,7 @@ class TestClassicalClassifier:
             [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}", "price_all_lead"],
         )
-        y_train = pd.Series([0, 0, 0])
+        y_train = pd.Series([-1, 1, -1])
         # first two by quote rule, two by tick rule, and two by random chance.
         x_test = pd.DataFrame(
             [
@@ -361,7 +361,7 @@ class TestClassicalClassifier:
             [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}", "price_all_lag"],
         )
-        y_train = pd.Series([0, 0, 0])
+        y_train = pd.Series([-1, 1, -1])
         # first two by quote rule, two by tick rule, two by random chance.
         x_test = pd.DataFrame(
             [
@@ -400,7 +400,7 @@ class TestClassicalClassifier:
             [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}", "price_all_lead"],
         )
-        y_train = pd.Series([0, 0, 0])
+        y_train = pd.Series([-1, 1, -1])
         # first two by quote rule, two by tick rule, two by random chance.
         x_test = pd.DataFrame(
             [
@@ -434,7 +434,7 @@ class TestClassicalClassifier:
             [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}", "price_all_lag"],
         )
-        y_train = pd.Series([0, 0, 0])
+        y_train = pd.Series([-1, 1, -1])
         # first two by quote rule, two by tick rule, two by random chance.
         x_test = pd.DataFrame(
             [
@@ -468,7 +468,7 @@ class TestClassicalClassifier:
             [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}", "price_all_lead"],
         )
-        y_train = pd.Series([0, 0, 0])
+        y_train = pd.Series([-1, 1, -1])
         # .
         x_test = pd.DataFrame(
             [
@@ -498,7 +498,7 @@ class TestClassicalClassifier:
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
             columns=["TRADE_SIZE", "ask_size_ex", "bid_size_ex"],
         )
-        y_train = pd.Series([0, 0, 0])
+        y_train = pd.Series([-1, 1, -1])
         # first two by trade size, random, at bid size, random, random.
         x_test = pd.DataFrame(
             [
@@ -534,7 +534,7 @@ class TestClassicalClassifier:
                 "TRADE_PRICE",
             ],
         )
-        y_train = pd.Series([0, 0, 0, 0])
+        y_train = pd.Series([-1, 1, -1, 1])
         # first three by depth, all other random as mid is different from trade price.
         x_test = pd.DataFrame(
             [
