@@ -433,7 +433,7 @@ class TabTransformer(nn.Module):
             x_cont (torch.Tensor): tensor with continous data.
 
         Returns:
-            torch.Tensor: probabilitys
+            torch.Tensor: probabilities
         """
         flat_categ: torch.Tensor | None = None
 

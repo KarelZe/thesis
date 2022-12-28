@@ -223,6 +223,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         """
         # check if there are attributes with trailing _
         check_is_fitted(self)
+
         test_loader = self.array_to_dataloader(X, pd.Series(np.zeros(len(X))))
 
         self._clf.eval()

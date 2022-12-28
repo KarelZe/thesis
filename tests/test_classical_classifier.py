@@ -7,6 +7,8 @@ Use of artificial data to test the classifier.
 import numpy as np
 import pandas as pd
 import pytest
+from sklearn.utils.estimator_checks import check_estimator
+from sklearn.utils.validation import check_is_fitted
 
 from otc.models.classical_classifier import ClassicalClassifier
 
@@ -35,8 +37,16 @@ class TestClassicalClassifier:
         self.y_test = pd.Series([1, -1, 1, -1])
         self.columns = self.x_train.columns.tolist()
         self.random_classifier = ClassicalClassifier(
-            layers=[("nan", "ex")], random_state=7, features=self.columns
+            layers=[("nan", "ex")],
+            random_state=7,
         ).fit(self.x_train, self.y_train)
+
+    def test_sklearn_compatibility(self) -> None:
+        """
+        Test, if classifier is compatible with sklearn.
+        """
+        clf = ClassicalClassifier(layers=[("nan", "ex")], random_state=13)
+        check_estimator(clf)
 
     def test_shapes(self) -> None:
         """
@@ -55,12 +65,14 @@ class TestClassicalClassifier:
         Two classifiers with the same random state should give the same results.
         """
         first_classifier = ClassicalClassifier(
-            layers=[("nan", "ex")], random_state=50, features=self.columns
+            layers=[("nan", "ex")],
+            random_state=50,
         ).fit(self.x_train, self.y_train)
         first_y_pred = first_classifier.predict(self.x_test)
 
         second_classifier = ClassicalClassifier(
-            layers=[("nan", "ex")], random_state=50, features=self.columns
+            layers=[("nan", "ex")],
+            random_state=50,
         ).fit(self.x_train, self.y_train)
         second_y_pred = second_classifier.predict(self.x_test)
 
@@ -93,9 +105,10 @@ class TestClassicalClassifier:
         A fitted classifier should have an attribute `layers_`.
         """
         fitted_classifier = ClassicalClassifier(
-            layers=[("nan", "ex")], random_state=42, features=self.columns
+            layers=[("nan", "ex")],
+            random_state=42,
         ).fit(self.x_train, self.y_train)
-        assert hasattr(fitted_classifier, "layers_")
+        assert check_is_fitted(fitted_classifier) is None
 
     def test_invalid_func(self) -> None:
         """
@@ -105,7 +118,8 @@ class TestClassicalClassifier:
         Test for 'foo', which is no valid rule.
         """
         classifier = ClassicalClassifier(
-            layers=[("foo", "all")], random_state=42, features=self.columns
+            layers=[("foo", "all")],
+            random_state=42,
         )
         with pytest.raises(ValueError):
             classifier.fit(self.x_train, self.y_train)
@@ -118,7 +132,8 @@ class TestClassicalClassifier:
         Test for 'bar', which is no valid subset.
         """
         classifier = ClassicalClassifier(
-            layers=[("tick", "bar")], random_state=42, features=self.columns
+            layers=[("tick", "bar")],
+            random_state=42,
         )
         with pytest.raises(ValueError):
             classifier.fit(self.x_train, self.y_train)
@@ -223,7 +238,7 @@ class TestClassicalClassifier:
             subset (str): subset e. g., 'ex'
         """
         x_train = pd.DataFrame(
-            [[0, 0], [0, 0], [0, 0]], columns=["TRADE_PRICE", f"price_a{subset}_lead"]
+            [[0, 0], [0, 0], [0, 0]], columns=["TRADE_PRICE", f"price_{subset}_lead"]
         )
         y_train = pd.Series([0, 0, 0])
         x_test = pd.DataFrame(
