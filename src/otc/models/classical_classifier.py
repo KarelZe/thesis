@@ -421,9 +421,17 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         # pylint: disable=W0201
         self.func_mapping_ = dict(zip(allowed_func_str, funcs))
 
+        # get features from pd.DataFrame
+        if isinstance(X, pd.DataFrame):
+            self.features = X.columns.tolist()
+
         X, y = check_X_y(
             X, y, multi_output=False, accept_sparse=False, force_all_finite=False
         )
+
+        # if no features are provided or inferred, use default
+        if not self.features:
+            self.features = [str(i) for i in range(X.shape[1])]
 
         if (
             self.features
@@ -462,15 +470,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
         rs = check_random_state(self.random_state)
 
-        # get features from pd.DataFrame
-        if isinstance(X, pd.DataFrame):
-            self.features = X.columns.tolist()
-
         X = check_array(X, accept_sparse=False, force_all_finite=False)
-
-        # if no features are provided or inferred, use default
-        if not self.features:
-            self.features = [f"feature_{i}" for i in range(X.shape[1])]
 
         self.X_ = pd.DataFrame(data=X, columns=self.features)
 

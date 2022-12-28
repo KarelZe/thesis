@@ -209,7 +209,6 @@ class TabTransformerObjective(Objective):
             module_params=module_params,
             optim_params=optim_params,
             dl_params=dl_params,
-            features=self.x_train.columns.tolist(),
             callbacks=self._callbacks,
         )
 
@@ -348,7 +347,6 @@ class FTTransformerObjective(Objective):
             module_params=module_params,
             optim_params=optim_params,
             dl_params=dl_params,
-            features=self.x_train.columns.tolist(),
             callbacks=self._callbacks,  # type: ignore # noqa: E501
         )
 

@@ -23,7 +23,7 @@ class TabDataset(Dataset):
         self,
         x: pd.DataFrame | npt.ndarray,
         y: pd.Series | npt.ndarray,
-        features: list[str],
+        features: list[str] | None = None,
         cat_features: list[str] | None = None,
         cat_unique_counts: tuple[int, ...] | None = None,
     ):
@@ -41,15 +41,13 @@ class TabDataset(Dataset):
         self._cat_unique_counts = () if not cat_unique_counts else cat_unique_counts
 
         # calculate cat indices
-        self._features = features
+        features = [] if not features else features
         cat_features = [] if not cat_features else cat_features
-        self._cat_idx = [features.index(i) for i in cat_features if i in self._features]
+        self._cat_idx = [features.index(i) for i in cat_features if i in features]
 
         # calculate cont indices
         cont_features = [f for f in features if f not in cat_features]
-        self._cont_idx = [
-            features.index(i) for i in cont_features if i in self._features
-        ]
+        self._cont_idx = [features.index(i) for i in cont_features if i in features]
 
         # pd 2 np
         x = x.values if isinstance(x, pd.DataFrame) else x
