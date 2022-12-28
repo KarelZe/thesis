@@ -142,14 +142,15 @@ class TestClassicalClassifier:
         Test, if only valid column length can be passed.
 
         An exception should be raised if length of columns list does not match
-        the number of columns in the data.
-        Test for columns list of length 2, which does not match the data.
+        the number of columns in the data. `features` is only used if, data is
+        not passed as `pd.DataFrame`.Test for columns list of length 2, which
+        does not match the data.
         """
         classifier = ClassicalClassifier(
             layers=[("tick", "all")], random_state=42, features=["one"]
         )
         with pytest.raises(ValueError):
-            classifier.fit(self.x_train, self.y_train)
+            classifier.fit(self.x_train.values, self.y_train.values)
 
     def test_override(self) -> None:
         """
