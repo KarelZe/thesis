@@ -77,9 +77,11 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Initialize a ClassicalClassifier.
 
         Args:
-            layers (List[Tuple[str, str]]): Layers of classical rule. Up to 4 possible.
-            If fewer layers are needed use ("nan","ex").
-            random_state (float, optional): random seed. Defaults to None.
+            layers (list[ tuple[ str, str, ] ]): Layers of classical rule.
+            features (list[str] | None, optional): List of feature names in order of
+            columns. Required to match columns in feature matrix with label.
+            Can be `None`, if `pd.DataFrame` is passed. Defaults to None.
+            random_state (float | None, optional): random seed. Defaults to 42.
         """
         self.layers = layers
         self.random_state = random_state
@@ -90,10 +92,9 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Set tags for sklearn.
 
         See: https://scikit-learn.org/stable/developers/develop.html#estimator-tags
-
-        Skip tests, as there is no option to get test right if there is just one class.
         """
-        # FIXME: Try enabling _skip_test again
+        # FIXME: Try enabling _skip_test again. Skip tests, as there is no option to
+        # get test right if there is just one class.
         return {"allow_nan": True, "binary_only": True, "_skip_test": True}
 
     def _tick(self, subset: Literal["all", "ex"]) -> npt.NDArray:
@@ -390,7 +391,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Args:
             X (npt.NDArray | pd.DataFrame): features
             y (npt.NDArray | pd.Series): ground truth (ignored)
-            sample_weight (npt.NDArray, optional): Sample weights. Defaults to None.
+            sample_weight (npt.NDArray | None, optional):  Sample weights.
+            Defaults to None.
 
         Raises:
             ValueError: Unknown subset e. g., 'ise'
@@ -398,7 +400,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             ValueError: Multi output is not supported.
 
         Returns:
-            TCRClassifier: Instance itself.
+            ClassicalClassifier: Instance of itself.
         """
         _check_sample_weight(sample_weight, X)
 
@@ -448,14 +450,10 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
     # pylint: disable=C0103
     def predict(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
         """
-        Perform classification on test vectors X.
+        Perform classification on test vectors `X`.
 
         Args:
-            X (npt.NDArray | pd.DataFrame): Feature matrix.
-
-
-        Raises:
-            ValueError: X must be pd.DataFrame, as labels are required.
+            X (npt.NDArray | pd.DataFrame): feature matrix.
 
         Returns:
             npt.NDArray: Predicted traget values for X.
@@ -505,7 +503,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Probabilities are either 0 or 1 depending on the class.
 
         Args:
-            X (npt.NDArray): feature matrix
+            X (npt.NDArray | pd.DataFrame): feature matrix
 
         Returns:
             npt.NDArray: probabilities
