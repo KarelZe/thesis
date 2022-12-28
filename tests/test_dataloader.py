@@ -34,8 +34,13 @@ class TestDataLoader:
         )
         y = pd.Series(np.arange(length))
 
-        training_data = TabDataset(x=x, y=y, features=["a","b", "c"],
-         cat_features=None, cat_unique_counts=None)
+        training_data = TabDataset(
+            x=x,
+            y=y,
+            features=["a", "b", "c"],
+            cat_features=None,
+            cat_unique_counts=None,
+        )
         data_loader = TabDataLoader(
             training_data.x_cat,
             training_data.x_cont,
@@ -62,7 +67,11 @@ class TestDataLoader:
 
         # column a is categorical
         training_data = TabDataset(
-            x=x, y=y, cat_features=["a"],features=["a","b", "c"], cat_unique_counts=tuple([100])
+            x=x,
+            y=y,
+            cat_features=["a"],
+            features=["a", "b", "c"],
+            cat_unique_counts=tuple([100]),
         )
         train_loader = TabDataLoader(
             training_data.x_cat,
@@ -89,7 +98,13 @@ class TestDataLoader:
         y = pd.Series(np.arange(length))
 
         # no categorical features
-        training_data = TabDataset(x=x, y=y,features=["a","b", "c"], cat_features=None, cat_unique_counts=None)
+        training_data = TabDataset(
+            x=x,
+            y=y,
+            features=["a", "b", "c"],
+            cat_features=None,
+            cat_unique_counts=None,
+        )
         train_loader = TabDataLoader(
             training_data.x_cat,
             training_data.x_cont,

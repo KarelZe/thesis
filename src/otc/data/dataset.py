@@ -6,11 +6,11 @@ Supports both categorical and continous data.
 
 from __future__ import annotations
 
+import numpy.typing as npt
 import pandas as pd
 import torch
 from torch.utils.data import Dataset
 
-import numpy.typing as npt
 
 class TabDataset(Dataset):
     """PyTorch Dataset for tabular data.
@@ -47,7 +47,9 @@ class TabDataset(Dataset):
 
         # calculate cont indices
         cont_features = [f for f in features if f not in cat_features]
-        self._cont_idx = [features.index(i) for i in cont_features if i in self._features]
+        self._cont_idx = [
+            features.index(i) for i in cont_features if i in self._features
+        ]
 
         # pd 2 np
         x = x.values if isinstance(x, pd.DataFrame) else x
