@@ -248,9 +248,8 @@ class TestClassicalClassifier:
 
         # first two by rule (see p. 28 Grauer et al.), remaining two by random chance.
         y_test = pd.Series([-1, 1, 1, -1])
-        columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("rev_tick", subset)], random_state=7, features=columns
+            layers=[("rev_tick", subset)], random_state=7
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -283,9 +282,8 @@ class TestClassicalClassifier:
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}"],
         )
         y_test = pd.Series([-1, 1, 1, -1, -1, 1])
-        columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("quote", subset)], random_state=45, features=columns
+            layers=[("quote", subset)], random_state=45
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -311,9 +309,8 @@ class TestClassicalClassifier:
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}", "price_all_lag"],
         )
         y_test = pd.Series([-1, 1, 1, -1])
-        columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("lr", subset)], random_state=7, features=columns
+            layers=[("lr", subset)], random_state=7
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -346,9 +343,8 @@ class TestClassicalClassifier:
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}", "price_all_lead"],
         )
         y_test = pd.Series([-1, 1, 1, -1, -1, 1])
-        columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("rev_lr", subset)], random_state=42, features=columns
+            layers=[("rev_lr", subset)], random_state=42
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -386,9 +382,8 @@ class TestClassicalClassifier:
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}", "price_all_lag"],
         )
         y_test = pd.Series([-1, 1, 1, -1, -1, 1])
-        columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("emo", subset)], random_state=42, features=columns
+            layers=[("emo", subset)], random_state=42
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -421,9 +416,8 @@ class TestClassicalClassifier:
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}", "price_all_lead"],
         )
         y_test = pd.Series([-1, 1, 1, -1, -1, 1])
-        columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("rev_emo", subset)], random_state=42, features=columns
+            layers=[("rev_emo", subset)], random_state=42
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -456,9 +450,8 @@ class TestClassicalClassifier:
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}", "price_all_lag"],
         )
         y_test = pd.Series([1, -1, 1, -1, 1, -1])
-        columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("clnv", subset)], random_state=42, features=columns
+            layers=[("clnv", subset)], random_state=42
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -491,9 +484,8 @@ class TestClassicalClassifier:
             columns=["TRADE_PRICE", f"ask_{subset}", f"bid_{subset}", "price_all_lead"],
         )
         y_test = pd.Series([1, -1, 1, -1, 1, -1])
-        columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("rev_clnv", subset)], random_state=5, features=columns
+            layers=[("rev_clnv", subset)], random_state=5
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -522,9 +514,8 @@ class TestClassicalClassifier:
             columns=["TRADE_SIZE", "ask_size_ex", "bid_size_ex"],
         )
         y_test = pd.Series([-1, 1, -1, 1, -1, 1])
-        columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("trade_size", "ex")], random_state=42, features=columns
+            layers=[("trade_size", "ex")], random_state=42
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -564,9 +555,8 @@ class TestClassicalClassifier:
             ],
         )
         y_test = pd.Series([1, -1, 1, 1, -1])
-        columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("depth", "ex")], random_state=5, features=columns
+            layers=[("depth", "ex")], random_state=5
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
