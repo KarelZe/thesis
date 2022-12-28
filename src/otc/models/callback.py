@@ -21,7 +21,7 @@ from catboost import CatBoostClassifier
 import wandb
 from otc.config.config import settings
 from otc.data.fs import fs
-from otc.models.tabtransformer import TransformerClassifier
+from otc.models.transformer_classifier import TransformerClassifier
 from otc.utils.colors import Colors
 
 logger = logging.getLogger(__name__)

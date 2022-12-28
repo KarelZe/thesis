@@ -1,5 +1,5 @@
 """
-Implements classical trade classification rules.
+Implements classical trade classification rules with a sklearn-like interface.
 
 Both simple rules like quote rule or tick test or hybrids are included.
 """

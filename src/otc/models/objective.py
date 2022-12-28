@@ -23,7 +23,8 @@ from otc.models.activation import ReGLU
 from otc.models.callback import CallbackContainer, PrintCallback, SaveCallback
 from otc.models.classical_classifier import ClassicalClassifier
 from otc.models.fttransformer import FeatureTokenizer, FTTransformer, Transformer
-from otc.models.tabtransformer import TabTransformer, TransformerClassifier
+from otc.models.tabtransformer import TabTransformer
+from otc.models.transformer_classifier import TransformerClassifier
 
 
 def set_seed(seed_val: int = 42) -> int:

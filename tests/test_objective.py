@@ -15,7 +15,7 @@ from otc.models.objective import (
     GradientBoostingObjective,
     TabTransformerObjective,
 )
-from otc.models.tabtransformer import TransformerClassifier
+from otc.models.transformer_classifier import TransformerClassifier
 
 
 class TestObjectives:
