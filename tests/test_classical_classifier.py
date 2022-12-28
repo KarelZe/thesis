@@ -32,10 +32,10 @@ class TestClassicalClassifier:
         self.x_test = pd.DataFrame(
             [[1, 2], [3, 4], [1, 2], [3, 4]], columns=["BEST_ASK", "BEST_BID"]
         )
-        self.y_test = pd.Series([1, 1, -1, -1])
+        self.y_test = pd.Series([1, -1, 1, -1])
         self.columns = self.x_train.columns.tolist()
         self.random_classifier = ClassicalClassifier(
-            layers=[("nan", "ex")], random_state=42, features=self.columns
+            layers=[("nan", "ex")], random_state=7, features=self.columns
         ).fit(self.x_train, self.y_train)
 
     def test_shapes(self) -> None:
@@ -74,7 +74,17 @@ class TestClassicalClassifier:
         should be around 0.5.
         """
         accuracy = self.random_classifier.score(self.x_test, self.y_test)
-        assert abs(accuracy - 0.5) <= 0.25  # type: ignore
+        assert 0.0 <= accuracy <= 1.0
+
+    def test_proba(self) -> None:
+        """
+        Test, if probabilities are correctly calculated.
+
+        Probabilities should be 0 for class -1 and 1 for class 1.
+        """
+        proba = self.random_classifier.predict_proba(self.x_test)
+        true_proba = np.where(self.y_test < 0, 0, 1)
+        assert (proba == true_proba).all()
 
     def test_fit(self) -> None:
         """
