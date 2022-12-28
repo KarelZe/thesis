@@ -35,7 +35,6 @@ class TestClassicalClassifier:
             [[1, 2], [3, 4], [1, 2], [3, 4]], columns=["BEST_ASK", "BEST_BID"]
         )
         self.y_test = pd.Series([1, -1, 1, -1])
-        self.columns = self.x_train.columns.tolist()
         self.random_classifier = ClassicalClassifier(
             layers=[("nan", "ex")],
             random_state=7,
@@ -169,11 +168,9 @@ class TestClassicalClassifier:
             columns=["TRADE_PRICE", "price_ex_lag", "price_all_lead"],
         )
         y_test = pd.Series([-1, 1])
-        columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
             layers=[("tick", "ex"), ("rev_tick", "all")],
             random_state=7,
-            features=columns,
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
@@ -220,9 +217,9 @@ class TestClassicalClassifier:
 
         # first two by rule (see p. 28 Grauer et al.), remaining two by random chance.
         y_test = pd.Series([-1, 1, 1, -1])
-        columns = x_train.columns.tolist()
         fitted_classifier = ClassicalClassifier(
-            layers=[("tick", subset)], random_state=7, features=columns
+            layers=[("tick", subset)],
+            random_state=7,
         ).fit(x_train, y_train)
         y_pred = fitted_classifier.predict(x_test)
         assert (y_pred == y_test).all()
