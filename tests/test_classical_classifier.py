@@ -7,13 +7,13 @@ Use of artificial data to test the classifier.
 import numpy as np
 import pandas as pd
 import pytest
-from sklearn.utils.estimator_checks import check_estimator
 from sklearn.utils.validation import check_is_fitted
 
 from otc.models.classical_classifier import ClassicalClassifier
+from tests.templates import ClassifierMixin
 
 
-class TestClassicalClassifier:
+class TestClassicalClassifier(ClassifierMixin):
     """
     Perform automated tests for ClassicalClassifier.
 
@@ -35,27 +35,10 @@ class TestClassicalClassifier:
             [[1, 2], [3, 4], [1, 2], [3, 4]], columns=["BEST_ASK", "BEST_BID"]
         )
         self.y_test = pd.Series([1, -1, 1, -1])
-        self.random_classifier = ClassicalClassifier(
+        self.clf = ClassicalClassifier(
             layers=[("nan", "ex")],
             random_state=7,
         ).fit(self.x_train, self.y_train)
-
-    def test_sklearn_compatibility(self) -> None:
-        """
-        Test, if classifier is compatible with sklearn.
-        """
-        clf = ClassicalClassifier(layers=[("nan", "ex")], random_state=13)
-        check_estimator(clf)
-
-    def test_shapes(self) -> None:
-        """
-        Test, if shapes of the classifier equal the targets.
-
-        Shapes are usually [no. of samples, 1].
-        """
-        y_pred = self.random_classifier.predict(self.x_test)
-
-        assert self.y_test.shape == y_pred.shape
 
     def test_random_state(self) -> None:
         """
@@ -76,26 +59,6 @@ class TestClassicalClassifier:
         second_y_pred = second_classifier.predict(self.x_test)
 
         assert (first_y_pred == second_y_pred).all()
-
-    def test_score(self) -> None:
-        """
-        Test, if score is correctly calculated..
-
-        For a random classification i. e., `layers=[("nan", "ex")]`, the score
-        should be around 0.5.
-        """
-        accuracy = self.random_classifier.score(self.x_test, self.y_test)
-        assert 0.0 <= accuracy <= 1.0
-
-    def test_proba(self) -> None:
-        """
-        Test, if probabilities are correctly calculated.
-
-        Probabilities should be 0 for class -1 and 1 for class 1.
-        """
-        proba = self.random_classifier.predict_proba(self.x_test)
-        true_proba = np.array([[0, 1], [1, 0], [0, 1], [1, 0]])
-        assert (proba == true_proba).all()
 
     def test_fit(self) -> None:
         """

@@ -12,6 +12,7 @@ import numpy.typing as npt
 import pandas as pd
 import torch
 from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.utils.multiclass import check_classification_targets
 from sklearn.utils.validation import check_array, check_is_fitted, check_X_y
 from torch import nn, optim
 
@@ -73,7 +74,11 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         See: https://scikit-learn.org/stable/developers/develop.html#estimator-tags
         """
-        return {"binary_only": True, "_skip_test": False}
+        return {
+            "binary_only": True,
+            "_skip_test": True,
+            "poor_score": True,
+        }
 
     def array_to_dataloader(
         self, X: npt.NDArray | pd.DataFrame, y: npt.NDArray | pd.Series
@@ -104,7 +109,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         y: npt.NDArray | pd.Series,
         eval_set: tuple[npt.NDArray, npt.NDArray]
         | tuple[pd.DataFrame, pd.Series]
-        | None,
+        | None = None,
     ) -> TransformerClassifier:
         """
         Fit the model.
@@ -113,7 +118,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             X (npt.NDArray | pd.DataFrame): feature matrix
             y (npt.NDArray | pd.Series): target
             eval_set (tuple[npt.NDArray, npt.NDArray] |
-            tuple[pd.DataFrame, pd.Series] | None): eval set.
+            tuple[pd.DataFrame, pd.Series] | None): eval set. Defaults to None.
             If no eval set is passed, the training set is used.
 
         Returns:
@@ -122,6 +127,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         # get features from pd.DataFrame
         if isinstance(X, pd.DataFrame):
             self.features = X.columns.tolist()
+
+        check_classification_targets(y)
 
         X, y = check_X_y(X, y, multi_output=False, accept_sparse=False)
 
@@ -137,6 +144,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             )
         else:
             X_val, y_val = X, y
+
+        self.classes_ = np.array([-1, 1])
 
         train_loader = self.array_to_dataloader(X, y)
         val_loader = self.array_to_dataloader(X_val, y_val)
@@ -229,9 +238,11 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         Returns:
             npt.NDArray: labels
         """
-        probs = self.predict_proba(X)
-        # convert probs to classes
-        return np.where(probs > 0.5, 1, -1)
+        probability = self.predict_proba(X)
+
+        # convert probs to classes by checking which class has highest probability.
+        # Then assign -1 if first probability is >= 0.5 and 1 otherwise.
+        return self.classes_[np.argmax(probability, axis=1)]
 
     def predict_proba(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
         """
@@ -252,6 +263,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         self.clf.eval()
 
+        # calculate probability and counter-probability
         probabilites = []
         with torch.no_grad():
             for x_cat, x_cont, _ in test_loader:
@@ -260,4 +272,5 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 probability = torch.sigmoid(probability)
                 probabilites.append(probability.detach().cpu().numpy())
 
-        return np.concatenate(probabilites)
+        probabilites = np.concatenate(probabilites)
+        return np.column_stack((1 - probabilites, probabilites))  # type: ignore
