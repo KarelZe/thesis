@@ -175,12 +175,14 @@ class TabTransformerObjective(Objective):
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
-        batch_size: int = trial.suggest_categorical("batch_size", [16192, 32768, 65536])  # type: ignore # noqa: E501
+        batch_size: int = trial.suggest_categorical("batch_size", [4096, 8192, 16192])  # type: ignore # noqa: E501
 
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
         no_devices = torch.cuda.device_count()
 
+        torch.cuda.empty_cache()
+        
         dl_params: dict[str, Any] = {
             "batch_size": batch_size
             * max(no_devices, 1),  # dataprallel splits batches across devices
@@ -203,6 +205,7 @@ class TabTransformerObjective(Objective):
         }
 
         optim_params = {"lr": lr, "weight_decay": weight_decay}
+        
 
         self._clf = TransformerClassifier(
             module=TabTransformer,  # type: ignore
@@ -289,12 +292,14 @@ class FTTransformerObjective(Objective):
 
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
-        batch_size: int = trial.suggest_categorical("batch_size", [16192, 32768, 65536])  # type: ignore # noqa: E501
+        batch_size: int = trial.suggest_categorical("batch_size", [4096, 8192, 16192])  # type: ignore # noqa: E501
 
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
         no_devices = torch.cuda.device_count()
 
+        torch.cuda.empty_cache()
+        
         feature_tokenizer_kwargs = {
             "num_continous": len(self._cont_features),
             "cat_cardinalities": self._cat_cardinalities,
