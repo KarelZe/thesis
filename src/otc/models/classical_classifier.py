@@ -78,8 +78,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Initialize a ClassicalClassifier.
 
         Args:
-            layers (list[ tuple[ str, str, ] ]): Layers of classical rule.
-            features (list[str] | None, optional): List of feature names in order of
+            layers (List[ tuple[ str, str, ] ]): Layers of classical rule.
+            features (List[str] | None, optional): List of feature names in order of
             columns. Required to match columns in feature matrix with label.
             Can be `None`, if `pd.DataFrame` is passed. Defaults to None.
             random_state (float | None, optional): random seed. Defaults to 42.
@@ -438,7 +438,9 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             X, y, multi_output=False, accept_sparse=False, force_all_finite=False
         )
 
-        self.classes_ = np.unique(y)
+        # FIXME: make flexible if open-sourced
+        # self.classes_ = np.unique(y)
+        self.classes_ = np.array([-1, 1])
 
         # if no features are provided or inferred, use default
         if not self.columns_:
@@ -493,7 +495,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
                 np.isnan(pred),
                 func(subset),  # type: ignore
                 pred,
-                #     ).astype(self.classes_.dtype)
+                # ).astype(self.classes_.dtype)
                 # # fill NaNs randomly with classes e. g., [-1, 1]
                 # mask = np.isnan(pred)
                 # pred[mask] = rs.choice(self.classes_, pred.shape)[mask]
@@ -501,9 +503,9 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
         # fill NaNs randomly with -1 and 1
         mask = np.isnan(pred)
-        pred[mask] = rs.choice([-1, 1], pred.shape)[mask]
+        pred[mask] = rs.choice(self.classes_, pred.shape)[mask]
 
-        # reset self.X_ to empty frame to minify memory usage
+        # reset self.X_ to avoid persisting it
         del self.X_
         return pred
 
@@ -519,6 +521,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Returns:
             npt.NDArray: probabilities
         """
+        # get index of predicted class and one-hot encode it
         indices = np.where(self.predict(X)[:, None] == self.classes_[None, :])[1]
         n_classes = np.max(self.classes_) + 1
 
