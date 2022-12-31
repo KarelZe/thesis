@@ -8,8 +8,8 @@ related:
 - [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]
 - [[@hastietrevorElementsStatisticalLearning2009]]
 - [[🎄Tree-based Methods/Random Forests/@breimanRandomForests2001]]
-- [[🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020]]
-- [[🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020]]
+- [[@arikTabNetAttentiveInterpretable2020]]
+- [[@huangTabTransformerTabularData2020]]
 Code: 
 - https://github.com/LeoGrin/tabular-benchmark
 # Notes Sebastian Raschka

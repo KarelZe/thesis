@@ -1,5 +1,5 @@
 
-[[@grauerOptionTradeClassification2022]] promote using trade size information to improve the classification performance of midspread trades. In their >>depth rule<<, they infer the trade initiator from the bid's depth and ask for quotes. Based on the observation that an exceeding bid or ask quote relates to higher liquidity on one side, trades are classified as buyer-iniated for a larger ask size and seller-iniated for a higher bid size.
+[[@grauerOptionTradeClassification2022]] promote using trade size information to improve the classification performance of midspread trades. In their depth rule, they infer the trade initiator from the bid's depth and ask for quotes. Based on the observation that an exceeding bid or ask quote relates to higher liquidity on one side, trades are classified as buyer-iniated for a larger ask size and seller-iniated for a higher bid size.
 
 As shown in Algorithm 2, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for assigning the initiator. To sign the remaining trades, other rules must follow thereafter.
 

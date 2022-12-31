@@ -1,17 +1,18 @@
-*title:* Feature Engineering and Selection: A Practical Approach for Predictive Models
-*authors:* Max Kuhn, Kjell Johnson
-*year:* 2020
-*tags:* 
-*status:* #📦 
-*related:*
-*code:*
-*review:*
+_title:_ Feature Engineering and Selection: A Practical Approach for Predictive Models
+_authors:_ Max Kuhn, Kjell Johnson
+_year:_ 2020
+_tags:_
+_status:_ #📦
+_related:_
+_code:_
+_review:_
 
 ## Notes 📍
 
 ## Annotations 📖
 
-# Annotations  
+# Annotations
+
 (20/12/2022, 08:36:27)
 
 “This lack of performance may be due to a simple to explain, but difficult to pinpoint, cause: relevant predictors that were collected are represented in a way that models have trouble achieving good performance.” ([Kuhn and Johnson, 2020, p. xi](zotero://select/library/items/3D9SK3D2)) ([pdf](zotero://open-pdf/library/items/WIWDCH5M?page=12&annotation=BDYJ6UMY))
@@ -22,7 +23,6 @@
 
 “Does this replace the test set (or, analogously, the assessment set)? No. Since the validation data are guiding the training process, they can’t be used for a fair assessment for how well the modeling process is working” ([Kuhn and Johnson, 2020, p. 53](zotero://select/library/items/3D9SK3D2)) ([pdf](zotero://open-pdf/library/items/WIWDCH5M?page=70&annotation=LS9RXH34))
 
-“A Box-Cox transformation (Box and Cox, 1964) was used to estimate this transformation. The Box-Cox procedure, originally intended as a transformation of a model’s outcome, uses maximum likelihood estimation to estimate a transformation parameter λ in the equation x∗ = { xλ−1 λ ̃ xλ−1 , λ 6= 0 ̃ x log x, λ = 0 where ̃ x is the geometric mean of the predictor data. In this procedure, λ is estimated from the data. Because the parameter of interest is in the exponent, this type of transformation is called a power transformation. Some values of λ map to common transformations, such as λ = 1 (no transformation), λ = 0 (log), λ = 0.5 (square root), and λ = −1 (inverse). As you can see, the Box-Cox transformation is quite flexible in its ability to address many different data distributions.” ([Kuhn and Johnson, 2020, p. 122](zotero://select/library/items/3D9SK3D2)) ([pdf](zotero://open-pdf/library/items/WIWDCH5M?page=139&annotation=9VZPYP9U))
 
 “Also, note that both transformations are unsupervised since, in this application, the outcome is not used in the computations. While the transformation might improve the predictor distribution, it has no guarantee of improving the model. However, there are a variety of parametric models that utilize polynomial calculations on the predictor data, such as most linear models, neural networks, and support vector machines. In these situations, a skewed predictor distribution can have a harmful effect on these models since the tails of the distribution can dominate the underlying calculations.” ([Kuhn and Johnson, 2020, p. 123](zotero://select/library/items/3D9SK3D2)) ([pdf](zotero://open-pdf/library/items/WIWDCH5M?page=140&annotation=SZMYELQK))
 

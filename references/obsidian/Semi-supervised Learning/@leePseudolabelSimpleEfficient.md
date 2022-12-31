@@ -1,25 +1,27 @@
-*title:* Pseudo-Label: The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks
-*authors:* Dong-Hyun Lee
-*year:* 2013
-*tags:* #semi-supervised #pseudo-labelling #deep-learning #supervised-learning 
-*status:* #📦 
-*related:*
+_title:_ Pseudo-Label: The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks
+_authors:_ Dong-Hyun Lee
+_year:_ 2013
+_tags:_ #semi-supervised #pseudo-labelling #deep-learning #supervised-learning
+_status:_ #📦
+_related:_
+
 - [[@chapelleSemiSupervisedClassificationLow2005]]
 - [[@zhuSemiSupervisedLearningLiterature]]
 - [[@devlinBERTPretrainingDeep2019]]
 - [[@clarkELECTRAPretrainingText2020]]
 
 ## Notes 📍
+
 - Authors propose a simple way of training neural networks in a [[semi-supervised]] fashion. The network is trained with labeled and unlabeled data simultaneously instead of using separated pre-training and finetuning. In absence of true labels, for unlabeled data pseudo labels are assigned from the class with the highest class probablity ($y_i^{\prime}= \begin{cases}1 & \text { if } i=\operatorname{argmax} \min _{i^{\prime}} f_{i^{\prime}}(x) \\ 0 & \text { otherwise }\end{cases}$) and re-calculated every weight update. Therefore pseudo-labels are treated similar to manual labels.
 - Due to an imbalance of unlabelled and labelled data in the training set, it's important to adjust the loss function given by:
-$$
-L=\frac{1}{n} \sum_{m=1}^n \sum_{i=1}^C L\left(y_i^m, f_i^m\right)+\alpha(t) \frac{1}{n^{\prime}} \sum_{m=1}^{n^{\prime}} \sum_{i=1}^C L\left(y_i^{\prime m}, f_i^{\prime m}\right),
-$$
-	where $n$ is the number of mini-batch in labeled data for SGD, $n^{\prime}$ for unlabeled data, $f_i^m$ is the output units of $m$ 's sample in labeled data, $y_i^m$ is the label of that, $f_i^{\prime m}$ for unlabeled data, $y_i^{\prime m}$ is the pseudo-label of that for unlabeled data, $\alpha(t)$ is a coefficient balancing them.
-	Setting a good $\alpha(t)$ is important. If $\alpha(t)$ is too high, it hinders training even for labeled data. If $\alpha(t)$ is too small one won't benefit from unlabeled data.
+  $$
+  L=\frac{1}{n} \sum_{m=1}^n \sum_{i=1}^C L\left(y_i^m, f_i^m\right)+\alpha(t) \frac{1}{n^{\prime}} \sum_{m=1}^{n^{\prime}} \sum_{i=1}^C L\left(y_i^{\prime m}, f_i^{\prime m}\right),
+  $$
+      where $n$ is the number of mini-batch in labeled data for SGD, $n^{\prime}$ for unlabeled data, $f_i^m$ is the output units of $m$ 's sample in labeled data, $y_i^m$ is the label of that, $f_i^{\prime m}$ for unlabeled data, $y_i^{\prime m}$ is the pseudo-label of that for unlabeled data, $\alpha(t)$ is a coefficient balancing them.
+      Setting a good $\alpha(t)$ is important. If $\alpha(t)$ is too high, it hinders training even for labeled data. If $\alpha(t)$ is too small one won't benefit from unlabeled data.
 - Can be coupled with dropout [[@hintonImprovingNeuralNetworks2012]] and denoising AE.
 - Pseudo labeling omits the caculation of an expensive similarity matrix and achieves state-of-the-art-performance.
-- Pseudo labelling requires a change in the loss and network architecture. Also, setting the weighting scheme $\alpha_{t}$ is very brittle.  So even though it's conceptually simple it would impact a comparsion between models. Better use pre-training but be aware of wastefulness of e. g., BERT.
+- Pseudo labelling requires a change in the loss and network architecture. Also, setting the weighting scheme $\alpha_{t}$ is very brittle. So even though it's conceptually simple it would impact a comparsion between models. Better use pre-training but be aware of wastefulness of e. g., BERT.
 
 ## Annotations 📖
 
@@ -39,8 +41,7 @@ $$
 
 “Pseudo-Label : The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks data. But dropout is different from bagging in that all of the sub-models share same weights.” ([Lee, p. 4](zotero://select/library/items/7QE4ZTFQ)) ([pdf](zotero://open-pdf/library/items/MTK4LZKA?page=4&annotation=2XJ4YAXU))
 
-“Pseudo-Label are target classes for unlabeled data as if they were true labels. We just pick up the class which has maximum predicted probability for each unlabeled sample y′ i= { 1 if i = argmaxi′ fi′ (x) 0 otherwise We use Pseudo-Label in a fine-tuning phase with Dropout. The pre-trained network is trained in a supervised fashion with labeled and unlabeled data simultaneously. For unlabeled data, Pseudo-Label s recalculated every weights update are used for the same loss function of supervised learning task” ([Lee, p. 4](zotero://select/library/items/7QE4ZTFQ))
-
+“P
 “Because the total number of labeled data and unlabeled data is quite different and the training balance between them is quite important for the network performance, the overall loss function is L= 1 n n ∑ m=1 C ∑ i=1 L(ym i ,fm i )+α(t) 1 n′ n′ ∑ m=1 C ∑ i=1 L(y′m i , f ′m i ), (15) where n is the number of mini-batch in labeled data for SGD, n′ for unlabeled data, f m i is the output units of m’s sample in labeled data, ym i is the label of that, f ′m i for unlabeled data, y′m i is the pseudo-label of that for unlabeled data, α(t) is a coefficient balancing them. The proper scheduling of α(t) is very important for the network performance. If α(t) is too high, it disturbs training even for labeled data. Whereas if α(t) is too small, we cannot use benefit from unlabeled data. Furthermore, the deterministic annealing process, by which α(t) is slowly increased, is expected to help the optimization process to avoid poor local minima (Grandvalet et al., 2006) so that the pseudo-labels of unlabeled data are similar to true labels as much as possible.” ([Lee, p. 4](zotero://select/library/items/7QE4ZTFQ)) ([pdf](zotero://open-pdf/library/items/MTK4LZKA?page=4&annotation=H5CRAJLQ))
 
 “The goal of semi-supervised learning is to improve generalization performance using unlabeled data. The cluster assumption states that the decision boundary should lie in low-density regions to improve generalization performance (Chapelle et al., 2005).” ([Lee, p. 4](zotero://select/library/items/7QE4ZTFQ)) ([pdf](zotero://open-pdf/library/items/MTK4LZKA?page=4&annotation=PSMYFXRX))

@@ -4,7 +4,7 @@
 - single output neuron, fused loss describe what loss function is used
 
 - See paper [[@huangTabTransformerTabularData2020]]
-- TabTransformer can't capture correlations between categorical and continous features. See [[🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021]]
+- TabTransformer can't capture correlations between categorical and continous features. See [[@somepalliSAINTImprovedNeural2021]]
 - Investigate whether my dataset even profits from this type of architecture?
 - See about embedding continous features in [[@somepalliSAINTImprovedNeural2021]]
 - On considertion of different weights at an algorithm level see [[@huyenDesigningMachineLearning]] (p. 111)

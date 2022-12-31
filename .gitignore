@@ -419,7 +419,7 @@ thesis.pdf
 
 # weights and biases
 /wandb/
-/artifacts/
+**/artifacts/
 
 # catboost
 **/catboost_info/
@@ -429,3 +429,6 @@ thesis.pdf
 
 #venv
 .venv/
+
+# flowershow
+**/.flowershow/*

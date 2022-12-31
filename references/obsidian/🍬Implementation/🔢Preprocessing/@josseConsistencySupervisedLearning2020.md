@@ -1,15 +1,17 @@
-*title:* On the consistency of supervised learning with missing values
-*authors:* Julie Josse, Nicolas Prost, Erwan Scornet, Gaël Varoquaux
-*year:* 2020
-*tags:* #gradient_boosting #decision-trees #missing-value #imputation #nan 
-*status:* #📦 
-*related:*
+_title:_ On the consistency of supervised learning with missing values
+_authors:_ Julie Josse, Nicolas Prost, Erwan Scornet, Gaël Varoquaux
+_year:_ 2020
+_tags:_ #gradient_boosting #decision-trees #missing-value #imputation #nan
+_status:_ #📦
+_related:_
+
 - [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]
+
 ## Notes 📍
+
 - Write if needed.
 
 ## Annotations 📖
-
 
 “A striking result is that the widely-used method of imputing with a constant, such as the mean prior to learning is consistent when missing values are not informative.” ([Josse et al., 2020, p. 1](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=1&annotation=5QVYVDL4))
 
@@ -43,13 +45,13 @@
 
 “Surrogate splits Once the best split is chosen via Algorithm 1, surrogate splits search for a split on another variable that induces a data partition close to the original one.” ([Josse et al., 2020, p. 17](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=17&annotation=69AXLE97))
 
-“Probabilistic splits Another option is to propagate missing observations according to a Bernoulli distribuwher(resp.  is the number of points already on the left (resp. right) (see Algorithm 3 in Appendix A.3)” ([Josse et al., 2020, p. 18](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=18&annotation=RZ3GTFLX))
+“Probabilistic splits Another option is to propagate missing observations according to a Bernoulli distribuwher(resp. is the number of points already on the left (resp. right) (see Algorithm 3 in Appendix A.3)” ([Josse et al., 2020, p. 18](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=18&annotation=RZ3GTFLX))
 
 “Block propagation A third option to choose the split on the observed values, and then send all incomplete observations as a block, to a side chosen by minimizing the error (see Algorithm 4 in Appendix A.3). This is the method used in LightGBM (Ke et al., 2017).” ([Josse et al., 2020, p. 18](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=18&annotation=7G6MQTX6))
 
 “A second class of methods uses missing values to compute the splitting criterion itself. Consequently, the splitting location depends on the missing values, contrary to all methods presented in Section 5.2. Its most common instance is “missing incorporated in attribute” (MIA, Twala et al. 2008, )” ([Josse et al., 2020, p. 19](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=19&annotation=W5PPBJXU))
 
-“More specifically, MIA considers the following splits, for all splits (j, z): • { ̃ Xj ≤ z or ̃ Xj = NA} vs { ̃ Xj > z}, • { ̃ Xj ≤ z} vs { ̃ Xj > z or ̃ Xj = NA}, • { ̃ Xj 6= NA} vs { ̃ Xj = NA}. In a nutshell, for each possible split, MIA tries to send all missing values to the left or to the right, and compute for each choice the corresponding error (right-hand side in 9, as well as the error associated to separating the observed values from the missing ones.” ([Josse et al., 2020, p. 19](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=19&annotation=V5DEHSCS))
+“More specifically, MIA considers the following splits, for all splits In a nutshell, for each possible split, MIA tries to send all missing values to the left or to the right, and compute for each choice the corresponding error (right-hand side in 9, as well as the error associated to separating the observed values from the missing ones.” ([Josse et al., 2020, p. 19](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=19&annotation=V5DEHSCS))
 
 “Finally, it chooses the split among the previous ones with the lowest error (see Algorithm 5 in Appendix A.3).” ([Josse et al., 2020, p. 19](zotero://select/library/items/IV3UNULR)) ([pdf](zotero://open-pdf/library/items/HK8RPCRM?page=19&annotation=K7XKH276))
 

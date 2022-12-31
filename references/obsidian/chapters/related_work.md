@@ -1,3 +1,18 @@
+## search terms
+
+```
+('trade initiator' or 'tick test' or 'trade signing'
+or 'trade direction' or 'trade classification' or 'trade direction classification' or 'trade direction classifier' or 'trade sign')
+
+and 
+
+('logistic regression' or 'k-nearest-neighbour' or 'ensemble' or 'neural' or 'deep learning' or 'tree' or 'transformer' or 'feed-forward' or 'gradient-boosting' or 'gradient-boosted tree' or 'machine learning' or 'model' or 'classifier')
+
+and ('option' or 'futures' or 'derivatives')
+```
+
+search sciencedirect, google scholar, ieee, research gate
+
 - [[@grauerOptionTradeClassification2022]] perform option trade classification
 - [[@savickasInferringDirectionOption2003]] perform option trade classification
 - [[@ronenMachineLearningTrade2022]] / [[@fedeniaMachineLearningCorporate2021]] They employ a machine learning-based approach for trade side classification. Selection of method follows no clear research agenda, so does sample selection or tuning. Also leaves out latest advancements in prediction of tabular data such as GBM or dedicated NN architectures. Data set only spans two days? General saying ML based predictor (random forest) outperforms tick rule and BVC. Still much human inutition is required for feature engineering. Treated as **supervised tasks**. More recent approaches and also ML approaches outperform classical approaches due to a higher trading frequency. Transfer learning not successful. **Note:** Tick rule has been among the poorest predictors in Grauer. **Note:** Check what the actual difference between the two papers are....

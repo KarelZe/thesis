@@ -9,6 +9,6 @@
 - For overview see [[@zhuSemiSupervisedLearningLiterature]]
 - for problems / success of semi-supervised learning in tabular data see [[@yoonVIMEExtendingSuccess2020]]
 - **pseudo-labelling:** e. g., [How To Build an Efficient NLP Model – Weights & Biases (wandb.ai)](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) and [[@leePseudolabelSimpleEfficient]]. Requires solving the issue of obtaining soft probablities. Reason why pseudo-labels are a poor idea -> requires change in neural network architecture -> we aim for comparability.
-- For pretraining ofneural net architectures also see argumentation in [[🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021]]
+- For pretraining ofneural net architectures also see argumentation in [[@somepalliSAINTImprovedNeural2021]]
 - See also [[@bahriSCARFSelfSupervisedContrastive2022]], while the paper is not 100 % relevant, it contains interesting citations.
 - How does regularization relate to semi-supervised learning? Don't both aim for the same objective?

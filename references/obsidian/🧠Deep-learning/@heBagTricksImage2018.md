@@ -65,7 +65,6 @@ $$
 
 “These scores can be normalized by the softmax operator to obtain predicted probabilities.” ([He et al., 2018, p. 6](zotero://select/library/items/F7UZXV8E)) ([pdf](zotero://open-pdf/library/items/WTS9X9U5?page=6&annotation=642TRFFD))
 
-“The idea of label smoothing was first proposed to train Inception-v2. It changes the construction of the true probability to qi = { 1 − ε if i = y, ε/(K − 1) otherwise, (4) where ε is a small constant. Now the optimal solution becomes z∗ i= { log((K − 1)(1 − ε)/ε) + α if i = y, α otherwise, (5) where α can be an arbitrary real number. This encourages a finite output from the fully-connected layer and can generalize better.” ([He et al., 2018, p. 6](zotero://select/library/items/F7UZXV8E)) ([pdf](zotero://open-pdf/library/items/WTS9X9U5?page=6&annotation=T4FARF6A))
 
 “In knowledge distillation , we use a teacher model to help train the current model, which is called the student model. The teacher model is often a pre-trained model with higher accuracy, so by imitation, the student model is able to improve its own accuracy while keeping the model complexity the same.” ([He et al., 2018, p. 6](zotero://select/library/items/F7UZXV8E)) ([pdf](zotero://open-pdf/library/items/WTS9X9U5?page=6&annotation=V5EJ72GK))
 
