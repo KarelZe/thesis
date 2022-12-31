@@ -1,16 +1,14 @@
 - [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
 - Guide on visualizations https://www.nature.com/articles/s41467-020-19160-7
 - Guide on storytelling with data https://www.practicedataviz.com/pdv-evd-mvp#PDV-EVD-mvp-g
+- For visualization see: https://www.data-to-viz.com
 - see  `writing-a-good-introduction.pdf`
 - Prepare final pdf https://github.com/google-research/arxiv-latex-cleaner
 - Adhere to best practices http://www.sigplan.org/Resources/EmpiricalEvaluation/
-%%
+
 # Title
-- <mark style="background: #BBFABBA6;">Forget the rules: Improving trade side classification using machine learning</mark>
-- Off being right: trade-side classification of options data with machine learning
-- Trade side classifcation with machine learning: do or don't?
-- <mark style="background: #BBFABBA6;">Be less wrong. Improving trade side classification with machine learning</mark>
-%%
+Forget About the Rules: Improving Trade Side Classification With Machine Learning
+
 # Introduction
 
 [[introduction]]
@@ -69,7 +67,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 
 [[transformer_networks]]
 ### Network Architecture
-
+[[network_architecture]]
 ### Attention
 [[attention]]
 ### Positional Encoding

@@ -18,6 +18,13 @@ TODO: Explain why we don't include the results of the classical rules themselves
 TODO: Adress the usefullness of the engineered features. Sketch the results of the *adversarial validation*. Which features are very different in the training set and the validation set? Which features are most important in adversarial validation?
 TODO: Plot distributions of features from training and validation set. Could also test using https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test test if samples are drawn from the same distribution.</mark>
 
+TODO: Rerun with > 0 and see if it affects the degree.
+TODO: Economic intuition:  [[@zhuClusteringStructureMicrostructure2021]]
+TODO: For different types of spreads see [[@zhuClusteringStructureMicrostructure2021]]
+
+TODO: Introduce the word "feature crosses" and motivation in deep learning https://stats.stackexchange.com/questions/349155/why-do-neural-networks-need-feature-selection-engineering/349202#349202
+
+
 All feature set, the their definition and origin is documented in Appendix [[🍬appendix#^7c0162]].
 
 ## Problem of missing values and categoricals

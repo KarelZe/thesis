@@ -22,18 +22,55 @@
             }
           },
           {
+            "id": "65e025ce8224c5f9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/training-of-supervised-models.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "6bebb1bda32ee0d6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/attention.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "631afa07ae8486ce",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🐈gradient-boosting.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "1e52354404ef27d3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🪛feature engineering.md",
+                "file": "chapters/results_of_supervised.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -91,7 +128,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "chapters/training-of-supervised-models.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -119,7 +156,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "chapters/training-of-supervised-models.md"
               }
             }
           }
@@ -140,17 +177,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "160a03ac0eb0e817",
+  "active": "65e025ce8224c5f9",
   "lastOpenFiles": [
-    "❓Questions.md",
-    "empty files.md",
-    "orphaned files output.md",
-    "files without tags.md",
-    "broken links output.md",
-    "🖼️Media/attention-algo.png",
-    "chapters/comparsion.md",
     "TOC.md",
-    "chapters/depth_rule.md",
-    "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md"
+    "chapters/selection_of_approaches.md",
+    "chapters/training-of-supervised-models.md",
+    "chapters/results_of_supervised.md",
+    "chapters/network_architecture.md",
+    "chapters/attention.md",
+    "chapters/🤖transformer.md",
+    "chapters/🪛feature engineering.md",
+    "chapters/🐈gradient-boosting.md",
+    "chapters/extensions-to-tabtransformer.md"
   ]
 }

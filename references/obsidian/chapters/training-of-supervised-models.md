@@ -23,7 +23,6 @@
 	- https://github.com/manujosephv/pytorch_tabular/blob/main/pytorch_tabular/models/tab_transformer/tab_transformer.py
 	- Simplify / cross-validate implementation of TabTransfromer and FTTransformer against https://pytorch.org/tutorials/beginner/transformer_tutorial
 	- Can use to gather some ideas for TabNet: https://www.kaggle.com/code/medali1992/amex-tabnetclassifier-feature-eng-0-791/notebook and TabTransformer https://www.kaggle.com/code/yekenot/amex-pytorch-tabtransformer
-	- 
 
 To inform our models which features are categorical, we pass the index the index of categorical features and the their cardinality to the models.
 
@@ -42,3 +41,18 @@ To inform our models which features are categorical, we pass the index the index
 - Idea: Instead of assign an unknown token it could help assign to map the token to random vector. https://stackoverflow.com/questions/45495190/initializing-out-of-vocabulary-oov-tokens
 - Idea: reduce the least frequent root symbols.
 - Apply an idea similar to sentence piece. Here, the number of words in vocabulary is fixed https://github.com/google/sentencepiece. See repo for paper / algorithm.
+
+- Use weighting scheme for samples. See: https://pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html
+- tips for training transformers https://huggingface.co/docs/transformers/v4.18.0/en/performance
+- learning rate warmup https://stackoverflow.com/questions/55933867/what-does-learning-rate-warm-up-mean
+- optimizer schedulers for transformers: https://huggingface.co/docs/transformers/main_classes/optimizer_schedules
+
+For training of transformers see [[@popelTrainingTipsTransformer2018]]
+Intuition behind sample weights: https://m.youtube.com/watch?v=68ABAU_V8qI
+Smart batching for transformers: https://mccormickml.com/2020/07/29/smart-batching-tutorial/#why-we-pad
+For training the transformer see: https://datascience.stackexchange.com/questions/64583/what-are-the-good-parameter-ranges-for-bert-hyperparameters-while-finetuning-it
+
+
+![[visualization_of_bleu_over_time.png]]
+
+![[bleu_no_of_gpus.png]]

@@ -8,3 +8,8 @@
 - Investigate whether my dataset even profits from this type of architecture?
 - See about embedding continous features in [[@somepalliSAINTImprovedNeural2021]]
 - On considertion of different weights at an algorithm level see [[@huyenDesigningMachineLearning]] (p. 111)
+
+Video about TabTransformer:
+https://m.youtube.com/watch?v=-ZdHhyQsvRc
+
+Reading group on TabTransformer: https://m.youtube.com/watch?v=59uGzJaVzYc

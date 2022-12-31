@@ -93,4 +93,4 @@ We address these issues.
 - Explain how the Gradient Boosting Procedure for the regression case, can be extended to the classifcation case
 - Discuss the problem of obtainining good probability estimates from a boosted decision tree. See e. g., [[@caruanaObtainingCalibratedProbabilities]] or [[@friedmanAdditiveLogisticRegression2000]] (Note paper is commenting about boosting, gradient boosting has not been published at the time)
 - Observations in [[@tanhaSemisupervisedSelftrainingDecision2017]] on poor probability estimates are equally applicable.
-- https://catboost.ai/news/catboost-enables-fast-gradient-boosting-on-decision-trees-using-gpus
+- Compare my explanation against https://catboost.ai/news/catboost-enables-fast-gradient-boosting-on-decision-trees-using-gpus
