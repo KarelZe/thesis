@@ -52,6 +52,8 @@ Intuition behind sample weights: https://m.youtube.com/watch?v=68ABAU_V8qI
 Smart batching for transformers: https://mccormickml.com/2020/07/29/smart-batching-tutorial/#why-we-pad
 For training the transformer see: https://datascience.stackexchange.com/questions/64583/what-are-the-good-parameter-ranges-for-bert-hyperparameters-while-finetuning-it
 
+Research broader theory behind sample weighting. Research if there is a broader theory / concept to decay e. g. exponential smooting or weighted regression etc.
+For random shuffling with stochastic gradient descent see [[@lecunEfficientBackProp2012]]
 
 ![[visualization_of_bleu_over_time.png]]
 

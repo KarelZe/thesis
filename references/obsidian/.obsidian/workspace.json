@@ -22,48 +22,24 @@
             }
           },
           {
-            "id": "65e025ce8224c5f9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/training-of-supervised-models.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6bebb1bda32ee0d6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/attention.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "631afa07ae8486ce",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🐈gradient-boosting.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "1e52354404ef27d3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/results_of_supervised.md",
+                "file": "chapters/🪛feature engineering.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "738400ec2d9e0b17",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@lecunEfficientBackProp2012.md",
                 "mode": "source",
                 "source": false
               }
@@ -128,7 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/training-of-supervised-models.md",
+                "file": "chapters/🪛feature engineering.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -156,7 +132,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/training-of-supervised-models.md"
+                "file": "chapters/🪛feature engineering.md"
               }
             }
           }
@@ -165,7 +141,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 206.5
+    "width": 210.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -177,17 +153,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "65e025ce8224c5f9",
+  "active": "1e52354404ef27d3",
   "lastOpenFiles": [
-    "TOC.md",
-    "chapters/selection_of_approaches.md",
-    "chapters/training-of-supervised-models.md",
-    "chapters/results_of_supervised.md",
-    "chapters/network_architecture.md",
-    "chapters/attention.md",
     "chapters/🤖transformer.md",
+    "TOC.md",
+    "chapters/training-of-supervised-models.md",
     "chapters/🪛feature engineering.md",
-    "chapters/🐈gradient-boosting.md",
-    "chapters/extensions-to-tabtransformer.md"
+    "📥Inbox/@lecunEfficientBackProp2012.md",
+    "chapters/feature_importance.md",
+    "chapters/extensions-to-tabtransformer.md",
+    "📥Inbox/@boxAnalysisTransformations2022.md",
+    "chapters/introduction.md",
+    "chapters/🎄decison_trees.md"
   ]
 }
