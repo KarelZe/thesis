@@ -17,11 +17,11 @@ from typing import Any
 import optuna
 import torch
 from catboost import CatBoostClassifier
-from torch import nn
 
 import wandb
 from otc.config.config import settings
 from otc.data.fs import fs
+from otc.models.transformer_classifier import TransformerClassifier
 from otc.utils.colors import Colors
 
 logger = logging.getLogger(__name__)
@@ -76,7 +76,7 @@ class Callback:
         Args:
             study (optuna.Study): optuna study.
             trial (optuna.trial.Trial | optuna.trial.FrozenTrial): optuna trial.
-            model (nn.Module | CatBoostClassifier): model.
+            model (TransformerClassifier | CatBoostClassifier): model.
             name (str): name of study.
         """
 
@@ -124,7 +124,7 @@ class SaveCallback(Callback):
         self,
         study: optuna.Study,
         trial: optuna.trial.Trial | optuna.trial.FrozenTrial,
-        model: nn.Module | CatBoostClassifier,
+        model: TransformerClassifier | CatBoostClassifier,
         name: str,
     ) -> None:
         """
@@ -139,7 +139,7 @@ class SaveCallback(Callback):
         Args:
             study (optuna.Study): optuna study.
             trial (optuna.trial.Trial | optuna.trial.FrozenTrial): optuna trial.
-            model (nn.Module | CatBoostClassifier): model.
+            model (TransformerClassifier | CatBoostClassifier): model.
             name (str): name of study.
         """
         if study.best_trial == trial:
@@ -186,8 +186,8 @@ class SaveCallback(Callback):
                     "%sSaved '%s'.%s", Colors.OKGREEN, file_training_stats, Colors.ENDC
                 )
 
-            elif isinstance(model, nn.Module):
-                file_model = prefix_file + ".pth"
+            elif isinstance(model, TransformerClassifier):
+                file_model = prefix_file + ".pkl"
                 uri_model = (
                     "gs://"
                     + Path(
@@ -197,7 +197,7 @@ class SaveCallback(Callback):
 
                 # https://stackoverflow.com/a/72511896/5755604
                 with fs.open(uri_model, "wb") as f:
-                    torch.save(model.state_dict(), f)
+                    torch.save(model, f)
 
                 m_artifact = wandb.Artifact(name=file_model, type="model")  # type: ignore # noqa: E501
             else:
@@ -309,7 +309,7 @@ class CallbackContainer:
         self,
         study: optuna.Study,
         trial: optuna.trial.Trial | optuna.trial.FrozenTrial,
-        model: nn.Module | CatBoostClassifier,
+        model: TransformerClassifier | CatBoostClassifier,
         name: str,
     ) -> None:
         """
@@ -319,7 +319,7 @@ class CallbackContainer:
             study (optuna.Study): optuna study.
             trial (optuna.trial.Trial | optuna.trial.FrozenTrial):
             optuna trial.
-            model (nn.Module | CatBoostClassifier): model.
+            model (TransformerClassifier | CatBoostClassifier): model.
             name (str): name of study.
         """
         for callback in self.callbacks:

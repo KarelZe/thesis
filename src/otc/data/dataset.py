@@ -6,6 +6,7 @@ Supports both categorical and continous data.
 
 from __future__ import annotations
 
+import numpy.typing as npt
 import pandas as pd
 import torch
 from torch.utils.data import Dataset
@@ -20,8 +21,9 @@ class TabDataset(Dataset):
 
     def __init__(
         self,
-        x: pd.DataFrame,
-        y: pd.Series,
+        x: pd.DataFrame | npt.ndarray,
+        y: pd.Series | npt.ndarray,
+        features: list[str] | None = None,
         cat_features: list[str] | None = None,
         cat_unique_counts: tuple[int, ...] | None = None,
     ):
@@ -39,13 +41,17 @@ class TabDataset(Dataset):
         self._cat_unique_counts = () if not cat_unique_counts else cat_unique_counts
 
         # calculate cat indices
-        features = x.columns.tolist()
+        features = [] if not features else features
         cat_features = [] if not cat_features else cat_features
         self._cat_idx = [features.index(i) for i in cat_features if i in features]
 
         # calculate cont indices
         cont_features = [f for f in features if f not in cat_features]
         self._cont_idx = [features.index(i) for i in cont_features if i in features]
+
+        # pd 2 np
+        x = x.values if isinstance(x, pd.DataFrame) else x
+        y = y.values if isinstance(y, pd.Series) else y
 
         assert (
             x.shape[0] == y.shape[0]
@@ -55,14 +61,14 @@ class TabDataset(Dataset):
         ), "For all categorical features the number of unique entries must be provided."
 
         # adjust target to be either 0 or 1
-        self.y = torch.tensor(y.values).float()
+        self.y = torch.tensor(y).float()
         self.y[self.y < 0] = 0
 
         # cut into continous and categorical tensor
         self.x_cat: torch.Tensor | None = None
         if len(self._cat_idx) > 0:
-            self.x_cat = torch.tensor(x.iloc[:, self._cat_idx].values).int()
-        self.x_cont = torch.tensor(x.iloc[:, self._cont_idx].values).float()
+            self.x_cat = torch.tensor(x[:, self._cat_idx]).int()
+        self.x_cont = torch.tensor(x[:, self._cont_idx]).float()
 
     def __len__(self) -> int:
         """

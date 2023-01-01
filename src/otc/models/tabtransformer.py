@@ -334,6 +334,7 @@ class TabTransformer(nn.Module):
         continuous_mean_std: torch.Tensor | None = None,
         attn_dropout: float = 0.0,
         ff_dropout: float = 0.0,
+        **kwargs: Any,
     ):
         """
         TabTransformer.
@@ -432,7 +433,7 @@ class TabTransformer(nn.Module):
             x_cont (torch.Tensor): tensor with continous data.
 
         Returns:
-            torch.Tensor: predictions
+            torch.Tensor: probabilities
         """
         flat_categ: torch.Tensor | None = None
 

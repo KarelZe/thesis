@@ -10,10 +10,10 @@ import torch.nn as nn
 
 from otc.models.objective import set_seed
 from otc.models.tabtransformer import TabTransformer
-from tests import templates
+from tests.templates import NeuralNetTestsMixin
 
 
-class TestTabTransformer(templates.NeuralNetTestsMixin):
+class TestTabTransformer(NeuralNetTestsMixin):
     """
     Perform tests specified in `NeuralNetTestsMixin` for\
     `TabTransformer` model.
