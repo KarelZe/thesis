@@ -18,3 +18,4 @@
 - first introduced in [[@grauerOptionTradeClassification2022]] (p 12)
 - combines the quote and reverse tick rule
 - performs fairly well for options as shown in [[@grauerOptionTradeClassification2022]]
+- Lee and Ready SAS implementatin https://github.com/jblocher/sas_util/blob/master/LR_Trade_ID.sas

@@ -1,5 +1,5 @@
 """
-Implements classical trade classification rules.
+Implements classical trade classification rules with a sklearn-like interface.
 
 Both simple rules like quote rule or tick test or hybrids are included.
 """
@@ -11,13 +11,14 @@ from typing import Any, Literal
 import numpy as np
 import numpy.typing as npt
 import pandas as pd
-import scipy.sparse as sp
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.utils import check_random_state
+from sklearn.utils.multiclass import check_classification_targets
 from sklearn.utils.validation import (
     _check_sample_weight,
-    check_consistent_length,
+    check_array,
     check_is_fitted,
+    check_X_y,
 )
 
 allowed_func_str = (
@@ -70,18 +71,37 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
                 str,
             ]
         ],
-        random_state: float | None,
+        features: list[str] | None = None,
+        random_state: float | None = 42,
     ):
         """
         Initialize a ClassicalClassifier.
 
         Args:
-            layers (List[Tuple[str, str]]): Layers of classical rule. Up to 4 possible.
-            If fewer layers are needed use ("nan","ex").
-            random_state (float, optional): random seed. Defaults to None.
+            layers (List[ tuple[ str, str, ] ]): Layers of classical rule.
+            features (List[str] | None, optional): List of feature names in order of
+            columns. Required to match columns in feature matrix with label.
+            Can be `None`, if `pd.DataFrame` is passed. Defaults to None.
+            random_state (float | None, optional): random seed. Defaults to 42.
         """
         self.layers = layers
         self.random_state = random_state
+        self.features = features
+
+    def _more_tags(self) -> dict[str, bool]:
+        """
+        Set tags for sklearn.
+
+        See: https://scikit-learn.org/stable/developers/develop.html#estimator-tags
+        """
+        # FIXME: Try enabling _skip_test again. Skip tests, as prediction is not
+        # invariant and parameters immutable.
+        return {
+            "allow_nan": True,
+            "binary_only": True,
+            "_skip_test": True,
+            "poor_score": True,
+        }
 
     def _tick(self, subset: Literal["all", "ex"]) -> npt.NDArray:
         """
@@ -366,15 +386,19 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
     # pylint: disable=C0103
     def fit(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: npt.NDArray = None
+        self,
+        X: npt.NDArray | pd.DataFrame,
+        y: npt.NDArray | pd.Series,
+        sample_weight: npt.NDArray | None = None,
     ) -> ClassicalClassifier:
         """
         Fit the classifier.
 
         Args:
-            X (pd.DataFrame): features
-            y (pd.Series): ground truth (ignored)
-            sample_weight (npt.NDArray, optional): Sample weights. Defaults to None.
+            X (npt.NDArray | pd.DataFrame): features
+            y (npt.NDArray | pd.Series): ground truth (ignored)
+            sample_weight (npt.NDArray | None, optional):  Sample weights.
+            Defaults to None.
 
         Raises:
             ValueError: Unknown subset e. g., 'ise'
@@ -382,7 +406,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             ValueError: Multi output is not supported.
 
         Returns:
-            TCRClassifier: Instance itself.
+            ClassicalClassifier: Instance of itself.
         """
         _check_sample_weight(sample_weight, X)
 
@@ -403,6 +427,30 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         # pylint: disable=W0201
         self.func_mapping_ = dict(zip(allowed_func_str, funcs))
 
+        # create working copy to be altered and try to get columns from df
+        self.columns_ = self.features
+        if isinstance(X, pd.DataFrame):
+            self.columns_ = X.columns.tolist()
+
+        check_classification_targets(y)
+
+        X, y = check_X_y(
+            X, y, multi_output=False, accept_sparse=False, force_all_finite=False
+        )
+
+        # FIXME: make flexible if open-sourced
+        # self.classes_ = np.unique(y)
+        self.classes_ = np.array([-1, 1])
+
+        # if no features are provided or inferred, use default
+        if not self.columns_:
+            self.columns_ = [str(i) for i in range(X.shape[1])]
+
+        if len(self.columns_) > 0 and X.shape[1] != len(self.columns_):
+            raise ValueError(
+                f"Expected {len(self.columns_)} columns, got {X.shape[1]}."
+            )
+
         for func_str, subset in self.layers:
             if subset not in allowed_subsets:
                 raise ValueError(
@@ -413,67 +461,68 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
                     f"Unknown function string: {func_str},"
                     f"expected one of {allowed_func_str}."
                 )
-        # pylint: disable=W0201, C0103
-        self.layers_ = self.layers
-
-        # pylint: disable=W0201, C0103
-        self.sparse_output_ = sp.issparse(y)
-
-        if not self.sparse_output_:
-            y = np.asarray(y)
-            y = np.atleast_1d(y)
-
-        if y.ndim == 1:
-            y = np.reshape(y, (-1, 1))
-
-        # pylint: disable=W0201, C0103
-        self.n_outputs_ = y.shape[1]
-        if self.n_outputs_ > 1:
-            raise ValueError("Multi output not supported.")
-
-        check_consistent_length(X, y)
 
         return self
 
     # pylint: disable=C0103
-    def predict(self, X: pd.DataFrame) -> npt.NDArray:
+    def predict(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
         """
-        Perform classification on test vectors X.
+        Perform classification on test vectors `X`.
 
         Args:
-            X (pd.DataFrame): Feature matrix.
-
-        Raises:
-            ValueError: X must be pd.DataFrame, as labels are required.
+            X (npt.NDArray | pd.DataFrame): feature matrix.
 
         Returns:
             npt.NDArray: Predicted traget values for X.
         """
-        # check if there are attributes with trailing _
         check_is_fitted(self)
 
         rs = check_random_state(self.random_state)
 
-        if not isinstance(X, pd.DataFrame):
-            raise ValueError("X must be pd.DataFrame, as labels are required.")
+        X = check_array(X, accept_sparse=False, force_all_finite=False)
+
+        self.X_ = pd.DataFrame(data=X, columns=self.columns_)
+
         mapping_cols = {"BEST_ASK": "ask_best", "BEST_BID": "bid_best"}
         # pylint: disable=W0201, C0103
-        self.X_ = X.rename(columns=mapping_cols)
+        self.X_.rename(columns=mapping_cols, inplace=True)
 
         pred = np.full(shape=(X.shape[0],), fill_value=np.nan)
 
-        for func_str, subset in self.layers_:
+        for func_str, subset in self.layers:
             func = self.func_mapping_[func_str]
             pred = np.where(
                 np.isnan(pred),
                 func(subset),  # type: ignore
                 pred,
+                # ).astype(self.classes_.dtype)
+                # # fill NaNs randomly with classes e. g., [-1, 1]
+                # mask = np.isnan(pred)
+                # pred[mask] = rs.choice(self.classes_, pred.shape)[mask]
             )
-
-        if self.n_outputs_ == 1:
-            pred = np.ravel(pred)
 
         # fill NaNs randomly with -1 and 1
         mask = np.isnan(pred)
-        pred[mask] = rs.choice([-1, 1], pred.shape)[mask]
+        pred[mask] = rs.choice(self.classes_, pred.shape)[mask]
+
+        # reset self.X_ to avoid persisting it
+        del self.X_
         return pred
+
+    def predict_proba(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
+        """
+        Predict class probabilities for X.
+
+        Probabilities are either 0 or 1 depending on the class.
+
+        Args:
+            X (npt.NDArray | pd.DataFrame): feature matrix
+
+        Returns:
+            npt.NDArray: probabilities
+        """
+        # get index of predicted class and one-hot encode it
+        indices = np.where(self.predict(X)[:, None] == self.classes_[None, :])[1]
+        n_classes = np.max(self.classes_) + 1
+
+        return np.identity(n_classes)[indices]

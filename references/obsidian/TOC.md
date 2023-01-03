@@ -1,13 +1,13 @@
 - [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
 - Guide on visualizations https://www.nature.com/articles/s41467-020-19160-7
 - Guide on storytelling with data https://www.practicedataviz.com/pdv-evd-mvp#PDV-EVD-mvp-g
+- For visualization see: https://www.data-to-viz.com
 - see  `writing-a-good-introduction.pdf`
+- Prepare final pdf https://github.com/google-research/arxiv-latex-cleaner
+- Adhere to best practices http://www.sigplan.org/Resources/EmpiricalEvaluation/
 
 # Title
-- <mark style="background: #BBFABBA6;">Forget the rules: Improving trade side classification using machine learning</mark>
-- Off being right: trade-side classification of options data with machine learning
-- Trade side classifcation with machine learning: do or don't?
-- <mark style="background: #BBFABBA6;">Be less wrong. Improving trade side classification with machine learning</mark>
+Forget About the Rules: Improving Trade Side Classification With Machine Learning
 
 # Introduction
 
@@ -22,7 +22,7 @@ The following section introduces common rules for signing option trades. We star
 ## Basic Rules
 
 [[basic_rules]]
-### Quote-Rule
+### Quote Rule
 [[quote_rule]]
 ### Tick Test
 [[tick_test]]
@@ -67,7 +67,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 
 [[transformer_networks]]
 ### Network Architecture
-
+[[network_architecture]]
 ### Attention
 [[attention]]
 ### Positional Encoding
@@ -78,10 +78,10 @@ In our attempt to compare shallow with deep architectures for trade classificati
 
 ### Extensions in TabTransformer
 [[extensions-to-tabtransformer]]
-### Extensions in FT-Transformer
+### Extensions in FTTransformer
+[[🤖pretraining-FTTransformer]]
 
-[[draft_ft_transformer]]
-# Semi-Supervised Approaches
+# 👽 Semi-Supervised Approaches
 
 ## Selection of Approaches
 
@@ -94,7 +94,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ## Extensions to TabTransformer
 [[extensions-to-tabtransformer]]
 ## Extension to FTTransformer
-# Empirical Study
+# 👒 Empirical Study
 - In the subsequent sections we apply methods from (...) in an empirical setting.
 ## Environment 🟡
 [[environment]]
@@ -111,12 +111,12 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### CBOE Data Set 🟡
 describe if data set is actually used. Write similarily to 
 
-### Pre-processing 🟡
-[[preprocessing]]
-### Generation of True Labels
-[[generation-of-true-labels]]
 ### Exploratory Data Analysis
 [[🌴exploratory_data_analysis]]
+
+### Data Pre-Processing 🟡
+[[preprocessing]]
+
 ### Feature Engineering 🟡
 ![[🪛feature engineering]]
 
@@ -140,16 +140,26 @@ describe if data set is actually used. Write similarily to
 ### Evaluation Metric
 [[evaluation_metric]]
 
-# Results
+# 🏁 Results
 [[results]]
 ## Results of Supervised Models
 [[results_of_supervised]]
 ## Results of Semi-Supervised Models
 [[results_of_semisupervised]]
+
+## Robustness of Results
+[[robustness]]
+
 ## Feature Importance
 [[feature_importance]]
-## Robustness Checks
-[[robustness]]
+
+## Ablation Study of Models
+
+# 🍕 Application in Transaction Cost Estimation
+[[🍕Application study]]
+## Simulation Setup
+## Simulation Results
+
 # 💣Discussion
 [[discussion]]
 # Conclusion

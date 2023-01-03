@@ -38,10 +38,10 @@ interval: 1
 | [[environment]]                     |     77.5 |       |        1 | 1970-01-01 |
 | [[emo_rule]]                        |       80 |       |        1 | 1970-01-01 |
 | [[embeddings]]                      |     82.5 |       |        1 | 1970-01-01 |
-| [[draft_ft_transformer]]            |       85 |       |        1 | 1970-01-01 |
+| [[🤖pretraining-FTTransformer]]            |       85 |       |        1 | 1970-01-01 |
 | [[discussion]]                      |     87.5 |       |        1 | 1970-01-01 |
 | [[depth_rule]]                      |       90 |       |        1 | 1970-01-01 |
-| [[comparsion]]                      |     92.5 |       |        1 | 1970-01-01 |
+| [[comparsion 1]]                      |     92.5 |       |        1 | 1970-01-01 |
 | [[clnv_method]]                     |       95 |       |        1 | 1970-01-01 |
 | [[basic_rules]]                     |     97.5 |       |        1 | 1970-01-01 |
 | [[adversarial_validation]]          |        0 |       |        2 | 2022-12-15 |
