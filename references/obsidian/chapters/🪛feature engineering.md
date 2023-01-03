@@ -16,6 +16,7 @@ TODO: Plot distributions of features from training and validation set. Could als
 TODO: Economic intuition:  [[@zhuClusteringStructureMicrostructure2021]]
 TODO: For different types of spreads see [[@zhuClusteringStructureMicrostructure2021]]
 TODO: Introduce the word "feature crosses" and motivation in deep learning https://stats.stackexchange.com/questions/349155/why-do-neural-networks-need-feature-selection-engineering/349202#349202
+https://financetrain.com/why-lognormal-distribution-is-used-to-describe-stock-prices
 </mark>
 
 All feature set, the their definition and origin is documented in Appendix [[🍬appendix#^7c0162]].
@@ -39,33 +40,15 @@ It has been well established that neural networks are long known to train faster
 
 ## Solution of feature scales
 
-Continuous and categorical variable require different treatment, as derived below. Price and size-related features exhibit a positive skewness, as brought up in chapter [[🌴exploratory_data_analysis]].
-
-- effects $\lambda > 1$ compresses larger values and with opposite effects for values $< 1$. 
-
-We apply a power. Write following section:
-
-A Box-Cox transformation (Box and Cox, 1964) was used to estimate this transformation. The Box-Cox procedure, originally intended as a transformation of a model's outcome, uses maximum likelihood estimation to estimate a transformation parameter $\lambda$ in the equation
+Continuous and categorical variable require different treatment, as derived below. Price and size-related features exhibit a positive skewness, as brought up in chapter [[🌴exploratory_data_analysis]]. To avoid negative impacts during training (tails of distributions dominate calculations (see e. g. , [[@kuhnFeatureEngineeringSelection2020]] or https://deepai.org/machine-learning-glossary-and-terms/skewness), we reduce skewness with power transformations. We determine the transformation using the Box-Cox procedure ([[@boxAnalysisTransformations2022]] p. 214), given by:
 $$
-x^*= \begin{cases}\frac{x^\lambda-1}{\lambda \tilde{x}^{\lambda-1}}, & \lambda \neq 0 \\ \tilde{x} \log x, & \lambda=0\end{cases}
+\tilde{x}= \begin{cases}\frac{x^\lambda-1}{\lambda}, & \lambda \neq 0 \\ \log (x),& \lambda=0\end{cases}.\tag{1}
 $$
-where $\tilde{x}$ is the geometric mean of the predictor data. In this procedure, $\lambda$ is estimated from the data. Because the parameter of interest is in the exponent, this type of transformation is called a power transformation. Some values of $\lambda$ map to common transformations, such as $\lambda=1$ (no transformation), $\lambda=0(\log ), \lambda=0.5$ (square root), and $\lambda=-1$ (inverse). As you can see, the Box-Cox transformation is quite flexible in its ability to address many different data distributions. For the data in [[@kuhnFeatureEngineeringSelection2020]]
+Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimizing for the Gaussian likelihood on the training set. As shown in Equation $(1)$, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $x$, we follow common practice by adding a constant of $1$ if needed. 
 
-A simple generalization of both the square root transform and the log transform is known as the Box-Cox transform:
-$$
-\tilde{x}= \begin{cases}\frac{x^\lambda-1}{\lambda} & \text { if } \lambda \neq 0 \\ \ln (x) & \text { if } \lambda=0\end{cases}
-$$
+When applying the test in feature engineering, it is important to note two major conceptual differences from the [[@boxAnalysisTransformations2022]] paper as pointed out by [[@kuhnFeatureEngineeringSelection2020]]. Here, the transform is used an unsupervised manner, as the transformation's outcome is not directly used in the model. Also, the transform is applied to all features, rather than the model's residuals.
 
-Could map to the observation that trade prices are log-normally distributed. https://financetrain.com/why-lognormal-distribution-is-used-to-describe-stock-prices
-
-We adhere to a notation found in [[@kuhnFeatureEngineeringSelection2020]]
-
-
-
-<mark style="background: #BBFABBA6;">How is Skewness Used in Machine Learning? (https://deepai.org/machine-learning-glossary-and-terms/skewness) In most models, any form of skewness is undesirable, since it leads to excessively large [variance](https://deepai.org/machine-learning-glossary-and-terms/variance) in [estimates](https://deepai.org/machine-learning-glossary-and-terms/estimator). Other models require [unbiased estimators](https://deepai.org/machine-learning-glossary-and-terms/unbiased-estimator) or Gaussian models to function accurately.</mark>
-
-Our estimates for $\lambda$ are documented in the Appendix [[🍬appendix]]. <mark style="background: #FFB86CA6;">TODO: Rerun with > 0 and see if it affects the degree.</mark>
-Based on the results of the box cox test for , [[@boxAnalysisTransformations2022]] we apply a common $x^{\prime}=\log(x)$ transform to mitigate the skewness in the data with the result of compressing large values and expanding smaller ones. More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations[^1]. Due to the monotonous nature of the logarithm (power transform in general; see https://en.wikipedia.org/wiki/Power_transform), the splits of tree-based learners remain unaffected with only minor differences due to quantization <mark style="background: #ADCCFFA6;">(see quantization / histogram building in gradient boosting https://neurips.cc/media/neurips-2022/Slides/53370.pdf)</mark>. The log transform comes at the cost of an decreased interpretability (cp. [[@fengLogtransformationItsImplications2014]]).
+Our estimates for $\lambda$ are documented in the Appendix [[🍬appendix]]. <mark style="background: #FFB86CA6;">TODO: Rerun with > 0 and see if it affects the degree.</mark> Based on the results of the box cox test, we apply a common $x^{\prime}=\log(x)$ transform with the effect of compressing large values and expanding smaller ones. More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations[^1]. Due to the monotonous nature of the logarithm (power transform in general; see https://en.wikipedia.org/wiki/Power_transform), the splits of tree-based learners remain unaffected with only minor differences due to quantization <mark style="background: #ADCCFFA6;">(see quantization / histogram building in gradient boosting https://neurips.cc/media/neurips-2022/Slides/53370.pdf)</mark>. The log transform comes at the cost of an decreased interpretability (cp. [[@fengLogtransformationItsImplications2014]]).
 
 Our largest feature set als contains dates and times of the trade. In contrast to other continuous features, the features are inherently cyclic. We exploit this property for hours, days, and months and apply a fourier transform to convert the features into a smooth variable using formula [[#^773161]]:
 
