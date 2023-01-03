@@ -15,3 +15,7 @@
 
 ![[feature_attributions.png]]
 (compare kernelshap with feature attributions from attention [[@borisovDeepNeuralNetworks2022]])
+
+Compare different feature attributions:
+![[feature_attributions_from_attention.png]]
+(Found in [[@borisovDeepNeuralNetworks2022]])

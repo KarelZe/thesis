@@ -22,19 +22,19 @@
             }
           },
           {
-            "id": "777b5b234e18db2b",
+            "id": "ac3a188e5e16b40e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🪛feature engineering.md",
+                "file": "chapters/transformer_networks.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🪛feature engineering.md",
+                "file": "chapters/transformer_networks.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🪛feature engineering.md"
+                "file": "chapters/transformer_networks.md"
               }
             }
           }
@@ -141,17 +141,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "777b5b234e18db2b",
+  "active": "ac3a188e5e16b40e",
   "lastOpenFiles": [
     "TOC.md",
-    "🍬Implementation/🔢Preprocessing/@yiWhyNotUse2020.md",
+    "chapters/attention.md",
+    "chapters/feature_importance_measure.md",
     "chapters/🪛feature engineering.md",
+    "🍬Implementation/🔢Preprocessing/@yiWhyNotUse2020.md",
     "chapters/🤖transformer.md",
     "chapters/training-of-supervised-models.md",
     "📥Inbox/@lecunEfficientBackProp2012.md",
     "chapters/feature_importance.md",
-    "chapters/extensions-to-tabtransformer.md",
-    "📥Inbox/@boxAnalysisTransformations2022.md",
-    "chapters/introduction.md"
+    "chapters/extensions-to-tabtransformer.md"
   ]
 }
