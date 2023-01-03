@@ -26,7 +26,7 @@ The required pre-processing is minimal for tree-based learners. As one of few pr
 However, neural networks can not inherently handle missing values, as a $\mathtt{[NaN]}$ value can not be propagated through the network. As such, missing values must be addressed beforehand. Similarily, categorical features, like the issue type, require an encoding, as no gradient can be calculated on categories.
 
 ## Solution to missing values and categoricals
-In order to prepare a common datasets for *all* our machine learning models, we need to impute, scale and encode the data. Like in the chapter [[preprocessing]] our feature scaling aims to be minimal intrusive, while facilitating efficient training for all our machine learning models. Following a common track in literature, we train our predictive model on imputed data.  We choose zero imputation for being a single-pass strategy that minimizes data leakage and allows tree-based learners and neural networks to separate imputed values from observed ones. While imputation with constants, such as zeros, is simplistic, it is on-par with more complex approaches (cp. [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] p. 4). <mark style="background: #FFF3A3A6;">(For neural networks zero imputation is actually more controversial, see e. g., [[@yiWhyNotUse2020]] and [[@smiejaProcessingMissingData2018]])</mark>. We do not provide missing indicators to keep the number of parameters in our models small.
+In order to prepare a common datasets for *all* our machine learning models, we need to impute, scale and encode the data. Like in the chapter [[preprocessing]] our feature scaling aims to be minimal intrusive, while facilitating efficient training for all our machine learning models. Following a common track in literature, we train our predictive model on imputed data.  We select an imputation with constants for being a single-pass strategy that minimizes data leakage and allows tree-based learners and neural networks to separate imputed values from observed ones. While imputation with constants is simplistic, it is on-par with more complex approaches (cp. [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] p. 4). We choose a constant of $-1$, thus different from zero, so that the models can easily differentiate imputed from meaningful values and we avoid adversarial performance effects in neural networks from dropping input nodes (cp. [[@yiWhyNotUse2020]] p. 1 and [[@smiejaProcessingMissingData2018]]).[^5] No missing indicators are provided to keep the number of parameters in our models small.
 
 Classical trade signing algorithms, such as the tick test, are also impacted by missing values. In theses cases, we defer to a random classification or a subsequent rule, if rules can not be computed. Details are provided in section [[training-of-supervised-models]].
 
@@ -35,11 +35,13 @@ As introduced in the chapters [[🐈gradient-boosting]] and [[🤖transformer]] 
 ## Problem of feature scales
 As observed in the [[🌴exploratory_data_analysis]] data is not just missing but may also be skewed. Tree-based models can handle arbitrary feature scales, as the splitting process is based on the purity of the split but not on the scale of the splitting value.  
 
-It has been well established that neural networks are long known to train faster on whitened data with zero mean, unit variance and uncorrelated inputs (cp. [[@lecunEfficientBackProp2012]]; p. 8). This is because a mean close to zero helps prevent  bias the direction of the weight update and scaling to unit variance helps balance the rate at which parameters are updated In order to maintain comparability with the traditional rules, inputs are not decorrelated. <mark style="background: #FFF3A3A6;">(reread in lecun paper or [here.](https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/))</mark>
+It has been well established that neural networks are long known to train faster on whitened data with zero mean, unit variance and uncorrelated inputs (cp. [[@lecunEfficientBackProp2012]]; p. 8). This is because a mean close to zero helps prevent  bias the direction of the weight update and scaling to unit variance helps balance the rate at which parameters are updated In order to maintain comparability with the traditional rules, inputs are not decorrelated. (reread in lecun paper or [here.](https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/))
 
 ## Solution of feature scales
 
 Continuous and categorical variable require different treatment, as derived below. Price and size-related features exhibit a positive skewness, as brought up in chapter [[🌴exploratory_data_analysis]].
+
+- effects $\lambda > 1$ compresses larger values and with opposite effects for values $< 1$. 
 
 We apply a power. Write following section:
 
@@ -49,9 +51,16 @@ x^*= \begin{cases}\frac{x^\lambda-1}{\lambda \tilde{x}^{\lambda-1}}, & \lambda \
 $$
 where $\tilde{x}$ is the geometric mean of the predictor data. In this procedure, $\lambda$ is estimated from the data. Because the parameter of interest is in the exponent, this type of transformation is called a power transformation. Some values of $\lambda$ map to common transformations, such as $\lambda=1$ (no transformation), $\lambda=0(\log ), \lambda=0.5$ (square root), and $\lambda=-1$ (inverse). As you can see, the Box-Cox transformation is quite flexible in its ability to address many different data distributions. For the data in [[@kuhnFeatureEngineeringSelection2020]]
 
+A simple generalization of both the square root transform and the log transform is known as the Box-Cox transform:
+$$
+\tilde{x}= \begin{cases}\frac{x^\lambda-1}{\lambda} & \text { if } \lambda \neq 0 \\ \ln (x) & \text { if } \lambda=0\end{cases}
+$$
+
 Could map to the observation that trade prices are log-normally distributed. https://financetrain.com/why-lognormal-distribution-is-used-to-describe-stock-prices
 
 We adhere to a notation found in [[@kuhnFeatureEngineeringSelection2020]]
+
+
 
 <mark style="background: #BBFABBA6;">How is Skewness Used in Machine Learning? (https://deepai.org/machine-learning-glossary-and-terms/skewness) In most models, any form of skewness is undesirable, since it leads to excessively large [variance](https://deepai.org/machine-learning-glossary-and-terms/variance) in [estimates](https://deepai.org/machine-learning-glossary-and-terms/estimator). Other models require [unbiased estimators](https://deepai.org/machine-learning-glossary-and-terms/unbiased-estimator) or Gaussian models to function accurately.</mark>
 
@@ -101,3 +110,4 @@ A comprehensive overview of all feature transformations is given in Appendix [[�
 [^2]: See chapter on ordered boosting, [[extensions-to-tabtransformer]], or the [[fttransformer]].
 [^3]: Notice the similarities to the positional encoding used in [[@vaswaniAttentionAllYou2017]].
 [^4]: Optionally, add proof in the appendix.
+[^5]: Subsequent scaling may also affect the imputation constant.
