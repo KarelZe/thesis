@@ -4,14 +4,19 @@
   "pdfExportSettings": {
     "pageSize": "A4",
     "landscape": false,
-    "margin": "0",
+    "margin": "2",
     "downscalePercent": 100
   },
-  "spellcheck": false,
+  "spellcheck": true,
   "spellcheckDictionary": [
     "backpropagation"
   ],
   "legacyEditor": false,
   "livePreview": true,
-  "attachmentFolderPath": "🖼️Media"
+  "attachmentFolderPath": "🖼️Media",
+  "readableLineLength": false,
+  "spellcheckLanguages": [
+    "de",
+    "en-GB-oxendict"
+  ]
 }

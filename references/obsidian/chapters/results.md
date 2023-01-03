@@ -8,3 +8,4 @@
 	- perturbation: change data slightly, add noise etc.
 	- invariance: keep features the same, but change some sensitive information
 	- Directional expectation tests. e. g. does a change in the feature has a logical impact on the prediction e. g. very high bid (**could be interesting!**)
+- adhere to http://www.sigplan.org/Resources/EmpiricalEvaluation/

@@ -64,6 +64,11 @@ Decoder: The decoder is also composed of a stack of $N=6$ identical layers. In a
 ## Attention
 An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors. The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.
 
+- nice explanation of transformers, such as dot-product attention https://t.co/WOlBY3suy4
+
+Very high level overview: https://www.youtube.com/watch?app=desktop&v=SZorAJ4I-sA
+
+
 
 ## Point-wise Feed-Forward Networks
 

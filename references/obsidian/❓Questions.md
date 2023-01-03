@@ -3,7 +3,7 @@
 - I marked TabNet as optional in my toc, due to the very slow training / convergence. Architecture is hard to optimize, as e. g., some gradients are hand-crafted and no approximations available. Similar expected performance.
 - Was able to improve the test accuracy of gradient-boosting approach to 72.84 % (ca. 6 % above SOTA) on the test set. Would this be sufficient for the thesis? It's hard to squeeze out more accuracy from these few features.
 - Discuss the idea of describing all rules as algorithms for preciseness.
-- Request final dataset e. g., CBOE data for comparsion and unlabeled dataset for implementing and testing pre-training routines.
+- Request final dataset e. g., CBOE data for comparison and unlabeled dataset for implementing and testing pre-training routines.
 
 ## Closed
 - How is the "time from the previous trade" calculated in table 9? Are there any restrictions regarding the option or underlying? -> time to the previous trade of the same option, as used in the tick rule.

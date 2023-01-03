@@ -31,3 +31,5 @@
 
 - There are several established libraries such as catboost, XGBoost and LightGBM, (that differ in e. g., the growing policy of trees, handling missing values or the calculation of gradients. (see papers also see [[@josseConsistencySupervisedLearning2020]]))  Their performance however, doesn't differ much. (found in [[@gorishniyRevisitingDeepLearning2021]] and cited [[@prokhorenkovaCatBoostUnbiasedBoosting2018]])
 - See [[@huangTabTransformerTabularData2020]] that point out common problems of comparsions between gbts and dl.
+- Why to formulate problem as probabilistic classification problem: https://www.youtube.com/watch?v=RXMu96RJj_s
+- for use of transformer-based models in finance see [[@zouStockMarketPrediction2022]]
