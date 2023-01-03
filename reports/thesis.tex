@@ -1,9 +1,14 @@
 \documentclass[oneside,a4paper,12pt]{article} % Specifies the page format and font size.
 
+% --------------------------------- Encoding ---------------------------------
+\usepackage[utf8]{inputenc} % Enables the use of special characters.
+\usepackage[T1]{fontenc} % Enables the use of special characters.
+
 % -------------------------------------- Integration of packages --------------------------------------
 % Literature and language
 	\usepackage[english]{babel}
-	\usepackage[style=bwl-FU,backend=bibtex,natbib=true,maxcitenames=2]{biblatex}
+	\usepackage{csquotes}
+	\usepackage[style=bwl-FU,backend=biber,natbib=true,maxcitenames=2]{biblatex}
 	\addbibresource{Content/bibliography.bib}
 
 % --------------------------------- Algorithm ---------------------------------
@@ -50,12 +55,13 @@
 	\usepackage{footmisc} % Implements a range of footnotes options.
 	\renewcommand{\footnotelayout}{\setstretch{1}} % Sets a line spacing of 1 for the footnotes.
 	\pagestyle{headings} % Creates a header using the page number and the heading of the current section.
-	\usepackage[utf8]{inputenc} % Enables the use of special characters.
-	\usepackage[T1]{fontenc} % Enables the use of special characters.
 	\usepackage{eurosym} % Usage of €
 	\usepackage{acronym} % Enables the incorporation of a list of abbreviations.
 	\usepackage{nomencl} % Useful to create list of symbols.
+	
+% Colors	
 	\usepackage{xcolor} % Enables the definition of more colors.
+	\usepackage{colorprofiles} % load color profiles for pdf/a standard
 
 % Tables and Graphs
 	\usepackage{booktabs} % Improves the design of the tables
@@ -70,7 +76,11 @@
     \usepackage{amscd,amsfonts,amsmath,amssymb,amsthm,amscd,bbm} % Extends the maths set.
 
 % Markdown
-	\usepackage[hybrid]{markdown}
+%	\usepackage[hybrid]{markdown}
+
+% PDF/a standard
+\usepackage[a-2b,mathxmp]{pdfx}
+
 % Depth
 \setcounter{secnumdepth}{3}
 
@@ -83,7 +93,24 @@
 	\newcommand{\postalcode}{76133} % Enter your postal code.
 	\newcommand{\city}{Karlsruhe} % Enter your city/town.
 	\newcommand{\email}{markus.bilz@student.kit.edu} % Enter your email adress.
-	\newcommand{\typeofthesis}{Master's Thesis} % specify the type of thesis: Seminar Thesis, Bachelor Thesis, Master Thesis.
+	\newcommand{\typeofthesis}{Master's Thesis} % specify the type of thesis: Seminar Thesis, Bachelor Thesis, Master Thesi
+
+%--------------------------------- Information in xmpdata ---------------------------------
+% definition from macro doesn't seem to work.
+\begin{filecontents*}[overwrite]{\jobname.xmpdata}
+	\Title{Forget About the Rules: Improving Option Trade Classification With Machine Learning}
+	\Author{Markus Bilz}
+	\Language{en-GB}
+	\Keywords{trade-classification\sep machine-learning\sep transformer}
+\end{filecontents*}
+
+% --------------------------------- Information in desription ---------------------------------
+\pdfinfo {   
+          /Title (\titleofthesis)
+          /Author (\name)
+          /Subject (Trade Classification using machine learning)
+          /Keywords (trade-classification machine-learning transformer) 
+}
 
 % --------------------------------- Definition of hyperlinks ---------------------------------
 % Hyperreferences
@@ -95,9 +122,6 @@
         linkcolor=black,
         citecolor=darkblue,
         urlcolor=black,
-        pdftitle=\titleofthesis,
-        pdfsubject=\typeofthesis,
-        pdfauthor=\name,
         bookmarksopen
         }
 

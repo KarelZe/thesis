@@ -12,11 +12,11 @@ from pathlib import Path
 import click
 import optuna
 import pandas as pd
-import wandb
 import yaml
 from optuna.exceptions import ExperimentalWarning
 from optuna.integration.wandb import WeightsAndBiasesCallback
 
+import wandb
 from otc.config.config import settings
 from otc.features.build_features import (
     features_categorical,
@@ -28,7 +28,6 @@ from otc.models.objective import (
     ClassicalObjective,
     FTTransformerObjective,
     GradientBoostingObjective,
-    TabNetObjective,
     TabTransformerObjective,
     set_seed,
 )
@@ -38,7 +37,6 @@ OBJECTIVES = {
     "classical": ClassicalObjective,
     "tabtransformer": TabTransformerObjective,
     "fttransformer": FTTransformerObjective,
-    "tabnet": TabNetObjective,
 }
 
 FEATURE_SETS = {
@@ -60,7 +58,7 @@ FEATURE_SETS = {
 @click.option(
     "--model",
     type=click.Choice(
-        ["classical", "gbm", "tabtransformer", "fttransformer", "tabnet"],
+        ["classical", "gbm", "tabtransformer", "fttransformer"],
         case_sensitive=False,
     ),
     required=True,
