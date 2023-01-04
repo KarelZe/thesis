@@ -166,10 +166,9 @@ class Attention(nn.Module):
             x (torch.Tensor): input tensor.
 
         Returns:
-            torch.Tensor: output tensor.
+            Tuple[torch.Tensor, Dict[str, torch.Tensor]]: Tuple with tokens and
+            attention_stats
         """
-        # print("x in attention")
-        # print(x)
         q, k, v = self.to_qkv(x).chunk(3, dim=-1)
         b, n, _ = q.shape
         # reshape and permute: b n (h d) -> b h n d
@@ -183,12 +182,9 @@ class Attention(nn.Module):
         # reshape and permute: b h i j, b h j d -> b h i d
         out = out.permute(0, 2, 1, 3).reshape(b, n, -1)
 
-        # print(attention_logits)
-        # print(attention_probs)
-
         return self.to_out(out), {
             "attention_logits": attention_logits,
-            "attention_probs": attention_probs,  # .diagonal(0,2,3)
+            "attention_probs": attention_probs,
         }
 
 
