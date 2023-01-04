@@ -15,3 +15,7 @@ Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 
 ### Attention visualization
 - https://m.youtube.com/watch?v=A1tqsEkSoLg
+- Average over different Attention heads, layer aggregation by multiplication (Abnar et al)
+Alternative:
+![[attention-map.png]]
+
