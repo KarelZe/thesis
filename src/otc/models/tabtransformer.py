@@ -5,13 +5,10 @@ Based on paper:
 https://arxiv.org/abs/2012.06678
 
 Implementation adapted from: https://github.com/lucidrains/tab-transformer-pytorch
-and https://github.com/kathrinse/TabSurvey/blob/main/models/tabtransformer.py
-
-Also see: https://pytorch.org/docs/stable/_modules/torch/nn/modules/transformer.html
 """
 from __future__ import annotations
 
-from typing import Any, Callable
+from typing import Any, Callable, cast
 
 import torch
 import torch.nn.functional as F
@@ -48,7 +45,10 @@ class Residual(nn.Module):
         Returns:
             torch.Tensor: output tensor.
         """
-        return self.fn(x, **kwargs) + x
+        out = self.fn(x, **kwargs)
+        if isinstance(out, tuple):
+            out, _ = out
+        return out + x
 
 
 class PreNorm(nn.Module):
@@ -137,20 +137,20 @@ class Attention(nn.Module):
     """
 
     def __init__(
-        self, dim: int, heads: int = 8, dim_head: int = 16, dropout: float = 0.0
+        self, dim: int, n_heads: int = 8, dim_head: int = 16, dropout: float = 0.0
     ):
         """
         Attention.
 
         Args:
             dim (int): Number of dimensions.
-            heads (int, optional): Number of attention heads. Defaults to 8.
+            n_heads (int, optional): Number of attention heads. Defaults to 8.
             dim_head (int, optional): Dimension of attention heads. Defaults to 16.
             dropout (float, optional): Degree of dropout. Defaults to 0.0.
         """
         super().__init__()
-        inner_dim = dim_head * heads
-        self.heads = heads
+        inner_dim = dim_head * n_heads
+        self.n_heads = n_heads
         self.scale = dim_head**-0.5
 
         self.to_qkv = nn.Linear(dim, inner_dim * 3, bias=False)
@@ -158,7 +158,7 @@ class Attention(nn.Module):
 
         self.dropout = nn.Dropout(dropout)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: torch.Tensor) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
         """
         Forward pass of attention module.
 
@@ -166,21 +166,26 @@ class Attention(nn.Module):
             x (torch.Tensor): input tensor.
 
         Returns:
-            torch.Tensor: output tensor.
+            Tuple[torch.Tensor, Dict[str, torch.Tensor]]: Tuple with tokens and
+            attention_stats
         """
         q, k, v = self.to_qkv(x).chunk(3, dim=-1)
         b, n, _ = q.shape
         # reshape and permute: b n (h d) -> b h n d
         q, k, v = map(
-            lambda t: t.reshape(b, n, self.heads, -1).permute(0, 2, 1, 3), (q, k, v)
+            lambda t: t.reshape(b, n, self.n_heads, -1).permute(0, 2, 1, 3), (q, k, v)
         )
-        sim = einsum("b h i d, b h j d -> b h i j", q, k) * self.scale
-        attn = sim.softmax(dim=-1)
-        attn = self.dropout(attn)
-        out = einsum("b h i j, b h j d -> b h i d", attn, v)
+        attention_logits = einsum("b h i d, b h j d -> b h i j", q, k) * self.scale
+        attention_probs = attention_logits.softmax(dim=-1)
+        attention_probs = self.dropout(attention_probs)
+        out = einsum("b h i j, b h j d -> b h i d", attention_probs, v)
         # reshape and permute: b h i j, b h j d -> b h i d
         out = out.permute(0, 2, 1, 3).reshape(b, n, -1)
-        return self.to_out(out)
+
+        return self.to_out(out), {
+            "attention_logits": attention_logits,
+            "attention_probs": attention_probs,
+        }
 
 
 class Transformer(nn.Module):
@@ -218,25 +223,27 @@ class Transformer(nn.Module):
         """
         super().__init__()
         self.embeds = nn.Embedding(num_tokens, dim)  # (Embed the categorical features.)
-        self.layers = nn.ModuleList([])
+        self.blocks = nn.ModuleList([])
 
         for _ in range(depth):
-            self.layers.append(
-                nn.ModuleList(
-                    [
-                        Residual(
+            self.blocks.append(
+                nn.ModuleDict(
+                    {
+                        "attention": Residual(
                             PreNorm(
                                 dim,
                                 Attention(
                                     dim,
-                                    heads=heads,
+                                    n_heads=heads,
                                     dim_head=dim_head,
                                     dropout=attn_dropout,
                                 ),
                             )
                         ),
-                        Residual(PreNorm(dim, FeedForward(dim, dropout=ff_dropout))),
-                    ]
+                        "ffn": Residual(
+                            PreNorm(dim, FeedForward(dim, dropout=ff_dropout))
+                        ),
+                    }
                 )
             )
 
@@ -252,9 +259,10 @@ class Transformer(nn.Module):
         """
         x = self.embeds(x)
 
-        for attn, ff in self.layers:  # type: ignore
-            x = attn(x)
-            x = ff(x)
+        for layer in self.blocks:
+            layer = cast(nn.ModuleDict, layer)
+            x = layer["attention"](x)
+            x = layer["ffn"](x)
 
         return x
 
