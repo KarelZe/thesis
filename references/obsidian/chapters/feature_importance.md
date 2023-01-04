@@ -19,3 +19,4 @@ Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 Alternative:
 ![[attention-map.png]]
 
+feature importance evaluation is a non-trivial problem due to missing ground truth. See [[@borisovDeepNeuralNetworks2022]] paper for citation
