@@ -81,7 +81,10 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         }
 
     def array_to_dataloader(
-        self, X: npt.NDArray | pd.DataFrame, y: npt.NDArray | pd.Series
+        self,
+        X: npt.NDArray | pd.DataFrame,
+        y: npt.NDArray | pd.Series,
+        weight: npt.NDArray | None = None,
     ) -> TabDataLoader:
         """
         Convert array like to dataloader.
@@ -89,19 +92,24 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         Args:
             X (npt.NDArray | pd.DataFrame): feature matrix
             y (npt.NDArray | pd.Series): target vector
+            weight (npt.NDArray | None, optional): weights for each sample.
+            Defaults to None.
 
         Returns:
-            TabDataLoader: data loader with X_cat, X_cont, y
+            TabDataLoader: data loader.
         """
         data = TabDataset(
             X,
             y,
-            features=self.features,
+            feature_names=self.features,
+            weight=weight,
             cat_features=self.module_params["cat_features"],
             cat_unique_counts=self.module_params["cat_cardinalities"],
         )
 
-        return TabDataLoader(data.x_cat, data.x_cont, data.y, **self.dl_params)
+        return TabDataLoader(
+            data.x_cat, data.x_cont, data.y, data.weight, **self.dl_params
+        )
 
     def fit(
         self,
@@ -147,7 +155,10 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         self.classes_ = np.array([-1, 1])
 
-        train_loader = self.array_to_dataloader(X, y)
+        # decay weight of very old observations in training set. See eda notebook.
+        weight = np.geomspace(0.001, 1, num=len(y))
+        train_loader = self.array_to_dataloader(X, y, weight)
+        # no weight for validation set / every sample with weight = 1
         val_loader = self.array_to_dataloader(X_val, y_val)
 
         self.clf = self.module(**self.module_params)
@@ -166,7 +177,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         # see https://stackoverflow.com/a/53628783/5755604
         # no sigmoid required; numerically more stable
-        criterion = nn.BCEWithLogitsLoss()
+        # do not reduce, calculate mean after multiplication with weight
+        criterion = nn.BCEWithLogitsLoss(reduction="none")
 
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=5)
@@ -178,15 +190,16 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             self.clf.train()
 
-            for x_cat, x_cont, targets in train_loader:
+            for x_cat, x_cont, weights, targets in train_loader:
 
                 # reset the gradients back to zero
                 optimizer.zero_grad()
 
-                outputs = self.clf(x_cat, x_cont)
-                outputs = outputs.flatten()
+                # compute the model output and train loss
                 with torch.cuda.amp.autocast():
-                    train_loss = criterion(outputs, targets)
+                    outputs = self.clf(x_cat, x_cont).flatten()
+                    intermediate_loss = criterion(outputs, targets)
+                    train_loss = torch.mean(weights * intermediate_loss)
 
                 # compute accumulated gradients
                 scaler.scale(train_loss).backward()
@@ -204,16 +217,14 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             # correct = 0
 
             with torch.no_grad():
-                for x_cat, x_cont, targets in val_loader:
+                for x_cat, x_cont, weights, targets in val_loader:
                     outputs = self.clf(x_cat, x_cont)
                     outputs = outputs.flatten()
 
-                    val_loss = criterion(outputs, targets)
-                    loss_in_epoch_val += val_loss.item()
+                    intermediate_loss = criterion(outputs, targets)
+                    val_loss = torch.mean(weights * intermediate_loss)
 
-                    # # convert to propability, then round to nearest integer
-                    # outputs = torch.sigmoid(outputs).round()
-                    # correct += (outputs == targets).sum().item()
+                    loss_in_epoch_val += val_loss.item()
 
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
@@ -258,15 +269,16 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         check_is_fitted(self)
 
         X = check_array(X, accept_sparse=False)
+        y = np.zeros(len(X))
 
-        test_loader = self.array_to_dataloader(X, pd.Series(np.zeros(len(X))))
+        test_loader = self.array_to_dataloader(X, y)
 
         self.clf.eval()
 
         # calculate probability and counter-probability
         probabilites = []
         with torch.no_grad():
-            for x_cat, x_cont, _ in test_loader:
+            for x_cat, x_cont, _, _ in test_loader:
                 probability = self.clf(x_cat, x_cont)
                 probability = probability.flatten()
                 probability = torch.sigmoid(probability)
