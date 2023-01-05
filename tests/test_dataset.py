@@ -191,7 +191,63 @@ class TestDataLoader:
         y = pd.Series(np.arange(length))
         with pytest.raises(AssertionError):
             TabDataset(
+                x=x,
+                y=y,
+                feature_names=["A", "C", "D"],
+            )
+
+    def test_empty_feature_names(self) -> None:
+        """
+        Test, if assertation is raised if resulting feature_names are empty.
+
+        Might be the case if `X` is a numpy array and `feature_names` is not provided.	 
+        """
+        length = 10
+        x = np.arange(30).reshape(length, 3)
+        y = np.arange(length)
+        with pytest.raises(AssertionError):
+            TabDataset(
+                x=x,
+                y=y,
+                feature_names=None,
+            )
+
+    def test_overlong_cat_features(self) -> None:
+        """
+        Test, if assertation is raised if `cat_feature` is provided, that is not in\
+        `feature_names`. Might be a typo.
+        """
+        length = 10
+        x = pd.DataFrame(np.arange(30).reshape(length, 3), columns=["A", "B", "C"])
+        y = pd.Series(np.arange(length))
+        with pytest.raises(AssertionError):
+            TabDataset(
+                x=x,
+                y=y,
+                cat_features=["E"],
+                cat_unique_counts=tuple([1]),
+            )
+
+    def test_selective_feature_names(self) -> None:
+        """
+        Test, if fewer feature_names are provided, than columns in the pd.DataFrame,
+        the subset should be correctly selected.
+
+        This check can not be done for numpy arrays, as column names are not available.
+        """
+        x = pd.DataFrame([[1, 2, 3], [1, 2, 3], [1, 2, 3]], columns=["A", "B", "C"])
+        y = pd.Series([4, 4, 4])
+
+        # select only columns A and C with C being categorical. B is not considered.
+        data = TabDataset(
             x=x,
             y=y,
-            feature_names=["A", "C", "D"],
+            feature_names=["A", "C"],
+            cat_features=["C"],
+            cat_unique_counts=tuple([1]),
+        )
+        print(data.x_cont)
+        print(data.x_cat)
+        assert data.x_cont.equal(torch.Tensor([1, 1, 1])) and data.x_cat.equal(  # type: ignore
+            torch.Tensor([3, 3, 3])
         )

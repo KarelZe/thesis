@@ -49,18 +49,26 @@ class TabDataset(Dataset):
         """
         self._cat_unique_counts = () if not cat_unique_counts else cat_unique_counts
 
+        feature_names = [] if feature_names is None else feature_names
         # infer feature names from dataframe. Manual feature_names take precedence.
-        if isinstance(x, pd.DataFrame) and feature_names is None:
+        if isinstance(x, pd.DataFrame) and len(feature_names) == 0:
             feature_names = x.columns.tolist()
-
-        feature_names = [] if not feature_names else feature_names
 
         assert isinstance(x, pd.DataFrame) and set(feature_names).issubset(
             x.columns.tolist()
-        ), "Feature names must be a subset of X.columns."
+        ), "`feature_names` must be a subset of X.columns."
+
+        assert (
+            len(feature_names) > 0
+        ), "`feature_names` must not be empty.\
+        No columns to select."
 
         # calculate cat indices
         cat_features = [] if not cat_features else cat_features
+        assert set(cat_features).issubset(
+            feature_names
+        ), "Categorical features must be a subset of feature names."
+
         self._cat_idx = [
             feature_names.index(i) for i in cat_features if i in feature_names
         ]
@@ -101,7 +109,7 @@ class TabDataset(Dataset):
         )
         assert (
             y.shape[0] == weight.shape[0]
-        ), "Length of traget must match length of weight."
+        ), "Length of label must match length of weight."
         self.weight = weight
 
     def __len__(self) -> int:
