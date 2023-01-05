@@ -56,7 +56,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             features (list[str] | None, optional): List of feature names in order of
             columns. Required to match columns in feature matrix with label. If no
             feature names are provided for pd.DataFrames, names are taken from
-            `X.columns`. Defaults to None.
+            `X.columns` in `fit()`. Defaults to None.
         """
         self.module = module
 
