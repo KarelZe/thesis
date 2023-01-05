@@ -31,13 +31,17 @@ class TabDataset(Dataset):
         """
         Tabular data set holding data for the model.
 
+        Data set is inspired by CatBoost's Pool class:
+        https://catboost.ai/en/docs/concepts/python-reference_pool
+
         Args:
             x (pd.DataFrame | npt.ndarray): feature matrix
             y (pd.Series | npt.ndarray): target
             weight (pd.Series | npt.ndarray | None, optional): weights of samples. If
             not provided all samples are given a weight of 1. Defaults to None.
-            feature_names (list[str] | None, optional): name of features. Defaults to
-            None.
+            feature_names (list[str] | None, optional): name of features. Necessary for
+            npt.ndarrays. Optional for pd.DataFrame. If no feature names are provided
+            for pd.DataFrames, names are taken from `X.columns`. Defaults to None.
             cat_features (list[str] | None, optional): List with categorical columns.
             Defaults to None.
             cat_unique_counts (tuple[int, ...] | None, optional): Number of categories
@@ -45,8 +49,17 @@ class TabDataset(Dataset):
         """
         self._cat_unique_counts = () if not cat_unique_counts else cat_unique_counts
 
-        # calculate cat indices
+        # infer feature names from dataframe. Manual feature_names take precedence.
+        if isinstance(x, pd.DataFrame) and feature_names is None:
+            feature_names = x.columns.tolist()
+
         feature_names = [] if not feature_names else feature_names
+
+        assert isinstance(x, pd.DataFrame) and set(feature_names).issubset(
+            x.columns.tolist()
+        ), "Feature names must be a subset of X.columns."
+
+        # calculate cat indices
         cat_features = [] if not cat_features else cat_features
         self._cat_idx = [
             feature_names.index(i) for i in cat_features if i in feature_names

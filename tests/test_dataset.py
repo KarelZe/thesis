@@ -32,7 +32,7 @@ class TestDataLoader:
         x = pd.DataFrame(np.arange(30).reshape(length, 3))
         y = pd.Series(np.arange(length))
 
-        training_data = TabDataset(x=x, y=y, feature_names=["a", "b", "c"])
+        training_data = TabDataset(x=x, y=y)
         assert len(training_data) == length
 
     def test_invalid_len(self) -> None:
@@ -47,7 +47,7 @@ class TestDataLoader:
         y = pd.Series(np.arange(length + 1))
 
         with pytest.raises(AssertionError):
-            TabDataset(x=x, y=y, feature_names=["a", "b", "c"])
+            TabDataset(x=x, y=y)
 
     def test_invalid_weight(self) -> None:
         """
@@ -60,7 +60,7 @@ class TestDataLoader:
         weight = np.ones(length + 1)
 
         with pytest.raises(AssertionError):
-            TabDataset(x=x, y=y, weight=weight, feature_names=["a", "b", "c"])
+            TabDataset(x=x, y=y, weight=weight)
 
     def test_invalid_unique_count(self) -> None:
         """
@@ -78,7 +78,6 @@ class TestDataLoader:
             TabDataset(
                 x=x,
                 y=y,
-                feature_names=["a", "b", "c"],
                 cat_features=["a", "b"],
                 cat_unique_counts=tuple([20]),
             )
@@ -100,7 +99,6 @@ class TestDataLoader:
         training_data = TabDataset(
             x=x,
             y=y,
-            feature_names=["a", "b", "c"],
             cat_features=["a"],
             cat_unique_counts=tuple([100]),
         )
@@ -126,7 +124,6 @@ class TestDataLoader:
         training_data = TabDataset(
             x=x,
             y=y,
-            feature_names=["a", "b", "c"],
             cat_features=None,
             cat_unique_counts=None,
         )
@@ -141,7 +138,7 @@ class TestDataLoader:
         x = pd.DataFrame(np.arange(30).reshape(length, 3))
         y = pd.Series(np.arange(length))
         weight = np.geomspace(0.001, 1, num=len(y))
-        data = TabDataset(x=x, y=y, weight=weight, feature_names=["a", "b", "c"])
+        data = TabDataset(x=x, y=y, weight=weight)
         assert data.weight.equal(torch.tensor(weight).float())
 
     def test_no_weight(self) -> None:
@@ -152,5 +149,49 @@ class TestDataLoader:
         length = 10
         x = pd.DataFrame(np.arange(30).reshape(length, 3))
         y = pd.Series(np.arange(length))
-        data = TabDataset(x=x, y=y, feature_names=["a", "b", "c"])
+        data = TabDataset(x=x, y=y)
         assert data.weight.equal(torch.ones(length))
+
+    def test_no_feature_names(self) -> None:
+        """
+        Test, if no feature names are provided, feature names are inferred from\
+        the `pd.DataFrame`.
+        """
+        length = 10
+        x = pd.DataFrame(np.arange(30).reshape(length, 3), columns=["A", "B", "C"])
+        y = pd.Series(np.arange(length))
+        data = TabDataset(x=x, y=y, cat_features=["C"], cat_unique_counts=tuple([1]))
+        assert data.x_cont.shape == (length, 2) and data.x_cat.shape == (length, 1)
+
+    def test_feature_names(self) -> None:
+        """
+        Test, if manual feature_names take precedence for pd.DataFrames.
+        """
+        length = 10
+        x = pd.DataFrame(np.arange(30).reshape(length, 3), columns=["A", "B", "C"])
+        y = pd.Series(np.arange(length))
+        data = TabDataset(
+            x=x,
+            y=y,
+            feature_names=["A", "C"],
+            cat_features=["C"],
+            cat_unique_counts=tuple([1]),
+        )
+        assert data.x_cont.shape == (length, 1) and data.x_cat.shape == (length, 1)
+
+    def test_overlong_feature_names(self) -> None:
+        """
+        Test, if assertation is raised if feature_names are provided, that are not in\
+        the pd.DataFrame. 
+
+        This check can not be done for numpy arrays, as column names are not available.
+        """
+        length = 10
+        x = pd.DataFrame(np.arange(30).reshape(length, 3), columns=["A", "B", "C"])
+        y = pd.Series(np.arange(length))
+        with pytest.raises(AssertionError):
+            TabDataset(
+            x=x,
+            y=y,
+            feature_names=["A", "C", "D"],
+        )

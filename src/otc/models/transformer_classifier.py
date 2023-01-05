@@ -54,8 +54,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             dl_params (dict[str, Any]): params for dataloader
             callbacks (CallbackContainer): Container with callbacks
             features (list[str] | None, optional): List of feature names in order of
-            columns. Required to match columns in feature matrix with label.
-            Can be `None`, if `pd.DataFrame` is passed. Defaults to None.
+            columns. Required to match columns in feature matrix with label. If no
+            feature names are provided for pd.DataFrames, names are taken from
+            `X.columns`. Defaults to None.
         """
         self.module = module
 
@@ -132,8 +133,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         Returns:
             TransformerClassifier: self
         """
-        # get features from pd.DataFrame
-        if isinstance(X, pd.DataFrame):
+        # get features from pd.DataFrame, if not provided
+        if isinstance(X, pd.DataFrame) and self.features is None:
             self.features = X.columns.tolist()
 
         check_classification_targets(y)
