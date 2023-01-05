@@ -182,7 +182,7 @@ class TabTransformerObjective(Objective):
         no_devices = torch.cuda.device_count()
 
         torch.cuda.empty_cache()
-        
+
         dl_params: dict[str, Any] = {
             "batch_size": batch_size
             * max(no_devices, 1),  # dataprallel splits batches across devices
@@ -205,7 +205,6 @@ class TabTransformerObjective(Objective):
         }
 
         optim_params = {"lr": lr, "weight_decay": weight_decay}
-        
 
         self._clf = TransformerClassifier(
             module=TabTransformer,  # type: ignore
@@ -299,7 +298,7 @@ class FTTransformerObjective(Objective):
         no_devices = torch.cuda.device_count()
 
         torch.cuda.empty_cache()
-        
+
         feature_tokenizer_kwargs = {
             "num_continous": len(self._cont_features),
             "cat_cardinalities": self._cat_cardinalities,

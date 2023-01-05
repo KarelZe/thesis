@@ -178,7 +178,8 @@ class TestDataLoader:
         x = pd.DataFrame(np.arange(30).reshape(length, 3), columns=["A", "B", "C"])
         y = pd.Series(np.arange(length))
         data = TabDataset(x=x, y=y, cat_features=["C"], cat_unique_counts=tuple([1]))
-        assert data.x_cont.shape == (length, 2) and data.x_cat.shape == (length, 1)
+        assert data.x_cont.shape == (length, 2)
+        assert data.x_cat.shape == (length, 1)  # type: ignore
 
     def test_feature_names(self) -> None:
         """
@@ -194,7 +195,8 @@ class TestDataLoader:
             cat_features=["H"],
             cat_unique_counts=tuple([1]),
         )
-        assert data.x_cont.shape == (length, 2) and data.x_cat.shape == (length, 1)
+        assert data.x_cont.shape == (length, 2)
+        assert data.x_cat.shape == (length, 1)  # type: ignore
 
     def test_empty_feature_names(self) -> None:
         """
