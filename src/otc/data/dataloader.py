@@ -78,7 +78,8 @@ class TabDataLoader:
         Raises:
             StopIteration: stopping criterion.
         Returns:
-            Tuple[torch.Tensor | None, torch.Tensor, torch.Tensor]: (X_cat), X_cont, y
+            Tuple[torch.Tensor | None, torch.Tensor, torch.Tensor]: (X_cat), X_cont,
+            weight, y
         """
         if self.i >= self.dataset_len:
             raise StopIteration

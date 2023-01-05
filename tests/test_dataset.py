@@ -32,7 +32,7 @@ class TestDataLoader:
         x = pd.DataFrame(np.arange(30).reshape(length, 3))
         y = pd.Series(np.arange(length))
 
-        training_data = TabDataset(x=x, y=y, features=["a", "b", "c"])
+        training_data = TabDataset(x=x, y=y, feature_names=["a", "b", "c"])
         assert len(training_data) == length
 
     def test_invalid_len(self) -> None:
@@ -47,7 +47,20 @@ class TestDataLoader:
         y = pd.Series(np.arange(length + 1))
 
         with pytest.raises(AssertionError):
-            TabDataset(x=x, y=y, features=["a", "b", "c"])
+            TabDataset(x=x, y=y, feature_names=["a", "b", "c"])
+
+    def test_invalid_weight(self) -> None:
+        """
+        Test, if an error is raised if length of weight and y do not match.
+        """
+        length = 10
+        x = pd.DataFrame(np.arange(30).reshape(length, 3))
+        y = pd.Series(np.arange(length))
+        # make weight one element longer
+        weight = np.ones(length + 1)
+
+        with pytest.raises(AssertionError):
+            TabDataset(x=x, y=y, weight=weight, feature_names=["a", "b", "c"])
 
     def test_invalid_unique_count(self) -> None:
         """
@@ -65,7 +78,7 @@ class TestDataLoader:
             TabDataset(
                 x=x,
                 y=y,
-                features=["a", "b", "c"],
+                feature_names=["a", "b", "c"],
                 cat_features=["a", "b"],
                 cat_unique_counts=tuple([20]),
             )
@@ -87,7 +100,7 @@ class TestDataLoader:
         training_data = TabDataset(
             x=x,
             y=y,
-            features=["a", "b", "c"],
+            feature_names=["a", "b", "c"],
             cat_features=["a"],
             cat_unique_counts=tuple([100]),
         )
@@ -113,9 +126,31 @@ class TestDataLoader:
         training_data = TabDataset(
             x=x,
             y=y,
-            features=["a", "b", "c"],
+            feature_names=["a", "b", "c"],
             cat_features=None,
             cat_unique_counts=None,
         )
 
         assert training_data.x_cat is None
+
+    def test_weight(self) -> None:
+        """
+        Test, if weight is correctly assigned to data set.
+        """
+        length = 10
+        x = pd.DataFrame(np.arange(30).reshape(length, 3))
+        y = pd.Series(np.arange(length))
+        weight = np.geomspace(0.001, 1, num=len(y))
+        data = TabDataset(x=x, y=y, weight=weight, feature_names=["a", "b", "c"])
+        assert data.weight.equal(torch.tensor(weight).float())
+
+    def test_no_weight(self) -> None:
+        """
+        Test, if no weight is provided, every sample should get weight 1.
+
+        """
+        length = 10
+        x = pd.DataFrame(np.arange(30).reshape(length, 3))
+        y = pd.Series(np.arange(length))
+        data = TabDataset(x=x, y=y, feature_names=["a", "b", "c"])
+        assert data.weight.equal(torch.ones(length))
