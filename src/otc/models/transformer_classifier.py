@@ -197,8 +197,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                 # compute the model output and train loss
                 with torch.cuda.amp.autocast():
-                    outputs = self.clf(x_cat, x_cont).flatten()
-                    intermediate_loss = criterion(outputs, targets)
+                    logits = self.clf(x_cat, x_cont).flatten()
+                    intermediate_loss = criterion(logits, targets)
                     train_loss = torch.mean(weights * intermediate_loss)
 
                 # compute accumulated gradients
@@ -218,8 +218,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             with torch.no_grad():
                 for x_cat, x_cont, weights, targets in val_loader:
-                    outputs = self.clf(x_cat, x_cont)
-                    logits = outputs.flatten()
+                    logits = self.clf(x_cat, x_cont)
+                    logits = logits.flatten()
 
                     # get probabilities and round to nearest integer
                     preds = torch.sigmoid(logits).round()
