@@ -8,6 +8,14 @@ The goal of my feature set definition is: Have a minimal feature set required to
 - Some feature ideas like order imbalance could be adapted from [[@aitkenIntradayAnalysisProbability1995]].
 - [[@ronenMachineLearningTrade2022]] suggest to use models that can handle time series components. This would limit our choices. Thus we use feature engineering to induce a notion of time into our models.
 
+Possible formulations of spread (found in [[@zhuClusteringStructureMicrostructure2021]]]
+1. Dollar bid-ask (quoted) spread $=$ ask price $-$ bid price
+2. Proportional bid-ask (quoted) spread $=\frac{\text { ask price-bid price }}{\text { mid quote }} \times 100 \%$
+3. Dollar effective spread: $\left|\text{trade price} - \text{mid quote}\right|$.
+4. Proportional effective spread: $2\left|\frac{\text { trade price-mid quote }}{\text { mid quote }}\right| \times 100 \%$.
+
+[[@blazejewskiLocalNonparametricModel2005]] use several lagged variables e. g., volume at ask price level lagged. Do not have this data. Also consistency with classical works would be completely lost.
+
 
 | Feature               | Feature Category             | FS 1 (Classical) | FS 2 (F1 + Grauer) | FS 3 (F2 + temp) | FS 4 (F3 + Others) | Transform   |
 | --------------------- | ---------------------------- | ---------------- | ------------------ | ---------------- | ------------------ | ----------- |
