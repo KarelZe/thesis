@@ -112,13 +112,13 @@ In our attempt to compare shallow with deep architectures for trade classificati
 describe if data set is actually used. Write similarily to 
 
 ### Exploratory Data Analysis
-[[🌴exploratory_data_analysis]]
+[[🚏exploratory data analysis]]
 
 ### Data Pre-Processing 🟡
 [[preprocessing]]
 
 ### Feature Engineering 🟡
-![[🪛feature engineering]]
+![[🪄feature engineering]]
 
 ### Train-Test Split 🟡
 
