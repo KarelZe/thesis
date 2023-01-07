@@ -27,14 +27,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🪛feature engineering.md",
+                "file": "chapters/🌴exploratory_data_analysis.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -63,7 +63,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "uuid",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -72,7 +72,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -92,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🪛feature engineering.md",
+                "file": "chapters/🌴exploratory_data_analysis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +121,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🪛feature engineering.md"
+                "file": "chapters/🌴exploratory_data_analysis.md"
               }
             }
           }
@@ -143,15 +144,15 @@
   },
   "active": "777b5b234e18db2b",
   "lastOpenFiles": [
-    "TOC.md",
-    "🍬Implementation/🔢Preprocessing/@yiWhyNotUse2020.md",
-    "chapters/🪛feature engineering.md",
-    "chapters/🤖transformer.md",
-    "chapters/training-of-supervised-models.md",
-    "📥Inbox/@lecunEfficientBackProp2012.md",
-    "chapters/feature_importance.md",
-    "chapters/extensions-to-tabtransformer.md",
-    "📥Inbox/@boxAnalysisTransformations2022.md",
-    "chapters/introduction.md"
+    "🖼️Media/uuid_over_time.png",
+    "🖼️Media/tradesize-rule.png",
+    "🖼️Media/tick-rule-reverse-tick-rule.png",
+    "🖼️Media/tick-rule-formulae-alternative 1.png",
+    "🖼️Media/tick-rule-formulae-alternative.png",
+    "🖼️Media/techniques-to-speed-up-training.png",
+    "🖼️Media/tabular-learning-architectures 1.png",
+    "🖼️Media/tabular-learning-architectures.png",
+    "🖼️Media/tabtransformer-architecture.png",
+    "🖼️Media/tab-transformer-embedding.png"
   ]
 }

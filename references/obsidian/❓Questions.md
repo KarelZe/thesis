@@ -1,4 +1,5 @@
 ## Open
+- spread calculation
 - Ask for feedback regarding the toc. Indicate where I deviate from my initial expose (i. e., swap TabNet for FTTransformer due to slow training and no implementation of Rosenthal's rule due to low importance. Added ablation study, simulation, and list of algorithms).
 - I marked TabNet as optional in my toc, due to the very slow training / convergence. Architecture is hard to optimize, as e. g., some gradients are hand-crafted and no approximations available. Similar expected performance.
 - Was able to improve the test accuracy of gradient-boosting approach to 72.84 % (ca. 6 % above SOTA) on the test set. Would this be sufficient for the thesis? It's hard to squeeze out more accuracy from these few features.
