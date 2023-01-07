@@ -11,88 +11,71 @@ features_date = [
     "date_month_cos",
     "date_time_sin",
     "date_time_cos",
-    "date_year",
+    "date_weekday_sin",
+    "date_weekday_cos",
+    "date_day_sin",
+    "date_day_cos",
 ]
 
 features_option = [
     "STRK_PRC",
-    "ROOT",
-    "time_to_maturity",
-    "OPTION_TYPE",
-]
-
-features_trade = [
-    "TRADE_SIZE",
-    "TRADE_PRICE",
-    "BEST_ASK",
-    "BEST_BID",
-    "price_ex_lag",
-    "price_ex_lead",
-    "price_all_lag",
-    "price_all_lead",
-    "bid_ex",
-    "ask_ex",
-    "bid_size_ex",
-    "ask_size_ex",
-    "midpoint_ex",
-    "dis_mid_ex",
-    "rel_bid_size_ex",
-    "rel_ask_size_ex",
-    "diff_ask_bid_size_ex",
+    "ttm",
+    "bin_option_type",
+    "bin_issue_type",
+    "bin_root",
+    "myn",
+    "day_vol",
 ]
 
 # https://github.com/KarelZe/thesis/blob/main/notebooks/
 # 3.0a-mb-explanatory_data_analysis.ipynb
 features_categorical: List[Tuple[str, int]] = [
-    ("ROOT", 8667),
-    ("OPTION_TYPE", 2),
-    ("issue_type", 6),
+    ("bin_root", 8667),
+    ("bin_option_type", 2),
+    ("bin_issue_type", 6),
 ]
 
-features_ml = [*features_trade, *features_date, *features_option]
-
 features_classical = [
-    "TRADE_SIZE",
     "TRADE_PRICE",
+    "bid_ex",
+    "ask_ex",
     "BEST_ASK",
     "BEST_BID",
     "price_ex_lag",
     "price_ex_lead",
     "price_all_lag",
     "price_all_lead",
-    "bid_ex",
-    "ask_ex",
-    "bid_size_ex",
-    "ask_size_ex",
-]
-
-
-features_classical_size = [
-    "TRADE_PRICE",
-    "bid_ask_size_ratio_ex",
-    "rel_bid_size_ex",
-    "rel_ask_size_ex",
-    "depth_ex",
-    "prox_ex",
-    "prox_best",
-    "spread_ex",
-    "spread_best",
-    "bid_ask_ratio_ex",
-    "price_rel_nbb",
-    "price_rel_nbo",
     "chg_ex_lead",
     "chg_ex_lag",
     "chg_all_lead",
     "chg_all_lag",
-    "ask_ex",
-    "bid_ex",
-    "BEST_ASK",
-    "BEST_BID",
-    "price_all_lag",
-    "price_all_lead",
-    "price_ex_lag",
-    "price_ex_lead",
+    "prox_ex",
+    "prox_best",
+]
+
+features_size = [
+    "bid_ask_size_ratio_ex",
+    "rel_bid_size_ex",
+    "rel_ask_size_ex",
     "TRADE_SIZE",
     "bid_size_ex",
     "ask_size_ex",
+    "depth_ex",
+]
+
+features_classical_size = [
+    *features_classical,
+    *features_size,
+]
+
+features_ml = [*features_classical_size, *features_date, *features_option]
+
+features_unused = [
+    "price_rel_nbb",
+    "price_rel_nbo",
+    "date_year",
+    "mid_ex",
+    "mid_best",
+    "spread_ex",
+    "spread_best",
 ]

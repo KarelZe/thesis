@@ -4,20 +4,7 @@ In the following chapter, we motivate feature engineering, present our feature s
 Classical algorithms ([[basic_rules]] or [[hybrid_rules]]) infer the initiator of the trade from the *raw* price and quote data. We employ feature engineering to pre-process input data and enhance the convergence and performance of our machine learning models. Gradient-boosted trees and neural networks, though flexible estimators, have limitations in synthesizing new features from existing ones, as demonstrated in empirical work on synthetic data by [@heatonEmpiricalAnalysisFeature2016] (p. 5-6). Specifically, ratios, standard deviations, and differences can be difficult for these models to learn and must therefore be engineered beforehand. To ensure fair comparison and improve the transferability of our results, we use simple, non-destructive transformations in our feature engineering. 
 
 ## Feature set definition
-To establish a common ground, we derive three sets of features from raw data. The feature sets are are to a large extend inspired by inherent features used within classical trade classification rules. Features are derived from quote and price data, except for feature sets 3 and 4, which include additional option characteristics and date features.
-
-<mark style="background: #ABF7F7A6;">TODO: Add to each feature, where it has been used.
-TODO: Point out some interesting features here in the text.
-TODO: We are less concerned about providing redundant data to the model, as trees do not base their splitting process on correlation. Also, with neural nets being a universal function approximator.
-TODO: explain why we don't discretize / binarize features, other than classical models. See [[@kuhnFeatureEngineeringSelection2020]]
-TODO: Explain why we don't include the results of the classical rules themselves, due to redundant low-precision encoding. May give an example explaining for decision trees.
-TODO: Adress the usefullness of the engineered features. Sketch the results of the *adversarial validation*. Which features are very different in the training set and the validation set? Which features are most important in adversarial validation?
-TODO: Plot distributions of features from training and validation set. Could also test using https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test test if samples are drawn from the same distribution.
-TODO: Economic intuition:  [[@zhuClusteringStructureMicrostructure2021]]
-TODO: For different types of spreads see [[@zhuClusteringStructureMicrostructure2021]]
-TODO: Introduce the word "feature crosses" and motivation in deep learning https://stats.stackexchange.com/questions/349155/why-do-neural-networks-need-feature-selection-engineering/349202#349202
-https://financetrain.com/why-lognormal-distribution-is-used-to-describe-stock-prices
-</mark>
+To establish a common ground, we derive three sets of features from raw data. The feature sets are are to a large extend inspired by inherent features used within classical trade classification rules. Features are derived from quote and price data, except for feature sets 3 and 4, which include additional option characteristics and date features. 
 
 All feature set, the their definition and origin is documented in Appendix [[🍬appendix#^7c0162]].
 
@@ -31,16 +18,16 @@ In order to prepare a common datasets for *all* our machine learning models, we 
 
 Classical trade signing algorithms, such as the tick test, are also impacted by missing values. In theses cases, we defer to a random classification or a subsequent rule, if rules can not be computed. Details are provided in section [[training-of-supervised-models]].
 
-As introduced in the chapters [[🐈gradient-boosting]] and [[🤖transformer]] both architectures have found to be robust to missing values. In conjunction with the low degree of missing values (compare chapter [[🌴exploratory_data_analysis]]), we therefore expect the impact from missing values to be minor. To address concerns, that the imputation or scaling negatively impacts the performance of gradient boosted trees, we perform an ablation study in chapter [[🎋ablation_study]], and retrain our models on the unscaled and unimputed data set.
+As introduced in the chapters [[🐈gradient-boosting]] and [[🤖transformer]] both architectures have found to be robust to missing values. In conjunction with the low degree of missing values (compare chapter [[🚏exploratory data analysis]]), we therefore expect the impact from missing values to be minor. To address concerns, that the imputation or scaling negatively impacts the performance of gradient boosted trees, we perform an ablation study in chapter [[🎋ablation_study]], and retrain our models on the unscaled and unimputed data set.
 
 ## Problem of feature scales
-As observed in the [[🌴exploratory_data_analysis]] data is not just missing but may also be skewed. Tree-based models can handle arbitrary feature scales, as the splitting process is based on the purity of the split but not on the scale of the splitting value.  
+As observed in the [[🚏exploratory data analysis]] data is not just missing but may also be skewed. Tree-based models can handle arbitrary feature scales, as the splitting process is based on the purity of the split but not on the scale of the splitting value.  
 
 It has been well established that neural networks are long known to train faster on whitened data with zero mean, unit variance and uncorrelated inputs (cp. [[@lecunEfficientBackProp2012]]; p. 8). This is because a mean close to zero helps prevent  bias the direction of the weight update and scaling to unit variance helps balance the rate at which parameters are updated In order to maintain comparability with the traditional rules, inputs are not decorrelated. (reread in lecun paper or [here.](https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/))
 
 ## Solution of feature scales
 
-Continuous and categorical variable require different treatment, as derived below. Price and size-related features exhibit a positive skewness, as brought up in chapter [[🌴exploratory_data_analysis]]. To avoid negative impacts during training (tails of distributions dominate calculations (see e. g. , [[@kuhnFeatureEngineeringSelection2020]] or https://deepai.org/machine-learning-glossary-and-terms/skewness), we reduce skewness with power transformations. We determine the transformation using the Box-Cox procedure ([[@boxAnalysisTransformations2022]] p. 214), given by:
+Continuous and categorical variable require different treatment, as derived below. Price and size-related features exhibit a positive skewness, as brought up in chapter [[🚏exploratory data analysis]]. To avoid negative impacts during training (tails of distributions dominate calculations (see e. g. , [[@kuhnFeatureEngineeringSelection2020]] or https://deepai.org/machine-learning-glossary-and-terms/skewness), we reduce skewness with power transformations. We determine the transformation using the Box-Cox procedure ([[@boxAnalysisTransformations2022]] p. 214), given by:
 $$
 \tilde{x}= \begin{cases}\frac{x^\lambda-1}{\lambda}, & \lambda \neq 0 \\ \log (x),& \lambda=0\end{cases}.\tag{1}
 $$
@@ -48,7 +35,7 @@ Here, $\lambda$ is the power parameter and determines the specific power functio
 
 When applying the test in feature engineering, it is important to note two major conceptual differences from the [[@boxAnalysisTransformations2022]] paper as pointed out by [[@kuhnFeatureEngineeringSelection2020]]. Here, the transform is used an unsupervised manner, as the transformation's outcome is not directly used in the model. Also, the transform is applied to all features, rather than the model's residuals.
 
-Our estimates for $\lambda$ are documented in the Appendix [[🍬appendix]]. <mark style="background: #FFB86CA6;">TODO: Rerun with > 0 and see if it affects the degree.</mark> Based on the results of the box cox test, we apply a common $x^{\prime}=\log(x)$ transform with the effect of compressing large values and expanding smaller ones. More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations[^1]. Due to the monotonous nature of the logarithm (power transform in general; see https://en.wikipedia.org/wiki/Power_transform), the splits of tree-based learners remain unaffected with only minor differences due to quantization <mark style="background: #ADCCFFA6;">(see quantization / histogram building in gradient boosting https://neurips.cc/media/neurips-2022/Slides/53370.pdf)</mark>. The log transform comes at the cost of an decreased interpretability (cp. [[@fengLogtransformationItsImplications2014]]).
+Our estimates for $\lambda$ are documented in the Appendix [[🍬appendix]]. Based on the results of the box cox test, we apply a common $x^{\prime}=\log(x)$ transform with the effect of compressing large values and expanding smaller ones. More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations[^1]. Due to the monotonous nature of the logarithm (power transform in general; see https://en.wikipedia.org/wiki/Power_transform), the splits of tree-based learners remain unaffected with only minor differences due to quantization <mark style="background: #ADCCFFA6;">(see quantization / histogram building in gradient boosting https://neurips.cc/media/neurips-2022/Slides/53370.pdf)</mark>. The log transform comes at the cost of an decreased interpretability (cp. [[@fengLogtransformationItsImplications2014]]).
 
 Our largest feature set als contains dates and times of the trade. In contrast to other continuous features, the features are inherently cyclic. We exploit this property for hours, days, and months and apply a fourier transform to convert the features into a smooth variable using formula [[#^773161]]:
 
