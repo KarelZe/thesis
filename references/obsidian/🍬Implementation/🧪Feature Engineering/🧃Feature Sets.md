@@ -8,6 +8,153 @@ The goal of my feature set definition is: Have a minimal feature set required to
 - Some feature ideas like order imbalance could be adapted from [[@aitkenIntradayAnalysisProbability1995]].
 - [[@ronenMachineLearningTrade2022]] suggest to use models that can handle time series components. This would limit our choices. Thus we use feature engineering to induce a notion of time into our models.
 
+```python
+features_date = [
+
+    "date_month_sin",
+
+    "date_month_cos",
+
+    "date_time_sin",
+
+    "date_time_cos",
+
+    "date_weekday_sin",
+
+    "date_weekday_cos",
+
+    "date_day_sin",
+
+    "date_day_cos",
+
+]
+
+  
+
+features_option = [
+
+    "STRK_PRC",
+
+    "ttm",
+
+    "bin_option_type",
+
+    "bin_issue_type",
+
+    "bin_root",
+
+    "myn",
+
+    "day_vol",
+
+]
+
+  
+
+# https://github.com/KarelZe/thesis/blob/main/notebooks/
+
+# 3.0a-mb-explanatory_data_analysis.ipynb
+
+features_categorical: List[Tuple[str, int]] = [
+
+    ("bin_root", 8667),
+
+    ("bin_option_type", 2),
+
+    ("bin_issue_type", 6),
+
+]
+
+  
+
+features_classical = [
+
+    "TRADE_PRICE",
+
+    "bid_ex",
+
+    "ask_ex",
+
+    "BEST_ASK",
+
+    "BEST_BID",
+
+    "price_ex_lag",
+
+    "price_ex_lead",
+
+    "price_all_lag",
+
+    "price_all_lead",
+
+    "chg_ex_lead",
+
+    "chg_ex_lag",
+
+    "chg_all_lead",
+
+    "chg_all_lag",
+
+    "prox_ex",
+
+    "prox_best",
+
+]
+
+  
+
+features_size = [
+
+    "bid_ask_size_ratio_ex",
+
+    "rel_bid_size_ex",
+
+    "rel_ask_size_ex",
+
+    "TRADE_SIZE",
+
+    "bid_size_ex",
+
+    "ask_size_ex",
+
+    "depth_ex",
+
+]
+
+  
+
+features_classical_size = [
+
+    *features_classical,
+
+    *features_size,
+
+]
+
+  
+
+features_ml = [*features_classical_size, *features_date, *features_option]
+
+  
+
+features_unused = [
+
+    "price_rel_nbb",
+
+    "price_rel_nbo",
+
+    "date_year",
+
+    "mid_ex",
+
+    "mid_best",
+
+    "spread_ex",
+
+    "spread_best",
+
+]
+```
 
 | Feature               | Feature Category             | FS 1 (Classical) | FS 2 (F1 + Grauer) | FS 3 (F2 + temp) | FS 4 (F3 + Others) | Transform   |
 | --------------------- | ---------------------------- | ---------------- | ------------------ | ---------------- | ------------------ | ----------- |
