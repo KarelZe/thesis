@@ -13,3 +13,8 @@ Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 - Do ablation studies. That is, the removal of one feature shouldn't cause the model to collapse. (idea found in [[@huyenDesigningMachineLearning]])
 - discuss and address correlations of features
 
+<<<<<<< HEAD
+=======
+### Attention visualization
+- https://m.youtube.com/watch?v=A1tqsEkSoLg
+>>>>>>> origin/main

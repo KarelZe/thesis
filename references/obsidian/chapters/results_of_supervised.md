@@ -1,5 +1,5 @@
-![[visualize_results.png]]
-(found in [[👨‍👩‍👧‍👦Related Works/@jurkatisInferringTradeDirections2022]] )
+![[visualize_resutls.png]]
+(found in [[@jurkatisInferringTradeDirections2022]] )
 
 
 For visualizing across images and tables, one could adapt the following logic:

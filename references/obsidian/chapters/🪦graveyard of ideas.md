@@ -9,7 +9,7 @@ Test log-normality visually with qq-plots (https://stackoverflow.com/questions/4
 <mark style="background: #FF5582A6;">There are controversies(Note zero imputation can be problematic for neural nets, as shown in [[@yiWhyNotUse2020]] paper)</mark>
 <mark style="background: #FF5582A6;">- For imputation look into [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]
 - [[@josseConsistencySupervisedLearning2020]] also compare different imputation methods and handling approaches of missing values in tree-based methods.
-- for visualizations and approaches see [[@zhengFeatureEngineeringMachine 1]] and [[@butcherFeatureEngineeringSelection2020]]</mark>
+- for visualizations and approaches see [[@zhengFeatureEngineeringMachine]] and [[@butcherFeatureEngineeringSelection2020]]</mark>
 <mark style="background: #FF5582A6;">- [[@yiWhyNotUse2020]] and [[@smiejaProcessingMissingData2018]] contain various references to papers to impute missing data in neural networks. 
 - add no missing indicator to keep the number of parameters small.
 </mark>

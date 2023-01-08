@@ -37,7 +37,7 @@ class TestDataLoader:
         training_data = TabDataset(
             x=x,
             y=y,
-            features=["a", "b", "c"],
+            feature_names=["a", "b", "c"],
             cat_features=None,
             cat_unique_counts=None,
         )
@@ -70,7 +70,7 @@ class TestDataLoader:
             x=x,
             y=y,
             cat_features=["a"],
-            features=["a", "b", "c"],
+            feature_names=["a", "b", "c"],
             cat_unique_counts=tuple([100]),
         )
         train_loader = TabDataLoader(
@@ -101,7 +101,7 @@ class TestDataLoader:
         training_data = TabDataset(
             x=x,
             y=y,
-            features=["a", "b", "c"],
+            feature_names=["a", "b", "c"],
             cat_features=None,
             cat_unique_counts=None,
         )

@@ -1,24 +1,10 @@
-Related #data-preprocessing #training #feature-importance 
 In the following chapter, we motivate feature engineering, present our feature sets and discuss strategies for transforming features into a form that accelerates and advances the training of our models.
 
 ## Goal of feature engineering
 Classical algorithms ([[basic_rules]] or [[hybrid_rules]]) infer the initiator of the trade from the *raw* price and quote data. We employ feature engineering to pre-process input data and enhance the convergence and performance of our machine learning models. Gradient-boosted trees and neural networks, though flexible estimators, have limitations in synthesizing new features from existing ones, as demonstrated in empirical work on synthetic data by [@heatonEmpiricalAnalysisFeature2016] (p. 5-6). Specifically, ratios, standard deviations, and differences can be difficult for these models to learn and must therefore be engineered beforehand. To ensure fair comparison and improve the transferability of our results, we use simple, non-destructive transformations in our feature engineering. 
 
 ## Feature set definition
-To establish a common ground, we derive three sets of features from raw data. The feature sets are are to a large extend inspired by inherent features used within classical trade classification rules. Features are derived from quote and price data, except for feature sets 3 and 4, which include additional option characteristics and date features.
-
-<mark style="background: #ABF7F7A6;">TODO: Add to each feature, where it has been used.
-TODO: Point out some interesting features here in the text.
-TODO: We are less concerned about providing redundant data to the model, as trees do not base their splitting process on correlation. Also, with neural nets being a universal function approximator.
-TODO: explain why we don't discretize / binarize features, other than classical models. See [[@kuhnFeatureEngineeringSelection2020]]
-TODO: Explain why we don't include the results of the classical rules themselves, due to redundant low-precision encoding. May give an example explaining for decision trees.
-TODO: Adress the usefullness of the engineered features. Sketch the results of the *adversarial validation*. Which features are very different in the training set and the validation set? Which features are most important in adversarial validation?
-TODO: Plot distributions of features from training and validation set. Could also test using https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test test if samples are drawn from the same distribution.
-TODO: Economic intuition:  [[@zhuClusteringStructureMicrostructure2021]]
-TODO: For different types of spreads see [[@zhuClusteringStructureMicrostructure2021]]
-TODO: Introduce the word "feature crosses" and motivation in deep learning https://stats.stackexchange.com/questions/349155/why-do-neural-networks-need-feature-selection-engineering/349202#349202
-https://financetrain.com/why-lognormal-distribution-is-used-to-describe-stock-prices
-</mark>
+To establish a common ground, we derive three sets of features from raw data. The feature sets are are to a large extend inspired by inherent features used within classical trade classification rules. Features are derived from quote and price data, except for feature sets 3 and 4, which include additional option characteristics and date features. 
 
 All feature set, the their definition and origin is documented in Appendix [[🍬appendix#^7c0162]].
 
@@ -49,7 +35,7 @@ Here, $\lambda$ is the power parameter and determines the specific power functio
 
 When applying the test in feature engineering, it is important to note two major conceptual differences from the [[@boxAnalysisTransformations2022]] paper as pointed out by [[@kuhnFeatureEngineeringSelection2020]]. Here, the transform is used an unsupervised manner, as the transformation's outcome is not directly used in the model. Also, the transform is applied to all features, rather than the model's residuals.
 
-Our estimates for $\lambda$ are documented in the Appendix [[🍬appendix]]. <mark style="background: #FFB86CA6;">TODO: Rerun with > 0 and see if it affects the degree.</mark> Based on the results of the box cox test, we apply a common $x^{\prime}=\log(x)$ transform with the effect of compressing large values and expanding smaller ones. More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations[^1]. Due to the monotonous nature of the logarithm (power transform in general; see https://en.wikipedia.org/wiki/Power_transform), the splits of tree-based learners remain unaffected with only minor differences due to quantization <mark style="background: #ADCCFFA6;">(see quantization / histogram building in gradient boosting https://neurips.cc/media/neurips-2022/Slides/53370.pdf)</mark>. The log transform comes at the cost of an decreased interpretability (cp. [[@fengLogtransformationItsImplications2014]]).
+Our estimates for $\lambda$ are documented in the Appendix [[🍬appendix]]. Based on the results of the box cox test, we apply a common $x^{\prime}=\log(x)$ transform with the effect of compressing large values and expanding smaller ones. More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations[^1]. Due to the monotonous nature of the logarithm (power transform in general; see https://en.wikipedia.org/wiki/Power_transform), the splits of tree-based learners remain unaffected with only minor differences due to quantization <mark style="background: #ADCCFFA6;">(see quantization / histogram building in gradient boosting https://neurips.cc/media/neurips-2022/Slides/53370.pdf)</mark>. The log transform comes at the cost of an decreased interpretability (cp. [[@fengLogtransformationItsImplications2014]]).
 
 Our largest feature set als contains dates and times of the trade. In contrast to other continuous features, the features are inherently cyclic. We exploit this property for hours, days, and months and apply a fourier transform to convert the features into a smooth variable using formula [[#^773161]]:
 
@@ -91,7 +77,7 @@ One aspect that remains open, is the high cardinality of categorical features wi
 A comprehensive overview of all feature transformations is given in Appendix [[🍬appendix#^8e998b]].
 
 [^1]: See e. g., https://numpy.org/doc/stable/reference/generated/numpy.log1p.html
-[^2]: See chapter on ordered boosting, [[extensions-to-tabtransformer]], or the [[🤖FTTransformer]].
+[^2]: See chapter on ordered boosting, [[extensions-to-tabtransformer]], or the [[fttransformer]].
 [^3]: Notice the similarities to the positional encoding used in [[@vaswaniAttentionAllYou2017]].
 [^4]: Optionally, add proof in the appendix.
 [^5]: Subsequent scaling may also affect the imputation constant.
