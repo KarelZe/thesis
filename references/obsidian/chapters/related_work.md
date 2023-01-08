@@ -16,3 +16,5 @@
 - For classical rule-based approaches see some citations in [[@olbrysEvaluatingTradeSide2018]]. E. g., [[@chakrabartyTradeClassificationAlgorithms2012]] or [[@chakrabartyEvaluatingTradeClassification2015 1]]
 - see [[@rosenthalModelingTradeDirection2012]]
 - Seldomly used but ML-like. Would probably be sufficient to cover it under related works.
+
+- The closest works are

@@ -2,8 +2,9 @@
 - Firstly, Feature Tokenizer transforms features to embeddings. The embeddings are then processed by the Transformer module and the final representation of the (CLS) token is used for prediction.
 - Very likely interpretable... 
 - Work out differences between the three:
-
-- NeurIPS paper and presentation: https://slideslive.com/38968794/revisiting-deep-learning-models-for-tabular-data?ref=recommended
-- 
-
 ![[comparison.png]]
+
+
+On different embeddings check my understanding against:
+- https://towardsdatascience.com/transformers-for-tabular-data-part-3-piecewise-linear-periodic-encodings-1fc49c4bd7bc
+- 

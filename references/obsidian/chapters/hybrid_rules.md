@@ -20,4 +20,4 @@ Naturally,
 - Current hybrid approaches use stacking ([[@grauerOptionTradeClassification2022]] p. 11). Also, due to technical limitations. Why not try out the majority vote/voting classifier with a final estimator? Show how this relates to ML.
 - In stock markets applying those filters i. e. going from tick and quote rule did not always improve classification accuracies. The work of [[@finucaneDirectTestMethods2000]] raises critique about it in the stock market.
 ![[pseudocode-of-algorithms 1.png]]
-(found in [[@jurkatisInferringTradeDirections2022]]). Overly complex description but helpful for implementation?
+(found in [[👨‍👩‍👧‍👦Related Works/@jurkatisInferringTradeDirections2022]]). Overly complex description but helpful for implementation?

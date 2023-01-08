@@ -20,30 +20,6 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "5dfc4defffaf166c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "777b5b234e18db2b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🚏exploratory data analysis.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
         ]
       }
@@ -88,7 +64,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 296.5
+    "width": 561.5
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -141,7 +117,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 210.5
+    "width": 210.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -155,15 +132,15 @@
   },
   "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
-    "chapters/🚏exploratory data analysis.md",
-    "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
-    "chapters/🪄feature engineering.md",
+    "🖼️Media/obsidian.jpg",
+    "🖼️Media/kde-plot-results 1.png",
+    "🖼️Media/feature-tokenizer.png",
+    "🖼️Media/Pasted image 20230108063956.png",
+    "🖼️Media/Pasted image 20230108080816.png",
     "TOC.md",
-    "chapters/extensions-to-gradient-boosting.md",
-    "🖼️Media/uuid_over_time.png",
-    "🖼️Media/tradesize-rule.png",
-    "🖼️Media/tick-rule-reverse-tick-rule.png",
-    "🖼️Media/tick-rule-formulae-alternative 1.png",
-    "🖼️Media/tick-rule-formulae-alternative.png"
+    "🖼️Media/sine_cosine_transform.png",
+    "🖼️Media/sgd-warm-restarts.png",
+    "🖼️Media/stochastic-weight-averaging.png",
+    "🖼️Media/swa-visualization.png"
   ]
 }

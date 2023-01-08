@@ -153,6 +153,8 @@ describe if data set is actually used. Write similarily to
 ## Feature Importance
 [[feature_importance]]
 
+![[🧭Attention map]]
+
 ## Ablation Study of Models
 
 # 🍕 Application in Transaction Cost Estimation
