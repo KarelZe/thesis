@@ -13,10 +13,3 @@ Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
 - Do ablation studies. That is, the removal of one feature shouldn't cause the model to collapse. (idea found in [[@huyenDesigningMachineLearning]])
 - discuss and address correlations of features
 
-### Attention visualization
-- https://m.youtube.com/watch?v=A1tqsEkSoLg
-- Average over different Attention heads, layer aggregation by multiplication (Abnar et al)
-Alternative:
-![[attention-map.png]]
-
-feature importance evaluation is a non-trivial problem due to missing ground truth. See [[@borisovDeepNeuralNetworks2022]] paper for citation

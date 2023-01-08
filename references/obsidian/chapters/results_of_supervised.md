@@ -1,4 +1,4 @@
-![[visualize_resutls.png]]
+![[visualize_results.png]]
 (found in [[👨‍👩‍👧‍👦Related Works/@jurkatisInferringTradeDirections2022]] )
 
 
