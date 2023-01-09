@@ -21,7 +21,7 @@
 - [[obsidian.jpg]]
 - [[possible text.png]]
 - [[Pasted image 20221104113342.png]]
-- [[Pasted image 20221205094336.png]]
+- [[feature-tokenizer.png]]
 - [[optuna-as-boxplot.png]]
 - [[missclassification-trade-rule.png]]
 - [[obsidian 1.jpg]]
