@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖Training of transformer.md",
+                "file": "chapters/🤖Transformer.md",
                 "mode": "source",
                 "source": false
               }
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Training of transformer.md",
+                "file": "chapters/🤖Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Training of transformer.md"
+                "file": "chapters/🤖Transformer.md"
               }
             }
           }
@@ -144,6 +144,7 @@
   },
   "active": "5c825679ee0584e3",
   "lastOpenFiles": [
+    "chapters/🤖Training of transformer.md",
     "chapters/🧵Positional encoding.md",
     "chapters/🤖Transformer.md",
     "chapters/🤖FTTransformer.md",
@@ -152,7 +153,6 @@
     "🔗Classical rules/@aktasTradeClassificationAccuracy2014.md",
     "chapters/related_work.md",
     "chapters/🤖pretraining-FTTransformer.md",
-    "🧠Deep Learning Methods/Transformer/@popelTrainingTipsTransformer2018.md",
-    "chapters/🤖Training of transformer.md"
+    "🧠Deep Learning Methods/Transformer/@popelTrainingTipsTransformer2018.md"
   ]
 }

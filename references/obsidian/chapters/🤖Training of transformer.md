@@ -8,6 +8,7 @@
 - One might has to adjust the lr when scaling across multiple gpus [[@poppeSensitivityVPINChoice2016]] contains a nice discussion.
 - Use weight decay of 0.1 for a small amount of regularization [[@loshchilovDecoupledWeightDecay2019]].
 
+
 ## Notes from Huang et al paper
 See [[@huangTabTransformerTabularData2020]] (p. 12)
 - AdamW optimizer

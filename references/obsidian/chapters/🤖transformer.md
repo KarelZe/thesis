@@ -86,6 +86,8 @@ Very high level overview: https://www.youtube.com/watch?app=desktop&v=SZorAJ4I-s
 - What is Attentition?
 - What is the difference between LSTMs and Transformers? Why are transformers preferable?
 
+- discuss the effects of layer pre-normalization vs. post-normalization (see [[@tunstallNaturalLanguageProcessing2022]])
+
 
 
 #### Attention is all you need; Attentional Neural Network Models | Łukasz Kaiser | Masterclass
