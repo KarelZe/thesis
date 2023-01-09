@@ -66,21 +66,20 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ![[🐈gradient-boosting]]
 ## Transformer Networks
 
-[[transformer_networks]]
+[[🤖Transformer Networks]]
 ### Network Architecture
 [[network_architecture]]
 ### Attention
 [[attention]]
 ### Positional Encoding
+[[🧵Positional encoding]]
 ### Embeddings
-[[embeddings]]
-### Extensions in TabNet
-[[extensions-to-tabnet]]
+[[🤖Embeddings]]
 
 ### Extensions in TabTransformer
 [[extensions-to-tabtransformer]]
 ### Extensions in FTTransformer
-[[🤖pretraining-FTTransformer]]
+[[🤖Pretraining FTTransformer]]
 
 # 👽 Semi-Supervised Approaches
 
@@ -90,8 +89,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 [[selection-of-approaches]]
 ## Extensions to Gradient Boosted Trees
 [[extensions-to-gradient-boosting]]
-## Extensions to TabNet
-[[extensions-to-tabnet]]
+
 ## Extensions to TabTransformer
 [[extensions-to-tabtransformer]]
 ## Extension to FTTransformer

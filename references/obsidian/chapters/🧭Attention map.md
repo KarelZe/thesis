@@ -1,5 +1,4 @@
-Relates to #attention #shap #random-feature-permutation 
- 
+Relates to #attention #shap #random-feature-permutation  
 ### Attention visualization
 
 In addition to [[🥌Kernel SHAP]], transformer-based models offer some interpretability through their attention mechanism. Feature attributions can be derived from attention by visualizing features that the model attends to in a *attention map*. While attention maps are specific to transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in Figure [[#^401670]].
@@ -38,7 +37,6 @@ In this equation, $\odot$ represents the element-wise product between the gradie
 
 Provide some short discussion. Address problems with interpration of attention proabilites?
 Possible papers: [[@bastingsElephantInterpretabilityRoom2020]] and  [[@jainAttentionNotExplanation2019]] and [[@wiegreffeAttentionNotNot2019]] and https://medium.com/@byron.wallace/thoughts-on-attention-is-not-not-explanation-b7799c4c3b24 and https://medium.com/@yuvalpinter/attention-is-not-not-explanation-dbc25b534017
-
 
 In absence of a ground truth for the true feature attribution, we also calculate attention maps using Eq. (...) and Eq. (...). Inline with previous research, feature attributions are also summed over the first attention layer or over all transformer blocks. All of these approaches, can be computed with a single forward pass and are computationally efficient. The level of agreement between attributions from attention maps and [[🥌Kernel SHAP]] is quantified by calculating Spearman's rank correlation between them.
 

@@ -38,4 +38,4 @@ A classical train test split is advantegous for a number of reasons:
 - Write how target variable is distributed in each set. 
  Show that a stratified train-test-split is likely not necessary to maintain the distribution of the target variable.
 - Plot learning curves to estimate whether performance will increase with the number of samples. Use it to motivate semi-supervised learning.  [Plotting Learning Curves — scikit-learn 1.1.2 documentation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html) and [Tutorial: Learning Curves for Machine Learning in Python for Data Science (dataquest.io)](https://www.dataquest.io/blog/learning-curves-machine-learning/)
-![[learning-curves-samples 1.png]]
+![[learning-curves-samples.png]]

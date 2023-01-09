@@ -1,5 +1,5 @@
  See [[@huangTabTransformerTabularData2020]] for extensions.
-- Authors use unsupervised pretraining and supervised finetuning. They also try out techniques like pseudo labelling from [[@leePseudolabelSimpleEfficient 1]] for semi supervised learning among others.
+- Authors use unsupervised pretraining and supervised finetuning. They also try out techniques like pseudo labelling from [[@leePseudolabelSimpleEfficient]] for semi supervised learning among others.
 - For pratical implementation see: - For pratical implementation see [Self Supervised Pretraining - pytorch_widedeep](https://pytorch-widedeep.readthedocs.io/en/latest/pytorch-widedeep/self_supervised_pretraining.html)
 - single output neuron, fused loss describe what loss function is used
 

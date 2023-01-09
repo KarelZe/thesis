@@ -22,12 +22,12 @@
             }
           },
           {
-            "id": "5c825679ee0584e3",
+            "id": "ca4567ed628d593c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖Transformer.md",
+                "file": "chapters/feature_importance.md",
                 "mode": "source",
                 "source": false
               }
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Transformer.md",
+                "file": "chapters/feature_importance.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Transformer.md"
+                "file": "chapters/feature_importance.md"
               }
             }
           }
@@ -142,17 +142,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "5c825679ee0584e3",
+  "active": "ca4567ed628d593c",
   "lastOpenFiles": [
-    "chapters/🤖Training of transformer.md",
-    "chapters/🧵Positional encoding.md",
-    "chapters/🤖Transformer.md",
-    "chapters/🤖FTTransformer.md",
+    "chapters/fttransformer.md",
+    "chapters/feature_importance.md",
+    "chapters/feature_importance_measure.md",
     "TOC.md",
-    "🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017.md",
-    "🔗Classical rules/@aktasTradeClassificationAccuracy2014.md",
-    "chapters/related_work.md",
-    "chapters/🤖pretraining-FTTransformer.md",
-    "🧠Deep Learning Methods/Transformer/@popelTrainingTipsTransformer2018.md"
+    "🧠Deep Learning Methods/Transformer/@cheferTransformerInterpretabilityAttention2021.md",
+    "chapters/🧭Attention map.md",
+    "chapters/results_of_semisupervised.md",
+    "chapters/🤖Transformer Networks.md",
+    "chapters/🤖FTTransformer.md",
+    "www.archive.org.md"
   ]
 }

@@ -12,7 +12,7 @@ interval: 1
 | [[robustness]]                      |     27.5 |       |        1 | 1970-01-01 |
 | [[semi-supervised]]                 |       28 |       |        1 | 1970-01-01 |
 | [[results_of_semisupervised]]       |       30 |       |        1 | 1970-01-01 |
-| [[transformer_networks]]            |       31 |       |        1 | 1970-01-01 |
+| [[🤖Transformer Networks]]            |       31 |       |        1 | 1970-01-01 |
 | [[results]]                         |     32.5 |       |        1 | 1970-01-01 |
 | [[related_work]]                    |       35 |       |        1 | 1970-01-01 |
 | [[quote_rule]]                      |     37.5 |       |        1 | 1970-01-01 |
@@ -37,8 +37,8 @@ interval: 1
 | [[evaluation_metric]]               |       75 |       |        1 | 1970-01-01 |
 | [[environment]]                     |     77.5 |       |        1 | 1970-01-01 |
 | [[emo_rule]]                        |       80 |       |        1 | 1970-01-01 |
-| [[embeddings]]                      |     82.5 |       |        1 | 1970-01-01 |
-| [[🤖pretraining-FTTransformer]]            |       85 |       |        1 | 1970-01-01 |
+| [[🤖Embeddings]]                      |     82.5 |       |        1 | 1970-01-01 |
+| [[🤖Pretraining FTTransformer]]            |       85 |       |        1 | 1970-01-01 |
 | [[discussion]]                      |     87.5 |       |        1 | 1970-01-01 |
 | [[depth_rule]]                      |       90 |       |        1 | 1970-01-01 |
 | [[comparsion 1]]                      |     92.5 |       |        1 | 1970-01-01 |
@@ -47,7 +47,7 @@ interval: 1
 | [[adversarial_validation]]          |        0 |       |        2 | 2022-12-15 |
 | [[draft_rf]]                        |      2.5 |       |        2 | 2022-12-15 |
 | [[🐈gradient-boosting]]                       |        5 |       |        2 | 2022-12-15 |
-| [[cat_boost]]                       |      7.5 |       |        2 | 2022-12-15 |
+| [[🐈CatBoost]]                       |      7.5 |       |        2 | 2022-12-15 |
 | [[🎄decison_trees]]                 |       10 |       |        2 | 2022-12-15 |
 | [[🤖Transformer]]               |     12.5 |       |        2 | 2022-12-15 |
 | [[train-test-split]]                |       15 |       |        2 | 2022-12-15 |
