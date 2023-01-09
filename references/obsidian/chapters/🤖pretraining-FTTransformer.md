@@ -5,5 +5,7 @@
 
 - NeurIPS paper and presentation: https://slideslive.com/38968794/revisiting-deep-learning-models-for-tabular-data?ref=recommended
 - 
+- see also paper visiting pre-training objectives [[@rubachevRevisitingPretrainingObjectives2022]]
+
 
 ![[comparison.png]]

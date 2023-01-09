@@ -22,31 +22,19 @@
             }
           },
           {
-            "id": "a1e2083ed2ee9f35",
+            "id": "5c825679ee0584e3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🧵Positional encoding.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "29809c5189055d9a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🪄feature engineering.md",
+                "file": "chapters/🤖Transformer.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -75,7 +63,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "phuon",
+                "query": "aktas",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -104,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🪄feature engineering.md",
+                "file": "chapters/🤖Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -132,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🪄feature engineering.md"
+                "file": "chapters/🤖Transformer.md"
               }
             }
           }
@@ -154,17 +142,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "29809c5189055d9a",
+  "active": "5c825679ee0584e3",
   "lastOpenFiles": [
-    "🧠Deep Learning Methods/Transformer/@tunstallNaturalLanguageProcessing2022.md",
-    "chapters/🧵Positional encoding.md",
+    "chapters/🤖FTTransformer.md",
     "TOC.md",
-    "🧠Deep Learning Methods/Transformer/@phuongFormalAlgorithmsTransformers2022.md",
-    "chapters/🧭Attention map.md",
-    "📥Inbox/@rothmanTransformersNaturalLanguage2021.md",
-    "chapters/🤖transformer.md",
-    "🧠Deep Learning Methods/Transformer/@AnnotatedTransformer.md",
-    "chapters/🪄feature engineering.md",
-    "🖼️Media/obsidian.jpg"
+    "🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017.md",
+    "chapters/🤖Transformer.md",
+    "🔗Classical rules/@aktasTradeClassificationAccuracy2014.md",
+    "chapters/related_work.md",
+    "chapters/🤖pretraining-FTTransformer.md",
+    "🧠Deep Learning Methods/Transformer/@popelTrainingTipsTransformer2018.md",
+    "chapters/🤖Training of transformer.md",
+    "chapters/🧵Positional encoding.md"
   ]
 }

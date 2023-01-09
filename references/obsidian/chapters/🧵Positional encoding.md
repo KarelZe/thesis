@@ -5,6 +5,7 @@ Related:
 - https://towardsdatascience.com/master-positional-encoding-part-i-63c05d90a0c3
 - introduced in [[@vaswaniAttentionAllYou2017]]
 - nice consistent notation in [[@phuongFormalAlgorithmsTransformers2022]]
+- nice summary and well explained in [[@zhangDiveDeepLearning2021]]. Use it to crosscheck my understanding!
 
 **Notes:**
 - Add information about the position in sequence to the embedding
@@ -18,6 +19,10 @@ Related:
 **Visualization:**
 ![[viz-pos-encoding.png]]
 (Code available at https://github.com/jalammar/jalammar.github.io/blob/master/notebookes/transformer/transformer_positional_encoding_graph.ipynb)
+
+Visualization of  diffferent columns:
+![[freq-of-encoding.png]]
+(Image from: https://d2l.ai/chapter_attention-mechanisms-and-transformers/self-attention-and-positional-encoding.html)
 
 ## Amirhossein Kazemnejad
 https://kazemnejad.com/blog/transformer_architecture_positional_encoding

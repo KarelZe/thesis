@@ -5,6 +5,7 @@
 - see  `writing-a-good-introduction.pdf`
 - Prepare final pdf https://github.com/google-research/arxiv-latex-cleaner
 - Adhere to best practices http://www.sigplan.org/Resources/EmpiricalEvaluation/
+- use colors in formulas🎨. See [[@patrignaniWhyShouldAnyone2021]]
 
 # Title
 Forget About the Rules: Improving Trade Side Classification With Machine Learning
@@ -112,13 +113,13 @@ In our attempt to compare shallow with deep architectures for trade classificati
 describe if data set is actually used. Write similarily to 
 
 ### Exploratory Data Analysis
-[[🚏exploratory data analysis]]
+[[🚏Exploratory data analysis]]
 
 ### Data Pre-Processing 🟡
 [[preprocessing]]
 
 ### Feature Engineering 🟡
-![[🪄feature engineering]]
+![[🪄Feature engineering]]
 
 ### Train-Test Split 🟡
 

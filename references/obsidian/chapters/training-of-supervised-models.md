@@ -1,3 +1,5 @@
+[[🤖Training of transformer]]
+
 - Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Implement robustness checks (as in [[@grauerOptionTradeClassification2022]]) early on.
 - Use classification methods (*probabilistic classifier*) that can return probabilities instead of class-only for better analysis. Using probabilistic trade classification rules might have been studied in [[@easleyDiscerningInformationTrade2016]]
 - Interesting notebook about TabNet [Introduction to TabNet - Kfold 10 [TRAINING] | Kaggle](https://www.kaggle.com/code/ludovick/introduction-to-tabnet-kfold-10-training/notebook)
@@ -42,19 +44,4 @@ To inform our models which features are categorical, we pass the index the index
 - Idea: reduce the least frequent root symbols.
 - Apply an idea similar to sentence piece. Here, the number of words in vocabulary is fixed https://github.com/google/sentencepiece. See repo for paper / algorithm.
 
-- Use weighting scheme for samples. See: https://pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html
-- tips for training transformers https://huggingface.co/docs/transformers/v4.18.0/en/performance
-- learning rate warmup https://stackoverflow.com/questions/55933867/what-does-learning-rate-warm-up-mean
-- optimizer schedulers for transformers: https://huggingface.co/docs/transformers/main_classes/optimizer_schedules
 
-For training of transformers see [[@popelTrainingTipsTransformer2018]]
-Intuition behind sample weights: https://m.youtube.com/watch?v=68ABAU_V8qI
-Smart batching for transformers: https://mccormickml.com/2020/07/29/smart-batching-tutorial/#why-we-pad
-For training the transformer see: https://datascience.stackexchange.com/questions/64583/what-are-the-good-parameter-ranges-for-bert-hyperparameters-while-finetuning-it
-
-Research broader theory behind sample weighting. Research if there is a broader theory / concept to decay e. g. exponential smooting or weighted regression etc.
-For random shuffling with stochastic gradient descent see [[@lecunEfficientBackProp2012]]
-
-![[visualization_of_bleu_over_time.png]]
-
-![[bleu_no_of_gpus.png]]

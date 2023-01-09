@@ -17,4 +17,4 @@
 - see [[@rosenthalModelingTradeDirection2012]]
 - Seldomly used but ML-like. Would probably be sufficient to cover it under related works.
 
-- The closest works are
+One may look into [[@zouStockMarketPrediction2022]] (a survey on stock market prediction. Also lists a few papers that use transformers)

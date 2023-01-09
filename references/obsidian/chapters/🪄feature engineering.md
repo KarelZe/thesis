@@ -18,16 +18,16 @@ In order to prepare a common datasets for *all* our machine learning models, we 
 
 Classical trade signing algorithms, such as the tick test, are also impacted by missing values. In theses cases, we defer to a random classification or a subsequent rule, if rules can not be computed. Details are provided in section [[training-of-supervised-models]].
 
-As introduced in the chapters [[🐈gradient-boosting]] and [[🤖transformer]] both architectures have found to be robust to missing values. In conjunction with the low degree of missing values (compare chapter [[🚏exploratory data analysis]]), we therefore expect the impact from missing values to be minor. To address concerns, that the imputation or scaling negatively impacts the performance of gradient boosted trees, we perform an ablation study in chapter [[🎋ablation_study]], and retrain our models on the unscaled and unimputed data set.
+As introduced in the chapters [[🐈gradient-boosting]] and [[🤖Transformer]] both architectures have found to be robust to missing values. In conjunction with the low degree of missing values (compare chapter [[🚏Exploratory data analysis]]), we therefore expect the impact from missing values to be minor. To address concerns, that the imputation or scaling negatively impacts the performance of gradient boosted trees, we perform an ablation study in chapter [[🎋ablation_study]], and retrain our models on the unscaled and unimputed data set.
 
 ## Problem of feature scales
-As observed in the [[🚏exploratory data analysis]] data is not just missing but may also be skewed. Tree-based models can handle arbitrary feature scales, as the splitting process is based on the purity of the split but not on the scale of the splitting value.  
+As observed in the [[🚏Exploratory data analysis]] data is not just missing but may also be skewed. Tree-based models can handle arbitrary feature scales, as the splitting process is based on the purity of the split but not on the scale of the splitting value.  
 
 It has been well established that neural networks are long known to train faster on whitened data with zero mean, unit variance and uncorrelated inputs (cp. [[@lecunEfficientBackProp2012]]; p. 8). This is because a mean close to zero helps prevent  bias the direction of the weight update and scaling to unit variance helps balance the rate at which parameters are updated In order to maintain comparability with the traditional rules, inputs are not decorrelated. (reread in lecun paper or [here.](https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/))
 
 ## Solution of feature scales
 
-Continuous and categorical variable require different treatment, as derived below. Price and size-related features exhibit a positive skewness, as brought up in chapter [[🚏exploratory data analysis]]. To avoid negative impacts during training (tails of distributions dominate calculations (see e. g. , [[@kuhnFeatureEngineeringSelection2020]] or https://deepai.org/machine-learning-glossary-and-terms/skewness), we reduce skewness with power transformations. We determine the transformation using the Box-Cox procedure ([[@boxAnalysisTransformations2022]] p. 214), given by:
+Continuous and categorical variable require different treatment, as derived below. Price and size-related features exhibit a positive skewness, as brought up in chapter [[🚏Exploratory data analysis]]. To avoid negative impacts during training (tails of distributions dominate calculations (see e. g. , [[@kuhnFeatureEngineeringSelection2020]] or https://deepai.org/machine-learning-glossary-and-terms/skewness), we reduce skewness with power transformations. We determine the transformation using the Box-Cox procedure ([[@boxAnalysisTransformations2022]] p. 214), given by:
 $$
 \tilde{x}= \begin{cases}\frac{x^\lambda-1}{\lambda}, & \lambda \neq 0 \\ \log (x),& \lambda=0\end{cases}.\tag{1}
 $$
