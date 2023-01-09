@@ -8,6 +8,7 @@ Related:
 - nice summary and well explained in [[@zhangDiveDeepLearning2021]]. Use it to crosscheck my understanding!
 
 **Notes:**
+- The encoder (the self-attention and feed-forward layers) are said to be permutation equivariant—if the input is permuted then the corresponding output of the layer is permuted in exactly the same way.
 - Add information about the position in sequence to the embedding
 - The vector $p_i$ is of dimension $d_{\text{model}}$  and is added (not concat'd! -> to keep no of params small?) to the embedding vector.
 - Note that there is a subtle difference between positional embedding and encoding. When reading [[@rothmanTransformersNaturalLanguage2021]] I noticed, that word `positional encoding = embedding + positional vector`
