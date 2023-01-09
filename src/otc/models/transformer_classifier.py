@@ -198,8 +198,13 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                 # compute the model output and train loss
                 with torch.cuda.amp.autocast():
+<<<<<<< HEAD
                     logits = self.clf(x_cat, x_cont).flatten()
                     intermediate_loss = criterion(logits, targets)
+=======
+                    outputs = self.clf(x_cat, x_cont).flatten()
+                    intermediate_loss = criterion(outputs, targets)
+>>>>>>> af09fcb... Add sample weighting to `TransformerClassifier` 🏋️ (#100)
                     train_loss = torch.mean(weights * intermediate_loss)
 
                 # compute accumulated gradients
@@ -219,6 +224,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             with torch.no_grad():
                 for x_cat, x_cont, weights, targets in val_loader:
+<<<<<<< HEAD
                     logits = self.clf(x_cat, x_cont)
                     logits = logits.flatten()
 
@@ -231,6 +237,15 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                     # Weight sample loss with weight.
                     intermediate_loss = criterion(logits, targets)
                     val_loss = torch.mean(weights * intermediate_loss)
+=======
+                    outputs = self.clf(x_cat, x_cont)
+                    outputs = outputs.flatten()
+
+                    intermediate_loss = criterion(outputs, targets)
+                    val_loss = torch.mean(weights * intermediate_loss)
+
+                    loss_in_epoch_val += val_loss.item()
+>>>>>>> af09fcb... Add sample weighting to `TransformerClassifier` 🏋️ (#100)
 
                     loss_in_epoch_val += val_loss.item()
             # loss average over all batches
@@ -290,9 +305,15 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         probabilites = []
         with torch.no_grad():
             for x_cat, x_cont, _, _ in test_loader:
+<<<<<<< HEAD
                 logits = self.clf(x_cat, x_cont)
                 logits = logits.flatten()
                 probability = torch.sigmoid(logits)
+=======
+                probability = self.clf(x_cat, x_cont)
+                probability = probability.flatten()
+                probability = torch.sigmoid(probability)
+>>>>>>> af09fcb... Add sample weighting to `TransformerClassifier` 🏋️ (#100)
                 probabilites.append(probability.detach().cpu().numpy())
 
         probabilites = np.concatenate(probabilites)

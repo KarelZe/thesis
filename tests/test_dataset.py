@@ -32,7 +32,11 @@ class TestDataLoader:
         x = pd.DataFrame(np.arange(30).reshape(length, 3))
         y = pd.Series(np.arange(length))
 
+<<<<<<< HEAD
         training_data = TabDataset(x=x, y=y)
+=======
+        training_data = TabDataset(x=x, y=y, feature_names=["a", "b", "c"])
+>>>>>>> af09fcb... Add sample weighting to `TransformerClassifier` 🏋️ (#100)
         assert len(training_data) == length
 
     def test_invalid_len(self) -> None:
@@ -47,7 +51,11 @@ class TestDataLoader:
         y = pd.Series(np.arange(length + 1))
 
         with pytest.raises(AssertionError):
+<<<<<<< HEAD
             TabDataset(x=x, y=y)
+=======
+            TabDataset(x=x, y=y, feature_names=["a", "b", "c"])
+>>>>>>> af09fcb... Add sample weighting to `TransformerClassifier` 🏋️ (#100)
 
     def test_invalid_weight(self) -> None:
         """
@@ -60,6 +68,7 @@ class TestDataLoader:
         weight = np.ones(length + 1)
 
         with pytest.raises(AssertionError):
+<<<<<<< HEAD
             TabDataset(x=x, y=y, weight=weight)
 
     def test_invalid_feature_names_len(self) -> None:
@@ -78,6 +87,9 @@ class TestDataLoader:
                 y=y,
                 feature_names=["A", "F"],
             )
+=======
+            TabDataset(x=x, y=y, weight=weight, feature_names=["a", "b", "c"])
+>>>>>>> af09fcb... Add sample weighting to `TransformerClassifier` 🏋️ (#100)
 
     def test_invalid_unique_count(self) -> None:
         """
@@ -95,6 +107,10 @@ class TestDataLoader:
             TabDataset(
                 x=x,
                 y=y,
+<<<<<<< HEAD
+=======
+                feature_names=["a", "b", "c"],
+>>>>>>> af09fcb... Add sample weighting to `TransformerClassifier` 🏋️ (#100)
                 cat_features=["a", "b"],
                 cat_unique_counts=tuple([20]),
             )
@@ -116,6 +132,10 @@ class TestDataLoader:
         training_data = TabDataset(
             x=x,
             y=y,
+<<<<<<< HEAD
+=======
+            feature_names=["a", "b", "c"],
+>>>>>>> af09fcb... Add sample weighting to `TransformerClassifier` 🏋️ (#100)
             cat_features=["a"],
             cat_unique_counts=tuple([100]),
         )
@@ -141,6 +161,10 @@ class TestDataLoader:
         training_data = TabDataset(
             x=x,
             y=y,
+<<<<<<< HEAD
+=======
+            feature_names=["a", "b", "c"],
+>>>>>>> af09fcb... Add sample weighting to `TransformerClassifier` 🏋️ (#100)
             cat_features=None,
             cat_unique_counts=None,
         )
@@ -155,7 +179,11 @@ class TestDataLoader:
         x = pd.DataFrame(np.arange(30).reshape(length, 3))
         y = pd.Series(np.arange(length))
         weight = np.geomspace(0.001, 1, num=len(y))
+<<<<<<< HEAD
         data = TabDataset(x=x, y=y, weight=weight)
+=======
+        data = TabDataset(x=x, y=y, weight=weight, feature_names=["a", "b", "c"])
+>>>>>>> af09fcb... Add sample weighting to `TransformerClassifier` 🏋️ (#100)
         assert data.weight.equal(torch.tensor(weight).float())
 
     def test_no_weight(self) -> None:
@@ -166,6 +194,7 @@ class TestDataLoader:
         length = 10
         x = pd.DataFrame(np.arange(30).reshape(length, 3))
         y = pd.Series(np.arange(length))
+<<<<<<< HEAD
         data = TabDataset(x=x, y=y)
         assert data.weight.equal(torch.ones(length))
 
@@ -229,3 +258,7 @@ class TestDataLoader:
                 cat_features=["E"],
                 cat_unique_counts=tuple([1]),
             )
+=======
+        data = TabDataset(x=x, y=y, feature_names=["a", "b", "c"])
+        assert data.weight.equal(torch.ones(length))
+>>>>>>> af09fcb... Add sample weighting to `TransformerClassifier` 🏋️ (#100)
