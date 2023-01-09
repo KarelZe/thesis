@@ -10,6 +10,20 @@
 - [[@devlinBERTPretrainingDeep2019]]
 # Notes 
 
+### Positional Encoding:
+The [[@vaswaniAttentionAllYou2017]] paper uses
+$$
+\begin{aligned}
+W_p[2 i-1, t] & =\sin \left(t / \ell_{\max }^{2 i / d_{\mathrm{e}}}\right), \\
+W_p[2 i, t] & =\cos \left(t / \ell_{\max }^{2 i / d_{\mathrm{e}}}\right) .
+\end{aligned}
+$$
+for $0<i \leq d_{\mathrm{e}} / 2$.
+The positional embedding of a token is usually added to the token embedding to form a token's initial embedding. For the $t$-th token of a sequence $x$, the embedding is
+$$
+e=W_e[:, x[t]]+W_p[:, t] .
+$$
+
 # Annotations
 
 “It covers what transformers are, how they are trained, what they are used for, their key architectural components, and a preview of the most prominent models. The reader is assumed to be familiar with basic ML terminology and simpler neural network architectures such as MLPs.” ([Phuong and Hutter, 2022, p. 1](zotero://select/library/items/DYN5Q8UB)) ([pdf](zotero://open-pdf/library/items/9X32MT2H?page=1&annotation=77QFWC4I))

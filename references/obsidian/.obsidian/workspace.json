@@ -39,14 +39,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@tunstallNaturalLanguageProcessing2022.md",
+                "file": "chapters/🪄feature engineering.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -75,7 +75,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "positional",
+                "query": "phuon",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -104,7 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🧵Positional encoding.md",
+                "file": "chapters/🪄feature engineering.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -132,7 +132,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🧵Positional encoding.md"
+                "file": "chapters/🪄feature engineering.md"
               }
             }
           }
@@ -154,17 +154,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "a1e2083ed2ee9f35",
+  "active": "29809c5189055d9a",
   "lastOpenFiles": [
-    "📥Inbox/@rothmanTransformersNaturalLanguage2021.md",
-    "chapters/🧵Positional encoding.md",
     "🧠Deep Learning Methods/Transformer/@tunstallNaturalLanguageProcessing2022.md",
-    "chapters/🤖transformer.md",
+    "chapters/🧵Positional encoding.md",
     "TOC.md",
+    "🧠Deep Learning Methods/Transformer/@phuongFormalAlgorithmsTransformers2022.md",
+    "chapters/🧭Attention map.md",
+    "📥Inbox/@rothmanTransformersNaturalLanguage2021.md",
+    "chapters/🤖transformer.md",
     "🧠Deep Learning Methods/Transformer/@AnnotatedTransformer.md",
     "chapters/🪄feature engineering.md",
-    "chapters/🧭Attention map.md",
-    "🖼️Media/obsidian.jpg",
-    "🖼️Media/kde-plot-results 1.png"
+    "🖼️Media/obsidian.jpg"
   ]
 }
