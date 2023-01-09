@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖transformer.md",
+                "file": "chapters/🧵Positional encoding.md",
                 "mode": "source",
                 "source": false
               }
@@ -39,13 +39,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧵Positional encoding.md",
+                "file": "🧠Deep Learning Methods/Transformer/@tunstallNaturalLanguageProcessing2022.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -103,7 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "chapters/🧵Positional encoding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -131,7 +132,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "chapters/🧵Positional encoding.md"
               }
             }
           }
@@ -153,17 +154,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "8399eb31ec07fd72",
+  "active": "a1e2083ed2ee9f35",
   "lastOpenFiles": [
-    "🧵Positional encoding.md",
+    "📥Inbox/@rothmanTransformersNaturalLanguage2021.md",
+    "chapters/🧵Positional encoding.md",
+    "🧠Deep Learning Methods/Transformer/@tunstallNaturalLanguageProcessing2022.md",
     "chapters/🤖transformer.md",
+    "TOC.md",
     "🧠Deep Learning Methods/Transformer/@AnnotatedTransformer.md",
     "chapters/🪄feature engineering.md",
     "chapters/🧭Attention map.md",
-    "TOC.md",
     "🖼️Media/obsidian.jpg",
-    "🖼️Media/kde-plot-results 1.png",
-    "🖼️Media/feature-tokenizer.png",
-    "🖼️Media/Pasted image 20230108063956.png"
+    "🖼️Media/kde-plot-results 1.png"
   ]
 }
