@@ -8,4 +8,4 @@
 - see also paper visiting pre-training objectives [[@rubachevRevisitingPretrainingObjectives2022]]
 
 
-![[comparison.png]]
+![[comparison-ft-tab-transformer.png]]

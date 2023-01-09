@@ -25,7 +25,7 @@ When using optuna draw a boxplot. optimal value should lie near the median. Some
 
 - compare results of untuned and tuned models. Similar to [[@gorishniyRevisitingDeepLearning2021]].
 
-[[hyperparametertuning]]
+[[💡Hyperparameter tuning]]
 
 Repeat search with different random initializations:
 ![[random-searches-hyperparms 1.png]]

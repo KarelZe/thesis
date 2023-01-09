@@ -1,6 +1,6 @@
 One approach that aims to reduce the bias, is *gradient boosting*, which was popularized by [[@friedmanGreedyFunctionApproximation2001]]. *Gradient Boosting* is different from the afore-mentioned approach, as it sequentially adds the approximations of several over-simplified models (so-called *weak-lerners*) to an ensemble estimate. Shallow trees are commonly used as weak learners [[@friedmanGreedyFunctionApproximation2001]]. Due to the sequential ensemble building, the construction of the tree is only dependent on the trees previously built. 
 
-Recall from section [[🎄decison_trees]] that a tree can be expressed as
+Recall from section [[🎄Decison_trees]] that a tree can be expressed as
 
 $$
 T(x ; \Theta)=\sum_{j=1}^{J} \gamma_{j} I\left(x \in R_{j}\right).
@@ -39,7 +39,7 @@ In addition to imposing constraints on the individual trees,  the boosted ensemb
 
 <mark style="background: #FFB8EBA6;">TODO: See [[@chenXGBoostScalableTree2016]] for detailed explanation. Idea can also be found in [[@friedmanAdditiveLogisticRegression2000]]. Also [[@hastietrevorElementsStatisticalLearning2009]] (p. 617) could be interesting. </mark>
 
-Recall from chapter ([[🎄decison_trees]]) that the estimate $\gamma_{jm}$ is constant for the entire region. As before the best estimate is simply the average over all residuals.
+Recall from chapter ([[🎄Decison_trees]]) that the estimate $\gamma_{jm}$ is constant for the entire region. As before the best estimate is simply the average over all residuals.
 
 An improved estimate for $x$ is calculated from the previous estimate by adding the tree, fitted on the residuals as shown in equation (...). The later moves the prediction towards the greatest descent and thus improves the overall prediction.
 

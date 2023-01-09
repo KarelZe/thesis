@@ -2,3 +2,6 @@
 - Define the metrics.
 - Accuracy, ROC-curve, area under the curve. Think about statistical Tests e. g., $\chi^2$-Test
 - Introduce concept of a confusion matrix. Are all errors equally problematic?
+
+
+We optimize for the accuracy

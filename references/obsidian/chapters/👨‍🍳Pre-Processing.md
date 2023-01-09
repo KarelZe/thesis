@@ -14,3 +14,7 @@
 - Discuss how previously unused data could be used. This maps to the notion of supervised and semi-supervised learning
 - Pseudo Labeling?
 - We assign sells the label `0` and buys the label `1`. This has the advantage that the calculation from the logloss doesn't require any mapping. Easy interpretation as probability.
+
+Adversarial validation can help balance training and testing sets, and improve the model performance on testing set. 
+
+feature importance is used in adversarial validation to filter the most inconsistently distributed features sequentially. However, there is a trade-off for this method between the improvement of generalization performance and losing information by dropping features from the model. The proposed method in this paper can improve the generalization performance of the model to the testing set without losing information

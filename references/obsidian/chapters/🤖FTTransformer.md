@@ -2,7 +2,9 @@
 - Firstly, Feature Tokenizer transforms features to embeddings. The embeddings are then processed by the Transformer module and the final representation of the (CLS) token is used for prediction.
 - Very likely interpretable... 
 - Work out differences between the three:
-![[comparison.png]]
+![[feature-tokenizer.png]]
+
+![[comparison-ft-tab-transformer.png]]
 
 
 On different embeddings check my understanding against:

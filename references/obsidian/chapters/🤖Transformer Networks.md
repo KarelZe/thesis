@@ -14,7 +14,7 @@
 - Detailed explanation and implementation. Check my understanding against it: https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html
 - On implementation aspects see: https://arxiv.org/pdf/2007.00072.pdf
 - batch nromalization is not fully understood. See [[@zhangDiveDeepLearning2021]] (p. 277)
-
+- https://e2eml.school/transformers.html
 
 feature importance evaluation is a non-trivial problem due to missing ground truth. See [[@borisovDeepNeuralNetworks2022]] paper for citation
 - nice visualization / explanation of self-attention. https://peltarion.com/blog/data-science/self-attention-video
