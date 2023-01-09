@@ -72,6 +72,7 @@ Very high level overview: https://www.youtube.com/watch?app=desktop&v=SZorAJ4I-s
 
 ## Point-wise Feed-Forward Networks
 
+[[🧵Positional encoding]]
 
 
 ## Optimizer

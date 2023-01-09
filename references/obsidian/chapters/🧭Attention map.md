@@ -2,7 +2,7 @@ Relates to #attention #shap #random-feature-permutation
  
 ### Attention visualization
 
-In addition to [[🥌kernel shap]], transformer-based models offer some interpretability through their attention mechanism. Feature attributions can be derived from attention by visualizing features that the model attends to in a *attention map*. While attention maps are specific to transformers or other attention-based architectures,  rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in Figure [[#^401670]].
+In addition to [[🥌Kernel SHAP]], transformer-based models offer some interpretability through their attention mechanism. Feature attributions can be derived from attention by visualizing features that the model attends to in a *attention map*. While attention maps are specific to transformers or other attention-based architectures,  rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in Figure [[#^401670]].
 
 ![[attention-map-saint.png]] ^401670
 
@@ -36,7 +36,7 @@ $$
 
 In this equation, $\odot$ represents the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(b)}:=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(b)}$. As previously suggested in [[@cheferTransformerInterpretabilityAttention2021]] (p. 786), negative contributions are eliminated in order to focus on positive relevance, and the results are averaged over the heads dimension.
 
-In absence of a ground truth for the true feature attribution, we also calculate attention maps using Eq. (...) and Eq. (...). Inline with previous research, feature attributions are also summed over the first attention layer or over all transformer blocks. All of these approaches, can be computed with a single forward pass and are computationally efficient. The level of agreement between attributions from attention maps and [[🥌kernel shap]] is quantified by calculating Spearman's rank correlation between them.
+In absence of a ground truth for the true feature attribution, we also calculate attention maps using Eq. (...) and Eq. (...). Inline with previous research, feature attributions are also summed over the first attention layer or over all transformer blocks. All of these approaches, can be computed with a single forward pass and are computationally efficient. The level of agreement between attributions from attention maps and [[🥌Kernel SHAP]] is quantified by calculating Spearman's rank correlation between them.
 
 Due to the limitation that TabTransformer ([[@huangTabTransformerTabularData2020]]) only feds categorical features through the transformer, only feature-attributions for non-continuous features can be estimated.
 
