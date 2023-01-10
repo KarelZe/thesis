@@ -39,9 +39,11 @@ $$
 
 In this equation, $\odot$ represents the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(b)}:=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(b)}$. As previously suggested in [[@cheferTransformerInterpretabilityAttention2021]] (p. 786), negative contributions are eliminated in order to focus on positive relevance, and the results are averaged over the heads dimension.
 
+%%
 Provide some short discussion. Address problems with interpration of attention proabilites?
 Possible papers: [[@bastingsElephantInterpretabilityRoom2020]] and  [[@jainAttentionNotExplanation2019]] and [[@wiegreffeAttentionNotNot2019]] and https://medium.com/@byron.wallace/thoughts-on-attention-is-not-not-explanation-b7799c4c3b24 and https://medium.com/@yuvalpinter/attention-is-not-not-explanation-dbc25b534017
 A research on what transformers actually learn for simple language models: https://transformer-circuits.pub/2021/framework/index.html
+%%
 
 In absence of a ground truth for the true feature attribution, we also calculate attention maps using Eq. (...) and Eq. (...). Inline with previous research, feature attributions are also summed over the first attention layer or over all transformer blocks. All of these approaches, can be computed with a single forward pass and are computationally efficient. The level of agreement between attributions from attention maps and [[🧭Kernel SHAP]] is quantified by calculating Spearman's rank correlation between them.
 

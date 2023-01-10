@@ -3,7 +3,7 @@
 (image from [[@tayEfficientTransformersSurvey2022]])
 
 
-
+Throughout the work we adhere to a notation suggested by [[@phuongFormalAlgorithmsTransformers2022]]
 
 
 

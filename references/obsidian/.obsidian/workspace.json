@@ -6,6 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
+        "dimension": 49.42660550458716,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -51,7 +52,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🧭Attention map.md",
+                "file": "chapters/🛌Embeddings.md",
                 "mode": "source",
                 "source": false
               }
@@ -63,6 +64,7 @@
       {
         "id": "675af78723ee45d1",
         "type": "tabs",
+        "dimension": 50.57339449541285,
         "children": [
           {
             "id": "0abd77888f93b540",
@@ -73,9 +75,9 @@
               "state": {
                 "file": "🎨transformer.canvas",
                 "viewState": {
-                  "x": -446,
-                  "y": 12.424770642201906,
-                  "zoom": -0.8246464192775694,
+                  "x": -487.1139374837536,
+                  "y": -380.70128539161107,
+                  "zoom": -0.1579797526109028,
                   "snapToGrid": false
                 }
               },
@@ -105,9 +107,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "b9b5dd46dbbad367",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🛌Embeddings.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -165,7 +179,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🧭Attention map.md",
+                "file": "chapters/🛌Embeddings.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -193,7 +207,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🧭Attention map.md"
+                "file": "chapters/🛌Embeddings.md"
               }
             }
           }
@@ -216,15 +230,15 @@
   },
   "active": "d46184c987b5dcc0",
   "lastOpenFiles": [
+    "🧠Deep Learning Methods/Transformer/@phuongFormalAlgorithmsTransformers2022.md",
     "chapters/🛌Embeddings.md",
     "chapters/🤖Transformer.md",
     "chapters/🧭Attention map.md",
-    "chapters/🤖Attention.md",
-    "chapters/🤖TabTransformer.md",
     "🎨transformer.canvas",
     "chapters/🧵Positional encoding.md",
     "chapters/🤖Training of transformer.md",
-    "chapters/🤖Transformer Networks.md",
-    "TOC.md"
+    "chapters/🤖Attention.md",
+    "chapters/🤖TabTransformer.md",
+    "chapters/🤖Transformer Networks.md"
   ]
 }
