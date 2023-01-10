@@ -1,4 +1,14 @@
 
+![[transformer-architecture.png]]
+(image from [[@tayEfficientTransformersSurvey2022]])
+
+Throughout the work we adhere to a notation suggested by [[@phuongFormalAlgorithmsTransformers2022]].
+
+Components:
+[[🛌Embeddings]]
+[[🧵Positional encoding]]
+
+
 
 Transformers have been proposed by [[🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017]] vor sequence-to-sequence modelling as radical new approach to Recurrent Neural Networks. Among others, the inherent sequential processing bounds the capabilities for learning long sequences and efficient parallel implementations in RNNs. Transformers adress these issues by utilizing a so-called attention mechanism to model dependencies between the input and output sequences of arbitrary length. *Attention* is a pooling mechanism, that uses query vector $\boldsymbol{q}$ to  perform a biased selection over similar keys $\boldsymbol{v}$ to obtain their corresponding values $\boldsymbol{k}$  ([[@zhangDiveDeepLearning2021]]).
 
@@ -66,12 +76,17 @@ An attention function can be described as mapping a query and a set of key-value
 
 - nice explanation of transformers, such as dot-product attention https://t.co/WOlBY3suy4
 
-Very high level overview: https://www.youtube.com/watch?app=desktop&v=SZorAJ4I-sA
+- Very high level overview: https://www.youtube.com/watch?app=desktop&v=SZorAJ4I-sA
+- low-level  overview. Fully digest these ideas: https://transformer-circuits.pub/2021/framework/index.html
 
+## Multiheaded Attention
+- What is the effect of multi-headed attention?
+https://transformer-circuits.pub/2021/framework/index.html
 
 
 ## Point-wise Feed-Forward Networks
 
+[[🧵Positional encoding]]
 
 
 ## Optimizer
@@ -82,6 +97,8 @@ Very high level overview: https://www.youtube.com/watch?app=desktop&v=SZorAJ4I-s
 - General Introduction: [[🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017]]
 - What is Attentition?
 - What is the difference between LSTMs and Transformers? Why are transformers preferable?
+
+- discuss the effects of layer pre-normalization vs. post-normalization (see [[@tunstallNaturalLanguageProcessing2022]])
 
 
 

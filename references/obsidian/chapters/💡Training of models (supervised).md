@@ -1,0 +1,47 @@
+[[🤖Training of transformer]]
+
+- Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Implement robustness checks (as in [[@grauerOptionTradeClassification2022]]) early on.
+- Use classification methods (*probabilistic classifier*) that can return probabilities instead of class-only for better analysis. Using probabilistic trade classification rules might have been studied in [[@easleyDiscerningInformationTrade2016]]
+- Interesting notebook about TabNet [Introduction to TabNet - Kfold 10 [TRAINING] | Kaggle](https://www.kaggle.com/code/ludovick/introduction-to-tabnet-kfold-10-training/notebook)
+- Use [Captum · Model Interpretability for PyTorch](https://captum.ai/) to learn what the model picks up as a relevant feature.
+- Try out Stochastic weight averaging for neural net as done [here.](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) or here [Stochastic Weight Averaging in PyTorch](https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/)
+- Try out adverserial weight perturbation as done [here.][feedback-nn-train | Kaggle](https://www.kaggle.com/code/wht1996/feedback-nn-train/notebook)
+- Try out ensembling as in [[@huangSnapshotEnsemblesTrain2017]]
+- Try ADAM optimizer first, try out Adan by [[@xieAdanAdaptiveNesterov2022]] for fun. 
+- Get inspiration for code from https://github.com/kathrinse/TabSurvey e. g., on saving results.
+- use cyclic learning rates as done in [[@huangSnapshotEnsemblesTrain2017]]
+- try cyclic learning rates https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.CyclicLR.html
+- cycling procedure was proposed in [[@loshchilovSGDRStochasticGradient2017]] and [[@smithCyclicalLearningRates2017]]
+- Test if buys and sells are *really* imbalanced, as indicated by [[@easleyOptionVolumeStock1998]]. Might require up-or downsampling.
+- For implementation see https://www.learnpytorch.io/07_pytorch_experiment_tracking/
+- Visualize learned embeddings for categorical data as done in [[@huangTabTransformerTabularData2020]]. Also see attention masks in [[@borisovDeepNeuralNetworks2022]] code.
+- For improvement of TabTransformer
+	- also see https://keras.io/examples/structured_data/tabtransformer/
+	- use einsum that is part of torch already instead of external libary as done in  https://github.com/radi-cho/GatedTabTransformer/blob/master/gated_tab_transformer/gated_tab_transformer.py
+	- Alternatively see https://github.com/timeseriesAI/tsai/blob/be3c787d6e6d0e41839faa3e62d74145c851ef9c/tsai/models/TabTransformer.py#L133 or original implementation https://github.com/autogluon/autogluon/blob/master/tabular/src/autogluon/tabular/models/tab_transformer/tab_transformer.py
+	- We implement the classical rules as a classifier conforming to the sklearn api
+- Compare TabTransformer implementations with:
+	- https://github.com/aruberts/TabTransformerTF/blob/main/tabtransformertf/models/tabtransformer.py
+	- https://github.com/manujosephv/pytorch_tabular/blob/main/pytorch_tabular/models/tab_transformer/tab_transformer.py
+	- Simplify / cross-validate implementation of TabTransfromer and FTTransformer against https://pytorch.org/tutorials/beginner/transformer_tutorial
+	- Can use to gather some ideas for TabNet: https://www.kaggle.com/code/medali1992/amex-tabnetclassifier-feature-eng-0-791/notebook and TabTransformer https://www.kaggle.com/code/yekenot/amex-pytorch-tabtransformer
+
+To inform our models which features are categorical, we pass the index the index of categorical features and the their cardinality to the models.
+
+- How to handle high number of categorical variables in data set? How does this relate to gradient boosted trees and transformers?
+	- What does it mean for the number of parameters in a transformer model to have one more category?
+	- Use a linear projection: https://www.kaggle.com/code/limerobot/dsb2019-v77-tr-dt-aug0-5-3tta/notebook
+	- https://en.wikipedia.org/wiki/Additive_smoothing
+	- How is the training of the gradient boosted tree affected?
+	- For explosion in parameters also see [[@tunstallNaturalLanguageProcessing2022]]. Could apply their reasoning (calculate no. of parameters) for my work. 
+	- KISS. Dimensionality is probably not so high, that it can not be handled. It's much smaller than common corpi sizes. Mapping to 'UKNWN' character. -> Think how this can be done using the current `sklearn` implementation.
+	- The problem of high number of categories is called a high cardinality problem of categoricals see e. g., [[@huangTabTransformerTabularData2020]]
+
+- handle variables with high cardinality
+- How do to reduce the number of categorical variables?
+- strict assumption as we have out-of-vocabulary tokens e. g., unseen symbols like "TSLA".  (see done differently here https://keras.io/examples/structured_data/tabtransformer/)
+- Idea: Instead of assign an unknown token it could help assign to map the token to random vector. https://stackoverflow.com/questions/45495190/initializing-out-of-vocabulary-oov-tokens
+- Idea: reduce the least frequent root symbols.
+- Apply an idea similar to sentence piece. Here, the number of words in vocabulary is fixed https://github.com/google/sentencepiece. See repo for paper / algorithm.
+
+
