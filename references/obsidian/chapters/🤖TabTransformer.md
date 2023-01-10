@@ -2,6 +2,6 @@ While the Transformer ([[@vaswaniAttentionAllYou2017]]) was originally proposed 
 
 Tabular data is different from ... due to being invariant to ...
 
-
+Problem about broken correlations.
 
 ![[comparison-ft-tab-transformer.png]]

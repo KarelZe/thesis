@@ -70,7 +70,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### Network Architecture
 [[🤖Transformer network architecture]]
 ### Attention
-[[🤖Attention]]
+[[🅰️Attention]]
 ### Positional Encoding
 [[🧵Positional encoding]]
 ### Embeddings

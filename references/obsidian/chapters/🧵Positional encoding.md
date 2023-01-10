@@ -1,11 +1,29 @@
-Related: 
+related: 
 #transformer #positional-encoding #linear-algebra
 
-**ressources:**
+Resources:
 - https://towardsdatascience.com/master-positional-encoding-part-i-63c05d90a0c3
 - introduced in [[@vaswaniAttentionAllYou2017]]
 - nice consistent notation in [[@phuongFormalAlgorithmsTransformers2022]]
 - nice summary and well explained in [[@zhangDiveDeepLearning2021]]. Use it to crosscheck my understanding!
+
+[[@vaswaniAttentionAllYou2017]] propose to inject information on the token's position within the sequence through a *positional encoding*. $W_p: \mathbb{N} \rightarrow \mathbb{R}^{d_{\mathrm{e}}}$ They propose a sinusodial embedding given by:
+$$
+\begin{aligned}
+W_p[2 i-1, t] & =\sin \left(t / \ell_{\max }^{2 i / d_e}\right), \\
+W_p[2 i, t] & =\cos \left(t / \ell_{\max }^{2 i / d_e}\right) .
+\end{aligned}
+$$
+for $0<i \leq d_{\mathrm{e}} / 2$.
+
+
+The positional embedding is added to the token embedding (compare chapter [[🛌Embeddings]]):
+
+The positional embedding of a token is usually added to the token embedding to form a token's initial embedding. For the $t$-th token of a sequence $x$, the embedding is
+$$
+e=W_e[:, x[t]]+W_p[:, t] .
+$$
+
 
 **Notes:**
 - The encoder (the self-attention and feed-forward layers) are said to be permutation equivariant—if the input is permuted then the corresponding output of the layer is permuted in exactly the same way.
@@ -100,6 +118,17 @@ P E_{(\text {pos }, i)}= \begin{cases}\sin \left(\frac{p o s}{10000^{i / d_{\tex
 $$
 $\boldsymbol{P E} E_{(p o s, i)}$ represents the position encoding at position $p o s$ in the sequence, and hidden dimensionality $i$. These values, concatenated for all hidden dimensions, are added to the original input features (in the Transformer visualization above, see "Positional encoding"), and constitute the position information. We distinguish between even $(i \bmod 2=0)$ and uneven $(i \bmod 2=1$ ) hidden dimensionalities where we apply a sine/cosine respectively. 
 The intuition behind this encoding is that you can represent $P E_{(p o s+k, i)}$ as a linear function of $P E_{(p o s,:)}$, which might allow the model to easily attend to relative positions. The wavelengths in different dimensions range from $2 \pi$ to $10000 \cdot 2 \pi$.
+
+## Notes from Tunstall
+[[@tunstallNaturalLanguageProcessing2022]]R
+
+“Naturally, we want to avoid being so wasteful with our model parameters since models are expensive to train, and larger models are more difficult to maintain. A common approach is to limit the vocabulary and discard rare words by considering, say, the 100,000 most common words in the corpus. Words that are not part of the vocabulary are classified as “unknown” and mapped to a shared UNK token. This means that we lose some potentially important information in the process of word tokenization, since the model has no information about words associated with UNK.” ([Tunstall, 2022, p. 32](zotero://select/library/items/HYPN9IJ9)) ([pdf](zotero://open-pdf/library/items/TVF29AAM?page=56&annotation=8I4JJSUZ))
+
+“Positional embeddings are based on a simple, yet very effective idea: augment the token embeddings with a position-dependent pattern of values arranged in a vector. If the pattern is characteristic for each position, the attention heads and feed-forward layers in each stack can learn to incorporate positional information into their transformations.” ([Tunstall, 2022, p. 73](zotero://select/library/items/HYPN9IJ9)) ([pdf](zotero://open-pdf/library/items/TVF29AAM?page=97&annotation=SH9B5BKC))
+
+“Absolute positional representations Transformer models can use static patterns consisting of modulated sine and cosine signals to encode the positions of the tokens. This works especially well when there are not large volumes of data available.” ([Tunstall, 2022, p. 74](zotero://select/library/items/HYPN9IJ9)) ([pdf](zotero://open-pdf/library/items/TVF29AAM?page=98&annotation=WYXPF9R8))
+
+“Relative positional representations Although absolute positions are important, one can argue that when computing an embedding, the surrounding tokens are most important. Relative positional representations follow that intuition and encode the relative positions between tokens. This cannot be set up by just introducing a new relative embedding layer at the beginning, since the relative embedding changes for each token depending on where from the sequence we are attending to it” ([Tunstall, 2022, p. 74](zotero://select/library/items/HYPN9IJ9)) ([pdf](zotero://open-pdf/library/items/TVF29AAM?page=98&annotation=P3WC3ZNQ))
 
 ## Notes from e2eml school
 https://e2eml.school/transformers.html#positional_encoding

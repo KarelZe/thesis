@@ -12,7 +12,7 @@
 ## Notes 
 - More efficient than BERT.
 - Uses a GAN like network consisting of a generator and descriminiator to destinguish real input tokens from generated syhetic replacements. Instead of masking their method replaces some input with tokens from the proposal distribution. This corrcuption procedure solves the mismatchin BERT where the network during pretraining lerns the (MASK) tokens, which are not present during finetuning (see [[@devlinBERTPretrainingDeep2019]])
-- ![[electra-architecture 1.png]]
+- ![[electra-architecture.png]]
 
 ## Annotations
 “Masked language modeling (MLM) pre-training methods such as BERT corrupt the input by replacing some tokens with (MASK) and then train a model to reconstruct the original tokens. While they produce good results when transferred to downstream NLP tasks, they generally require large amounts of compute to be effective. As an alternative, we propose a more sample-efficient pre-training task called replaced token detection. Instead of masking the input, our approach corrupts it by replacing some tokens with plausible alternatives sampled from a small generator network. Then, instead of training a model that predicts the original identities of the corrupted tokens, we train a discriminative model that predicts whether each token in the corrupted input was replaced by a generator sample or not. Thorough experiments demonstrate this new pre-training task is more efficient than MLM because the task is defined over all input tokens rather than just the small subset that was masked out” ([Clark et al., 2020, p. 1](zotero://select/library/items/GNZMQFS7)) ([pdf](zotero://open-pdf/library/items/PND3FKSH?page=1&annotation=WPHUJVIM))

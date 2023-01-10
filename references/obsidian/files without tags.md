@@ -59,5 +59,5 @@
 - [[🧓Discussion]]
 - [[🐈CatBoost]]
 - [[🔢Basic rules]]
-- [[🤖Attention]]
+- [[🅰️Attention]]
 - [[chapters/adversarial_validation.md]]

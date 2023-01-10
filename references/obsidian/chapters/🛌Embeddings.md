@@ -9,8 +9,7 @@
 
 [[@vaswaniAttentionAllYou2017]] train the Transformer on pre-trained token embeddings. To obtain token embeddings from raw input sequences, the sequence is first split into individual vocabulary elements, so-called *tokens*. Depending on the tokenization strategy, tokens can be as fine-grained as individual characters, or more coarse-grained sub-words (cite some famous papers), or words. The vocabulary $V$ consists of $N_{V}=|V|$ elements and maps tokens onto unique integer keys, referred to as token-ids. [[@phuongFormalAlgorithmsTransformers2022]]
 
-The vocabulary may include special tokens, like `UNKWN` token to handle out-of-vocabulary items or to mark the beginning or end of sequence with the `BOS` or `EOS` 
-token.
+The vocabulary may include special tokens, like `UNK` token to handle out-of-vocabulary items or to mark the beginning or end of sequence with the `BOS` or `EOS` token.
 
 Consider the input sequence "Kings and Queens"; a small vocabulary of $V=[0,N_v]$, and a mapping between token and token-id of $\text{queen}\mapsto 0$; $\text{king}\mapsto 1$ . Applying tokenizing by words, after common pre-processing like stemming and stopword removal, yields a sequence of token-ids $x$ given by $[1, 0]$. <mark style="background: #FFB8EBA6;">(What about EOS / BOS?)</mark>[^ 1] 
 
@@ -47,7 +46,7 @@ print(cosine_sim)
 
 Our running example uses word embeddings, motivated by the domain in which Transformers were proposed. However, the novel idea of capturing semantics as  embedding vectors extends to other discrete entities. We explore embedding categorical data, like the option's underlying in Chapter [[🤖TabTransformer]] and [[🤖FTTransformer]] and (discretized?), continuous data in the Chapter [[🤖FTTransformer]].
 
-Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the ordering of tokens within a sequence. The later later is vital in natural language processing and must be induced to the model using a [[🧵Positional encoding]].
+Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens within a sequence. (Check if this is also true for contextual embeddings used in BERT etc.) The later later is vital in natural language processing and must be induced to the model using a [[🧵Positional encoding]], as later stages of the encoder are position-invariant (see [[@tunstallNaturalLanguageProcessing2022]] or [[@phuongFormalAlgorithmsTransformers2022]]) <mark style="background: #FFB8EBA6;">(check formulation could also be equivariant)</mark>.
 
 [^1:]Note that there is a subtle difference between tokens and words. Token could be be words including punctation marks. But words can also be split into multiple tokens (Compare sub-words). Also notice the subtlety of words being reduced to their stem and lower-cased. (Provide the standard nlp reference for further info on this topic.)
 

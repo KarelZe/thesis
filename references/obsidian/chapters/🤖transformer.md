@@ -7,8 +7,8 @@ Throughout the work we adhere to a notation suggested by [[@phuongFormalAlgorith
 Components:
 [[🛌Embeddings]]
 [[🧵Positional encoding]]
-
-
+[[🅰️Attention]]
+[[🎱Pointwise FFN]]
 
 Transformers have been proposed by [[🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017]] vor sequence-to-sequence modelling as radical new approach to Recurrent Neural Networks. Among others, the inherent sequential processing bounds the capabilities for learning long sequences and efficient parallel implementations in RNNs. Transformers adress these issues by utilizing a so-called attention mechanism to model dependencies between the input and output sequences of arbitrary length. *Attention* is a pooling mechanism, that uses query vector $\boldsymbol{q}$ to  perform a biased selection over similar keys $\boldsymbol{v}$ to obtain their corresponding values $\boldsymbol{k}$  ([[@zhangDiveDeepLearning2021]]).
 
