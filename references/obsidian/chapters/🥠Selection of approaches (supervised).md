@@ -21,11 +21,11 @@
 - Challenges of learning of tabular data can be found in [[@borisovDeepNeuralNetworks2022]] e. g. both 
 - Taxonomy of approaches can be found in [[@borisovDeepNeuralNetworks2022]] 
 ![[tabular-learning-architectures 1.png]]
-- Nice formulation and overview of the dominance of GBT and deep learning is given in [[@levinTransferLearningDeep2022 1]]
+- Nice formulation and overview of the dominance of GBT and deep learning is given in [[@levinTransferLearningDeep2022]]
 
 - Sophisticated neural network architectures might not be required, but rather a mix of regularization approaches to regularize MLPs [[@kadraWelltunedSimpleNets2021]].
 
-- semi-supervised learning with pre-training for tabular data improves feature transfer. Also possible if features differ between the upstream and downstream task. [[@levinTransferLearningDeep2022 1]] 
+- semi-supervised learning with pre-training for tabular data improves feature transfer. Also possible if features differ between the upstream and downstream task. [[@levinTransferLearningDeep2022]] 
 - reasons why deep learning on tabular data is challenging [[@shavittRegularizationLearningNetworks2018]] (use more as background citation)
 - selection is hard e. g., in deep learning, as there are no universal benchmarks and robust, battle tested approaches for tabular data compared to other data sources. (see [[@gorishniyRevisitingDeepLearning2021]])
 

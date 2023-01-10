@@ -22,7 +22,56 @@
             }
           },
           {
-            "id": "dbbdeaf503fdaeba",
+            "id": "b0c0f12bffb6a0e9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖Transformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "675af78723ee45d1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0abd77888f93b540",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "🎨transformer.canvas",
+                "viewState": {
+                  "x": -446,
+                  "y": 12.424770642201906,
+                  "zoom": -0.8246464192775694,
+                  "snapToGrid": false
+                }
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "56f1fb52ed05e124",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖Training of transformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "d46184c987b5dcc0",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -32,9 +81,20 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "21be04c6245f0de3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🧵Positional encoding.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -92,7 +152,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Embeddings.md",
+                "file": "🎨transformer.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +180,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Embeddings.md"
+                "file": "🎨transformer.canvas"
               }
             }
           }
@@ -129,8 +189,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 210.5,
-    "collapsed": true
+    "width": 210.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -142,17 +201,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "dbbdeaf503fdaeba",
+  "active": "0abd77888f93b540",
   "lastOpenFiles": [
-    "TOC.md",
+    "chapters/🤖Transformer.md",
     "chapters/🤖TabTransformer.md",
-    "chapters/🤖Pretraining FTTransformer.md",
-    "chapters/🥠Selection of approaches (supervised).md",
-    "files without tags.md",
-    "orphaned files output.md",
-    "🖼️Media/wandb.jpg",
-    "🧠Deep Learning Methods/@izmailovAveragingWeightsLeads2019.md",
-    "🖼️Media/swa-visualization.png",
-    "🖼️Media/emo-rule-formulae.png"
+    "🎨transformer.canvas",
+    "chapters/🤖Embeddings.md",
+    "chapters/🧵Positional encoding.md",
+    "chapters/🤖Training of transformer.md",
+    "chapters/🤖Transformer Networks.md",
+    "TOC.md",
+    "Untitled 1.canvas",
+    "chapters/🪄feature engineering.md"
   ]
 }

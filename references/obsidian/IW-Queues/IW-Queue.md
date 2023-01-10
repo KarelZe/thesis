@@ -41,7 +41,7 @@ interval: 1
 | [[🤖Pretraining FTTransformer]]            |       85 |       |        1 | 1970-01-01 |
 | [[🧓Discussion]]                      |     87.5 |       |        1 | 1970-01-01 |
 | [[🔢Depth rule]]                      |       90 |       |        1 | 1970-01-01 |
-| [[comparsion 1]]                      |     92.5 |       |        1 | 1970-01-01 |
+| [[comparsion]]                      |     92.5 |       |        1 | 1970-01-01 |
 | [[🔢CLNV method]]                     |       95 |       |        1 | 1970-01-01 |
 | [[🔢Basic rules]]                     |     97.5 |       |        1 | 1970-01-01 |
 | [[adversarial_validation]]          |        0 |       |        2 | 2022-12-15 |

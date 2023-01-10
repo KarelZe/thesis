@@ -1,5 +1,5 @@
 
-Use $t$-SNE to assess the output of the supervised vs. the semi-supervised train models. See [[@leePseudolabelSimpleEfficient 1]] and [[@banachewiczKaggleBookData2022]] for how to use it.
+Use $t$-SNE to assess the output of the supervised vs. the semi-supervised train models. See [[@leePseudolabelSimpleEfficient]] and [[@banachewiczKaggleBookData2022]] for how to use it.
 See [[@vandermaatenVisualizingDataUsing2008]] for original paper.
 ![[t-sne-map 1.png]]
 
