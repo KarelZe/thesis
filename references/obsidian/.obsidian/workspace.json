@@ -75,9 +75,9 @@
               "state": {
                 "file": "🎨transformer.canvas",
                 "viewState": {
-                  "x": -487.1139374837536,
-                  "y": -380.70128539161107,
-                  "zoom": -0.1579797526109028,
+                  "x": -949.0337787983126,
+                  "y": -480.4561835500409,
+                  "zoom": 1,
                   "snapToGrid": false
                 }
               },
@@ -120,8 +120,7 @@
               }
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -230,11 +229,11 @@
   },
   "active": "d46184c987b5dcc0",
   "lastOpenFiles": [
-    "🧠Deep Learning Methods/Transformer/@phuongFormalAlgorithmsTransformers2022.md",
-    "chapters/🛌Embeddings.md",
     "chapters/🤖Transformer.md",
-    "chapters/🧭Attention map.md",
+    "chapters/🛌Embeddings.md",
     "🎨transformer.canvas",
+    "🧠Deep Learning Methods/Transformer/@phuongFormalAlgorithmsTransformers2022.md",
+    "chapters/🧭Attention map.md",
     "chapters/🧵Positional encoding.md",
     "chapters/🤖Training of transformer.md",
     "chapters/🤖Attention.md",

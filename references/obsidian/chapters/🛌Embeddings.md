@@ -3,50 +3,55 @@
 **Related:**
 - See [[@gorishniyEmbeddingsNumericalFeatures2022]]
 - See [[@phuongFormalAlgorithmsTransformers2022]]
+- See [[@bengioNeuralProbabilisticLanguage]]
 
+![[transformer-architecture.png]] ^dbc00b
 
-![[transformer-architecture.png]]
+[[@vaswaniAttentionAllYou2017]] train the Transformer on pre-trained token embeddings. To obtain token embeddings from raw input sequences, the sequence is first split into individual vocabulary elements, so-called *tokens*. Depending on the tokenization strategy, tokens can be as fine-grained as individual characters, or more coarse-grained sub-words (cite some famous papers), or words. The vocabulary $V$ consists of $N_{V}=|V|$ elements and maps tokens onto unique integer keys, referred to as token-ids. [[@phuongFormalAlgorithmsTransformers2022]]
 
-## Draft
-[[@vaswaniAttentionAllYou2017]] train the Transformer on pre-trained token embeddings. To obtain token embeddings from raw input sequences, the  sequence is first split into individual vocabulary elements, so-called *tokens*. Depending on the tokenization strategy, tokens can be as fine-grained as individual characters, or more coarse-grained sub-words (cite some famous papers), or words. The vocabulary $V$ consists of $N_{V}=|V|$ elements and maps tokens onto unique integer keys, we refer to them as token-ids. [[@phuongFormalAlgorithmsTransformers2022]]
+The vocabulary may include special tokens, like `UNKWN` token to handle out-of-vocabulary items or to mark the beginning or end of sequence with the `BOS` or `EOS` 
+token.
 
-The vocabulary may include special tokens, like `UNKWN` token to handle out-of-vocabulary items or to mark the beginning or end of sequence with the `BOS` or `EOS` token.
+Consider the input sequence "Kings and Queens"; a small vocabulary of $V=[0,N_v]$, and a mapping between token and token-id of $\text{queen}\mapsto 0$; $\text{king}\mapsto 1$ . Applying tokenizing by words, after common pre-processing like stemming and stopword removal, yields a sequence of token-ids $x$ given by $[1, 0]$. <mark style="background: #FFB8EBA6;">(What about EOS / BOS?)</mark>[^ 1] 
 
-Consider the sequence "Kings and Queens", and a small vocabulary of $V=[0,1]$, and a mapping between token and token-id: $\text{queen}\mapsto 0$; $\text{king}\mapsto 1$ . Applying common pre-processing like stemming and stopword removal, and tokenizing by words, would yield a sequence of token-ids given by $[1, 0]$.[^ 1] 
+Subsequently, the sequence of token-ids is converted into a sequence of *token embeddings*. Pioneered by [[@bengioNeuralProbabilisticLanguage]] (p. 1,139), an embedding maps each token - here a word - into a high-dimensional space. Through representing every word as a vector, semantic and syntactic relationships between words can be encoded. As such, similar words share a similar embedding vector [[@bengioNeuralProbabilisticLanguage]] (p. 1,139). Also, word embeddings are semantically meaningful and can capture linguistic regularities, like the gender, with vector offsets [[@mikolovLinguisticRegularitiesContinuous2013]]  (p. 748 f.).
 
-An embedding is i, as pioneered 
-
-or , more specifically the token-id, 
-
-is projected into a high-dimensional space.
-
-The idea 
-
-The use of embeddings to encode words in a dense low dimensional space is prevalent in natural language processing
-While  
-
-Our example in Eq. (...) uses word embeddings, motivated by the domain in which Transformers were proposed. However, the novel idea of capturing semantics as  embedding vectors extends to other discrete entities. We explore embedding categorical data, like the underlying in Chapter [[🤖TabTransformer]] and (discretized?), continuous data in the Chapters [[🤖TabTransformer]] and [[🤖FTTransformer]].
-
-Ultimately, the embedding layer is just a lookup table to retrieve the embedding vector $e \in \mathbb{R}^{d_{\mathrm{e}}}$  from the embedding matrix $W_e \in \mathbb{R}^{d_{\mathrm{e}} \times N_{\mathrm{V}}}$ given the tokenid $v \in V \cong\left[N_{\mathrm{V}}\right]$ as
+The embedding layer from Figure [[#^dbc00b]] is ultimatley a lookup table to retrieve the embedding vector $e \in \mathbb{R}^{d_{\mathrm{e}}}$  from a learned, embedding matrix $W_e \in \mathbb{R}^{d_{\mathrm{e}} \times N_{\mathrm{V}}}$ with a token-id $v \in V \cong\left[N_{\mathrm{V}}\right]$ as shown :
 $$
+\tag{1}
 e=W_e[:, v].
 $$
+
+Concluding the example from above with synthetic embeddings of dimensionality $e^d=3$:
+$$
+\tag{2}
+\begin{aligned}
+e_{\text{king}}&=W_e[:,1] = [0.01, 0.20, 0.134]^T\\
+e_{\text{queen}}&=W_e[:,0] = [0.07, 0.157, 0.139]^T\\
+\end{aligned}
+$$
+are likely to be close in space with cosine-similarity of $\approx 1$ due to their high semantic similarity with regard to profession. 
 %%
-The dimensionality of the embedding $d_e$ may affect quality of the embedding.
+```python
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+x = np.array([0.01, 0.20, 0.134]).reshape(-1,1)
+y = np.array([0.07, 0.157, 0.139]).reshape(-1,1)
+cosine_sim = cosine_similarity(x, y)
+print(cosine_sim)
+
+[[1. 1. 1.] [1. 1. 1.] [1. 1. 1.]]
+
+```
 %%
-Embeddings encode only the semantic relationship of tokens, but they do not provide a clue to the model about the ordering of tokens within a sequence which is required in natural language processing. The later must be induced the model using a [[🧵Positional encoding]].
+
+Our running example uses word embeddings, motivated by the domain in which Transformers were proposed. However, the novel idea of capturing semantics as  embedding vectors extends to other discrete entities. We explore embedding categorical data, like the option's underlying in Chapter [[🤖TabTransformer]] and [[🤖FTTransformer]] and (discretized?), continuous data in the Chapter [[🤖FTTransformer]].
+
+Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the ordering of tokens within a sequence. The later later is vital in natural language processing and must be induced to the model using a [[🧵Positional encoding]].
+
+[^1:]Note that there is a subtle difference between tokens and words. Token could be be words including punctation marks. But words can also be split into multiple tokens (Compare sub-words). Also notice the subtlety of words being reduced to their stem and lower-cased. (Provide the standard nlp reference for further info on this topic.)
 
 ---
-
-about token positions into the input to model the sequential nature of text
-
-- Words or tokens can not be processed directly. 
-- The embedding size is fixed apriori. As it is relevant for how the data is organized in the high-dim space.
-- a semantic relation between the words is learned; vectors can be. Subtraction, addition etc is typically meaningful. -> "king - man + woman ~= queen"
-- embeddings are often realized as a hashmap ala get "key" by "vector". They are provided to the model as-is and not-specific to Transformers.
-- in the [[@vaswaniAttentionAllYou2017]] they just write that they use learned embeddings in the encoder
-
-Embeddings are a way of representing words, phrases, or other discrete entities as points in a high-dimensional vector space. These vectors capture some kind of meaning or semantic relationship between the entities they represent, but the exact relationship depends on the way the embeddings are trained.
 
 
 ## Notes from Phuong and Hutter
@@ -63,7 +68,7 @@ A good embedding groups words with similar meanings together. A model that works
 
 A good embedding groups words with similar meanings together. **A model that works with an embedding learns patterns in the embedded space.** That means that whatever it learns to do with one word automatically gets applied to all the words right next to it. This has the added benefit of reducing the amount of training data needed. Each example gives a little bit of learning that gets applied across a whole neighborhood of words.
 
-## Notes from Colah
+## Notes from Chris Olah
 From https://colah.github.io/posts/2014-07-NLP-RNNs-Representations/:
 
 I’d like to start by tracing a particularly interesting strand of deep learning research: word embeddings. In my personal opinion, word embeddings are one of the most exciting area of research in deep learning at the moment, although they were originally introduced by Bengio, _et al._ more than a decade ago.(see [[@bengioNeuralProbabilisticLanguage]]) Beyond that, I think they are one of the best places to gain intuition about why deep learning is so effective.
@@ -108,5 +113,3 @@ The embedding sub-layer works like other standard *transduction models*. A token
 “To verify the word embedding produced for these two words, we can use cosine similarity to see if the word embeddings of the words black and brown are similar. Cosine similarity uses Euclidean (L2) norm to create vectors in a unit sphere. The dot product of the vectors we are comparing is the cosine between the points of those two vectors.” (Rothman, 2021, p. 10)
 
 “The Transformer's subsequent layers do not start empty-handed. They have learned word embeddings that already provide information on how the words can be associated. However, a big chunk of information is missing because no additional vector or information indicates a word's position in a sequence.” (Rothman, 2021, p. 10)
-
-[^1:]Note that there is a subtle difference between tokens and words. Token could be `.` but word would not include. Also, words can be split into multiple tokens. Compare sub-words. Provide the standard nlp reference.
