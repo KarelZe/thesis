@@ -37,7 +37,7 @@ interval: 1
 | [[🧭Evaluation metric]]               |       75 |       |        1 | 1970-01-01 |
 | [[🌏Environment]]                     |     77.5 |       |        1 | 1970-01-01 |
 | [[🔢EMO rule]]                        |       80 |       |        1 | 1970-01-01 |
-| [[🤖Embeddings]]                      |     82.5 |       |        1 | 1970-01-01 |
+| [[🛌Embeddings]]                      |     82.5 |       |        1 | 1970-01-01 |
 | [[🤖Pretraining FTTransformer]]            |       85 |       |        1 | 1970-01-01 |
 | [[🧓Discussion]]                      |     87.5 |       |        1 | 1970-01-01 |
 | [[🔢Depth rule]]                      |       90 |       |        1 | 1970-01-01 |

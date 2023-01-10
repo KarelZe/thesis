@@ -74,7 +74,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### Positional Encoding
 [[🧵Positional encoding]]
 ### Embeddings
-[[🤖Embeddings]]
+[[🛌Embeddings]]
 
 ### Extensions in TabTransformer
 [[🤖Extensions to TabTransformer]]

@@ -51,7 +51,7 @@
 - [[🌏Environment]]
 - [[🔢EMO rule]]
 - [[chapters/draft_rf.md]]
-- [[🤖Embeddings]]
+- [[🛌Embeddings]]
 - [[🔢CLNV method]]
 - [[chapters/draft_nn.md]]
 - [[🏅Comparsion]]

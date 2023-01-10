@@ -32,9 +32,33 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "378387bc8ff618c4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖TabTransformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "d46184c987b5dcc0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🧭Attention map.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       },
       {
         "id": "675af78723ee45d1",
@@ -71,18 +95,6 @@
             }
           },
           {
-            "id": "d46184c987b5dcc0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🤖Embeddings.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "21be04c6245f0de3",
             "type": "leaf",
             "state": {
@@ -94,7 +106,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -152,7 +165,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🎨transformer.canvas",
+                "file": "chapters/🧭Attention map.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -180,7 +193,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🎨transformer.canvas"
+                "file": "chapters/🧭Attention map.md"
               }
             }
           }
@@ -201,17 +214,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "0abd77888f93b540",
+  "active": "d46184c987b5dcc0",
   "lastOpenFiles": [
+    "chapters/🛌Embeddings.md",
     "chapters/🤖Transformer.md",
+    "chapters/🧭Attention map.md",
+    "chapters/🤖Attention.md",
     "chapters/🤖TabTransformer.md",
     "🎨transformer.canvas",
-    "chapters/🤖Embeddings.md",
     "chapters/🧵Positional encoding.md",
     "chapters/🤖Training of transformer.md",
     "chapters/🤖Transformer Networks.md",
-    "TOC.md",
-    "Untitled 1.canvas",
-    "chapters/🪄feature engineering.md"
+    "TOC.md"
   ]
 }

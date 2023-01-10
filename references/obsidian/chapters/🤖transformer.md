@@ -6,6 +6,7 @@
 
 
 
+
 Transformers have been proposed by [[🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017]] vor sequence-to-sequence modelling as radical new approach to Recurrent Neural Networks. Among others, the inherent sequential processing bounds the capabilities for learning long sequences and efficient parallel implementations in RNNs. Transformers adress these issues by utilizing a so-called attention mechanism to model dependencies between the input and output sequences of arbitrary length. *Attention* is a pooling mechanism, that uses query vector $\boldsymbol{q}$ to  perform a biased selection over similar keys $\boldsymbol{v}$ to obtain their corresponding values $\boldsymbol{k}$  ([[@zhangDiveDeepLearning2021]]).
 
 On an abstract level, the Transformer consists of an encoder and a decoder.  The encoder maps the input sequence $\left(x_{1}, \ldots, x_{n}\right)$ with $x_{i} \in \mathbb{R}^{d}$, to a sequence of continous representations $\boldsymbol{z}=\left(z_{1}, \ldots, z_{n}\right)$, from which the decoder generates an output sequence of symbols $\boldsymbol{y}=\left(y_{1}, \ldots, y_{m}\right)$. Previously generated parts of the sequence are considered as an additional input, making the model autoregressive.
@@ -72,8 +73,12 @@ An attention function can be described as mapping a query and a set of key-value
 
 - nice explanation of transformers, such as dot-product attention https://t.co/WOlBY3suy4
 
-Very high level overview: https://www.youtube.com/watch?app=desktop&v=SZorAJ4I-sA
+- Very high level overview: https://www.youtube.com/watch?app=desktop&v=SZorAJ4I-sA
+- low-level  overview. Fully digest these ideas: https://transformer-circuits.pub/2021/framework/index.html
 
+## Multiheaded Attention
+- What is the effect of multi-headed attention?
+https://transformer-circuits.pub/2021/framework/index.html
 
 
 ## Point-wise Feed-Forward Networks
