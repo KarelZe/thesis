@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 49.42660550458716,
+        "dimension": 48.01762114537445,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -23,35 +23,24 @@
             }
           },
           {
-            "id": "378387bc8ff618c4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🤖TabTransformer.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "21be04c6245f0de3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🪄Feature engineering.md",
+                "file": "chapters/🧵Positional encoding.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "675af78723ee45d1",
         "type": "tabs",
-        "dimension": 50.57339449541285,
+        "dimension": 51.98237885462555,
         "children": [
           {
             "id": "0abd77888f93b540",
@@ -62,13 +51,25 @@
               "state": {
                 "file": "🎨transformer.canvas",
                 "viewState": {
-                  "x": -649.9059530834037,
-                  "y": -350.3446532508873,
-                  "zoom": 0.5251374348363582,
+                  "x": -1148.3247140386432,
+                  "y": -531.3470998049472,
+                  "zoom": 1,
                   "snapToGrid": false
                 }
               },
               "pinned": true
+            }
+          },
+          {
+            "id": "8329dc1fdc5bca5f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🧵Positional encoding.md",
+                "mode": "source",
+                "source": false
+              }
             }
           },
           {
@@ -79,7 +80,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -108,7 +110,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "vaswani",
+                "query": "tabtransf",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -121,7 +123,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 561.5
+    "width": 489.5
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -137,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "chapters/🧵Positional encoding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -165,7 +167,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "chapters/🧵Positional encoding.md"
               }
             }
           }
@@ -186,17 +188,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "160a03ac0eb0e817",
+  "active": "21be04c6245f0de3",
   "lastOpenFiles": [
-    "chapters/🤖Transformer.md",
     "TOC.md",
-    "🎱Pointwise FFN.md",
-    "Semi-supervised Learning/@clarkELECTRAPretrainingText2020.md",
+    "@zhangDiveDeepLearning2021.md",
+    "chapters/🧵Positional encoding.md",
+    "chapters/🛌Token Embedding.md",
+    "chapters/🧭Attention map.md",
+    "chapters/🪄Feature engineering.md",
     "🎨transformer.canvas",
-    "🍬Implementation/🧪Feature Engineering/@popelTrainingTipsTransformer2018.md",
-    "chapters/🤖Training of transformer.md",
-    "🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017.md",
-    "🧠Deep Learning Methods/@levinTransferLearningDeep2022.md",
-    "chapters/🤖TabTransformer.md"
+    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+    "chapters/🤖TabTransformer.md",
+    "chapters/🤖Transformer.md"
   ]
 }

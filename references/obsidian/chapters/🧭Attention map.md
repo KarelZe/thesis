@@ -43,6 +43,9 @@ In this equation, $\odot$ represents the element-wise product between the gradie
 Provide some short discussion. Address problems with interpration of attention proabilites?
 Possible papers: [[@bastingsElephantInterpretabilityRoom2020]] and  [[@jainAttentionNotExplanation2019]] and [[@wiegreffeAttentionNotNot2019]] and https://medium.com/@byron.wallace/thoughts-on-attention-is-not-not-explanation-b7799c4c3b24 and https://medium.com/@yuvalpinter/attention-is-not-not-explanation-dbc25b534017
 A research on what transformers actually learn for simple language models: https://transformer-circuits.pub/2021/framework/index.html
+
+A library that can also investigate models across multiple nodes:
+https://transformer-circuits.pub/2021/garcon/index.html
 %%
 
 In absence of a ground truth for the true feature attribution, we also calculate attention maps using Eq. (...) and Eq. (...). Inline with previous research, feature attributions are also summed over the first attention layer or over all transformer blocks. All of these approaches, can be computed with a single forward pass and are computationally efficient. The level of agreement between attributions from attention maps and [[🧭Kernel SHAP]] is quantified by calculating Spearman's rank correlation between them.
