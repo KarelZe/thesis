@@ -20,7 +20,7 @@
 - Choose neural network architectures, that are tailored towards tabular data.
 - Challenges of learning of tabular data can be found in [[@borisovDeepNeuralNetworks2022]] e. g. both 
 - Taxonomy of approaches can be found in [[@borisovDeepNeuralNetworks2022]] 
-![[tabular-learning-architectures 1.png]]
+![[tabular-learning-architectures.png]]
 - Nice formulation and overview of the dominance of GBT and deep learning is given in [[@levinTransferLearningDeep2022]]
 
 - Sophisticated neural network architectures might not be required, but rather a mix of regularization approaches to regularize MLPs [[@kadraWelltunedSimpleNets2021]].

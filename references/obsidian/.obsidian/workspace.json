@@ -23,7 +23,7 @@
             }
           },
           {
-            "id": "21be04c6245f0de3",
+            "id": "3ad4be100c94591a",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -51,25 +51,13 @@
               "state": {
                 "file": "🎨transformer.canvas",
                 "viewState": {
-                  "x": -1148.3247140386432,
-                  "y": -531.3470998049472,
+                  "x": -1023.0491754128864,
+                  "y": -522.8470998049472,
                   "zoom": 1,
                   "snapToGrid": false
                 }
               },
               "pinned": true
-            }
-          },
-          {
-            "id": "8329dc1fdc5bca5f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🧵Positional encoding.md",
-                "mode": "source",
-                "source": false
-              }
             }
           },
           {
@@ -80,8 +68,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -188,17 +175,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "21be04c6245f0de3",
+  "active": "3ad4be100c94591a",
   "lastOpenFiles": [
-    "TOC.md",
-    "@zhangDiveDeepLearning2021.md",
-    "chapters/🧵Positional encoding.md",
     "chapters/🛌Token Embedding.md",
-    "chapters/🧭Attention map.md",
-    "chapters/🪄Feature engineering.md",
-    "🎨transformer.canvas",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+    "chapters/🛌Embeddings.md",
     "chapters/🤖TabTransformer.md",
-    "chapters/🤖Transformer.md"
+    "TOC.md",
+    "chapters/🤖FTTransformer.md",
+    "chapters/🥠Selection of approaches (supervised).md",
+    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+    "chapters/🧵Positional encoding.md",
+    "chapters/🤖Transformer.md",
+    "chapters/🤖Training of transformer.md"
   ]
 }

@@ -71,15 +71,15 @@ In our attempt to compare shallow with deep architectures for trade classificati
 [[🤖Transformer network architecture]]
 ### Attention
 [[🅰️Attention]]
-### Positional Encoding
-[[🧵Positional encoding]]
-### Embeddings
-[[🛌Token Embedding]]
+### Positional Encoding 🟢
+![[🧵Positional encoding]]
+### Embeddings 🟢
+![[🛌Token Embedding]]
 
 ### Extensions in TabTransformer
 [[🤖Extensions to TabTransformer]]
 ### Extensions in FTTransformer
-[[🤖Pretraining FTTransformer]]
+[[🤖FTTransformer]]
 
 # 👽 Semi-Supervised Approaches
 

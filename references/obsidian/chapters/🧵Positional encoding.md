@@ -1,6 +1,8 @@
 related: 
 #transformer #positional-encoding #linear-algebra #linear-projection #cylic-data
 
+![[classical_transformer.png]]
+
 [[@vaswaniAttentionAllYou2017]] (p. 6) propose to inject information on the token's position within the sequence through a *positional embedding*, that is added to the token embedding from Section [[🛌Token Embedding]]. Like token embeddings, positional embeddings can also be learned. Due to better, extrapolation capabilities, [[@vaswaniAttentionAllYou2017]] (p. 6), propose an embedding $W_p: \mathbb{N} \rightarrow \mathbb{R}^{d_{\mathrm{e}}}$ based on sine and cosine signals to encode the *absolute* position of the token:
 $$
 \tag{1}

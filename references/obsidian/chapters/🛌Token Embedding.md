@@ -4,8 +4,10 @@
 - See [[@gorishniyEmbeddingsNumericalFeatures2022]]
 - See [[@phuongFormalAlgorithmsTransformers2022]]
 - See [[@bengioNeuralProbabilisticLanguage]]
+![[classical_transformer.png]]
+(own drawing after [[@daiTransformerXLAttentiveLanguage2019]])
 
-![[transformer-architecture.png]] ^dbc00b
+ ^dbc00b
 
 [[@vaswaniAttentionAllYou2017]] train the Transformer on pre-trained token embeddings. To obtain token embeddings from raw input sequences, the sequence is first split into individual vocabulary elements, so-called *tokens*. Depending on the tokenization strategy, tokens can be as fine-grained as individual characters, or more coarse-grained sub-words (cite some famous papers), or words. The vocabulary $V$ consists of $N_{V}=|V|$ elements and maps tokens onto unique integer keys, referred to as token-ids. [[@phuongFormalAlgorithmsTransformers2022]]
 
