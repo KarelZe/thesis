@@ -1,11 +1,46 @@
-Related: 
-#transformer #positional-encoding #linear-algebra
+related: 
+#transformer #positional-encoding #linear-algebra #linear-projection #cylic-data
 
-**ressources:**
-- https://towardsdatascience.com/master-positional-encoding-part-i-63c05d90a0c3
+[[@vaswaniAttentionAllYou2017]] (p. 6) propose to inject information on the token's position within the sequence through a *positional embedding*, that is added to the token embedding from Section [[🛌Token Embedding]]. Like token embeddings, positional embeddings can also be learned. Due to better, extrapolation capabilities, [[@vaswaniAttentionAllYou2017]] (p. 6), propose an embedding $W_p: \mathbb{N} \rightarrow \mathbb{R}^{d_{\mathrm{e}}}$ based on sine and cosine signals to encode the *absolute* position of the token:
+$$
+\tag{1}
+\begin{aligned}
+W_p[2 i-1, t] & =\sin \left(t / \ell_{\max }^{2 i / d_e}\right), \\
+W_p[2 i, t] & =\cos \left(t / \ell_{\max }^{2 i / d_e}\right) .
+\end{aligned}
+$$
+with $0<i \leq d_{\mathrm{e}} / 2$, the maximum sequence length $\ell_{\max}$, which is arbitrarily set to $\ell_{\max}=10,000$, and $t$ is again the position of the token in the sequence. As shown in Equation (1) the frequency decreases across the position dimension and alternates between sine and cosine for the embedding dimension. Each embedding thus contains a pattern, easily distinguishable by the model.
+
+Using trigonometric functions for the positional embedding is favourable, due to being zero-centered, and resulting in values in the *limited* range of $[-1,1]$. These properties are long known to promote convergence of neural networks (cp. [[@lecunEfficientBackProp2012]] (p. 8 f)). The reason for encoding with both the sine and cosine is more subtle. [[@vaswaniAttentionAllYou2017]] (p. 6) hypothesize, that beside learning the *absolute position* i. e., fifth place in sequence, also enables to model attend to *relative positions*, i. e., two places from a given token. A detailed proof is layed out in  [[@zhangDiveDeepLearning2021]] (p. 410) 
+
+![[viz-of-pos-encoding.png]]
+(pos encoding copied from [[@zhangDiveDeepLearning2021]]; p. 409; transpose image due to my matrix notation) ^1f2fe5
+
+We visualize the positional embedding in Figure [[#^1f2fe5]] with an embedding dimension of $d_e=32$ and 60 tokens. One can clearly see the pattern describing the position.
+
+The positional embedding of a token is finally added to the token embedding to form a token's initial embedding $e$. For the $t$-th token of a sequence $x$, the embedding becomes:
+$$
+e=W_e[:, x[t]]+W_p[:, t] .
+$$
+Due to the sheer depth of of the network with multiple Transformer blocks, the positional information would easily vanish during back-propagation. To enforce it, the architecture relies on residual connections [[@heDeepResidualLearning2015]] (p. 3).
+
+%%
+ResNet paper on residual learning / residual connections. Discusses in general the problems that arise with learning deep neural networks: https://arxiv.org/pdf/1512.03385.pdf
+Nice explanation: https://stats.stackexchange.com/a/565203/351242
+%%
+
+Later works, like [[@daiTransformerXLAttentiveLanguage2019]] (p. 4 f.) <mark style="background: #FFB8EBA6;">(also found in [[@tayEfficientTransformersSurvey2022]]; p. 24)</mark>, remove the positional encoding in favour of *relative position encoding*, that is only considered during computation. <mark style="background: #FFB8EBA6;">(see also [[@tunstallNaturalLanguageProcessing2022]] (p. 74). There is a short section that describes *relative, positional embeddings*).</mark> 
+
+Also, if the order of the input is arbitrary, a positional encoding may be dropped [[@huangTabTransformerTabularData2020]]  (p. 3). We come back to this observation in chapter [[🤖TabTransformer]].
+
+---
+
+Resources:
+- nice visualizations: https://towardsdatascience.com/master-positional-encoding-part-i-63c05d90a0c3
 - introduced in [[@vaswaniAttentionAllYou2017]]
 - nice consistent notation in [[@phuongFormalAlgorithmsTransformers2022]]
 - nice summary and well explained in [[@zhangDiveDeepLearning2021]]. Use it to crosscheck my understanding!
+- [[@daiTransformerXLAttentiveLanguage2019]] removes the positional encoding altogether.
 
 **Notes:**
 - The encoder (the self-attention and feed-forward layers) are said to be permutation equivariant—if the input is permuted then the corresponding output of the layer is permuted in exactly the same way.
@@ -14,7 +49,7 @@ Related:
 - Note that there is a subtle difference between positional embedding and encoding. When reading [[@rothmanTransformersNaturalLanguage2021]] I noticed, that word `positional encoding = embedding + positional vector`
 - There are obviously different types of *positional embeddings* e. g., learnable embeddings, absolute positional representations and relative positional representations. ([[@tunstallNaturalLanguageProcessing2022]]) In the [[@vaswaniAttentionAllYou2017]] an *absolute positional encoding* is used. Sine and cosine signals are sued to encode the position of tokens. 
 - Positional encoding can be learned or fix. Both seem to work similarily. 
-- According to this [reddit post](https://www.reddit.com/r/learnmachinelearning/comments/9e4j4q/positional_encoding_in_transformer_model/), [[@vaswaniAttentionAllYou2017]] chose the fixed encoding with sine and cosine, to enable learning about the relative position in a sequence.
+- According to this [reddit post](https://www.reddit.com/r/learnmachinelearning/comments/9e4j4q/positional_encoding_in_transformer_model/), [[@vaswaniAttentionAllYou2017]] chose the fixed encoding with sine and cosine, to enable learning about the relative position in a sequence. It's also documented in the paper, even though it is covered only briefly.
 - *Absolute positional embeddings* work well if the dataset is small.
 
 **Visualization:**
@@ -24,6 +59,54 @@ Related:
 Visualization of  diffferent columns:
 ![[freq-of-encoding.png]]
 (Image from: https://d2l.ai/chapter_attention-mechanisms-and-transformers/self-attention-and-positional-encoding.html)
+
+## Notes from Dive into Deep Learning
+(see [[@zhangDiveDeepLearning2021]])
+Suppose that the input representation $\mathbf{X} \in \mathbb{R}^{n \times d}$ contains the $d$-dimensional embeddings for $n$ tokens of a sequence. The positional encoding outputs $\mathbf{X}+\mathbf{P}$ using a positional embedding matrix $\mathbf{P} \in \mathbb{R}^{n \times d}$ of the same shape, whose element on the $i^{\text {th }}$ row and the $(2 j)^{\text {th }}$ or the $(2 j+1)^{\text {th }}$ column is
+$$
+\begin{aligned}
+p_{i, 2 j} & =\sin \left(\frac{i}{10000^{2 j / d}}\right), \\
+p_{i, 2 j+1} & =\cos \left(\frac{i}{10000^{2 j / d}}\right) .
+\end{aligned}
+$$
+At first glance, this trigonometric-function design looks weird. Before explanations of this design, let's first implement it in the following PositionalEncoding class.
+
+In the positional embedding matrix $\mathbf{P}$, rows correspond to positions within a sequence and columns represent different positional encoding dimensions. In the example below, we can see that the $6^{\mathrm{th}}$ and the $7^{\text {th }}$ columns of the positional embedding matrix have a higher frequency than the $8^{\text {th }}$ and the $9^{\text {th }}$ columns. The offset between the $6^{\text {th }}$ and the $7^{\text {th }}$ (same for the $8^{\text {th }}$ and the $9^{\text {th }}$ ) columns is due to the alternation of sine and cosine functions.
+
+In binary representations, a higher bit has a lower frequency than a lower bit. Similarly, as demonstrated in the heat map below, the positional encoding decreases frequencies along the encoding dimension by using trigonometric functions. Since the outputs are float numbers, such continuous representations are more space-efficient than binary representations.
+
+Besides capturing absolute positional information, the above positional encoding also allows a model to easily learn to attend by relative positions. This is because for any fixed position offset $\delta$, the positional encoding at position $i+\delta$ can be represented by a linear projection of that at position $i$.
+
+This projection can be explained mathematically. Denoting $\omega_j=1 / 10000^{2 j / d}$, any pair of $\left(p_{i, 2 j}, p_{i, 2 j+1}\right)$ in (11.6.2) can be linearly projected to $\left(p_{i+\delta, 2 j}, p_{i+\delta, 2 j+1}\right)$ for any fixed offset $\delta$ :
+$$
+\begin{aligned}
+& {\left[\begin{array}{cc}
+\cos \left(\delta \omega_j\right) & \sin \left(\delta \omega_j\right) \\
+-\sin \left(\delta \omega_j\right) & \cos \left(\delta \omega_j\right)
+\end{array}\right]\left[\begin{array}{c}
+p_{i, 2 j} \\
+p_{i, 2 j+1}
+\end{array}\right] } \\
+= & {\left[\begin{array}{c}
+\cos \left(\delta \omega_j\right) \sin \left(i \omega_j\right)+\sin \left(\delta \omega_j\right) \cos \left(i \omega_j\right) \\
+-\sin \left(\delta \omega_j\right) \sin \left(i \omega_j\right)+\cos \left(\delta \omega_j\right) \cos \left(i \omega_j\right)
+\end{array}\right] } \\
+= & {\left[\begin{array}{c}
+\sin \left((i+\delta) \omega_j\right) \\
+\cos \left((i+\delta) \omega_j\right)
+\end{array}\right] } \\
+= & {\left[\begin{array}{c}
+p_{i+\delta, 2 j} \\
+p_{i+\delta, 2 j+1}
+\end{array}\right] }
+\end{aligned}
+$$
+where the $2 \times 2$ projection matrix does not depend on any position index $i$.
+
+## Notes from Efficient Transformers
+(see [[@tayEfficientTransformersSurvey2022]])
+
+The input first passes through an embedding layer that converts each one-hot token representation into a dmodel dimensional embedding, i.e., RB × RN × Rdmodel. The new tensor is then additively composed with positional encodings and passed through a multiheaded self-attention module. Positional encodings can take the form of a sinusoidal input (as per (Vaswani et al., 2017)) or be trainable embeddings.
 
 ## Amirhossein Kazemnejad
 https://kazemnejad.com/blog/transformer_architecture_positional_encoding
@@ -100,6 +183,17 @@ P E_{(\text {pos }, i)}= \begin{cases}\sin \left(\frac{p o s}{10000^{i / d_{\tex
 $$
 $\boldsymbol{P E} E_{(p o s, i)}$ represents the position encoding at position $p o s$ in the sequence, and hidden dimensionality $i$. These values, concatenated for all hidden dimensions, are added to the original input features (in the Transformer visualization above, see "Positional encoding"), and constitute the position information. We distinguish between even $(i \bmod 2=0)$ and uneven $(i \bmod 2=1$ ) hidden dimensionalities where we apply a sine/cosine respectively. 
 The intuition behind this encoding is that you can represent $P E_{(p o s+k, i)}$ as a linear function of $P E_{(p o s,:)}$, which might allow the model to easily attend to relative positions. The wavelengths in different dimensions range from $2 \pi$ to $10000 \cdot 2 \pi$.
+
+## Notes from Tunstall
+[[@tunstallNaturalLanguageProcessing2022]]R
+
+“Naturally, we want to avoid being so wasteful with our model parameters since models are expensive to train, and larger models are more difficult to maintain. A common approach is to limit the vocabulary and discard rare words by considering, say, the 100,000 most common words in the corpus. Words that are not part of the vocabulary are classified as “unknown” and mapped to a shared UNK token. This means that we lose some potentially important information in the process of word tokenization, since the model has no information about words associated with UNK.” ([Tunstall, 2022, p. 32](zotero://select/library/items/HYPN9IJ9)) ([pdf](zotero://open-pdf/library/items/TVF29AAM?page=56&annotation=8I4JJSUZ))
+
+“Positional embeddings are based on a simple, yet very effective idea: augment the token embeddings with a position-dependent pattern of values arranged in a vector. If the pattern is characteristic for each position, the attention heads and feed-forward layers in each stack can learn to incorporate positional information into their transformations.” ([Tunstall, 2022, p. 73](zotero://select/library/items/HYPN9IJ9)) ([pdf](zotero://open-pdf/library/items/TVF29AAM?page=97&annotation=SH9B5BKC))
+
+“Absolute positional representations Transformer models can use static patterns consisting of modulated sine and cosine signals to encode the positions of the tokens. This works especially well when there are not large volumes of data available.” ([Tunstall, 2022, p. 74](zotero://select/library/items/HYPN9IJ9)) ([pdf](zotero://open-pdf/library/items/TVF29AAM?page=98&annotation=WYXPF9R8))
+
+“Relative positional representations Although absolute positions are important, one can argue that when computing an embedding, the surrounding tokens are most important. Relative positional representations follow that intuition and encode the relative positions between tokens. This cannot be set up by just introducing a new relative embedding layer at the beginning, since the relative embedding changes for each token depending on where from the sequence we are attending to it” ([Tunstall, 2022, p. 74](zotero://select/library/items/HYPN9IJ9)) ([pdf](zotero://open-pdf/library/items/TVF29AAM?page=98&annotation=P3WC3ZNQ))
 
 ## Notes from e2eml school
 https://e2eml.school/transformers.html#positional_encoding

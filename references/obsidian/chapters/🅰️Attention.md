@@ -1,9 +1,16 @@
+
+![[context-xl-transformer.png]]
+(found in [[@daiTransformerXLAttentiveLanguage2019]])
+
 [[@vaswaniAttentionAllYou2017]]
 groshiny paper?
 
 Nice overview over attention and self-attention:
 - https://slds-lmu.github.io/seminar_nlp_ss20/attention-and-self-attention-for-nlp.html
+<<<<<<<< HEAD:references/obsidian/chapters/🅰️Attention.md
+========
 - 
+>>>>>>>> origin/main:references/obsidian/chapters/🤖Attention.md
 
 https://angelina-yang.medium.com/whats-the-difference-between-attention-and-self-attention-in-transformer-models-2846665880b6
 
@@ -12,3 +19,7 @@ https://angelina-yang.medium.com/whats-the-difference-between-attention-and-self
 
 - intuition behind multi-head and self-attention e. g. cosine similarity, key and querying mechanism: https://www.youtube.com/watch?v=mMa2PmYJlCo&list=PL86uXYUJ7999zE8u2-97i4KG_2Zpufkfb
 - Course on nlp / transformers: https://phontron.com/class/anlp2022/schedule.html
+<<<<<<<< HEAD:references/obsidian/chapters/🅰️Attention.md
+- See also [[@elhage2021mathematical]]
+========
+>>>>>>>> origin/main:references/obsidian/chapters/🤖Attention.md

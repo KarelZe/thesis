@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 49.42660550458716,
+        "dimension": 48.01762114537445,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -23,48 +23,24 @@
             }
           },
           {
-            "id": "b0c0f12bffb6a0e9",
+            "id": "21be04c6245f0de3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖Transformer.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "378387bc8ff618c4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🤖TabTransformer.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d46184c987b5dcc0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🛌Embeddings.md",
+                "file": "chapters/🧵Positional encoding.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       },
       {
         "id": "675af78723ee45d1",
         "type": "tabs",
-        "dimension": 50.57339449541285,
+        "dimension": 51.98237885462555,
         "children": [
           {
             "id": "0abd77888f93b540",
@@ -75,8 +51,8 @@
               "state": {
                 "file": "🎨transformer.canvas",
                 "viewState": {
-                  "x": -949.0337787983126,
-                  "y": -480.4561835500409,
+                  "x": -1148.3247140386432,
+                  "y": -531.3470998049472,
                   "zoom": 1,
                   "snapToGrid": false
                 }
@@ -85,19 +61,7 @@
             }
           },
           {
-            "id": "56f1fb52ed05e124",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🤖Training of transformer.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "21be04c6245f0de3",
+            "id": "8329dc1fdc5bca5f",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -112,15 +76,12 @@
             "id": "b9b5dd46dbbad367",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🛌Embeddings.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "graph",
+              "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -149,7 +110,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "stochastic",
+                "query": "tabtransf",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -162,7 +123,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 561.5
+    "width": 489.5
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -178,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🛌Embeddings.md",
+                "file": "chapters/🧵Positional encoding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -206,7 +167,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🛌Embeddings.md"
+                "file": "chapters/🧵Positional encoding.md"
               }
             }
           }
@@ -227,17 +188,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "d46184c987b5dcc0",
+  "active": "21be04c6245f0de3",
   "lastOpenFiles": [
-    "chapters/🤖Transformer.md",
-    "chapters/🛌Embeddings.md",
-    "🎨transformer.canvas",
-    "🧠Deep Learning Methods/Transformer/@phuongFormalAlgorithmsTransformers2022.md",
-    "chapters/🧭Attention map.md",
+    "TOC.md",
+    "@zhangDiveDeepLearning2021.md",
     "chapters/🧵Positional encoding.md",
-    "chapters/🤖Training of transformer.md",
-    "chapters/🤖Attention.md",
+    "chapters/🛌Token Embedding.md",
+    "chapters/🧭Attention map.md",
+    "chapters/🪄Feature engineering.md",
+    "🎨transformer.canvas",
+    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
     "chapters/🤖TabTransformer.md",
-    "chapters/🤖Transformer Networks.md"
+    "chapters/🤖Transformer.md"
   ]
 }
