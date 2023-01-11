@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 48.01762114537445,
+        "dimension": 51.37665198237885,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -28,7 +28,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🧵Positional encoding.md",
+                "file": "chapters/🤖FTTransformer.md",
                 "mode": "source",
                 "source": false
               }
@@ -40,7 +40,7 @@
       {
         "id": "675af78723ee45d1",
         "type": "tabs",
-        "dimension": 51.98237885462555,
+        "dimension": 48.62334801762114,
         "children": [
           {
             "id": "0abd77888f93b540",
@@ -51,8 +51,8 @@
               "state": {
                 "file": "🎨transformer.canvas",
                 "viewState": {
-                  "x": -1023.0491754128864,
-                  "y": -522.8470998049472,
+                  "x": 28.587052005790156,
+                  "y": -454.35782200222957,
                   "zoom": 1,
                   "snapToGrid": false
                 }
@@ -126,7 +126,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🧵Positional encoding.md",
+                "file": "chapters/🤖FTTransformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -154,7 +154,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🧵Positional encoding.md"
+                "file": "chapters/🤖FTTransformer.md"
               }
             }
           }
@@ -177,15 +177,15 @@
   },
   "active": "3ad4be100c94591a",
   "lastOpenFiles": [
-    "chapters/🛌Token Embedding.md",
-    "chapters/🛌Embeddings.md",
     "chapters/🤖TabTransformer.md",
-    "TOC.md",
     "chapters/🤖FTTransformer.md",
-    "chapters/🥠Selection of approaches (supervised).md",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+    "🎨transformer.canvas",
     "chapters/🧵Positional encoding.md",
-    "chapters/🤖Transformer.md",
-    "chapters/🤖Training of transformer.md"
+    "chapters/🧭Attention map.md",
+    "chapters/🛌Token Embedding.md",
+    "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
+    "❓Questions.md",
+    "chapters/🛌Embeddings.md",
+    "TOC.md"
   ]
 }

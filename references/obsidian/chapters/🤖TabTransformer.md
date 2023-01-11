@@ -1,6 +1,9 @@
 #tabular-data #tabtransformer #transformer #embeddings #categorical #continious 
 
 
+![[tab_transformer.png]]
+
+
 Collapses to a multi-layer perceptron
 
 
