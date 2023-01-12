@@ -11,7 +11,7 @@ year: 2020
 - https://github.com/jrzaurin/pytorch-widedeep
 - https://github.com/lucidrains/tab-transformer-pytorch
 - https://github.com/autogluon/autogluon/blob/master/tabular/src/autogluon/tabular/models/tab_transformer/tab_transformer.py (autogluon implementation)
-- 
+
 
 ## Notes
 - TabTransformer is a tansformer-based architecture for tabular data. Using transformer layer ([[@vaswaniAttentionAllYou2017]]) it transforms the parametric embeddings of contextual data into robust contextual embeddings through the use of a sequence of multi-head attention-based transformer layers. The motivation for this step is, that highly correlated features within one column or across columns result in embedding pairs that are close in Euclidean space which could not be learned for a vanilla MLP. Embeddings also increases robustness.

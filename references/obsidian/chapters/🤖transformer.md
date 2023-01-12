@@ -1,12 +1,18 @@
 
-![[transformer-architecture.png]]
-(image from [[@tayEfficientTransformersSurvey2022]])
+![[classical_transformer_architecture.png]]
+(own drawing after [[@daiTransformerXLAttentiveLanguage2019]])
 
 Throughout the work we adhere to a notation suggested by [[@phuongFormalAlgorithmsTransformers2022]].
 
+- both encoders and decoders can be used separately. Might name prominent examples.
+- 
+
 Cross-check understanding against:
 - https://www.baeldung.com/cs/transformer-text-embeddings
+- Check my understanding of transformers with https://huggingface.co/course/chapter1/5?fw=pt
 - I like how to describe the architecture from a coarse-level to a very fine level. Especially, how it's done visually. Could be helpful for my own explanations as well.
+- http://nlp.seas.harvard.edu/annotated-transformer/
+- a bit of intuition why it makes sense https://blog.ml6.eu/transformers-for-tabular-data-hot-or-not-e3000df3ed46
 
 Components:
 [[🛌Token Embedding]]
@@ -24,6 +30,10 @@ Open:
 - [ ] FTTransformer
 - [ ] Pre-Training
 - [ ] Embeddings of categorical / continuous data
+
+
+- Tabular data is different from ... due to being invariant to ...
+- What is the purpose of the encoder and the decoder? Introduce the term contextualized embeddings thoroughly.
 
 Transformers have been proposed by [[@vaswaniAttentionAllYou2017]] vor sequence-to-sequence modelling as radical new approach to Recurrent Neural Networks. Among others, the inherent sequential processing bounds the capabilities for learning long sequences and efficient parallel implementations in RNNs. Transformers adress these issues by utilizing a so-called attention mechanism to model dependencies between the input and output sequences of arbitrary length. *Attention* is a pooling mechanism, that uses query vector $\boldsymbol{q}$ to  perform a biased selection over similar keys $\boldsymbol{v}$ to obtain their corresponding values $\boldsymbol{k}$  ([[@zhangDiveDeepLearning2021]]).
 
@@ -93,6 +103,18 @@ An attention function can be described as mapping a query and a set of key-value
 
 - Very high level overview: https://www.youtube.com/watch?app=desktop&v=SZorAJ4I-sA
 - low-level  overview. Fully digest these ideas: https://transformer-circuits.pub/2021/framework/index.html
+- notebook with nice visuals: https://github.com/dvgodoy/PyTorchStepByStep/blob/master/Chapter10.ipynb
+
+Visualization of norm-first and norm last (similar in [[@xiongLayerNormalizationTransformer2020]]):
+![[Pasted image 20230112101547.png]]
+![[norm-first-norm-last-big-picture.png]]
+(from https://github.com/dvgodoy/PyTorchStepByStep)
+
+Layer norm / batch norm / instance norm:
+![[layer-batch-instance-norm.png]]
+![[viz-of image-embedding.png]]
+(from https://github.com/dvgodoy/PyTorchStepByStep)
+
 
 ## Multiheaded Attention
 - What is the effect of multi-headed attention?

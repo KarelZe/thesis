@@ -8,6 +8,12 @@
 - One might has to adjust the lr when scaling across multiple gpus [[@poppeSensitivityVPINChoice2016]] contains a nice discussion.
 - Use weight decay of 0.1 for a small amount of regularization [[@loshchilovDecoupledWeightDecay2019]].
 
+- log gradients and loss using `wandb.watch` as shown here https://www.youtube.com/watch?v=k6p-gqxJfP4 with `wandb.log({"epoch":epoch, "loss":loss}, step)` (nested in `if ((batch_ct +1) % 25) == 0:`) and `wandb.watch(model, criterion, log="all", log_freq=10)`
+- watch out for exploding and vanishing gradients
+- distillation, learning rate warmup, learning rate decay (not used but could improve training times and maybe accuracy) ([[@gorishniyRevisitingDeepLearning2021]])
+- Use of Post-Norm (Hello [[🤖TabTransformer]]) has been deemed outdated in Transformers due to a more fragile training process (see [[@gorishniyRevisitingDeepLearning2021]]). May swap (?).
+- Tips for training deep neural networks on categorical data: https://www.youtube.com/watch?v=E8C_obO1HfY 
+- Mind the double descent effect https://openai.com/blog/deep-double-descent/
 
 ## Notes from Huang et al paper
 See [[@huangTabTransformerTabularData2020]] (p. 12)

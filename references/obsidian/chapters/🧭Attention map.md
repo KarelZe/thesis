@@ -4,7 +4,7 @@ Relates to #attention #shap #random-feature-permutation
 In addition to [[🧭Kernel SHAP]], transformer-based models offer some interpretability through their attention mechanism. Feature attributions can be derived from attention by visualizing features that the model attends to in a *attention map*. While attention maps are specific to transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in Figure [[#^401670]].
 
 ![[attention-map-for-heads.png]]
-(Copied from [[🧠Deep Learning Methods/@zhangDiveDeepLearning2021]]; Code available)
+(Copied from [[🧠Deep Learning Methods/@zhangDiveDeepLearning2021]]; Code available or http://nlp.seas.harvard.edu/annotated-transformer/)
 
 ![[attention-map-saint.png]] ^401670
 (Copied from [[@somepalliSAINTImprovedNeural2021]])
@@ -46,6 +46,9 @@ A research on what transformers actually learn for simple language models: https
 
 A library that can also investigate models across multiple nodes:
 https://transformer-circuits.pub/2021/garcon/index.html
+
+For visualization see also:
+http://nlp.seas.harvard.edu/annotated-transformer/
 %%
 
 In absence of a ground truth for the true feature attribution, we also calculate attention maps using Eq. (...) and Eq. (...). Inline with previous research, feature attributions are also summed over the first attention layer or over all transformer blocks. All of these approaches, can be computed with a single forward pass and are computationally efficient. The level of agreement between attributions from attention maps and [[🧭Kernel SHAP]] is quantified by calculating Spearman's rank correlation between them.

@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 51.37665198237885,
+        "dimension": 58.68820362212433,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -23,24 +23,23 @@
             }
           },
           {
-            "id": "3ad4be100c94591a",
+            "id": "307e485b18b51768",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖FTTransformer.md",
+                "file": "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "675af78723ee45d1",
         "type": "tabs",
-        "dimension": 48.62334801762114,
+        "dimension": 41.31179637787567,
         "children": [
           {
             "id": "0abd77888f93b540",
@@ -51,9 +50,9 @@
               "state": {
                 "file": "🎨transformer.canvas",
                 "viewState": {
-                  "x": 28.587052005790156,
-                  "y": -454.35782200222957,
-                  "zoom": 1,
+                  "x": -638.9448500278434,
+                  "y": -122.29144922563825,
+                  "zoom": 0.7462612645836664,
                   "snapToGrid": false
                 }
               },
@@ -64,11 +63,28 @@
             "id": "b9b5dd46dbbad367",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖TabTransformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "2231ba4daf875ce7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -110,7 +126,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 489.5
+    "width": 273.5
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -126,7 +142,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖FTTransformer.md",
+                "file": "chapters/🤖TabTransformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -154,7 +170,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖FTTransformer.md"
+                "file": "chapters/🤖TabTransformer.md"
               }
             }
           }
@@ -163,7 +179,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 210.5
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -175,17 +191,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "3ad4be100c94591a",
+  "active": "b9b5dd46dbbad367",
   "lastOpenFiles": [
+    "TOC.md",
+    "chapters/🤖Training of transformer.md",
+    "chapters/🤖Transformer.md",
     "chapters/🤖TabTransformer.md",
+    "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
+    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+    "chapters/🅰️Attention.md",
+    "chapters/🐈gradient-boosting.md",
     "chapters/🤖FTTransformer.md",
-    "🎨transformer.canvas",
-    "chapters/🧵Positional encoding.md",
-    "chapters/🧭Attention map.md",
-    "chapters/🛌Token Embedding.md",
-    "🍬Implementation/🧪Feature Engineering/🧃Feature Sets.md",
-    "❓Questions.md",
-    "chapters/🛌Embeddings.md",
-    "TOC.md"
+    "🧠Deep Learning Methods/@baLayerNormalization2016.md"
   ]
 }

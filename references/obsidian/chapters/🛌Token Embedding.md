@@ -4,7 +4,7 @@
 - See [[@gorishniyEmbeddingsNumericalFeatures2022]]
 - See [[@phuongFormalAlgorithmsTransformers2022]]
 - See [[@bengioNeuralProbabilisticLanguage]]
-![[classical_transformer.png]]
+![[classical_transformer_architecture.png]]
 (own drawing after [[@daiTransformerXLAttentiveLanguage2019]])
 
  ^dbc00b
