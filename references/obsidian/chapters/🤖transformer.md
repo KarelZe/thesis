@@ -4,8 +4,9 @@
 
 Throughout the work we adhere to a notation suggested by [[@phuongFormalAlgorithmsTransformers2022]].
 
+- encoder/ decoder models $\approx$ sequence-to-sequence model
 - both encoders and decoders can be used separately. Might name prominent examples.
-- 
+- note the practical effect of cot
 
 Cross-check understanding against:
 - https://www.baeldung.com/cs/transformer-text-embeddings
@@ -13,6 +14,7 @@ Cross-check understanding against:
 - I like how to describe the architecture from a coarse-level to a very fine level. Especially, how it's done visually. Could be helpful for my own explanations as well.
 - http://nlp.seas.harvard.edu/annotated-transformer/
 - a bit of intuition why it makes sense https://blog.ml6.eu/transformers-for-tabular-data-hot-or-not-e3000df3ed46
+- https://ai.stanford.edu/blog/contextual/
 
 Components:
 [[🛌Token Embedding]]
@@ -137,6 +139,10 @@ https://transformer-circuits.pub/2021/framework/index.html
 
 - discuss the effects of layer pre-normalization vs. post-normalization (see [[@tunstallNaturalLanguageProcessing2022]])
 
+## Notes from Huggingface 🤗
+https://huggingface.co/course/chapter1/4
+-   **Encoder (left)**: The encoder receives an input and builds a representation of it (its features). This means that the model is optimized to acquire understanding from the input.
+-   **Decoder (right)**: The decoder uses the encoder’s representation (features) along with other inputs to generate a target sequence. This means that the model is optimized for generating outputs.
 
 
 #### Notes on Talk with Łukasz Kaiser 

@@ -14,6 +14,33 @@
 - Use of Post-Norm (Hello [[🤖TabTransformer]]) has been deemed outdated in Transformers due to a more fragile training process (see [[@gorishniyRevisitingDeepLearning2021]]). May swap (?).
 - Tips for training deep neural networks on categorical data: https://www.youtube.com/watch?v=E8C_obO1HfY 
 - Mind the double descent effect https://openai.com/blog/deep-double-descent/
+- https://blog.ml6.eu/how-a-pretrained-tabtransformer-performs-in-the-real-world-eccb12362950
+- https://www.borealisai.com/research-blogs/tutorial-14-transformers-i-introduction/
+
+## Tipps from reddit 🤖
+https://www.reddit.com/r/MachineLearning/comments/z088fo/r_tips_on_training_transformers/
+1.  Bigger architectures learn better and train faster
+2.  Layer norms are very important
+3.  Apply high learning rates to top layers and smaller rates to lower layers
+4.  The batch size should be as high as possible -> write script -> keep gpu busy
+5. Transformers are data hungry (must be stated in the [[@vaswaniAttentionAllYou2017]] paper)
+
+## Notes from Borealis AI
+- detailed tips: https://www.borealisai.com/research-blogs/tutorial-17-transformers-iii-training/
+
+
+## Notes from less wrong on training Transformers
+(https://www.lesswrong.com/posts/b3CQrAo2nufqzwNHF/how-to-train-your-transformer)
+-   Read the relevant literature and take note of all tricks
+-   Use Colab for free GPU time.
+-   Rezero or Dynamic Linear Combinations for scaling depth.
+-   Shuffle data and create train, validation, test sets from the beginning.
+-   Shuffle in memory if samples are otherwise correlated.
+-   Train a simple fully connected network as baseline and sanity check.
+-   Establish scaling laws to find bottlenecks and aim at the ideal model size.
+-   Use gradient accumulation to fit larger models on a small GPU.
+-   Lower the learning rate when the model stagnates, but don't start too low. (Better yet, use a cyclic learning rate schedule.)
+
 
 ## Notes from Huang et al paper
 See [[@huangTabTransformerTabularData2020]] (p. 12)

@@ -17,3 +17,4 @@ https://angelina-yang.medium.com/whats-the-difference-between-attention-and-self
 - intuition behind multi-head and self-attention e. g. cosine similarity, key and querying mechanism: https://www.youtube.com/watch?v=mMa2PmYJlCo&list=PL86uXYUJ7999zE8u2-97i4KG_2Zpufkfb
 - Course on nlp / transformers: https://phontron.com/class/anlp2022/schedule.html
 - See also [[@elhage2021mathematical]]
+- https://www.borealisai.com/research-blogs/tutorial-16-transformers-ii-extensions/

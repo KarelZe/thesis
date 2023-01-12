@@ -19,6 +19,9 @@ Using trigonometric functions for the positional embedding is favourable, due to
 ![[viz-of-pos-encoding.png]]
 (pos encoding copied from [[@zhangDiveDeepLearning2021]]; p. 409; transpose image due to my matrix notation) ^1f2fe5
 
+![[positional-encoding-different-view.png]]
+(copied from: https://www.borealisai.com/research-blogs/tutorial-16-transformers-ii-extensions/)
+
 We visualize the positional embedding in Figure [[#^1f2fe5]] with an embedding dimension of $d_e=32$ and 60 tokens. One can clearly see the pattern describing the position.
 
 The positional embedding of a token is finally added to the token embedding to form a token's initial embedding $e$. For the $t$-th token of a sequence $x$, the embedding becomes:
@@ -33,6 +36,11 @@ Nice explanation: https://stats.stackexchange.com/a/565203/351242
 %%
 
 Later works, like [[@daiTransformerXLAttentiveLanguage2019]] (p. 4 f.) <mark style="background: #FFB8EBA6;">(also found in [[@tayEfficientTransformersSurvey2022]]; p. 24)</mark>, remove the positional encoding in favour of *relative position encoding*, that is only considered during computation. <mark style="background: #FFB8EBA6;">(see also [[@tunstallNaturalLanguageProcessing2022]] (p. 74). There is a short section that describes *relative, positional embeddings*).</mark> 
+
+%%
+nice blog post with proof:
+https://www.borealisai.com/research-blogs/tutorial-16-transformers-ii-extensions/
+%%
 
 Also, if the order of the input is arbitrary, a positional encoding may be dropped [[@huangTabTransformerTabularData2020]]  (p. 3). We come back to this observation in chapter [[🤖TabTransformer]].
 

@@ -4,12 +4,18 @@
 ![[tab_transformer.png]]
 (own drawing. Inspired by [[@huangTabTransformerTabularData2020]]. Top layers a little bit different. They write MLP. I take the FFN with two hidden layers and an output layer. <mark style="background: #FFB8EBA6;">Better change label to MLP</mark>; Also they call the <mark style="background: #FFB8EBA6;">input embedding a column embedding)</mark> ^87bba0
 
-
-What must be known from another chapter: Why does it make sense to use transformer-based models for tabular data? -> Learn contetualized embeddings.
-
-Motivated by the success of (cp. [[@devlinBERTPretrainingDeep2019]]) of contextual embeddings in natural language processing, [[@huangTabTransformerTabularData2020]]  propose with *TabTransformer* an adaption of the classical Transformer for the tabular domain. *TabTransformer* is *encoder-only* and features a stack of Transformer layers (see chapter [[🤖Transformer]] or [[@vaswaniAttentionAllYou2017]]) to learn contextualized embeddings of categorical features from their parametric embeddings, as shown in Figure ([[#^87bba0]]]).  The transformer layers, are identical to those found in [[@vaswaniAttentionAllYou2017]] featuring multi-headed self-attention and a norm-last layer arrangement. Continuous inputs are normalized using layer norm ([[@baLayerNormalization2016]]) , concatenated with the contextual embeddings, and input into a multi-layer peceptron. More specifically, [[@huangTabTransformerTabularData2020]] (p. 4; 12) use a feed-forward network with two hidden layers, whilst other architectures and even non-deep models, such as [[🐈gradient-boosting]], are applicable. Thus, for strictly continuous inputs, the network collapses to a multi-layer perceptron with layer normalization.
+Motivated by the success of (cp. [[@devlinBERTPretrainingDeep2019]]) of contextual embeddings in natural language processing, [[@huangTabTransformerTabularData2020]]  propose with *TabTransformer* an adaption of the classical Transformer for the tabular domain. *TabTransformer* is *encoder-only* and features a stack of Transformer layers (see chapter [[🤖Transformer]] or [[@vaswaniAttentionAllYou2017]]) to learn contextualized embeddings of categorical features from their parametric embeddings, as shown in Figure ([[#^87bba0]]]).  The transformer layers, are identical to those found in [[@vaswaniAttentionAllYou2017]] featuring multi-headed self-attention and a norm-last layer arrangement. Continuous inputs are normalized using layer norm ([[@baLayerNormalization2016]]) , concatenated with the contextual embeddings, and input into a multi-layer peceptron. More specifically, [[@huangTabTransformerTabularData2020]] (p. 4; 12) use a feed-forward network with two hidden layers, whilst other architectures and even non-deep models, such as [[🐈gradient-boosting]], are applicable.<mark style="background: #FFB8EBA6;"> (downstream network?)</mark> Thus, for strictly continuous inputs, the network collapses to a multi-layer perceptron with layer normalization.
 
 Due to the tabular nature of the data, with features arranged in a row-column fashion, the token embedding (see chapter [[🛌Token Embedding]]) is replaced for a *column embedding*. 
+
+- no positional encoding
+
+- TabTransformers applies a sequence of multi-head attention based transformer layers to obtain contextual embeddings from parametric embeddings.
+
+
+![[tabtransformer-explanation.png]]
+
+![[column-embeddings.png]]
 
 <mark style="background: #FFB8EBA6;">(What is done and how does it work?)</mark>
 <mark style="background: #FFB8EBA6;">(How is the embedding different from the classical transformer?)</mark>
@@ -24,13 +30,12 @@ Their observation integrates with a wider strand of literature that suggests mod
 ---
 
 ## Notes
+- What must be known from another chapter: Why does it make sense to use transformer-based models for tabular data? -> Learn contetualized embeddings.
 - adapts the classical transformer of vaswani at el to the tabular domain
 - TabTransformer is an encoder-only model
 - learns contextualized embeddings of the categorical input
-- Why is a different 
 - contextual embeddings have been heavily studied in nlp. Things are different in the tabular domain. (p. 2)
 - Contextual embeddings  are highly successful in nlp.
-- TabTransformers applies a sequence of multi-head attention based transformer layers to obtain contextual embeddings from parametric embeddings.
 - Improved properties with regard to robustness through the use of contextual embeddings.
 - no decoder, no positional encoding
 - on a high level overwie model consists of an encoder for categorical inputss
@@ -40,11 +45,6 @@ Their observation integrates with a wider strand of literature that suggests mod
 - not just simple categorical embeddings but contextual embedding
 - Use of Post-Norm (Hello [[🤖TabTransformer]]) has been deemed outdated in Transformers due to a more fragile training process (see [[@gorishniyRevisitingDeepLearning2021]]). May swap (?).
 
-
-
-![[tabtransformer-explanation.png]]
-
-![[column-embeddings.png]]
 
 ![[comparison-ft-tab-transformer.png]]
 (found on reddit. Haven't found the original source yet. Guess it's taken from some yandex slide.)

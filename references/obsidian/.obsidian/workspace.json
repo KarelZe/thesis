@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 58.68820362212433,
+        "dimension": 48.31130690161527,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -33,13 +33,26 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "35d4b3ff912dbe75",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖Training of Transformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       },
       {
         "id": "675af78723ee45d1",
         "type": "tabs",
-        "dimension": 41.31179637787567,
+        "dimension": 51.68869309838473,
         "children": [
           {
             "id": "0abd77888f93b540",
@@ -51,7 +64,7 @@
                 "file": "🎨transformer.canvas",
                 "viewState": {
                   "x": -638.9448500278434,
-                  "y": -122.29144922563825,
+                  "y": -454.94117801159547,
                   "zoom": 0.7462612645836664,
                   "snapToGrid": false
                 }
@@ -142,7 +155,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖TabTransformer.md",
+                "file": "chapters/🤖Training of Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -170,7 +183,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖TabTransformer.md"
+                "file": "chapters/🤖Training of Transformer.md"
               }
             }
           }
@@ -191,17 +204,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "b9b5dd46dbbad367",
+  "active": "35d4b3ff912dbe75",
   "lastOpenFiles": [
-    "TOC.md",
-    "chapters/🤖Training of transformer.md",
+    "chapters/🧵Positional encoding.md",
+    "chapters/🅰️Attention.md",
+    "chapters/🤖Training of Transformer.md",
+    "chapters/🧭Attention map.md",
     "chapters/🤖Transformer.md",
     "chapters/🤖TabTransformer.md",
+    "🎨transformer.canvas",
+    "TOC.md",
     "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-    "chapters/🅰️Attention.md",
-    "chapters/🐈gradient-boosting.md",
-    "chapters/🤖FTTransformer.md",
-    "🧠Deep Learning Methods/@baLayerNormalization2016.md"
+    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md"
   ]
 }

@@ -13,6 +13,14 @@ In the *tabular domain* various approaches for obtaining attention from multiple
 
 While not explored systematically for the tabular domain, the roles of different attention heads have been studied intensively in transformer-based machine translation (see e. g., [[@voitaAnalyzingMultiHeadSelfAttention2019]], [[@tangAnalysisAttentionMechanisms2018]]).  [[@voitaAnalyzingMultiHeadSelfAttention2019]] observe that attention heads have a varying importance and serve distinct purposes like learning positional or syntactic relations between tokens. Also, all attention layers contribute to the model's prediction. Transferring their result back to the tabular domain, averaging over multiple heads or considering selected attention layers only and may lead to undesired obfuscation effects. 
 
+%%
+interesting blog post on importance of heads and pruning them:
+https://lena-voita.github.io/posts/acl19_heads.html
+
+Heads have a different importance and many can even be pruned:
+https://proceedings.neurips.cc/paper/2019/file/2c601ad9d2ff9bc8b282670cdd54f69f-Paper.pdf
+%%
+
 As part of their *rollout attention* method [[@abnarQuantifyingAttentionFlow2020]] (p. 3) combine raw attention from multiple layers through recursive matrix multiplication with the weight matrices from attention layers below, as shown in this Equation: [^1]
 $$
 \begin{aligned}
