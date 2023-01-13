@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 49.58394517865884,
+        "dimension": 51.34605971610377,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -26,11 +26,9 @@
             "id": "307e485b18b51768",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "chapters/🤖Training of Transformer.md",
-                "mode": "source",
-                "source": false
+                "file": "🖼️Media/tab_transformer.png"
               }
             }
           },
@@ -76,7 +74,7 @@
       {
         "id": "675af78723ee45d1",
         "type": "tabs",
-        "dimension": 50.41605482134116,
+        "dimension": 48.65394028389623,
         "children": [
           {
             "id": "0abd77888f93b540",
@@ -179,7 +177,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Training of Transformer.md",
+                "file": "🖼️Media/tab_transformer.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -207,7 +205,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Training of Transformer.md"
+                "file": "🖼️Media/tab_transformer.png"
               }
             }
           }
@@ -230,15 +228,15 @@
   },
   "active": "307e485b18b51768",
   "lastOpenFiles": [
-    "🖼️Media/column-embeddings.png",
-    "chapters/🤖Training of Transformer.md",
+    "🖼️Media/tabtransformer-architecture.png",
+    "🖼️Media/pre-data-loader.png",
+    "🖼️Media/Pasted image 20221104113342.png",
+    "chapters/🤖Transformer.md",
+    "^tabtr.md",
     "TOC.md",
     "chapters/🤖TabTransformer.md",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-    "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
-    "chapters/🥠Selection of approaches (supervised).md",
-    "chapters/🛌Token Embedding.md",
-    "chapters/🤖Transformer.md",
-    "chapters/🥠Selection of approaches (semi-supervised).md"
+    "chapters/🤖Training of Transformer.md",
+    "🖼️Media/column-embeddings.png",
+    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md"
   ]
 }

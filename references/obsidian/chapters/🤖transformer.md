@@ -22,6 +22,10 @@ Components:
 [[🅰️Attention]]
 [[🎱Point-wise FFN]]
 
+Specialized variants:
+[[🤖TabTransformer]]
+[[🤖FTTransformer]]
+
 Open:
 - [ ] Attention
 - [ ] Research the intuition behind attention
@@ -108,7 +112,7 @@ An attention function can be described as mapping a query and a set of key-value
 - notebook with nice visuals: https://github.com/dvgodoy/PyTorchStepByStep/blob/master/Chapter10.ipynb
 
 Visualization of norm-first and norm last (similar in [[@xiongLayerNormalizationTransformer2020]]):
-![[Pasted image 20230112101547.png]]
+![[layer-norm-first-last.png]]
 ![[norm-first-norm-last-big-picture.png]]
 (from https://github.com/dvgodoy/PyTorchStepByStep)
 
