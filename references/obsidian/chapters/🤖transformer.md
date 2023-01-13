@@ -2,7 +2,7 @@
 ![[classical_transformer_architecture.png]]
 (own drawing after [[@daiTransformerXLAttentiveLanguage2019]])
 
-Throughout the work we adhere to a notation suggested by [[@phuongFormalAlgorithmsTransformers2022]].
+In the subsequent sections we introduce the classical Transformer of [[@vaswaniAttentionAllYou2017]]. Our focus on introducing the central building blocks like self-attention and multi-headed attention.  We then transfer the concepts to the tabular domain by covering [[🤖TabTransformer]] and [[🤖FTTransformer]]. Throughout the work we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]].
 
 - encoder/ decoder models $\approx$ sequence-to-sequence model
 - both encoders and decoders can be used separately. Might name prominent examples.
@@ -54,14 +54,6 @@ Encoder: The encoder is composed of a stack of $N=6$ identical layers. Each laye
 
 Decoder: The decoder is also composed of a stack of $N=6$ identical layers. In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack. Similar to the encoder, we employ residual connections around each of the sub-layers, followed by layer normalization. We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions. This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position $i$ can depend only on the known outputs at positions less than $i$.
 
-## Attention
-An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors. The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.
-
-- nice explanation of transformers, such as dot-product attention https://t.co/WOlBY3suy4
-
-- Very high level overview: https://www.youtube.com/watch?app=desktop&v=SZorAJ4I-sA
-- low-level  overview. Fully digest these ideas: https://transformer-circuits.pub/2021/framework/index.html
-- notebook with nice visuals: https://github.com/dvgodoy/PyTorchStepByStep/blob/master/Chapter10.ipynb
 
 Visualization of norm-first and norm last (similar in [[@xiongLayerNormalizationTransformer2020]]):
 ![[layer-norm-first-last.png]]

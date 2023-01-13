@@ -20,6 +20,15 @@ https://angelina-yang.medium.com/whats-the-difference-between-attention-and-self
 - https://www.borealisai.com/research-blogs/tutorial-16-transformers-ii-extensions/
 - discuss problems with computational complexity and that approximations exist
 
+An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors. The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.
+
+- nice explanation of transformers, such as dot-product attention https://t.co/WOlBY3suy4
+
+- Very high level overview: https://www.youtube.com/watch?app=desktop&v=SZorAJ4I-sA
+- low-level  overview. Fully digest these ideas: https://transformer-circuits.pub/2021/framework/index.html
+- notebook with nice visuals: https://github.com/dvgodoy/PyTorchStepByStep/blob/master/Chapter10.ipynb
+
+
 ## Multi-headed attention
 - [[@vaswaniAttentionAllYou2017]] propose to run several attention heads in parallel, instead of using a single attention heads.
 - They write it improves performance and has a similar computational cost to the single-headed version

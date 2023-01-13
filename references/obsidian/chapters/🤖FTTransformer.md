@@ -1,10 +1,44 @@
 ![[ft_transformer.png]]
-(own drawing somewhat inspired by figure [[@gorishniyRevisitingDeepLearning2021]] and page 5)
+(own drawing somewhat inspired by figure [[@gorishniyRevisitingDeepLearning2021]] and page 5) ^6a12a6
 
-- Variant of the classical transformer, but for tabular data. Published in [[@gorishniyRevisitingDeepLearning2021]]
+The FTTransformer of [[@gorishniyRevisitingDeepLearning2021]] is another adaption of the classical Transformer ([[@vaswaniAttentionAllYou2017]]) and Bert [[@devlinBERTPretrainingDeep2019]] for the tabular domain. Opposed to the [[TabTransformer]], the FTTransformer, introduces a  *feature tokenizer*, for embedding both continuous and categorical inputs, that are contextualized in a stack of Transformer layers, as shown in Figure [[#^6a12a6]]. 
+
+
+For embedding 
+
+
+Conceptually different from the aforementioned approaches, the Transformer-blocks are arranged in norm-last ...
+
+Also deriving 
+
+While this linear mapping is conceptually simple, later works of [[@gorishniyRevisitingDeepLearning2021]] suggests, that line
+![[Pasted image 20230113154921.png]]
+
+![[Pasted image 20230113154446.png]]
+
+![[Pasted image 20230113154737.png]]
+
+
+
+A special $[\texttt{CLS}]$ token of dimension $\mathbb{R}^{e_d}$ is appended the column embeddings with $X = \left[e_1, e_2, \ldots e_{n}, \texttt{[CLS]}\right]$ , where $X \in \mathbb{R}^{e_d \times n +1}$.
+
+$X$ is passed through a sequence 
+
+
+Is there a mask somewhere
+
+
+![[Pasted image 20230113160607.png]]
+
 - Firstly, Feature Tokenizer transforms features to embeddings. The embeddings are then processed by the Transformer module and the final representation of the (CLS) token is used for prediction.
 - Very likely interpretable... 
 - Analysed in [[@grinsztajnWhyTreebasedModels2022]]
+
+![[Pasted image 20230113150825.png]]
+
+![[Pasted image 20230113151427.png]]
+(from revisiting [[@gorishniyRevisitingDeepLearning2021]])
+
 - Work out differences between the three:
 ![[feature-tokenizer.png]]
 
