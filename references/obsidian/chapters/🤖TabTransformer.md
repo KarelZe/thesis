@@ -4,71 +4,45 @@
 ![[tab_transformer.png]]
 (own drawing. Inspired by [[@huangTabTransformerTabularData2020]]. Top layers a little bit different. They write MLP. I take the FFN with two hidden layers and an output layer. <mark style="background: #FFB8EBA6;">Better change label to MLP</mark>; Also they call the <mark style="background: #FFB8EBA6;">input embedding a column embedding)</mark> ^87bba0
 
-Motivated by the success of (cp. [[@devlinBERTPretrainingDeep2019]]) of contextual embeddings in natural language processing, [[@huangTabTransformerTabularData2020]]  propose with *TabTransformer* an adaption of the classical Transformer for the tabular domain. *TabTransformer* is *encoder-only* and features a stack of Transformer layers (see chapter [[🤖Transformer]] or [[@vaswaniAttentionAllYou2017]]) to learn contextualized embeddings of categorical features from their parametric embeddings, as shown in Figure ([[#^87bba0]]]).  The transformer layers, are identical to those found in [[@vaswaniAttentionAllYou2017]] featuring multi-headed self-attention and a norm-last layer arrangement. Continuous inputs are normalized using layer norm ([[@baLayerNormalization2016]]) , concatenated with the contextual embeddings, and input into a multi-layer peceptron. More specifically, [[@huangTabTransformerTabularData2020]] (p. 4; 12) use a feed-forward network with two hidden layers, whilst other architectures and even non-deep models, such as [[🐈gradient-boosting]], are applicable.<mark style="background: #FFB8EBA6;"> (downstream network?)</mark> Thus, for strictly continuous inputs, the network collapses to a multi-layer perceptron with layer normalization.
+Motivated by the success of (cp. [[@devlinBERTPretrainingDeep2019]]; [[@liuRoBERTaRobustlyOptimized2019]]) of contextual embeddings in natural language processing, [[@huangTabTransformerTabularData2020]]  propose with *TabTransformer* an adaption of the classical Transformer for the tabular domain. *TabTransformer* is *encoder-only* and features a stack of Transformer layers (see chapter [[🤖Transformer]] or [[@vaswaniAttentionAllYou2017]]) to learn contextualized embeddings of categorical features from their parametric embeddings, as shown in Figure ([[#^87bba0]]]).  The transformer layers, are identical to those found in [[@vaswaniAttentionAllYou2017]] featuring multi-headed self-attention and a norm-last layer arrangement. Continuous inputs are normalized using layer norm ([[@baLayerNormalization2016]]) , concatenated with the contextual embeddings, and input into a multi-layer peceptron. More specifically, [[@huangTabTransformerTabularData2020]] (p. 4; 12) use a feed-forward network with two hidden layers, whilst other architectures and even non-deep models, such as [[🐈gradient-boosting]], are applicable.<mark style="background: #FFB8EBA6;"> (downstream network?)</mark> Thus, for strictly continuous inputs, the network collapses to a multi-layer perceptron with layer normalization.
 
-Due to the tabular nature of the data, with features arranged in a row-column fashion, the token embedding (see chapter [[🛌Token Embedding]]) is replaced for a *column embedding*. 
+Due to the tabular nature of the data, with features arranged in a row-column fashion, the token embedding (see chapter [[🛌Token Embedding]]) is replaced for a *column embedding*. Also the notation needs to be adapted to the tabular domain. We denote the data set with $D:=\left\{\left(\mathbf{x}_k, y_k\right) \right\}_{k=1,\cdots N}$ identified with $\left[N_{\mathrm{D}}\right]:=\left\{1, \ldots, N_{\mathrm{D}}\right\}$.  Each tuple $(\boldsymbol{x}, y)$ represents a row in the data set, and consist of the binary classification target $y_k \in \mathbb{R}$ and the vector of features $\boldsymbol{x} = \left\{\boldsymbol{x}_{\text{cat}}, \boldsymbol{x}_{\text{cont}}\right\}$, where $x_{\text{cont}} \in \mathbb{R}^c$ denotes all $c$ continuous features and $\boldsymbol{x}_{\text{cat}}\in \mathbb{R}^{m}$ all $m$ categorical features. 
 
-- no positional encoding
+%%
+Notation adapted from [[@prokhorenkovaCatBoostUnbiasedBoosting2018]], [[@huangTabTransformerTabularData2020]]) and [[@phuongFormalAlgorithmsTransformers2022]]
+Classification (ETransformer). Given a vocabulary $V$ and a set of classes $\left[N_{\mathrm{C}}\right]$, let $\left(x_n, c_n\right) \in$ $V^* \times\left[N_{\mathrm{C}}\right]$ for $n \in\left[N_{\text {data }}\right]$ be an i.i.d. dataset of sequence-class pairs sampled from $P(x, c)$. The goal in classification is to learn an estimate of the conditional distribution $P(c \mid x)$.
 
-- TabTransformers applies a sequence of multi-head attention based transformer layers to obtain contextual embeddings from parametric embeddings.
+Notation. Let $V$ denote a finite set, called a $v o-$ cabulary, often identified with $\left[N_{\mathrm{V}}\right]:=\left\{1, \ldots, N_{\mathrm{V}}\right\}$
 
+where $\boldsymbol{x} \equiv$ $\left\{\boldsymbol{x}_{\text {cat }}, \boldsymbol{x}_{\text {cont }}\right\}$.
+The analogon for a sequence, i. e.  a row in the tabular dataset. 
 
-![[tabtransformer-explanation.png]]
+Assume we observe a dataset of examples $\mathcal{D}=\left\{\left(\mathbf{x}_k, y_k\right)\right\}_{k=1 . . n}$, where $\mathbf{x}_k=\left(x_k^1, \ldots, x_k^m\right)$ is a random vector of $m$ features and $y_k \in \mathbb{R}$ is a target, which can be either binary or a numerical response. (from catboost paper [[@prokhorenkovaCatBoostUnbiasedBoosting2018]])
+Let $(\boldsymbol{x}, y)$ denote a feature-target pair, where $\boldsymbol{x} \equiv$ $\left\{\boldsymbol{x}_{\text {cat }}, \boldsymbol{x}_{\text {cont }}\right\}$. The $\boldsymbol{x}_{\text {cat }}$ denotes all the categorical features and $x_{\text {cont }} \in \mathbb{R}^c$ denotes all of the $c$ continuous features. Let $\boldsymbol{x}_{\text {cat }} \equiv\left\{x_1, x_2, \cdots, x_m\right\}$ with each $x_i$ being a categorical feature, for $i \in\{1, \cdots, m\}$. (from [[@huangTabTransformerTabularData2020]] )
+%%
+
+In chapter [[🛌Token Embedding]], one lookup table suffices for storing the embeddings of all tokens within the sequence. Due to the heterogeneous (?)  nature of tabular data, every categorical column is independent of all $m-1$ other categorical columns. Thus, every column requires learning their own embedding matrix. As such, each column is embedded separately using a *column embedding*. For every $i$-th categorical column with $i \in {1,\cdots m}$ the 
+
+<mark style="background: #FF5582A6;">TODO:</mark> Think about the projection / look up in code.
+
+%%
 
 ![[column-embeddings.png]]
 
-<mark style="background: #FFB8EBA6;">(What is done and how does it work?)</mark>
-<mark style="background: #FFB8EBA6;">(How is the embedding different from the classical transformer?)</mark>
+The embedding matrix is now dependent on the on the ca table to retrieve the embedding vector $e \in \mathbb{R}^{d_{\mathrm{e}}}$  from a learned, embedding matrix $W_e \in \mathbb{R}^{d_{\mathrm{e}} \times N_{\mathrm{V}}}$ with a token-id $v \in {1,\cdots m}$ as shown :
+$$
+\tag{1}
+e=W_e[:, v].
+$$
+
+%%
+Note that categorical columns may be arranged in an arbitrary order and that the Transformer blocks are (... equivariant?), Thus, no [[🧵Positional encoding]] is required to inject the order. Analogous to chapter [[🤖Transformer]], the column embedding of each row is subsequently passed through several transformer layers, ultimately resulting in contextualized embeddings $\tilde{V} \in \mathbb{R}^{d_{\text {out}} \times m}$.  At the end of the encoder, the contextual embeddings are flattened and concatenated with the continuous inputs into a ($d_\text{dim}  \times m + c$)-dimensional vector, which serves as input to the multi-layer perceptron ([[@huangTabTransformerTabularData2020]] (p. 3)). Like before, a linear layer and softmax activation <mark style="background: #FFB8EBA6;">(actually it's just a sigmoid due to the binary case, which is less computationally demanding for the binary case)</mark> are used to retrieve the class probabilities.
 
 In large-scale experiments [[@huangTabTransformerTabularData2020]]  (p. 5 f.) can show, that the use of contextual embeddings elevates both the robustness to noise and missing data of the model. For various binary classification tasks, the TabTransformer outperforms other deep learning models e. g., vanilla multi-layer perceptrons in terms of *area under the curve* (AUC) and can compete with [[🐈gradient-boosting]].  
 
-Yet, embedding and contextualizing categorical inputs remains imperfect, as no continuous data is considered for the contextualized embeddings and correlations between categorical and continuous features are lost due to the precessing in different subnetworks ([[@somepalliSAINTImprovedNeural2021]]; p. 2).
-In a small experimental setup, [[@somepalliSAINTImprovedNeural2021]] (p. 8) address this concern for the TabTransformer by also embedding continuous inputs, which leads the substantial improvements in (AUC) . 
+Yet, embedding and contextualizing categorical inputs remains imperfect, as no continuous data is considered for the contextualized embeddings and correlations between categorical and continuous features are lost due to the precessing in different subnetworks ([[@somepalliSAINTImprovedNeural2021]]; p. 2). Also, the robustness to noise in continous data is hardly improved. In a small experimental setup, [[@somepalliSAINTImprovedNeural2021]] (p. 8) address this concern for the TabTransformer by also embedding continuous inputs, which leads the substantial improvements in (AUC) . 
 
-Their observation integrates with a wider strand of literature that suggests models can profit from embedding continuous features ([[@somepalliSAINTImprovedNeural2021]] (p. 8), [[@gorishniyRevisitingDeepLearning2021]] (p. ), [[@gorishniyEmbeddingsNumericalFeatures2022]] (p. )). To dwell on this idea, we introduce the [[🤖FTTransformer]], a transformer that contextualizes embeddings of all inputs  in the subsequent section.
-
----
-
-## Notes
-- What must be known from another chapter: Why does it make sense to use transformer-based models for tabular data? -> Learn contetualized embeddings.
-- adapts the classical transformer of vaswani at el to the tabular domain
-- TabTransformer is an encoder-only model
-- learns contextualized embeddings of the categorical input
-- contextual embeddings have been heavily studied in nlp. Things are different in the tabular domain. (p. 2)
-- Contextual embeddings  are highly successful in nlp.
-- Improved properties with regard to robustness through the use of contextual embeddings.
-- no decoder, no positional encoding
-- on a high level overwie model consists of an encoder for categorical inputss
-- correlations are broken. Numerical input still procesed by mlp and may overfit, be not robust to noise / missing values.
-- They conjecture that the improved robustness comes from the contextual embeddings [[@huangTabTransformerTabularData2020]].
-- In their comparsion TabTransformer significantly outperforms MLP and recent deep networks for tabular data while matching the performance of tree-based ensemble models (GBDT).
-- not just simple categorical embeddings but contextual embedding
-- Use of Post-Norm (Hello [[🤖TabTransformer]]) has been deemed outdated in Transformers due to a more fragile training process (see [[@gorishniyRevisitingDeepLearning2021]]). May swap (?).
-
-
-![[comparison-ft-tab-transformer.png]]
-(found on reddit. Haven't found the original source yet. Guess it's taken from some yandex slide.)
-
-## Notes from Talk by Zohar Karnin
-(see here: https://www.youtube.com/watch?v=-ZdHhyQsvRc)
-
-- networks can only interpret numbers.
-	- Continuous: Easy for numerical input
-	- Categorical: convert to embedding
-
-- issues with categorical data
-	- rare categories -> similar to infrequent words
-	- similar categories; have a head-start by not initializing randomly -> semantic meaning of words
-	- use transfer learning 
-	- handle context
-
-- pre-training is boroughed from nlp. Two approaches:
-	- MLM: convert some categories to missing embedding, reconstruct the category
-	- Replaced token detection: Replace category with random replacement, detect replaced
-- not necessarily a mlp followed by transformer. Could be any network
-- in a semi-supervised comparsion they also compared gbrts on pseudo labelled data
-
-
+Their observation integrates with a wider strand of literature that suggests models can profit from embedding continuous features ([[@somepalliSAINTImprovedNeural2021]] (p. 8), [[@gorishniyRevisitingDeepLearning2021]] (p. ), [[@gorishniyEmbeddingsNumericalFeatures2022]] (p. )). To dwell on this idea, we introduce the [[🤖FTTransformer]], a transformer that contextualizes embeddings of all inputs in the subsequent section.
 
 ---
 Related:

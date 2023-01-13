@@ -1,3 +1,4 @@
+- survey on transformers for tabular data [[@badaroTransformersTabularData]]
 - Introduce a classifcation that differentiates between supervised, unsupervised, reenforcement learning and semi-supervised learning. 
 - Introduce the concept of classification as a variant of supervised learning. 
 - Could be supervised if all labels are known

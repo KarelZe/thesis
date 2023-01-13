@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 48.31130690161527,
+        "dimension": 49.58394517865884,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -28,7 +28,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
+                "file": "chapters/🤖Training of Transformer.md",
                 "mode": "source",
                 "source": false
               }
@@ -40,19 +40,43 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖Training of Transformer.md",
+                "file": "chapters/🥠Selection of approaches (supervised).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "32ff7a42b7aa773f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🛌Token Embedding.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "39bc96f9879a525c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖Transformer.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       },
       {
         "id": "675af78723ee45d1",
         "type": "tabs",
-        "dimension": 51.68869309838473,
+        "dimension": 50.41605482134116,
         "children": [
           {
             "id": "0abd77888f93b540",
@@ -204,17 +228,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "35d4b3ff912dbe75",
+  "active": "307e485b18b51768",
   "lastOpenFiles": [
-    "chapters/🧵Positional encoding.md",
-    "chapters/🅰️Attention.md",
+    "🖼️Media/column-embeddings.png",
     "chapters/🤖Training of Transformer.md",
-    "chapters/🧭Attention map.md",
-    "chapters/🤖Transformer.md",
-    "chapters/🤖TabTransformer.md",
-    "🎨transformer.canvas",
     "TOC.md",
+    "chapters/🤖TabTransformer.md",
+    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
     "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md"
+    "chapters/🥠Selection of approaches (supervised).md",
+    "chapters/🛌Token Embedding.md",
+    "chapters/🤖Transformer.md",
+    "chapters/🥠Selection of approaches (semi-supervised).md"
   ]
 }

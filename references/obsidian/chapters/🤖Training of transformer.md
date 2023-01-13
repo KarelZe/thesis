@@ -16,6 +16,7 @@
 - Mind the double descent effect https://openai.com/blog/deep-double-descent/
 - https://blog.ml6.eu/how-a-pretrained-tabtransformer-performs-in-the-real-world-eccb12362950
 - https://www.borealisai.com/research-blogs/tutorial-14-transformers-i-introduction/
+- Might use additional tips from here: [[@liuRoBERTaRobustlyOptimized2019]])
 
 ## Tipps from reddit 🤖
 https://www.reddit.com/r/MachineLearning/comments/z088fo/r_tips_on_training_transformers/
@@ -28,6 +29,12 @@ https://www.reddit.com/r/MachineLearning/comments/z088fo/r_tips_on_training_tran
 ## Notes from Borealis AI
 - detailed tips: https://www.borealisai.com/research-blogs/tutorial-17-transformers-iii-training/
 
+## Notes from Neptune AI
+(https://neptune.ai/blog/tips-to-train-nlp-models)
+- use layer-wise learning rate
+- reinitialize layers
+- use pre-training :-)
+- code provided here: https://github.com/flowerpot-ai/stabilizer
 
 ## Notes from less wrong on training Transformers
 (https://www.lesswrong.com/posts/b3CQrAo2nufqzwNHF/how-to-train-your-transformer)
