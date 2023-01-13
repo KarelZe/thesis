@@ -29,7 +29,7 @@ The following section introduces common rules for signing option trades. We star
 ### Tick Test
 [[🔢Tick test]]
 ### Depth Rule 🟢
-![[🔢Depth rule]]
+[[🔢Depth rule]]
 
 ### Trade Size Rule
 [[🔢Tradesize rule]]
@@ -62,9 +62,9 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### Decision Tree 🟡
 
 ^5db625
-![[🎄Decison_trees]]
+[[🎄Decison_trees]]
 ### Gradient Boosting Procedure 🟡
-![[🐈gradient-boosting]]
+[[🐈gradient-boosting]]
 ## Transformer Networks
 
 [[🤖Transformer Networks]]
@@ -73,9 +73,9 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### Attention
 [[🅰️Attention]]
 ### Positional Encoding 🟢
-![[🧵Positional encoding]]
+[[🧵Positional encoding]]
 ### Embeddings 🟢
-![[🛌Token Embedding]]
+[[🛌Token Embedding]]
 
 ### Extensions in TabTransformer
 [[🤖Extensions to TabTransformer]]
@@ -118,7 +118,7 @@ describe if data set is actually used. Write similarily to
 [[👨‍🍳Pre-Processing]]
 
 ### Feature Engineering 🟡
-![[🪄Feature engineering]]
+[[🪄Feature engineering]]
 
 ### Train-Test Split 🟡
 
@@ -153,7 +153,7 @@ describe if data set is actually used. Write similarily to
 ## Feature Importance
 [[🏅Feature importance results]]
 
-![[🧭Attention map]]
+[[🧭Attention map]]
 
 ## Ablation Study of Models
 
