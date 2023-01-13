@@ -6,6 +6,7 @@
 - Prepare final pdf https://github.com/google-research/arxiv-latex-cleaner
 - Adhere to best practices http://www.sigplan.org/Resources/EmpiricalEvaluation/
 - use colors in formulas🎨. See [[@patrignaniWhyShouldAnyone2021]]
+- https://www.molecularecologist.com/2020/04/23/simple-tools-for-mastering-color-in-scientific-figures/
 
 # Title
 Forget About the Rules: Improving Trade Side Classification With Machine Learning
@@ -28,7 +29,7 @@ The following section introduces common rules for signing option trades. We star
 ### Tick Test
 [[🔢Tick test]]
 ### Depth Rule 🟢
-![[🔢Depth rule]]
+[[🔢Depth rule]]
 
 ### Trade Size Rule
 [[🔢Tradesize rule]]
@@ -61,9 +62,9 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### Decision Tree 🟡
 
 ^5db625
-![[🎄Decison_trees]]
+[[🎄Decison_trees]]
 ### Gradient Boosting Procedure 🟡
-![[🐈gradient-boosting]]
+[[🐈gradient-boosting]]
 ## Transformer Networks
 
 [[🤖Transformer Networks]]
@@ -71,15 +72,15 @@ In our attempt to compare shallow with deep architectures for trade classificati
 [[🤖Transformer network architecture]]
 ### Attention
 [[🅰️Attention]]
-### Positional Encoding
+### Positional Encoding 🟢
 [[🧵Positional encoding]]
-### Embeddings
+### Embeddings 🟢
 [[🛌Token Embedding]]
 
 ### Extensions in TabTransformer
 [[🤖Extensions to TabTransformer]]
 ### Extensions in FTTransformer
-[[🤖Pretraining FTTransformer]]
+[[🤖FTTransformer]]
 
 # 👽 Semi-Supervised Approaches
 
@@ -117,7 +118,7 @@ describe if data set is actually used. Write similarily to
 [[👨‍🍳Pre-Processing]]
 
 ### Feature Engineering 🟡
-![[🪄Feature engineering]]
+[[🪄Feature engineering]]
 
 ### Train-Test Split 🟡
 
@@ -152,7 +153,7 @@ describe if data set is actually used. Write similarily to
 ## Feature Importance
 [[🏅Feature importance results]]
 
-![[🧭Attention map]]
+[[🧭Attention map]]
 
 ## Ablation Study of Models
 

@@ -429,3 +429,7 @@ thesis.pdf
 
 #venv
 .venv/
+
+# powerpoint
+*.ppt
+*.pptx

@@ -12,3 +12,4 @@
 - For pretraining ofneural net architectures also see argumentation in [[🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021]]
 - See also [[@bahriSCARFSelfSupervisedContrastive2022]], while the paper is not 100 % relevant, it contains interesting citations.
 - How does regularization relate to semi-supervised learning? Don't both aim for the same objective?
+- [[@huangTabTransformerTabularData2020]] compare in their semi-supervised comparsion against GBM (PL) GBMs trained on pseudo labelled data

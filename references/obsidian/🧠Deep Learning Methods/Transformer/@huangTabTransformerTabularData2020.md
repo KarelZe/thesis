@@ -10,7 +10,8 @@ year: 2020
 *code:*
 - https://github.com/jrzaurin/pytorch-widedeep
 - https://github.com/lucidrains/tab-transformer-pytorch
-- https://github.com/autogluon/autogluon/blob/master/tabular/src/autogluon/tabular/models/tab_transformer/tab_transformer.py (autogluon implmentation)
+- https://github.com/autogluon/autogluon/blob/master/tabular/src/autogluon/tabular/models/tab_transformer/tab_transformer.py (autogluon implementation)
+
 
 ## Notes
 - TabTransformer is a tansformer-based architecture for tabular data. Using transformer layer ([[@vaswaniAttentionAllYou2017]]) it transforms the parametric embeddings of contextual data into robust contextual embeddings through the use of a sequence of multi-head attention-based transformer layers. The motivation for this step is, that highly correlated features within one column or across columns result in embedding pairs that are close in Euclidean space which could not be learned for a vanilla MLP. Embeddings also increases robustness.
@@ -72,14 +73,32 @@ Below, we explain the Transformer layers and column embedding.
 ## Comparsion FT-Transformer and TabTransformer
 
 ![[ft-tab-transformer.png]]
-(found here https://preview.redd.it/mk28f629uxw91.png?width=1916&format=png&auto=webp&s=9a801d48189cf7fd9d4039e107e236aaa93f6a6f)
+(Guess it's taken from some yandex slide. found here https://preview.redd.it/mk28f629uxw91.png?width=1916&format=png&auto=webp&s=9a801d48189cf7fd9d4039e107e236aaa93f6a6f)
+
 ## Notes Sebastian Raschka
 -   Several open-source implementations are available on GitHub, however, I could not find the official implementation, so the results from this paper must be taken with a grain of salt.
 -   The paper proposes a transformer-based architecture based on self-attention that can be applied to tabular data.
 -   In addition to the purely supervised regime, the authors propose a semi-supervised approach leveraging unsupervised pre-training.
 -   Looking at the average AUC across 15 datasets, the proposed TabTransformer (82.8) is on par with gradient-boosted trees (82.9).
 
+## Notes from Talk by Zohar Karnin
+(see here: https://www.youtube.com/watch?v=-ZdHhyQsvRc)
 
+- networks can only interpret numbers.
+	- Continuous: Easy for numerical input
+	- Categorical: convert to embedding
+
+- issues with categorical data
+	- rare categories -> similar to infrequent words
+	- similar categories; have a head-start by not initializing randomly -> semantic meaning of words
+	- use transfer learning 
+	- handle context
+
+- pre-training is boroughed from nlp. Two approaches:
+	- MLM: convert some categories to missing embedding, reconstruct the category
+	- Replaced token detection: Replace category with random replacement, detect replaced
+- not necessarily a mlp followed by transformer. Could be any network
+- in a semi-supervised comparsion they also compared gbrts on pseudo labelled data
 
 ## Annotations
 “The TabTransformer is built upon self-attention based Transformers. The Transformer layers transform the embeddings of categorical features into robust contextual embeddings to achieve higher prediction accuracy.” ([Huang et al., 2020, p. 1](zotero://select/library/items/MH4GW34I)) ([pdf](zotero://open-pdf/library/items/QYWHEUYE?page=1&annotation=VXCRZEIK))

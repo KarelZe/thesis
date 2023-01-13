@@ -1,31 +1,47 @@
 
-![[transformer-architecture.png]]
-(image from [[@tayEfficientTransformersSurvey2022]])
+![[classical_transformer_architecture.png]]
+(own drawing after [[@daiTransformerXLAttentiveLanguage2019]])
 
 Throughout the work we adhere to a notation suggested by [[@phuongFormalAlgorithmsTransformers2022]].
 
+- encoder/ decoder models $\approx$ sequence-to-sequence model
+- both encoders and decoders can be used separately. Might name prominent examples.
+- note the practical effect of cot
+
 Cross-check understanding against:
 - https://www.baeldung.com/cs/transformer-text-embeddings
+- Check my understanding of transformers with https://huggingface.co/course/chapter1/5?fw=pt
 - I like how to describe the architecture from a coarse-level to a very fine level. Especially, how it's done visually. Could be helpful for my own explanations as well.
+- http://nlp.seas.harvard.edu/annotated-transformer/
+- a bit of intuition why it makes sense https://blog.ml6.eu/transformers-for-tabular-data-hot-or-not-e3000df3ed46
+- https://ai.stanford.edu/blog/contextual/
 
 Components:
 [[🛌Token Embedding]]
 [[🧵Positional encoding]]
 [[🅰️Attention]]
-[[🎱Pointwise FFN]]
+[[🎱Point-wise FFN]]
+
+Specialized variants:
+[[🤖TabTransformer]]
+[[🤖FTTransformer]]
 
 Open:
 - [ ] Attention
 - [ ] Research the intuition behind attention
 - [ ] Self-attention / multi-headed attention
 - [ ] Residual connections
-- [ ] Layer norm, Pre-Norm, and Post-Norm
+- [ ] Layer Norm, Pre-Norm, and Post-Norm
 - [ ] TabTransformer
 - [ ] FTTransformer
 - [ ] Pre-Training
 - [ ] Embeddings of categorical / continuous data
 
-Transformers have been proposed by [[🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017]] vor sequence-to-sequence modelling as radical new approach to Recurrent Neural Networks. Among others, the inherent sequential processing bounds the capabilities for learning long sequences and efficient parallel implementations in RNNs. Transformers adress these issues by utilizing a so-called attention mechanism to model dependencies between the input and output sequences of arbitrary length. *Attention* is a pooling mechanism, that uses query vector $\boldsymbol{q}$ to  perform a biased selection over similar keys $\boldsymbol{v}$ to obtain their corresponding values $\boldsymbol{k}$  ([[@zhangDiveDeepLearning2021]]).
+
+- Tabular data is different from ... due to being invariant to ...
+- What is the purpose of the encoder and the decoder? Introduce the term contextualized embeddings thoroughly.
+
+Transformers have been proposed by [[@vaswaniAttentionAllYou2017]] vor sequence-to-sequence modelling as radical new approach to Recurrent Neural Networks. Among others, the inherent sequential processing bounds the capabilities for learning long sequences and efficient parallel implementations in RNNs. Transformers adress these issues by utilizing a so-called attention mechanism to model dependencies between the input and output sequences of arbitrary length. *Attention* is a pooling mechanism, that uses query vector $\boldsymbol{q}$ to  perform a biased selection over similar keys $\boldsymbol{v}$ to obtain their corresponding values $\boldsymbol{k}$  ([[@zhangDiveDeepLearning2021]]).
 
 On an abstract level, the Transformer consists of an encoder and a decoder.  The encoder maps the input sequence $\left(x_{1}, \ldots, x_{n}\right)$ with $x_{i} \in \mathbb{R}^{d}$, to a sequence of continous representations $\boldsymbol{z}=\left(z_{1}, \ldots, z_{n}\right)$, from which the decoder generates an output sequence of symbols $\boldsymbol{y}=\left(y_{1}, \ldots, y_{m}\right)$. Previously generated parts of the sequence are considered as an additional input, making the model autoregressive.
 
@@ -35,7 +51,7 @@ The decoder obtains the output from the encoded representation. Similarily, it s
 
 Inputs and output tokens for the encoder respective decoder are not  processed as-is, but converted to learned embeddings of vectors with dimension $d_{\text {model }}$ first and enhanced with a positional encoding. We describe positional encoding later in detail later.
 
-The specific attention mechanism used by [[🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017]] is the *scaled dot product attention*, which is a faster and more space-efficient variant of the *dot-product attention* due to efficient matrix implementation. For this both queries, key and values are grouped into matrices.
+The specific attention mechanism used by [[@vaswaniAttentionAllYou2017]] is the *scaled dot product attention*, which is a faster and more space-efficient variant of the *dot-product attention* due to efficient matrix implementation. For this both queries, key and values are grouped into matrices.
 
 $\operatorname{Attention}(\boldsymbol{Q}, \boldsymbol{K}, V)=\sigma\left(\frac{\boldsymbol{Q}\boldsymbol{K}^{T}}{\sqrt{d_{k}}}\right) \boldsymbol{V}$
 
@@ -93,6 +109,18 @@ An attention function can be described as mapping a query and a set of key-value
 
 - Very high level overview: https://www.youtube.com/watch?app=desktop&v=SZorAJ4I-sA
 - low-level  overview. Fully digest these ideas: https://transformer-circuits.pub/2021/framework/index.html
+- notebook with nice visuals: https://github.com/dvgodoy/PyTorchStepByStep/blob/master/Chapter10.ipynb
+
+Visualization of norm-first and norm last (similar in [[@xiongLayerNormalizationTransformer2020]]):
+![[layer-norm-first-last.png]]
+![[norm-first-norm-last-big-picture.png]]
+(from https://github.com/dvgodoy/PyTorchStepByStep)
+
+Layer norm / batch norm / instance norm:
+![[layer-batch-instance-norm.png]]
+![[viz-of image-embedding.png]]
+(from https://github.com/dvgodoy/PyTorchStepByStep)
+
 
 ## Multiheaded Attention
 - What is the effect of multi-headed attention?
@@ -109,15 +137,19 @@ https://transformer-circuits.pub/2021/framework/index.html
 
 
 
-- General Introduction: [[🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017]]
+- General Introduction: [[@vaswaniAttentionAllYou2017]]
 - What is Attentition?
 - What is the difference between LSTMs and Transformers? Why are transformers preferable?
 
 - discuss the effects of layer pre-normalization vs. post-normalization (see [[@tunstallNaturalLanguageProcessing2022]])
 
+## Notes from Huggingface 🤗
+https://huggingface.co/course/chapter1/4
+-   **Encoder (left)**: The encoder receives an input and builds a representation of it (its features). This means that the model is optimized to acquire understanding from the input.
+-   **Decoder (right)**: The decoder uses the encoder’s representation (features) along with other inputs to generate a target sequence. This means that the model is optimized for generating outputs.
 
 
-#### Attention is all you need; Attentional Neural Network Models | Łukasz Kaiser | Masterclass
+#### Notes on Talk with Łukasz Kaiser 
 
 - https://www.youtube.com/watch?v=rBCqOTEfxvg
 

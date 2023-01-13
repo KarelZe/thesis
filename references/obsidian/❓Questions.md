@@ -2,7 +2,7 @@
 - When bid is zero at ISE exchange. Does it impact calculation of absolute spread?
 - Ask what the `day_vol` feature is. Found no meta data for it. 
 - Discuss correlated features in feature importance calculation.
-- What should I do with the CBOE data set.
+- What should I do with the CBOE data set?
 
 ## Closed
 - Ask for feedback regarding the toc. Indicate where I deviate from my initial expose (i. e., swap TabNet for FTTransformer due to slow training and no implementation of Rosenthal's rule due to low importance. Added ablation study, simulation, and list of algorithms). -> ok, but might be to fine-grained. Use bold text instead of chapters.

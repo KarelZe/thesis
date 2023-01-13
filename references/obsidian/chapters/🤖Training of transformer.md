@@ -8,6 +8,46 @@
 - One might has to adjust the lr when scaling across multiple gpus [[@poppeSensitivityVPINChoice2016]] contains a nice discussion.
 - Use weight decay of 0.1 for a small amount of regularization [[@loshchilovDecoupledWeightDecay2019]].
 
+- log gradients and loss using `wandb.watch` as shown here https://www.youtube.com/watch?v=k6p-gqxJfP4 with `wandb.log({"epoch":epoch, "loss":loss}, step)` (nested in `if ((batch_ct +1) % 25) == 0:`) and `wandb.watch(model, criterion, log="all", log_freq=10)`
+- watch out for exploding and vanishing gradients
+- distillation, learning rate warmup, learning rate decay (not used but could improve training times and maybe accuracy) ([[@gorishniyRevisitingDeepLearning2021]])
+- Use of Post-Norm (Hello [[🤖TabTransformer]]) has been deemed outdated in Transformers due to a more fragile training process (see [[@gorishniyRevisitingDeepLearning2021]]). May swap (?).
+- Tips for training deep neural networks on categorical data: https://www.youtube.com/watch?v=E8C_obO1HfY 
+- Mind the double descent effect https://openai.com/blog/deep-double-descent/
+- https://blog.ml6.eu/how-a-pretrained-tabtransformer-performs-in-the-real-world-eccb12362950
+- https://www.borealisai.com/research-blogs/tutorial-14-transformers-i-introduction/
+- Might use additional tips from here: [[@liuRoBERTaRobustlyOptimized2019]])
+
+## Tipps from reddit 🤖
+https://www.reddit.com/r/MachineLearning/comments/z088fo/r_tips_on_training_transformers/
+1.  Bigger architectures learn better and train faster
+2.  Layer norms are very important
+3.  Apply high learning rates to top layers and smaller rates to lower layers
+4.  The batch size should be as high as possible -> write script -> keep gpu busy
+5. Transformers are data hungry (must be stated in the [[@vaswaniAttentionAllYou2017]] paper)
+
+## Notes from Borealis AI
+- detailed tips: https://www.borealisai.com/research-blogs/tutorial-17-transformers-iii-training/
+
+## Notes from Neptune AI
+(https://neptune.ai/blog/tips-to-train-nlp-models)
+- use layer-wise learning rate
+- reinitialize layers
+- use pre-training :-)
+- code provided here: https://github.com/flowerpot-ai/stabilizer
+
+## Notes from less wrong on training Transformers
+(https://www.lesswrong.com/posts/b3CQrAo2nufqzwNHF/how-to-train-your-transformer)
+-   Read the relevant literature and take note of all tricks
+-   Use Colab for free GPU time.
+-   Rezero or Dynamic Linear Combinations for scaling depth.
+-   Shuffle data and create train, validation, test sets from the beginning.
+-   Shuffle in memory if samples are otherwise correlated.
+-   Train a simple fully connected network as baseline and sanity check.
+-   Establish scaling laws to find bottlenecks and aim at the ideal model size.
+-   Use gradient accumulation to fit larger models on a small GPU.
+-   Lower the learning rate when the model stagnates, but don't start too low. (Better yet, use a cyclic learning rate schedule.)
+
 
 ## Notes from Huang et al paper
 See [[@huangTabTransformerTabularData2020]] (p. 12)
