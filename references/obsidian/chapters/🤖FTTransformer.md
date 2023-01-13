@@ -25,6 +25,8 @@ On different embeddings check my understanding against:
 - https://www.kaggle.com/code/antonsruberts/tabtransformer-w-pre-training
 
 
+
+
 ## Notes from W&B Paper Reading Group
 (See here: https://www.youtube.com/watch?v=59uGzJaVzYc)
 

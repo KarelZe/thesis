@@ -32,64 +32,16 @@ Open:
 - [ ] Self-attention / multi-headed attention
 - [ ] Residual connections
 - [ ] Layer Norm, Pre-Norm, and Post-Norm
-- [ ] TabTransformer
+- [x] TabTransformer
 - [ ] FTTransformer
 - [ ] Pre-Training
 - [ ] Embeddings of categorical / continuous data
+- [ ] Selection of supervised approaches
+- [ ] Selection of semi-supervised approaches
 
 
 - Tabular data is different from ... due to being invariant to ...
 - What is the purpose of the encoder and the decoder? Introduce the term contextualized embeddings thoroughly.
-
-Transformers have been proposed by [[@vaswaniAttentionAllYou2017]] vor sequence-to-sequence modelling as radical new approach to Recurrent Neural Networks. Among others, the inherent sequential processing bounds the capabilities for learning long sequences and efficient parallel implementations in RNNs. Transformers adress these issues by utilizing a so-called attention mechanism to model dependencies between the input and output sequences of arbitrary length. *Attention* is a pooling mechanism, that uses query vector $\boldsymbol{q}$ to  perform a biased selection over similar keys $\boldsymbol{v}$ to obtain their corresponding values $\boldsymbol{k}$  ([[@zhangDiveDeepLearning2021]]).
-
-On an abstract level, the Transformer consists of an encoder and a decoder.  The encoder maps the input sequence $\left(x_{1}, \ldots, x_{n}\right)$ with $x_{i} \in \mathbb{R}^{d}$, to a sequence of continous representations $\boldsymbol{z}=\left(z_{1}, \ldots, z_{n}\right)$, from which the decoder generates an output sequence of symbols $\boldsymbol{y}=\left(y_{1}, \ldots, y_{m}\right)$. Previously generated parts of the sequence are considered as an additional input, making the model autoregressive.
-
-The encoder creates an attention-based representation,  empowering the search for similar observations within a large context. The encoder consists of a layer with two sublayers, which are stacked $N=6$ times. The layer is composed multi-head self-attention mechanism and point-wise, fully-connected feed forward networks. More over, residual connections are added around each of the sublayers, feeding into a normalizaton layer, that sits on top of each sub-layer. Residual connections add a copy of the input back to the output of a calculation to assure that the input is retained. Layer normalization helps to promote convergence and can cut training times (Ba et al).
-
-The decoder obtains the output from the encoded representation. Similarily, it stacks $N=6$ identical layers. Besides the two sublayers from the encoder, a third sublayer performing multi-headed attention. The additional self-attention sub-layer is masked to prevent to positions to attending to future positions.  As before, residual connections and layer normalization are used for each of the sublayers.
-
-Inputs and output tokens for the encoder respective decoder are not  processed as-is, but converted to learned embeddings of vectors with dimension $d_{\text {model }}$ first and enhanced with a positional encoding. We describe positional encoding later in detail later.
-
-The specific attention mechanism used by [[@vaswaniAttentionAllYou2017]] is the *scaled dot product attention*, which is a faster and more space-efficient variant of the *dot-product attention* due to efficient matrix implementation. For this both queries, key and values are grouped into matrices.
-
-$\operatorname{Attention}(\boldsymbol{Q}, \boldsymbol{K}, V)=\sigma\left(\frac{\boldsymbol{Q}\boldsymbol{K}^{T}}{\sqrt{d_{k}}}\right) \boldsymbol{V}$
-
-As shown in equation (...) the dot-product attention is defined as the dot products of the query with all keys devided by a scaling factor.  $\boldsymbol{Q}\boldsymbol{K}^{T}$ gives the probability distribution over all keys. The soft-max is used to obtain the weights to the values.
-
-To further increase performance, the attention function is not performed on a single set of queries, keys and values, but rather on different linear projections of theirs. With *multi-headed attention*, the attention function is then performed on $h=8$ of the projections in parallel. The intermediate results from the different subspaces, get concatenated and the final value is obtained after a subsequent linear projection.
-
-RNNs naturally maintain the order of tokens in a sequence through reccurence. In absence of such a mechanism, *positional encoding* at the bottom of the Transformer's encoder and decoder is added to the input embeddings to induce positional information from external.
-The author suggest some *sinusodial positional encoding*, similar to the one used in chapter (...).
-
-(formula?)
-
-All in all transformers pose an hardware-efficient alternative for modelling sequences, including the prediction of time series.
-
-
-
-The positional encoding uses $\sin(\cdot)$ and $\cos(\cdot)$ at different frequencies, similar to chapter (...).
-
-
-Because self-attention operation is permutation invariant, it is important to use proper positional encodingto provide order information to the model. The positional encoding $\mathbf{P} \in \mathbb{R}^{L \times d}$ has the same dimension as the input embedding, so it can be added on the input directly. The vanilla Transformer considered two types of encodings:
-(1) Sinusoidal positional encoding is defined as follows, given the token position $i=1, \ldots, L$ and the dimension $\delta=1, \ldots, d$ :
-$$
-\operatorname{PE}(i, \delta)= \begin{cases}\sin \left(\frac{i}{10000^{2 \delta^{\prime} / d}}\right) & \text { if } \delta=2 \delta^{\prime} \\ \cos \left(\frac{i}{10000^{25^{\prime} / d}}\right) & \text { if } \delta=2 \delta^{\prime}+1\end{cases}
-$$
-In this way each dimension of the positional encoding corresponds to a sinusoid of different wavelengths in different dimensions, from $2 \pi$ to $10000 \cdot 2 \pi$.
-
-
-
-
-Recurrent models are inherently sequential, as their hidden state depends on the previous hidden state. This precludes them from parallelization, which is key for longer sequence lengths, as computations are memory bound. (Attention is all you need)
-
-The transformer architecture uses a so-called attention mechanism in the encoder and decoder instead of recurrence, which allows them to be parallelized. (Attention is all you need)
-
-The attention mechanism allows to model dependencies in sequences independent of their distance in the input and output sequences. (Attention is all you need)
-
-In the transformer the number of operations required to relate signals from one two arbitrary input and output positions grows with the distance between distant position.  With the Transformer this is reduced to a constant number of operations. This comes at the cost of reduced effective resolution due to avreging attention-weighted positions, which is coutnerfeit bei Multi-Head attention. (Attention is all you need)
-
-Self attention is an attention mechanism relating different positions of a single sequence in order to compute a representation of the sequence.  (Attention is all you need)
 
 
 ## Architecture
@@ -134,6 +86,32 @@ https://transformer-circuits.pub/2021/framework/index.html
 
 ## Optimizer
 - Adam
+
+
+- Go "deep" instead of wide
+- Explain how neural networks can be adjusted to perform binary classification.
+- use feed-forward networks to discuss central concepts like loss function, back propagation etc.
+- Discuss why plain vanilla feed-forward networks are not suitable for tabular data. Why do the perform poorly?
+- How does the chosen layer and loss function to problem framing
+- How are neural networks optimized?
+- Motivation for Transformers
+- For formal algorithms on Transformers see [[@phuongFormalAlgorithmsTransformers2022]]
+- http://nlp.seas.harvard.edu/2018/04/03/attention.html
+- https://www.youtube.com/watch?v=EixI6t5oif0
+- https://transformer-circuits.pub/2021/framework/index.html
+- On efficiency of transformers see: https://arxiv.org/pdf/2009.06732.pdf
+- Mathematical foundation of the transformer architecture: https://transformer-circuits.pub/2021/framework/index.html
+- Detailed explanation and implementation. Check my understanding against it: https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html
+- On implementation aspects see: https://arxiv.org/pdf/2007.00072.pdf
+- batch nromalization is not fully understood. See [[@zhangDiveDeepLearning2021]] (p. 277)
+- https://e2eml.school/transformers.html
+
+feature importance evaluation is a non-trivial problem due to missing ground truth. See [[@borisovDeepNeuralNetworks2022]] paper for citation
+- nice visualization / explanation of self-attention. https://peltarion.com/blog/data-science/self-attention-video
+
+- intuition behind multi-head and self-attention e. g. cosine similarity, key and querying mechanism: https://www.youtube.com/watch?v=mMa2PmYJlCo&list=PL86uXYUJ7999zE8u2-97i4KG_2Zpufkfb
+
+
 
 
 
