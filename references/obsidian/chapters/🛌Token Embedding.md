@@ -11,13 +11,13 @@
 
 [[@vaswaniAttentionAllYou2017]] train the Transformer on pre-trained token embeddings. To obtain token embeddings from raw input sequences, the sequence is first split into individual vocabulary elements, so-called *tokens*. Depending on the tokenization strategy, tokens can be as fine-grained as individual characters, or more coarse-grained sub-words (cite some famous papers), or words. The vocabulary $V$ consists of $N_{V}=|V|$ elements and maps tokens onto unique integer keys, referred to as token-ids. [[@phuongFormalAlgorithmsTransformers2022]]
 
-The vocabulary may include special tokens, like `UNK` token to handle out-of-vocabulary items or to mark the beginning or end of sequence with the `BOS` or `EOS` token.
+The vocabulary may include special tokens, like the $\texttt{[UNK]}$ token to handle out-of-vocabulary items, the $\texttt{[EOS]}$ token to mark the end of sequence, or $\texttt{[CLS]}$ token for storing an aggregate representation of the sequence for classification (used in [[@devlinBERTPretrainingDeep2019]]; p. 4). 
 
-Consider the input sequence "Kings and Queens"; a small vocabulary of $V=[0,N_v]$, and a mapping between token and token-id of $\text{queen}\mapsto 0$; $\text{king}\mapsto 1$ . Applying tokenizing by words, after common pre-processing like stemming and stopword removal, yields a sequence of token-ids $x$ given by $[1, 0]$. <mark style="background: #FFB8EBA6;">(What about EOS / BOS?)</mark>[^ 1] 
+Consider the input sequence "Kings and Queens"; a small vocabulary of $V=[0,N_v]$, and a mapping between token and token-id of $\text{queen}\mapsto 0$; $\text{king}\mapsto 1$ . Applying tokenizing by words, after common pre-processing like stemming and stopword removal, yields a sequence of token-ids $x$ given by $[1, 0]$. <mark style="background: #FFB8EBA6;">(What about EOS / BOS?; let indices start at one!)</mark>[^ 1] 
 
 Subsequently, the sequence of token-ids is converted into a sequence of *token embeddings*. Pioneered by [[@bengioNeuralProbabilisticLanguage]] (p. 1,139), an embedding maps each token - here a word - into a high-dimensional space. Through representing every word as a vector, semantic and syntactic relationships between words can be encoded. As such, similar words share a similar embedding vector [[@bengioNeuralProbabilisticLanguage]] (p. 1,139). Also, word embeddings are semantically meaningful and can capture linguistic regularities, like the gender, with vector offsets [[@mikolovLinguisticRegularitiesContinuous2013]]  (p. 748 f.).
 
-The embedding layer from Figure [[#^dbc00b]] is ultimatley a lookup table to retrieve the embedding vector $e \in \mathbb{R}^{d_{\mathrm{e}}}$  from a learned, embedding matrix $W_e \in \mathbb{R}^{d_{\mathrm{e}} \times N_{\mathrm{V}}}$ with a token-id $v \in V \cong\left[N_{\mathrm{V}}\right]$ as shown :
+The embedding layer from Figure [[#^dbc00b]] is ultimately a lookup table to retrieve the embedding vector $e \in \mathbb{R}^{d_{\mathrm{e}}}$  from a learned, embedding matrix $W_e \in \mathbb{R}^{d_{\mathrm{e}} \times N_{\mathrm{V}}}$ with a token-id $v \in V \cong\left[N_{\mathrm{V}}\right]$ as shown :
 $$
 \tag{1}
 e=W_e[:, v].

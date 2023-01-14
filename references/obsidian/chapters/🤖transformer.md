@@ -1,6 +1,6 @@
 
 ![[classical_transformer_architecture.png]]
-(own drawing after [[@daiTransformerXLAttentiveLanguage2019]])
+(own drawing after [[@daiTransformerXLAttentiveLanguage2019]], use L instead of N)
 
 In the subsequent sections we introduce the classical Transformer of [[@vaswaniAttentionAllYou2017]]. Our focus on introducing the central building blocks like self-attention and multi-headed attention.  We then transfer the concepts to the tabular domain by covering [[🤖TabTransformer]] and [[🤖FTTransformer]]. Throughout the work we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]].
 
@@ -15,6 +15,8 @@ Cross-check understanding against:
 - http://nlp.seas.harvard.edu/annotated-transformer/
 - a bit of intuition why it makes sense https://blog.ml6.eu/transformers-for-tabular-data-hot-or-not-e3000df3ed46
 - https://ai.stanford.edu/blog/contextual/
+- https://towardsdatascience.com/transformers-explained-visually-not-just-how-but-why-they-work-so-well-d840bd61a9d3
+
 
 Components:
 [[🛌Token Embedding]]
