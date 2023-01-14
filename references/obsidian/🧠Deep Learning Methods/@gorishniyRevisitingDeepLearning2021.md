@@ -35,6 +35,8 @@ I could adapt their notation for categorical and continous data as wall as their
 - As both categorical and continous features features are embedded, the architecture deviates from similar architectures like [[@huangTabTransformerTabularData2020]]. 
 ![[ft-transformer-architecture.png]]
 
+![[comparison-ft-tab-transformer.png]]
+
 ### Feature Tokenizer
 > The Feature Tokenizer module (see Figure 2) transforms the input features $x$ to embeddings $T \in \mathbb{R}^{k \times d}$. The embedding for a given feature $x_j$ is computed as follows:
 $$
@@ -119,3 +121,16 @@ Tabular format is characterized by: “In these problems, data points are repres
 ## Notation for supervised learning problem
 
 “Notation. In this work, we consider supervised learning problems. D={(xi, yi)}in=1 denotes a dataset, where xi=(x(num) i , x(cat) i ) ∈ X represents numerical x(num) ij and categorical x(cat) ij features of an object and yi ∈ Y denotes the corresponding object label. The total number of features is denoted as k. The dataset is split into three disjoint subsets: D = Dtrain ∪ Dval ∪ Dtest, where Dtrain is used for training, Dval is used for early stopping and hyperparameter tuning, and Dtest is used for the final evaluation. We consider three types of tasks: binary classification Y = {0, 1}, multiclass classification Y = {1, . . . , C} and regression Y = R.” (Gorishniy et al., 2021, p. 3)
+
+
+
+## Notes from W&B Paper Reading Group
+(See here: https://www.youtube.com/watch?v=59uGzJaVzYc)
+
+- there is a lack of benchmarks
+- deep learning models are interesting for multi-modal use cases
+- feature tokenizer is just a look-up table as well
+- distillation, learning rate warmup, learning rate decay is not used in paper,  but could improve training times and maybe accuracy.
+- there is a paper that studies that studies ensembeling for deep learning (Fort et al, 2020)
+- there is no universal solution of gbdt and deep learning models
+- deep learning is less interpretable

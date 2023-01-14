@@ -42,7 +42,7 @@
 - [[formula-quote-rule.png]]
 - [[feature_attributions.png]]
 - [[emo-rule-formulae.png]]
-- [[feature-tokenizer.png]]
+- [[feature-tokenizer-fttransformer.png]]
 - [[cyclical-lr.png]]
 - [[clnv-method-visualization.png]]
 - [[bert-architecture.png]]

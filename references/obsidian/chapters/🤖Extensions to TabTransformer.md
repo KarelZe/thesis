@@ -13,3 +13,4 @@ Resources:
 - Investigate whether my dataset even profits from this type of architecture?
 - See about embedding continous features in [[@somepalliSAINTImprovedNeural2021]]
 - On considertion of different weights at an algorithm level see [[@huyenDesigningMachineLearning]] (p. 111)
+- https://www.kaggle.com/code/antonsruberts/tabtransformer-w-pre-training

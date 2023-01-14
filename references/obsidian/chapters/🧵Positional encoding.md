@@ -16,6 +16,11 @@ with $0<i \leq d_{\mathrm{e}} / 2$, the maximum sequence length $\ell_{\max}$, w
 
 Using trigonometric functions for the positional embedding is favourable, due to being zero-centered, and resulting in values in the *limited* range of $[-1,1]$. These properties are long known to promote convergence of neural networks (cp. [[@lecunEfficientBackProp2012]] (p. 8 f)). The reason for encoding with both the sine and cosine is more subtle. [[@vaswaniAttentionAllYou2017]] (p. 6) hypothesize, that beside learning the *absolute position* i. e., fifth place in sequence, also enables to model attend to *relative positions*, i. e., two places from a given token. A detailed proof is layed out in  [[@zhangDiveDeepLearning2021]] (p. 410) 
 
+%%
+TODO: Think about including the proof in the thesis:
+
+%% 
+
 ![[viz-of-pos-encoding.png]]
 (pos encoding copied from [[@zhangDiveDeepLearning2021]]; p. 409; transpose image due to my matrix notation) ^1f2fe5
 

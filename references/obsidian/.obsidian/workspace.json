@@ -1,0 +1,231 @@
+{
+  "main": {
+    "id": "550952c7dea0cc23",
+    "type": "split",
+    "children": [
+      {
+        "id": "ac0c9ffcaad5ed9e",
+        "type": "tabs",
+        "dimension": 59.76505139500734,
+        "children": [
+          {
+            "id": "160a03ac0eb0e817",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "TOC.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "0f92442fd597a142",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖FTTransformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "dd4f6fe382b725a6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "675af78723ee45d1",
+        "type": "tabs",
+        "dimension": 40.23494860499266,
+        "children": [
+          {
+            "id": "0abd77888f93b540",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "🎨transformer.canvas",
+                "viewState": {
+                  "x": -638.9448500278434,
+                  "y": -454.94117801159547,
+                  "zoom": 0.7462612645836664,
+                  "snapToGrid": false
+                }
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "b9b5dd46dbbad367",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖TabTransformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "3dc88f885a9a5d55",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "2231ba4daf875ce7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "b529659093fc318f",
+    "type": "split",
+    "children": [
+      {
+        "id": "c5256196fcf4b790",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8399eb31ec07fd72",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "6942b2f8be896a2c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tabtransf",
+                "matchingCase": true,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 273.5
+  },
+  "right": {
+    "id": "9db2ac4605daf425",
+    "type": "split",
+    "children": [
+      {
+        "id": "8b73bff3515ba23a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b822a70ca6f7b75f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "chapters/🤖FTTransformer.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": true,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              }
+            }
+          },
+          {
+            "id": "80a8566a30589318",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": false
+              }
+            }
+          },
+          {
+            "id": "716b7df63052bda1",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "chapters/🤖FTTransformer.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "obsidian-tts:Text to Speech": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "command-palette:Open command palette": false,
+      "markdown-importer:Open format converter": false
+    }
+  },
+  "active": "0f92442fd597a142",
+  "lastOpenFiles": [
+    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+    "chapters/🤖FTTransformer.md",
+    "chapters/🤖Extensions to TabTransformer.md",
+    "chapters/🤖Pretraining FTTransformer.md",
+    "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
+    "TOC.md",
+    "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
+    "chapters/🤖Training of the Transformer.md",
+    "chapters/🛌Token Embedding.md",
+    "chapters/🧭Attention map.md"
+  ]
+}

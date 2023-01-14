@@ -4,6 +4,7 @@
 *tags:* #embeddings #transformer #tabular-data
 *status:* #📥
 *related:*
+- article with explanations. https://towardsdatascience.com/transformers-for-tabular-data-part-3-piecewise-linear-periodic-encodings-1fc49c4bd7bc
 *code:* [https://github.com/Yura52/tabular-dl-num-embeddings](https://github.com/Yura52/tabular-dl-num-embeddings)
 # Notes Sebastian Raschka
 -   Instead of designing new architectures for end-to-end learning, the authors focus on embedding methods for tabular data: (1) a piecewise linear encoding of scalar values and (2) periodic activation-based embeddings.

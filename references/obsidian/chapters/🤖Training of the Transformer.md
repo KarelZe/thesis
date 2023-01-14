@@ -17,6 +17,8 @@
 - https://blog.ml6.eu/how-a-pretrained-tabtransformer-performs-in-the-real-world-eccb12362950
 - https://www.borealisai.com/research-blogs/tutorial-14-transformers-i-introduction/
 - Might use additional tips from here: [[@liuRoBERTaRobustlyOptimized2019]])
+- https://paperswithcode.com/paper/revisiting-deep-learning-models-for-tabular/review/
+- [[@liuUnderstandingDifficultyTraining2020]]
 
 ## Tipps from reddit 🤖
 https://www.reddit.com/r/MachineLearning/comments/z088fo/r_tips_on_training_transformers/
