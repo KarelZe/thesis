@@ -1,22 +1,65 @@
 
 ![[classical_transformer_architecture.png]]
-(own drawing after [[@daiTransformerXLAttentiveLanguage2019]], use L instead of N)
+(own drawing after [[@daiTransformerXLAttentiveLanguage2019]], use L instead of N, left encoder and right decoder)
 
 In the subsequent sections we introduce the classical Transformer of [[@vaswaniAttentionAllYou2017]]. Our focus on introducing the central building blocks like self-attention and multi-headed attention.  We then transfer the concepts to the tabular domain by covering [[🤖TabTransformer]] and [[🤖FTTransformer]]. Throughout the work we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]].
 
+## Points to consider
 - encoder/ decoder models $\approx$ sequence-to-sequence model
 - both encoders and decoders can be used separately. Might name prominent examples.
-- note the practical effect of cot
+- consistst of encoder and decoder
+- uses an attention mechanism
+- No need for recusive loops as with RNN and LSTM
+- faster processing due to parallelization
+- handle long-term depndencies
+- decoder takes a sequence as an input, parallel processing inside encoder, input for the decoder, output of a sequence
+- the sequence length of encoder and decoder is flexible (compare translation)
+- the decoder processes autoregressive, meaning it considers previous outputs $y_i$, output before $y_i < y_j$.
+- why were Transformers introduced?
+- What is the purpose of the encoder and the decoder? Introduce the term contextualized embeddings thoroughly.
+- What are the parts of the architecture?
+- Introduce pre-norm. What is bad with it? Why should it maybe be adjusted?
+- components.
+	- encoder:
+		- consists of 6 encoder blocks. Every encoder block consits of multi-head atttention and fully connected layers, and a normalization layer
+		- residual connection?
+	- self-attention
+		- key mechanism to transfer sequences
+		- from a sequence with variable size $x$ onto a sequence with the same size $I$ with the property ...
 
+
+## Resources
 Cross-check understanding against:
 - https://www.baeldung.com/cs/transformer-text-embeddings
 - Check my understanding of transformers with https://huggingface.co/course/chapter1/5?fw=pt
 - I like how to describe the architecture from a coarse-level to a very fine level. Especially, how it's done visually. Could be helpful for my own explanations as well.
 - http://nlp.seas.harvard.edu/annotated-transformer/
 - a bit of intuition why it makes sense https://blog.ml6.eu/transformers-for-tabular-data-hot-or-not-e3000df3ed46
-- https://ai.stanford.edu/blog/contextual/
 - https://towardsdatascience.com/transformers-explained-visually-not-just-how-but-why-they-work-so-well-d840bd61a9d3
+- Explain how neural networks can be adjusted to perform binary classification.
+- use feed-forward networks to discuss central concepts like loss function, back propagation etc.
+- Discuss why plain vanilla feed-forward networks are not suitable for tabular data. Why do the perform poorly?
+- How does the chosen layer and loss function to problem framing
+- How are neural networks optimized?
+- Motivation for Transformers
+- For formal algorithms on Transformers see [[@phuongFormalAlgorithmsTransformers2022]]
+- http://nlp.seas.harvard.edu/2018/04/03/attention.html
+- https://www.youtube.com/watch?v=EixI6t5oif0
+- https://transformer-circuits.pub/2021/framework/index.html
+- On efficiency of transformers see: https://arxiv.org/pdf/2009.06732.pdf
+- Mathematical foundation of the transformer architecture: https://transformer-circuits.pub/2021/framework/index.html
+- Detailed explanation and implementation. Check my understanding against it: https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html
+- On implementation aspects see: https://arxiv.org/pdf/2007.00072.pdf
+- batch nromalization is not fully understood. See [[@zhangDiveDeepLearning2021]] (p. 277)
 
+- nice visualization / explanation of self-attention. https://peltarion.com/blog/data-science/self-attention-video
+- intuition behind multi-head and self-attention e. g. cosine similarity, key and querying mechanism: https://www.youtube.com/watch?v=mMa2PmYJlCo&list=PL86uXYUJ7999zE8u2-97i4KG_2Zpufkfb
+- Our analysis starts from the observation: the original Transformer (referred to as Post-LN) is less robust than its Pre-LN variant2 (Baevski and Auli, 2019; Xiong et al., 2019; Nguyen and Salazar, 2019). (from [[@liuUnderstandingDifficultyTraining2020]])
+- motivation to switch 
+- General Introduction: [[@vaswaniAttentionAllYou2017]]
+- What is Attentition?
+- What is the difference between LSTMs and Transformers? Why are transformers preferable?
+- discuss the effects of layer pre-normalization vs. post-normalization (see [[@tunstallNaturalLanguageProcessing2022]])
 
 Components:
 [[🛌Token Embedding]]
@@ -28,23 +71,28 @@ Specialized variants for tabular data:
 [[🤖TabTransformer]]
 [[🤖FTTransformer]]
 
-Open:
-- [ ] Attention
-- [ ] Research the intuition behind attention
-- [ ] Self-attention / multi-headed attention
-- [ ] Residual connections
-- [ ] Layer Norm, Pre-Norm, and Post-Norm
-- [x] TabTransformer
-- [x] FTTransformer
-- [ ] Pre-Training
-- [ ] Embeddings of categorical / continuous data
-- [ ] Selection of supervised approaches
-- [ ] Selection of semi-supervised approaches
+## Notes from Tunstall
 
 
-- Tabular data is different from ... due to being invariant to ...
-- What is the purpose of the encoder and the decoder? Introduce the term contextualized embeddings thoroughly.
+## Notes from Rothman
+[[@rothmanTransformersNaturalLanguage2021]]
+- multi-head attention sub-layer contains eight attention heads and is followed by post-layer normalization, which will add residual connections to the output of the sublayer and normalize
+- performing attention using a single head is slow. Given the size of the embeddings, we would have to make huge computations. A better way is to divide the dimensions (embedding dim) among the heads.  Output of the multi-headed attention module must be concatenated. 
+- Inside each head of the attention mechanism, each word vector has three representations a Query vector, key and value.
 
+## Notes from e2ml
+(https://e2eml.school/transformers.html#second_order_matrix_mult)
+- De-embedding is done the same way embeddings are done, with a projection from one space to another, that is, a matrix multiplication.
+- The softmax is helpful here for three reasons. First, it converts our de-embedding results vector from an arbitrary set of values to a probability distribution. Softmax exaggerates the difference between values. Preserves though if some words are equally likely. And we can perform backpropagation.
+- Linear layers are used to project the matricces. To make multi-headed self-attention even possible.
+- Skip connections add a copy of the input to the output of a set of calculations. The input to the attention block are added back in to its outputs. The inputs to the element-wise forward blcoks are added to the inputs. Makes the overall pipeline robust.
+- Skip connections help to smooth out saddle points and ridges of the gradient. The problem is taht attention is a filter, that blocks out most what tries to pass through and may lead to large areas where the gradient is flat. Slopes of loss function hills are much smoother uniform, if skip connections are used. Also, it could happen, that an attention filter forgets entirely about the most recent word. Skip connections therefore enforce the signal and add the word back in.
+- Inputs are shifted to have a zero mean and scaled to std dev of 1. It's needed cause it matters, for e. g., softmax what ranges values have and if they are balanced.
+- layer normalization maintains a consistent distribution of signal values each step of the way throughout many-layered neural nets.
+- Intuively, multiple attention layers allow for multiple paths to good set of transformer params. More layers lead to better results, but improvements are marginal with more than six layers.
+- We can not make any judgements about the performance of the encoder, as the result is only a sequence of vectors in the embedded space.
+- Cross-attention is similar to self-attention but with the exception taht the key matrix, value  matrix are from the fianl encoder layer
+- As all layers get the same embedded source sequence in the decoder, it can be said that succesive layers provide redundancy and cooperate to perform the same task.
 
 ## Architecture
 Here, the encoder maps an input sequence of symbol representations $\left(x_{1}, \ldots, x_{n}\right)$ to a sequence of continuous representations $\mathrm{z}=\left(z_{1}, \ldots, z_{n}\right)$. Given $\mathrm{z}$, the decoder then generates an output sequence $\left(y_{1}, \ldots, y_{m}\right)$ of symbols one element at a time. At each step the model is auto-regressive, consuming the previously generated symbols as additional input when generating the next.
@@ -68,62 +116,14 @@ Layer norm / batch norm / instance norm:
 (from https://github.com/dvgodoy/PyTorchStepByStep)
 
 
-## Multiheaded Attention
-- What is the effect of multi-headed attention?
-https://transformer-circuits.pub/2021/framework/index.html
-
-
-## Point-wise Feed-Forward Networks
-
-[[🧵Positional encoding]]
-
-
-## Optimizer
-- Adam
-
-
-- Go "deep" instead of wide
-- Explain how neural networks can be adjusted to perform binary classification.
-- use feed-forward networks to discuss central concepts like loss function, back propagation etc.
-- Discuss why plain vanilla feed-forward networks are not suitable for tabular data. Why do the perform poorly?
-- How does the chosen layer and loss function to problem framing
-- How are neural networks optimized?
-- Motivation for Transformers
-- For formal algorithms on Transformers see [[@phuongFormalAlgorithmsTransformers2022]]
-- http://nlp.seas.harvard.edu/2018/04/03/attention.html
-- https://www.youtube.com/watch?v=EixI6t5oif0
-- https://transformer-circuits.pub/2021/framework/index.html
-- On efficiency of transformers see: https://arxiv.org/pdf/2009.06732.pdf
-- Mathematical foundation of the transformer architecture: https://transformer-circuits.pub/2021/framework/index.html
-- Detailed explanation and implementation. Check my understanding against it: https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html
-- On implementation aspects see: https://arxiv.org/pdf/2007.00072.pdf
-- batch nromalization is not fully understood. See [[@zhangDiveDeepLearning2021]] (p. 277)
-- https://e2eml.school/transformers.html
-
-feature importance evaluation is a non-trivial problem due to missing ground truth. See [[@borisovDeepNeuralNetworks2022]] paper for citation
-- nice visualization / explanation of self-attention. https://peltarion.com/blog/data-science/self-attention-video
-
-- intuition behind multi-head and self-attention e. g. cosine similarity, key and querying mechanism: https://www.youtube.com/watch?v=mMa2PmYJlCo&list=PL86uXYUJ7999zE8u2-97i4KG_2Zpufkfb
-
-
-- Our analysis starts from the observation: the original Transformer (referred to as Post-LN) is less robust than its Pre-LN variant2 (Baevski and Auli, 2019; Xiong et al., 2019; Nguyen and Salazar, 2019). (from [[@liuUnderstandingDifficultyTraining2020]])
-- motivation to switch 
-
-- General Introduction: [[@vaswaniAttentionAllYou2017]]
-- What is Attentition?
-- What is the difference between LSTMs and Transformers? Why are transformers preferable?
-
-- discuss the effects of layer pre-normalization vs. post-normalization (see [[@tunstallNaturalLanguageProcessing2022]])
-
 ## Notes from Huggingface 🤗
 https://huggingface.co/course/chapter1/4
 -   **Encoder (left)**: The encoder receives an input and builds a representation of it (its features). This means that the model is optimized to acquire understanding from the input.
 -   **Decoder (right)**: The decoder uses the encoder’s representation (features) along with other inputs to generate a target sequence. This means that the model is optimized for generating outputs.
 
 
-#### Notes on Talk with Łukasz Kaiser 
-
-- https://www.youtube.com/watch?v=rBCqOTEfxvg
+## Notes on Talk with Łukasz Kaiser 
+(see here: https://www.youtube.com/watch?v=rBCqOTEfxvg)
 
 - RNNs suffer from vanishing gradients
 - Some people used CNNs, but path length is still logarithmic (going down a tree). Is limited to position.
@@ -135,34 +135,13 @@ https://huggingface.co/course/chapter1/4
 - to preserve the order of words they use multi-head attention
 - attention heads can be interpreted (see winograd schemas)
 
-#### Attention in Dive into Deep Learning (Zhang et al)
+## Notes from Zhang
+(see here: [[🧠Deep Learning Methods/@zhangDiveDeepLearning2021]])
+
 - framework for designing attention mechanisms consists of:
     - volitional (~free) cues = queries
     - sensory inputs  = keys
     - nonvolitional cue of sensory input = keys
 - attention pooling mechanism  enables a given query (volitional cue) to interact with keys (nonvolitional cues) which guides a biased selection over values (sensory inputs)
-
 - self attention enjoys both parallel computation and the shortest maximum path length. Which makes it appealing to design deep architectures by using self-attention. Do not require a convolutional layer or recurrent layer.
-
 - It's an instance of an encoder-decoder architecture. Input and output sequence embeddings are added with positional encoding before being fed into the encoder and the decoder that stack modules based on self-attention.
-
-## Advantages over LSTM
-- More hardware friendly LSTMs require 4 linear layers for the gates and the cell state, for every timestep.
-
-
-## Points to consider
-- consistst of encoder and decoder
-- uses an attention mechanism
-- No need for recusive loops as with RNN and LSTM
-- faster processing due to parallelization
-- handle long-term depndencies
-- decoder takes a sequence as an input, parallel processing inside encoder, input for the decoder, output of a sequence
-- the sequence length of encoder and decoder is flexible (compare translation)
-- the decoder processes autoregressive, meaning it considers previous outputs $y_i$, output before $y_i < y_j$.
-- components.
-	- encoder:
-		- consists of 6 encoder blocks. Every encoder block consits of multi-head atttention and fully connected layers, and a normalization layer
-		- residual connection?
-	- self-attention
-		- key mechanism to transfer sequences
-		- from a sequence with variable size $x$ onto a sequence with the same size $I$ with the property ...

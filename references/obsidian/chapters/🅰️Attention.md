@@ -5,7 +5,9 @@
 - Attention in general?
 - Where does it originate from?
 
+
 ## Self-attention
+- https://ai.stanford.edu/blog/contextual/
 - Why does it make sense? 
 - good blog post for intuition https://towardsdatascience.com/transformers-explained-visually-part-3-multi-head-attention-deep-dive-1c1ff1024853
 - good blog post for inuition on attention: https://storrs.io/attention/
@@ -36,6 +38,7 @@ An attention function can be described as mapping a query and a set of key-value
 - interesting blog post on importance of heads and pruning them: https://lena-voita.github.io/posts/acl19_heads.html
 - Heads have a different importance and many can even be pruned: https://proceedings.neurips.cc/paper/2019/file/2c601ad9d2ff9bc8b282670cdd54f69f-Paper.pdf
 - It's just a logical concept. A single data matrix is used for the Query, Key, and Value, respectively, with logically separate sections of the matrix for each Attention head. Similarly, there are not separate Linear layers, one for each Attention head. All the Attention heads share the same Linear layer but simply operate on their ‘own’ logical section of the data matrix.
+- https://transformer-circuits.pub/2021/framework/index.html
 
 ## Go Beyond
 - Self-attention is central to the transformer architecture, yet other attention mechanisms can be used

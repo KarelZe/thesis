@@ -77,9 +77,9 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### Embeddings 🟢
 [[🛌Token Embedding]]
 
-### Extensions in TabTransformer
-[[🤖Extensions to TabTransformer]]
-### Extensions in FTTransformer
+### Extensions in TabTransformer🟢
+[[🤖TabTransformer]]
+### Extensions in FTTransformer🟢
 [[🤖FTTransformer]]
 
 # 👽 Semi-Supervised Approaches
@@ -91,8 +91,8 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ## Extensions to Gradient Boosted Trees
 [[🐈extensions-to-gradient-boosting]]
 
-## Extensions to TabTransformer
-[[🤖Extensions to TabTransformer]]
+## Extensions to TabTransformer 
+
 ## Extension to FTTransformer
 # 👒 Empirical Study
 - In the subsequent sections we apply methods from (...) in an empirical setting.
@@ -139,6 +139,7 @@ describe if data set is actually used. Write similarily to
 [[🏅Feature importance measure]]
 ### Evaluation Metric
 [[🧭Evaluation metric]]
+[[🧭Attention map]]
 
 # 🏁 Results
 [[🏅Results]]
@@ -152,8 +153,6 @@ describe if data set is actually used. Write similarily to
 
 ## Feature Importance
 [[🏅Feature importance results]]
-
-[[🧭Attention map]]
 
 ## Ablation Study of Models
 

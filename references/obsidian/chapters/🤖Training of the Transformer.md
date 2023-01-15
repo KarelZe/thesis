@@ -1,5 +1,6 @@
 #lr-warmup #lr-scheduling 
 
+- practical tips for deep learning: http://yyue.blogspot.com/2015/01/abrief-overview-of-deep-learning.html
 
 - training of the transformer has been found non-trivial[[@liuUnderstandingDifficultyTraining2020]]
 - introduce notion of effective batch size (batch size when training is split across multiple gpus; see [[🧠Deep Learning Methods/Transformer/@popelTrainingTipsTransformer2018]] p. 46)

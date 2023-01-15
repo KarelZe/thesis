@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 64.2504118616145,
+        "dimension": 69.65247185511502,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -28,7 +28,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖Pretraining FTTransformer.md",
+                "file": "chapters/🤖Transformer.md",
                 "mode": "source",
                 "source": false
               }
@@ -40,7 +40,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+                "file": "chapters/🧭Kernel SHAP.md",
                 "mode": "source",
                 "source": false
               }
@@ -52,7 +52,7 @@
       {
         "id": "675af78723ee45d1",
         "type": "tabs",
-        "dimension": 35.749588138385505,
+        "dimension": 30.347528144884972,
         "children": [
           {
             "id": "0abd77888f93b540",
@@ -78,7 +78,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖Pretraining FTTransformer.md",
+                "file": "chapters/🤖Pretraining of Transformers.md",
                 "mode": "source",
                 "source": false
               }
@@ -143,7 +143,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Pretraining FTTransformer.md",
+                "file": "chapters/🤖Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -171,7 +171,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Pretraining FTTransformer.md"
+                "file": "chapters/🤖Transformer.md"
               }
             }
           }
@@ -194,15 +194,15 @@
   },
   "active": "dd4f6fe382b725a6",
   "lastOpenFiles": [
+    "chapters/🅰️Attention.md",
+    "chapters/🛌Token Embedding.md",
     "chapters/🤖Transformer.md",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-    "chapters/🤖Pretraining FTTransformer.md",
-    "chapters/🤖Training of the Transformer.md",
-    "chapters/🤖FTTransformer.md",
+    "chapters/🧭Kernel SHAP.md",
+    "chapters/🧭Attention map.md",
     "chapters/🤖TabTransformer.md",
-    "chapters/🤖Extensions to TabTransformer.md",
-    "chapters/💡Training of models (supervised).md",
     "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
-    "chapters/🏅Results of supervised.md"
+    "TOC.md",
+    "chapters/🤖Training of the Transformer.md",
+    "chapters/🤖Pretraining of Transformers.md"
   ]
 }
