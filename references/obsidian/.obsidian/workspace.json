@@ -23,19 +23,19 @@
             }
           },
           {
-            "id": "5fc6bddb531253ce",
+            "id": "dd4f6fe382b725a6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖TabTransformer.md",
-                "mode": "preview",
+                "file": "chapters/🤖Pretraining FTTransformer.md",
+                "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "dd4f6fe382b725a6",
+            "id": "00f7e55a5eb343ec",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -64,7 +64,7 @@
                 "file": "🎨transformer.canvas",
                 "viewState": {
                   "x": -638.9448500278434,
-                  "y": -454.94117801159547,
+                  "y": -732.1492853332265,
                   "zoom": 0.7462612645836664,
                   "snapToGrid": false
                 }
@@ -73,55 +73,19 @@
             }
           },
           {
-            "id": "b9b5dd46dbbad367",
+            "id": "8df88cee1949a99b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+                "file": "chapters/🤖Pretraining FTTransformer.md",
                 "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "27942e948feec381",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🧵Positional encoding.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3dc88f885a9a5d55",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2231ba4daf875ce7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🤖FTTransformer.md",
-                "mode": "preview",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -179,7 +143,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖TabTransformer.md",
+                "file": "chapters/🤖Pretraining FTTransformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -207,7 +171,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖TabTransformer.md"
+                "file": "chapters/🤖Pretraining FTTransformer.md"
               }
             }
           }
@@ -228,17 +192,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "5fc6bddb531253ce",
+  "active": "dd4f6fe382b725a6",
   "lastOpenFiles": [
+    "chapters/🤖Transformer.md",
+    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+    "chapters/🤖Pretraining FTTransformer.md",
+    "chapters/🤖Training of the Transformer.md",
     "chapters/🤖FTTransformer.md",
     "chapters/🤖TabTransformer.md",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-    "chapters/🧵Positional encoding.md",
-    "chapters/🤖Training of the Transformer.md",
-    "chapters/💡Training and tuning.md",
-    "chapters/🤖Transformer.md",
-    "🎨transformer.canvas",
-    "chapters/🤖Pretraining FTTransformer.md",
-    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md"
+    "chapters/🤖Extensions to TabTransformer.md",
+    "chapters/💡Training of models (supervised).md",
+    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+    "chapters/🏅Results of supervised.md"
   ]
 }
