@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 59.76505139500734,
+        "dimension": 64.2504118616145,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -23,13 +23,13 @@
             }
           },
           {
-            "id": "0f92442fd597a142",
+            "id": "5fc6bddb531253ce",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖FTTransformer.md",
-                "mode": "source",
+                "file": "chapters/🤖TabTransformer.md",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -52,7 +52,7 @@
       {
         "id": "675af78723ee45d1",
         "type": "tabs",
-        "dimension": 40.23494860499266,
+        "dimension": 35.749588138385505,
         "children": [
           {
             "id": "0abd77888f93b540",
@@ -78,7 +78,19 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖TabTransformer.md",
+                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "27942e948feec381",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🧵Positional encoding.md",
                 "mode": "source",
                 "source": false
               }
@@ -102,13 +114,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-                "mode": "source",
+                "file": "chapters/🤖FTTransformer.md",
+                "mode": "preview",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -166,7 +179,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖FTTransformer.md",
+                "file": "chapters/🤖TabTransformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -194,7 +207,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖FTTransformer.md"
+                "file": "chapters/🤖TabTransformer.md"
               }
             }
           }
@@ -215,17 +228,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "0f92442fd597a142",
+  "active": "5fc6bddb531253ce",
   "lastOpenFiles": [
-    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
     "chapters/🤖FTTransformer.md",
-    "chapters/🤖Extensions to TabTransformer.md",
-    "chapters/🤖Pretraining FTTransformer.md",
-    "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
-    "TOC.md",
-    "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
+    "chapters/🤖TabTransformer.md",
+    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
+    "chapters/🧵Positional encoding.md",
     "chapters/🤖Training of the Transformer.md",
-    "chapters/🛌Token Embedding.md",
-    "chapters/🧭Attention map.md"
+    "chapters/💡Training and tuning.md",
+    "chapters/🤖Transformer.md",
+    "🎨transformer.canvas",
+    "chapters/🤖Pretraining FTTransformer.md",
+    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md"
   ]
 }

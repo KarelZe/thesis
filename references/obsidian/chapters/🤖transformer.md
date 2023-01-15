@@ -2,6 +2,8 @@
 ![[classical_transformer_architecture.png]]
 (own drawing after [[@daiTransformerXLAttentiveLanguage2019]], use L instead of N)
 
+![[Pasted image 20230115060830.png]]
+
 In the subsequent sections we introduce the classical Transformer of [[@vaswaniAttentionAllYou2017]]. Our focus on introducing the central building blocks like self-attention and multi-headed attention.  We then transfer the concepts to the tabular domain by covering [[🤖TabTransformer]] and [[🤖FTTransformer]]. Throughout the work we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]].
 
 - encoder/ decoder models $\approx$ sequence-to-sequence model
@@ -35,7 +37,7 @@ Open:
 - [ ] Residual connections
 - [ ] Layer Norm, Pre-Norm, and Post-Norm
 - [x] TabTransformer
-- [ ] FTTransformer
+- [x] FTTransformer
 - [ ] Pre-Training
 - [ ] Embeddings of categorical / continuous data
 - [ ] Selection of supervised approaches
@@ -106,8 +108,8 @@ feature importance evaluation is a non-trivial problem due to missing ground tru
 - intuition behind multi-head and self-attention e. g. cosine similarity, key and querying mechanism: https://www.youtube.com/watch?v=mMa2PmYJlCo&list=PL86uXYUJ7999zE8u2-97i4KG_2Zpufkfb
 
 
-
-
+- Our analysis starts from the observation: the original Transformer (referred to as Post-LN) is less robust than its Pre-LN variant2 (Baevski and Auli, 2019; Xiong et al., 2019; Nguyen and Salazar, 2019). (from [[@liuUnderstandingDifficultyTraining2020]])
+- motivation to switch 
 
 - General Introduction: [[@vaswaniAttentionAllYou2017]]
 - What is Attentition?
