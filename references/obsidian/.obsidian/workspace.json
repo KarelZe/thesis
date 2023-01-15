@@ -194,15 +194,15 @@
   },
   "active": "dd4f6fe382b725a6",
   "lastOpenFiles": [
-    "chapters/🅰️Attention.md",
-    "chapters/🛌Token Embedding.md",
-    "chapters/🤖Transformer.md",
-    "chapters/🧭Kernel SHAP.md",
-    "chapters/🧭Attention map.md",
-    "chapters/🤖TabTransformer.md",
-    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+    "chapters/🥠Selection of approaches (semi-supervised).md",
     "TOC.md",
+    "chapters/🅰️Attention.md",
+    "chapters/🤖Transformer.md",
+    "chapters/🤖TabTransformer.md",
+    "chapters/🤖FTTransformer.md",
     "chapters/🤖Training of the Transformer.md",
-    "chapters/🤖Pretraining of Transformers.md"
+    "chapters/🛌Token Embedding.md",
+    "chapters/🧭Kernel SHAP.md",
+    "chapters/🧭Attention map.md"
   ]
 }

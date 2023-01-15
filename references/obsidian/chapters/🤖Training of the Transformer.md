@@ -10,6 +10,7 @@
 - results are the same when trained on multiple gpus, if batch size across all gpus remains the same. [[@poppeSensitivityVPINChoice2016]] confirmed this empirically.
 - One might has to adjust the lr when scaling across multiple gpus [[@poppeSensitivityVPINChoice2016]] contains a nice discussion.
 - Use weight decay of 0.1 for a small amount of regularization [[@loshchilovDecoupledWeightDecay2019]].
+- on the compute cost of transformers [[@ivanovDataMovementAll2021]]
 
 - On activation function see [[@shazeerGLUVariantsImprove2020]]
 

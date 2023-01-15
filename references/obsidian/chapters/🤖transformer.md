@@ -28,6 +28,7 @@ In the subsequent sections we introduce the classical Transformer of [[@vaswaniA
 		- from a sequence with variable size $x$ onto a sequence with the same size $I$ with the property ...
 
 
+
 ## Resources
 Cross-check understanding against:
 - https://www.baeldung.com/cs/transformer-text-embeddings
@@ -37,7 +38,6 @@ Cross-check understanding against:
 - a bit of intuition why it makes sense https://blog.ml6.eu/transformers-for-tabular-data-hot-or-not-e3000df3ed46
 - https://towardsdatascience.com/transformers-explained-visually-not-just-how-but-why-they-work-so-well-d840bd61a9d3
 - Explain how neural networks can be adjusted to perform binary classification.
-- use feed-forward networks to discuss central concepts like loss function, back propagation etc.
 - Discuss why plain vanilla feed-forward networks are not suitable for tabular data. Why do the perform poorly?
 - How does the chosen layer and loss function to problem framing
 - How are neural networks optimized?
@@ -46,10 +46,9 @@ Cross-check understanding against:
 - http://nlp.seas.harvard.edu/2018/04/03/attention.html
 - https://www.youtube.com/watch?v=EixI6t5oif0
 - https://transformer-circuits.pub/2021/framework/index.html
-- On efficiency of transformers see: https://arxiv.org/pdf/2009.06732.pdf
+- On efficiency of transformers see: [[🧠Deep Learning Methods/Transformer/@tayEfficientTransformersSurvey2022]] Also good sanity check for own understanding
 - Mathematical foundation of the transformer architecture: https://transformer-circuits.pub/2021/framework/index.html
 - Detailed explanation and implementation. Check my understanding against it: https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html
-- On implementation aspects see: https://arxiv.org/pdf/2007.00072.pdf
 - batch nromalization is not fully understood. See [[@zhangDiveDeepLearning2021]] (p. 277)
 
 - nice visualization / explanation of self-attention. https://peltarion.com/blog/data-science/self-attention-video
@@ -57,8 +56,7 @@ Cross-check understanding against:
 - Our analysis starts from the observation: the original Transformer (referred to as Post-LN) is less robust than its Pre-LN variant2 (Baevski and Auli, 2019; Xiong et al., 2019; Nguyen and Salazar, 2019). (from [[@liuUnderstandingDifficultyTraining2020]])
 - motivation to switch 
 - General Introduction: [[@vaswaniAttentionAllYou2017]]
-- What is Attentition?
-- What is the difference between LSTMs and Transformers? Why are transformers preferable?
+- What is Attention?
 - discuss the effects of layer pre-normalization vs. post-normalization (see [[@tunstallNaturalLanguageProcessing2022]])
 
 Components:
@@ -71,7 +69,31 @@ Specialized variants for tabular data:
 [[🤖TabTransformer]]
 [[🤖FTTransformer]]
 
+
+## Notes from Harvard🎓
+http://nlp.seas.harvard.edu/2018/04/03/attention.html
+- self-attention is a an attention mechaism of realting different positions of a single sequence to compute a representation of the sequence.
+- Encoder maps an input sequenc of symbol representations (x1, .... xn) to a a seuqence of continuous representations z=(z1, ..., zn). The decoder generates from z an output sequence(y1,...ym) of symbols one element at a time. Each step is auto-regressive as generated symbols are used as additional input when generating text.
+- Droput is applied to the output of each sublayer, before it is added to the sub-layer input and normalized. Requires all sublayers of the model to have a fixed dimensions to make residual connnections (which add elemnt-wisely?) possible.
+- Each layer has two sub-layers. The first is a multi-headed self attention mechanism and the second is a simple, point-wise feed-forward network.
+- the decoder inserts a third layer, which performs multi-head attention over the output of the encoder stack. Again layer normalization and residual connections are used.
+- To prevent the decoder from attending to subsequent  poistions a musk is used, so that the predictions only depend on known outputs at positions less than i.
+- 
+
 ## Notes from Tunstall
+[[@tunstallNaturalLanguageProcessing2022]]
+- it's based on the encoder-decoder architecture, which is commonly used in machine translation, where a sequence is translated from language to another.
+- **Encoder:** converts an input sequence of tokens into sequence of embedding vectors which is the context.
+-  **Decoder:** use encoder's hidden state to iteratively generate an output sequence of tokens (auto-regressively?)
+- Both encoder and decoder consists of multiple stacked transformer blocks
+- the encoder's output is fed to the decoder layer and the decoder gnerates a prediction for the most probable next token in the sequence. The output is then fed back into the decoder to generate the next token until the end of EOS token is reached.
+- Enoder-only architecture that is well suited for text-classification and named-entity recognition. A sequence of text is converted into a rich numerical representation => bidirectional attention
+- Other types => decoder-only => autoregressive attention and encoder-decoder => good for machine translation and summarization
+- The encoder feeds the input through sublayers:
+	- multi-head self-attention layer
+	- fully-connected feed-forward layer
+- The purpose of the encoder is to update the input embeddings and to produce representations that encode some contextual information of the sequence. Input dimensions and output dimensions are the same. 
+- skip connections and layer normalization is used to train deep neural networks efficiently.
 
 
 ## Notes from Rothman
@@ -121,6 +143,17 @@ https://huggingface.co/course/chapter1/4
 -   **Encoder (left)**: The encoder receives an input and builds a representation of it (its features). This means that the model is optimized to acquire understanding from the input.
 -   **Decoder (right)**: The decoder uses the encoder’s representation (features) along with other inputs to generate a target sequence. This means that the model is optimized for generating outputs.
 
+## Notes from Baeldung 🍁
+https://www.baeldung.com/cs/transformer-text-embeddings
+- input sequence is input to the encoding block to obtain rich embeddings for each token, which is then fed to the decoding block to obtain the output
+- initial layers in the encoder capture more basic patterns, latter blocks capture more sophisticated ones (as only filtered signal is passed?)
+- Encoder takes one vector per token in the sequence as in put and returns a vector per token of the same shape. Thus, intuitively, the encoder returns the same input vectors, but enriched with more complex information.
+- Self-attention layer detects related tokens in the sequence. (sequential)
+- Next are the add and normalization layers, as the entire sequence is required and normalized. FFN follows (parallel) and another add and normalization. The only part that can be normalized are the feed-forward parts.
+- decoder is like the encoder but with an additional encoder-decoder-attention layer. The attention mechanism provides insights into which tokens of the input sequence are more relevant to the current output token. It is followed by an add and normalize layer.
+- the current decoder input will be processed producing and output, which will feed the next decoder
+- The last decoder is connected to the output layer, generating the next output token, until the EOS token is reached.
+- The decoder outputs a stack of float vectors. This vector is connect to a linear layer to project the output vector into a vector the size of the vocabulary. By applying softmax, we obtain the probabilities for every token to be the next token in the sequence. The token with the highest probability is chosen.
 
 ## Notes on Talk with Łukasz Kaiser 
 (see here: https://www.youtube.com/watch?v=rBCqOTEfxvg)
