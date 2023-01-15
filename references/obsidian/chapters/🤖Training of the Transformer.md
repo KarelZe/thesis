@@ -1,5 +1,7 @@
 #lr-warmup #lr-scheduling 
 
+
+- training of the transformer has been found non-trivial[[@liuUnderstandingDifficultyTraining2020]]
 - introduce notion of effective batch size (batch size when training is split across multiple gpus; see [[🧠Deep Learning Methods/Transformer/@popelTrainingTipsTransformer2018]] p. 46)
 - report or store training times?
 - In case of diverged training, try gradient clipping and/or more warmup steps. (found in [[🧠Deep Learning Methods/Transformer/@popelTrainingTipsTransformer2018]])
@@ -7,6 +9,9 @@
 - results are the same when trained on multiple gpus, if batch size across all gpus remains the same. [[@poppeSensitivityVPINChoice2016]] confirmed this empirically.
 - One might has to adjust the lr when scaling across multiple gpus [[@poppeSensitivityVPINChoice2016]] contains a nice discussion.
 - Use weight decay of 0.1 for a small amount of regularization [[@loshchilovDecoupledWeightDecay2019]].
+
+- On activation function see [[@shazeerGLUVariantsImprove2020]]
+
 
 - log gradients and loss using `wandb.watch` as shown here https://www.youtube.com/watch?v=k6p-gqxJfP4 with `wandb.log({"epoch":epoch, "loss":loss}, step)` (nested in `if ((batch_ct +1) % 25) == 0:`) and `wandb.watch(model, criterion, log="all", log_freq=10)`
 - watch out for exploding and vanishing gradients

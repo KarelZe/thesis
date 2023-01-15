@@ -71,6 +71,9 @@ $$
 $$
 Below, we explain the Transformer layers and column embedding.
 
+Important details on column embedding:
+Column Embedding. The first study is on the choice of column embedding - shared parameters $\boldsymbol{c}_{\phi_i}$ across the embeddings of multiple classes in column $i$ for $i$ $\{1,2, \ldots, m\}$. In particular, we study the optimal dimension of $\boldsymbol{c}_{\phi_i}, \ell$. An alternative choice is to element-wisely add the unique identifier $\boldsymbol{c}_{\phi_i}$ and feature-value specific embeddings $\boldsymbol{w}_{\phi_{i j}}$ rather than concatenating them. In that case, both the dimension of $\boldsymbol{c}_{\phi_i}$ and $\boldsymbol{w}_{\phi_{i j}}$ are equal to the dimension of embedding $d$. The goal of having column embedding is to
+
 ## Comparsion FT-Transformer and TabTransformer
 
 ![[ft-tab-transformer.png]]
@@ -81,6 +84,20 @@ Below, we explain the Transformer layers and column embedding.
 -   The paper proposes a transformer-based architecture based on self-attention that can be applied to tabular data.
 -   In addition to the purely supervised regime, the authors propose a semi-supervised approach leveraging unsupervised pre-training.
 -   Looking at the average AUC across 15 datasets, the proposed TabTransformer (82.8) is on par with gradient-boosted trees (82.9).
+
+
+## Notes from the keras blog
+https://keras.io/examples/structured_data/tabtransformer/#experiment-2-tabtransformer
+
+1.  All the categorical features are encoded as embeddings, using the same `embedding_dims`. This means that each value in each categorical feature will have its own embedding vector.
+2.  A column embedding, one embedding vector for each categorical feature, is added (point-wise) to the categorical feature embedding.
+3.  The embedded categorical features are fed into a stack of Transformer blocks. Each Transformer block consists of a multi-head self-attention layer followed by a feed-forward layer.
+4.  The outputs of the final Transformer layer, which are the _contextual embeddings_ of the categorical features, are concatenated with the input numerical features, and fed into a final MLP block.
+5.  A `softmax` classifer is applied at the end of the model.
+
+The [paper](https://arxiv.org/abs/2012.06678) discusses both addition and concatenation of the column embedding in the _Appendix: Experiment and Model Details_ section. The architecture of TabTransformer is shown below, as presented in the paper.
+
+
 
 ## Notes from Talk by Zohar Karnin
 (see here: https://www.youtube.com/watch?v=-ZdHhyQsvRc)
