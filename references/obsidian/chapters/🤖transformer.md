@@ -45,11 +45,11 @@ In the subsequent sections we introduce the classical Transformer of [[@vaswaniA
 - https://towardsdatascience.com/transformers-explained-visually-not-just-how-but-why-they-work-so-well-d840bd61a9d3
 - http://nlp.seas.harvard.edu/2018/04/03/attention.html
 
-
-
-Components:
+Components in Embedding:
 [[🛌Token Embedding]]
 [[🧵Positional encoding]]
+
+Components in Transformer block:
 [[🅰️Attention]]
 [[🎱Position-wise FFN]]
 

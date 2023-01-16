@@ -1,4 +1,6 @@
 
+The second central component
+
 importance of feed-forward layers in transformers, is discussed in several papers: 
 Previous work also highlighted the importance of feed-forward layers in transformers (Press et al., 2020 [[@pressImprovingTransformerModels2020]]; Pulugundla et al.  [[@pulugundlaAttentionbasedNeuralBeamforming2021]], 2021; Xu et al., 2020). Still, to date, the role of feed-forward layers remains under-explored (look up in [[@gevaTransformerFeedForwardLayers2021]])
 
@@ -7,6 +9,16 @@ Previous work also highlighted the importance of feed-forward layers in transfor
 - Contains most of the params.
 - activation functions see [[@shazeerGLUVariantsImprove2020]]
 - efficiency [[@kitaevReformerEfficientTransformer2020]]
+
+![[notation-pointwise-ffn.png]]
+
+## Notes from Vaswani
+(see [[@vaswaniAttentionAllYou2017]])
+In addition to attention sub-layers, each of the layers in our encoder and decoder contains a fully connected feed-forward network, which is applied to each position separately and identically. This consists of two linear transformations with a ReLU activation in between.
+$$
+\operatorname{FFN}(x)=\max \left(0, x W_1+b_1\right) W_2+b_2
+$$
+While the linear transformations are the same across different positions, they use different parameters from layer to layer. Another way of describing this is as two convolutions with kernel size 1 . The dimensionality of input and output is $d_{\text {model }}=512$, and the inner-layer has dimensionality $d_{f f}=2048$
 
 ## Notes from UVADLC
 (see here: https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html#Transformer-Encoder)
