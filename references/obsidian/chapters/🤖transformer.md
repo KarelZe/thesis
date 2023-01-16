@@ -28,6 +28,13 @@ In the subsequent sections we introduce the classical Transformer of [[@vaswaniA
 		- from a sequence with variable size $x$ onto a sequence with the same size $I$ with the property ...
 
 
+%%
+Nice visuals: https://erdem.pl/2021/05/understanding-positional-encoding-in-transformers
+
+ResNet paper on residual learning / residual connections. Discusses in general the problems that arise with learning deep neural networks: https://arxiv.org/pdf/1512.03385.pdf
+Nice explanation: https://stats.stackexchange.com/a/565203/351242
+%%
+
 
 ## Resources
 Cross-check understanding against:
@@ -70,11 +77,12 @@ Specialized variants for tabular data:
 [[🤖FTTransformer]]
 
 
+
 ## Notes from Harvard🎓
 http://nlp.seas.harvard.edu/2018/04/03/attention.html
 - self-attention is a an attention mechaism of realting different positions of a single sequence to compute a representation of the sequence.
 - Encoder maps an input sequenc of symbol representations (x1, .... xn) to a a seuqence of continuous representations z=(z1, ..., zn). The decoder generates from z an output sequence(y1,...ym) of symbols one element at a time. Each step is auto-regressive as generated symbols are used as additional input when generating text.
-- Droput is applied to the output of each sublayer, before it is added to the sub-layer input and normalized. Requires all sublayers of the model to have a fixed dimensions to make residual connnections (which add elemnt-wisely?) possible.
+- Dropout is applied to the output of each sublayer, before it is added to the sub-layer input and normalized. Requires all sublayers of the model to have a fixed dimensions to make residual connnections (which add elemnt-wisely?) possible.
 - Each layer has two sub-layers. The first is a multi-headed self attention mechanism and the second is a simple, point-wise feed-forward network.
 - the decoder inserts a third layer, which performs multi-head attention over the output of the encoder stack. Again layer normalization and residual connections are used.
 - To prevent the decoder from attending to subsequent  poistions a musk is used, so that the predictions only depend on known outputs at positions less than i.
@@ -126,9 +134,9 @@ Encoder: The encoder is composed of a stack of $N=6$ identical layers. Each laye
 
 Decoder: The decoder is also composed of a stack of $N=6$ identical layers. In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack. Similar to the encoder, we employ residual connections around each of the sub-layers, followed by layer normalization. We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions. This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position $i$ can depend only on the known outputs at positions less than $i$.
 
-
 Visualization of norm-first and norm last (similar in [[@xiongLayerNormalizationTransformer2020]]):
 ![[layer-norm-first-last.png]]
+![[formulas-layer-norm.png]]
 ![[norm-first-norm-last-big-picture.png]]
 (from https://github.com/dvgodoy/PyTorchStepByStep)
 
@@ -155,7 +163,7 @@ https://www.baeldung.com/cs/transformer-text-embeddings
 - The last decoder is connected to the output layer, generating the next output token, until the EOS token is reached.
 - The decoder outputs a stack of float vectors. This vector is connect to a linear layer to project the output vector into a vector the size of the vocabulary. By applying softmax, we obtain the probabilities for every token to be the next token in the sequence. The token with the highest probability is chosen.
 
-## Notes on Talk with Łukasz Kaiser 
+## Notes on Talk with Łukasz Kaiser 🎙️
 (see here: https://www.youtube.com/watch?v=rBCqOTEfxvg)
 
 - RNNs suffer from vanishing gradients
@@ -167,6 +175,25 @@ https://www.baeldung.com/cs/transformer-text-embeddings
 - n^2 * d complexity
 - to preserve the order of words they use multi-head attention
 - attention heads can be interpreted (see winograd schemas)
+
+## Notes from talk with Lucas Beyer / Google🎙️
+(see https://www.youtube.com/watch?v=EixI6t5oif0)
+- attention was originally introduced in the Bahdu paper. But was not the most central part.
+- attention is like a (convoluted (soft)) dictionary lookup. like in a dict we have keys and values and want to query the dictionary. keys and values are a vector of quotes. measure the similarity with the dotproduct. we measure similarity between query and key (attention weights) and the result is normalized. We take weighted average of all values weighted by the attention weights. Note output can also be average over multiple 
+![[attention-visualization.png]]
+- q (word to translate), k, v (words in source language)
+- We not just have one query, but multiple. Also an attention matrix. We use multi-head attention
+- Multi-head attention splits the queries along the embedding dimension. Also outputs are split. Works empirically better. Requires less compute. (only implementation details. Not the gist of attention.)
+- Architecture is heavily inspired by the translation task / community. This is helpful, as it resulted in encoder / decoder architecture.
+- Every token from the input sequence is linearily projected. Each vector looks around to see what vectors are there and calculates the output. (self-attention)
+- Every token individually is sent to a oint-wise MLP. It's done individually for every token. Stores knowledge. There is a paper. <mark style="background: #FFB8EBA6;">(search for it) </mark>"Gives the model processing power to think about what it has seen." Larger hidden size gives better results.
+- skip processing. We have input and update it with our processing. (See residual stream in (mathematical foundations of Transformers))
+- Layer norm is technically important.
+- It's not clear, which variant of layer-norm is better.
+- Decoder learns to sample from all possible outputs of the target language. 10 most likely translation etc. Computationally infeasible. To solve we look at one token at a time. Decoder works auto-regressively. Choose most likely token. and update all the inputs / things we have computed so far.
+- All inputs are passed into the decoder at once to reduce training times. We multiply with mask matrix to lookup future tokens. In generation time we can not implement this trick and have to implement token by token.
+- Cross-attention. Tokens from decoder become queries and keys and values come from the encoder. Look at the tokens from the source language (keys, values). 
+- Flexible architecture. Needs loads of data. Are computationally efficient. That's true.
 
 ## Notes from Zhang
 (see here: [[🧠Deep Learning Methods/@zhangDiveDeepLearning2021]])

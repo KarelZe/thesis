@@ -22,7 +22,7 @@ $$
 \tag{1}
 e=W_e[:, v].
 $$
-The dimension of the embedding $d_e$ is an important tunable hyperparameter (see [[💡Hyperparameter tuning]]) .
+<mark style="background: #FFB8EBA6;">(What do we mean by learnable-> randomly initialize, let the model figure out how to adjust embedding)</mark> The dimension of the embedding $d_e$ is an important tunable hyperparameter (see [[💡Hyperparameter tuning]]) .
 
 Concluding the example from above with synthetic embeddings of dimensionality $e^d=3$:
 $$
