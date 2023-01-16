@@ -11,7 +11,7 @@ In the subsequent sections we introduce the classical Transformer of [[@vaswaniA
 - both encoders and decoders can be used separately. Might name prominent examples.
 - consistst of encoder and decoder
 - uses an attention mechanism
-- No need for recusive loops as with RNN and LSTM
+- No need for recursive loops as with RNN and LSTM
 - faster processing due to parallelization
 - handle long-term depndencies
 - decoder takes a sequence as an input, parallel processing inside encoder, input for the decoder, output of a sequence
@@ -31,6 +31,7 @@ In the subsequent sections we introduce the classical Transformer of [[@vaswaniA
 		- from a sequence with variable size $x$ onto a sequence with the same size $I$ with the property ...
 - Why do neural networks perform poorly on tabular data?
 - Why does it make sense to use transformers for tabular data?
+- Update residual stream, refine inputs from previous layers? See [[@elhage2021mathematical]]
 
 
 ## Resources

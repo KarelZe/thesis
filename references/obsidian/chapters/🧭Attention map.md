@@ -14,6 +14,11 @@ In the *tabular domain* various approaches for obtaining attention from multiple
 While not explored systematically for the tabular domain, the roles of different attention heads have been studied intensively in transformer-based machine translation (see e. g., [[@voitaAnalyzingMultiHeadSelfAttention2019]], [[@tangAnalysisAttentionMechanisms2018]]).  [[@voitaAnalyzingMultiHeadSelfAttention2019]] observe that attention heads have a varying importance and serve distinct purposes like learning positional or syntactic relations between tokens. Also, all attention layers contribute to the model's prediction. Transferring their result back to the tabular domain, averaging over multiple heads or considering selected attention layers only and may lead to undesired obfuscation effects. 
 
 %%
+Argue, why it makes sense to look at attention maps? Attention is a filter [[🅰️Attention]]
+%%
+
+
+%%
 interesting blog post on importance of heads and pruning them:
 https://lena-voita.github.io/posts/acl19_heads.html
 

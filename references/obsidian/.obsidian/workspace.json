@@ -27,6 +27,18 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "🧠Deep Learning Methods/@glorotDeepSparseRectifier2011.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "6c91eb6ec241ea85",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "chapters/🎱Position-wise FFN.md",
                 "mode": "source",
                 "source": false
@@ -34,7 +46,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       },
       {
         "id": "2f13d9827f2a70e7",
@@ -160,17 +172,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "43b584f6b30ef205",
+  "active": "6c91eb6ec241ea85",
   "lastOpenFiles": [
+    "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md",
+    "🧠Deep Learning Methods/@glorotDeepSparseRectifier2011.md",
+    "chapters/🎱Position-wise FFN.md",
     "chapters/🤖Transformer.md",
     "TOC.md",
+    "chapters/🧭Attention map.md",
+    "chapters/🧓Discussion.md",
     "chapters/🅰️Attention.md",
-    "chapters/🎱Position-wise FFN.md",
     "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020 1.md",
-    "chapters/🧵Positional encoding.md",
-    "chapters/🤖Training of the Transformer.md",
-    "📥Inbox/@rothmanTransformersNaturalLanguage2021.md",
-    "🧠Deep Learning Methods/Transformer/@tayEfficientTransformersSurvey2022.md",
-    "📥Inbox/@wangLearningDeepTransformer2019.md"
+    "chapters/🧵Positional encoding.md"
   ]
 }

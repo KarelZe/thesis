@@ -1,8 +1,34 @@
 
-The second central component
+Besides the attention sub-layer ([[🅰️Attention]]), the transformer block also contains a small feed-forward network, which is applied to each token separately and identically ([[@vaswaniAttentionAllYou2017]]) (p. 5). 
+
+The network consists of a linear transformation, followed by a ReLU activation ([[@glorotDeepSparseRectifier2011]]; p. 318), and second linear layer. 
+![[notation-pointwise-ffn.png]]
+
+
+The linear transformation is the same for every position, but not so over different layers.
+
+Like the 
+
+```
+S. Sukhbaatar, J. Weston, and R. Fergus. 2015. Endto-end memory networks. In Advances in Neural Information Processing Systems (NIPS). Sainbayar Sukhbaatar, Edouard Grave, Guillaume Lample, Herve Jegou, and Armand Joulin. 2019. Augmenting self-attention with persistent memory. arXiv preprint arXiv:1907.01470.
+
+Guillaume Lample, Alexandre Sablayrolles, Marc’Aurelio Ranzato, Ludovic Denoyer, and Herv ́ e J ́ egou. Large memory layers with product keys. CoRR, abs/1907.05242, 2019. URL http: //arxiv.org/abs/1907.05242.
+
+Due to the 
+
+
+
 
 importance of feed-forward layers in transformers, is discussed in several papers: 
 Previous work also highlighted the importance of feed-forward layers in transformers (Press et al., 2020 [[@pressImprovingTransformerModels2020]]; Pulugundla et al.  [[@pulugundlaAttentionbasedNeuralBeamforming2021]], 2021; Xu et al., 2020). Still, to date, the role of feed-forward layers remains under-explored (look up in [[@gevaTransformerFeedForwardLayers2021]])
+```
+
+(purpose in the network)
+In the network the point-wise feed-forward network and prepares .
+
+The capacity is choosen to 
+a magnitude of the model's dim, enhances the model's ability to retain information, the large capacity, also contributes significantly to the high computational requirements and memory footprint of transformers and has been in focus of research (See [[@tayEfficientTransformersSurvey2022]]).  
+
 
 - memory of the transformers. (see [[🤖Transformer#^54aa8a]])
 - comes at linear complexity. In focus of literature. (see [[@tayEfficientTransformersSurvey2022]])
@@ -10,7 +36,24 @@ Previous work also highlighted the importance of feed-forward layers in transfor
 - activation functions see [[@shazeerGLUVariantsImprove2020]]
 - efficiency [[@kitaevReformerEfficientTransformer2020]]
 
-![[notation-pointwise-ffn.png]]
+Later variants often replace the ReLU activation with a $GELU$ activation, which 
+
+only'). It is described in detail in Algorithm 9. It uses the GELU nonlinearity instead of ReLU:
+$$
+\operatorname{GELU}(x)=x \cdot \mathbb{P}_{X \sim N(0,1)}[X<x] .
+$$
+(When called with vector or matrix arguments, GELU is applied element-wise.)
+
+Like for 
+
+---
+
+## Notes from Tay
+(see [[@tayEfficientTransformersSurvey2022]])
+- transformers are a multi-layered architecture formed by stacking transformer blocks on top of one another.
+- Transformer blocks are characterized by a multi-head sel-attention mechanism, a poistion-wise feed-forward network, layer norm modules ([[@baLayerNormalization2016]]) and residual connectors ([[@heDeepResidualLearning2015]])
+- The input is passed through an embedding layer and converts one-hot tokens into a $d_{\text{model}}$ dimensional embedding. The tensor is composed with a positional encoding and passed through a multi-headed self-attention module. 
+- Inputs and outputs oft he multi-headed self-attention module are connected by residual connectors and a layer normalization layer. the output of the multi-headed self-attention module is then passed to a two-layered feed forward network which has it inputs / outputs similarily connected in a residual fashion with layer normalization. 
 
 ## Notes from Vaswani
 (see [[@vaswaniAttentionAllYou2017]])
