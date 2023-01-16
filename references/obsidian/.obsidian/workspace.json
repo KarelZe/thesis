@@ -6,7 +6,6 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 69.65247185511502,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -23,33 +22,15 @@
             }
           },
           {
-            "id": "dd4f6fe382b725a6",
+            "id": "addb92166f40a2e8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖Transformer.md",
+                "file": "chapters/🅰️Attention.md",
                 "mode": "source",
                 "source": false
               }
-            }
-          }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "675af78723ee45d1",
-        "type": "tabs",
-        "dimension": 30.347528144884972,
-        "children": [
-          {
-            "id": "0abd77888f93b540",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "empty",
-              "state": {},
-              "pinned": true
             }
           }
         ]
@@ -110,7 +91,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Transformer.md",
+                "file": "TOC.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -138,7 +119,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Transformer.md"
+                "file": "TOC.md"
               }
             }
           }
@@ -147,7 +128,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -159,17 +141,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "dd4f6fe382b725a6",
+  "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
-    "chapters/🧵Positional encoding.md",
-    "chapters/🤖Transformer.md",
-    "chapters/🛌Token Embedding.md",
-    "chapters/👨‍🍳Tain-Test-split.md",
-    "TOC.md",
-    "chapters/🤖Training of the Transformer.md",
-    "chapters/💡Training of models (supervised).md",
-    "chapters/🧭Attention map.md",
     "chapters/🅰️Attention.md",
-    "chapters/🪄feature engineering.md"
+    "chapters/🎱Position-wise FFN.md",
+    "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020 1.md",
+    "chapters/🤖Transformer.md",
+    "chapters/🧵Positional encoding.md",
+    "chapters/🤖Training of the Transformer.md",
+    "TOC.md",
+    "📥Inbox/@rothmanTransformersNaturalLanguage2021.md",
+    "🧠Deep Learning Methods/Transformer/@tayEfficientTransformersSurvey2022.md",
+    "📥Inbox/@wangLearningDeepTransformer2019.md"
   ]
 }

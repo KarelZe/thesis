@@ -2,11 +2,18 @@
 ![[context-xl-transformer.png]]
 (found in [[@daiTransformerXLAttentiveLanguage2019]])
 
-- Attention in general?
-- Where does it originate from?
+- What is Attention in general?
+- Where does it originate from? Where was it introduced?
+
+
+The study of the transformer architecture has focused on the role and function of self-attention layers (Voita et al., 2019; Clark et al., 2019; Vig and Belinkov, 2019) and on inter-layer differences (i.e. lower vs. upper layers) (Tenney et al., 2019; Jawahar et al., 2019). (look up citations in [[@gevaTransformerFeedForwardLayers2021]])
 
 
 ## Self-attention
+- intuition behind multi-head and self-attention e. g. cosine similarity, key and querying mechanism: https://www.youtube.com/watch?v=mMa2PmYJlCo&list=PL86uXYUJ7999zE8u2-97i4KG_2Zpufkfb
+
+- See [[@zhangDiveDeepLearning2021]] for intuitive explanation
+- See [[@tayEfficientTransformersSurvey2022]] for computational complexity
 - https://ai.stanford.edu/blog/contextual/
 - Why does it make sense? 
 - good blog post for intuition https://towardsdatascience.com/transformers-explained-visually-part-3-multi-head-attention-deep-dive-1c1ff1024853
@@ -30,6 +37,7 @@ An attention function can be described as mapping a query and a set of key-value
 - low-level  overview. Fully digest these ideas: https://transformer-circuits.pub/2021/framework/index.html
 - notebook with nice visuals: https://github.com/dvgodoy/PyTorchStepByStep/blob/master/Chapter10.ipynb
 
+- efficiency [[@kitaevReformerEfficientTransformer2020]]
 
 ## Multi-headed attention
 - [[@vaswaniAttentionAllYou2017]] propose to run several attention heads in parallel, instead of using a single attention heads.

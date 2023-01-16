@@ -17,8 +17,11 @@ While not explored systematically for the tabular domain, the roles of different
 interesting blog post on importance of heads and pruning them:
 https://lena-voita.github.io/posts/acl19_heads.html
 
-Heads have a different importance and many can even be pruned:
-https://proceedings.neurips.cc/paper/2019/file/2c601ad9d2ff9bc8b282670cdd54f69f-Paper.pdf
+Heads have a different importance and many can even be pruned: [[@michelAreSixteenHeads2019]]
+
+The study of the transformer architecture has focused on the role and function of self-attention layers (Voita et al., 2019; Clark et al., 2019; Vig and Belinkov, 2019) and on inter-layer differences (i.e. lower vs. upper layers) (Tenney et al., 2019; Jawahar et al., 2019). (look up citations in [[@gevaTransformerFeedForwardLayers2021]])
+
+Also related are interpretability methods that explain predictions (Han et al., 2020; Wiegreffe and Pinter, 2019) (look up citations in [[@gevaTransformerFeedForwardLayers2021]])
 %%
 
 As part of their *rollout attention* method [[@abnarQuantifyingAttentionFlow2020]] (p. 3) combine raw attention from multiple layers through recursive matrix multiplication with the weight matrices from attention layers below, as shown in this Equation: [^1]

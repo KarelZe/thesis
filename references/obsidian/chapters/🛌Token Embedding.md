@@ -33,6 +33,12 @@ e_{\text{queen}}&=W_e[:,0] = [0.07, 0.157, 0.139]^T\\
 \end{aligned}
 $$
 are likely to be close in space with cosine-similarity of $\approx 1$ due to their high semantic similarity with regard to profession. 
+
+%%
+TODO: Use dot-product instead, to be coherent to the idea used in attention? Not scaled by magnitude?
+See here. https://datascience.stackexchange.com/questions/744/cosine-similarity-versus-dot-product-as-distance-metrics
+%%
+
 %%
 ```python
 from sklearn.metrics.pairwise import cosine_similarity
