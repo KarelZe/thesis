@@ -14,6 +14,8 @@ W_p[2 i, t] & =\cos \left(t / \ell_{\max }^{2 i / d_e}\right) .
 $$
 with $0<i \leq d_{\mathrm{e}} / 2$, the maximum sequence length $\ell_{\max}$, which is arbitrarily set to $\ell_{\max}=10,000$, and $t$ is again the position of the token in the sequence. As shown in Equation (1) the frequency decreases across the position dimension and alternates between sine and cosine for the embedding dimension. Each embedding thus contains a pattern, easily distinguishable by the model.
 
+<mark style="background: #FFB8EBA6;">(TODO: make clear, why it is needed in the first place)</mark>
+
 Using trigonometric functions for the positional embedding is favourable, due to being zero-centered, and resulting in values in the *limited* range of $[-1,1]$. These properties are long known to promote convergence of neural networks (cp. [[@lecunEfficientBackProp2012]] (p. 8 f)). The reason for encoding with both the sine and cosine is more subtle. [[@vaswaniAttentionAllYou2017]] (p. 6) hypothesize, that beside learning the *absolute position* i. e., fifth place in sequence, also enables to model attend to *relative positions*, i. e., two places from a given token. A detailed proof is layed out in  [[@zhangDiveDeepLearning2021]] (p. 410) 
 
 %%
@@ -35,7 +37,11 @@ e=W_e[:, x[t]]+W_p[:, t] .
 $$
 Due to the sheer depth of of the network with multiple Transformer blocks, the positional information would easily vanish during back-propagation. To enforce it, the architecture relies on residual connections [[@heDeepResidualLearning2015]] (p. 3).
 
+<mark style="background: #FFB8EBA6;">(TODO: What is intuition behind adding a positional encoding -> shift in space (see talk of lucas beyer / rothman) )</mark>
+
 %%
+Nice visuals: https://erdem.pl/2021/05/understanding-positional-encoding-in-transformers
+
 ResNet paper on residual learning / residual connections. Discusses in general the problems that arise with learning deep neural networks: https://arxiv.org/pdf/1512.03385.pdf
 Nice explanation: https://stats.stackexchange.com/a/565203/351242
 %%

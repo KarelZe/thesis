@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 64.2504118616145,
+        "dimension": 59.01434809731753,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -23,105 +23,62 @@
             }
           },
           {
-            "id": "5fc6bddb531253ce",
+            "id": "aeba5bea6262ab02",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖TabTransformer.md",
-                "mode": "preview",
+                "file": "chapters/🎱Position-wise FFN.md",
+                "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "dd4f6fe382b725a6",
+            "id": "ec96e832c9bb31a5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+                "file": "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md",
                 "mode": "source",
                 "source": false
               }
+            }
+          },
+          {
+            "id": "43b584f6b30ef205",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          },
+          {
+            "id": "d19615aeeacfbad9",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
             }
           }
         ],
         "currentTab": 1
       },
       {
-        "id": "675af78723ee45d1",
+        "id": "2204a541c235c2d3",
         "type": "tabs",
-        "dimension": 35.749588138385505,
+        "dimension": 40.98565190268247,
         "children": [
           {
-            "id": "0abd77888f93b540",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "canvas",
-              "state": {
-                "file": "🎨transformer.canvas",
-                "viewState": {
-                  "x": -638.9448500278434,
-                  "y": -454.94117801159547,
-                  "zoom": 0.7462612645836664,
-                  "snapToGrid": false
-                }
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "b9b5dd46dbbad367",
+            "id": "ffd3b4881898d5c1",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "27942e948feec381",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🧵Positional encoding.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "3dc88f885a9a5d55",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2231ba4daf875ce7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🤖FTTransformer.md",
-                "mode": "preview",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -150,7 +107,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tabtransf",
+                "query": "tag:#feature-enginering",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -179,7 +136,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖TabTransformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -206,9 +162,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "chapters/🤖TabTransformer.md"
-              }
+              "state": {}
             }
           }
         ],
@@ -216,7 +170,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -228,17 +183,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "5fc6bddb531253ce",
+  "active": "ffd3b4881898d5c1",
   "lastOpenFiles": [
-    "chapters/🤖FTTransformer.md",
-    "chapters/🤖TabTransformer.md",
-    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-    "chapters/🧵Positional encoding.md",
-    "chapters/🤖Training of the Transformer.md",
-    "chapters/💡Training and tuning.md",
     "chapters/🤖Transformer.md",
-    "🎨transformer.canvas",
-    "chapters/🤖Pretraining FTTransformer.md",
-    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md"
+    "chapters/🎱Position-wise FFN.md",
+    "TOC.md",
+    "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md",
+    "📥Inbox/@narangTransformerModificationsTransfer2021.md",
+    "chapters/🏅Comparsion.md",
+    "🧠Deep Learning Methods/@glorotDeepSparseRectifier2011.md",
+    "🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017.md",
+    "chapters/🧭Attention map.md",
+    "chapters/🧓Discussion.md"
   ]
 }

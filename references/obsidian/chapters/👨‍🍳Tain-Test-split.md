@@ -1,5 +1,7 @@
 - https://www.coursera.org/learn/machine-learning-projects#syllabus
 
+- see for split etc [[@raschkaModelEvaluationModel2020]]
+
 **How:**
 We perform a split into three disjoint sets.
 **Sets:**

@@ -9,6 +9,9 @@ year: 2020
 - [[@huangTabTransformerTabularData2020]]
 - [[@arikTabNetAttentiveInterpretable2020]]
 *code:* [https://github.com/Yura52/rtdl](https://github.com/Yura52/rtdl) (package + baseline)
+*video*:
+- NIPS-talk by the author: https://slideslive.com/38968794/revisiting-deep-learning-models-for-tabular-data?ref=recommended
+- Reading group video on FTTransformer: https://m.youtube.com/watch?v=59uGzJaVzYc
 
 ## Notes Sebastian Raschka
 -   In this paper, the researchers discuss the issue of improper baselines in the deep learning for tabular data literature.
