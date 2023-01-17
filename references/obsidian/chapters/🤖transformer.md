@@ -2,6 +2,8 @@
 ![[classical_transformer_architecture.png]]
 (own drawing after [[@daiTransformerXLAttentiveLanguage2019]], use L instead of N, left encoder and right decoder)
 
+![[Pasted image 20230115060830.png]]
+
 In the subsequent sections we introduce the classical Transformer of [[@vaswaniAttentionAllYou2017]]. Our focus on introducing the central building blocks like self-attention and multi-headed attention.  We then transfer the concepts to the tabular domain by covering [[🤖TabTransformer]] and [[🤖FTTransformer]]. Throughout the work we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]].
 
 “The transformer network [44] is the current workhorse of Natural Language Processing (NLP): it is employed ubiquitously across a large variety of tasks. Transformers are built by stacking blocks composed of self-attention layers followed by fully connected layers (dubbed FFN), as shown in Figure 3.” (Lample et al., 2019, p. 3) ([[@lampleLargeMemoryLayers2019]])

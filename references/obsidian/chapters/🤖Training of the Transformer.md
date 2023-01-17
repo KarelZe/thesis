@@ -16,6 +16,9 @@
 - On activation function see [[@shazeerGLUVariantsImprove2020]]
 
 
+- On activation function see [[@shazeerGLUVariantsImprove2020]]
+
+
 - log gradients and loss using `wandb.watch` as shown here https://www.youtube.com/watch?v=k6p-gqxJfP4 with `wandb.log({"epoch":epoch, "loss":loss}, step)` (nested in `if ((batch_ct +1) % 25) == 0:`) and `wandb.watch(model, criterion, log="all", log_freq=10)`
 - watch out for exploding and vanishing gradients
 - distillation, learning rate warmup, learning rate decay (not used but could improve training times and maybe accuracy) ([[@gorishniyRevisitingDeepLearning2021]])
