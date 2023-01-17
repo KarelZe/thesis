@@ -6,7 +6,6 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 59.01434809731753,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -23,62 +22,19 @@
             }
           },
           {
-            "id": "aeba5bea6262ab02",
+            "id": "9e9d1cd2b08015b6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🎱Position-wise FFN.md",
+                "file": "chapters/🤖Transformer.md",
                 "mode": "source",
                 "source": false
               }
-            }
-          },
-          {
-            "id": "ec96e832c9bb31a5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "43b584f6b30ef205",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "d19615aeeacfbad9",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
             }
           }
         ],
         "currentTab": 1
-      },
-      {
-        "id": "2204a541c235c2d3",
-        "type": "tabs",
-        "dimension": 40.98565190268247,
-        "children": [
-          {
-            "id": "ffd3b4881898d5c1",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          }
-        ]
       }
     ],
     "direction": "vertical"
@@ -136,6 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "chapters/🤖Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -162,7 +119,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "chapters/🤖Transformer.md"
+              }
             }
           }
         ],
@@ -183,17 +142,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "ffd3b4881898d5c1",
+  "active": "9e9d1cd2b08015b6",
   "lastOpenFiles": [
-    "chapters/🤖Transformer.md",
-    "chapters/🎱Position-wise FFN.md",
-    "TOC.md",
-    "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md",
-    "📥Inbox/@narangTransformerModificationsTransfer2021.md",
-    "chapters/🏅Comparsion.md",
-    "🧠Deep Learning Methods/@glorotDeepSparseRectifier2011.md",
-    "🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017.md",
     "chapters/🧭Attention map.md",
-    "chapters/🧓Discussion.md"
+    "chapters/🅰️Attention.md",
+    "chapters/🤖Transformer.md",
+    "🤖Transformer network architecture.md",
+    "TOC.md",
+    "📥Inbox/@lampleLargeMemoryLayers2019.md",
+    "chapters/🎱Position-wise FFN.md",
+    "🤖Transformer Networks.md",
+    "chapters/🤖TabTransformer.md",
+    "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md"
   ]
 }

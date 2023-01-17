@@ -14,7 +14,9 @@ In the *tabular domain* various approaches for obtaining attention from multiple
 While not explored systematically for the tabular domain, the roles of different attention heads have been studied intensively in transformer-based machine translation (see e. g., [[@voitaAnalyzingMultiHeadSelfAttention2019]], [[@tangAnalysisAttentionMechanisms2018]]).  [[@voitaAnalyzingMultiHeadSelfAttention2019]] observe that attention heads have a varying importance and serve distinct purposes like learning positional or syntactic relations between tokens. Also, all attention layers contribute to the model's prediction. Transferring their result back to the tabular domain, averaging over multiple heads or considering selected attention layers only and may lead to undesired obfuscation effects. 
 
 %%
-Argue, why it makes sense to look at attention maps? Attention is a filter [[🅰️Attention]]
+<mark style="background: #FFB8EBA6;">TODO: Argue, why it makes sense to look at attention maps? Attention is a filter [[🅰️Attention]]</mark>
+
+TODO: write about that higher layers learn details, whereas lower layers focus on more general / basic information. Try to find the paper again, that had some good references... 
 %%
 
 
@@ -54,6 +56,8 @@ $$
 %%
 
 In this equation, $\odot$ represents the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(b)}:=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(b)}$. As previously suggested in [[@cheferTransformerInterpretabilityAttention2021]] (p. 786), negative contributions are eliminated in order to focus on positive relevance, and the results are averaged over the heads dimension.
+
+<mark style="background: #FFB8EBA6;">(TODO: Use different notation for dot-product. In previous chapters it's no dot at all)</mark>
 
 %%
 Provide some short discussion. Address problems with interpration of attention proabilites?

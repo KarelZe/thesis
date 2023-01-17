@@ -66,9 +66,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### Gradient Boosting Procedure 🟡
 [[🐈gradient-boosting]]
 ## Transformer Networks
-[[🤖Transformer Networks]]
-### Network Architecture
-[[🤖Transformer network architecture]]
+[[🤖Transformer]]
 ### Position-wise FFN 🟢
 [[🎱Position-wise FFN]]
 ### Attention

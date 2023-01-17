@@ -1,10 +1,41 @@
 
 ![[classical_transformer_architecture.png]]
-(own drawing after [[@daiTransformerXLAttentiveLanguage2019]], use L instead of N, left encoder and right decoder)
+(own drawing after [[@daiTransformerXLAttentiveLanguage2019]], <mark style="background: #FFB8EBA6;">use L instead of N, left encoder and right decoder</mark>)
 
-![[Pasted image 20230115060830.png]]
+which reassambles the needs for which the transformer was proposed
 
-In the subsequent sections we introduce the classical Transformer of [[@vaswaniAttentionAllYou2017]]. Our focus on introducing the central building blocks like self-attention and multi-headed attention.  We then transfer the concepts to the tabular domain by covering [[🤖TabTransformer]] and [[🤖FTTransformer]]. Throughout the work we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]].
+and has since advanced / become ubiquitous in natural language processing ([[@lampleLargeMemoryLayers2019]], p. 3; ...)
+
+i. e., the next most probable word in the target language. 
+
+For the original domain in which the Transformer was proposed, the input By appending, each newly generated 
+
+(Why they were proposed in the first place?) 
+(Have gained popularity)
+(Consists of two components, encoder and decoder. Depending on the task one of each or both may be required. Introduce the phrase encoder-only.)
+
+
+Both the encoder and decoder stack $L$ Transformer blocks. Each of these blocks consists of two sub-layers: a self-attention sub-layer, followed by a feed-forward network. 
+
+
+
+![[formulas-layer-norm.png]]
+
+ [[@xiongLayerNormalizationTransformer2020]]
+
+In the subsequent sections we introduce the classical Transformer of [[@vaswaniAttentionAllYou2017]] more thoroughly. Our focus on the central building blocks, attention, multi-head self-attention, and cross-attention (see Chapter [[🅰️Attention]]) as well as feed-forward networks ([[🎱Position-wise FFN]]). In the subsequent chapters we show, that the self-attention mechanism and embeddings are generic enough to be transferred to the tabular domain. With the [[🤖TabTransformer]] ([[@huangTabTransformerTabularData2020]]) and [[🤖FTTransformer]] ([[@gorishniyRevisitingDeepLearning2021]]) we introduce two promising alternatives. For consistency we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]] (p. 1 f) throughout the work.
+
+---
+
+The Transformer , 
+
+Not all 
+
+Sequence-to-sequence
+
+
+
+
 
 “The transformer network [44] is the current workhorse of Natural Language Processing (NLP): it is employed ubiquitously across a large variety of tasks. Transformers are built by stacking blocks composed of self-attention layers followed by fully connected layers (dubbed FFN), as shown in Figure 3.” (Lample et al., 2019, p. 3) ([[@lampleLargeMemoryLayers2019]])
 
@@ -39,7 +70,6 @@ First, we apply layer normalization before the selfattention and feedforward blo
 		- key mechanism to transfer sequences
 		- from a sequence with variable size $x$ onto a sequence with the same size $I$ with the property ...
 - Why do neural networks perform poorly on tabular data?
-- Why does it make sense to use transformers for tabular data?
 - Update residual stream, refine inputs from previous layers? See [[@elhage2021mathematical]]
 
 
@@ -71,7 +101,7 @@ Specialized variants for tabular data:
 ## Viz
 Visualization of norm-first and norm last (similar in [[@xiongLayerNormalizationTransformer2020]]):
 ![[layer-norm-first-last.png]]
-![[formulas-layer-norm.png]]
+
 ![[norm-first-norm-last-big-picture.png]]
 (from https://github.com/dvgodoy/PyTorchStepByStep)
 
