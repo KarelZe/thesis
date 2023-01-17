@@ -4,7 +4,14 @@
 
 In the subsequent sections we introduce the classical Transformer of [[@vaswaniAttentionAllYou2017]]. Our focus on introducing the central building blocks like self-attention and multi-headed attention.  We then transfer the concepts to the tabular domain by covering [[🤖TabTransformer]] and [[🤖FTTransformer]]. Throughout the work we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]].
 
+“The transformer network [44] is the current workhorse of Natural Language Processing (NLP): it is employed ubiquitously across a large variety of tasks. Transformers are built by stacking blocks composed of self-attention layers followed by fully connected layers (dubbed FFN), as shown in Figure 3.” (Lample et al., 2019, p. 3) ([[@lampleLargeMemoryLayers2019]])
+
+
+First, we apply layer normalization before the selfattention and feedforward blocks instead of after. This small change has been unanimously adopted by all current Transformer implementations because it leads to more effective training (Baevski and Auli, 2019; Xiong et al., 2020). [[@narangTransformerModificationsTransfer2021]]
+
 ## Structure
+
+
 - encoder/ decoder models $\approx$ sequence-to-sequence model
 - go down one step introduce transformer blocks, then its two main sublayers, ([[🅰️Attention]] and [[🎱Position-wise FFN]]), explain how the sublayers are wrapped in layer norm residual connections, similar two how its done in [[@tayEfficientTransformersSurvey2022]] and [[@rothmanTransformersNaturalLanguage2021]]
 - layer norm is the same as batch norm except that it normalizes the feature dimension ([[@zhangDiveDeepLearning2021]] p. 423)
@@ -70,6 +77,20 @@ Layer norm / batch norm / instance norm:
 ![[layer-batch-instance-norm.png]]
 ![[viz-of image-embedding.png]]
 (from https://github.com/dvgodoy/PyTorchStepByStep)
+
+## Notes from Sukhabaatar
+(see [[@sukhbaatarAugmentingSelfattentionPersistent2019]])
+Feedforward sublayer. The second element of a transformer layer is a fully connected feedforward layer. This sublayer is applied to each position $t$ in the input sequence independently, and consists of two affine transformations with a pointwise non-linear function in between:
+$$
+\mathrm{FF}\left(\mathbf{x}_t\right)=\mathbf{U} \sigma\left(\mathbf{V} \mathbf{x}_t+\mathbf{b}\right)+\mathbf{c},
+$$
+where $\sigma(x)=\max (0, x)$ is the ReLU activation function; $\mathbf{V}$ and $\mathbf{U}$ are matrices of dimension $d \times d_f$ and $d_f \times d$ respectively; $\mathbf{b}$ and $\mathbf{c}$ are the bias terms. Typically, $d_f$ is set to be 4 times larger than $d$.
+Add-norm. Both the multi-head self-attention and the feed-forward layer are followed by an add-norm operation. This transformation is simply a residual connection [17] followed by layer normalization [23]. The layer normalization computes the average and standard deviation of the output activations of a given sublayer and normalizes them accordingly. This guarantees that the input $\mathbf{y}_t$ of the following sublayer is well conditioned, i.e., that $\mathbf{y}_t^T 1=0$ and $\mathbf{y}_t^T \mathbf{y}_t=\sqrt{d}$. More precisely, the AddNorm operation is defined as:
+$$
+\operatorname{AddNorm}\left(\mathbf{x}_t\right)=\operatorname{LayerNorm}\left(\mathbf{x}_t+\operatorname{Sublayer}\left(\mathbf{x}_t\right)\right) \text {, }
+$$
+where Sublayer is either a multi-head self-attention or a feedforward sublayer.
+
 
 ## Notes from Tay
 (see [[@tayEfficientTransformersSurvey2022]])

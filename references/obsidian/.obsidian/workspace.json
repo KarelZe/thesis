@@ -6,6 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
+        "dimension": 59.01434809731753,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -22,43 +23,68 @@
             }
           },
           {
-            "id": "addb92166f40a2e8",
+            "id": "aeba5bea6262ab02",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/@glorotDeepSparseRectifier2011.md",
+                "file": "chapters/🎱Position-wise FFN.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "6c91eb6ec241ea85",
+            "id": "ec96e832c9bb31a5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🎱Position-wise FFN.md",
+                "file": "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md",
                 "mode": "source",
                 "source": false
               }
             }
-          }
-        ],
-        "currentTab": 2
-      },
-      {
-        "id": "2f13d9827f2a70e7",
-        "type": "tabs",
-        "children": [
+          },
           {
             "id": "43b584f6b30ef205",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🎱Position-wise FFN.md",
+                "file": "chapters/🤖Transformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "d19615aeeacfbad9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖Transformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "2204a541c235c2d3",
+        "type": "tabs",
+        "dimension": 40.98565190268247,
+        "children": [
+          {
+            "id": "ffd3b4881898d5c1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖Transformer.md",
                 "mode": "source",
                 "source": false
               }
@@ -122,7 +148,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🎱Position-wise FFN.md",
+                "file": "chapters/🤖Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -150,7 +176,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🎱Position-wise FFN.md"
+                "file": "chapters/🤖Transformer.md"
               }
             }
           }
@@ -172,17 +198,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "6c91eb6ec241ea85",
+  "active": "ffd3b4881898d5c1",
   "lastOpenFiles": [
-    "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md",
-    "🧠Deep Learning Methods/@glorotDeepSparseRectifier2011.md",
     "chapters/🎱Position-wise FFN.md",
-    "chapters/🤖Transformer.md",
     "TOC.md",
+    "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md",
+    "chapters/🤖Transformer.md",
+    "📥Inbox/@narangTransformerModificationsTransfer2021.md",
+    "chapters/🏅Comparsion.md",
+    "🧠Deep Learning Methods/@glorotDeepSparseRectifier2011.md",
+    "🧠Deep Learning Methods/Transformer/@vaswaniAttentionAllYou2017.md",
     "chapters/🧭Attention map.md",
-    "chapters/🧓Discussion.md",
-    "chapters/🅰️Attention.md",
-    "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020 1.md",
-    "chapters/🧵Positional encoding.md"
+    "chapters/🧓Discussion.md"
   ]
 }
