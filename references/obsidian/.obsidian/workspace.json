@@ -6,6 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
+        "dimension": 33.87096774193548,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -20,21 +21,27 @@
               },
               "pinned": true
             }
-          },
+          }
+        ]
+      },
+      {
+        "id": "edfab61193f0c850",
+        "type": "tabs",
+        "dimension": 66.12903225806451,
+        "children": [
           {
-            "id": "9e9d1cd2b08015b6",
+            "id": "966fe423151885fd",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖Transformer.md",
+                "file": "chapters/🥠Selection of approaches (supervised).md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -92,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Transformer.md",
+                "file": "chapters/🥠Selection of approaches (supervised).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +127,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Transformer.md"
+                "file": "chapters/🥠Selection of approaches (supervised).md"
               }
             }
           }
@@ -142,17 +149,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "9e9d1cd2b08015b6",
+  "active": "966fe423151885fd",
   "lastOpenFiles": [
+    "TOC.md",
+    "chapters/🤖Transformer.md",
+    "📥Inbox/@nguyenTransformersTearsImproving2019.md",
+    "chapters/🥠Selection of approaches (semi-supervised).md",
+    "chapters/🥠Selection of approaches (supervised).md",
+    "chapters/🤖TabTransformer.md",
+    "chapters/🤖Pretraining of Transformers.md",
     "chapters/🧭Attention map.md",
     "chapters/🅰️Attention.md",
-    "chapters/🤖Transformer.md",
-    "🤖Transformer network architecture.md",
-    "TOC.md",
-    "📥Inbox/@lampleLargeMemoryLayers2019.md",
-    "chapters/🎱Position-wise FFN.md",
-    "🤖Transformer Networks.md",
-    "chapters/🤖TabTransformer.md",
-    "🧠Deep Learning Methods/Transformer/@shazeerGLUVariantsImprove2020.md"
+    "🤖Transformer network architecture.md"
   ]
 }

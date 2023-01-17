@@ -2,42 +2,43 @@
 ![[classical_transformer_architecture.png]]
 (own drawing after [[@daiTransformerXLAttentiveLanguage2019]], <mark style="background: #FFB8EBA6;">use L instead of N, left encoder and right decoder</mark>)
 
-The Transformer is a neural network architecture proposed by [[@vaswaniAttentionAllYou2017]] (p. 2 f.) for sequence-to-sequence modelling. Since it introduction it has become ubiquitous in natural language processing ([[@lampleLargeMemoryLayers2019]], p. 3; ...), among other domains (...). The wide success has lead to adaptions for image representations, tabular representations, ... . It follows a classical encoder-decoder pattern 
+The *Transformer* is a neural network architecture proposed by [[@vaswaniAttentionAllYou2017]] (p. 2 f.) for sequence-to-sequence modelling. Since it introduction it has become ubiquitous in natural language processing ([[@lampleLargeMemoryLayers2019]], p. 3; ...), among other domains (...). The wide success has lead to adaptions / seen wide adoptions for image representations, tabular representations, ... .
 
+The classical Transfomer follows an encoder-decoder architecture, as visualized in Figure(...).
+<mark style="background: #FFB8EBA6;">FIXME:</mark>
 -   **Encoder (left)**: The encoder receives an input and builds a representation of it (its features). This means that the model is optimized to acquire understanding from the input.
 -   **Decoder (right)**: The decoder uses the encoder’s representation (features) along with other inputs to generate a target sequence. This means that the model is optimized for generating outputs
 
-For it's original application, machine translation, both the encoder and decoder are required, as the input sequence in the source language must first mapped to a rich numerical representation to later generate the output in the target language. <mark style="background: #FFF3A3A6;">(Note: This is over-simplifying)</mark> Yet, the modular design, allows to adapt Transformers to a much wider range of use cases, some of which only require the encoder or decoder. The necessity is highly dependent on the task to solve i. e., if a enriched representation of the input suffices, or if inversely new output must be generated. We refer to these truncated architectures as *encoder-only* or *decoder-only*.   
+For it's original application, machine translation, both the encoder and decoder are required, as the input sequence in the source language must first mapped to a rich numerical representation to later generate the output in the target language <mark style="background: #FFF3A3A6;">(Note: This is over-simplifying and lines are blurry.)</mark> Yet, the modular design, allows to adapt Transformers to a much wider range of use cases, some of which only require the encoder or decoder. The necessity is highly dependent on the task to solve i. e., if a enriched representation of the input suffices, or if inversely new output must be generated. We refer to these truncated architectures as *encoder-only* or *decoder-only*. 
 
-%%
-Not all derived architectures feature both an encoder and decoder.
-%%
-For the original domain in which the Transformer was proposed, the input By appending, each newly generated 
+Both the encoder and decoder stack $L$ Transformer blocks. Each of these blocks consists of two sub-layers: a multi-head self-attention layer, followed by a fully-connected feed-forward network. Each of these sub-layer are connected by residual connections ([[@heDeepResidualLearning2015]]) and followed by layer normalization ([[@baLayerNormalization2016]]). The specific layer arrangement is referred to as *Post Layer Normalization* (Post-LN) derived from the placement of the normalization layer.
 
-<mark style="background: #FFB8EBA6;">(Why they were proposed in the first place?) 
-(Have gained popularity)
-(Consists of two components, encoder and decoder. Depending on the task one of each or both may be required. Introduce the phrase encoder-only.)</mark>
+Layer normalization improves the trainability of the Transformer by keeping.
 
-The 
-
-Both the encoder and decoder stack $L$ Transformer blocks. Each of these blocks consists of two sub-layers: a self-attention sub-layer, followed by a fully-connected feed-forward network. 
-
-
-
+A
+*Pre-LN* is known to be particullary hard
 - Our analysis starts from the observation: the original Transformer (referred to as Post-LN) is less robust than its Pre-LN variant2 (Baevski and Auli, 2019; Xiong et al., 2019; Nguyen and Salazar, 2019). (from [[@liuUnderstandingDifficultyTraining2020]])
 Addnorm operation.
 
+The later, is commonly known as pre-norm.
+
 ![[formulas-layer-norm.png]]
 
- [[@xiongLayerNormalizationTransformer2020]]
+[[@xiongLayerNormalizationTransformer2020]]
+[[@nguyenTransformersTearsImproving2019]]
+[[@wangLearningDeepTransformer2019]]
 
 The classical Transformer of [[@vaswaniAttentionAllYou2017]] features 
 
 - layer norm is the same as batch norm except that it normalizes the feature dimension ([[@zhangDiveDeepLearning2021]] p. 423)
 
-leading to a brittle optimization. 
 
+leading to a brittle optimization. 
 A variant known as pre-norm, 
+
+Why do we employ residual connections? add input back in. Requires the 
+
+Besides the decoder also contains a third sub-layer.
 
 In the subsequent sections we introduce the classical Transformer of [[@vaswaniAttentionAllYou2017]] more thoroughly. Our focus on the central building blocks, attention, multi-head self-attention, and cross-attention (see Chapter [[🅰️Attention]]) as well as feed-forward networks (chapter [[🎱Position-wise FFN]]). In the subsequent chapters we show, that the self-attention mechanism and embeddings are generic enough to be transferred to the tabular domain. With the [[🤖TabTransformer]] ([[@huangTabTransformerTabularData2020]], p. 1 f.) and [[🤖FTTransformer]] ([[@gorishniyRevisitingDeepLearning2021]] p. 1) we introduce two promising alternatives. For consistency we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]] (p. 1 f) throughout the work.
 
