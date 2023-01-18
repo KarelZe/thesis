@@ -22,12 +22,12 @@
             }
           },
           {
-            "id": "966fe423151885fd",
+            "id": "fc3638a4eda8659e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖Transformer.md",
+                "file": "chapters/🤖transformer.md",
                 "mode": "source",
                 "source": false
               }
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Transformer.md",
+                "file": "chapters/🤖transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Transformer.md"
+                "file": "chapters/🤖transformer.md"
               }
             }
           }
@@ -142,17 +142,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "966fe423151885fd",
+  "active": "fc3638a4eda8659e",
   "lastOpenFiles": [
-    "chapters/🅰️Attention.md",
+    "📥Inbox/@heDeepResidualLearning2015.md",
+    "chapters/🤖transformer.md",
+    "TOC.md",
     "chapters/🤖Transformer.md",
+    "chapters/🅰️Attention.md",
     "🎨transformer.canvas",
     "chapters/🤖Training of the Transformer.md",
     "chapters/🤖FTTransformer.md",
     "chapters/🤖TabTransformer.md",
-    "chapters/👪Related work.md",
-    "chapters/💡Tuning of models (semi-supervised).md",
-    "chapters/🥠Selection of approaches (supervised).md",
-    "TOC.md"
+    "chapters/👪Related work.md"
   ]
 }

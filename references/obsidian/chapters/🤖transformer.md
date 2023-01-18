@@ -6,35 +6,32 @@
 
 The *Transformer* is a neural network architecture proposed by [[@vaswaniAttentionAllYou2017]] (p. 2 f.) for sequence-to-sequence modelling, such as machine translation. Since its introduction it has become ubiquitous in natural language processing ([[@lampleLargeMemoryLayers2019]], p. 3; ...). Its success for language representations has also led to adaptions for image representations ([[@parmarImageTransformer2018]], [[@carionEndtoEndObjectDetection2020]]) (found in [[@tayEfficientTransformersSurvey2022]]), as well as tabular data representations ([[@huangTabTransformerTabularData2020]], [[@somepalliSAINTImprovedNeural2021]], [[@gorishniyRevisitingDeepLearning2021]]).
 
-The *classical* Transformer follows an encoder-decoder architecture. A sequence of inputs e. g., a sentence in the source language, is first mapped to a sequence of embeddings and enriched with positional information. The encoder receives the input and creates a rich representation from it by encoding the context in which the input appears. The output of the encoder is then fed to the decoder. The decoder takes the embedded target sequence along with parts of the encoded representation of the output to generate the output sequence e. g., a sentence in the target language in an auto-regressive manner. <mark style="background: #FFB8EBA6;">(citation -> Vaswani )</mark> The architecture is depicted in Figure [[🤖Transformer#^2cf7ee]].
+The *classical* Transformer follows an encoder-decoder architecture. A sequence of inputs e. g., a sentence in the source language, is first mapped to a sequence of embeddings and enriched with positional information. The encoder receives the input and creates a rich representation from it by encoding the context in which the input appears. The output of the encoder is then fed to the decoder. The decoder takes the embedded target sequence along with parts of the encoded representation of the output to generate the output sequence e. g., a sentence in the target language in an auto-regressive fashion. <mark style="background: #FFB8EBA6;">(citation -> Vaswani )</mark> The architecture is depicted in Figure [[🤖Transformer#^2cf7ee]].
 
-The encoder consists of $L$ stacked Transformer blocks. In the classical implementation $L$ is set to $6$ ([[@vaswaniAttentionAllYou2017]]; p. 6) . Each of these blocks consists of two sub-layers: a multi-head self-attention layer, followed by a position-wise, feed-forward network. Each of these sub-layer are connected by skip connections ([[@heDeepResidualLearning2015]]), whereby the input of the sub-layer is added to the sub-layer's output. The output is passed through a layer normalization layer ([[@baLayerNormalization2016]]). 
-%%
-Due to the order of the layers the setup is known as the *post layer norm* (Post LN) architecture.
-%%
+The encoder consists of $L$ stacked Transformer blocks. In the classical implementation $L$ is set to $6$ ([[@vaswaniAttentionAllYou2017]]; p. 6) . Each block consists of two sub-layers: a multi-head self-attention layer, followed by a position-wise, feed-forward network. In the encoder inputs can attend to any token within the sequence. Each of these sub-layer are connected by skip connections ([[@heDeepResidualLearning2015]]), whereby the input of the sub-layer is added to the sub-layer's output. Finally layer normalization ([[@baLayerNormalization2016]]) is applied. 
 
-Aside from the multi-headed self-attention and feed-forward sub-layer the decoder features a third sub-layer for multi-headed self-attention on the output of the encoder, known as *cross attention*. The multi-headed self-attention mechanism in the decoder is also modified, whereby future parts of the output sequence are masked, to prevent the model from attending to subsequent positions during training ([[@vaswaniAttentionAllYou2017]], p. 3) ([[@narangTransformerModificationsTransfer2021]], p. 15).
+Aside from the multi-headed self-attention and feed-forward sub-layer the decoder features a third sub-layer for multi-headed self-attention on the output of the encoder, known as *cross attention*. The multi-headed self-attention mechanism in the decoder differs from the one in the encoder. Specifically, future parts of the output sequence are causally masked to prevent the model from attending to subsequent positions during training. ([[@vaswaniAttentionAllYou2017]], p. 3) ([[@narangTransformerModificationsTransfer2021]], p. 15).
+
+The output of the decoder is finally passed through a linear layer with a softmax activation function to unembed the output and retrieve the probabilities for the next token ([[@vaswaniAttentionAllYou2017]]) (p. 5). Since the output sequence is generated token by token, with the most probable token being fed back as input to the decoder to provide context for the following token until the remaining sequence is generated.
 
 This chapter can only provides a high level of the Transformer. Subsequent chapters cover multi-headed self-attention, token and positional embeddings in detail. 
-
-<mark style="background: #BBFABBA6;">“In the encoder mode, there is no restriction or constraint that the self-attention mechanism has to be causal, i.e., dependent solely on the present and past tokens.” (Tay et al., 2022, p. 5)</mark>
-
-<mark style="background: #FF5582A6;">(“In the encoder-decoder setting, self-attention used in the decoder (i.e. across decoding positions) must be causal since each auto-regressive decoding step can only depend on previous tokens, whereas the selfattention used in the encoder need not.” (Tay et al., 2022, p. 5))</mark>
-
-<mark style="background: #D2B3FFA6;">“Exploring the Limits of Transfer Learning mechanism after each self-attention layer that attends to the output of the encoder. The self-attention mechanism in the decoder also uses a form of autoregressive or causal selfattention, which only allows the model to attend to past outputs.” (Raffel et al., 2020, p. 5)</mark>
-
-<mark style="background: #FFF3A3A6;">“The output of the final decoder block is fed into a dense layer with a softmax output, whose weights are shared with the input embedding matrix.” (Raffel et al., 2020, p. 5)</mark>
 
 ## Transformer modes
 For it's original application, machine translation, both the encoder and decoder are used, where the input sequence in the source language is first mapped to a rich, intermediate representation and subsequently the output sequence is generated. Yet, the modular design, allows to adapt Transformers to a much wider range of use cases, some of which only require the encoder or decoder. [[@raffelExploringLimitsTransfer2020]] (p. 16 f.) differentiate these modes: 
 1. **encoder-only:** use of only the encoder stage e. g. in sentiment classification. Since inputs are not masked, hence *fully-visible masking*, inputs can attend to any other input within the sequence. <mark style="background: #ABF7F7A6;">(What about padding masking in the encoder? https://stats.stackexchange.com/a/446571/351242)</mark>
 2. **decoder-only:** Use of the decoder stage e. g., in auto-completion to auto-regressively generate a sequence. Use of *causal masking*, so that inputs only depend on all previously generated outputs.
 3. **encoder-decoder:** Use of both the encoder and decoder stages e. g., in translation. Combines *Fully-visible masking* in the encoder, with *causal masking* in the decoder.
+![[different-mask-patterns.png]]
+
 As our focus is on probabilistic classification of tabular data, the goal is to learn an enriched representation of the features, which can be used for classifying the label. As such, only *encoder-only* Transformers suffice. Also, *fully-visible masking* is appropriate, as inputs are free to attend to all previous and subsequent columns or rows within the dataset.
 
 In the subsequent sections we introduce the classical Transformer of [[@vaswaniAttentionAllYou2017]] more thoroughly. Our focus on the central building blocks, attention, multi-head self-attention, and cross-attention (see Chapter [[🅰️Attention]]) as well as feed-forward networks (chapter [[🎱Position-wise FFN]]). In the subsequent chapters we show, that the self-attention mechanism and embeddings are generic enough to be transferred to the tabular domain. With the [[🤖TabTransformer]] ([[@huangTabTransformerTabularData2020]], p. 1 f.) and [[🤖FTTransformer]] ([[@gorishniyRevisitingDeepLearning2021]] p. 1) we introduce two promising alternatives. For consistency we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]] (p. 1 f) throughout the work.
 
 ## Transformer architectures
+
+%%
+Due to the order of the layers the setup is known as the *post layer norm* (Post LN) architecture.
+%%
 
 <mark style="background: #BBFABBA6;">“We use a simplified version of layer normalization where the activations are only rescaled and no additive bias is applied. After layer normalization, a residual skip connection (He et al., 2016) adds each subcomponent’s input to its output.” (Raffel et al., 2020, p. 4)</mark>
 
@@ -103,8 +100,6 @@ As mentioned earlier, the Transformer architecture makes use of layer normalizat
 
 Our analysis starts from the observation: the original Transformer (referred to as Post-LN) is less robust than its Pre-LN variant2 (Baevski and Auli, 2019; Xiong et al., 2019; Nguyen and Salazar, 2019). We recognize that gradient vanishing issue is not the direct reason causing such difference, since fixing this issue alone cannot stabilize PostLN training. It implies that, besides unbalanced gradients, there exist other factors influencing model training greatly [[@liuUnderstandingDifficultyTraining2020]]
 
-
-
 leading to a brittle optimization. 
 A variant known as pre-norm, 
 
@@ -144,7 +139,7 @@ Specialized variants for tabular data:
 [[🤖FTTransformer]]
 
 
-## Viz
+## Visualizations
 
 
 
