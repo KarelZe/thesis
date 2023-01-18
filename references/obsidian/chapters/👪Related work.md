@@ -11,10 +11,24 @@
 - Do not compare accuracies across different datasets. This won't work. Might mention [[@grauerOptionTradeClassification2022]] as it is calculated on (partly) the same data set.
 
 - Results were very different for the option markets between the studies. Compare the frequency some literature (in the stock market) suggest, that  for higher frequencies classical approaches like the tick test deteriorate.
-> Easley, O’Hara, and Srinivas (1998) use the Lee and Ready approach to test their game theoretic model of informed trading in stock and option markets. It is, therefore, important to determine whether the application of stock trade classification rules to derivatives is valid. [[@savickasInferringDirectionOption2003]]
+> Easley, O’Hara, and Srinivas (1998) use the Lee and Ready approach to test their game theoretic model of informed trading in stock and option markets. It is, therefore, important to determine whether the application of stock trade classification rules to derivatives is valid. [[@savickasInferringDirectionOption2003]] Don't propose their own rules. 
+
+- We find serious flaws within their research.
 
 - For classical rule-based approaches see some citations in [[@olbrysEvaluatingTradeSide2018]]. E. g., [[@chakrabartyTradeClassificationAlgorithms2012]] or [[@chakrabartyEvaluatingTradeClassification2015]]
 - see [[@rosenthalModelingTradeDirection2012]]
 - Seldomly used but ML-like. Would probably be sufficient to cover it under related works.
 
-One may look into [[@zouStockMarketPrediction2022]] (a survey on stock market prediction. Also lists a few papers that use transformers)
+Also the number of features is not the same...
+
+
+
+
+All works find, that machine learning can outperform classical rules. 
+Set's the field (...)
+
+Motivates
+
+Differentiate between trade classification for option markets 
+
+and trade classification using machine learning

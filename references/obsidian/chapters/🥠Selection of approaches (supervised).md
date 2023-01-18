@@ -1,5 +1,5 @@
 
-Due 
+Due to a unsatisfactory research situation, for trade calssification (see chapter [[👪Related work]]) we base
 
 We define the following criteria a model should meet:
 

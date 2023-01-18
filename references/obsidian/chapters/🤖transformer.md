@@ -1,24 +1,63 @@
 
 ![[classical_transformer_architecture.png]]
-(own drawing after [[@daiTransformerXLAttentiveLanguage2019]], <mark style="background: #FFB8EBA6;">use L instead of N, left encoder and right decoder</mark>)
+(own drawing after [[@daiTransformerXLAttentiveLanguage2019]], <mark style="background: #FFB8EBA6;">use L instead of N, left encoder and right decoder. Add label.</mark>)
+
+## Overview
 
 The *Transformer* is a neural network architecture proposed by [[@vaswaniAttentionAllYou2017]] (p. 2 f.) for sequence-to-sequence modelling. Since it introduction it has become ubiquitous in natural language processing ([[@lampleLargeMemoryLayers2019]], p. 3; ...), among other domains (...). The wide success has lead to adaptions / seen wide adoptions for image representations, tabular representations, ... .
+
+“The transformer network [44] is the current workhorse of Natural Language Processing (NLP): it is employed ubiquitously across a large variety of tasks. Transformers are built by stacking blocks composed of self-attention layers followed by fully connected layers (dubbed FFN), as shown in Figure 3.” (Lample et al., 2019, p. 3) ([[@lampleLargeMemoryLayers2019]])
 
 The classical Transfomer follows an encoder-decoder architecture, as visualized in Figure(...).
 <mark style="background: #FFB8EBA6;">FIXME:</mark>
 -   **Encoder (left)**: The encoder receives an input and builds a representation of it (its features). This means that the model is optimized to acquire understanding from the input.
 -   **Decoder (right)**: The decoder uses the encoder’s representation (features) along with other inputs to generate a target sequence. This means that the model is optimized for generating outputs
 
+(Explain how encoder and decoder are intertwined. What is mask multi-head self-attention.)
+(“Overall, the decoder is structured similarly to the encoder, with the following changes: First, the self-attention mechanisms are “causal” which prevents the decoder from looking at future items from the target sequence when it is fed in during training” (Narang et al., 2021, p. 15))
+
+- the decoder processes autoregressive, meaning it considers previous outputs $y_i$, output before $y_i < y_j$.
+- why were Transformers introduced?
+
+## Transformer modes
+
+(Transformer modes -> nicely explained in [[@tayEfficientTransformersSurvey2022]]. They refer to [[@raffelExploringLimitsTransfer2020]]).
+
 For it's original application, machine translation, both the encoder and decoder are required, as the input sequence in the source language must first mapped to a rich numerical representation to later generate the output in the target language <mark style="background: #FFF3A3A6;">(Note: This is over-simplifying and lines are blurry.)</mark> Yet, the modular design, allows to adapt Transformers to a much wider range of use cases, some of which only require the encoder or decoder. The necessity is highly dependent on the task to solve i. e., if a enriched representation of the input suffices, or if inversely new output must be generated. We refer to these truncated architectures as *encoder-only* or *decoder-only*. 
+
+## Transformer architectures
+- motivation to switch discuss the effects of layer pre-normalization vs. post-normalization (see [[@tunstallNaturalLanguageProcessing2022]])
 
 Both the encoder and decoder stack $L$ Transformer blocks. Each of these blocks consists of two sub-layers: a multi-head self-attention layer, followed by a fully-connected feed-forward network. Each of these sub-layer are connected by residual connections ([[@heDeepResidualLearning2015]]) and followed by layer normalization ([[@baLayerNormalization2016]]). The specific layer arrangement is referred to as *Post Layer Normalization* (Post-LN) derived from the placement of the normalization layer.
 
+First, we apply layer normalization before the selfattention and feedforward blocks instead of after. This small change has been unanimously adopted by all current Transformer implementations because it leads to more effective training (Baevski and Auli, 2019; Xiong et al., 2020). [[@narangTransformerModificationsTransfer2021]]
+
+
 Layer normalization improves the trainability of the Transformer by keeping.
 
-A
+![[layer-norm-first-last.png]]
+Visualization of norm-first and norm last (similar in [[@xiongLayerNormalizationTransformer2020]]):
+
+- Update residual stream, refine inputs from previous layers? See [[@elhage2021mathematical]]
+
+(brittle training, requirement for warm-up stages)
+
+“Different orders of the sub-layers, residual connection and layer normalization in a Transformer layer lead to variants of Transformer architectures. One of the original and most popularly used architecture for the Transformer and BERT (Vaswani et al., 2017; Devlin et al., 2018) follows “selfattention (FFN) sub-layer → residual connection → layer normalization”, which we call the Transformer with PostLayer normalization (Post-LN Transformer), as illustrated in Figure 1.” (Xiong et al., 2020, p. 3)
+
 *Pre-LN* is known to be particullary hard
 - Our analysis starts from the observation: the original Transformer (referred to as Post-LN) is less robust than its Pre-LN variant2 (Baevski and Auli, 2019; Xiong et al., 2019; Nguyen and Salazar, 2019). (from [[@liuUnderstandingDifficultyTraining2020]])
 Addnorm operation.
+
+How it's done in [[@tayEfficientTransformersSurvey2022]]:
+The inputs and output of the multi-headed self-attention module are connected by residual connectors and a layer normalization layer. The output of the multi-headed selfattention module is then passed to a two-layered feed-forward network which has its inputs/outputs similarly connected in a residual fashion with layer normalization. The sublayer residual connectors with layer norm is expressed as:
+$$
+X=\operatorname{LayerNorm}\left(F_S(X)\right)+X
+$$
+where $F_S$ is the sub-layer module which is either the multi-headed self-attention or the position-wise feed-forward layers.
+
+
+
+“Both the multi-head self-attention and the feed-forward layer are followed by an add-norm operation. This transformation is simply a residual connection [17] followed by layer normalization [23]. The layer normalization computes the average and standard deviation of the output activations of a given sublayer and normalizes them accordingly. This guarantees that the input yt of the following sublayer is well conditioned, i.e., that yT t 1 = 0 and yT t yt = √d.” (Sukhbaatar et al., 2019, p. 3)
 
 The later, is commonly known as pre-norm.
 
@@ -28,10 +67,28 @@ The later, is commonly known as pre-norm.
 [[@nguyenTransformersTearsImproving2019]]
 [[@wangLearningDeepTransformer2019]]
 
+https://stats.stackexchange.com/a/565203/351242 ResNet paper ([[@heDeepResidualLearning2015]]) on residual learning / residual connections. Discusses in general the problems that arise with learning deep neural networks.
+
+2.3 Putting it all together (from [[@tayEfficientTransformersSurvey2022]])
+Each Transformer block can be expressed as:
+$$
+\begin{aligned}
+& \left.X_A=\text { LayerNorm(MultiheadAttention }(X, X)\right)+X \\
+& X_B=\operatorname{LayerNorm}\left(\operatorname{PositionFFN}\left(X_A\right)\right)+X_A
+\end{aligned}
+$$
+where $X$ is the input of the Transformer block and $X_B$ is the output of the Transformer block. Note that the MultiheadAttention() function accepts two argument tensors, one for query and the other for key-values. If the first argument and second argument is the same input tensor, this is the MultiheadSelfAttention mechanism.
+
+
 The classical Transformer of [[@vaswaniAttentionAllYou2017]] features 
 
 - layer norm is the same as batch norm except that it normalizes the feature dimension ([[@zhangDiveDeepLearning2021]] p. 423)
 
+As mentioned earlier, the Transformer architecture makes use of layer normalization and skip connections. The former normalizes each input in the batch to have zero mean and unity variance. Skip connections pass a tensor to the next layer of the model without processing and add it to the processed tensor. When it comes to placing the layer normalization in the encoder or decoder layers of a transformer, there are two main choices adopted in the literature: Post layer normalization This is the arrangement used in the Transformer paper; it places layer normalization in between the skip connections. This arrangement is tricky to train from scratch as the gradients can diverge. For this reason, you will often see a concept known as learning rate warm-up, where the learning rate is gradually increased from a small value to some maximum value during training. Pre layer normalization This is the most common arrangement found in the literature; it places layer normalization within the span of the skip connections. This tends to be much more stable during training, and it does not usually require any learning rate warm-up. The difference between the two arrangements is illustrated in Figure 3-6. (unknown)
+
+“To train a Transformer however, one usually needs a carefully designed learning rate warm-up stage, which is shown to be crucial to the final performance but will slow down the optimization and bring more hyperparameter tunings. In this paper, we first study theoretically why the learning rate warm-up stage is essential and show that the location of layer normalization matters. Specifically, we prove with mean field theory that at initialization, for the original-designed Post-LN Transformer, which places the layer normalization between the residual blocks, the expected gradients of the parameters near the output layer are large. Therefore, using a large learning rate on those gradients makes the training unstable. The warm-up stage is practically helpful for avoiding this problem. On the other hand, our theory also shows that if the layer normalization is put inside the residual blocks (recently proposed as Pre-LN Transformer), the gradients are well-behaved at initialization. This motivates us to remove the warm-up stage for the training of Pre-LN Transformers. We show in our experiments that Pre-LN Transformers without the warm-up stage can reach comparable results with baselines while requiring significantly less training time and hyper-parameter tuning on a wide range of applications.” (Xiong et al., 2020, p. 1)
+
+Our analysis starts from the observation: the original Transformer (referred to as Post-LN) is less robust than its Pre-LN variant2 (Baevski and Auli, 2019; Xiong et al., 2019; Nguyen and Salazar, 2019). We recognize that gradient vanishing issue is not the direct reason causing such difference, since fixing this issue alone cannot stabilize PostLN training. It implies that, besides unbalanced gradients, there exist other factors influencing model training greatly [[@liuUnderstandingDifficultyTraining2020]]
 
 leading to a brittle optimization. 
 A variant known as pre-norm, 
@@ -40,64 +97,24 @@ Why do we employ residual connections? add input back in. Requires the
 
 Besides the decoder also contains a third sub-layer.
 
+<mark style="background: #FFB86CA6;">“Residual connections (He et al., 2016a) were first introduced to facilitate the training of deep convolutional networks, where the output of the `-th layer F` is summed with its input: x`+1 = x` + F`(x`). (1) The identity term x` is crucial to greatly extending the depth of such networks (He et al., 2016b). If one were to scale x` by a scalar λ`, then the contribution of x` to the final layer FL is (∏L−1 i=` λi)x`. For deep networks with dozens or even hundreds of layers L, the term ∏L−1 i=` λi becomes very large if λi > 1 or very small if  for enough i. When backpropagating from the last layer L back to `, these multiplicative terms can cause exploding or vanishing gradients, respectively. Therefore they fix λi = 1, keeping the total residual path an identity map.” (Nguyen and Salazar, 2019, p. 2) [[@nguyenTransformersTearsImproving2019]]</mark>
+
+<mark style="background: #ADCCFFA6;">“Inspired by He et al. (2016b), we apply LAYERNORM immediately before each sublayer (PRENORM): x`+1 = x` + F`(LAYERNORM(x`)). (3) This is cited as a stabilizer for Transformer training (Chen et al., 2018; Wang et al., 2019) and is already implemented in popular toolkits (Vaswani et al., 2018; Ott et al., 2019; Hieber et al., 2018), though not necessarily used by their default recipes. Wang et al. (2019) make a similar argument to motivate the success of PRENORM in training very deep Transformers. Note that one must append an additional normalization after both encoder and decoder so their outputs are appropriately scaled.” (Nguyen and Salazar, 2019, p. 2)</mark> [[@nguyenTransformersTearsImproving2019]]
+
+<mark style="background: #FFB86CA6;">Skip Connection bypasses the gradient exploding or vanishing problem and tries to solve the model optimization problem from the perspective of information transfer. It enables the delivery and integration of information by adding an identity mapping from the input of the neural network to the output, which may ease the optimization and allow the error signal to pass through the non-linearities.</mark> (https://aclanthology.org/2020.coling-main.320.pdf)
+
+<mark style="background: #FFF3A3A6;">The residual connection is crucial in the Transformer architecture for two reasons:
+
+1.  Similar to ResNets, Transformers are designed to be very deep. Some models contain more than 24 blocks in the encoder. Hence, the residual connections are crucial for enabling a smooth gradient flow through the model.
+    
+2.  Without the residual connection, the information about the original sequence is lost. Remember that the Multi-Head Attention layer ignores the position of elements in a sequence, and can only learn it based on the input features. Removing the residual connections would mean that this information is lost after the first attention layer (after initialization), and with a randomly initialized query and key vector, the output vectors for position � has no relation to its original input. All outputs of the attention are likely to represent similar/same information, and there is no chance for the model to distinguish which information came from which input element. An alternative option to residual connection would be to fix at least one head to focus on its original input, but this is very inefficient and does not have the benefit of the improved gradient flow.</mark> (https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html)
+
 In the subsequent sections we introduce the classical Transformer of [[@vaswaniAttentionAllYou2017]] more thoroughly. Our focus on the central building blocks, attention, multi-head self-attention, and cross-attention (see Chapter [[🅰️Attention]]) as well as feed-forward networks (chapter [[🎱Position-wise FFN]]). In the subsequent chapters we show, that the self-attention mechanism and embeddings are generic enough to be transferred to the tabular domain. With the [[🤖TabTransformer]] ([[@huangTabTransformerTabularData2020]], p. 1 f.) and [[🤖FTTransformer]] ([[@gorishniyRevisitingDeepLearning2021]] p. 1) we introduce two promising alternatives. For consistency we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]] (p. 1 f) throughout the work.
 
----
-
-As mentioned earlier, the Transformer architecture makes use of layer normalization and skip connections. The former normalizes each input in the batch to have zero mean and unity variance. Skip connections pass a tensor to the next layer of the model without processing and add it to the processed tensor. When it comes to placing the layer normalization in the encoder or decoder layers of a transformer, there are two main choices adopted in the literature: Post layer normalization This is the arrangement used in the Transformer paper; it places layer normalization in between the skip connections. This arrangement is tricky to train from scratch as the gradients can diverge. For this reason, you will often see a concept known as learning rate warm-up, where the learning rate is gradually increased from a small value to some maximum value during training. Pre layer normalization This is the most common arrangement found in the literature; it places layer normalization within the span of the skip connections. This tends to be much more stable during training, and it does not usually require any learning rate warm-up. The difference between the two arrangements is illustrated in Figure 3-6.
-
-The Transformer , 
-
-Not all 
-
-Sequence-to-sequence
-
-
-
-
-
-“The transformer network [44] is the current workhorse of Natural Language Processing (NLP): it is employed ubiquitously across a large variety of tasks. Transformers are built by stacking blocks composed of self-attention layers followed by fully connected layers (dubbed FFN), as shown in Figure 3.” (Lample et al., 2019, p. 3) ([[@lampleLargeMemoryLayers2019]])
-
-
-First, we apply layer normalization before the selfattention and feedforward blocks instead of after. This small change has been unanimously adopted by all current Transformer implementations because it leads to more effective training (Baevski and Auli, 2019; Xiong et al., 2020). [[@narangTransformerModificationsTransfer2021]]
-
-## Structure
-
-
-- encoder/ decoder models $\approx$ sequence-to-sequence model
-- both encoders and decoders can be used separately. Might name prominent examples.
-- consistst of encoder and decoder
-- uses an attention mechanism
-- No need for recursive loops as with RNN and LSTM
-- faster processing due to parallelization
-- handle long-term depndencies
-- decoder takes a sequence as an input, parallel processing inside encoder, input for the decoder, output of a sequence
-- the sequence length of encoder and decoder is flexible (compare translation)
-- the decoder processes autoregressive, meaning it considers previous outputs $y_i$, output before $y_i < y_j$.
-- why were Transformers introduced?
-- What is the purpose of the encoder and the decoder? Introduce the term contextualized embeddings thoroughly.
-- What are the parts of the architecture?
-- Introduce pre-norm. What is bad with it? Why should it maybe be adjusted?
-- pre-norm / post-norm - post norm discussion [[@xiongLayerNormalizationTransformer2020]]
-- components.
-	- encoder:
-		- consists of 6 encoder blocks. Every encoder block consits of multi-head atttention and fully connected layers, and a normalization layer
-		- residual connection? see also here. https://stats.stackexchange.com/a/565203/351242 ResNet paper ([[@heDeepResidualLearning2015]]) on residual learning / residual connections. Discusses in general the problems that arise with learning deep neural networks.
-	- self-attention
-		- key mechanism to transfer sequences
-		- from a sequence with variable size $x$ onto a sequence with the same size $I$ with the property ...
-- Why do neural networks perform poorly on tabular data?
-- Update residual stream, refine inputs from previous layers? See [[@elhage2021mathematical]]
-
-
 ## Resources
-
-
-
 - Detailed explanation and implementation. Check my understanding against it: https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html
 - mathematical foundations [[@elhage2021mathematical]]
 - general description of setup in [[@zhangDiveDeepLearning2021]]
-- motivation to switch discuss the effects of layer pre-normalization vs. post-normalization (see [[@tunstallNaturalLanguageProcessing2022]])
 - https://towardsdatascience.com/transformers-explained-visually-not-just-how-but-why-they-work-so-well-d840bd61a9d3
 - http://nlp.seas.harvard.edu/2018/04/03/attention.html
 
@@ -115,8 +132,8 @@ Specialized variants for tabular data:
 
 
 ## Viz
-Visualization of norm-first and norm last (similar in [[@xiongLayerNormalizationTransformer2020]]):
-![[layer-norm-first-last.png]]
+
+
 
 ![[norm-first-norm-last-big-picture.png]]
 (from https://github.com/dvgodoy/PyTorchStepByStep)

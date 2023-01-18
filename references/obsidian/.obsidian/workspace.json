@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 33.87096774193548,
+        "dimension": 64.7347302719572,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -21,23 +21,40 @@
               },
               "pinned": true
             }
-          }
-        ]
-      },
-      {
-        "id": "edfab61193f0c850",
-        "type": "tabs",
-        "dimension": 66.12903225806451,
-        "children": [
+          },
           {
             "id": "966fe423151885fd",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🥠Selection of approaches (supervised).md",
+                "file": "chapters/🤖Transformer.md",
                 "mode": "source",
                 "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "075a46e0c3695efa",
+        "type": "tabs",
+        "dimension": 35.265269728042796,
+        "children": [
+          {
+            "id": "aca5488260c32cae",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "🎨transformer.canvas",
+                "viewState": {
+                  "x": -446,
+                  "y": -317,
+                  "zoom": 0,
+                  "snapToGrid": false
+                }
               }
             }
           }
@@ -99,7 +116,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🥠Selection of approaches (supervised).md",
+                "file": "chapters/🤖Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +144,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🥠Selection of approaches (supervised).md"
+                "file": "chapters/🤖Transformer.md"
               }
             }
           }
@@ -151,15 +168,15 @@
   },
   "active": "966fe423151885fd",
   "lastOpenFiles": [
-    "TOC.md",
-    "chapters/🤖Transformer.md",
-    "📥Inbox/@nguyenTransformersTearsImproving2019.md",
-    "chapters/🥠Selection of approaches (semi-supervised).md",
-    "chapters/🥠Selection of approaches (supervised).md",
-    "chapters/🤖TabTransformer.md",
-    "chapters/🤖Pretraining of Transformers.md",
-    "chapters/🧭Attention map.md",
     "chapters/🅰️Attention.md",
-    "🤖Transformer network architecture.md"
+    "chapters/🤖Transformer.md",
+    "🎨transformer.canvas",
+    "chapters/🤖Training of the Transformer.md",
+    "chapters/🤖FTTransformer.md",
+    "chapters/🤖TabTransformer.md",
+    "chapters/👪Related work.md",
+    "chapters/💡Tuning of models (semi-supervised).md",
+    "chapters/🥠Selection of approaches (supervised).md",
+    "TOC.md"
   ]
 }

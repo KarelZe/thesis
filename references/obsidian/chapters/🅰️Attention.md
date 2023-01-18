@@ -11,6 +11,7 @@ The study of the transformer architecture has focused on the role and function o
 
 ## Self-attention
 - intuition behind multi-head and self-attention e. g. cosine similarity, key and querying mechanism: https://www.youtube.com/watch?v=mMa2PmYJlCo&list=PL86uXYUJ7999zE8u2-97i4KG_2Zpufkfb
+- See [[@michelAreSixteenHeads2019]] for discussion if all heads are necessary
 
 - See [[@zhangDiveDeepLearning2021]] for intuitive explanation
 - See [[@tayEfficientTransformersSurvey2022]] for computational complexity
