@@ -6,7 +6,6 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 64.7347302719572,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -36,29 +35,6 @@
           }
         ],
         "currentTab": 1
-      },
-      {
-        "id": "075a46e0c3695efa",
-        "type": "tabs",
-        "dimension": 35.265269728042796,
-        "children": [
-          {
-            "id": "aca5488260c32cae",
-            "type": "leaf",
-            "state": {
-              "type": "canvas",
-              "state": {
-                "file": "🎨transformer.canvas",
-                "viewState": {
-                  "x": -446,
-                  "y": -317,
-                  "zoom": 0,
-                  "snapToGrid": false
-                }
-              }
-            }
-          }
-        ]
       }
     ],
     "direction": "vertical"

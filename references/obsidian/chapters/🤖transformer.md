@@ -1,23 +1,19 @@
 
 ![[classical_transformer_architecture.png]]
-(own drawing after [[@daiTransformerXLAttentiveLanguage2019]], <mark style="background: #FFB8EBA6;">use L instead of N, left encoder and right decoder. Add label.</mark>)
+(own drawing after [[@daiTransformerXLAttentiveLanguage2019]], <mark style="background: #FFB8EBA6;">use L instead of N, left encoder and right decoder. Add label.</mark>) ^2cf7ee
 
 ## Overview
 
-The *Transformer* is a neural network architecture proposed by [[@vaswaniAttentionAllYou2017]] (p. 2 f.) for sequence-to-sequence modelling. Since it introduction it has become ubiquitous in natural language processing ([[@lampleLargeMemoryLayers2019]], p. 3; ...), among other domains (...). The wide success has lead to adaptions / seen wide adoptions for image representations, tabular representations, ... .
+The *Transformer* is a neural network architecture proposed by [[@vaswaniAttentionAllYou2017]] (p. 2 f.) for sequence-to-sequence modelling, such as machine translation. Since its introduction it has become ubiquitous in natural language processing ([[@lampleLargeMemoryLayers2019]], p. 3; ...). Its success for language representations has also led to adaptions for image representations ([[@parmarImageTransformer2018]], [[@carionEndtoEndObjectDetection2020]]) (found in [[@tayEfficientTransformersSurvey2022]]), as well as tabular data representations ([[@huangTabTransformerTabularData2020]], [[@somepalliSAINTImprovedNeural2021]], [[@gorishniyRevisitingDeepLearning2021]]).
 
-“The transformer network [44] is the current workhorse of Natural Language Processing (NLP): it is employed ubiquitously across a large variety of tasks. Transformers are built by stacking blocks composed of self-attention layers followed by fully connected layers (dubbed FFN), as shown in Figure 3.” (Lample et al., 2019, p. 3) ([[@lampleLargeMemoryLayers2019]])
+The *classical* Transformer follows an encoder-decoder architecture. A sequence of inputs e. g., a sentence in the source language, is first mapped to a sequence of embeddings and enriched with positional information. The encoder receives the input and creates a rich representation from it by encoding the context in which the input appears. The output of the encoder is then fed to the decoder. The decoder takes the embedded target sequence along with parts of the encoded representation of the output to generate the output sequence e. g., a sentence in the target language in an auto-regressive manner. <mark style="background: #FFB8EBA6;">(citation -> Vaswani )</mark> The architecture is depicted in Figure [[🤖Transformer#^2cf7ee]].
 
-The classical Transfomer follows an encoder-decoder architecture, as visualized in Figure(...).
-<mark style="background: #FFB8EBA6;">FIXME:</mark>
--   **Encoder (left)**: The encoder receives an input and builds a representation of it (its features). This means that the model is optimized to acquire understanding from the input.
--   **Decoder (right)**: The decoder uses the encoder’s representation (features) along with other inputs to generate a target sequence. This means that the model is optimized for generating outputs
+The encoder consists of $L$ stacked Transformer blocks. In the classical implementation $L$ is set to $6$ ([[@vaswaniAttentionAllYou2017]]; p. 6) . Each of these blocks consists of two sub-layers: a multi-head self-attention layer, followed by a position-wise, feed-forward network. Each of these sub-layer are connected by skip connections ([[@heDeepResidualLearning2015]]), whereby the input of the sub-layer is added to the sub-layer's output. The output is passed through a layer normalization layer ([[@baLayerNormalization2016]]). 
+%%
+Due to the order of the layers the setup is known as the *post layer norm* (Post LN) architecture.
+%%
 
-(Explain how encoder and decoder are intertwined. What is mask multi-head self-attention.)
-(“Overall, the decoder is structured similarly to the encoder, with the following changes: First, the self-attention mechanisms are “causal” which prevents the decoder from looking at future items from the target sequence when it is fed in during training” (Narang et al., 2021, p. 15))
-
-- the decoder processes autoregressive, meaning it considers previous outputs $y_i$, output before $y_i < y_j$.
-- why were Transformers introduced?
+Aside from the multi-headed self-attention and feed-forward sub-layer the decoder features a third sub-layer for multi-headed self-attention on the output of the encoder, known as *cross attention*. The multi-headed self-attention mechanism in the decoder is also modified, whereby future parts of the output sequence are masked, to prevent the model from attending to subsequent positions during training ([[@vaswaniAttentionAllYou2017]], p. 3) ([[@narangTransformerModificationsTransfer2021]], p. 15). 
 
 ## Transformer modes
 
@@ -26,9 +22,13 @@ The classical Transfomer follows an encoder-decoder architecture, as visualized 
 For it's original application, machine translation, both the encoder and decoder are required, as the input sequence in the source language must first mapped to a rich numerical representation to later generate the output in the target language <mark style="background: #FFF3A3A6;">(Note: This is over-simplifying and lines are blurry.)</mark> Yet, the modular design, allows to adapt Transformers to a much wider range of use cases, some of which only require the encoder or decoder. The necessity is highly dependent on the task to solve i. e., if a enriched representation of the input suffices, or if inversely new output must be generated. We refer to these truncated architectures as *encoder-only* or *decoder-only*. 
 
 ## Transformer architectures
+
+<mark style="background: #BBFABBA6;">“We use a simplified version of layer normalization where the activations are only rescaled and no additive bias is applied. After layer normalization, a residual skip connection (He et al., 2016) adds each subcomponent’s input to its output.” (Raffel et al., 2020, p. 4)</mark>
+
+
 - motivation to switch discuss the effects of layer pre-normalization vs. post-normalization (see [[@tunstallNaturalLanguageProcessing2022]])
 
-Both the encoder and decoder stack $L$ Transformer blocks. Each of these blocks consists of two sub-layers: a multi-head self-attention layer, followed by a fully-connected feed-forward network. Each of these sub-layer are connected by residual connections ([[@heDeepResidualLearning2015]]) and followed by layer normalization ([[@baLayerNormalization2016]]). The specific layer arrangement is referred to as *Post Layer Normalization* (Post-LN) derived from the placement of the normalization layer.
+Both the encoder and decoder stack $L$ Transformer blocks. The specific layer arrangement is referred to as *Post Layer Normalization* (Post-LN) derived from the placement of the normalization layer.
 
 First, we apply layer normalization before the selfattention and feedforward blocks instead of after. This small change has been unanimously adopted by all current Transformer implementations because it leads to more effective training (Baevski and Auli, 2019; Xiong et al., 2020). [[@narangTransformerModificationsTransfer2021]]
 
@@ -89,6 +89,8 @@ As mentioned earlier, the Transformer architecture makes use of layer normalizat
 “To train a Transformer however, one usually needs a carefully designed learning rate warm-up stage, which is shown to be crucial to the final performance but will slow down the optimization and bring more hyperparameter tunings. In this paper, we first study theoretically why the learning rate warm-up stage is essential and show that the location of layer normalization matters. Specifically, we prove with mean field theory that at initialization, for the original-designed Post-LN Transformer, which places the layer normalization between the residual blocks, the expected gradients of the parameters near the output layer are large. Therefore, using a large learning rate on those gradients makes the training unstable. The warm-up stage is practically helpful for avoiding this problem. On the other hand, our theory also shows that if the layer normalization is put inside the residual blocks (recently proposed as Pre-LN Transformer), the gradients are well-behaved at initialization. This motivates us to remove the warm-up stage for the training of Pre-LN Transformers. We show in our experiments that Pre-LN Transformers without the warm-up stage can reach comparable results with baselines while requiring significantly less training time and hyper-parameter tuning on a wide range of applications.” (Xiong et al., 2020, p. 1)
 
 Our analysis starts from the observation: the original Transformer (referred to as Post-LN) is less robust than its Pre-LN variant2 (Baevski and Auli, 2019; Xiong et al., 2019; Nguyen and Salazar, 2019). We recognize that gradient vanishing issue is not the direct reason causing such difference, since fixing this issue alone cannot stabilize PostLN training. It implies that, besides unbalanced gradients, there exist other factors influencing model training greatly [[@liuUnderstandingDifficultyTraining2020]]
+
+
 
 leading to a brittle optimization. 
 A variant known as pre-norm, 
