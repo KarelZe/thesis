@@ -1,3 +1,12 @@
+
+Due to a unsatisfactory research situation, for trade calssification (see chapter [[👪Related work]]) we base
+
+We define the following criteria a model should meet:
+
+- for comparability 
+
+
+
 - nice overview also in [[@levinTransferLearningDeep2022]]
 - survey on transformers for tabular data [[@badaroTransformersTabularData]]
 - Introduce a classifcation that differentiates between supervised, unsupervised, reenforcement learning and semi-supervised learning. 
