@@ -48,7 +48,10 @@ y_l & =x_l+\mathcal{F}\left(x_l ; \theta_l\right)
 $$
 where $x_l$ and $x_{l+1}$ are the input and output of the $l$-th sub-layer, and $y_l$ is the intermediate output followed by the post-processing function $f(\cdot)$. In this way, $x_l$ is explicitly exposed to $y_l$ (see Eq. (2)).</mark>
 
-Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sub-layer and is added to its output. Also, exploding or vanishing gradients are mitigated, as gradients can bypass the sub-layer, ultimately resulting in an easier optimization ([[@liuRethinkingSkipConnection2020]]).  Residual connections also help to preserve the positional embeddings ([[🧵Positional encoding]]) as, the layer's input are maintained in the identity mapping.
+![[residual-connection.png]]
+(from [[@heDeepResidualLearning2015]])
+
+Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sub-layer and is added to its output. Also, exploding or vanishing gradients are mitigated, as gradients can bypass the sub-layer, ultimately resulting in an easier optimization ([[@liuRethinkingSkipConnection2020]]).  Residual connections also help to preserve the positional embeddings ([[🧵Positional encoding]]) as, the layer's input are maintained in the identity mapping.<mark style="background: #FFB8EBA6;"> (may come back and read this https://transformer-circuits.pub/2021/framework/index.html)</mark>
 
 ## research on residual connections 🧬
 
