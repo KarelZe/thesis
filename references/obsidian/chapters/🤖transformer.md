@@ -53,7 +53,7 @@ where $x_l$ and $x_{l+1}$ are the input and output of the $l$-th sub-layer, and 
 
 Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sub-layer and is added to its output. Also, exploding or vanishing gradients are mitigated, as gradients can bypass the sub-layer, ultimately resulting in an easier optimization ([[@liuRethinkingSkipConnection2020]]).  Residual connections also help to preserve the positional embeddings ([[🧵Positional encoding]]) as, the layer's input are maintained in the identity mapping.<mark style="background: #FFB8EBA6;"> (may come back and read this https://transformer-circuits.pub/2021/framework/index.html)</mark>
 
-## research on residual connections 🧬
+### research on residual connections 🧬
 
 <mark style="background: #CACFD9A6;">For a residual block $x+f(x)$, its shortcut output refers to $x$, its residual branch output refers to $f(x)$, and the dependency on its residual branch refers to $\frac{\operatorname{Var}[f(x)]}{\operatorname{Var}[x+f(x)]}$.(From [[@liuUnderstandingDifficultyTraining2020]])
 </mark>
@@ -86,9 +86,11 @@ A residual unit is defined to be (He et al., 2016b): xl+1 = f (yl) (1) yl = xl +
 
 “2.2 On the Importance of Pre-Norm for Deep Residual Network The situation is quite different when we switch to deeper models. More specifically, we find that prenorm is more efficient for training than post-norm if the model goes deeper. This can be explained by seeing back-propagation which <mark style="background: #BBFABBA6;">is the core process to obtain gradients for parameter update. Here we take a stack of L sub-layers as an example. Let E be the loss used to measure how many errors occur in system prediction, and xL be the output of the topmost sub-layer. For post-norm Transformer, given a sub-layer l, the differential of E with respect to xl can be computed by the chain rule, and we have ∂E ∂xl = ∂E ∂xL × L−1 ∏ k=l ∂LN(yk) ∂yk × L−1 ∏ k=l ( 1 + ∂F (xk; θk) ∂xk ) (5) where ∏L−1 k=l ∂ LN(yk ) ∂yk means the backward pass of the layer normalization, and ∏L−1 k=l (1 + ∂F(xk;θk) ∂xk ) means the backward pass of the sub-layer with the residual connection. Likewise, we have the gradient for pre-norm 4: ∂E ∂xl = ∂E ∂xL × ( 1+ L−1 ∑ k=l ∂F (LN(xk); θk) ∂xl ) (6) Obviously, Eq. (6) establishes a direct way to pass error gradient ∂E ∂xL from top to bottom. Its merit lies in that the number of product items on the right side does not depend on the depth of the stack. In contrast, Eq. (5) is inefficient for passing gradients back because the residual connection is not 3We need to add an additional function of layer normalization to the top layer to prevent the excessively increased value caused by the sum of unnormalized output. 4For a detailed derivation, we refer the reader to Appendix A. a bypass of the layer normalization unit (see Figure 1(a)). Instead, gradients have to be passed through LN(·) of each sub-layer. It in turn introduces term ∏L−1 k=l ∂ LN(yk ) ∂yk into the right hand side of Eq. (5), and poses a higher risk of gradient vanishing or exploring if L goes larger. This was confirmed by our experiments in which we successfully trained a pre-norm Transformer system with a 20-layer encoder on the WMT English-German task, whereas the post-norm Transformer system failed to train for a deeper encoder (Section 5.1).” (Wang et al., 2019, p. 1812)</mark>
 
-
 ### layer norm
 (to be done)
+
+Additionally, [[@vaswaniAttentionAllYou2017]] employ layer normalization to make training of the Transformer feasible.
+
 
 See also: https://arxiv.org/pdf/1901.09321.pdf
 See also: https://www.borealisai.com/research-blogs/tutorial-17-transformers-iii-training/
