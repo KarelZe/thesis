@@ -8,6 +8,7 @@
 
 The study of the transformer architecture has focused on the role and function of self-attention layers (Voita et al., 2019; Clark et al., 2019; Vig and Belinkov, 2019) and on inter-layer differences (i.e. lower vs. upper layers) (Tenney et al., 2019; Jawahar et al., 2019). (look up citations in [[@gevaTransformerFeedForwardLayers2021]])
 
+- What is learned in lower layers? What is learned in upper layers?
 
 ## Self-attention
 - intuition behind multi-head and self-attention e. g. cosine similarity, key and querying mechanism: https://www.youtube.com/watch?v=mMa2PmYJlCo&list=PL86uXYUJ7999zE8u2-97i4KG_2Zpufkfb
