@@ -718,12 +718,12 @@ class Transformer(nn.Module):
             prenormalization (bool): flag to use prenormalization.
             first_prenormalization (bool): flag to use prenormalization in the first
             layer.
-            last_layer_query_idx (Union[None, List[int], slice]): query index for the
+            last_layer_query_idx (None | list[int] | slice): query index for the
             last layer.
-            n_tokens (Optional[int]): number of tokens.
-            kv_compression_ratio (Optional[float]): compression ratio for the key and
+            n_tokens (int | None): number of tokens.
+            kv_compression_ratio (float | None): compression ratio for the key and
             values.
-            kv_compression_sharing (Optional[str]): strategy for sharing the key and
+            kv_compression_sharing (str | None): strategy for sharing the key and
             values of compression.
             head_activation (Callable[..., nn.Module]): activation function in the
             attention head.
