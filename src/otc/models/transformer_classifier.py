@@ -1,6 +1,5 @@
 """
 Sklearn-like wrapper around pytorch transformer models.
-
 Can be used as a consistent interface for evaluation and tuning.
 """
 from __future__ import annotations
@@ -24,11 +23,9 @@ from otc.optim.early_stopping import EarlyStopping
 class TransformerClassifier(BaseEstimator, ClassifierMixin):
     """
     Sklearn wrapper around transformer models.
-
     Args:
         BaseEstimator (_type_): base estimator
         ClassifierMixin (_type_): mixin
-
     Returns:
         _type_: classifier
     """
@@ -46,7 +43,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
     ) -> None:
         """
         Initialize the model.
-
         Args:
             module (nn.Module): module to instantiate
             module_params (dict[str, Any]): params for module
@@ -72,7 +68,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
     def _more_tags(self) -> dict[str, bool]:
         """
         Set tags for sklearn.
-
         See: https://scikit-learn.org/stable/developers/develop.html#estimator-tags
         """
         return {
@@ -89,13 +84,11 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
     ) -> TabDataLoader:
         """
         Convert array like to dataloader.
-
         Args:
             X (npt.NDArray | pd.DataFrame): feature matrix
             y (npt.NDArray | pd.Series): target vector
             weight (npt.NDArray | None, optional): weights for each sample.
             Defaults to None.
-
         Returns:
             TabDataLoader: data loader.
         """
@@ -109,7 +102,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         )
 
         return TabDataLoader(
-            data.x_cat, data.x_cont, data.y, data.weight, **self.dl_params
+            data.x_cat, data.x_cont, data.weight, data.y, **self.dl_params
         )
 
     def fit(
@@ -122,14 +115,12 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
     ) -> TransformerClassifier:
         """
         Fit the model.
-
         Args:
             X (npt.NDArray | pd.DataFrame): feature matrix
             y (npt.NDArray | pd.Series): target
             eval_set (tuple[npt.NDArray, npt.NDArray] |
             tuple[pd.DataFrame, pd.Series] | None): eval set. Defaults to None.
             If no eval set is passed, the training set is used.
-
         Returns:
             TransformerClassifier: self
         """
@@ -179,10 +170,10 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         # see https://stackoverflow.com/a/53628783/5755604
         # no sigmoid required; numerically more stable
         # do not reduce, calculate mean after multiplication with weight
-        criterion = nn.BCEWithLogitsLoss(reduction="none")
+        criterion = nn.BCEWithLogitsLoss()  # (reduction="none")
 
         # keep track of val loss and do early stopping
-        early_stopping = EarlyStopping(patience=15)
+        early_stopping = EarlyStopping(patience=5)
 
         for epoch in range(self.epochs):
 
@@ -191,7 +182,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             self.clf.train()
 
-            for x_cat, x_cont, weights, targets in train_loader:
+            for x_cat, x_cont, _, targets in train_loader:
 
                 # reset the gradients back to zero
                 optimizer.zero_grad()
@@ -199,9 +190,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 # compute the model output and train loss
                 with torch.cuda.amp.autocast():
                     logits = self.clf(x_cat, x_cont).flatten()
-                    intermediate_loss = criterion(logits, targets)
-                    train_loss = torch.mean(weights * intermediate_loss)
-
+                    # intermediate_loss = criterion(logits, targets)
+                    # train_loss = torch.mean(weights * intermediate_loss)
+                    train_loss = criterion(logits, targets)
                 # compute accumulated gradients
                 scaler.scale(train_loss).backward()
 
@@ -218,7 +209,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             correct = 0
 
             with torch.no_grad():
-                for x_cat, x_cont, weights, targets in val_loader:
+                for x_cat, x_cont, _, targets in val_loader:
                     logits = self.clf(x_cat, x_cont)
                     logits = logits.flatten()
 
@@ -229,9 +220,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                     # loss calculation.
                     # Criterion contains softmax already.
                     # Weight sample loss with weight.
-                    intermediate_loss = criterion(logits, targets)
-                    val_loss = torch.mean(weights * intermediate_loss)
-
+                    # intermediate_loss = criterion(logits, targets)
+                    # val_loss = torch.mean(weights * intermediate_loss)
+                    val_loss = criterion(logits, targets)
                     loss_in_epoch_val += val_loss.item()
             # loss average over all batches
             train_loss = loss_in_epoch_train / len(train_loader)
@@ -253,10 +244,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
     def predict(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
         """
         Predict class labels for X.
-
         Args:
             X (npt.NDArray | pd.DataFrame): feature matrix
-
         Returns:
             npt.NDArray: labels
         """
@@ -269,10 +258,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
     def predict_proba(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
         """
         Predict class probabilities for X.
-
         Args:
             X (npt.NDArray | pd.DataFrame): feature matrix
-
         Returns:
             npt.NDArray: probabilities
         """
