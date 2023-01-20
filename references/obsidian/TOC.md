@@ -7,6 +7,7 @@
 - Adhere to best practices http://www.sigplan.org/Resources/EmpiricalEvaluation/
 - use colors in formulas🎨. See [[@patrignaniWhyShouldAnyone2021]]
 - https://www.molecularecologist.com/2020/04/23/simple-tools-for-mastering-color-in-scientific-figures/
+- look into [[@lonesHowAvoidMachine2022]]
 
 # Title
 Forget About the Rules: Improving Trade Side Classification With Machine Learning

@@ -2,7 +2,7 @@
 The second part is layer norm. 
 
 
-Additionally, [[@vaswaniAttentionAllYou2017]] employ layer normalization to make training of the Transformer feasible.
+Additionally, [[@vaswaniAttentionAllYou2017]] (p. 3) employ layer normalization around each sub-layer after adding the residual connections ([[🔗Residual connections]]).
 
 
 

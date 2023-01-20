@@ -1,3 +1,4 @@
+- look into [[@lonesHowAvoidMachine2022]]
 - training of the transformer has been found non-trivial[[@liuUnderstandingDifficultyTraining2020]]
 - Do less alchemy and more understanding [Ali Rahimi's talk at NIPS(NIPS 2017 Test-of-time award presentation) - YouTube](https://www.youtube.com/watch?v=Qi1Yry33TQE)
 - Keep algorithms / ideas simple. Add complexity only where needed! 

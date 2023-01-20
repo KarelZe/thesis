@@ -7,7 +7,7 @@ Visualization of norm-first and norm last (similar in [[@xiongLayerNormalization
 
 ## TOC
 
-[[🤖Overview Transformer]]
+[[🗼Overview Transformer]]
 
 Components in the embedding:
 [[🛌Token Embedding]]
@@ -128,7 +128,6 @@ https://www.baeldung.com/cs/transformer-text-embeddings
 ## Notes from talk with Lucas Beyer / Google🎙️
 
 ^54aa8a
-
 (see https://www.youtube.com/watch?v=EixI6t5oif0)
 - attention was originally introduced in the Bahdu paper. But was not the most central part.
 - attention is like a (convoluted (soft)) dictionary lookup. like in a dict we have keys and values and want to query the dictionary. keys and values are a vector of quotes. measure the similarity with the dotproduct. we measure similarity between query and key (attention weights) and the result is normalized. We take weighted average of all values weighted by the attention weights. Note output can also be average over multiple 
