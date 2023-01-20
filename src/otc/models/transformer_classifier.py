@@ -109,7 +109,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         )
 
         return TabDataLoader(
-            data.x_cat, data.x_cont, data.weight, data.y, **self.dl_params
+            data.x_cat, data.x_cont, data.y, data.weight, **self.dl_params
         )
 
     def fit(
@@ -179,7 +179,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         # see https://stackoverflow.com/a/53628783/5755604
         # no sigmoid required; numerically more stable
         # do not reduce, calculate mean after multiplication with weight
-        criterion = nn.BCEWithLogitsLoss()  # (reduction="none")
+        criterion = nn.BCEWithLogitsLoss(reduction="none")
 
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=5)
@@ -191,7 +191,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             self.clf.train()
 
-            for x_cat, x_cont, _, targets in train_loader:
+            for x_cat, x_cont, weights, targets in train_loader:
 
                 # reset the gradients back to zero
                 optimizer.zero_grad()
@@ -199,9 +199,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 # compute the model output and train loss
                 with torch.cuda.amp.autocast():
                     logits = self.clf(x_cat, x_cont).flatten()
-                    # intermediate_loss = criterion(logits, targets)
-                    # train_loss = torch.mean(weights * intermediate_loss)
-                    train_loss = criterion(logits, targets)
+                    intermediate_loss = criterion(logits, targets)
+                    train_loss = torch.mean(weights * intermediate_loss)
+
                 # compute accumulated gradients
                 scaler.scale(train_loss).backward()
 
@@ -218,7 +218,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             correct = 0
 
             with torch.no_grad():
-                for x_cat, x_cont, _, targets in val_loader:
+                for x_cat, x_cont, weights, targets in val_loader:
                     logits = self.clf(x_cat, x_cont)
                     logits = logits.flatten()
 
@@ -229,9 +229,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                     # loss calculation.
                     # Criterion contains softmax already.
                     # Weight sample loss with weight.
-                    # intermediate_loss = criterion(logits, targets)
-                    # val_loss = torch.mean(weights * intermediate_loss)
-                    val_loss = criterion(logits, targets)
+                    intermediate_loss = criterion(logits, targets)
+                    val_loss = torch.mean(weights * intermediate_loss)
+
                     loss_in_epoch_val += val_loss.item()
             # loss average over all batches
             train_loss = loss_in_epoch_train / len(train_loader)

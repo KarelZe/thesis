@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 52.20686580472581,
+        "dimension": 52.206865804725815,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -46,12 +46,8 @@
             "id": "209b0562a81ebb2b",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🤖Transformer.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -164,15 +160,15 @@
   },
   "active": "fc3638a4eda8659e",
   "lastOpenFiles": [
-    "chapters/🤖Pretraining of Transformers.md",
-    "chapters/🤖Transformer.md",
-    "📥Inbox/@elhage2021mathematical.md",
-    "TOC.md",
     "chapters/🅰️Attention.md",
+    "chapters/🤖Transformer.md",
+    "TOC.md",
+    "chapters/🤖FTTransformer.md",
+    "chapters/🤖Pretraining of Transformers.md",
+    "📥Inbox/@elhage2021mathematical.md",
     "📥Inbox/@heDeepResidualLearning2015.md",
     "🎨transformer.canvas",
     "chapters/🤖Training of the Transformer.md",
-    "chapters/🤖FTTransformer.md",
     "chapters/🤖TabTransformer.md"
   ]
 }

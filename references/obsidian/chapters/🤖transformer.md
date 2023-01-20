@@ -2,6 +2,11 @@
 ![[classical_transformer_architecture.png]]
 (own drawing after [[@daiTransformerXLAttentiveLanguage2019]], <mark style="background: #FFB8EBA6;">use L instead of N, left encoder and right decoder. Add label.</mark>) ^2cf7ee
 
+![[layer-norm-first-last.png]]
+Visualization of norm-first and norm last (similar in [[@xiongLayerNormalizationTransformer2020]])
+
+
+
 ## Overview
 
 The *Transformer* is a neural network architecture proposed by [[@vaswaniAttentionAllYou2017]] (p. 2 f.) for sequence-to-sequence modelling, such as machine translation. Since its introduction it has become ubiquitous in natural language processing ([[@lampleLargeMemoryLayers2019]], p. 3; ...). Its success for language representations has also led to adaptions for image representations ([[@parmarImageTransformer2018]], [[@carionEndtoEndObjectDetection2020]]) (found in [[@tayEfficientTransformersSurvey2022]]), as well as tabular data representations ([[@huangTabTransformerTabularData2020]], [[@somepalliSAINTImprovedNeural2021]], [[@gorishniyRevisitingDeepLearning2021]]).
@@ -55,6 +60,8 @@ Intuitively, the residual connection provides an alternative path for informatio
 
 ### research on residual connections 🧬
 
+
+
 <mark style="background: #CACFD9A6;">For a residual block $x+f(x)$, its shortcut output refers to $x$, its residual branch output refers to $f(x)$, and the dependency on its residual branch refers to $\frac{\operatorname{Var}[f(x)]}{\operatorname{Var}[x+f(x)]}$.(From [[@liuUnderstandingDifficultyTraining2020]])
 </mark>
 
@@ -89,6 +96,9 @@ A residual unit is defined to be (He et al., 2016b): xl+1 = f (yl) (1) yl = xl +
 ### layer norm
 (to be done)
 
+The second part is layer norm. 
+
+
 Additionally, [[@vaswaniAttentionAllYou2017]] employ layer normalization to make training of the Transformer feasible.
 
 
@@ -114,9 +124,6 @@ By the placement of the layer norm, one differentiates the
 “Residual connection and layer normalization Besides the two sub-layers described above, the residual connection and layer normalization are also key components to the Transformer. For any vector v, the layer normalization is computed as LayerNorm(v) = γ v−μ σ + β, in which μ, σ are the mean and standard deviation of the elements in v, i.e., μ = 1 d ∑d k=1 vk and σ2 = 1 d ∑d k=1(vk − μ)2. Scale γ and bias vector β are parameters” (Xiong et al., 2020, p. 3)
 
 “the impact of the layer normalization positions [32, 33]. There are currently two major layer normalization positions in Transformers: Pre-Layer Normalization (Pre-LN) and Post-Layer Normalization (Post-LN). Pre-LN applies the layer normalization to an input for each sub-layer, and Post-LN places the layer normalization after each residual connection. The original Transformer [28] employs PostLN. However, recent studies often suggest using Pre-LN [32, 2, 5] because the training in Post-LN with deep Transformers (e.g., ten or more layers) often becomes unstable, resulting in useless models. Figure 1 shows an actual example; loss curves of training 18L-18L Transformer encoder-decoders on a widely used WMT English-to-German machine translation dataset. Here, XL-Y L represents the number of layers in encoder and decoder, where X and Y correspond to encoder and decoder, respectively. These figures clearly show that 18L-18L Post-LN Transformer encoder-decoder fails to train the model. However, in contrast, Liu et al. [13] reported that Post-LN consistently achieved better performance than Pre-LN in the machine translation task when they used 6L-6L (relatively shallow) Transformers.” (Takase et al., 2022, p. 2)
-
-![[layer-norm-first-last.png]]
-Visualization of norm-first and norm last (similar in [[@xiongLayerNormalizationTransformer2020]])
 
 
 
@@ -221,18 +228,6 @@ Specialized variants for tabular data:
 [[🤖TabTransformer]]
 [[🤖FTTransformer]]
 
-
-## Visualizations
-
-
-
-![[norm-first-norm-last-big-picture.png]]
-(from https://github.com/dvgodoy/PyTorchStepByStep)
-
-Layer norm / batch norm / instance norm:
-![[layer-batch-instance-norm.png]]
-![[viz-of image-embedding.png]]
-(from https://github.com/dvgodoy/PyTorchStepByStep)
 
 ## Notes from Sukhabaatar
 (see [[@sukhbaatarAugmentingSelfattentionPersistent2019]])
