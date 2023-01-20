@@ -72,7 +72,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### Attention
 [[🅰️Attention]]
 ### Positional Encoding 🟢
-[[🧵Positional encoding]]
+[[🧵Positional Embedding]]
 ### Embeddings 🟢
 [[🛌Token Embedding]]
 
