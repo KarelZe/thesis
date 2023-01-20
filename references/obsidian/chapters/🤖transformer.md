@@ -1,6 +1,6 @@
 
 ![[classical_transformer_architecture.png]]
-(own drawing after [[@daiTransformerXLAttentiveLanguage2019]], <mark style="background: #FFB8EBA6;">use L instead of N, left encoder and right decoder. Add label.</mark>) ^2cf7ee
+(own drawing after [[@daiTransformerXLAttentiveLanguage2019]], <mark style="background: #FFB8EBA6;">use L instead of N, left encoder and right decoder. Add label.</mark> Altnerative https://github.com/negrinho/sane_tikz) ^2cf7ee
 
 ![[layer-norm-first-last.png]]
 Visualization of norm-first and norm last (similar in [[@xiongLayerNormalizationTransformer2020]])

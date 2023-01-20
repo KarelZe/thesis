@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 52.206865804725815,
+        "dimension": 56.32823365785814,
         "children": [
           {
             "id": "160a03ac0eb0e817",
@@ -23,18 +23,6 @@
             }
           },
           {
-            "id": "b1faa7e615bd5b3a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "TOC.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "99f4016e220b2936",
             "type": "leaf",
             "state": {
@@ -46,13 +34,12 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "886d50b05f0a56d1",
         "type": "split",
-        "dimension": 47.793134195274185,
+        "dimension": 43.671766342141865,
         "children": [
           {
             "id": "076e2fecab32d51c",
@@ -62,12 +49,8 @@
                 "id": "fc3638a4eda8659e",
                 "type": "leaf",
                 "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "chapters/🤖Transformer.md",
-                    "mode": "source",
-                    "source": false
-                  }
+                  "type": "empty",
+                  "state": {}
                 }
               }
             ]
@@ -80,12 +63,8 @@
                 "id": "209b0562a81ebb2b",
                 "type": "leaf",
                 "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "chapters/🍔Layer norm.md",
-                    "mode": "source",
-                    "source": false
-                  }
+                  "type": "empty",
+                  "state": {}
                 }
               }
             ]
@@ -133,7 +112,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 273.5
+    "width": 359.5
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -199,17 +178,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "b1faa7e615bd5b3a",
+  "active": "160a03ac0eb0e817",
   "lastOpenFiles": [
+    "📥Inbox/@daiTransformerXLAttentiveLanguage2019.md",
+    "chapters/🤖transformer.md",
+    "TOC.md",
     "chapters/💡Training and tuning.md",
     "chapters/🏅Results of supervised.md",
     "chapters/🏅Results of semi-supervised.md",
     "chapters/🍔Layer norm.md",
     "chapters/🤖Transformer.md",
-    "TOC.md",
     "orphaned files output.md",
-    "files without tags.md",
-    "empty files.md",
-    "broken links output.md"
+    "files without tags.md"
   ]
 }
