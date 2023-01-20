@@ -282,7 +282,7 @@ class FTTransformerObjective(Objective):
         """
         # https://arxiv.org/pdf/2106.11959v2.pdf page 18  (B)
         n_blocks: int = trial.suggest_int("n_blocks", 1, 6)
-        d_token: int = trial.suggest_int("d_token", 64, 512)
+        d_token: int = trial.suggest_int("d_token", 64, 512, step=8)
         attention_dropout = trial.suggest_float("attention_dropout", 0, 0.5)
         ffn_dropout = trial.suggest_float("ffn_dropout", 0, 0.5)
 
