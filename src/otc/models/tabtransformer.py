@@ -140,7 +140,6 @@ class ColumnEmbedding(nn.Module):
             x = x + self.shared_embed[None]
         # add bias term, not part of paper but works in Gorishnyy et al.
         if self.bias is not None:
-            print(self.bias)
             x = x + self.bias[None]
         # add dropout, not part of paper, but could work
         return self.dropout(x)
