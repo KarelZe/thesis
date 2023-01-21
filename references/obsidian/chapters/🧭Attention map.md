@@ -1,14 +1,35 @@
-Relates to #attention #shap #random-feature-permutation 
- 
+Relates to #attention #shap #random-feature-permutation  
 ### Attention visualization
 
-In addition to [[🥌kernel shap]], transformer-based models offer some interpretability through their attention mechanism. Feature attributions can be derived from attention by visualizing features that the model attends to in a *attention map*. While attention maps are specific to transformers or other attention-based architectures,  rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in Figure [[#^401670]].
+In addition to [[🧭Kernel SHAP]], transformer-based models offer some interpretability through their attention mechanism. Feature attributions can be derived from attention by visualizing features that the model attends to in a *attention map*. While attention maps are specific to transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in Figure [[#^401670]].
+
+![[attention-map-for-heads.png]]
+(Copied from [[🧠Deep Learning Methods/@zhangDiveDeepLearning2021]]; Code available or http://nlp.seas.harvard.edu/annotated-transformer/)
 
 ![[attention-map-saint.png]] ^401670
+(Copied from [[@somepalliSAINTImprovedNeural2021]])
 
 In the *tabular domain* various approaches for obtaining attention from multiple attention heads and transformer blocks have been explored in the literature [[@somepalliSAINTImprovedNeural2021]] and [[@borisovDeepNeuralNetworks2022]] gather attention maps from the first attention layer only, and [[@borisovDeepNeuralNetworks2022]] obtain feature attributions by taking the diagonal of the attention matrix $\mathbf{A}$ or through column-wise summation. In contrast, [[@gorishniyRevisitingDeepLearning2021]] leverage all attention matrices by averaging over multiple transformer blocks, attention heads, and samples to obtain global feature attributions. Both approaches may be myopic, as attention heads may contribute unequally to the result or as some attention layers are neglected entirely.
 
 While not explored systematically for the tabular domain, the roles of different attention heads have been studied intensively in transformer-based machine translation (see e. g., [[@voitaAnalyzingMultiHeadSelfAttention2019]], [[@tangAnalysisAttentionMechanisms2018]]).  [[@voitaAnalyzingMultiHeadSelfAttention2019]] observe that attention heads have a varying importance and serve distinct purposes like learning positional or syntactic relations between tokens. Also, all attention layers contribute to the model's prediction. Transferring their result back to the tabular domain, averaging over multiple heads or considering selected attention layers only and may lead to undesired obfuscation effects. 
+
+%%
+<mark style="background: #FFB8EBA6;">TODO: Argue, why it makes sense to look at attention maps? Attention is a filter [[🅰️Attention]]</mark>
+
+TODO: write about that higher layers learn details, whereas lower layers focus on more general / basic information. Try to find the paper again, that had some good references... 
+%%
+
+
+%%
+interesting blog post on importance of heads and pruning them:
+https://lena-voita.github.io/posts/acl19_heads.html
+
+Heads have a different importance and many can even be pruned: [[@michelAreSixteenHeads2019]]
+
+The study of the transformer architecture has focused on the role and function of self-attention layers (Voita et al., 2019; Clark et al., 2019; Vig and Belinkov, 2019) and on inter-layer differences (i.e. lower vs. upper layers) (Tenney et al., 2019; Jawahar et al., 2019). (look up citations in [[@gevaTransformerFeedForwardLayers2021]])
+
+Also related are interpretability methods that explain predictions (Han et al., 2020; Wiegreffe and Pinter, 2019) (look up citations in [[@gevaTransformerFeedForwardLayers2021]])
+%%
 
 As part of their *rollout attention* method [[@abnarQuantifyingAttentionFlow2020]] (p. 3) combine raw attention from multiple layers through recursive matrix multiplication with the weight matrices from attention layers below, as shown in this Equation: [^1]
 $$
@@ -36,7 +57,21 @@ $$
 
 In this equation, $\odot$ represents the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(b)}:=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(b)}$. As previously suggested in [[@cheferTransformerInterpretabilityAttention2021]] (p. 786), negative contributions are eliminated in order to focus on positive relevance, and the results are averaged over the heads dimension.
 
-In absence of a ground truth for the true feature attribution, we also calculate attention maps using Eq. (...) and Eq. (...). Inline with previous research, feature attributions are also summed over the first attention layer or over all transformer blocks. All of these approaches, can be computed with a single forward pass and are computationally efficient. The level of agreement between attributions from attention maps and [[🥌kernel shap]] is quantified by calculating Spearman's rank correlation between them.
+<mark style="background: #FFB8EBA6;">(TODO: Use different notation for dot-product. In previous chapters it's no dot at all)</mark>
+
+%%
+Provide some short discussion. Address problems with interpration of attention proabilites?
+Possible papers: [[@bastingsElephantInterpretabilityRoom2020]] and  [[@jainAttentionNotExplanation2019]] and [[@wiegreffeAttentionNotNot2019]] and https://medium.com/@byron.wallace/thoughts-on-attention-is-not-not-explanation-b7799c4c3b24 and https://medium.com/@yuvalpinter/attention-is-not-not-explanation-dbc25b534017
+A research on what transformers actually learn for simple language models: https://transformer-circuits.pub/2021/framework/index.html
+
+A library that can also investigate models across multiple nodes:
+https://transformer-circuits.pub/2021/garcon/index.html
+
+For visualization see also:
+http://nlp.seas.harvard.edu/annotated-transformer/
+%%
+
+In absence of a ground truth for the true feature attribution, we also calculate attention maps using Eq. (...) and Eq. (...). Inline with previous research, feature attributions are also summed over the first attention layer or over all transformer blocks. All of these approaches, can be computed with a single forward pass and are computationally efficient. The level of agreement between attributions from attention maps and [[🧭Kernel SHAP]] is quantified by calculating Spearman's rank correlation between them.
 
 Due to the limitation that TabTransformer ([[@huangTabTransformerTabularData2020]]) only feds categorical features through the transformer, only feature-attributions for non-continuous features can be estimated.
 
