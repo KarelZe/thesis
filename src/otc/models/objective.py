@@ -14,6 +14,7 @@ import numpy as np
 import optuna
 import pandas as pd
 import torch
+import torch.nn.functional as F
 from catboost import CatBoostClassifier, Pool
 from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
@@ -167,6 +168,7 @@ class TabTransformerObjective(Objective):
             float: accuracy of trial on validation set.
         """
         # searchable params
+        # dim must be divisiable by 2, 4, 8 (n_heads)
         dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
 
         # done similar to borisov
@@ -196,11 +198,12 @@ class TabTransformerObjective(Objective):
             "dim": dim,
             "dim_out": 1,
             "mlp_act": nn.ReLU,
+            "transformer_act": F.gelu,
+            "transformer_norm_first": False,
             "mlp_hidden_mults": (4, 2),
-            "attn_dropout": dropout,
-            "ff_dropout": dropout,
-            "cat_features": self._cat_features,
+            "transformer_dropout": dropout,
             "cat_cardinalities": self._cat_cardinalities,
+            "cat_features": self._cat_features,
             "num_continuous": len(self._cont_features),
         }
 
