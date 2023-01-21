@@ -1,5 +1,6 @@
 #lr-warmup #lr-scheduling 
 
+- practical guide https://github.com/google-research/tuning_playbook
 - practical tips for deep learning: http://yyue.blogspot.com/2015/01/abrief-overview-of-deep-learning.html
 - post norm / pre-norm / lr warm up [[@xiongLayerNormalizationTransformer2020]]
 

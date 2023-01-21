@@ -15,7 +15,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "TOC.md",
+                "file": "🗿TOC.md",
                 "mode": "source",
                 "source": false
               },
@@ -28,13 +28,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "TOC.md",
+                "file": "chapters/🤖Training of the Transformer.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "886d50b05f0a56d1",
@@ -128,7 +129,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TOC.md",
+                "file": "chapters/🤖Training of the Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -156,7 +157,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TOC.md"
+                "file": "chapters/🤖Training of the Transformer.md"
               }
             }
           }
@@ -178,17 +179,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "160a03ac0eb0e817",
+  "active": "99f4016e220b2936",
   "lastOpenFiles": [
-    "📥Inbox/@daiTransformerXLAttentiveLanguage2019.md",
+    "chapters/🤖TabTransformer.md",
+    "chapters/🎱Position-wise FFN.md",
+    "chapters/🧭Attention map.md",
+    "chapters/🛌Token Embedding.md",
+    "🗿TOC.md",
     "chapters/🤖transformer.md",
-    "TOC.md",
+    "chapters/🅰️Attention.md",
+    "📥Inbox/@daiTransformerXLAttentiveLanguage2019.md",
     "chapters/💡Training and tuning.md",
-    "chapters/🏅Results of supervised.md",
-    "chapters/🏅Results of semi-supervised.md",
-    "chapters/🍔Layer norm.md",
-    "chapters/🤖Transformer.md",
-    "orphaned files output.md",
-    "files without tags.md"
+    "chapters/🏅Results of supervised.md"
   ]
 }
