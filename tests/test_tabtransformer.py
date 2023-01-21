@@ -6,7 +6,6 @@ https://github.com/tilman151/unittest_dl/blob/master/tests/test_model.py
 """
 
 import torch
-import torch.nn as nn
 
 from otc.models.objective import set_seed
 from otc.models.tabtransformer import TabTransformer
@@ -52,11 +51,7 @@ class TestTabTransformer(NeuralNetTestsMixin):
             cat_cardinalities=self.num_unique_cat,
             num_continuous=self.num_features_cont,
             dim_out=1,
-            mlp_act=nn.ReLU,
             dim=32,
             depth=2,
-            heads=6,
-            attn_dropout=0.1,
-            ff_dropout=0.1,
-            mlp_hidden_mults=(4, 2),
+            heads=8,
         ).to(device)
