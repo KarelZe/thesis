@@ -51,6 +51,8 @@
 -   When looking at the average performance across all nine datasets, the proposed SAINT method tends to outperform gradient-boosted trees. The datasets ranged from 200 to 495,000 examples.
 ## Annotations
 
+“Effect of embedding continuous features To understand the effect of learning embeddings for continuous data, we perform a simple experiment with TabTransformer. We modify TabTransformer by embedding continuous features into d dimensions using a single layer ReLU MLP, just as they use on categorical features, and we pass the embedded features through the transformer block. We keep the entire architecture and all training hyper-parameters the same for both TabTransformer and its modified version. The average AUROC of the original TabTransformer is 89.38. Just by embedding the continuous features, the performance jumps to 91.72. This experiment shows that embedding the continuous data is important and can boost the performance of the model significantly.” (Somepalli et al., 2021, p. 8)
+
 “Our method, SAINT, performs attention over both rows and columns, and it includes an enhanced embedding method. We also study a new contrastive self-supervised pre-training method for use when labels are scarce.” ([Somepalli et al., 2021, p. 1](zotero://select/library/items/PCV7XCHY)) ([pdf](zotero://open-pdf/library/items/N8H76CQW?page=1&annotation=KM89W4QU))
 
 “SAINT consistently improves performance over previous deep learning methods, and it even outperforms gradient boosting methods, including XGBoost, CatBoost, and LightGBM, on average over a variety of benchmark tasks.” ([Somepalli et al., 2021, p. 1](zotero://select/library/items/PCV7XCHY)) ([pdf](zotero://open-pdf/library/items/N8H76CQW?page=1&annotation=CRU8WRY7))

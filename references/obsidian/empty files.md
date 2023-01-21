@@ -1,3 +1,3 @@
 - [[Semi-supervised Learning/pre-training.md]]
-- [[chapters/🎋ablation_study.md]]
-- [[chapters/comparsion.md]]
+- [[🎋Ablation study]]
+- [[🏅Comparsion]]

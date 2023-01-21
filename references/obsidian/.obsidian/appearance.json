@@ -1,6 +1,7 @@
 {
-  "baseFontSize": 19,
+  "baseFontSize": 15,
   "translucency": false,
   "accentColor": "",
-  "monospaceFontFamily": "Cascadia Code"
+  "monospaceFontFamily": "Cascadia Code",
+  "cssTheme": "Typomagical"
 }

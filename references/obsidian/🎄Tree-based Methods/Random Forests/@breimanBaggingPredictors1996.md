@@ -8,7 +8,7 @@ related:
 - [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]
 - [[@hastietrevorElementsStatisticalLearning2009]]
 - [[🎄Tree-based Methods/Random Forests/@breimanRandomForests2001]]
-- [[@hintonImprovingNeuralNetworks2012]] (Bagging is similar to dro-pout found in [[@leePseudolabelSimpleEfficient 1]])
+- [[@hintonImprovingNeuralNetworks2012]] (Bagging is similar to dro-pout found in [[@leePseudolabelSimpleEfficient]])
 
 Tags: #bagging #dt #decision-trees
 

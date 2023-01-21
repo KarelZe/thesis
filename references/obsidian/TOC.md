@@ -5,53 +5,55 @@
 - see  `writing-a-good-introduction.pdf`
 - Prepare final pdf https://github.com/google-research/arxiv-latex-cleaner
 - Adhere to best practices http://www.sigplan.org/Resources/EmpiricalEvaluation/
+- use colors in formulas🎨. See [[@patrignaniWhyShouldAnyone2021]]
+- https://www.molecularecologist.com/2020/04/23/simple-tools-for-mastering-color-in-scientific-figures/
 
 # Title
 Forget About the Rules: Improving Trade Side Classification With Machine Learning
 
 # Introduction
 
-[[introduction]]
+[[👶Introduction]]
 
 # 👨‍👩‍👧‍👦 Related Work
-[[related_work]]
+[[👪Related work]]
 # 🔗Rule-Based Approaches
 
 The following section introduces common rules for signing option trades. We start by introducing the prevailing quote and tick rule and continue with the recently introduced depth and trade size rule. In section [[#^a043d0]] we combine hybrids thereoff. We draw a connection to ensemble learning.
 
 ## Basic Rules
 
-[[basic_rules]]
+[[🔢Basic rules]]
 ### Quote Rule
-[[quote_rule]]
+[[🔢Quote rule]]
 ### Tick Test
-[[tick_test]]
+[[🔢Tick test]]
 ### Depth Rule 🟢
-![[depth_rule]]
+[[🔢Depth rule]]
 
 ### Trade Size Rule
-[[tradesize_rule]]
+[[🔢Tradesize rule]]
 ## Hybrid Rules
 
 ^a043d0
 
 ^ce4ff0
-[[hybrid_rules]]
+[[🔢Hybrid rules]]
 ### Lee and Ready Algorithm
 
 ^370c50
-[[lr_algorithm]]
+[[🔢LR algorithm]]
 
 ### Ellis-Michaely-O’Hara Rule
-[[emo_rule]]
+[[🔢EMO rule]]
 ### Chakrabarty-Li-Nguyen-Van-Ness Method
-[[clnv_method]]
+[[🔢CLNV method]]
 
 # 🧠 Supervised Approaches
 ## Selection of Approaches
 
 ^d8f019
-[[selection_of_approaches]]
+[[🥠Selection of approaches (supervised)]]
 
 ## Gradient Boosted Trees  🟢
 
@@ -60,44 +62,41 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### Decision Tree 🟡
 
 ^5db625
-![[🎄decison_trees]]
+[[🎄Decison_trees]]
 ### Gradient Boosting Procedure 🟡
-![[🐈gradient-boosting]]
+[[🐈gradient-boosting]]
 ## Transformer Networks
-
-[[transformer_networks]]
-### Network Architecture
-[[network_architecture]]
+[[🤖Transformer]]
+### Position-wise FFN 🟢
+[[🎱Position-wise FFN]]
 ### Attention
-[[attention]]
-### Positional Encoding
-### Embeddings
-[[embeddings]]
-### Extensions in TabNet
-[[extensions-to-tabnet]]
+[[🅰️Attention]]
+### Positional Encoding 🟢
+[[🧵Positional encoding]]
+### Embeddings 🟢
+[[🛌Token Embedding]]
 
-### Extensions in TabTransformer
-[[extensions-to-tabtransformer]]
-### Extensions in FTTransformer
-[[🤖pretraining-FTTransformer]]
+### Extensions in TabTransformer🟢
+[[🤖TabTransformer]]
+### Extensions in FTTransformer🟢
+[[🤖FTTransformer]]
 
 # 👽 Semi-Supervised Approaches
 
 ## Selection of Approaches
 
 ^c77130
-[[selection-of-approaches]]
+[[🥠Selection of approaches (semi-supervised)]]
 ## Extensions to Gradient Boosted Trees
-[[extensions-to-gradient-boosting]]
-## Extensions to TabNet
-[[extensions-to-tabnet]]
-## Extensions to TabTransformer
-[[extensions-to-tabtransformer]]
+[[🐈extensions-to-gradient-boosting]]
+
+## Extensions to TabTransformer 
+
 ## Extension to FTTransformer
 # 👒 Empirical Study
 - In the subsequent sections we apply methods from (...) in an empirical setting.
 ## Environment 🟡
-[[environment]]
+[[🌏Environment]]
 
 ## Data and Data Preparation 🟡
 
@@ -106,54 +105,53 @@ In our attempt to compare shallow with deep architectures for trade classificati
 - describe and reason about applied feature engineering
 - describe and reason about test and training split
 ### ISE Data Set 🟡
-[[ise-dataset]]
+[[🌏Ise dataset]]
 
 ### CBOE Data Set 🟡
 describe if data set is actually used. Write similarily to 
 
 ### Exploratory Data Analysis
-[[🚏exploratory data analysis]]
+[[🚏Exploratory data analysis]]
 
 ### Data Pre-Processing 🟡
-[[preprocessing]]
+[[👨‍🍳Pre-Processing]]
 
 ### Feature Engineering 🟡
-![[🪄feature engineering]]
+[[🪄Feature engineering]]
 
 ### Train-Test Split 🟡
 
 ^d50f5d
-[[train-test-split]]
+[[👨‍🍳Tain-Test-split]]
 ## Training and Tuning
-[[training_and_tuning]]
+[[💡Training and tuning]]
 
 ### Training of Supervised Models
-[[training-of-supervised-models]]
+[[💡Training of models (supervised)]]
 ### Training of Semi-Supervised Models
-[[tuning_of_semisupervised]]
+[[💡Tuning of models (semi-supervised)]]
 ### Hyperparameter Tuning
-[[hyperparametertuning]]
+[[💡Hyperparameter tuning]]
 
 ## Evaluation
 ### Feature Importance Measure
-[[feature_importance_measure]]
+[[🏅Feature importance measure]]
 ### Evaluation Metric
-[[evaluation_metric]]
+[[🧭Evaluation metric]]
+[[🧭Attention map]]
 
 # 🏁 Results
-[[results]]
+[[🏅Results]]
 ## Results of Supervised Models
-[[results_of_supervised]]
+[[🏅Results of supervised]]
 ## Results of Semi-Supervised Models
-[[results_of_semisupervised]]
+[[🏅Results of semi-supervised]]
 
 ## Robustness of Results
-[[robustness]]
+[[🏅Robustness]]
 
 ## Feature Importance
-[[feature_importance]]
-
-![[🧭Attention map]]
+[[🏅Feature importance results]]
 
 ## Ablation Study of Models
 
@@ -163,7 +161,7 @@ describe if data set is actually used. Write similarily to
 ## Simulation Results
 
 # 💣Discussion
-[[discussion]]
+[[🧓Discussion]]
 # Conclusion
 - Repeat the problem and its relevance, as well as the contribution (plus quantitative results).
 # 🌄Outlook

@@ -1,2 +1,0 @@
-- Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 
-- Use learning curves from [[#^d50f5d]].

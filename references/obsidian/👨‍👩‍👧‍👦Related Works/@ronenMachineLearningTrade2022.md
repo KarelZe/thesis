@@ -18,7 +18,7 @@ related:
 - Standardization / normalization of data is unclear -> is known to hinder to hinder learning in neural networks.
 - They do not handle imbalancies in the data.
 - Unclear which algorithm posed practical problems to handle the amount of data.
-- At time of reading its inclear if one should perform a 70-30 random split, as they did. Read on bulk classification (e. g. [[@chakrabartyEvaluatingTradeClassification2015 1]]). Shouldn't surrounding trades inform other trades? It's unclear what is meant by 10-fold-cv is not significantly dfferent. Split is obviously not maintained for the equity data, where 2/3s are used for training and the remainder for testing.
+- At time of reading its inclear if one should perform a 70-30 random split, as they did. Read on bulk classification (e. g. [[@chakrabartyEvaluatingTradeClassification2015]]). Shouldn't surrounding trades inform other trades? It's unclear what is meant by 10-fold-cv is not significantly dfferent. Split is obviously not maintained for the equity data, where 2/3s are used for training and the remainder for testing.
 - It's confusing that the feature set is not maintained throughout the work. See e. g., "We include oder flow information ... by augmenting ... with quote features".
 - They do some transfer learning, where the entire model is transferred -> What about parameter transfer.
 ### Content

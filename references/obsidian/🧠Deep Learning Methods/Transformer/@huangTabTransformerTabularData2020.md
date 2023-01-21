@@ -10,7 +10,9 @@ year: 2020
 *code:*
 - https://github.com/jrzaurin/pytorch-widedeep
 - https://github.com/lucidrains/tab-transformer-pytorch
-- https://github.com/autogluon/autogluon/blob/master/tabular/src/autogluon/tabular/models/tab_transformer/tab_transformer.py (autogluon implmentation)
+- https://github.com/autogluon/autogluon/blob/master/tabular/src/autogluon/tabular/models/tab_transformer/tab_transformer.py (autogluon implementation)
+*video:*
+- Video by the author: https://www.youtube.com/watch?v=-ZdHhyQsvRc
 
 ## Notes
 - TabTransformer is a tansformer-based architecture for tabular data. Using transformer layer ([[@vaswaniAttentionAllYou2017]]) it transforms the parametric embeddings of contextual data into robust contextual embeddings through the use of a sequence of multi-head attention-based transformer layers. The motivation for this step is, that highly correlated features within one column or across columns result in embedding pairs that are close in Euclidean space which could not be learned for a vanilla MLP. Embeddings also increases robustness.
@@ -69,10 +71,14 @@ $$
 $$
 Below, we explain the Transformer layers and column embedding.
 
+Important details on column embedding:
+Column Embedding. The first study is on the choice of column embedding - shared parameters $\boldsymbol{c}_{\phi_i}$ across the embeddings of multiple classes in column $i$ for $i$ $\{1,2, \ldots, m\}$. In particular, we study the optimal dimension of $\boldsymbol{c}_{\phi_i}, \ell$. An alternative choice is to element-wisely add the unique identifier $\boldsymbol{c}_{\phi_i}$ and feature-value specific embeddings $\boldsymbol{w}_{\phi_{i j}}$ rather than concatenating them. In that case, both the dimension of $\boldsymbol{c}_{\phi_i}$ and $\boldsymbol{w}_{\phi_{i j}}$ are equal to the dimension of embedding $d$. The goal of having column embedding is to
+
 ## Comparsion FT-Transformer and TabTransformer
 
 ![[ft-tab-transformer.png]]
-(found here https://preview.redd.it/mk28f629uxw91.png?width=1916&format=png&auto=webp&s=9a801d48189cf7fd9d4039e107e236aaa93f6a6f)
+(Guess it's taken from some yandex slide. found here https://preview.redd.it/mk28f629uxw91.png?width=1916&format=png&auto=webp&s=9a801d48189cf7fd9d4039e107e236aaa93f6a6f)
+
 ## Notes Sebastian Raschka
 -   Several open-source implementations are available on GitHub, however, I could not find the official implementation, so the results from this paper must be taken with a grain of salt.
 -   The paper proposes a transformer-based architecture based on self-attention that can be applied to tabular data.
@@ -80,6 +86,37 @@ Below, we explain the Transformer layers and column embedding.
 -   Looking at the average AUC across 15 datasets, the proposed TabTransformer (82.8) is on par with gradient-boosted trees (82.9).
 
 
+## Notes from the keras blog
+https://keras.io/examples/structured_data/tabtransformer/#experiment-2-tabtransformer
+
+1.  All the categorical features are encoded as embeddings, using the same `embedding_dims`. This means that each value in each categorical feature will have its own embedding vector.
+2.  A column embedding, one embedding vector for each categorical feature, is added (point-wise) to the categorical feature embedding.
+3.  The embedded categorical features are fed into a stack of Transformer blocks. Each Transformer block consists of a multi-head self-attention layer followed by a feed-forward layer.
+4.  The outputs of the final Transformer layer, which are the _contextual embeddings_ of the categorical features, are concatenated with the input numerical features, and fed into a final MLP block.
+5.  A `softmax` classifer is applied at the end of the model.
+
+The [paper](https://arxiv.org/abs/2012.06678) discusses both addition and concatenation of the column embedding in the _Appendix: Experiment and Model Details_ section. The architecture of TabTransformer is shown below, as presented in the paper.
+
+
+
+## Notes from Talk by Zohar Karnin
+(see here: https://www.youtube.com/watch?v=-ZdHhyQsvRc)
+
+- networks can only interpret numbers.
+	- Continuous: Easy for numerical input
+	- Categorical: convert to embedding
+
+- issues with categorical data
+	- rare categories -> similar to infrequent words
+	- similar categories; have a head-start by not initializing randomly -> semantic meaning of words
+	- use transfer learning 
+	- handle context
+
+- pre-training is boroughed from nlp. Two approaches:
+	- MLM: convert some categories to missing embedding, reconstruct the category
+	- Replaced token detection: Replace category with random replacement, detect replaced
+- not necessarily a mlp followed by transformer. Could be any network
+- in a semi-supervised comparsion they also compared gbrts on pseudo labelled data
 
 ## Annotations
 “The TabTransformer is built upon self-attention based Transformers. The Transformer layers transform the embeddings of categorical features into robust contextual embeddings to achieve higher prediction accuracy.” ([Huang et al., 2020, p. 1](zotero://select/library/items/MH4GW34I)) ([pdf](zotero://open-pdf/library/items/QYWHEUYE?page=1&annotation=VXCRZEIK))
