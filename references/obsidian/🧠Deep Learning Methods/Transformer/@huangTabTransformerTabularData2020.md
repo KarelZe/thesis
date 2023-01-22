@@ -57,6 +57,17 @@ year: 2020
 	- For large number of unlabeled data pre-trained transformers outperform all other models in terms of AUC.
 	- Tab-Transformer RTD performs better tahn TabTransformer-MLM as pre-training task is just a binary classification instead of a multi-class classification. They say, that the result is consistent with 
 	- [[@clarkELECTRAPretrainingText2020]]
+
+## Search space
+- AdamW optimizer
+- const learning rate
+- early stopping after 15 epochs
+- hidden (embedding) dim, no of layers, no attention heads. MLP sizes are 4x and 2x the input
+- 2 , 4, 8 attention heads
+- hid dim 32, 64, 128, 256
+- no layers 1, 2, 3, 6, 12
+- mlp selu, batchnorm, 2 hidden layers, capacity 8* l with l = d/8, second layer m*l with m in (1,3)
+
 ## Feature Engineering
 - They write that learned embeddings improve performance as long as the cardinality of variables is signifcantly less than the number of datapoints. If not the feature can cause overfitting effects.
 - For scalar features they suggest to include three types of rescaled features and one categorical feature. They argue that redundant encodings for scalars don't cause overfitting, but can help differentiate between useful and unuseful features.
