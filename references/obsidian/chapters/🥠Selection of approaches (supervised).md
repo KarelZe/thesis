@@ -5,6 +5,7 @@ We define the following criteria a model should meet:
 
 - for comparability 
 
+- large number of datapoints -> Transformers (are data hungry)
 
 
 - nice overview also in [[@levinTransferLearningDeep2022]]

@@ -1,11 +1,27 @@
+Additionally, [[@vaswaniAttentionAllYou2017]] (p. 3) employ *layer normalization* around each sub-layer after adding residual connections ([[🔗Residual connections]]). The specific configuration is referred to as *Post Layer Normalization* (Post-LN) derived from the arrangement of the normalization layer.
 
-The second part is layer norm. 
+Layer normalization is used for normalizing the activations of the sub-layer to stabilize and accelerate the training of the network ([[@baLayerNormalization2016]])(p. 2). In Transformers the normalization statistics are calculated separately for <mark style="background: #ADCCFFA6;">every instance</mark>, which guarantees scalability across different batch sizes. For a vector $\boldsymbol{e}\in \mathbb{R}^{d_e}$ the normalized output is given by: $\widehat{\boldsymbol{e}}=\frac{e-m}{\sqrt{v}} \odot \boldsymbol{\gamma}+\boldsymbol{\beta}$, calculated with the statistics $\boldsymbol{m} = \sum_{i=1}^{d_{\mathrm{e}}} e[i] / d_{\mathrm{e}}$ and $v = \sum_{i=1}^{d_{\mathrm{e}}}(e[i]-\boldsymbol{m})^2 / d_{\mathrm{e}}$ and the scale $\boldsymbol{\gamma}$ and bias $\boldsymbol{\beta}$ parameters. 
 
+<mark style="background: #D2B3FFA6;">“Training state-of-the-art, deep neural networks is computationally expensive. One way to reduce the training time is to normalize the activities of the neurons.” (Ba et al., 2016, p. 1)
 
-Additionally, [[@vaswaniAttentionAllYou2017]] (p. 3) employ layer normalization around each sub-layer after adding the residual connections ([[🔗Residual connections]]).
+“In this paper, we transpose batch normalization into layer normalization by computing the mean and variance used for normalization from all of the summed inputs to the neurons in a layer on a single training case” (Ba et al., 2016, p. 1)
 
+“This paper introduces layer normalization, a simple normalization method to improve the training speed for various neural network models. Unlike batch normalization, the proposed method directly estimates the normalization statistics from the summed inputs to the neurons within a hidden layer so the normalization does not introduce any new dependencies between training cases. We show that layer normalization works well for RNNs and improves both the training time and the generalization performance of several existing RNN models.” (Ba et al., 2016, p. 2)
+</mark>
 
+Different orders of the sub-layers, residual connection and layer normalization in a Transformer layer lead to variants of Transformer architectures.
 
+While *post layer norm* has has shown to slightly improve the performance of the Transformer, it is is 
+
+Layer normalization is a  
+
+![[layer-norm-algo.png]]
+
+Normalize across features, separately for each each sample and therefore independent of the batch size.
+
+As such, *pre-norm* is har. 
+
+We'll come back to this observation in Chapter [[💡Training of models (supervised)]]. 
 
 See also: https://arxiv.org/pdf/1901.09321.pdf
 See also: https://www.borealisai.com/research-blogs/tutorial-17-transformers-iii-training/
@@ -47,8 +63,8 @@ where Sublayer is either a multi-head self-attention or a feedforward sublayer.
 
 ## Other
 
-“Residual connection and layer normalization Besides the two sub-layers described above, the residual connection and layer normalization are also key components to the Transformer. For any vector v, the layer normalization is computed as LayerNorm(v) = γ v−μ σ + β, in which μ, σ are the mean and standard deviation of the elements in v, i.e., μ = 1 d ∑d k=1 vk and σ2 = 1 d ∑d k=1(vk − μ)2. Scale γ and bias vector β are parameters” (Xiong et al., 2020, p. 3)
-
+<mark style="background: #BBFABBA6;">“Residual connection and layer normalization Besides the two sub-layers described above, the residual connection and layer normalization are also key components to the Transformer. For any vector v, the layer normalization is computed as LayerNorm(v) = γ v−μ σ + β, in which μ, σ are the mean and standard deviation of the elements in v, i.e., μ = 1 d ∑d k=1 vk and σ2 = 1 d ∑d k=1(vk − μ)2. Scale γ and bias vector β are parameters” (Xiong et al., 2020, p. 3)
+</mark>
 “the impact of the layer normalization positions [32, 33]. There are currently two major layer normalization positions in Transformers: Pre-Layer Normalization (Pre-LN) and Post-Layer Normalization (Post-LN). Pre-LN applies the layer normalization to an input for each sub-layer, and Post-LN places the layer normalization after each residual connection. The original Transformer [28] employs PostLN. However, recent studies often suggest using Pre-LN [32, 2, 5] because the training in Post-LN with deep Transformers (e.g., ten or more layers) often becomes unstable, resulting in useless models. Figure 1 shows an actual example; loss curves of training 18L-18L Transformer encoder-decoders on a widely used WMT English-to-German machine translation dataset. Here, XL-Y L represents the number of layers in encoder and decoder, where X and Y correspond to encoder and decoder, respectively. These figures clearly show that 18L-18L Post-LN Transformer encoder-decoder fails to train the model. However, in contrast, Liu et al. [13] reported that Post-LN consistently achieved better performance than Pre-LN in the machine translation task when they used 6L-6L (relatively shallow) Transformers.” (Takase et al., 2022, p. 2)
 
 

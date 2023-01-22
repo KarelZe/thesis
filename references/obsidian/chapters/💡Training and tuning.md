@@ -5,7 +5,6 @@
 - Don't chase the benchmark, but aim for explainability of the results.
 - compare against https://github.com/jktis/Trade-Classification-Algorithms
 - Classical rules could be implemented using https://github.com/jktis/Trade-Classification-Algorithms
-- Motivate the importance of regularized neural nets with [[@kadraWelltunedSimpleNets2021]] papers. Authors state, that the improvements from regualrization of neural nets are very pronounced and highly significant. Discuss which regularization approaches are applied and why.  
-- Similarily, [[@heBagTricksImage2018]] show how they can improve the performance of neural nets for computer vision through "tricks" like lr scheduling.
+
 - Also see [[@shavittRegularizationLearningNetworks2018]] for regularization in neural networks for tabular data.
 - On activation function see [[@shazeerGLUVariantsImprove2020]]
