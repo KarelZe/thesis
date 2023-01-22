@@ -2,7 +2,7 @@
 
 ## Resources
 - Do less Alchemy at NIPS: https://www.youtube.com/watch?v=Qi1Yry33TQE
-- Practical guide for researchers by Google: https://github.com/google-research/tuning_playbook
+- Practical guide for researchers by Google: https://github.com/google-research/tuning_playbook or [[@tuningplaybookgithub]]
 
 
 ## Task to be done⛑️
@@ -21,6 +21,7 @@
 - Set up a simple baseline
 - Write why we use a quasi-random search during exploration and Bayesian search during exploitation phase. (see https://github.com/google-research/tuning_playbook)
 - Isolate the optimization of different hyperparameters e. g., optimizer, activation functions etc. during the exploration phase. Take into account nuance parameters. Decompose into smaller problems, that are manageable.
+- Discuss why retraining of the best model could make sense.
 - Keep ideas simple and gradually add complexity and make it visible in the structure of the chapter. Helps with reasoning later. Possible steps could be:
 	- tbd
 	- tbd
@@ -38,7 +39,6 @@
 - In-depth weights and bias blog post: https://wandb.ai/site/articles/debugging-neural-networks-with-pytorch-and-w-b-using-gradients-and-visualizations
 - Mind the double descent effect https://openai.com/blog/deep-double-descent/
 
-
 ## Learning rate
 - Lower the learning rate when the model stagnates, but don't start too low.  Try cyclic learning rates https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.CyclicLR.html
 - cycling procedure was proposed in [[@loshchilovSGDRStochasticGradient2017]] and [[@smithCyclicalLearningRates2017]]
@@ -53,7 +53,7 @@
 -   Shuffle in memory if samples are otherwise correlated. (see https://www.lesswrong.com/posts/b3CQrAo2nufqzwNHF/how-to-train-your-transformer)
 
 ## Classical algorithms
-- Implement as sklearn classifier for easier evaluation, ease of use, and reusability.
+- Implement as sklearn classifier for easier evaluation, ease of use, and re-usability.
 
 ## Baseline 
 - Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Also  [[@grauerOptionTradeClassification2022]] could be a baseline.
