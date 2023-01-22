@@ -1,9 +1,8 @@
 #lr-warmup #lr-scheduling 
 
-## Resources
+**Ressources**
 - Do less Alchemy at NIPS: https://www.youtube.com/watch?v=Qi1Yry33TQE
 - Practical guide for researchers by Google: https://github.com/google-research/tuning_playbook
-- 
 
 
 ## Task to be done⛑️
@@ -18,25 +17,45 @@
 - decide on a optimizer
 - implement a much simpler approach e. g., logistic regression
 - complete evaluation pipeline
+- advance experiment tracking https://www.learnpytorch.io/07_pytorch_experiment_tracking/
 
 ## Chapter structure
 - Write about the general idea of training / tuning.
 - Differentiate into exploration and exploitation. Do this in a structured way.
+- Set up a simple baseline
 - Write why we use a quasi-random search during exploration and Bayesian search during exploitation phase. (see https://github.com/google-research/tuning_playbook)
 - Isolate the optimization of different hyperparameters e. g., optimizer, activation functions etc. during the exploration phase. Take into account nuance parameters. Decompose into smaller problems, that are manageable.
 - Keep ideas simple and gradually add complexity and make it visible in the structure of the chapter. Helps with reasoning later. Possible steps could be:
 	1. 
+
+### Classical algorithms
+- Implement as sklearn classifier. Explain why.
+
+## Baseline 
+- Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Also  [[@grauerOptionTradeClassification2022]] could be a baseline.
+
+### Gradient Boosting
+- Discuss overfitting and underfitting. What measures are taken to address the problem?
+
 ### Neural Nets
 - Motivate the importance of regularized neural nets with [[@kadraWelltunedSimpleNets2021]] papers. Authors state, that the improvements from regularization of neural nets are very pronounced and highly significant. Discuss which regularization approaches are applied and why.  
 - Similarly, [[@heBagTricksImage2018]] show how they can improve the performance of neural nets for computer vision through "tricks" like learning rate scheduling.
 - Also see [[@shavittRegularizationLearningNetworks2018]] for regularization in neural networks for tabular data.
 - Motivate different activation functions with [[@shazeerGLUVariantsImprove2020]]
 
-### Gradient Boosting
-- Discuss overfitting and underfitting. What measures are taken to address the problem?
+### Additional techniques 🍰
+- Try out adverserial weight perturbation as done [here.][feedback-nn-train | Kaggle](https://www.kaggle.com/code/wht1996/feedback-nn-train/notebook)
+- Try out Stochastic weight averaging for neural net as done [here.](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) or here [Stochastic Weight Averaging in PyTorch](https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/)
 
-### Classical algorithms
-- Implement as sklearn classifier. Explain why.
+
+
+
+
+## Learning rate
+- try cyclic learning rates https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.CyclicLR.html
+- cycling procedure was proposed in [[@loshchilovSGDRStochasticGradient2017]] and [[@smithCyclicalLearningRates2017]]
+
+
 
 ## Batch size
 - The batch size should _not be_ treated as a tunable hyperparameter for validation set performance. (from https://github.com/google-research/tuning_playbook)

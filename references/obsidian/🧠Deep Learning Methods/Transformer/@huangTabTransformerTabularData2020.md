@@ -9,8 +9,11 @@ year: 2020
 - [[@gorishniyRevisitingDeepLearning2021]] (very similar idea, but look at differences)
 *code:*
 - https://github.com/jrzaurin/pytorch-widedeep
-- https://github.com/lucidrains/tab-transformer-pytorch
+- https://github.com/lucidrains/tab-transformer-pytorch (faulty implementation; does not contain any shared embeddings; weird scaling)
+- https://github.com/timeseriesAI/tsai/blob/be3c787d6e6d0e41839faa3e62d74145c851ef9c/tsai/models/TabTransformer.py (looks pretty reasonable)
 - https://github.com/autogluon/autogluon/blob/master/tabular/src/autogluon/tabular/models/tab_transformer/tab_transformer.py (autogluon implementation)
+- https://github.com/manujosephv/pytorch_tabular/blob/main/pytorch_tabular/models/tab_transformer/tab_transformer.py (pytorch tabular implementation)
+- https://keras.io/examples/structured_data/tabtransformer/ (keras implementation)
 *video:*
 - Video by the author: https://www.youtube.com/watch?v=-ZdHhyQsvRc
 

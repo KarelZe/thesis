@@ -31,12 +31,26 @@
             }
           },
           {
+            "id": "767524c3f67f5f7e",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖Training of the Transformer.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
             "id": "f2e0f4375182276b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖Training of the Transformer.md",
+                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
                 "mode": "source",
                 "source": false
               }
@@ -54,17 +68,9 @@
             "id": "209b0562a81ebb2b",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "767524c3f67f5f7e",
-            "type": "leaf",
-            "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🍔Layer norm.md",
+                "file": "chapters/🥠Selection of approaches (supervised).md",
                 "mode": "source",
                 "source": false
               }
@@ -76,14 +82,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/💡Training of models (supervised).md",
+                "file": "chapters/💡Tuning of models (semi-supervised).md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -112,7 +117,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#feature-enginering",
+                "query": "xie",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -141,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Training of the Transformer.md",
+                "file": "chapters/🥠Selection of approaches (supervised).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Training of the Transformer.md"
+                "file": "chapters/🥠Selection of approaches (supervised).md"
               }
             }
           }
@@ -191,17 +196,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f2e0f4375182276b",
+  "active": "209b0562a81ebb2b",
   "lastOpenFiles": [
-    "chapters/🏅Results of supervised.md",
-    "chapters/🥠Selection of approaches (supervised).md",
-    "chapters/👨‍🍳Tain-Test-split.md",
-    "chapters/🚏exploratory data analysis.md",
-    "chapters/🤖Training of the Transformer.md",
-    "chapters/💡Training and tuning.md",
+    "chapters/💡Tuning of models (semi-supervised).md",
     "chapters/💡Training of models (supervised).md",
+    "chapters/🤖Training of the Transformer.md",
+    "chapters/🚏exploratory data analysis.md",
+    "chapters/🏅Results.md",
+    "chapters/🥠Selection of approaches (supervised).md",
+    "chapters/🏅Feature importance results.md",
+    "🧠Deep Learning Methods/@xieAdanAdaptiveNesterov2022.md",
     "chapters/🍔Layer norm.md",
-    "chapters/🤖TabTransformer.md",
-    "chapters/🤖transformer.md"
+    "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md"
   ]
 }
