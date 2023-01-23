@@ -101,12 +101,12 @@ class ColumnEmbedding(nn.Module):
 
         self.shared_embedding = mode
         self.dropout = nn.Dropout(p=dropout)
-
-        # + 1 for NaNs in each column
-        self.cardinalities: list[int] = [c + 1 for c in list(cat_cardinalities)]
-
+      
+        if type(cat_cardinalities) is tuple:
+            cat_cardinalities = list(cat_cardinalities)
+        
         # embeddings for every class in every column
-        category_offsets = torch.tensor([0] + self.cardinalities[:-1]).cumsum(0)
+        category_offsets = torch.tensor([0] + cat_cardinalities[:-1]).cumsum(0)
         self.register_buffer("category_offsets", category_offsets, persistent=False)
         self.indiv_embed = nn.Embedding(sum(cat_cardinalities), dim)
 
@@ -135,7 +135,7 @@ class ColumnEmbedding(nn.Module):
         Returns:
             Tensor: tensor with embeddings
         """
-        x = self.indiv_embed(x + self.category_offsets)
+        x = self.indiv_embed(x + self.category_offsets[None])
         if self.shared_embedding == "add":
             x = x + self.shared_embed[None]
         # add bias term, not part of paper but works in Gorishnyy et al.

@@ -30,7 +30,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         _type_: classifier
     """
 
-    epochs = 1024
+    epochs = 128
 
     def __init__(
         self,
@@ -173,7 +173,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         criterion = nn.BCEWithLogitsLoss()  # (reduction="none")
 
         # keep track of val loss and do early stopping
-        early_stopping = EarlyStopping(patience=5)
+        early_stopping = EarlyStopping(patience=15)
 
         for epoch in range(self.epochs):
 
@@ -230,6 +230,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             # correct samples / no samples
             val_accuracy = correct / len(X_val)
 
+            
             self.callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
 
             # return early if val accuracy doesn't improve. Minus to minimize.

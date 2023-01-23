@@ -55,7 +55,7 @@ class EarlyStopping:
             logger.info(
                 f"{Colors.OKBLUE}[early stopping {self.counter}/"
                 f"{self.patience}]{Colors.ENDC}"
-                f" Stopping in {self.patience - self.counter} epochs."
+                f" Stopping in {self.patience - self.counter} epochs @ {abs(val_loss)}."
             )
 
             if self.counter >= self.patience:

@@ -418,8 +418,8 @@ presentation.pdf
 thesis.pdf
 
 # weights and biases
-/wandb/
-/artifacts/
+**/wandb
+**/artifacts
 
 # catboost
 **/catboost_info/
