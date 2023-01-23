@@ -11,23 +11,11 @@
           {
             "id": "fc3638a4eda8659e",
             "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@tunstallNaturalLanguageProcessing2022.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b7b63302b9c3bf89",
-            "type": "leaf",
             "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🍔Layer norm.md",
+                "file": "chapters/🤖Pretraining of Transformers.md",
                 "mode": "source",
                 "source": false
               },
@@ -35,36 +23,60 @@
             }
           },
           {
-            "id": "ab7002fcaa983b7d",
+            "id": "5a90139c01824c01",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@wangLearningDeepTransformer2019.md",
+                "file": "🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "1352e0aa843584d7",
+            "id": "79310742ed9733f5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@takaseLayerNormalizationsResidual2022.md",
+                "file": "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "8cdbd135d48ef53e",
+            "id": "d4ed3d8963bf5155",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@nguyenTransformersTearsImproving2019.md",
+                "file": "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7d7869ae0bebf9c7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/💡Tuning of models (semi-supervised).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "b55e26f87f65fbff",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,33 +105,8 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "c32f82710a3922a5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f2e0f4375182276b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "e8dcfee4ca085c4c",
@@ -127,31 +114,18 @@
         "dimension": 48.8641631896152,
         "children": [
           {
-            "id": "209b0562a81ebb2b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🥠Selection of approaches (supervised).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "3ccaf56b42332e71",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@tuningplaybookgithub.md",
+                "file": "chapters/🥠Selection of approaches (semi-supervised).md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -209,7 +183,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🍔Layer norm.md",
+                "file": "chapters/🤖Pretraining of Transformers.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -237,7 +211,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🍔Layer norm.md"
+                "file": "chapters/🤖Pretraining of Transformers.md"
               }
             }
           }
@@ -258,17 +232,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "b7b63302b9c3bf89",
+  "active": "fc3638a4eda8659e",
   "lastOpenFiles": [
-    "📥Inbox/@tuningplaybookgithub.md",
-    "chapters/🍔Layer norm.md",
-    "📥Inbox/@wangLearningDeepTransformer2019.md",
-    "chapters/🔗Residual connections.md",
-    "📥Inbox/@xiongLayerNormalizationTransformer2020.md",
+    "🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020.md",
+    "chapters/🤖Pretraining of Transformers.md",
+    "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
+    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+    "chapters/💡Tuning of models (semi-supervised).md",
     "🧠Deep Learning Methods/Transformer/@huangTabTransformerTabularData2020.md",
-    "🧠Deep Learning Methods/Transformer/@tayEfficientTransformersSurvey2022.md",
-    "📥Inbox/@takaseLayerNormalizationsResidual2022.md",
-    "📥Inbox/@nguyenTransformersTearsImproving2019.md",
-    "chapters/🅰️Attention.md"
+    "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
+    "chapters/🥠Selection of approaches (semi-supervised).md",
+    "chapters/🗼Overview Transformer.md",
+    "Semi-supervised Learning/@leePseudolabelSimpleEfficient.md"
   ]
 }

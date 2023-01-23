@@ -1,6 +1,25 @@
-- paper visiting pre-training objectives  [[@rubachevRevisitingPretrainingObjectives2022]]
-- Published in [[@gorishniyRevisitingDeepLearning2021]]
-- Authors use unsupervised pretraining and supervised finetuning. They also try out techniques like pseudo labelling from [[@leePseudolabelSimpleEfficient]] for semi supervised learning among others.
-- For implementation see https://nn.labml.ai/transformers/mlm/index.html
-- See [[@zhangDiveDeepLearning2021]] for BERT implementation and explanation 
 
+1. Why do we want to use pre-training? motivate with paper visiting pre-training objectives  [[@rubachevRevisitingPretrainingObjectives2022]]
+2. Overview for tabular data can be found in [[@rubachevRevisitingPretrainingObjectives2022]]
+3. Why do we use masked language modelling? -> No change in architecture, conceptually simple, successful in previous works
+4. Explain how pre-training works using BERT: See [[@zhangDiveDeepLearning2021]] for BERT implementation and explanation 
+
+## Notes
+- [[🧠Deep Learning Methods/@levinTransferLearningDeep2022]]
+- [[@somepalliSAINTImprovedNeural2021]] use semi-supervised learning but rely on constrative learning, which requires to alter the model.
+- [[@yoonVIMEExtendingSuccess2020]]
+
+<mark style="background: #FF5582A6;">“Self-supervised learning: Unsupervised representation learning improves supervised learning especially in small data regime (Raina et al. 2007). Recent work for text (Devlin et al. 2018) and image (Trinh, Luong, and Le 2019) data has shown significant advances – driven by the judicious choice of the unsupervised learning objective (masked input prediction) and attention-based deep learning” ([Arik and Pfister, 2020, p. 3](zotero://select/library/items/EH5DCRUW)) ([pdf](zotero://open-pdf/library/items/TPDKX93V?page=3&annotation=B6TI27FJ))</mark>
+
+<mark style="background: #ABF7F7A6;">“Self-Supervised Learning Self-supervision via a ‘pretext task’ on unlabeled data coupled with finetuning on labeled data is widely used for improving model performance in language and computer vision. Some of the tasks previously used for self-supervision on tabular data include masking, denoising, and replaced token detection. Masking (or Masked Language Modeling(MLM)) is when individual features are masked and the model’s objective is to impute their value [1, 18, 32]. Denoising injects various types of noise into the data, and the objective there is to recover the original values [43, 49]. Replaced token detection (RTD) inserts random values into a given feature vector and seeks to detect the location of these replacements [18, 20]. Contrastive pre-training, where the distance between two views of the same point is minimized while maximizing the distance between two different points [5, 12, 15], is another pretext task that applies to tabular data. In this paper, to the best of our knowledge, we are the first to adopt contrastive learning for tabular data. We couple this strategy with denoising to perform pre-training on a plethora of datasets with varied volumes of labeled data, and we show that our method outperforms traditional boosting methods.” ([Somepalli et al., 2021, p. 3](zotero://select/library/items/PCV7XCHY)) ([pdf](zotero://open-pdf/library/items/N8H76CQW?page=3&annotation=NYSIVQZX)) [[@somepalliSAINTImprovedNeural2021]]</mark>
+
+<mark style="background: #D2B3FFA6;">“Finally, for the first time for tabular data, we show significant performance improvements by using unsupervised pre-training to predict masked features (see Fig. 2” ([Arik and Pfister, 2020, p. 1](zotero://select/library/items/EH5DCRUW)) ([pdf](zotero://open-pdf/library/items/TPDKX93V?page=1&annotation=X5WBP7CA))</mark>
+
+<mark style="background: #BBFABBA6;">“We explore two different types of pre-training procedures, the masked language modeling (MLM) (Devlin et al. 2019) and the replaced token detection (RTD) (Clark et al. 2020).” ([Huang et al., 2020, p. 3](zotero://select/library/items/MH4GW34I)) ([pdf](zotero://open-pdf/library/items/QYWHEUYE?page=3&annotation=7SXSI5CA))</mark>
+
+<mark style="background: #FF5582A6;">“Note, the pre-training is only applied in semi-supervised scenario. We do not find much benefit in using it when the entire data is labeled. Its benefit is evident when there is a large number of unlabeled examples and a few labeled examples.” ([Huang et al., 2020, p. 4](zotero://select/library/items/MH4GW34I)) ([pdf](zotero://open-pdf/library/items/QYWHEUYE?page=4&annotation=VN52BT3H))</mark>
+
+<mark style="background: #FFB86CA6;">“Furthermore, we observe that when the number of unlabeled data is small as shown in Table 4, TabTransformerRTD performs better than TabTransformer-MLM, thanks to its easier pre-training task (a binary classification) than that of MLM (a multi-class classification). This is consistent with the finding of the ELECTRA paper (Clark et al. 2020).” ([Huang et al., 2020, p. 7](zotero://select/library/items/MH4GW34I)) ([pdf](zotero://open-pdf/library/items/QYWHEUYE?page=7&annotation=HU3JVTCV))</mark> ([[@huangTabTransformerTabularData2020]])
+
+<mark style="background: #ADCCFFA6;">“Tabular self-supervised learning: We propose a decoder architecture to reconstruct tabular features from the TabNet encoded representations. The decoder is composed of feature transformers, followed by FC layers at each decision step. The outputs are summed to obtain the reconstructed features.” ([Arik and Pfister, 2020, p. 5](zotero://select/library/items/EH5DCRUW)) ([pdf](zotero://open-pdf/library/items/TPDKX93V?page=5&annotation=3QTDAR2A))
+</mark>

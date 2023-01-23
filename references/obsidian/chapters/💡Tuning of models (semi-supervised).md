@@ -1,4 +1,5 @@
 - Justify training of semi-supervised model from theoretical perspective with findings in chapter [[#^c77130]] . 
 - Use learning curves from [[#^d50f5d]].
 - for pre-training using ELECTRA see: https://blog.ml6.eu/how-a-pretrained-tabtransformer-performs-in-the-real-world-eccb12362950
-- 
+- For pre-training objectives see: https://github.com/puhsu/tabular-dl-pretrain-objectives/
+- For implementation of masked language modelling see https://nn.labml.ai/transformers/mlm/index.html
