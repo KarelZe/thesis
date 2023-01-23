@@ -1,10 +1,12 @@
 ## Open
-- When bid is zero at ISE exchange. Does it impact calculation of absolute spread?
-- Ask what the `day_vol` feature is. Found no meta data for it. 
-- Discuss correlated features in feature importance calculation.
-- What should I do with the CBOE data set?
+- I'm currently struggling to obtain cluster resources with gpus through SLURM or Jupyter. Some nodes are down and my jobs seem have low priority. 
+- I tried to feature engineer the largest dataset (incl. quotes from all exchanges) but ran into out-of-memory errors even on the largest cluster instances and with careful garbage collection. I'll no longer use date features, due to the missing economical foundations and marginal performance improvements (see https://wandb.ai/fbv/thesis/runs/2xvaz9dl). Thus, I'd stick to the 3 smaller ones (classical, yours, yours + option features). Did you study the feature set for the upcoming paper? 
+- Regarding the theoretical background, what can I assume to be common knowledge regarding ML e. g., backpropagation, feed-forward network, or bias?
+- Ask for CBOE.
 
 ## Closed
+- Ask what the `day_vol` feature is. Found no meta data for it. -> It's the daily volume per option series. 
+- Discuss correlated features in feature importance calculation. -> Open. I Still need to find a solution.
 - Ask for feedback regarding the toc. Indicate where I deviate from my initial expose (i. e., swap TabNet for FTTransformer due to slow training and no implementation of Rosenthal's rule due to low importance. Added ablation study, simulation, and list of algorithms). -> ok, but might be to fine-grained. Use bold text instead of chapters.
 - I marked TabNet as optional in my toc, due to the very slow training / convergence. Architecture is hard to optimize, as e. g., some gradients are hand-crafted and no approximations available. Similar expected performance. -> Change is ok.
 - Was able to improve the test accuracy of gradient-boosting approach to 72.84 % (ca. 6 % above SOTA) on the test set. Would this be sufficient for the thesis? It's hard to squeeze out more accuracy from these few features. -> Figures are ok.
