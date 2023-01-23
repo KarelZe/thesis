@@ -2,7 +2,7 @@
 *authors:* Varun Godbole, George E. Dahl, Justin Gilmer, Christopher J. Shallue, Zachary Nado
 *year:* 2023
 *tags:* 
-*status:* #📥
+*status:* #deep-learning #training #tuning
 *related:*
 *code:*
 *review:*
@@ -10,7 +10,6 @@
 ## Notes 📍
 
 ## Annotations 📖
-
 
 ## Batch size
 - The batch size should _not be_ treated as a tunable hyperparameter for validation set performance. (from https://github.com/google-research/tuning_playbook)
