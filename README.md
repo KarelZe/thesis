@@ -40,7 +40,7 @@ source thesis/bin/activate
 python -m pip install .
 
 # run training script
-python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/ise_classic_size_log_normalized:v0 --features=classical-size
+python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/ise_classic_size_log_normalized:v2 --features=classical-size
 2022-11-18 10:25:50,920 - __main__ - INFO - Connecting to weights & biases. Downloading artifacts. 📦
 2022-11-18 10:25:56,180 - __main__ - INFO - Start loading artifacts locally. 🐢
 2022-11-18 10:26:07,562 - __main__ - INFO - Start with study. 🦄
@@ -50,6 +50,7 @@ python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --datase
 Using [`SLURM`](https://wiki.bwhpc.de/e/BwUniCluster2.0/Slurm) on [bwHPC](https://bwhpc.de/).
 Set up `submit_thesis_gpu.sh` to batch job:
 ```shell
+#!/bin/bash
 #SBATCH --job-name=gpu
 #SBATCH --partition=gpu_8 # See: https://wiki.bwhpc.de/e/BwUniCluster2.0/Batch_Queues
 #SBATCH --gres=gpu:1 # number of requested GPUs in node allocated by job
