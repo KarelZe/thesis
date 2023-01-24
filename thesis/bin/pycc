@@ -1,3 +1,0 @@
-#!/pfs/data5/home/kit/stud/uloak/thesis/thesis/bin/python
-from numba.pycc import main
-main()
