@@ -14,3 +14,4 @@
 - How does regularization relate to semi-supervised learning? Don't both aim for the same objective?
 - [[@huangTabTransformerTabularData2020]] compare in their semi-supervised comparsion against GBM (PL) GBMs trained on pseudo labelled data
 - Authors use unsupervised pre-training and supervised finetuning. They also try out techniques like pseudo labelling from [[@leePseudolabelSimpleEfficient]] for semi supervised learning among others.
+- [[@vanengelenSurveySemisupervisedLearning2020]] (nice overview of techniques)
