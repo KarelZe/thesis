@@ -11,6 +11,10 @@ The study of the transformer architecture has focused on the role and function o
 - What is learned in lower layers? What is learned in upper layers?
 
 ## Self-attention
+- https://www.borealisai.com/research-blogs/tutorial-17-transformers-iii-training/
+- Detailed explanation and implementation. Check my understanding against it: https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html
+- https://towardsdatascience.com/transformers-explained-visually-not-just-how-but-why-they-work-so-well-d840bd61a9d3
+- http://nlp.seas.harvard.edu/2018/04/03/attention.html
 - intuition behind multi-head and self-attention e. g. cosine similarity, key and querying mechanism: https://www.youtube.com/watch?v=mMa2PmYJlCo&list=PL86uXYUJ7999zE8u2-97i4KG_2Zpufkfb
 - See [[@michelAreSixteenHeads2019]] for discussion if all heads are necessary
 

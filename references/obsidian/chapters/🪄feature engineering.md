@@ -46,7 +46,7 @@ c_{\cos} &= \cos\left(\frac{2\pi x}{\max(x)} \right),
 \end{aligned}
 $$
 ^773161
-(There is close link to [[🧵Positional encoding]]) and [[@tancikFourierFeaturesLet2020]] and [[@gorishniyEmbeddingsNumericalFeatures2022]]
+(There is close link to [[🧵Positional Embedding]]) and [[@tancikFourierFeaturesLet2020]] and [[@gorishniyEmbeddingsNumericalFeatures2022]]
 %%
 https://en.wikipedia.org/wiki/Sine_wave
 Its most basic form as a function of time $(t)$ is:

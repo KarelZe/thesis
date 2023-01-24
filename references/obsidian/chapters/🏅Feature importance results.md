@@ -4,6 +4,7 @@
  - compare feature importances between approaches like in paper
  - How do they selected features relate to what is being used in classical formulas? (see [[#^ce4ff0]]) Could a hybrid formula be derived from the selection by the algorithm?
  - What is the economic intuition?
+- Use [Captum · Model Interpretability for PyTorch](https://captum.ai/) to learn what the model picks up as a relevant feature.
 
 ![[informative-uniformative-features.png]]
 [[@grinsztajnWhyTreebasedModels2022]]

@@ -1,3 +1,6 @@
+
+- Think about using ensembles
+- 
 - What are the findings? Find appropriate visualization (e. g., tables, charts)
 -  For each tuned configuration, we run 15 experiments with different random seeds and report the performance on the test set. For some algorithms, we also report the performance of default configurations without hyperparameter tuning. [[@gorishniyRevisitingDeepLearning2021]]
 - divide sample into zero ticks and non-zero ticks and see how the accuracy behaves. This was e. g. done in [[@finucaneDirectTestMethods2000]]. See also this paper for reasoning on zero tick and non-zero tick trades.
@@ -9,3 +12,4 @@
 	- invariance: keep features the same, but change some sensitive information
 	- Directional expectation tests. e. g. does a change in the feature has a logical impact on the prediction e. g. very high bid (**could be interesting!**)
 - adhere to http://www.sigplan.org/Resources/EmpiricalEvaluation/
+- Visualize learned embeddings for categorical data as done in [[@huangTabTransformerTabularData2020]]. 

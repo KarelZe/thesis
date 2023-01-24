@@ -2,6 +2,9 @@
 
 - see for split etc [[@raschkaModelEvaluationModel2020]]
 
+Be particularly careful if you’re working with time series data, since random splits of the data can easily cause leakage and overfitting — see Wang and Ruf [2022] for more on this. For a broader discussion of data leakage, see [Cawley and Talbot, 2010] and [Kaufman et al., 2012] (from [[@lonesHowAvoidMachine2022]])
+
+
 **How:**
 We perform a split into three disjoint sets.
 **Sets:**

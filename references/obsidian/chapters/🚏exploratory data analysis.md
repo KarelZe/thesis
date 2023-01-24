@@ -1,5 +1,13 @@
 - insert stats from `2.0-mb-data_preprocessing_loading_splitting.ipynb`
 
+- compare against [[@coxExploratoryDataAnalysis2017]]
+- explain why we look just into the training set
+
+- Involve domain experts: An example of the latter is using an opaque ML model to solve a problem where there is a strong need to understand how the model reaches an outcome, e.g. in making medical or financial decisions (see Rudin 2019). At the beginning of a project, domain experts can help you to understand the data, and point you towards features that are likely to be predictive. At the end of a project, they can help you to publish in domain-specific journals, and hence reach an audience that is most likely to benefit from your research. (from [[@lonesHowAvoidMachine2022]])
+- To ignore previous studies is to potentially miss out on valuable information. For example, someone may have tried your proposed approach before and found fundamental reasons why it won’t work (and therefore saved you a few years of frustration), or they may have partially solved the problem in a way that you can build on. So, it’s important to do a literature review before you start work; leaving it too late may mean that you are left scrambling to explain why you are covering the) -> go back to related works and discuss them.
+
+- Test if buys and sells are *really* imbalanced, as indicated by [[@easleyOptionVolumeStock1998]]. Might require up-or down-sampling.
+
 - Describe interesting properties of the data set. How are values distributed?
 - Examine the position of trade's prices relative to the quotes. This is of major importance in classical algorithms like LR, EMO or CLNV.
 - Study if classes are imbalanced and require further treatmeant. The work of [[@grauerOptionTradeClassification2022]] suggests that classes are rather balanced.
