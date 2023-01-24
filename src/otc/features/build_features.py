@@ -68,7 +68,19 @@ features_classical_size = [
     *features_size,
 ]
 
-features_ml = [*features_classical_size, *features_date, *features_option]
+features_exchange = [
+    *[f"ASK_{i}" for i in range(1, 17)],
+    *[f"BID_{i}" for i in range(1, 17)],
+]
+
+features_classical_size_exchanges = [
+    *features_classical,
+    *features_size,
+    *features_exchange,
+]
+
+features_ml = [*features_classical_size, *features_option]
+
 
 features_unused = [
     "price_rel_nbb",
@@ -78,4 +90,5 @@ features_unused = [
     "mid_best",
     "spread_ex",
     "spread_best",
+    *features_date,
 ]

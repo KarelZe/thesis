@@ -8,9 +8,18 @@
 
 This repository contains all the resources for my thesis on option trade classification at Karlsruhe Institute of Technology.
 
-| notes 📜  |schedule ⌚   |experiments 🧪   |computing resources ☄️   |document 🎓|
-|---|---|---|---|---|
-|See [`references`](https://github.com/KarelZe/thesis/tree/main/references) folder. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes.   | Link to [tasks and mile stones](https://github.com/KarelZe/thesis/milestones?direction=asc&sort=due_date&state=open).  | Link to [weights & biases](https://wandb.ai/fbv/thesis) (requires login). |Link to [gcp](https://console.cloud.google.com/welcome?project=flowing-mantis-239216) (requires login), and to [bwHPC](https://bwhpc.de/) (requires login).|see [`releases`](https://github.com/KarelZe/thesis/releases/).|
+| notes 📜                                                                                                                                                                   | schedule ⌚                                                                                                            | experiments 🧪                                                             | computing resources ☄️                                                                                                                                       | document 🎓                                                     |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| See [`references`](https://github.com/KarelZe/thesis/tree/main/references) folder. Download obsidian from [obsidian.md](https://obsidian.md/) to easily browse the notes. | Link to [tasks and mile stones](https://github.com/KarelZe/thesis/milestones?direction=asc&sort=due_date&state=open). | Link to [weights & biases](https://wandb.ai/fbv/thesis) (requires login). | Link to [gcp](https://console.cloud.google.com/welcome?project=flowing-mantis-239216) (requires login), and to [bwHPC](https://bwhpc.de/) (requires login). | see [`releases`](https://github.com/KarelZe/thesis/releases/). |
+
+## Results ⚡
+| year | gbm (classical) | gbm (classical + size) | gbm (classical + size + option) |
+| ---- | --------------- | ---------------------- | ------------------------------- |
+| 2015 | 60.39 (-2.98)   | 69.01 (5.64)           | 71.69 (8.32)                    |
+| 2016 | 63.68 (-3.09)   | 72.52 (5.75)           | 74.45 (7.68)                    |
+| 2017 | 64.56 (-3.63)   | 73.0 (4.81)            | 74.55 (6.36)                    |
+
+(Comparison with best overall in [https://dx.doi.org/10.2139/ssrn.4098475](https://dx.doi.org/10.2139/ssrn.4098475). `(classical)` uses fewer features, `(classical + size)` identical features, `(classical + size + option)` more features.)
 
 ## How to use
 
@@ -31,7 +40,7 @@ source thesis/bin/activate
 python -m pip install .
 
 # run training script
-python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/ise_classic_size_log_normalized:v0 --features=classical-size
+python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/ise_classic_size_log_normalized:v2 --features=classical-size
 2022-11-18 10:25:50,920 - __main__ - INFO - Connecting to weights & biases. Downloading artifacts. 📦
 2022-11-18 10:25:56,180 - __main__ - INFO - Start loading artifacts locally. 🐢
 2022-11-18 10:26:07,562 - __main__ - INFO - Start with study. 🦄
@@ -41,6 +50,7 @@ python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --datase
 Using [`SLURM`](https://wiki.bwhpc.de/e/BwUniCluster2.0/Slurm) on [bwHPC](https://bwhpc.de/).
 Set up `submit_thesis_gpu.sh` to batch job:
 ```shell
+#!/bin/bash
 #SBATCH --job-name=gpu
 #SBATCH --partition=gpu_8 # See: https://wiki.bwhpc.de/e/BwUniCluster2.0/Batch_Queues
 #SBATCH --gres=gpu:1 # number of requested GPUs in node allocated by job

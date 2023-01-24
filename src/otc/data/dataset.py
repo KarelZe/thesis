@@ -6,8 +6,6 @@ Supports both categorical and continous data.
 
 from __future__ import annotations
 
-from typing import cast
-
 import numpy.typing as npt
 import pandas as pd
 import torch
@@ -55,14 +53,12 @@ class TabDataset(Dataset):
         # infer feature names from dataframe.
         if isinstance(x, pd.DataFrame):
             feature_names = x.columns.tolist()
-        feature_names = cast(list[str], feature_names)
         assert (
             len(feature_names) == x.shape[1]
         ), "`len('feature_names)` must match `X.shape[1]`"
 
         # calculate cat indices
         cat_features = [] if not cat_features else cat_features
-        cat_features = cast(list[str], cat_features)
         assert set(cat_features).issubset(
             feature_names
         ), "Categorical features must be a subset of feature names."

@@ -14,6 +14,7 @@ import numpy as np
 import optuna
 import pandas as pd
 import torch
+import torch.nn.functional as F
 from catboost import CatBoostClassifier, Pool
 from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
@@ -167,6 +168,7 @@ class TabTransformerObjective(Objective):
             float: accuracy of trial on validation set.
         """
         # searchable params
+        # dim must be divisiable by 2, 4, 8 (n_heads)
         dim: int = trial.suggest_categorical("dim", [32, 64, 128, 256])  # type: ignore
 
         # done similar to borisov
@@ -175,7 +177,7 @@ class TabTransformerObjective(Objective):
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
-        batch_size: int = trial.suggest_categorical("batch_size", [4096, 8192, 16192])  # type: ignore # noqa: E501
+        batch_size = 32768 # see 5.0a-mb-batch-size-finder
 
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
@@ -196,11 +198,12 @@ class TabTransformerObjective(Objective):
             "dim": dim,
             "dim_out": 1,
             "mlp_act": nn.ReLU,
+            "transformer_act": F.gelu,
+            "transformer_norm_first": False,
             "mlp_hidden_mults": (4, 2),
-            "attn_dropout": dropout,
-            "ff_dropout": dropout,
-            "cat_features": self._cat_features,
+            "transformer_dropout": dropout,
             "cat_cardinalities": self._cat_cardinalities,
+            "cat_features": self._cat_features,
             "num_continuous": len(self._cont_features),
         }
 
@@ -280,18 +283,15 @@ class FTTransformerObjective(Objective):
         Returns:
             float: accuracy of trial on validation set.
         """
-        # searchable params done similar to fttransformer paper
+        # https://arxiv.org/pdf/2106.11959v2.pdf page 18  (B)
         n_blocks: int = trial.suggest_int("n_blocks", 1, 6)
-        d_tokens = [96, 128, 192, 256, 320, 384]
-        d_token: int = trial.suggest_categorical("d_token", d_tokens)  # type: ignore
-        attention_dropouts = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35]
-        attention_dropout: int = trial.suggest_categorical("attention_dropout", attention_dropouts)  # type: ignore # noqa: E501
-        ffn_dropouts = [0.0, 0.05, 0.1, 0.15, 0.2, 0.25]
-        ffn_dropout: int = trial.suggest_categorical("ffn_dropout", ffn_dropouts)  # type: ignore # noqa: E501
+        d_token: int = trial.suggest_int("d_token", 64, 512, step=8)
+        attention_dropout = trial.suggest_float("attention_dropout", 0, 0.5)
+        ffn_dropout = trial.suggest_float("ffn_dropout", 0, 0.5)
 
-        weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
-        lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
-        batch_size: int = trial.suggest_categorical("batch_size", [4096, 8192, 16192])  # type: ignore # noqa: E501
+        weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-3, log=True)
+        lr = trial.suggest_float("lr", 3e-5, 3e-4, log=True)
+        batch_size = 2048  # see 5.0a-mb-batch-size-finder
 
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
@@ -314,11 +314,12 @@ class FTTransformerObjective(Objective):
             "attention_normalization": nn.LayerNorm,
             "ffn_normalization": nn.LayerNorm,
             "ffn_dropout": ffn_dropout,
-            # minor simplification from original paper, fix at 4/3, as activation
+            # fix at 4/3, as activation (see search space B in
+            # https://arxiv.org/pdf/2106.11959v2.pdf)
             # is static with ReGLU / GeGLU
             "ffn_d_hidden": int(d_token * (4 / 3)),
             "attention_dropout": attention_dropout,
-            "residual_dropout": 0.0,
+            "residual_dropout": 0.0,  # see search space (B)
             "prenormalization": True,
             "first_prenormalization": False,
             "last_layer_query_idx": None,
