@@ -30,9 +30,9 @@ features_option = [
 # https://github.com/KarelZe/thesis/blob/main/notebooks/
 # 3.0a-mb-explanatory_data_analysis.ipynb
 features_categorical: List[Tuple[str, int]] = [
-    ("bin_root", 8667),
     ("bin_option_type", 2),
     ("bin_issue_type", 6),
+    ("bin_root", 9107), # + 1 for UNK which may be in val and test set
 ]
 
 features_classical = [
