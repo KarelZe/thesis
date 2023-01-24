@@ -52,3 +52,4 @@ We define the following criteria a model should meet:
 - See [[@huangTabTransformerTabularData2020]] that point out common problems of comparsions between gbts and dl.
 - Why to formulate problem as probabilistic classification problem: https://www.youtube.com/watch?v=RXMu96RJj_s
 - for use of transformer-based models in finance see [[@zouStockMarketPrediction2022]]
+- Non-parametric model of [[@kossenSelfAttentionDatapointsGoing2021]]

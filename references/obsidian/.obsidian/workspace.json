@@ -23,12 +23,36 @@
             }
           },
           {
+            "id": "526378df760620ed",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/💤Embeddings for tabular data.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "fad2e70214dd5169",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖FTTransformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "7d7869ae0bebf9c7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/💡Tuning of models (semi-supervised).md",
+                "file": "📥Inbox/@wangTransTabLearningTransferable.md",
                 "mode": "source",
                 "source": false
               }
@@ -40,7 +64,19 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
+                "file": "chapters/🥠Selection of approaches (supervised).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7fc09e8c6a9b4185",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🧠Deep Learning Methods/@kossenSelfAttentionDatapointsGoing2021.md",
                 "mode": "source",
                 "source": false
               }
@@ -60,7 +96,8 @@
               "pinned": true
             }
           }
-        ]
+        ],
+        "currentTab": 3
       },
       {
         "id": "e8dcfee4ca085c4c",
@@ -137,7 +174,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Pretraining of Transformers.md",
+                "file": "📥Inbox/@wangTransTabLearningTransferable.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -165,7 +202,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Pretraining of Transformers.md"
+                "file": "📥Inbox/@wangTransTabLearningTransferable.md"
               }
             }
           }
@@ -186,17 +223,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "fc3638a4eda8659e",
+  "active": "7d7869ae0bebf9c7",
   "lastOpenFiles": [
-    "Semi-supervised Learning/@yoonVIMEExtendingSuccess2020.md",
     "chapters/🤖Pretraining of Transformers.md",
-    "Semi-supervised Learning/@bahriSCARFSelfSupervisedContrastive2022.md",
+    "📥Inbox/@wangTransTabLearningTransferable.md",
+    "chapters/💤Embeddings for tabular data.md",
+    "📥Inbox/@chenExcelFormerNeuralNetwork2023.md",
+    "chapters/🤖FTTransformer.md",
+    "📥Inbox/@wangLearningDeepTransformer2019.md",
     "chapters/🥠Selection of approaches (supervised).md",
-    "chapters/🥠Selection of approaches (semi-supervised).md",
-    "chapters/🧭Evaluation metric.md",
     "chapters/💡Tuning of models (semi-supervised).md",
-    "chapters/🔢LR algorithm.md",
-    "📥Inbox/@ucarSubTabSubsettingFeatures2021.md",
-    "📥Inbox/@yinTaBERTPretrainingJoint2020.md"
+    "🧠Deep Learning Methods/@kossenSelfAttentionDatapointsGoing2021.md",
+    "chapters/💡Training of models (supervised).md"
   ]
 }
