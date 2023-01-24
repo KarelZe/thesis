@@ -7,6 +7,7 @@
 - Adhere to best practices http://www.sigplan.org/Resources/EmpiricalEvaluation/
 - use colors in formulas🎨. See [[@patrignaniWhyShouldAnyone2021]]
 - https://www.molecularecologist.com/2020/04/23/simple-tools-for-mastering-color-in-scientific-figures/
+- look into [[@lonesHowAvoidMachine2022]]
 
 # Title
 Forget About the Rules: Improving Trade Side Classification With Machine Learning
@@ -72,7 +73,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### Attention
 [[🅰️Attention]]
 ### Positional Encoding 🟢
-[[🧵Positional encoding]]
+[[🧵Positional Embedding]]
 ### Embeddings 🟢
 [[🛌Token Embedding]]
 
@@ -105,7 +106,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 - describe and reason about applied feature engineering
 - describe and reason about test and training split
 ### ISE Data Set 🟡
-[[🌏Ise dataset]]
+[[🌏ISE dataset]]
 
 ### CBOE Data Set 🟡
 describe if data set is actually used. Write similarily to 

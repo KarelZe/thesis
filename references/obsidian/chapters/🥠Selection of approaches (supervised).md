@@ -5,8 +5,9 @@ We define the following criteria a model should meet:
 
 - for comparability 
 
+- large number of datapoints -> Transformers are data hungry (must be stated in the [[@vaswaniAttentionAllYou2017]] paper)
 
-
+- Use classification methods (*probabilistic classifier*) that can return probabilities instead of class-only for better analysis. Using probabilistic trade classification rules might have been studied in [[@easleyDiscerningInformationTrade2016]]
 - nice overview also in [[@levinTransferLearningDeep2022]]
 - survey on transformers for tabular data [[@badaroTransformersTabularData]]
 - Introduce a classifcation that differentiates between supervised, unsupervised, reenforcement learning and semi-supervised learning. 

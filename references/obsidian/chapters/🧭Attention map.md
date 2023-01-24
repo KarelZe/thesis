@@ -1,5 +1,4 @@
 Relates to #attention #shap #random-feature-permutation  
-### Attention visualization
 
 In addition to [[🧭Kernel SHAP]], transformer-based models offer some interpretability through their attention mechanism. Feature attributions can be derived from attention by visualizing features that the model attends to in a *attention map*. While attention maps are specific to transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in Figure [[#^401670]].
 
