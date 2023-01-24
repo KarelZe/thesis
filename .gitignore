@@ -433,3 +433,7 @@ thesis.pdf
 # powerpoint
 *.ppt
 *.pptx
+
+# venvs
+thesis/
+venv/
