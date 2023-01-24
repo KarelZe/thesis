@@ -8,6 +8,7 @@
 - [[🧠Deep Learning Methods/@levinTransferLearningDeep2022]]
 - [[@somepalliSAINTImprovedNeural2021]] use semi-supervised learning but rely on constrative learning, which requires to alter the model.
 - [[@yoonVIMEExtendingSuccess2020]]
+- Other appraoches like TaBert https://arxiv.org/pdf/2005.08314.pdf
 
 <mark style="background: #FF5582A6;">“Self-supervised learning: Unsupervised representation learning improves supervised learning especially in small data regime (Raina et al. 2007). Recent work for text (Devlin et al. 2018) and image (Trinh, Luong, and Le 2019) data has shown significant advances – driven by the judicious choice of the unsupervised learning objective (masked input prediction) and attention-based deep learning” ([Arik and Pfister, 2020, p. 3](zotero://select/library/items/EH5DCRUW)) ([pdf](zotero://open-pdf/library/items/TPDKX93V?page=3&annotation=B6TI27FJ))</mark>
 

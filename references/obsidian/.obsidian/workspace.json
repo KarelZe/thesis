@@ -183,7 +183,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Pretraining of Transformers.md",
+                "file": "chapters/🥠Selection of approaches (semi-supervised).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -211,7 +211,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Pretraining of Transformers.md"
+                "file": "chapters/🥠Selection of approaches (semi-supervised).md"
               }
             }
           }
@@ -232,10 +232,10 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "fc3638a4eda8659e",
+  "active": "3ccaf56b42332e71",
   "lastOpenFiles": [
-    "🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020.md",
     "chapters/🤖Pretraining of Transformers.md",
+    "🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020.md",
     "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
     "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
     "chapters/💡Tuning of models (semi-supervised).md",
