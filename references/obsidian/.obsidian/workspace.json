@@ -28,7 +28,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/💤Embeddings for tabular data.md",
+                "file": "chapters/🛌Token Embedding.md",
                 "mode": "source",
                 "source": false
               }
@@ -52,7 +52,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@wangTransTabLearningTransferable.md",
+                "file": "🧠Deep Learning Methods/@grinsztajnWhyTreebasedModels2022.md",
                 "mode": "source",
                 "source": false
               }
@@ -97,7 +97,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       },
       {
         "id": "e8dcfee4ca085c4c",
@@ -145,7 +145,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "somepalli",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -174,7 +174,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📥Inbox/@wangTransTabLearningTransferable.md",
+                "file": "chapters/🛌Token Embedding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -202,7 +202,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📥Inbox/@wangTransTabLearningTransferable.md"
+                "file": "chapters/🛌Token Embedding.md"
               }
             }
           }
@@ -223,17 +223,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "7d7869ae0bebf9c7",
+  "active": "526378df760620ed",
   "lastOpenFiles": [
-    "chapters/🤖Pretraining of Transformers.md",
-    "📥Inbox/@wangTransTabLearningTransferable.md",
     "chapters/💤Embeddings for tabular data.md",
-    "📥Inbox/@chenExcelFormerNeuralNetwork2023.md",
+    "🧠Deep Learning Methods/@grinsztajnWhyTreebasedModels2022.md",
     "chapters/🤖FTTransformer.md",
+    "chapters/🥠Selection of approaches (semi-supervised).md",
+    "chapters/💡Training of models (supervised).md",
+    "📥Inbox/@wangTransTabLearningTransferable.md",
+    "chapters/🤖Pretraining of Transformers.md",
+    "📥Inbox/@chenExcelFormerNeuralNetwork2023.md",
     "📥Inbox/@wangLearningDeepTransformer2019.md",
-    "chapters/🥠Selection of approaches (supervised).md",
-    "chapters/💡Tuning of models (semi-supervised).md",
-    "🧠Deep Learning Methods/@kossenSelfAttentionDatapointsGoing2021.md",
-    "chapters/💡Training of models (supervised).md"
+    "chapters/🥠Selection of approaches (supervised).md"
   ]
 }
