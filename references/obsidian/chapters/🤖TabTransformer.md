@@ -41,6 +41,8 @@ Yet, embedding and contextualizing categorical inputs remains imperfect, as no c
 
 Their observation integrates with a wider strand of literature that suggests models can profit from embedding continuous features ([[@somepalliSAINTImprovedNeural2021]] (p. 8), [[@gorishniyRevisitingDeepLearning2021]] (p. ), [[@gorishniyEmbeddingsNumericalFeatures2022]] (p. )). To dwell on this idea, we introduce the [[🤖FTTransformer]], a transformer that contextualizes embeddings of all inputs in the subsequent section.
 
+<mark style="background: #FF5582A6;">(Positional encoding is strictly not required as only categorical vectors are embedded. I guess it would be more problematic, if numerical variables were also embedded. See [[@somepalliSAINTImprovedNeural2021]])</mark> 
+
 ---
 Related:
 - [[@huangTabTransformerTabularData2020]] propose TabTransformer

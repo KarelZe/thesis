@@ -11,6 +11,8 @@
 
 Instead of using the NLP-specific term "token embedding" use term "feature embedding." E. g., [[@somepalliSAINTImprovedNeural2021]] write <mark style="background: #FFB86CA6;">SAINT is inspired by the transformer encoder of Vaswani et al. [41], designed for natural language, where the model takes in a sequence of feature embeddings and outputs contextual representations of the same dimension.</mark>
 
+(Define with a catchy phrase what an embedding is -> Example from Marais -> use similar “An embedding is a layer which maps a discrete input to a numeric vector representation. It was first used in NLP in order to represent words as numbers so that they may be processed by numeric models.” (Marais, p. 51))
+
 [[@vaswaniAttentionAllYou2017]] train the Transformer on pre-trained token embeddings. To obtain token embeddings from raw input sequences, the sequence is first split into individual vocabulary elements, so-called *tokens*. Depending on the tokenization strategy, tokens can be as fine-grained as individual characters, or more coarse-grained sub-words (cite some famous papers), or words. The vocabulary $V$ consists of $N_{V}=|V|$ elements and maps tokens onto unique integer keys, referred to as token-ids. [[@phuongFormalAlgorithmsTransformers2022]]
 
 The vocabulary may include special tokens, like the $\texttt{[UNK]}$ token to handle out-of-vocabulary items, the $\texttt{[EOS]}$ token to mark the end of sequence, or $\texttt{[CLS]}$ token for storing an aggregate representation of the sequence for classification (used in [[@devlinBERTPretrainingDeep2019]]; p. 4). 

@@ -55,6 +55,8 @@ https://www.borealisai.com/research-blogs/tutorial-16-transformers-ii-extensions
 
 Also, if the order of the input is arbitrary, a positional encoding may be dropped [[@huangTabTransformerTabularData2020]]  (p. 3). We come back to this observation in chapter [[🤖TabTransformer]].
 
+<mark style="background: #FFB86CA6;">“Positional Encoding Transformers for vision and language typically employ positional encodings along with the patch/word embeddings to retain spatial information. These encodings are necessary when all features in a data point are of same type, hence these models use the same function to embed all inputs. This is not the case with most of the datasets used in this paper; each feature may be of a different type and thus possesses a unique embedding function. However, when we train the model on MNIST (treated as tabular data), positional encodings are used since all pixels are of the same type and share a single embedding function.” ([Somepalli et al., 2021, p. 15](zotero://select/library/items/PCV7XCHY)) ([pdf](zotero://open-pdf/library/items/N8H76CQW?page=15&annotation=FB8RJ78J))</mark>
+
 ---
 
 Resources:
