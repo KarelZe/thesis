@@ -29,7 +29,7 @@ interval: 1
 | [[generation-of-true-labels]]       |       55 |       |        1 | 1970-01-01 |
 | [[🏅Feature importance measure]]      |     57.5 |       |        1 | 1970-01-01 |
 | [[🏅Feature importance results]]              |       60 |       |        1 | 1970-01-01 |
-| [[🪄Feature engineering]]             |     62.5 |       |        1 | 1970-01-01 |
+| [[🪄Feature Engineering]]             |     62.5 |       |        1 | 1970-01-01 |
 | [[🤖Extensions to TabTransformer]]    |       65 |       |        1 | 1970-01-01 |
 | [[extensions-to-tabnet]]            |     67.5 |       |        1 | 1970-01-01 |
 | [[🐈extensions-to-gradient-boosting]] |       70 |       |        1 | 1970-01-01 |
@@ -38,7 +38,7 @@ interval: 1
 | [[🌏Environment]]                     |     77.5 |       |        1 | 1970-01-01 |
 | [[🔢EMO rule]]                        |       80 |       |        1 | 1970-01-01 |
 | [[🛌Token Embedding]]                      |     82.5 |       |        1 | 1970-01-01 |
-| [[🤖Pretraining of Transformers]]            |       85 |       |        1 | 1970-01-01 |
+| [[🤖Pre-training of Transformers]]            |       85 |       |        1 | 1970-01-01 |
 | [[🧓Discussion]]                      |     87.5 |       |        1 | 1970-01-01 |
 | [[🔢Depth rule]]                      |       90 |       |        1 | 1970-01-01 |
 | [[comparsion]]                      |     92.5 |       |        1 | 1970-01-01 |

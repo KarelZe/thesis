@@ -1,4 +1,11 @@
 
+
+<mark style="background: #CACFD9A6;">“An extensive line of work on tabular deep learning aims to challenge the dominance of GBDT models. Numerous tabular neural architectures have been introduced, based on the ideas of creating differentiable learner ensembles [55, 29, 77, 43, 8], incorporating attention mechanisms and transformer architectures [64, 26, 6, 34, 65, 44], as well as a variety of other approaches [70, 71, 10, 42, 23, 61]. However, recent systematic benchmarking of deep tabular models [26, 63] shows that while these models are competitive with GBDT on some tasks, there is still no universal best method. Gorishniy et al. [26] show that transformer-based models are the strongest alternative to GBDT and that ResNet and MLP models coupled with a strong hyperparameter tuning routine [2] offer competitive baselines. Similarly, Kadra et al. [40] find that carefully regularized MLPs are competitive. In a follow-up work, Gorishniy et al. [27] show that transformer architectures equipped with advanced embedding schemes for numerical features bridge the performance gap between deep tabular models and GBDT” (Levin et al., 2022, p. 3)</mark>
+
+<mark style="background: #FFB86CA6;">“Semi-supervised boosting methods have been studied extensively over the past two decades. The success achieved by supervised boosting methods, such as AdaBoost (Freund and Schapire 1997), gradient boosting, and XGBoost (Chen and Guestrin 2016), provides ample motivation for bringing boosting to the semi-supervised setting. Furthermore, the pseudo-labelling approach of self-training and co-training can be easily extended to boosting methods.” (Engelen and Hoos, 2020, p. 391)</mark> [[@vanengelenSurveySemisupervisedLearning2020]]
+
+<mark style="background: #BBFABBA6;">“Tabular data is a database that is structured in a tabular form. It arranges data elements in vertical columns (features) and horizontal rows (samples)” ([Yoon et al., 2020, p. 1](zotero://select/library/items/XSYUS7JZ)) ([pdf](zotero://open-pdf/library/items/78GQQ36U?page=1&annotation=8MAKL2B9))</mark>
+
 Due to a unsatisfactory research situation, for trade calssification (see chapter [[👪Related work]]) we base
 
 We define the following criteria a model should meet:
@@ -45,3 +52,4 @@ We define the following criteria a model should meet:
 - See [[@huangTabTransformerTabularData2020]] that point out common problems of comparsions between gbts and dl.
 - Why to formulate problem as probabilistic classification problem: https://www.youtube.com/watch?v=RXMu96RJj_s
 - for use of transformer-based models in finance see [[@zouStockMarketPrediction2022]]
+- Non-parametric model of [[@kossenSelfAttentionDatapointsGoing2021]]
