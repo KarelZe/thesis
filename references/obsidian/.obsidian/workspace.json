@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 46.90853346959632,
+        "dimension": 59.325498211548286,
         "children": [
           {
             "id": "64bb86cb491913cc",
@@ -14,7 +14,45 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🍔Layer norm.md",
+                "file": "chapters/🅰️Attention.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "3ccaf56b42332e71",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/💤Embeddings for tabular data.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "ff6fd06bcddd9cc1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@kossenSelfAttentionDatapointsGoing2021.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "623b60edf9105413",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@songAutoIntAutomaticFeature2019.md",
                 "mode": "source",
                 "source": false
               }
@@ -33,35 +71,14 @@
               },
               "pinned": true
             }
-          }
-        ]
-      },
-      {
-        "id": "e8dcfee4ca085c4c",
-        "type": "tabs",
-        "dimension": 53.09146653040367,
-        "children": [
-          {
-            "id": "3ccaf56b42332e71",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/💤Embeddings for tabular data.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
           },
           {
-            "id": "2ed43cf34a7019b6",
+            "id": "7a98b292f8d680fa",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/🍔Layer norm notes.md",
+                "file": "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,6 +86,27 @@
           }
         ],
         "currentTab": 1
+      },
+      {
+        "id": "7d0f20b2823cd759",
+        "type": "tabs",
+        "dimension": 40.674501788451714,
+        "children": [
+          {
+            "id": "d2e545f167483e29",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/💤Embeddings for tabular data notes.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -126,7 +164,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/🍔Layer norm notes.md",
+                "file": "notes/💤Embeddings for tabular data notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -154,7 +192,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/🍔Layer norm notes.md"
+                "file": "notes/💤Embeddings for tabular data notes.md"
               }
             }
           }
@@ -175,17 +213,17 @@
       "obsidian-tts:Text to Speech": false
     }
   },
-  "active": "2ed43cf34a7019b6",
+  "active": "d2e545f167483e29",
   "lastOpenFiles": [
-    "chapters/🍔Layer norm.md",
+    "chapters/💤Embeddings for tabular data.md",
+    "notes/💤Embeddings for tabular data notes.md",
+    "📥Inbox/@kossenSelfAttentionDatapointsGoing2021.md",
+    "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
+    "chapters/🛌Token Embedding.md",
+    "📥Inbox/@songAutoIntAutomaticFeature2019.md",
     "chapters/🤖Pre-training of Transformers.md",
-    "chapters/🔗Residual connections.md",
-    "📥Inbox/@shazeerAdafactorAdaptiveLearning2018.md",
-    "notes/🍔Layer norm notes.md",
-    "layer.md",
-    "🖼️Media/layer-norm-first-last.png",
-    "📥Inbox/@lonesHowAvoidMachine2022.md",
-    "🧠Deep Learning Methods/@baLayerNormalization2016.md",
-    "chapters/💡Training of models (supervised).md"
+    "chapters/🅰️Attention.md",
+    "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
+    "chapters/🍔Layer norm.md"
   ]
 }
