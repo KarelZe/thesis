@@ -4,10 +4,10 @@
 4. Overview for tabular data can be found in [[@rubachevRevisitingPretrainingObjectives2022]]. Come up with a selection, that makes sense e. g., does not require to alter the model.
 5. Why do we use masked language modelling? -> No change in architecture, conceptually simple, successful in previous works
 6. Explain how pre-training works using BERT: See [[@zhangDiveDeepLearning2021]] for BERT implementation and explanation 
+7. Why do we not consider meta data, column positions etc. like in Tabi, Tabert etc.?
 
-
-- [[@wangTransTabLearningTransferable]]
-- [[@chenExcelFormerNeuralNetwork2023]]
+**To read:**
+- good motivation and classification of pre-training objectives: [[@dongTablePretrainingSurvey2022]]
 - [[@darabiContrastiveMixupSelf2021]]
 - [[@badaroTransformersTabularData]]
 

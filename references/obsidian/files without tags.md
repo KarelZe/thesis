@@ -15,7 +15,7 @@
 - [[chapters/🪦graveyard of ideas.md]]
 - [[chapters/🪛feature engineering.md]]
 - [[🤖Transformer]]
-- [[🤖Pretraining of Transformers]]
+- [[🤖Pre-training of Transformers]]
 - [[chapters/🐈gradient-boosting.md]]
 - [[chapters/🍬appendix.md]]
 - [[🎋Ablation study]]

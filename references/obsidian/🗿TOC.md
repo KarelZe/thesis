@@ -118,7 +118,7 @@ describe if data set is actually used. Write similarily to
 [[👨‍🍳Pre-Processing]]
 
 ### Feature Engineering 🟡
-[[🪄Feature engineering]]
+[[🪄Feature Engineering]]
 
 ### Train-Test Split 🟡
 
