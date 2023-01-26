@@ -40,7 +40,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
+                "file": "🧠Deep Learning Methods/@hancockSurveyCategoricalData2020.md",
                 "mode": "source",
                 "source": false
               }
@@ -176,7 +176,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
+                "file": "🧠Deep Learning Methods/@hancockSurveyCategoricalData2020.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -204,7 +204,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📥Inbox/@guoEntityEmbeddingsCategorical2016.md"
+                "file": "🧠Deep Learning Methods/@hancockSurveyCategoricalData2020.md"
               }
             }
           }
@@ -227,9 +227,9 @@
   },
   "active": "ce6e67e20aa923b7",
   "lastOpenFiles": [
-    "notes/💤Embeddings for tabular data notes.md",
-    "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
     "chapters/💤Embeddings for tabular data.md",
+    "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
+    "notes/💤Embeddings for tabular data notes.md",
     "📥Inbox/@chengWideDeepLearning2016.md",
     "chapters/🤖TabTransformer.md",
     "chapters/🍔Layer norm.md",
