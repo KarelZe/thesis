@@ -1,7 +1,7 @@
 ## Open
 - I'm currently struggling to obtain cluster resources with gpus through SLURM or Jupyter. Some nodes are down and my jobs seem have low priority. 
 - I tried to feature engineer the largest dataset (incl. quotes from all exchanges) but ran into out-of-memory errors even on the largest cluster instances and with careful garbage collection. I'll no longer use date features, due to the missing economical foundations and marginal performance improvements (see https://wandb.ai/fbv/thesis/runs/2xvaz9dl). Thus, I'd stick to the 3 smaller ones (classical, yours, yours + option features). Did you study the feature set for the upcoming paper? 
-- Regarding the theoretical background, what can I assume to be common knowledge regarding ML e. g., backpropagation, feed-forward network, or bias?
+- Regarding the theoretical background, what can I assume to be common knowledge regarding ML e. g., back propagation, feed-forward network, or bias?
 - Ask for CBOE.
 
 ## Closed

@@ -8,12 +8,13 @@
 5. embeddings for tabular architectures are different from token embeddings.
 6. Why do we want to learn embeddings instead of just using scalars?
 7. Different architectures implement embeddings to different degree. Present them afterwards.
-8. One-hot-encoding of categoricals with high cardinality leads to sparse matrices, high number of parameters. Label enconding would lead to poor results. Situation is different for numerical data. Here embedding numerical data increases the parameter count.
+8. One-hot-encoding of categoricals with high cardinality leads to sparse matrices, high number of parameters. Label encoding would lead to poor results. Situation is different for numerical data. Here embedding numerical data increases the parameter count.
 9. Explain what is different for embedding continuous / categoricals?
 
 - [[@gorishniyEmbeddingsNumericalFeatures2022]]
 - [[@hancockSurveyCategoricalData2020]]
-
+- [[@chengWideDeepLearning2016]] (where categorical embeddings have been applied)
+- [[@guoEntityEmbeddingsCategorical2016]] (first use of categorical embeddings)
 
 ## Notes
 [[💤Embeddings for tabular data notes]]

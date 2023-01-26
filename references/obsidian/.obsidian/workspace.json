@@ -35,12 +35,24 @@
             }
           },
           {
+            "id": "ce6e67e20aa923b7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "ff6fd06bcddd9cc1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@kossenSelfAttentionDatapointsGoing2021.md",
+                "file": "chapters/🤖TabTransformer.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +97,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       },
       {
         "id": "7d0f20b2823cd759",
@@ -164,7 +176,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/💤Embeddings for tabular data notes.md",
+                "file": "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -192,7 +204,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/💤Embeddings for tabular data notes.md"
+                "file": "📥Inbox/@guoEntityEmbeddingsCategorical2016.md"
               }
             }
           }
@@ -213,17 +225,17 @@
       "obsidian-tts:Text to Speech": false
     }
   },
-  "active": "d2e545f167483e29",
+  "active": "ce6e67e20aa923b7",
   "lastOpenFiles": [
-    "chapters/💤Embeddings for tabular data.md",
     "notes/💤Embeddings for tabular data notes.md",
+    "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
+    "chapters/💤Embeddings for tabular data.md",
+    "📥Inbox/@chengWideDeepLearning2016.md",
+    "chapters/🤖TabTransformer.md",
+    "chapters/🍔Layer norm.md",
+    "❓Questions.md",
     "📥Inbox/@kossenSelfAttentionDatapointsGoing2021.md",
     "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
-    "chapters/🛌Token Embedding.md",
-    "📥Inbox/@songAutoIntAutomaticFeature2019.md",
-    "chapters/🤖Pre-training of Transformers.md",
-    "chapters/🅰️Attention.md",
-    "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
-    "chapters/🍔Layer norm.md"
+    "chapters/🛌Token Embedding.md"
   ]
 }
