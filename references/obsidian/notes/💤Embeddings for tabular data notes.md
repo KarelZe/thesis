@@ -1,5 +1,8 @@
-- Explain how embeddings can be implemented. (querying matrix with one-hot-vector)
 
+![[Pasted image 20230126132519.png]]
+(found here: https://images.ctfassets.net/dkgr2j75jrom/A6Xf1MfISZhiQWuyGFDpV/708d5fd82c14d8db6eb0d4af1c27d525/PillarPage-Qual-Quan-3.svg)
+
+- Explain how embeddings can be implemented. (querying matrix with one-hot-vector)
 
 Embeddings are a memory efficient way of representing one-hot encoded features that can also capture additional relationships between factors (or levels) of that variable. (https://medium.com/@michi.jeremias/embeddings-in-tabular-data-990202daa59f). See also their explanation on the relation between one-hot-encoding and embeddings.
 
@@ -37,7 +40,7 @@ Reason why embeddings could work. <mark style="background: #ABF7F7A6;">“Why ar
 <mark style="background: #D2B3FFA6;">“4.3 Embedding Layer Since the feature representations of the categorical features are very sparse and high-dimensional, a common way is to represent them into low-dimensional spaces (e.g., word embeddings). Specifically, we represent each categorical feature with a low-dimensional vector, i.e., ei = Vixi, (2) where Vi is an embedding matrix for field i, and xi is an one-hot vector. Often times categorical features can be multi-valued, i.e., xi is a multi-hot vector. Take movie watching prediction as an example, there could be a feature field Genre which describes the types of a movie and it may be multi-valued (e.g., Drama and Romance for movie “Titanic”). To be compatible with multi-valued inputs, we further modify the Equation 2 and represent the multi-valued feature field as the average of corresponding feature embedding vectors: ei = 1 q Vixi, (3) where q is the number of values that a sample has for i-th field and xi is the multi-hot vector representation for this field. To allow the interaction between categorical and numerical features, we also represent the numerical features in the same lowdimensional feature space. Specifically, we represent the numerical feature as em = vmxm, (4) where vm is an embedding vector for field m, and xm is a scalar value. By doing this, the output of the embedding layer would be a concatenation of multiple embedding vectors, as presented in Figure 2.” ([Song et al., 2019, p. 4](zotero://select/library/items/2PWVWL5T)) ([pdf](zotero://open-pdf/library/items/HBV6667L?page=4&annotation=UVTMKE9G))
 </mark>
 
-<mark style="background: #FF5582A6;">“Transformer-like architectures have a specific way to handle numerical features of the data. Namely, they map scalar values of numerical features to high-dimensional embedding vectors, which are then mixed by the self-attention modules.” ([Gorishniy et al., 2022, p. 1](zotero://select/library/items/V9AJAB5T)) ([pdf](zotero://open-pdf/library/items/YMZCLKEQ?page=1&annotation=NINXYJZY))</mark>
+“Transformer-like architectures have a specific way to handle numerical features of the data. Namely, they map scalar values of numerical features to high-dimensional embedding vectors, which are then mixed by the self-attention modules.” ([Gorishniy et al., 2022, p. 1](zotero://select/library/items/V9AJAB5T)) ([pdf](zotero://open-pdf/library/items/YMZCLKEQ?page=1&annotation=NINXYJZY))
 
 <mark style="background: #FFF3A3A6;">“As another important finding, we demonstrate that the step of embedding the numerical features is universally beneficial for different deep architectures, not only for arXiv:2203.05556v2 [cs.LG] 15 Mar 202” ([Gorishniy et al., 2022, p. 1](zotero://select/library/items/V9AJAB5T)) ([pdf](zotero://open-pdf/library/items/YMZCLKEQ?page=1&annotation=7CKCYKGR))</mark>
 

@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 59.325498211548286,
+        "dimension": 62.26096737907761,
         "children": [
           {
             "id": "64bb86cb491913cc",
@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🅰️Attention.md",
+                "file": "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
                 "mode": "source",
                 "source": false
               }
@@ -32,30 +32,6 @@
                 "source": false
               },
               "pinned": true
-            }
-          },
-          {
-            "id": "ce6e67e20aa923b7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/@hancockSurveyCategoricalData2020.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ff6fd06bcddd9cc1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🤖TabTransformer.md",
-                "mode": "source",
-                "source": false
-              }
             }
           },
           {
@@ -97,12 +73,12 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       },
       {
         "id": "7d0f20b2823cd759",
         "type": "tabs",
-        "dimension": 40.674501788451714,
+        "dimension": 37.73903262092239,
         "children": [
           {
             "id": "d2e545f167483e29",
@@ -176,7 +152,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🧠Deep Learning Methods/@hancockSurveyCategoricalData2020.md",
+                "file": "chapters/💤Embeddings for tabular data.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -204,16 +180,32 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🧠Deep Learning Methods/@hancockSurveyCategoricalData2020.md"
+                "file": "chapters/💤Embeddings for tabular data.md"
               }
+            }
+          },
+          {
+            "id": "f148b870bf6cdf2b",
+            "type": "leaf",
+            "state": {
+              "type": "graph-analysis",
+              "state": {}
+            }
+          },
+          {
+            "id": "01cf327703e04d13",
+            "type": "leaf",
+            "state": {
+              "type": "stat-view",
+              "state": {}
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 378.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -222,20 +214,21 @@
       "canvas:Create new canvas": false,
       "command-palette:Open command palette": false,
       "markdown-importer:Open format converter": false,
-      "obsidian-tts:Text to Speech": false
+      "obsidian-tts:Text to Speech": false,
+      "obsidian-word-sprint:Activate Word Sprint Leaf": false
     }
   },
-  "active": "ce6e67e20aa923b7",
+  "active": "3ccaf56b42332e71",
   "lastOpenFiles": [
+    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
     "chapters/💤Embeddings for tabular data.md",
-    "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
     "notes/💤Embeddings for tabular data notes.md",
-    "📥Inbox/@chengWideDeepLearning2016.md",
-    "chapters/🤖TabTransformer.md",
-    "chapters/🍔Layer norm.md",
-    "❓Questions.md",
+    "chapters/🛌Token Embedding.md",
+    "🧠Deep Learning Methods/@kossenSelfAttentionDatapointsGoing2021.md",
     "📥Inbox/@kossenSelfAttentionDatapointsGoing2021.md",
-    "🧠Deep Learning Methods/Transformer/@gorishniyEmbeddingsNumericalFeatures2022.md",
-    "chapters/🛌Token Embedding.md"
+    "chapters/🤖TabTransformer.md",
+    "🧠Deep Learning Methods/@hancockSurveyCategoricalData2020.md",
+    "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
+    "📥Inbox/@chengWideDeepLearning2016.md"
   ]
 }
