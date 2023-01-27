@@ -6,15 +6,15 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 62.26096737907761,
+        "dimension": 70.75365579302587,
         "children": [
           {
-            "id": "64bb86cb491913cc",
+            "id": "9c523544ac671f53",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
+                "file": "chapters/🤖Transformer.md",
                 "mode": "source",
                 "source": false
               }
@@ -35,12 +35,24 @@
             }
           },
           {
-            "id": "623b60edf9105413",
+            "id": "eaa775d6b8c25d88",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@songAutoIntAutomaticFeature2019.md",
+                "file": "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "5eb4049a071151d6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖TabTransformer.md",
                 "mode": "source",
                 "source": false
               }
@@ -72,13 +84,12 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "7d0f20b2823cd759",
         "type": "tabs",
-        "dimension": 37.73903262092239,
+        "dimension": 29.246344206974126,
         "children": [
           {
             "id": "d2e545f167483e29",
@@ -152,7 +163,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/💤Embeddings for tabular data.md",
+                "file": "chapters/🤖Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -180,7 +191,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/💤Embeddings for tabular data.md"
+                "file": "chapters/🤖Transformer.md"
               }
             }
           },
@@ -218,17 +229,17 @@
       "obsidian-word-sprint:Activate Word Sprint Leaf": false
     }
   },
-  "active": "3ccaf56b42332e71",
+  "active": "9c523544ac671f53",
   "lastOpenFiles": [
-    "🧠Deep Learning Methods/@gorishniyRevisitingDeepLearning2021.md",
     "chapters/💤Embeddings for tabular data.md",
     "notes/💤Embeddings for tabular data notes.md",
-    "chapters/🛌Token Embedding.md",
-    "🧠Deep Learning Methods/@kossenSelfAttentionDatapointsGoing2021.md",
-    "📥Inbox/@kossenSelfAttentionDatapointsGoing2021.md",
     "chapters/🤖TabTransformer.md",
-    "🧠Deep Learning Methods/@hancockSurveyCategoricalData2020.md",
-    "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
-    "📥Inbox/@chengWideDeepLearning2016.md"
+    "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
+    "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
+    "📥Inbox/@songAutoIntAutomaticFeature2019.md",
+    "chapters/🎱Position-wise FFN.md",
+    "chapters/🤖Transformer.md",
+    "chapters/🔗Residual connections.md",
+    "chapters/🧵Positional Embedding.md"
   ]
 }

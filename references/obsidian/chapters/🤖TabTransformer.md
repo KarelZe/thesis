@@ -43,9 +43,5 @@ Their observation integrates with a wider strand of literature that suggests mod
 
 <mark style="background: #FF5582A6;">(Positional encoding is strictly not required as only categorical vectors are embedded. I guess it would be more problematic, if numerical variables were also embedded. See [[@somepalliSAINTImprovedNeural2021]])</mark> 
 
----
-Related:
-- [[@huangTabTransformerTabularData2020]] propose TabTransformer
-- [[@vaswaniAttentionAllYou2017]] propose the Transformer architecture
-- [[@cholakovGatedTabTransformerEnhancedDeep2022]] Rubish paper that extends the TabTransformer
-- [[@gorishniyRevisitingDeepLearning2021]] propose FTTransformer, which is similar to the TabTransformer
+**Notes on TabTransformer:**
+[[🤖tabtransformer notes]]

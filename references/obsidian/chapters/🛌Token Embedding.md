@@ -1,14 +1,5 @@
 #word-2-vec #embeddings #data-preprocessing 
 
-**Related:**
-- See [[@gorishniyEmbeddingsNumericalFeatures2022]]
-- See [[@phuongFormalAlgorithmsTransformers2022]]
-- See [[@bengioNeuralProbabilisticLanguage]]
-![[classical_transformer_architecture.png]]
-(own drawing after [[@daiTransformerXLAttentiveLanguage2019]])
-
- ^dbc00b
-
 Instead of using the NLP-specific term "token embedding" use term "feature embedding." E. g., [[@somepalliSAINTImprovedNeural2021]] write <mark style="background: #FFB86CA6;">SAINT is inspired by the transformer encoder of Vaswani et al. [41], designed for natural language, where the model takes in a sequence of feature embeddings and outputs contextual representations of the same dimension.</mark>
 
 (Define with a catchy phrase what an embedding is -> Example from Marais -> use similar “An embedding is a layer which maps a discrete input to a numeric vector representation. It was first used in NLP in order to represent words as numbers so that they may be processed by numeric models.” (Marais, p. 51))
@@ -63,5 +54,5 @@ Embeddings can only encode the semantic relationship of tokens, but they do not 
 
 [^1:]Note that there is a subtle difference between tokens and words. Token could be be words including punctation marks. But words can also be split into multiple tokens (Compare sub-words). Also notice the subtlety of words being reduced to their stem and lower-cased. (Provide the standard nlp reference for further info on this topic.)
 
-## Notes
-[[🛌Notes on token embeddings]]
+**Notes:**
+[[🛌 Token embeddings notes]]
