@@ -68,7 +68,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -126,7 +126,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/🧵Positional encoding notes.md",
+                "file": "chapters/🧵Positional Embedding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -154,7 +154,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/🧵Positional encoding notes.md"
+                "file": "chapters/🧵Positional Embedding.md"
               }
             }
           },
@@ -192,11 +192,11 @@
       "obsidian-word-sprint:Activate Word Sprint Leaf": false
     }
   },
-  "active": "a443933e6494db46",
+  "active": "8399eb31ec07fd72",
   "lastOpenFiles": [
+    "notes/🧵Positional encoding notes.md",
     "chapters/🧵Positional Embedding.md",
     "chapters/🤖Transformer.md",
-    "notes/🧵Positional encoding notes.md",
     "chapters/🛌Token Embedding.md",
     "notes/🛌 Token embeddings notes.md",
     "chapters/🗼Overview Transformer.md",
