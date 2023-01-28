@@ -1,4 +1,22 @@
 
+
+TODO: Use dot-product instead, to be coherent to the idea used in attention? Not scaled by magnitude?
+See here. https://datascience.stackexchange.com/questions/744/cosine-similarity-versus-dot-product-as-distance-metrics
+
+
+```python
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+x = np.array([0.01, 0.20, 0.134]).reshape(-1,1)
+y = np.array([0.07, 0.157, 0.139]).reshape(-1,1)
+cosine_sim = cosine_similarity(x, y)
+print(cosine_sim)
+
+[[1. 1. 1.] [1. 1. 1.] [1. 1. 1.]]
+
+```
+
+
 ## Notes from Phuong and Hutter
 (see [[@phuongFormalAlgorithmsTransformers2022]])
 ![[token-embedding.png]]
