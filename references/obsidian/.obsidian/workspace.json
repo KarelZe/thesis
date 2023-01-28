@@ -20,6 +20,30 @@
             }
           },
           {
+            "id": "7d3355bf7c40a898",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🎱Position-wise FFN.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "5ddb5de3616ffbd2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🅰️Attention.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "c618750dc41aaec2",
             "type": "leaf",
             "state": {
@@ -67,8 +91,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -126,7 +149,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🧵Positional Embedding.md",
+                "file": "chapters/🤖Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -154,7 +177,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🧵Positional Embedding.md"
+                "file": "chapters/🤖Transformer.md"
               }
             }
           },
@@ -192,17 +215,17 @@
       "obsidian-word-sprint:Activate Word Sprint Leaf": false
     }
   },
-  "active": "8399eb31ec07fd72",
+  "active": "9c523544ac671f53",
   "lastOpenFiles": [
-    "notes/🧵Positional encoding notes.md",
-    "chapters/🧵Positional Embedding.md",
+    "chapters/🎱Position-wise FFN.md",
     "chapters/🤖Transformer.md",
+    "chapters/🅰️Attention.md",
+    "chapters/🧵Positional Embedding.md",
+    "notes/🧵Positional encoding notes.md",
     "chapters/🛌Token Embedding.md",
     "notes/🛌 Token embeddings notes.md",
     "chapters/🗼Overview Transformer.md",
     "notes/🔗residual connections notes.md",
-    "chapters/🔗Residual connections.md",
-    "chapters/🅰️Attention.md",
-    "chapters/💤Embeddings for tabular data.md"
+    "chapters/🔗Residual connections.md"
   ]
 }
