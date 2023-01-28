@@ -19,4 +19,3 @@ Like in chapter [[🛌Token Embedding]] the dimension of the embedding $e_{d}$ a
 
 ## Notes
 [[💤Embeddings for tabular data notes]]
-
