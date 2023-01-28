@@ -2,6 +2,14 @@
 ![[context-xl-transformer.png]]
 (found in [[@daiTransformerXLAttentiveLanguage2019]])
 
+
+What is attention in general?
+How does attention work?
+What is self-attention and how is it computed?
+What is cross-attention?
+What is problematic about attention?
+
+
 - What is Attention in general?
 - Where does it originate from? Where was it introduced?
 
