@@ -6,7 +6,7 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 70.75365579302587,
+        "dimension": 59.280089988751406,
         "children": [
           {
             "id": "9c523544ac671f53",
@@ -32,6 +32,18 @@
                 "source": false
               },
               "pinned": true
+            }
+          },
+          {
+            "id": "b12fc89b5be59936",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🪄Feature Engineering.md",
+                "mode": "source",
+                "source": false
+              }
             }
           },
           {
@@ -84,12 +96,13 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "7d0f20b2823cd759",
         "type": "tabs",
-        "dimension": 29.246344206974126,
+        "dimension": 40.719910011248594,
         "children": [
           {
             "id": "d2e545f167483e29",
@@ -104,8 +117,21 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "3ed81adbd2a3485e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🧠Deep Learning Methods/@borisovDeepNeuralNetworks2022.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -163,7 +189,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Transformer.md",
+                "file": "chapters/💤Embeddings for tabular data.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -191,7 +217,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Transformer.md"
+                "file": "chapters/💤Embeddings for tabular data.md"
               }
             }
           },
@@ -229,17 +255,17 @@
       "obsidian-word-sprint:Activate Word Sprint Leaf": false
     }
   },
-  "active": "9c523544ac671f53",
+  "active": "3ccaf56b42332e71",
   "lastOpenFiles": [
+    "🧠Deep Learning Methods/@borisovDeepNeuralNetworks2022.md",
     "chapters/💤Embeddings for tabular data.md",
     "notes/💤Embeddings for tabular data notes.md",
-    "chapters/🤖TabTransformer.md",
+    "chapters/🪄Feature Engineering.md",
+    "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
     "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
-    "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
-    "📥Inbox/@songAutoIntAutomaticFeature2019.md",
-    "chapters/🎱Position-wise FFN.md",
     "chapters/🤖Transformer.md",
-    "chapters/🔗Residual connections.md",
-    "chapters/🧵Positional Embedding.md"
+    "chapters/🤖TabTransformer.md",
+    "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
+    "📥Inbox/@songAutoIntAutomaticFeature2019.md"
   ]
 }

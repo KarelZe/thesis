@@ -9,6 +9,8 @@
 - [[@songAutoIntAutomaticFeature2019]] (use categorical embeddings)
 *code:*
 *review:*
+*video:*
+- https://www.youtube.com/watch?v=icmjDyNaj2E (pydata video covering entity embeddings)
 
 ## Notes 📍
 
