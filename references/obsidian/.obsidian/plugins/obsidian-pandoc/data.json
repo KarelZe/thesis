@@ -10,6 +10,4 @@
   "pandoc": null,
   "pdflatex": null,
   "outputFolder": "C:\\Users\\Markus\\Desktop\\chapters",
-  "extraArguments": "",
-  "exportFrom": "md"
-}
+  "extraArguments": "--resource-path \"C:\\Users\\Markus\\OneDrive\\Documents\\git\\thesis\\references\\obsidian\\🖼️Media\\\"",

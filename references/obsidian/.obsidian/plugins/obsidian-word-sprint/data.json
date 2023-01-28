@@ -1,0 +1,15 @@
+{
+  "sprintLength": 25,
+  "showLagNotices": true,
+  "showLeafUpdates": true,
+  "yellowNoticeTimeout": 10,
+  "yellowNoticeText": "Keep on writing, this is a sprint!",
+  "redNoticeTimeout": 50,
+  "redNoticeText": "Enjoy that break, get back to writing when you're back",
+  "dailyGoal": 1001,
+  "overallGoal": 0,
+  "defaultTab": "stats",
+  "showEncouragementNotices": false,
+  "encouragementWordCount": 250,
+  "encouragementText": "Amazing job so far! Keep it going you're doing great!"
+}

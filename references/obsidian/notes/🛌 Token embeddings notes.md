@@ -1,0 +1,60 @@
+
+## Notes from Phuong and Hutter
+(see [[@phuongFormalAlgorithmsTransformers2022]])
+![[token-embedding.png]]
+
+## Notes from e2eml
+
+In an embedding, those word points are all taken and rearranged (**projected**, in linear algebra terminology) into a lower-dimensional space. The picture above shows what they might look like in a 2-dimensional space for example. Now, instead of needing _N_ numbers to specify a word, we only need 2. These are the (_x_, _y_) coordinates of each point in the new space. Here's what a 2-dimensional embedding might look like for our toy example, together with the coordinates of a few of the words.
+
+![](https://e2eml.school/images/transformers/embedded_words.png)
+
+A good embedding groups words with similar meanings together. A model that works with an embedding learns patterns in the embedded space. That means that whatever it learns to do with one word automatically gets applied to all the words right next to it. This has the added benefit of reducing the amount of training data needed. Each example gives a little bit of learning that gets applied across a whole neighborhood of words
+
+A good embedding groups words with similar meanings together. **A model that works with an embedding learns patterns in the embedded space.** That means that whatever it learns to do with one word automatically gets applied to all the words right next to it. This has the added benefit of reducing the amount of training data needed. Each example gives a little bit of learning that gets applied across a whole neighborhood of words.
+
+## Notes from Chris Olah
+From https://colah.github.io/posts/2014-07-NLP-RNNs-Representations/:
+
+I’d like to start by tracing a particularly interesting strand of deep learning research: word embeddings. In my personal opinion, word embeddings are one of the most exciting area of research in deep learning at the moment, although they were originally introduced by Bengio, _et al._ more than a decade ago.(see [[@bengioNeuralProbabilisticLanguage]]) Beyond that, I think they are one of the best places to gain intuition about why deep learning is so effective.
+
+
+A word embedding $W:$ words $\rightarrow \mathbb{R}^n$ is a paramaterized function mapping words in some language to high-dimensional vectors (perhaps 200 to 500 dimensions). For example, we might find:
+$$
+\begin{aligned}
+& W(\text { "cat" })=(0.2,-0.4,0.7, \ldots) \\
+& W(\text { "mat" })=(0.0,0.6,-0.1, \ldots)
+\end{aligned}
+$$
+(Typically, the function is a lookup table, parameterized by a matrix, $\theta$, with a row for each word: $\left.W_\theta\left(w_n\right)=\theta_{n-}\right)$
+$W$ is initialized to have random vectors for each word. It learns to have meaningful vectors in order to perform some task.
+WW is initialized to have random vectors for each word. It learns to have meaningful vectors in order to perform some task.
+
+Word embeddings exhibit an even more remarkable property: analogies between words seem to be encoded in the difference vectors between words. For example, there seems to be a constant male-female difference vector:
+$$
+\begin{aligned}
+& W(\text { ''woman" })-W(\text { ''man") }) \simeq W(\text { ''aunt" })-W(\text { ''uncle" }) \\
+& W(\text { ''woman" })-W(\text { 'man" }) \simeq W(\text { 'queen" })-W(\text { ('king") }
+\end{aligned}
+$$
+This may not seem too surprising. After all, gender pronouns mean that switching a word can make a sentence grammatically incorrect. You write, "she is the aunt" but "he is the uncle." 
+
+Example is adapted from [[@mikolovLinguisticRegularitiesContinuous2013]]
+
+
+## Notes from Vaswani
+From [[@vaswaniAttentionAllYou2017]] :
+“Similarly to other sequence transduction models, we use learned embeddings to convert the input tokens and output tokens to vectors of dimension dmodel. We also use the usual learned linear transformation and softmax function to convert the decoder output to predicted next-token probabilities.” (Vaswani et al., 2017, p. 5)
+
+## Notes from Rothman
+From [[@rothmanTransformersNaturalLanguage2021]]:
+
+The embedding sub-layer works like other standard *transduction models*. A tokenizer will transform a sentence into tokens.
+
+“The Transformer contains a learned embedding sub-layer. Many embedding methods can be applied to the tokenized input. I chose the skip-gram architecture of the word2vec embedding approach Google made available in 2013 to illustrate the embedding sublayer of the Transformer.” (Rothman, 2021, p. 9)
+
+“A skip-gram will focus on a center word in a window of words and predicts context words. For example, if word(i) is the center word in a two-step window, a skipgram model will analyze word(i-2), word(i-1), word(i+1), and word(i+2). Then the window will slide and repeat the process. A skip-gram model generally contains an input layer, weights, a hidden layer, and an output containing the word embeddings of the tokenized input words.” (Rothman, 2021, p. 9)
+
+“To verify the word embedding produced for these two words, we can use cosine similarity to see if the word embeddings of the words black and brown are similar. Cosine similarity uses Euclidean (L2) norm to create vectors in a unit sphere. The dot product of the vectors we are comparing is the cosine between the points of those two vectors.” (Rothman, 2021, p. 10)
+
+“The Transformer's subsequent layers do not start empty-handed. They have learned word embeddings that already provide information on how the words can be associated. However, a big chunk of information is missing because no additional vector or information indicates a word's position in a sequence.” (Rothman, 2021, p. 10)
