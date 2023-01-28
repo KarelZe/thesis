@@ -4,16 +4,16 @@ The vocabulary may include special tokens, like the $\texttt{[UNK]}$ token to ha
 
 Consider the input sequence »Kings and Queens«; a small vocabulary of $V=[0,N_v]$, and a mapping between token and token-id of $\text{queen}\mapsto 1$; $\text{king}\mapsto 2$ . Applying tokenizing by words, after common pre-processing like stemming and stop word removal, yields a sequence of token-ids $x$ given by $[2, 1]$. ^ 1] 
 
-Subsequently, the sequence of token ids is converted into a sequence of *token embeddings*. Pioneered by [[@bengioNeuralProbabilisticLanguage]] (p. 1,139), embedding maps each token - here a word - into a high-dimensional space. By representing every word as a vector, semantic and syntactic relationships between can be encoded. As such, similar words share a similar embedding vector [[@bengioNeuralProbabilisticLanguage]] (p. 1,139). Also, word embeddings are semantically meaningful and can capture linguistic regularities, like gender through offsets between vectors [[@mikolovLinguisticRegularitiesContinuous2013]]  (p. 748 f.).
+Subsequently, the sequence of token ids is converted into a sequence of *token embeddings*. Pioneered by [[@bengioNeuralProbabilisticLanguage]] (p. 1,139), embedding maps each token - here a word - into a high-dimensional space. By representing every word as a vector, semantic and syntactic relationships between tokens can be encoded. As such, similar words share a similar embedding vector [[@bengioNeuralProbabilisticLanguage]] (p. 1,139). Also, word embeddings are semantically meaningful and can capture linguistic regularities, like gender through offsets between vectors [[@mikolovLinguisticRegularitiesContinuous2013]]  (p. 748 f.).
 
-The embedding layer from Figure [[#^dbc00b]] is ultimately a lookup table to retrieve the embedding vector $e \in \mathbb{R}^{d_{\mathrm{e}}}$  from a learned, embedding matrix $W_e \in \mathbb{R}^{d_{\mathrm{e}} \times N_{\mathrm{V}}}$ with a token-id $v \in V \cong\left[N_{\mathrm{V}}\right]$ as shown :
+The embedding layer from Figure [[#^dbc00b]] is ultimately a lookup table to retrieve the embedding vector $e \in \mathbb{R}^{d_{\mathrm{e}}}$  from a learned, embedding matrix $W_e \in \mathbb{R}^{d_{\mathrm{e}} \times N_{\mathrm{V}}}$ with a token-id $v \in V \cong\left[N_{\mathrm{V}}\right]$ as shown:
 $$
 \tag{1}
 e=W_e[:, v].
 $$
 
 ^4bee48
-The weights of $W_e$ are initialized randomly and updated using gradient-descent to obtain the learned embeddings. The dimension of the embedding $d_e$, affects the expressiveness of the network and is thus an important tuneable hyperparameter of the model (see [[💡Hyperparameter tuning]]). Concluding the example from above with synthetic embeddings of dimensionality $e^d=3$:
+The weights of $W_e$ are initialized randomly and updated using gradient descent to obtain the learned embeddings. The dimension of the embedding $d_e$, affects the expressiveness of the network and is thus an important tuneable hyperparameter of the model (see [[💡Hyperparameter tuning]]). Concluding the example from above with synthetic embeddings of dimensionality $e^d=3$:
 $$
 \tag{2}
 \begin{aligned}
