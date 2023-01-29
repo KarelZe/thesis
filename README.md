@@ -40,7 +40,7 @@ source thesis/bin/activate
 python -m pip install .
 
 # run training script
-python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/ise_classic_size_log_normalized:v2 --features=classical-size
+python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/ise_log_standardized:v2 --features=classical-size
 2022-11-18 10:25:50,920 - __main__ - INFO - Connecting to weights & biases. Downloading artifacts. 📦
 2022-11-18 10:25:56,180 - __main__ - INFO - Start loading artifacts locally. 🐢
 2022-11-18 10:26:07,562 - __main__ - INFO - Start with study. 🦄
@@ -62,8 +62,8 @@ Set up `submit_thesis_gpu.sh` to batch job:
 
 # Set up modules
 module purge                    # Unload all currently loaded modules.
-module load devel/cuda/10.2     # Load required modules e. g., cuda 10.2
-module load compiler/gnu/11.2
+module load devel/python/3.8.6_gnu_10.2 # Load python 3.8 
+module load devel/cuda/11.7     # Load required modules e. g., cuda 11.7
 
 # start venv and run script
 cd thesis

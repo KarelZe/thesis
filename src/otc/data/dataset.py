@@ -95,11 +95,11 @@ class TabDataset(Dataset):
             self.x_cat = torch.tensor(x[:, self._cat_idx]).int()
         self.x_cont = torch.tensor(x[:, self._cont_idx]).float()
 
-        # set weights
+        # set weights, no gradient calculation
         weight = (
-            torch.tensor(weight).float()
+            torch.tensor(weight, requires_grad=False).float()
             if weight is not None
-            else torch.ones(len(self.y)).float()
+            else torch.ones(len(self.y), requires_grad=False).float()
         )
         assert (
             y.shape[0] == weight.shape[0]
