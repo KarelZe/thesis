@@ -1,5 +1,5 @@
 {
-  "showCLICommands": true,
+  "showCLICommands": false,
   "addExtensionsToInternalLinks": "html",
   "injectAppCSS": "light",
   "injectThemeCSS": false,
@@ -9,5 +9,7 @@
   "highDPIDiagrams": true,
   "pandoc": null,
   "pdflatex": null,
-  "outputFolder": "C:\\Users\\Markus\\Desktop\\chapters",
-  "extraArguments": "--resource-path \"C:\\Users\\Markus\\OneDrive\\Documents\\git\\thesis\\references\\obsidian\\🖼️Media\\\"",
+  "outputFolder": null,
+  "extraArguments": "",
+  "exportFrom": "md"
+}
