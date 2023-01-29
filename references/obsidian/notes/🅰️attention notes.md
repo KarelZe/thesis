@@ -5,6 +5,8 @@
 
 ## Attention
 
+<mark style="background: #ADCCFFA6;">An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors. The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key. (unknown)</mark>
+
 
 ## Dot-product attention
 
@@ -72,26 +74,15 @@ The study of the transformer architecture has focused on the role and function o
 - Detailed explanation and implementation. Check my understanding against it: https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html
 - https://towardsdatascience.com/transformers-explained-visually-not-just-how-but-why-they-work-so-well-d840bd61a9d3
 - http://nlp.seas.harvard.edu/2018/04/03/attention.html
-
 - See [[@michelAreSixteenHeads2019]] for discussion if all heads are necessary
-
-- See [[@zhangDiveDeepLearning2021]] for intuitive explanation
-
 - https://ai.stanford.edu/blog/contextual/
-
 - good blog post for intuition https://towardsdatascience.com/transformers-explained-visually-part-3-multi-head-attention-deep-dive-1c1ff1024853
 - good blog post for inuition on attention: https://storrs.io/attention/
 Nice overview over attention and self-attention:
 - https://slds-lmu.github.io/seminar_nlp_ss20/attention-and-self-attention-for-nlp.html
-https://angelina-yang.medium.com/whats-the-difference-between-attention-and-self-attention-in-transformer-models-2846665880b6
+- https://angelina-yang.medium.com/whats-the-difference-between-attention-and-self-attention-in-transformer-models-2846665880b6
 - Course on nlp / transformers: https://phontron.com/class/anlp2022/schedule.html
 - https://www.borealisai.com/research-blogs/tutorial-16-transformers-ii-extensions/
 - discuss problems with computational complexity and that approximations exist
-
-An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors. The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.
-
 - nice explanation of transformers, such as dot-product attention https://t.co/WOlBY3suy4
-
 - low-level  overview. Fully digest these ideas: https://transformer-circuits.pub/2021/framework/index.html
-- notebook with nice visuals: https://github.com/dvgodoy/PyTorchStepByStep/blob/master/Chapter10.ipynb
-

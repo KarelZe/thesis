@@ -61,7 +61,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🧠Deep Learning Methods/@zhangDiveDeepLearning2021.md",
+                "file": "chapters/🍔Layer norm.md",
                 "mode": "source",
                 "source": false
               }
@@ -230,15 +230,15 @@
   },
   "active": "50e79075bd048c26",
   "lastOpenFiles": [
-    "🧠Deep Learning Methods/@zhangDiveDeepLearning2021.md",
+    "chapters/🍔Layer norm.md",
+    "chapters/🤖FTTransformer.md",
+    "chapters/🤖TabTransformer.md",
     "notes/🅰️attention notes.md",
+    "🧠Deep Learning Methods/@zhangDiveDeepLearning2021.md",
     "chapters/🗼Overview Transformer.md",
     "chapters/🤖Transformer.md",
     "📥Inbox/@kitaevReformerEfficientTransformer2020.md",
     "chapters/🅰️Attention.md",
-    "chapters/🥠Selection of approaches (semi-supervised).md",
-    "🧠Deep Learning Methods/Transformer/@tayEfficientTransformersSurvey2022.md",
-    "chapters/🎱Position-wise FFN.md",
-    "chapters/🧵Positional Embedding.md"
+    "chapters/🥠Selection of approaches (semi-supervised).md"
   ]
 }
