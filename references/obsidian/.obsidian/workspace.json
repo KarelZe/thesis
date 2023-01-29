@@ -30,62 +30,12 @@
         "dimension": 43.138357705286836,
         "children": [
           {
-            "id": "8d7314c087669ec0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@kitaevReformerEfficientTransformer2020.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "50e79075bd048c26",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/🅰️attention notes.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
             "id": "a2a0d01215f57c77",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🪄Feature Engineering.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "eaa775d6b8c25d88",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "5eb4049a071151d6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🤖TabTransformer.md",
+                "file": "chapters/🍔Layer norm.md",
                 "mode": "source",
                 "source": false
               }
@@ -127,28 +77,28 @@
               }
             }
           }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "7d0f20b2823cd759",
-        "type": "tabs",
-        "dimension": 40.719910011248594,
-        "children": [
-          {
-            "id": "d2e545f167483e29",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/💤Embeddings for tabular data notes.md",
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
   "left": {
     "id": "b529659093fc318f",
     "type": "split",
     "children": [
       {
-          },
+        "id": "c5256196fcf4b790",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8399eb31ec07fd72",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
           },
           {
             "id": "6942b2f8be896a2c",
@@ -185,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/🅰️attention notes.md",
+                "file": "chapters/🍔Layer norm.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -213,7 +163,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/🅰️attention notes.md"
+                "file": "chapters/🍔Layer norm.md"
               }
             }
           },
@@ -251,29 +201,17 @@
       "obsidian-word-sprint:Activate Word Sprint Leaf": false
     }
   },
-  "active": "50e79075bd048c26",
+  "active": "a2a0d01215f57c77",
   "lastOpenFiles": [
+    "📥Inbox/@kitaevReformerEfficientTransformer2020.md",
+    "notes/🅰️attention notes.md",
     "chapters/🍔Layer norm.md",
     "chapters/🤖FTTransformer.md",
     "chapters/🤖TabTransformer.md",
-    "notes/🅰️attention notes.md",
     "🧠Deep Learning Methods/@zhangDiveDeepLearning2021.md",
     "chapters/🗼Overview Transformer.md",
     "chapters/🤖Transformer.md",
-    "📥Inbox/@kitaevReformerEfficientTransformer2020.md",
     "chapters/🅰️Attention.md",
     "chapters/🥠Selection of approaches (semi-supervised).md"
   ]
-}                "file": "chapters/💤Embeddings for tabular data.md"
-      "obsidian-tts:Text to Speech": false,
-      "obsidian-word-sprint:Activate Word Sprint Leaf": false
-    "🧠Deep Learning Methods/@borisovDeepNeuralNetworks2022.md",
-    "chapters/💤Embeddings for tabular data.md",
-    "notes/💤Embeddings for tabular data notes.md",
-    "chapters/🪄Feature Engineering.md",
-    "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
-    "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
-    "chapters/🤖Transformer.md",
-    "chapters/🤖TabTransformer.md",
-    "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
-    "📥Inbox/@songAutoIntAutomaticFeature2019.md"
+}
