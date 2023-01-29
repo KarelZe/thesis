@@ -25,6 +25,20 @@ where $X$ is the input of the Transformer block and $X_B$ is the output of the T
 
 
 ## MHSA
+The Transformer model leverages a multi-headed self-attention mechanism. The key idea behind the mechanism is for each element in the sequence to learn to gather from other tokens in the sequence. The operation for a single head is defined as:
+$$
+A_h=\operatorname{Softmax}\left(\alpha Q_h K_h^{\top}\right) V_h,
+$$
+where $X$ is a matrix in $\mathbb{R}^{N \times d}, \alpha$ is a scaling factor that is typically set to $\frac{1}{\sqrt{d}}, Q_h=$ $X \boldsymbol{W}_q, K_h=X \boldsymbol{W}_k$ and $V_h=X \boldsymbol{W}_v$ are linear transformations applied on the temporal dimension of the input sequence, $\boldsymbol{W}_q, \boldsymbol{W}_k, \boldsymbol{W}_v \in \mathbb{R}^{d \times \frac{d}{H}}$ are the weight matrices (parameters) for the query, key, and value projections that project the input $X$ to an output tensor of $d$ dimensions, and $N_H$ is the number of heads. Softmax is applied row-wise.
+
+The outputs of heads $A_1 \cdots A_H$ are concatenated together and passed into a dense layer. The output $Y$ can thus be expressed as $Y=W_o\left[A_1 \cdots A_H\right]$, where $W_o$ is an output linear projection. Note that the computation of $A$ is typically done in a parallel fashion by considering tensors of $\mathbb{R}^B \times \mathbb{R}^N \times \mathbb{R}^H \times \mathbb{R}^{\frac{d}{H}}$ and computing the linear transforms for all heads in parallel.
+
+The attention matrix $A=Q K^{\top}$ is chiefly responsible for learning alignment scores between tokens in the sequence. In this formulation, the dot product between each element/token in the query $(Q)$ and key $(K)$ is taken. This drives the self-alignment process in self-attention whereby tokens learn to gather from each other. (Tay; p. 4)
+
+## Compute cost MHSA
+
+The computation costs of Transformers is derived from multiple factors. Firstly, the memory and computational complexity required to compute the attention matrix is quadratic in the input sequence length, i.e., $N \times N$. In particular, the $Q K^{\top}$ matrix multiplication operation alone consumes $N^2$ time and memory. This restricts the overall utility of self-attentive models in applications which demand the processing of long sequences. Memory restrictions are tend to be applicable more to training (due to gradient updates) and are generally of lesser impact on inference (no gradient updates). The quadratic cost of self-attention impacts (Tay; p. 4 f.)
+
 
 ## Position-wise FFN
 
