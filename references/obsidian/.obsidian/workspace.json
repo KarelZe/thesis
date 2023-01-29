@@ -6,28 +6,49 @@
       {
         "id": "ac0c9ffcaad5ed9e",
         "type": "tabs",
-        "dimension": 59.280089988751406,
+        "dimension": 56.861642294713164,
         "children": [
           {
-            "id": "9c523544ac671f53",
-                "source": false
-              },
+            "id": "5ddb5de3616ffbd2",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖Transformer.md",
+                "file": "chapters/🅰️Attention.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          }
+        ]
+      },
+      {
+        "id": "1dfb52e03a41e032",
+        "type": "tabs",
+        "dimension": 43.138357705286836,
+        "children": [
+          {
+            "id": "8d7314c087669ec0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@kitaevReformerEfficientTransformer2020.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "3ccaf56b42332e71",
+            "id": "50e79075bd048c26",
             "type": "leaf",
             "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/💤Embeddings for tabular data.md",
+                "file": "notes/🅰️attention notes.md",
                 "mode": "source",
                 "source": false
               },
@@ -35,7 +56,7 @@
             }
           },
           {
-            "id": "b12fc89b5be59936",
+            "id": "a2a0d01215f57c77",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -71,26 +92,36 @@
             }
           },
           {
-            "id": "fc3638a4eda8659e",
+            "id": "8930505bfb8cb2aa",
             "type": "leaf",
-            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🤖Pre-training of Transformers.md",
+                "file": "chapters/🤖Transformer.md",
                 "mode": "source",
                 "source": false
-              },
-              "pinned": true
+              }
             }
           },
           {
-            "id": "7a98b292f8d680fa",
+            "id": "2718b61fc9d0744c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
+                "file": "chapters/🗼Overview Transformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "028f8faccf61b6e0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🧠Deep Learning Methods/Transformer/@tayEfficientTransformersSurvey2022.md",
                 "mode": "source",
                 "source": false
               }
@@ -125,7 +156,24 @@
             "state": {
               "type": "search",
               "state": {
-                "file": "🧠Deep Learning Methods/@borisovDeepNeuralNetworks2022.md",
+                "query": "wang",
+                "matchingCase": true,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 224.5
+  },
+  "right": {
+    "id": "9db2ac4605daf425",
+    "type": "split",
     "children": [
       {
         "id": "8b73bff3515ba23a",
@@ -137,7 +185,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/💤Embeddings for tabular data.md",
+                "file": "notes/🅰️attention notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -165,7 +213,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/💤Embeddings for tabular data.md"
+                "file": "notes/🅰️attention notes.md"
               }
             }
           },
@@ -190,7 +238,11 @@
       }
     ],
     "direction": "horizontal",
-                "file": "chapters/💤Embeddings for tabular data.md",
+    "width": 378.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "command-palette:Open command palette": false,
@@ -199,18 +251,18 @@
       "obsidian-word-sprint:Activate Word Sprint Leaf": false
     }
   },
-  "active": "2ed43cf34a7019b6",
+  "active": "50e79075bd048c26",
   "lastOpenFiles": [
-    "🧠Deep Learning Methods/@borisovDeepNeuralNetworks2022.md",
-    "chapters/💤Embeddings for tabular data.md",
-    "notes/💤Embeddings for tabular data notes.md",
-    "chapters/🪄Feature Engineering.md",
-    "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
-    "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
-    "chapters/🤖Transformer.md",
+    "chapters/🍔Layer norm.md",
+    "chapters/🤖FTTransformer.md",
     "chapters/🤖TabTransformer.md",
-    "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
-    "📥Inbox/@songAutoIntAutomaticFeature2019.md"
+    "notes/🅰️attention notes.md",
+    "🧠Deep Learning Methods/@zhangDiveDeepLearning2021.md",
+    "chapters/🗼Overview Transformer.md",
+    "chapters/🤖Transformer.md",
+    "📥Inbox/@kitaevReformerEfficientTransformer2020.md",
+    "chapters/🅰️Attention.md",
+    "chapters/🥠Selection of approaches (semi-supervised).md"
   ]
 }                "file": "chapters/💤Embeddings for tabular data.md"
       "obsidian-tts:Text to Speech": false,

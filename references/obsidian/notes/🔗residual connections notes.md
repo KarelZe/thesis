@@ -1,4 +1,4 @@
-
+<mark style="background: #D2B3FFA6;">There is a theoretical link to boosting :D https://arxiv.org/abs/1706.04964</mark>
 
 <mark style="background: #CACFD9A6;">For a residual block $x+f(x)$, its shortcut output refers to $x$, its residual branch output refers to $f(x)$, and the dependency on its residual branch refers to $\frac{\operatorname{Var}[f(x)]}{\operatorname{Var}[x+f(x)]}$.(From [[@liuUnderstandingDifficultyTraining2020]])
 </mark>

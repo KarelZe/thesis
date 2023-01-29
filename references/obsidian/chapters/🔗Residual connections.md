@@ -21,9 +21,8 @@ Intuitively, the residual connection provides an alternative path for informatio
 
 <mark style="background: #FFF3A3A6;">(Introduce the word residual  stream, residual learning.)</mark>
 
-%%
-There is a theoretical link to boosting :D https://arxiv.org/abs/1706.04964
-%%
+<mark style="background: #D2B3FFA6;">(shortest description A transformer starts with a token embedding, followed by a series of “residual blocks”, and finally a token unembedding. Each residual block consists of an attention layer, followed by an MLP layer. Both the attention and MLP layers each “read” their input from the residual stream (by performing a linear projection), and then “write” their result to the residual stream by adding a linear projection back in. Each attention layer consists of multiple heads, which operate in parallel. from https://transformer-circuits.pub/2021/framework/index.html Think about it!)</mark>
+
 
 **Notes:**
 [[🔗residual connections notes]]

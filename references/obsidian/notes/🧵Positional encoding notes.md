@@ -5,6 +5,8 @@ Resources:
 - nice consistent notation in [[@phuongFormalAlgorithmsTransformers2022]]
 - nice summary and well explained in [[@zhangDiveDeepLearning2021]]. Use it to crosscheck my understanding!
 - [[@daiTransformerXLAttentiveLanguage2019]] removes the positional encoding altogether.
+- Nice visuals: https://erdem.pl/2021/05/understanding-positional-encoding-in-transformers
+- <mark style="background: #FFB8EBA6;">(see also [[@tunstallNaturalLanguageProcessing2022]] (p. 74). There is a short section that describes *relative, positional embeddings*).</mark> 
 
 **Notes:**
 - The encoder (the self-attention and feed-forward layers) are said to be permutation equivariant—if the input is permuted then the corresponding output of the layer is permuted in exactly the same way.
@@ -17,7 +19,10 @@ Resources:
 - *Absolute positional embeddings* work well if the dataset is small.
 
 **Visualization:**
-![[viz-pos-encoding.png]]
+
+
+![[positional-encoding-different-view.png]]
+(copied from: https://www.borealisai.com/research-blogs/tutorial-16-transformers-ii-extensions/)
 (Code available at https://github.com/jalammar/jalammar.github.io/blob/master/notebookes/transformer/transformer_positional_encoding_graph.ipynb)
 
 Visualization of  diffferent columns:
