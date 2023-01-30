@@ -30,8 +30,12 @@ For original notation see [[@gorishniyRevisitingDeepLearning2021]].
 
 ![[viz-of image-embedding.png]]
 (from https://github.com/dvgodoy/PyTorchStepByStep)
+![[vison-transformer.png]]
+(from [[@dosovitskiyImageWorth16x162021]])
 
 For classification tasks in the language representation model BERT, [[@devlinBERTPretrainingDeep2019]] (p. 4,174) propose to append a specialized $\texttt{[CLS]}$ token to every sequence, that stores its aggregate representation. Like any other token, the $\texttt{[CLS]}$ token is embedded first (see chapter [[🛌Token Embedding]]), and contextualized in the Transformer layers. Its final representation is then used in the classification task. 
+
+<mark style="background: #FFB86CA6;">“Similar to BERT’s [class] token, we prepend a learnable embedding to the sequence of embedded patches (z00 = xclass), whose state at the output of the Transformer encoder (z0 L) serves as the image representation y (Eq. 4).” (Dosovitskiy et al., 2021, p. 3)</mark> <mark style="background: #FFB8EBA6;">-> prepend is the word I was looking for</mark>
 
 [[@gorishniyRevisitingDeepLearning2021]] (p. 4) adapt the idea of a $\texttt{[CLS]}$ token for tabular representation models. Similar to a categorical or continuous feature, the embedding of the $[\texttt{CLS}]$ token $e_\texttt{[CLS]} \in \mathbb{R}^{e_d}$ is appended to the column embeddings with $X = \left[e_\texttt{[CLS]}, e_1, e_2, \ldots e_{n}\right]$ , where $X \in \mathbb{R}^{e_d \times n +1}$. $X$ is passed through a stack of $L$ transformer layers. The then updated representation of the (CLS) token is used for prediction:
 $$

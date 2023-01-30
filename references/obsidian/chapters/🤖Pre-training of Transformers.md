@@ -11,6 +11,7 @@
 - [[@darabiContrastiveMixupSelf2021]]
 - [[@badaroTransformersTabularData]]
 - [[@rubachevRevisitingPretrainingObjectives2022]]
+- https://www.borealisai.com/research-blogs/tutorial-14-transformers-i-introduction/
 
 ## Notes
 <mark style="background: #FFF3A3A6;">Difference of self-supervised learning and transfer learning: Recently, self-supervised learning (SSL) [2,3], as an unsupervised pretraining approach, has achieved promisingsuccess and outperforms transfer learning in a wide range of applications [2]. Similar to TL, SSLalso solves predictive tasks. But the output labels in SSL are constructed from the input data, ratherthan annotated by human as in TL. The auxiliary predictive tasks in SSL could be predicting whethertwo augmented data examples originate from the same original data example [3], inpainting maskedregions in images [4], etc. Since SSL does not leverage labels provided by human, it does not havethe risk of being biased to labels in a source task. On the other hand, the potential pitfall of not usinghuman-annotated labels is that the learned representations by SSL may not be as discriminative asthose in TL. (https://www.techrxiv.org/articles/preprint/Transfer_Learning_or_Self-supervised_Learning_A_Tale_of_Two_Pretraining_Paradigms/12502298) </mark> (Do not cite but keep in mind when writing.)

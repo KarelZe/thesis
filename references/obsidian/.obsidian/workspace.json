@@ -8,6 +8,87 @@
         "type": "tabs",
         "children": [
           {
+            "id": "5e767c5018ff3287",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🤖Transformer.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "2772ae188ca9ae54",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🗼Overview Transformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "02220467f0dd69d8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/🗼Overview transformer notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "72e3eac48e6d961f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@sutskeverSequenceSequenceLearning2014.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7604d172ecd02bfb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/💤Embeddings for tabular data.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "738ad1853ff079a8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🅰️Attention.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "ab74c25c3c1480f3",
+        "type": "tabs",
+        "children": [
+          {
             "id": "8c3e8a411a0b9225",
             "type": "leaf",
             "pinned": true,
@@ -63,8 +144,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 367.5,
-    "collapsed": true
+    "width": 367.5
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -80,7 +160,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/🅰️attention notes.md",
+                "file": "chapters/🗼Overview Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,7 +188,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/🅰️attention notes.md"
+                "file": "chapters/🗼Overview Transformer.md"
               }
             }
           },
@@ -125,7 +205,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 396.5
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -138,17 +218,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "8c3e8a411a0b9225",
+  "active": "2772ae188ca9ae54",
   "lastOpenFiles": [
-    "📥Inbox/@jawaharWhatDoesBERT2019.md",
-    "notes/🅰️attention notes.md",
-    "📥Inbox/@tenneyBERTRediscoversClassical2019.md",
-    "chapters/🅰️Attention.md",
+    "notes/🗼Overview transformer notes.md",
+    "chapters/🗼Overview Transformer.md",
+    "📥Inbox/@sutskeverSequenceSequenceLearning2014.md",
     "chapters/🤖Transformer.md",
-    "TOC.md",
-    "❓ Questions.md",
-    "Expose.md",
-    "🧞‍♀️Mastermind Group.md",
-    "Semi-supervised Learning/semi-supervised-learning.md"
+    "chapters/💤Embeddings for tabular data.md",
+    "chapters/🅰️Attention.md",
+    "notes/🅰️attention notes.md",
+    "chapters/🤖FTTransformer.md",
+    "chapters/🛌Token Embedding.md",
+    "chapters/🤖Pre-training of Transformers.md"
   ]
 }

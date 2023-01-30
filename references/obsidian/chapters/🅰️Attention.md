@@ -18,3 +18,35 @@
 	- What is the appropriate masking strategy?
 
 
+
+
+
+Attention is a concept originally introduced in [[@bahdanauNeuralMachineTranslation2016]]
+
+
+In practice,  the , Thus, the d-model dimensional keys is distributed logically. 
+
+
+As the output 
+
+Finally, a softmax function is applied to 
+
+**Multi-headed attention:**
+Rather than relying on a single attention function, [[@vaswaniAttentionAllYou2017]] (4. f) introduce multiple so-called *attention heads*, which perform attention in parallel on different linear projections of the queries, keys, and values. The 
+
+Doing so gives the model the flexibility
+
+
+$$
+\tilde{V}=\boldsymbol{V} \cdot \operatorname{softmax}\left(\boldsymbol{S} / \sqrt{d_{\mathrm{attn}}}\right)
+$$
+
+The output of the $h$ individual attention heads is finally concatenated and passed into a dense layer, whose purpose is to linearly project the output back into
+
+$$
+\begin{aligned}
+Y &= \left[Y^1 ; Y^2 ; \ldots ; Y^H\right] \\
+\tilde{V}&=W_o Y+b_o 1^{\top}
+\end{aligned}
+$$
+In practice, both the split across attention heads and the concatenation of the head's result is done only logically with each of the attention heads operating on the same data matrix, but in different subsections. The output $\tilde{V}$ is then passed to 
