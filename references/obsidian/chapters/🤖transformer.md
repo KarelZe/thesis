@@ -1,7 +1,7 @@
 
 ## TOC
 
-![[🗼Overview Transformer]]
+![[🗼Overview Transformer (2 p)]]
 
 Embedding components:
 ![[🛌Token Embedding]]
