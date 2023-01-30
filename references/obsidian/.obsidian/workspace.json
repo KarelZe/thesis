@@ -22,36 +22,24 @@
             }
           },
           {
+            "id": "0dfc393ed08540d9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🧵Positional Embedding.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "eefd85616e5edcc4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "chapters/🗼Overview Transformer (2 p).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2772ae188ca9ae54",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🛌Token Embedding.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "faf716262f9df011",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/🛌 Token embeddings notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +81,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "ab74c25c3c1480f3",
@@ -171,7 +160,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Transformer.md",
+                "file": "chapters/🧵Positional Embedding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -199,7 +188,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Transformer.md"
+                "file": "chapters/🧵Positional Embedding.md"
               }
             }
           },
@@ -229,10 +218,10 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "5e767c5018ff3287",
+  "active": "0dfc393ed08540d9",
   "lastOpenFiles": [
-    "chapters/🛌Token Embedding.md",
     "chapters/🤖Transformer.md",
+    "chapters/🛌Token Embedding.md",
     "notes/🛌 Token embeddings notes.md",
     "chapters/🗼Overview Transformer (2 p).md",
     "chapters/💤Embeddings for tabular data.md",
