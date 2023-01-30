@@ -22,36 +22,12 @@
             }
           },
           {
-            "id": "d251c47f6549bec7",
+            "id": "be9d5c6b639833a8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🔗Residual connections.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ca11dc67f1814e2a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🔗Residual connections.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "79540f38de4749a0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🧵Positional Embedding.md",
+                "file": "chapters/🍔Layer norm.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,33 +53,8 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "5e7214e71294ec36",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/🎱Position-wise FFN notes.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "17269e774642cddd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/🔗residual connections notes.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -161,7 +112,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🔗Residual connections.md",
+                "file": "chapters/🍔Layer norm.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -189,7 +140,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🔗Residual connections.md"
+                "file": "chapters/🍔Layer norm.md"
               }
             }
           },
@@ -219,17 +170,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "d251c47f6549bec7",
+  "active": "be9d5c6b639833a8",
   "lastOpenFiles": [
+    "chapters/🤖Transformer.md",
+    "notes/🅰️attention notes.md",
+    "notes/🎱Position-wise FFN notes.md",
     "chapters/🧵Positional Embedding.md",
     "chapters/🔗Residual connections.md",
     "notes/🔗residual connections notes.md",
-    "notes/🎱Position-wise FFN notes.md",
-    "chapters/🤖Transformer.md",
     "chapters/🛌Token Embedding.md",
     "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
     "chapters/🎱Position-wise FFN.md",
-    "notes/🛌 Token embeddings notes.md",
-    "chapters/🗼Overview Transformer (2 p).md"
+    "notes/🛌 Token embeddings notes.md"
   ]
 }
