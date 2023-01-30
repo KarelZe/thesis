@@ -34,18 +34,6 @@
             }
           },
           {
-            "id": "17269e774642cddd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/🔗residual connections notes.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "ca11dc67f1814e2a",
             "type": "leaf",
             "state": {
@@ -101,9 +89,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "17269e774642cddd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/🔗residual connections notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -221,14 +221,14 @@
   },
   "active": "d251c47f6549bec7",
   "lastOpenFiles": [
-    "notes/🔗residual connections notes.md",
-    "chapters/🔗Residual connections.md",
-    "chapters/🤖Transformer.md",
     "chapters/🧵Positional Embedding.md",
+    "chapters/🔗Residual connections.md",
+    "notes/🔗residual connections notes.md",
+    "notes/🎱Position-wise FFN notes.md",
+    "chapters/🤖Transformer.md",
     "chapters/🛌Token Embedding.md",
     "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
     "chapters/🎱Position-wise FFN.md",
-    "notes/🎱Position-wise FFN notes.md",
     "notes/🛌 Token embeddings notes.md",
     "chapters/🗼Overview Transformer (2 p).md"
   ]
