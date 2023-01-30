@@ -22,31 +22,7 @@
             }
           },
           {
-            "id": "d27dcc8a49e35dc6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🤖Transformer.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "75998da9db51b131",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🎱Position-wise FFN.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0dfc393ed08540d9",
+            "id": "79540f38de4749a0",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -56,57 +32,9 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "eefd85616e5edcc4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🗼Overview Transformer (2 p).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "72e3eac48e6d961f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@sutskeverSequenceSequenceLearning2014.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7604d172ecd02bfb",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/💤Embeddings for tabular data.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "738ad1853ff079a8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🅰️Attention.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       },
       {
         "id": "ab74c25c3c1480f3",
@@ -197,7 +125,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/🎱Position-wise FFN notes.md",
+                "file": "chapters/🧵Positional Embedding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -225,7 +153,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/🎱Position-wise FFN notes.md"
+                "file": "chapters/🧵Positional Embedding.md"
               }
             }
           },
@@ -255,17 +183,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "5e7214e71294ec36",
+  "active": "79540f38de4749a0",
   "lastOpenFiles": [
+    "chapters/🤖Transformer.md",
+    "chapters/🛌Token Embedding.md",
+    "Semi-supervised Learning/@devlinBERTPretrainingDeep2019.md",
     "chapters/🎱Position-wise FFN.md",
     "notes/🎱Position-wise FFN notes.md",
-    "chapters/🤖Transformer.md",
     "chapters/🧵Positional Embedding.md",
-    "chapters/🛌Token Embedding.md",
     "notes/🛌 Token embeddings notes.md",
     "chapters/🗼Overview Transformer (2 p).md",
     "chapters/💤Embeddings for tabular data.md",
-    "notes/🗼Overview transformer notes.md",
-    "📥Inbox/@sutskeverSequenceSequenceLearning2014.md"
+    "notes/🗼Overview transformer notes.md"
   ]
 }
