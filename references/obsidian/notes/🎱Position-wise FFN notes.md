@@ -1,4 +1,13 @@
 
+Removed stuff:
+Both activation functions are also available as *gated linear units* ([[@dauphinLanguageModelingGated2017]], p. ), which are the element-wise product of two linear transformations, of which one is activated, and may serve a drop-in for the first linear layer and activation function ([[@shazeerGLUVariantsImprove2020]]; p. 2).
+%%
+```python
+class PositionWiseFFN(nn.Module): """Positionwise feed-forward network.""" def __init__(self, ffn_num_input, ffn_num_hiddens, ffn_num_outputs, **kwargs): super(PositionWiseFFN, self).__init__(**kwargs) self.dense1 = nn.Linear(ffn_num_input, ffn_num_hiddens) self.relu = nn.ReLU() self.dense2 = nn.Linear(ffn_num_hiddens, ffn_num_outputs) def forward(self, X): return self.dense2(self.relu(self.dense1(X)))
+```
+%%
+
+
 
 ## Notes from Sukhbaatar
 (see [[@sukhbaatarAugmentingSelfattentionPersistent2019]])
