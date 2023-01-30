@@ -1,5 +1,7 @@
 <mark style="background: #D2B3FFA6;">There is a theoretical link to boosting :D https://arxiv.org/abs/1706.04964</mark>
 
+<mark style="background: #D2B3FFA6;">(shortest description A transformer starts with a token embedding, followed by a series of “residual blocks”, and finally a token unembedding. Each residual block consists of an attention layer, followed by an MLP layer. Both the attention and MLP layers each “read” their input from the residual stream (by performing a linear projection), and then “write” their result to the residual stream by adding a linear projection back in. Each attention layer consists of multiple heads, which operate in parallel. from https://transformer-circuits.pub/2021/framework/index.html Think about it!)</mark>
+
 <mark style="background: #CACFD9A6;">For a residual block $x+f(x)$, its shortcut output refers to $x$, its residual branch output refers to $f(x)$, and the dependency on its residual branch refers to $\frac{\operatorname{Var}[f(x)]}{\operatorname{Var}[x+f(x)]}$.(From [[@liuUnderstandingDifficultyTraining2020]])
 </mark>
 
