@@ -18,6 +18,7 @@
 	- What is the appropriate masking strategy?
 
 
+<<<<<<< HEAD
 
 
 
@@ -50,3 +51,5 @@ Y &= \left[Y^1 ; Y^2 ; \ldots ; Y^H\right] \\
 \end{aligned}
 $$
 In practice, both the split across attention heads and the concatenation of the head's result is done only logically with each of the attention heads operating on the same data matrix, but in different subsections. The output $\tilde{V}$ is then passed to 
+=======
+>>>>>>> origin/main

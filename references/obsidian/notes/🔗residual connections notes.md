@@ -1,4 +1,4 @@
-
+<mark style="background: #D2B3FFA6;">There is a theoretical link to boosting :D https://arxiv.org/abs/1706.04964</mark>
 
 (Formula, similar to Wang et al)
 for a solution. Let $\mathcal{F}$ be a sub-layer in encoder or decoder, and $\theta_l$ be the parameters of the sub-layer. A residual unit is defined to be (He et al., 2016b):
