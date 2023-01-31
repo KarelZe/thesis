@@ -18,7 +18,7 @@ Embedding components:
 
 📊**Transformers For Tabular Data**
 
-![[💤Embeddings for tabular data]]
+![[💤Embeddings For Tabular Data]]
 
 
 ![[🤖TabTransformer]]

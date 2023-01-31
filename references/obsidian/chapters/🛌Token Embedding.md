@@ -24,7 +24,7 @@ e_{\text{queen}}&=W_e[:,1] = [0.07, 0.157, 0.139]^T\\
 $$
 are likely to be close in space with cosine-similarity of $\approx 1$ due to their high semantic similarity. Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position (see [[@tunstallNaturalLanguageProcessing2022]] (p. 72) or [[@phuongFormalAlgorithmsTransformers2022]]). To preserve the ordering, positional information must be induced to the model using a [[🧵Positional Embedding]]. Another limitation of embeddings is, that identical tokens share their embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualized in the self-attention mechanism (see chapter [[🅰️Attention]]).
 
-Our running example uses word embeddings, motivated by the domain in which transformers were proposed. However, the novel idea of capturing semantics as embedding vectors extends to other discrete entities, as we explore in chapter [[💤Embeddings for tabular data]].
+Our running example uses word embeddings, motivated by the domain in which transformers were proposed. However, the novel idea of capturing semantics as embedding vectors extends to other discrete entities, as we explore in chapter [[💤Embeddings For Tabular Data]].
 
 ---
 

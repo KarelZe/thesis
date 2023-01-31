@@ -23,6 +23,18 @@
             }
           },
           {
+            "id": "f07d9fb1c0bcc206",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/💤Embeddings for tabular data notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "bd561f43d67ba5d7",
             "type": "leaf",
             "state": {
@@ -60,18 +72,6 @@
             }
           },
           {
-            "id": "ed7d1a55fe09308b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/🤖FTTransformer notes.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "b3077526d3c154a0",
             "type": "leaf",
             "state": {
@@ -83,8 +83,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -194,15 +193,15 @@
   },
   "active": "5e767c5018ff3287",
   "lastOpenFiles": [
-    "🖼️Media/mashup-tokenizer-fttransformer.png",
-    "chapters/🤖Transformer.md",
-    "chapters/🤖TabTransformer.md",
+    "notes/🅰️attention notes.md",
     "chapters/🤖FTTransformer.md",
-    "notes/🤖FTTransformer notes.md",
-    "🖼️Media/viz-of image-embedding.png",
-    "notes/🤖tabtransformer notes.md",
-    "chapters/🐈CatBoost.md",
-    "chapters/🛌Token Embedding.md",
-    "notes/🛌 Token embeddings notes.md"
+    "chapters/🤖TabTransformer.md",
+    "chapters/🤖Transformer.md",
+    "chapters/💤Embeddings For Tabular Data.md",
+    "chapters/🗼Overview Transformer (2 p).md",
+    "chapters/🧵Positional Embedding.md",
+    "chapters/🎱Position-wise FFN.md",
+    "chapters/🔗Residual connections.md",
+    "notes/💤Embeddings for tabular data notes.md"
   ]
 }

@@ -5,7 +5,7 @@ The FTTransformer of [[@gorishniyRevisitingDeepLearning2021]] is an adaption of 
 
 The feature tokenizer transforms all features of $x$ to their embeddings. If the $j$-th feature, $x_j$, is numerical, it is projected to its embedding $e_j \in \mathbb{R}^{e_d}$ by element-wise multiplication with a learned vector $W_j \in \mathbb{R}^{e_d}$ . More over, a feature-dependent bias term $b_j \in \mathbb{R}$ is added, as noted in Equation (1).
 
-For categorical inputs, the embedding is implemented as a lookup table, similar to the embedding in the chapter [[💤Embeddings for tabular data]]. We denote the cardinality of the $j$-th feature with $N_{C_j}$. The specific embeddings $e_j$ are queried with a unique integer key $c_j \in C_j \cong\left[N_{\mathrm{C_j}}\right]$ from the learned embedding matrix $W_j \in \mathbb{R}^{e_d \times N_{C_j}}$. Finally, a feature-specific bias term $b_j$ is added. Overall for $x_j$:
+For categorical inputs, the embedding is implemented as a lookup table, similar to the embedding in the chapter [[💤Embeddings For Tabular Data]]. We denote the cardinality of the $j$-th feature with $N_{C_j}$. The specific embeddings $e_j$ are queried with a unique integer key $c_j \in C_j \cong\left[N_{\mathrm{C_j}}\right]$ from the learned embedding matrix $W_j \in \mathbb{R}^{e_d \times N_{C_j}}$. Finally, a feature-specific bias term $b_j$ is added. Overall for $x_j$:
 $$
 \tag{1}
 e_j= 
@@ -23,7 +23,7 @@ $$
 
 For classification tasks in the language representation model BERT, [[@devlinBERTPretrainingDeep2019]] (p. 4,174) propose to prepend a specialized $\texttt{[CLS]}$ token to every sequence, that stores its aggregate representation. Like any other token, the $\texttt{[CLS]}$ token is embedded first (see chapter [[🛌Token Embedding]]), and contextualized in the subsequent Transformer layers. Its final representation is then used in the classification task.
 
-[[@gorishniyRevisitingDeepLearning2021]] (p. 4) adapt the idea of a $\texttt{[CLS]}$ token for tabular representation models, as visualized in Figure [[🤖FTTransformer#^23bb5c]]. Similar to the embeddings of a categorical or continuous feature, the embedding of the $[\texttt{CLS}]$ token $e_\texttt{[CLS]} \in \mathbb{R}^{e_d}$ is prepended to the column embeddings with $X = \left[e_\texttt{[CLS]}, e_1, e_2, \ldots e_{n}\right]$ , where $X \in \mathbb{R}^{e_d \times n +1}$. Like before, $X$ is passed through a stack of $L$ transformer layers. The then updated representation of the (CLS) token is used for prediction:
+[[@gorishniyRevisitingDeepLearning2021]] (p. 4) adapt the idea of a $\texttt{[CLS]}$ token for tabular representation models, as visualized in Figure [[🤖FTTransformer#^23bb5c]]. Similar to the embeddings of a categorical or continuous feature, the embedding of the $[\texttt{CLS}]$ token $e_\texttt{[CLS]} \in \mathbb{R}^{e_d}$ is prepended to the column embeddings with $X = \left[e_\texttt{[CLS]}, e_1, e_2, \ldots e_{n}\right]$ , where $X \in \mathbb{R}^{e_d \times n +1}$. Like before, $X$ is passed through a stack of $L$ Transformer layers. The then updated representation of the (CLS) token is used for prediction:
 $$
 P=\texttt{linear}\left(\texttt{ReLU}\left(\texttt{layer\_norm}\left(X[:,0]\right)\right)\right).
 $$

@@ -2,6 +2,17 @@
 ![[Pasted image 20230126132519.png]]
 (found here: https://images.ctfassets.net/dkgr2j75jrom/A6Xf1MfISZhiQWuyGFDpV/708d5fd82c14d8db6eb0d4af1c27d525/PillarPage-Qual-Quan-3.svg)
 
+<mark style="background: #D2B3FFA6;">standard basis ($\mathbf{e}_{1}$ etc. / orthogonal and equidistant -> found these properties in [[@cerdaEncodingHighcardinalityString2022]]) </mark>
+
+Since its introduction it has become ubiquitous in natural language processing ([[@lampleLargeMemoryLayers2019]], p. 3; ...). Its success for language representations has also led to adaptions for image representations ([[@parmarImageTransformer2018]], [[@carionEndtoEndObjectDetection2020]] (Visionformer of Dosovitsky and Liu et. al)) (found in [[@tayEfficientTransformersSurvey2022]]), as well as tabular data representations ([[@huangTabTransformerTabularData2020]], [[@somepalliSAINTImprovedNeural2021]], [[@gorishniyRevisitingDeepLearning2021]]).
+
+<mark style="background: #FFB86CA6;">In NLP, these embeddings represent words, but the same ideas have been used to process [image patches](https://arxiv.org/abs/2010.11929), [protein sequences](https://www.pnas.org/content/118/15/e2016239118), [graphs](https://arxiv.org/abs/1710.10903), [database schema](https://arxiv.org/abs/2012.15355), [speech](https://arxiv.org/abs/1910.09799), and [time series](https://arxiv.org/abs/2001.08317).</mark> (Found at borealis ai)
+
+
+
+
+~~Feature embeddings are flexible way to to represent tabular data. Though typically, models assume a static table structure which restricts the transferability across tables [[@wangTransTabLearningTransferable]]~~.
+
 - Explain how embeddings can be implemented. (querying matrix with one-hot-vector)
 
 Embeddings are a memory efficient way of representing one-hot encoded features that can also capture additional relationships between factors (or levels) of that variable. (https://medium.com/@michi.jeremias/embeddings-in-tabular-data-990202daa59f). See also their explanation on the relation between one-hot-encoding and embeddings.
