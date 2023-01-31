@@ -22,24 +22,12 @@
             }
           },
           {
-            "id": "e818a1cf9b82f2f9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🛌Token Embedding.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "2153eb7c5215129c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🛌Token Embedding.md",
+                "file": "chapters/🧵Positional Embedding.md",
                 "mode": "source",
                 "source": false
               }
@@ -172,7 +160,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🛌Token Embedding.md",
+                "file": "chapters/🧵Positional Embedding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -200,7 +188,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🛌Token Embedding.md"
+                "file": "chapters/🧵Positional Embedding.md"
               }
             }
           },
@@ -230,12 +218,12 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "e818a1cf9b82f2f9",
+  "active": "2153eb7c5215129c",
   "lastOpenFiles": [
-    "notes/🅰️attention notes.md",
-    "chapters/🛌Token Embedding.md",
-    "chapters/🗼Overview Transformer (2 p).md",
     "chapters/🤖Transformer.md",
+    "chapters/🛌Token Embedding.md",
+    "notes/🅰️attention notes.md",
+    "chapters/🗼Overview Transformer (2 p).md",
     "chapters/🍔Layer norm.md",
     "🧠Deep Learning Methods/@baLayerNormalization2016.md",
     "chapters/🎱Position-wise FFN.md",

@@ -6,14 +6,16 @@ W_p[2 i-1, t] & =\sin \left(t / \ell_{\max }^{2 i / d_e}\right), \\
 W_p[2 i, t] & =\cos \left(t / \ell_{\max }^{2 i / d_e}\right).
 \end{aligned}
 $$
-with $0<i \leq d_{\mathrm{e}} / 2$, the maximum sequence length $\ell_{\max}$, which is arbitrarily set to $\ell_{\max}=10{,}000$, and $t$ is again the position of the token in the sequence. As shown in Equation (1) the frequency decreases across the position dimension and alternates between sine and cosine for the embedding dimension. Each embedding thus contains a pattern, easily distinguishable by the model. Using trigonometric functions for the positional embedding is favorable, due to being zero-centered, and resulting in values in the closed range of $[-1,1]$. These properties are long known to promote the convergence of neural networks (cp. [[@lecunEfficientBackProp2012]] (p. 8 f)). 
-
-The reason for encoding with both the sine and cosine is more subtle, as either one would suffice for absolute embeddings. [[@vaswaniAttentionAllYou2017]] (p. 6) hypothesize, that besides learning the *absolute position* i. e., fifth place in sequence, providing both sine and cosine also enables the model to attend to *relative positions*, i. e., two places from a given token. A detailled proof is given in  [[@zhangDiveDeepLearning2021]] (p. 410).
+with $0<i \leq d_{\mathrm{e}} / 2$, the maximum sequence length $\ell_{\max}$, which is arbitrarily set to $\ell_{\max}=10{,}000$, and $t$ is again the position of the token in the sequence. As shown in Equation (1) the frequency decreases across the position dimension and alternates between sine and cosine for the embedding dimension. Each embedding thus contains a pattern, easily distinguishable by the model. We visualize the positional encoding in Figure [[#^1f2fe5]] with an embedding dimension of $d_e=96$ and 64 tokens. One can see the alternating pattern between even and odd columns and the unique pattern for each token's position. 
 
 ![[positional-encoding.png]]
 <mark style="background: #FFB8EBA6;">(Similar to [[@zhangDiveDeepLearning2021]] (p. 409); check y-labels. I thought that patterns fade for the latter positions in the sequence. See also here: https://www.borealisai.com/research-blogs/tutorial-16-transformers-ii-extensions/)</mark> ^1f2fe5
 
-We visualize the positional embedding in Figure [[#^1f2fe5]] with an embedding dimension of $d_e=96$ and 64 tokens. One can clearly see the alternating pattern between even and odd columns and the unique pattern for each token's position. The positional embedding is finally added element-wisely to the token embedding to form a token's initial embedding $e$. For the $t$-th token of a sequence $x$, the embedding becomes:
+Using trigonometric functions for the positional embedding is favourable, due to being zero-centred, and resulting in values in the closed range of $[-1,1]$. These properties are long known to promote the convergence of neural networks (cp. [[@lecunEfficientBackProp2012]] (p. 8 f) or [[@ioffeBatchNormalizationAccelerating2015]] (p. 2)). 
+
+The reason for encoding with both the sine and cosine is more subtle, as either one would suffice for absolute embeddings. [[@vaswaniAttentionAllYou2017]] (p. 6) hypothesize, that besides learning the *absolute position* i. e., fifth place in sequence, providing both sine and cosine also enables the model to attend to *relative positions*, i. e., two places from a given token. The detailed proof is given in  [[@zhangDiveDeepLearning2021]] (p. 410).
+
+The positional embedding is finally added element-wisely to the token embedding to form a token's initial embedding $e$. For the $t$-th token of a sequence $x$, the embedding becomes:
 $$
 \tag{3}
 e=W_e[:, x[t]]+W_p[:, t] .
