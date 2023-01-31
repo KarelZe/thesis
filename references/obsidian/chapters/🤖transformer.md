@@ -16,7 +16,7 @@ Embedding components:
 ![[🔗Residual connections]]
 ![[🍔Layer norm]]
 
-📊**Transformers for tabular data**
+📊**Transformers For Tabular Data**
 
 ![[💤Embeddings for tabular data]]
 

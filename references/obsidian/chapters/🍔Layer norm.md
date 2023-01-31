@@ -1,11 +1,9 @@
-
  [[@vaswaniAttentionAllYou2017]] (p. 3) extensively draw on *layer normalization* after the multi-headed attention and feed-forward sub-layers. Layer normalization is used for normalizing the activations of the sub-layer and to stabilize and accelerate the training of the network ([[@baLayerNormalization2016]])(p. 2). For the transformer, the normalization statistics are calculated separately for every instance, which guarantees scalability across different batch sizes. For a vector $\boldsymbol{e}\in \mathbb{R}^{d_e}$ the normalized output is given by: 
 $$
 \tag{4}
-\begin{aligned}
-\widehat{\boldsymbol{e}}&=\frac{e-m}{\sqrt{v}} \odot \boldsymbol{\gamma}+\boldsymbol{\beta},
-\end{aligned}
-$$calculated with the statistics $\boldsymbol{m} = \sum_{i=1}^{d_{\mathrm{e}}} e[i] / d_{\mathrm{e}}$ and $v = \sum_{i=1}^{d_{\mathrm{e}}}(e[i]-\boldsymbol{m})^2 / d_{\mathrm{e}}$. Typically, the scale $\gamma$ and bias $\beta$ are set for a zero mean and unit variance.
+\widehat{\boldsymbol{e}}=\frac{e-m}{\sqrt{v}} \odot \boldsymbol{\gamma}+\boldsymbol{\beta},
+$$
+calculated with the statistics $\boldsymbol{m} = \sum_{i=1}^{d_{\mathrm{e}}} e[i] / d_{\mathrm{e}}$ and $v = \sum_{i=1}^{d_{\mathrm{e}}}(e[i]-\boldsymbol{m})^2 / d_{\mathrm{e}}$. Typically, the scale $\gamma$ and bias $\beta$ are set for a zero mean and unit variance.
 
 ![Layer-normalization](layer-norm-first-last.png) 
 (Similar to [[@xiongLayerNormalizationTransformer2020]]; picture from https://github.com/dvgodoy/PyTorchStepByStep/blob/master/Chapter10.ipynb <mark style="background: #ABF7F7A6;">somehow draw in final norm layer.</mark>)

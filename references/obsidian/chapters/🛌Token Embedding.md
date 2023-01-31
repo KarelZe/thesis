@@ -6,7 +6,7 @@ Consider the following example with a small vocabulary of $V=[1,N_v]$, with a ma
 
 Subsequently, the sequence of token ids is converted into a sequence of *token embeddings*. Pioneered by [[@bengioNeuralProbabilisticLanguage]] (p. 1,139), an embedding maps each word into a high-dimensional space. By representing every word as a vector, semantic and syntactic relationships between tokens can be encoded. As such, similar words share a similar embedding vector [[@bengioNeuralProbabilisticLanguage]] (p. 1,139). Also, word embeddings are semantically meaningful and can capture linguistic regularities, like gender through offsets between vectors [[@mikolovLinguisticRegularitiesContinuous2013]]  (p. 748 f.). 
 
-The embedding layer from Figure [[#^dbc00b]] is ultimately a lookup table to retrieve the embedding vector $e \in \mathbb{R}^{d_{\mathrm{e}}}$  from a learned, embedding matrix $W_e \in \mathbb{R}^{d_{\mathrm{e}} \times N_{\mathrm{V}}}$ with a token-id $v \in V \cong\left[N_{\mathrm{V}}\right]$ as shown:
+The embedding layer from Figure [[#^dbc00b]] is ultimately a lookup table to retrieve the embedding vector $e \in \mathbb{R}^{d_{\mathrm{e}}}$  from a learned, embedding matrix $W_e \in \mathbb{R}^{d_{\mathrm{e}} \times N_{\mathrm{V}}}$ with a token-id $v \in V \cong\left[N_{\mathrm{V}}\right]$ as shown: [^2]
 $$
 \tag{1}
 e=W_e[:, v].
@@ -26,6 +26,8 @@ are likely to be close in space with cosine-similarity of $\approx 1$ due to the
 Our running example uses word embeddings, motivated by the domain in which transformers were proposed. However, the novel idea of capturing semantics as embedding vectors extends to other discrete entities, as we explore in chapter [[💤Embeddings for tabular data]].
 
 [^1:]There is a subtle difference between tokens and words. A token can be words including punctuation marks. But words can also be split into multiple tokens, which are known as sub-words. To decrease the size of the vocabulary, words may be reduced to their stems, lower-cased, and stop words be removed. See <mark style="background: #FF5582A6;">(...)</mark> for in-depth coverage on pre-processing techniques.
+
+[^2:] Throughout this work we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]] (p. 1 f) to maintain consistency.
 
 **Notes:**
 [[🛌 Token embeddings notes]]
