@@ -66,8 +66,20 @@ In our attempt to compare shallow with deep architectures for trade classificati
 [[🎄Decison_trees]]
 ### Gradient Boosting Procedure 🟡
 [[🐈gradient-boosting]]
-## Transformer Networks
-[[🤖Transformer]]
+## Transformer
+
+### Architectural Overview
+
+### Token Embedding
+
+### Positional Encoding
+
+### Residual Connections
+
+### Layer Norm
+
+
+
 ### Position-wise FFN 🟢
 [[🎱Position-wise FFN]]
 ### Attention
