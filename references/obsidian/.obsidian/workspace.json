@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🗼Overview Transformer (2 p).md",
+                "file": "chapters/🛌Token Embedding.md",
                 "mode": "source",
                 "source": false
               }
@@ -172,7 +172,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🗼Overview Transformer (2 p).md",
+                "file": "chapters/🛌Token Embedding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -200,7 +200,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🗼Overview Transformer (2 p).md"
+                "file": "chapters/🛌Token Embedding.md"
               }
             }
           },
@@ -232,10 +232,10 @@
   },
   "active": "e818a1cf9b82f2f9",
   "lastOpenFiles": [
-    "chapters/🤖Transformer.md",
+    "notes/🅰️attention notes.md",
     "chapters/🛌Token Embedding.md",
     "chapters/🗼Overview Transformer (2 p).md",
-    "notes/🅰️attention notes.md",
+    "chapters/🤖Transformer.md",
     "chapters/🍔Layer norm.md",
     "🧠Deep Learning Methods/@baLayerNormalization2016.md",
     "chapters/🎱Position-wise FFN.md",
