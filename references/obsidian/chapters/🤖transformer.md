@@ -1,22 +1,24 @@
 
 ## TOC
 
-![[🗼Overview Transformer]]
+![[🗼Overview Transformer (2 p)]]
 
 Embedding components:
 ![[🛌Token Embedding]]
 
 ![[🧵Positional Embedding]]
 
-Components in a transformer block:
 [[🅰️Attention]]
+(To be done)
+
+
 ![[🎱Position-wise FFN]]
 ![[🔗Residual connections]]
 ![[🍔Layer norm]]
 
-Specialized variants for tabular data:
+📊**Transformers For Tabular Data**
 
-![[💤Embeddings for tabular data]]
+![[💤Embeddings For Tabular Data]]
 
 
 ![[🤖TabTransformer]]

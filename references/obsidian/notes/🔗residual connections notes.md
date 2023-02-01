@@ -1,5 +1,26 @@
 <mark style="background: #D2B3FFA6;">There is a theoretical link to boosting :D https://arxiv.org/abs/1706.04964</mark>
 
+(Formula, similar to Wang et al)
+for a solution. Let $\mathcal{F}$ be a sub-layer in encoder or decoder, and $\theta_l$ be the parameters of the sub-layer. A residual unit is defined to be (He et al., 2016b):
+$$
+\begin{aligned}
+x_{l+1} & =f\left(y_l\right) \\
+y_l & =x_l+\mathcal{F}\left(x_l ; \theta_l\right)
+\end{aligned}
+$$
+where $x_l$ and $x_{l+1}$ are the input and output of the $l$-th sub-layer, and $y_l$ is the intermediate output followed by the post-processing function $f(\cdot)$. In this way, $x_l$ is explicitly exposed to $y_l$ (see Eq. (2)).
+
+
+
+
+![[residual-connection.png]]
+(from [[@heDeepResidualLearning2015]])
+
+
+
+
+<mark style="background: #D2B3FFA6;">(shortest description A transformer starts with a token embedding, followed by a series of “residual blocks”, and finally a token unembedding. Each residual block consists of an attention layer, followed by an MLP layer. Both the attention and MLP layers each “read” their input from the residual stream (by performing a linear projection), and then “write” their result to the residual stream by adding a linear projection back in. Each attention layer consists of multiple heads, which operate in parallel. from https://transformer-circuits.pub/2021/framework/index.html Think about it!)</mark>
+
 <mark style="background: #CACFD9A6;">For a residual block $x+f(x)$, its shortcut output refers to $x$, its residual branch output refers to $f(x)$, and the dependency on its residual branch refers to $\frac{\operatorname{Var}[f(x)]}{\operatorname{Var}[x+f(x)]}$.(From [[@liuUnderstandingDifficultyTraining2020]])
 </mark>
 

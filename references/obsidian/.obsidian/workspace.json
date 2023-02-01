@@ -4,12 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "ac0c9ffcaad5ed9e",
+        "id": "b72a2593b322a916",
         "type": "tabs",
+<<<<<<< HEAD
+        "dimension": 59.774243201641866,
+        "children": [
+          {
+            "id": "5e767c5018ff3287",
+=======
         "dimension": 56.861642294713164,
         "children": [
           {
             "id": "5ddb5de3616ffbd2",
+>>>>>>> origin/main
             "type": "leaf",
             "pinned": true,
             "state": {
@@ -38,11 +45,51 @@
                 "file": "📥Inbox/@kitaevReformerEfficientTransformer2020.md",
                 "mode": "source",
                 "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "f07d9fb1c0bcc206",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/💤Embeddings for tabular data notes.md",
+                "mode": "source",
+                "source": false
               }
             }
           },
           {
+<<<<<<< HEAD
+            "id": "bd561f43d67ba5d7",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          },
+          {
+            "id": "c35497c9d79f4804",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          }
+        ]
+      },
+      {
+        "id": "ab74c25c3c1480f3",
+        "type": "tabs",
+        "dimension": 40.225756798358134,
+        "children": [
+          {
+            "id": "8c3e8a411a0b9225",
+=======
             "id": "50e79075bd048c26",
+>>>>>>> origin/main
             "type": "leaf",
             "pinned": true,
             "state": {
@@ -56,11 +103,18 @@
             }
           },
           {
+<<<<<<< HEAD
+            "id": "b3077526d3c154a0",
+=======
             "id": "a2a0d01215f57c77",
+>>>>>>> origin/main
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
+<<<<<<< HEAD
+                "file": "🗿TOC.md",
+=======
                 "file": "chapters/🪄Feature Engineering.md",
                 "mode": "source",
                 "source": false
@@ -122,33 +176,34 @@
               "type": "markdown",
               "state": {
                 "file": "🧠Deep Learning Methods/Transformer/@tayEfficientTransformersSurvey2022.md",
+>>>>>>> origin/main
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "7d0f20b2823cd759",
-        "type": "tabs",
-        "dimension": 40.719910011248594,
-        "children": [
-          {
-            "id": "d2e545f167483e29",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/💤Embeddings for tabular data notes.md",
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
   "left": {
     "id": "b529659093fc318f",
     "type": "split",
     "children": [
       {
-          },
+        "id": "c5256196fcf4b790",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8399eb31ec07fd72",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
           },
           {
             "id": "6942b2f8be896a2c",
@@ -156,8 +211,13 @@
             "state": {
               "type": "search",
               "state": {
+<<<<<<< HEAD
+                "query": "steuerrech",
+                "matchingCase": false,
+=======
                 "query": "wang",
                 "matchingCase": true,
+>>>>>>> origin/main
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
@@ -169,7 +229,11 @@
       }
     ],
     "direction": "horizontal",
+<<<<<<< HEAD
+    "width": 367.5
+=======
     "width": 224.5
+>>>>>>> origin/main
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -185,7 +249,11 @@
             "state": {
               "type": "backlink",
               "state": {
+<<<<<<< HEAD
+                "file": "chapters/🤖Transformer.md",
+=======
                 "file": "notes/🅰️attention notes.md",
+>>>>>>> origin/main
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -213,44 +281,53 @@
             "state": {
               "type": "outline",
               "state": {
+<<<<<<< HEAD
+                "file": "chapters/🤖Transformer.md"
+=======
                 "file": "notes/🅰️attention notes.md"
+>>>>>>> origin/main
               }
-            }
-          },
-          {
-            "id": "f148b870bf6cdf2b",
-            "type": "leaf",
-            "state": {
-              "type": "graph-analysis",
-              "state": {}
-            }
-          },
-          {
-            "id": "01cf327703e04d13",
-            "type": "leaf",
-            "state": {
-              "type": "stat-view",
-              "state": {}
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
+<<<<<<< HEAD
+    "width": 200
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "obsidian-tts:Text to Speech": false,
+      "obsidian-word-sprint:Activate Word Sprint Leaf": false,
+=======
     "width": 378.5
   },
   "left-ribbon": {
     "hiddenItems": {
+>>>>>>> origin/main
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "command-palette:Open command palette": false,
-      "markdown-importer:Open format converter": false,
-      "obsidian-tts:Text to Speech": false,
-      "obsidian-word-sprint:Activate Word Sprint Leaf": false
+      "markdown-importer:Open format converter": false
     }
   },
+<<<<<<< HEAD
+  "active": "5e767c5018ff3287",
+  "lastOpenFiles": [
+    "notes/🅰️attention notes.md",
+    "chapters/🤖FTTransformer.md",
+    "chapters/🤖TabTransformer.md",
+    "chapters/🤖Transformer.md",
+    "chapters/💤Embeddings For Tabular Data.md",
+    "chapters/🗼Overview Transformer (2 p).md",
+    "chapters/🧵Positional Embedding.md",
+    "chapters/🎱Position-wise FFN.md",
+    "chapters/🔗Residual connections.md",
+    "notes/💤Embeddings for tabular data notes.md"
+=======
   "active": "50e79075bd048c26",
   "lastOpenFiles": [
     "chapters/🍔Layer norm.md",
@@ -263,17 +340,6 @@
     "📥Inbox/@kitaevReformerEfficientTransformer2020.md",
     "chapters/🅰️Attention.md",
     "chapters/🥠Selection of approaches (semi-supervised).md"
+>>>>>>> origin/main
   ]
-}                "file": "chapters/💤Embeddings for tabular data.md"
-      "obsidian-tts:Text to Speech": false,
-      "obsidian-word-sprint:Activate Word Sprint Leaf": false
-    "🧠Deep Learning Methods/@borisovDeepNeuralNetworks2022.md",
-    "chapters/💤Embeddings for tabular data.md",
-    "notes/💤Embeddings for tabular data notes.md",
-    "chapters/🪄Feature Engineering.md",
-    "📥Inbox/@guoEntityEmbeddingsCategorical2016.md",
-    "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
-    "chapters/🤖Transformer.md",
-    "chapters/🤖TabTransformer.md",
-    "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
-    "📥Inbox/@songAutoIntAutomaticFeature2019.md"
+}
