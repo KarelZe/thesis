@@ -1,7 +1,11 @@
 
 **Machine learning:**
 
+- Some feature sets contain as many as 42 features, some of which a forward looking (cp. [[@ronenMachineLearningTrade2022]] (p. 49)).
+
 - [[@rosenthalModelingTradeDirection2012]] writes that he uses a logistic-link generalized linear model (GLM). Obviously a fancy way of saying (in R wording) that he uses logistic regression. (see here. https://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/R/R-Manual/R-Manual20.html)
+
+- Parts of this may be due to the are bound by the best performance of their commitee members. Voting classifiers are bound to the of their ensemble members. Voting classifier / ensemble
 
 
 - Seldomly used but ML-like. Would probably be sufficient to cover it under related works.

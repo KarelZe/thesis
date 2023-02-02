@@ -6,6 +6,7 @@
       {
         "id": "9d9a45cd3aa297af",
         "type": "tabs",
+        "dimension": 67.97752808988764,
         "children": [
           {
             "id": "f825b6203f6d8412",
@@ -20,12 +21,25 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "4f12787c7c07e9af",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ]
       },
       {
         "id": "1b95373f56e439a0",
         "type": "tabs",
+        "dimension": 32.02247191011236,
         "children": [
           {
             "id": "af89e36c83bf093d",
@@ -77,8 +91,7 @@
               }
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -120,7 +133,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 367.5
+    "width": 367.5,
+    "collapsed": true
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -136,11 +150,11 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🧵Positional Embedding.md",
+                "file": "chapters/👪Related work.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
-                "showSearch": true,
+                "showSearch": false,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": false
@@ -164,12 +178,11 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🧵Positional Embedding.md"
+                "file": "chapters/👪Related work.md"
               }
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
@@ -186,17 +199,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "65a5221e35776755",
+  "active": "f825b6203f6d8412",
   "lastOpenFiles": [
+    "notes/👪Related works notes.md",
+    "chapters/👪Related work.md",
+    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
+    "chapters/🧵Positional Embedding.md",
     "chapters/🤖Transformer.md",
     "chapters/🍔Layer norm.md",
     "🔗Classical rules/@grauerOptionTradeClassification2022.md",
     "🔗Classical rules/@savickasInferringDirectionOption2003.md",
     "🗿TOC.md",
-    "notes/👪Related works notes.md",
-    "chapters/👪Related work.md",
-    "notes/🤖transformer notes.md",
-    "chapters/🔢Basic rules.md",
-    "👨‍👩‍👧‍👦Related Works/@blazejewskiLocalNonparametricModel2005.md"
+    "notes/🤖transformer notes.md"
   ]
 }
