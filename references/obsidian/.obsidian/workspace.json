@@ -181,8 +181,17 @@
                 "file": "chapters/👪Related work.md"
               }
             }
+          },
+          {
+            "id": "f5cb1e5e6ffbfbfa",
+            "type": "leaf",
+            "state": {
+              "type": "stat-view",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -201,9 +210,9 @@
   },
   "active": "f825b6203f6d8412",
   "lastOpenFiles": [
-    "notes/👪Related works notes.md",
-    "chapters/👪Related work.md",
     "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
+    "chapters/👪Related work.md",
+    "notes/👪Related works notes.md",
     "chapters/🧵Positional Embedding.md",
     "chapters/🤖Transformer.md",
     "chapters/🍔Layer norm.md",
