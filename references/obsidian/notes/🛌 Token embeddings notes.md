@@ -1,11 +1,8 @@
 
-<<<<<<< HEAD
 ## Difference equivariant / invariant:
 (see https://datascience.stackexchange.com/a/99892/142202)
 ![[equivariance-invariance.png]]
 
-=======
->>>>>>> origin/main
 
 TODO: Use dot-product instead, to be coherent to the idea used in attention? Not scaled by magnitude?
 See here. https://datascience.stackexchange.com/questions/744/cosine-similarity-versus-dot-product-as-distance-metrics

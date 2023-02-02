@@ -4,25 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "b72a2593b322a916",
+        "id": "9d9a45cd3aa297af",
         "type": "tabs",
-<<<<<<< HEAD
-        "dimension": 59.774243201641866,
         "children": [
           {
-            "id": "5e767c5018ff3287",
-=======
-        "dimension": 56.861642294713164,
-        "children": [
-          {
-            "id": "5ddb5de3616ffbd2",
->>>>>>> origin/main
+            "id": "f825b6203f6d8412",
             "type": "leaf",
             "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🅰️Attention.md",
+                "file": "chapters/👪Related work.md",
                 "mode": "source",
                 "source": false
               },
@@ -32,70 +24,17 @@
         ]
       },
       {
-        "id": "1dfb52e03a41e032",
+        "id": "1b95373f56e439a0",
         "type": "tabs",
-        "dimension": 43.138357705286836,
         "children": [
           {
-            "id": "8d7314c087669ec0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@kitaevReformerEfficientTransformer2020.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "f07d9fb1c0bcc206",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/💤Embeddings for tabular data notes.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-<<<<<<< HEAD
-            "id": "bd561f43d67ba5d7",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "c35497c9d79f4804",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          }
-        ]
-      },
-      {
-        "id": "ab74c25c3c1480f3",
-        "type": "tabs",
-        "dimension": 40.225756798358134,
-        "children": [
-          {
-            "id": "8c3e8a411a0b9225",
-=======
-            "id": "50e79075bd048c26",
->>>>>>> origin/main
+            "id": "af89e36c83bf093d",
             "type": "leaf",
             "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/🅰️attention notes.md",
+                "file": "notes/👪Related works notes.md",
                 "mode": "source",
                 "source": false
               },
@@ -103,50 +42,19 @@
             }
           },
           {
-<<<<<<< HEAD
-            "id": "b3077526d3c154a0",
-=======
-            "id": "a2a0d01215f57c77",
->>>>>>> origin/main
+            "id": "d2b001f6363aeb4a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-<<<<<<< HEAD
-                "file": "🗿TOC.md",
-=======
-                "file": "chapters/🪄Feature Engineering.md",
+                "file": "🔗Classical rules/@savickasInferringDirectionOption2003.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "eaa775d6b8c25d88",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@somepalliSAINTImprovedNeural2021.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "5eb4049a071151d6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🤖TabTransformer.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8930505bfb8cb2aa",
+            "id": "50c12817308b1733",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -158,31 +66,19 @@
             }
           },
           {
-            "id": "2718b61fc9d0744c",
+            "id": "65a5221e35776755",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🗼Overview Transformer.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "028f8faccf61b6e0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🧠Deep Learning Methods/Transformer/@tayEfficientTransformersSurvey2022.md",
->>>>>>> origin/main
+                "file": "chapters/🧵Positional Embedding.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -211,13 +107,8 @@
             "state": {
               "type": "search",
               "state": {
-<<<<<<< HEAD
-                "query": "steuerrech",
+                "query": "",
                 "matchingCase": false,
-=======
-                "query": "wang",
-                "matchingCase": true,
->>>>>>> origin/main
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
@@ -229,11 +120,7 @@
       }
     ],
     "direction": "horizontal",
-<<<<<<< HEAD
     "width": 367.5
-=======
-    "width": 224.5
->>>>>>> origin/main
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -249,11 +136,7 @@
             "state": {
               "type": "backlink",
               "state": {
-<<<<<<< HEAD
-                "file": "chapters/🤖Transformer.md",
-=======
-                "file": "notes/🅰️attention notes.md",
->>>>>>> origin/main
+                "file": "chapters/🧵Positional Embedding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -281,11 +164,7 @@
             "state": {
               "type": "outline",
               "state": {
-<<<<<<< HEAD
-                "file": "chapters/🤖Transformer.md"
-=======
-                "file": "notes/🅰️attention notes.md"
->>>>>>> origin/main
+                "file": "chapters/🧵Positional Embedding.md"
               }
             }
           }
@@ -294,19 +173,12 @@
       }
     ],
     "direction": "horizontal",
-<<<<<<< HEAD
     "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
       "obsidian-tts:Text to Speech": false,
       "obsidian-word-sprint:Activate Word Sprint Leaf": false,
-=======
-    "width": 378.5
-  },
-  "left-ribbon": {
-    "hiddenItems": {
->>>>>>> origin/main
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -314,32 +186,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-<<<<<<< HEAD
-  "active": "5e767c5018ff3287",
+  "active": "65a5221e35776755",
   "lastOpenFiles": [
-    "notes/🅰️attention notes.md",
-    "chapters/🤖FTTransformer.md",
-    "chapters/🤖TabTransformer.md",
     "chapters/🤖Transformer.md",
-    "chapters/💤Embeddings For Tabular Data.md",
-    "chapters/🗼Overview Transformer (2 p).md",
-    "chapters/🧵Positional Embedding.md",
-    "chapters/🎱Position-wise FFN.md",
-    "chapters/🔗Residual connections.md",
-    "notes/💤Embeddings for tabular data notes.md"
-=======
-  "active": "50e79075bd048c26",
-  "lastOpenFiles": [
     "chapters/🍔Layer norm.md",
-    "chapters/🤖FTTransformer.md",
-    "chapters/🤖TabTransformer.md",
-    "notes/🅰️attention notes.md",
-    "🧠Deep Learning Methods/@zhangDiveDeepLearning2021.md",
-    "chapters/🗼Overview Transformer.md",
-    "chapters/🤖Transformer.md",
-    "📥Inbox/@kitaevReformerEfficientTransformer2020.md",
-    "chapters/🅰️Attention.md",
-    "chapters/🥠Selection of approaches (semi-supervised).md"
->>>>>>> origin/main
+    "🔗Classical rules/@grauerOptionTradeClassification2022.md",
+    "🔗Classical rules/@savickasInferringDirectionOption2003.md",
+    "🗿TOC.md",
+    "notes/👪Related works notes.md",
+    "chapters/👪Related work.md",
+    "notes/🤖transformer notes.md",
+    "chapters/🔢Basic rules.md",
+    "👨‍👩‍👧‍👦Related Works/@blazejewskiLocalNonparametricModel2005.md"
   ]
 }

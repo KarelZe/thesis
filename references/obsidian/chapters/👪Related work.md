@@ -1,34 +1,49 @@
-- [[@grauerOptionTradeClassification2022]] perform option trade classification
-- [[@savickasInferringDirectionOption2003]] perform option trade classification
-- [[@ronenMachineLearningTrade2022]] / [[@fedeniaMachineLearningCorporate2021]] They employ a machine learning-based approach for trade side classification. Selection of method follows no clear research agenda, so does sample selection or tuning. Also leaves out latest advancements in prediction of tabular data such as GBM or dedicated NN architectures. Data set only spans two days? General saying ML based predictor (random forest) outperforms tick rule and BVC. Still much human inutition is required for feature engineering. Treated as **supervised tasks**. More recent approaches and also ML approaches outperform classical approaches due to a higher trading frequency. Transfer learning not successful. **Note:** Tick rule has been among the poorest predictors in Grauer. **Note:** Check what the actual difference between the two papers are....
-- Which works performed trade side classification for stocks, for options or other products.
-- [[@rosenthalModelingTradeDirection2012]] incorporates different methods into a model for the likelihood a trade was buyer-initiated. It's a simple logistic regresssion. Performed on stocks. 
-- [[@blazejewskiLocalNonparametricModel2005]] compare $k$-nn and logistic regression for trade-side classification. Performed for Australian stocks. Unclear how results compare to classical rules. 
-- Similarily, [[@aitkenIntradayAnalysisProbability1995]] perform trade side classification with logistic regression.
-1. Broader term is **trade site classification** = assign the side to a to a transaction and differentiate between buyer- and seller-initiated transactions
-2. It's also sometimes called trade sign classification
-- There is no single definition / understanding for the one who initiates trades. [[@olbrysEvaluatingTradeSide2018]] distinguish / discuss immediacy and initiator.
-- Do not compare accuracies across different datasets. This won't work. Might mention [[@grauerOptionTradeClassification2022]] as it is calculated on (partly) the same data set.
 
-- Results were very different for the option markets between the studies. Compare the frequency some literature (in the stock market) suggest, that  for higher frequencies classical approaches like the tick test deteriorate.
-> Easley, O’Hara, and Srinivas (1998) use the Lee and Ready approach to test their game theoretic model of informed trading in stock and option markets. It is, therefore, important to determine whether the application of stock trade classification rules to derivatives is valid. [[@savickasInferringDirectionOption2003]] Don't propose their own rules. 
+[[👪Related works notes]]
 
-- We find serious flaws within their research.
+**Trade classification on option data sets** 💸
 
-- For classical rule-based approaches see some citations in [[@olbrysEvaluatingTradeSide2018]]. E. g., [[@chakrabartyTradeClassificationAlgorithms2012]] or [[@chakrabartyEvaluatingTradeClassification2015]]
-- see [[@rosenthalModelingTradeDirection2012]]
-- Seldomly used but ML-like. Would probably be sufficient to cover it under related works.
+While classical trade classification algorithms are extensively tested in the stock markets (e. g., Chakrabarty et al., 2012; Odders-White, 2000), few works have examined trade classification in option markets (Grauer et al., 2022; Savickas and Wilson, 2003). For option markets, the sole focus is on classical classification rules. Even in stock markets, machine learning has hardly been applied to trade classification. An early work of rosenthalModelingTradeDirection2012 incorporates standard trade classification rules into a logistic regression model and achieves outperformance in the stock market. 
 
-Also the number of features is not the same...
+**Trade classification using machine learning** 📊
+Similarly, 
+
+The closest work to ours, is the work of [[@ronenMachineLearningTrade2022]] and [[@fedeniaMachineLearningCorporate2021]]
+
+[[@fedeniaMachineLearningCorporate2021]] and [[@ronenMachineLearningTrade2022]] improve upon classical rules with a random forest, a tree-based ensemble. Albeit their work considers a broad range of approaches, the selection leaves the latest advancements in artificial neural networks and ensemble learning aside. Even if the focus is on standard techniques, the unclear research agenda with regards to model selection, tuning, and testing hampers the transferability of their results to the yet unstudied option market [^1].
+
+Their model selection remains vague and is mainly guided by computational constraints. 
+
+Due to computational constraints, they finalize on random forests, feed-forward networks, and logistic regression.
+
+Our work improves on their work with respect to two aspects. More specifically, 
+
+The transferability of their results is limited.
+
+The chosen train-test split . More over, the omitted data pre-processing, favours models methods that are not reliant on gradient descent. 
+
+---
+
+[[@rosenthalModelingTradeDirection2012]] (p. 5) bridges the gap between classical trade classification and machine learning by estimating a logistic regression model on lagged and unlagged features inherently used in the tick rule, quote rule, and EMO algorithm. Instead of using the rule's outcome in their discretized form, [[@rosenthalModelingTradeDirection2012]] introduces an information strength criterion, to model the proximity 
 
 
 
 
-All works find, that machine learning can outperform classical rules. 
-Set's the field (...)
 
-Motivates
 
-Differentiate between trade classification for option markets 
+The improvement in accuracy is only minor with 2 % for Nasdaq stocks and 1.1 % for the NYSE. [[@rosenthalModelingTradeDirection2012]] (p. 15). 
 
-and trade classification using machine learning
+Our work tries to widden this gap through the use of 
+
+
+
+The work of [[@blazejewskiLocalNonparametricModel2005]] (p. 481 f.) compares a $k$-nearest neighbour classifier against logistic regression, as well as simple heuristics like the majority vote over past trades for signing trades at the Australian stock exchange. Their results indicate that the parametric $k$-nearest neighbour classifier improves upon a linear logistic regression in terms of classification accuracy, even when trained on fewer features. The work is unique from the aforementioned works with regard to feature set definition. 
+
+[[@blazejewskiLocalNonparametricModel2005]] (p. 3) use no quote or trade prices, but rather the order book volumes, trade sizes, and past trade signs for classification. However, no accuracies for classical trade signing rules are reported, which impedes a comparison across different works. 
+
+Inline with their results, we focus on non-linear models in the form gradient boosting and transformers. Additionally, our paper addresses the mentioned shortcomings by benchmarking against state-of-the-art trade classification rules. We share the idea of using the trade size, and bid and ask sizes for classification, for some of our feature sets, but greedily predict using non-historic features.
+
+Closest to our work are two recent publications of [[@ronenMachineLearningTrade2022]] and [[@fedeniaMachineLearningCorporate2021]], as they facilitate a comparison between 
+
+[^1:] We have contacted the authors about these concerns.
+
