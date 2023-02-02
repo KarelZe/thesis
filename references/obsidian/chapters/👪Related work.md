@@ -24,12 +24,26 @@ The chosen train-test split . More over, the omitted data pre-processing, favour
 
 ---
 
-
-The work of [[@blazejewskiLocalNonparametricModel2005]] (p. 481 f.) compares a $k$-nearest neighbour classifier against logistic regression, as well as simple heuristics like the majority vote over past trades for signing trades at the Australian stock exchange. Their results indicate that the parametric $k$-nearest neighbour classifier improves upon a linear logistic regression in terms of classification accuracy, even when trained on fewer features. The work is unique from the aforementioned works with regard to feature set definition. [[@blazejewskiLocalNonparametricModel2005]] (p. 3) use no quote or trade prices, but rather the order book volumes, trade sizes, and past trade signs for classification. However, no accuracies for classical trade signing rules are reported, which impedes a comparison across different works. 
-Inline with their results, we focus on non-linear models in the form gradient boosting and transformers. Additionally, our paper addresses the mentioned shortcomings by benchmarking against state-of-the-art trade classification rules. We share the idea of using the trade size, and bid and ask sizes for classification, for some of our feature sets, but greedily focus on non-historic data.
+[[@rosenthalModelingTradeDirection2012]] (p. 5) bridges the gap between classical trade classification and machine learning by estimating a logistic regression model on lagged and unlagged features inherently used in the tick rule, quote rule, and EMO algorithm. Instead of using the rule's outcome in their discretized form, [[@rosenthalModelingTradeDirection2012]] introduces an information strength criterion, to model the proximity 
 
 
 
+
+
+
+The improvement in accuracy is only minor with 2 % for Nasdaq stocks and 1.1 % for the NYSE. [[@rosenthalModelingTradeDirection2012]] (p. 15). 
+
+Our work tries to widden this gap through the use of 
+
+
+
+The work of [[@blazejewskiLocalNonparametricModel2005]] (p. 481 f.) compares a $k$-nearest neighbour classifier against logistic regression, as well as simple heuristics like the majority vote over past trades for signing trades at the Australian stock exchange. Their results indicate that the parametric $k$-nearest neighbour classifier improves upon a linear logistic regression in terms of classification accuracy, even when trained on fewer features. The work is unique from the aforementioned works with regard to feature set definition. 
+
+[[@blazejewskiLocalNonparametricModel2005]] (p. 3) use no quote or trade prices, but rather the order book volumes, trade sizes, and past trade signs for classification. However, no accuracies for classical trade signing rules are reported, which impedes a comparison across different works. 
+
+Inline with their results, we focus on non-linear models in the form gradient boosting and transformers. Additionally, our paper addresses the mentioned shortcomings by benchmarking against state-of-the-art trade classification rules. We share the idea of using the trade size, and bid and ask sizes for classification, for some of our feature sets, but greedily predict using non-historic features.
+
+Closest to our work are two recent publications of [[@ronenMachineLearningTrade2022]] and [[@fedeniaMachineLearningCorporate2021]], as they facilitate a comparison between 
 
 [^1:] We have contacted the authors about these concerns.
 
