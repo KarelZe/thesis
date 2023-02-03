@@ -4,7 +4,6 @@
 *tags:* #stocks #log-transform #log-normal #feature-engineering
 *status:* #📦 
 *related:*
-- [[@blackPricingOptionsCorporate1973]]
 *code:* None
 *review:* None
 

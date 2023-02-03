@@ -5,3 +5,5 @@ CLNV-Method is a hybrid of tick and quote rules when transactions prices are clo
 (image copied from [[@chakrabartyTradeClassificationAlgorithms2007]])
 - replace with clear formula
 - for success rate and motivation see  [[@chakrabartyTradeClassificationAlgorithms2007]]
+
+- Sometimes referred to as the MEMO algorithm

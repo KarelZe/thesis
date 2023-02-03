@@ -22,19 +22,30 @@
             }
           },
           {
-            "id": "af89e36c83bf093d",
+            "id": "9d2370f6be1b0498",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🔢Hybrid rules.md",
+                "file": "🗿TOC.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "6589e1a5ad3ea35c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/🔢CLNV method notes.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -92,7 +103,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🔢Hybrid rules.md",
+                "file": "chapters/👪Related Work.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +131,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🔢Hybrid rules.md"
+                "file": "chapters/👪Related Work.md"
               }
             }
           },
@@ -150,17 +161,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "af89e36c83bf093d",
+  "active": "f825b6203f6d8412",
   "lastOpenFiles": [
-    "chapters/🔢Basic rules.md",
-    "chapters/🔗Residual connections.md",
+    "notes/🔢CLNV method notes.md",
     "chapters/🔢CLNV method.md",
-    "chapters/🔢Depth rule.md",
-    "chapters/🔢EMO rule.md",
-    "chapters/🔢Hybrid rules.md",
-    "chapters/🔢LR algorithm.md",
-    "chapters/🔢Tick test.md",
-    "chapters/🔢Tradesize Rule.md",
-    "chapters/🔢Quote rule.md"
+    "🗿TOC.md",
+    "files without tags.md",
+    "empty files.md",
+    "broken links output.md",
+    "chapters/👪Related Work.md",
+    "🍬Implementation/🧪Feature Engineering/@antoniouLognormalDistributionStock2004.md",
+    "🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001.md",
+    "layer.md"
   ]
 }
