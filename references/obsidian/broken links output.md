@@ -7,5 +7,5 @@ Don't forget that creating the file from here may create the file in the wrong d
 - [[Semi-supervised Learning/@somepalliSAINTImprovedNeural2021]] in [[🧠Deep Learning Methods/@levinTransferLearningDeep2022]], [[🧠Deep Learning Methods/Transformer/@arikTabNetAttentiveInterpretable2020]]
 - [[generation-of-true-labels]] in [[IW-Queues/IW-Queue]]
 - [[comparsion]] in [[IW-Queues/IW-Queue]]
-- [[@finucaneDirectTestMethods2000]] in [[🔢LR algorithm]]
+- [[@finucaneDirectTestMethods2000]] in [[🔢LR algorithm notes]]
 - [[www.archive.org]] in [[❓Questions]]

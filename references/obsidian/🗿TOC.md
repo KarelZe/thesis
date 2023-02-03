@@ -16,8 +16,8 @@ Forget About the Rules: Improving Trade Side Classification With Machine Learnin
 
 [[👶Introduction]]
 
-# 👨‍👩‍👧‍👦 Related Work
-[[👪Related work]]
+# 👨‍👩‍👧‍👦 Related Work 🟢
+[[👪Related Work]]
 # 🔗Rule-Based Approaches
 
 The following section introduces common rules for signing option trades. We start by introducing the prevailing quote and tick rule and continue with the recently introduced depth and trade size rule. In section [[#^a043d0]] we combine hybrids thereoff. We draw a connection to ensemble learning.
@@ -33,7 +33,7 @@ The following section introduces common rules for signing option trades. We star
 [[🔢Depth rule]]
 
 ### Trade Size Rule
-[[🔢Tradesize rule]]
+[[🔢Tradesize Rule]]
 ## Hybrid Rules
 
 ^a043d0
@@ -43,7 +43,7 @@ The following section introduces common rules for signing option trades. We star
 ### Lee and Ready Algorithm
 
 ^370c50
-[[🔢LR algorithm]]
+[[🔢LR algorithm notes]]
 
 ### Ellis-Michaely-O’Hara Rule
 [[🔢EMO rule]]

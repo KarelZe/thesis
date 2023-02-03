@@ -9,7 +9,7 @@ interval: 1
 | [[🎄Decison_trees]]                             |       10 |       |        2 | 2022-12-15 |
 | [[🤖Transformer]]                               |     12.5 |       |        2 | 2022-12-15 |
 | [[👨‍🍳Tain-Test-split]]                        |       15 |       |        2 | 2022-12-15 |
-| [[🔢Tradesize rule]]                            |     17.5 |       |        1 | 1970-01-01 |
+| [[🔢Tradesize Rule]]                            |     17.5 |       |        1 | 1970-01-01 |
 | [[🔢Tick test]]                                 |       20 |       |        1 | 1970-01-01 |
 | [[🥠Selection of approaches (semi-supervised)]] |     22.5 |       |        1 | 1970-01-01 |
 | [[🥠Selection of approaches (supervised)]]      |       25 |       |        1 | 1970-01-01 |
@@ -17,12 +17,12 @@ interval: 1
 | [[semi-supervised]]                             |       28 |       |        1 | 1970-01-01 |
 | [[🏅Results of semi-supervised]]                |       30 |       |        1 | 1970-01-01 |
 | [[🏅Results]]                                   |     32.5 |       |        1 | 1970-01-01 |
-| [[👪Related work]]                              |       35 |       |        1 | 1970-01-01 |
+| [[👪Related Work]]                              |       35 |       |        1 | 1970-01-01 |
 | [[🔢Quote rule]]                                |     37.5 |       |        1 | 1970-01-01 |
 | [[💡Training and tuning]]                       |       40 |       |        1 | 1970-01-01 |
 | [[👨‍🍳Pre-Processing]]                         |       40 |       |        1 | 1970-01-01 |
 | [[💡Tuning of models (semi-supervised)]]        |       41 |       |        1 | 1970-01-01 |
-| [[🔢LR algorithm]]                              |     42.5 |       |        1 | 1970-01-01 |
+| [[🔢LR algorithm notes]]                              |     42.5 |       |        1 | 1970-01-01 |
 | [[pre-training]]                                |       45 |       |        1 | 1970-01-01 |
 | [[🌏ISE dataset]]                               |       45 |       |        1 | 1970-01-01 |
 | [[💡Training of models (supervised)]]           |       47 |       |        1 | 1970-01-01 |

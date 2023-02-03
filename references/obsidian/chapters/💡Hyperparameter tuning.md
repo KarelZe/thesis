@@ -7,7 +7,7 @@
 
 - Explain the importance why hyperparam tuning deserves its own chapter. - > even simple architectures can obtain SOTA-results with proper hyperparameter settings. -> See in-depth analysis in [[@melisStateArtEvaluation2017]] (found in [[@kadraWelltunedSimpleNets2021]])
 - [[@melisStateArtEvaluation2017]] investigate hyperparam tuning by plotting validation losses against the hyperparams. 
-- ![[validation-loss-vs-hyperparam 1.png]]
+- ![[validation-loss-vs-hyperparam.png]]
 - [[@melisStateArtEvaluation2017]] also they try out different seeds. Follow their recommendations.
 - See e. g., [[@olbrysEvaluatingTradeSide2018]][[@owenHyperparameterTuningPython2022]] for ideas / most adequate application.
 - What optimizer is chosen? Why? Could try out Adam or Adan?
@@ -19,16 +19,16 @@
 - For implementations on tab transformer, tabnet and tabmlp see: pytorch wide-deep package.
 - for most important hyperparams in litegbm, catboost etc. (see [[@banachewiczKaggleBookData2022]])
 - Visualize training and validation curves (seimilar to [3.4. Validation curves: plotting scores to evaluate models — scikit-learn 1.1.2 documentation](https://scikit-learn.org/stable/modules/learning_curve.html))
-![[sample-validation-curve 1.png]]
+![[sample-validation-curve.png]]
 When using optuna draw a boxplot. optimal value should lie near the median. Some values should be outside the IQR.
-![[optuna-as-boxplot 1.png]]
+![[optuna-as-boxplot.png]]
 
 - compare results of untuned and tuned models. Similar to [[@gorishniyRevisitingDeepLearning2021]].
 
 [[💡Hyperparameter tuning]]
 
 Repeat search with different random initializations:
-![[random-searches-hyperparms 1.png]]
+![[random-searches-hyperparms.png]]
 (found in [[@grinsztajnWhyTreebasedModels2022]])
 
 Show differences from different initializations using a violin plot. (suggested in [[@melisStateArtEvaluation2017]])

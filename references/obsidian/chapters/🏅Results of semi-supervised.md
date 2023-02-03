@@ -1,7 +1,7 @@
 
 Use $t$-SNE to assess the output of the supervised vs. the semi-supervised train models. See [[@leePseudolabelSimpleEfficient]] and [[@banachewiczKaggleBookData2022]] for how to use it.
 See [[@vandermaatenVisualizingDataUsing2008]] for original paper.
-![[t-sne-map 1.png]]
+![[t-sne-map.png]]
 
 
 
@@ -11,7 +11,7 @@ See [[@vandermaatenVisualizingDataUsing2008]] for original paper.
 - Confusion matrix
 - ROC curve. See e. g., [this thread](https://stackoverflow.com/a/38467407) for drawing ROC curves
 
-![[visualize-classical-rules-vs-ml 1.png]]
+![[visualize-classical-rules-vs-ml.png]]
 (print heatmap with $y$ axis with ask, bid and mid, $x$-axis could be some other criteria e. g. the trade size or none. If LR rule was good fit for options, accuracy should be evenly distributed and green. Visualize accuracy a hue / color)
 - calculate $z$-scores / $z$-statistic of classification accuracies to assess if the results are significant. (see e. g., [[@theissenTestAccuracyLee2000]])
 - provide $p$-values. Compare twitter / linkedin posting of S. Raschka on deep learning paper.
