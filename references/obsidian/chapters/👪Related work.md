@@ -3,47 +3,24 @@
 
 **Trade classification on option data sets** 💸
 
-While classical trade classification algorithms are extensively tested in the stock markets (e. g., Chakrabarty et al., 2012; Odders-White, 2000), few works have examined trade classification in option markets (Grauer et al., 2022; Savickas and Wilson, 2003). For option markets, the sole focus is on classical classification rules. Even in stock markets, machine learning has hardly been applied to trade classification. An early work of rosenthalModelingTradeDirection2012 incorporates standard trade classification rules into a logistic regression model and achieves outperformance in the stock market. 
+While classical trade classification algorithms are extensively tested in the stock markets (e.g., [[@chakrabartyTradeClassificationAlgorithms2012]]; [[@odders-whiteOccurrenceConsequencesInaccurate2000]]), few works have examined trade classification in option markets. 
+
+[[@savickasInferringDirectionOption2003]] (p. 882 f.) are the first to compare the tick rule, quote rule, the Lee and Ready algorithm, and the EMO rule for options traded at the CBOE. The data set spans a period from July 3, 1995 - December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule ($78.98~\%$) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
+
+The most exhaustive study is the one of [[@grauerOptionTradeClassification2022]] (p. 1 f.).  The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the ISE and CBOE classical rules like the popular Lee and Ready algorithm only achieve accuracies of $62.53~\%$ or $62.03~\%$ and are thus significantly smaller than in the stock market. In line with the research of  [[@savickasInferringDirectionOption2003]] (p. 886), the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the reported success rates deteriorate between both studies and over time. As a remedy, [[@grauerOptionTradeClassification2022]] (p. 14 f.) introduce two additional rules based on the trade and quote sizes. The *depth rule* is an alternative to the tick rule for classifying mid spread trades in the Lee and Ready algorithm and EMO rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the *trade size rule*, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between $73~\%$ and $75~\%$ surpassing previous rules by more than $10~\%$, at the cost of data efficiency.
+
+The work of [[@grauerOptionTradeClassification2022]] is important in two ways. First, the data set is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark. 
 
 **Trade classification using machine learning** 📊
-Similarly, 
+[[@rosenthalModelingTradeDirection2012]] (p. 5) bridges the gap between classical trade classification and machine learning by fitting a logistic regression model on lagged and unlagged predictors inherent to the tick rule, quote rule, and EMO algorithm, as well as a sector-specific and a time-specific term. Instead of using the rule's discretized outcome as a feature, [[@rosenthalModelingTradeDirection2012]] models the rules through so-called information strength functions. The proximity to the quotes, central to the EMO algorithm, is thus modelled by a proximity function. Likewise, the information strength of the quote and tick rule is estimated as the log return between the trade price and the midpoint or the previous trade price. However, it only improves the accuracy of the EMO algorithm by a marginal $2~\%$ for Nasdaq stocks and $1.1~\%$ for NYSE stocks [[@rosenthalModelingTradeDirection2012]] (p. 15). Our work aims to improve the model by exploring non-linear estimators and minimizing data modelling assumptions.
 
-The closest work to ours, is the work of [[@ronenMachineLearningTrade2022]] and [[@fedeniaMachineLearningCorporate2021]]
+The work of [[@blazejewskiLocalNonparametricModel2005]] (p. 481 f.) compares a $k$-nearest neighbour classifier against logistic regression, as well as simple heuristics like the majority vote over past trades for signing trades at the Australian stock exchange. Their results indicate that the parametric $k$-nearest neighbour classifier improves upon a linear logistic regression in terms of classification accuracy, even when trained on fewer features. The work is unique from the remaining works about feature set definition. Notably, [[@blazejewskiLocalNonparametricModel2005]] (p. 3) use no quote or trade prices, but rather the order book volumes, trade sizes, and past trade signs for classification. No accuracies for classical trade signing rules are reported, which impedes a comparison across different works. In line with their results, we focus on non-linear models in the form of gradient boosting and transformers. Additionally, our paper addresses the mentioned shortcomings by benchmarking against state-of-the-art trade classification rules. We share the idea of using the trade size, as well as the bid and ask sizes for classification for some of our feature sets, but greedily predict using non-historic features.
 
-[[@fedeniaMachineLearningCorporate2021]] and [[@ronenMachineLearningTrade2022]] improve upon classical rules with a random forest, a tree-based ensemble. Albeit their work considers a broad range of approaches, the selection leaves the latest advancements in artificial neural networks and ensemble learning aside. Even if the focus is on standard techniques, the unclear research agenda with regards to model selection, tuning, and testing hampers the transferability of their results to the yet unstudied option market [^1].
+Closest to our work is a publication of [[@ronenMachineLearningTrade2022]] (1. f). Therein, the authors compare a selection of machine learning algorithms against classical trade signing rules in the bond and stock market. Their comparison is the first to consider both logistic regression, a random forest, as well as feed-forward networks. Over a wide range of feature sets the tree-based ensemble consistently outperforms by out-of-sample accuracy the tick rule and Lee and Ready algorithm, as well as all remaining machine learning models. For the TRACE and ITCH data set, their best variant of the random forest outperforms the tick rule by $8.3~\%$ and $3.3~\%$, respectively [[@ronenMachineLearningTrade2022]] (p. 57). Whilst the superiority of random forests is consistent for the bond and equity market, fitted classifiers do not transfer across markets, as diminishing accuracies for the transfer learning by model transfer indicate.
 
-Their model selection remains vague and is mainly guided by computational constraints. 
+The results convincingly demonstrate the potential of machine learning, i.e., of tree-based ensembles, for trade classification. Yet, the comparability of the results is limited by the classifier's reliance on additional features beyond quote and price data. Albeit, [[@ronenMachineLearningTrade2022]] (p. 4) consider a wide range of approaches, their selection leaves the latest advancements in artificial neural networks and ensemble learning aside and is mainly guided by computational constraints. Even if the focus is on standard techniques, the unclear research agenda concerning model selection, tuning, and testing hampers the transferability of their results to the yet unstudied option market [^1]. 
 
-Due to computational constraints, they finalize on random forests, feed-forward networks, and logistic regression.
+In summary, machine learning has been applied successfully in the context of trade classification. To the best of our knowledge, no previous work perform machine learning-based classification in the options markets.
 
-Our work improves on their work with respect to two aspects. More specifically, 
-
-The transferability of their results is limited.
-
-The chosen train-test split . More over, the omitted data pre-processing, favours models methods that are not reliant on gradient descent. 
-
----
-
-[[@rosenthalModelingTradeDirection2012]] (p. 5) bridges the gap between classical trade classification and machine learning by estimating a logistic regression model on lagged and unlagged features inherently used in the tick rule, quote rule, and EMO algorithm. Instead of using the rule's outcome in their discretized form, [[@rosenthalModelingTradeDirection2012]] introduces an information strength criterion, to model the proximity 
-
-
-
-
-
-
-The improvement in accuracy is only minor with 2 % for Nasdaq stocks and 1.1 % for the NYSE. [[@rosenthalModelingTradeDirection2012]] (p. 15). 
-
-Our work tries to widden this gap through the use of 
-
-
-
-The work of [[@blazejewskiLocalNonparametricModel2005]] (p. 481 f.) compares a $k$-nearest neighbour classifier against logistic regression, as well as simple heuristics like the majority vote over past trades for signing trades at the Australian stock exchange. Their results indicate that the parametric $k$-nearest neighbour classifier improves upon a linear logistic regression in terms of classification accuracy, even when trained on fewer features. The work is unique from the aforementioned works with regard to feature set definition. 
-
-[[@blazejewskiLocalNonparametricModel2005]] (p. 3) use no quote or trade prices, but rather the order book volumes, trade sizes, and past trade signs for classification. However, no accuracies for classical trade signing rules are reported, which impedes a comparison across different works. 
-
-Inline with their results, we focus on non-linear models in the form gradient boosting and transformers. Additionally, our paper addresses the mentioned shortcomings by benchmarking against state-of-the-art trade classification rules. We share the idea of using the trade size, and bid and ask sizes for classification, for some of our feature sets, but greedily predict using non-historic features.
-
-Closest to our work are two recent publications of [[@ronenMachineLearningTrade2022]] and [[@fedeniaMachineLearningCorporate2021]], as they facilitate a comparison between 
-
-[^1:] We have contacted the authors about these concerns.
+[^1:] Major concerns are data pre-processing favours approaches non-reliant on gradient descent, an unclear model specification, and optimization. We have contacted the authors about these concerns.
 

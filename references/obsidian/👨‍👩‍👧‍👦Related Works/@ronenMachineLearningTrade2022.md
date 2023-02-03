@@ -5,7 +5,7 @@ tags :  #trade-classification #lr #tick-rule #quote-rule #random-forest #supervi
 #bonds #stocks 
 status : #📥
 related: 
-- [[@fedeniaMachineLearningCorporate2021]] (samey)
+- [[@fedeniaMachineLearningCorporate2021]] (samey; was the old title -> "This paper was previously titled: “Machine Learning in the Corporate Bond Market and Beyond: A New Classifier.”")
 - [[@rosenthalModelingTradeDirection2012]]
 - [[@easleyDiscerningInformationTrade2016]] (paper contains some notes on this paper)
 - [[@leeInferringTradeDirection1991]] (serves as a benchmark)
