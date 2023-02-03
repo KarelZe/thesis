@@ -28,7 +28,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
+                "file": "chapters/🐈CatBoost.md",
                 "mode": "source",
                 "source": false
               }
@@ -120,7 +120,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "spars",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -129,12 +129,12 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 367.5,
-    "collapsed": true
+    "width": 367.5
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -208,17 +208,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f825b6203f6d8412",
+  "active": "6942b2f8be896a2c",
   "lastOpenFiles": [
-    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
+    "chapters/🐈CatBoost.md",
     "chapters/👪Related work.md",
+    "👨‍👩‍👧‍👦Related Works/@blazejewskiLocalNonparametricModel2005.md",
+    "👨‍👩‍👧‍👦Related Works/@ronenMachineLearningTrade2022.md",
     "notes/👪Related works notes.md",
     "chapters/🧵Positional Embedding.md",
     "chapters/🤖Transformer.md",
     "chapters/🍔Layer norm.md",
     "🔗Classical rules/@grauerOptionTradeClassification2022.md",
-    "🔗Classical rules/@savickasInferringDirectionOption2003.md",
-    "🗿TOC.md",
-    "notes/🤖transformer notes.md"
+    "🔗Classical rules/@savickasInferringDirectionOption2003.md"
   ]
 }

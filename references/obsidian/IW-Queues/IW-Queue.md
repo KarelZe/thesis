@@ -43,4 +43,4 @@ interval: 1
 | [[🔢Depth rule]]                                |       90 |       |        1 | 1970-01-01 |
 | [[🔢CLNV method]]                               |       95 |       |        1 | 1970-01-01 |
 | [[🔢Basic rules]]                               |     97.5 |       |        1 | 1970-01-01 |
-| [[🐈gradient-boosting]]                         |        5 |       |        4 | 2023-02-02 |
+| [[🐈gradient-boosting]]                         |        5 |       |        8 | 2023-02-07 |
