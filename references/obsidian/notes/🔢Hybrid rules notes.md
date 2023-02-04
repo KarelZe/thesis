@@ -1,6 +1,7 @@
 - Why is there a need for hybrid classification rules? What are the problems of the tick and quote rule?
 - The previous trade classification rules are applicable to certain trades or come with their own drawbacks e. g., they perform poorly for a greater distance to quotes. To mitigate the disadvantages, rules are combined to hybrids through ensembeling. In certain cases through stacking.
 - “Sophisticated algorithms combine quote and tick rule: trades at the midpoint are always classified by the tick rule and trades at best bid or best ask by the quote rule. The three most common algorithms differ in the choice of how to split up the remaining trades between quote and tick rule, as illustrated in [[#^3d69f3]]” ([[@poppeSensitivityVPINChoice2016]]; p. 9)
+- “The paper further shows that, while the Lee and Ready (1991) algorithm has been the default choice among the traditional trade classification algorithm—possibly partly due to being automatically supplied by data vendors, partly due to its simplicity—the similar simplistic algorithms of Chakrabarty et al. (2007) and Ellis et al. (2000) tend to perform better and may be preferred in certain applications.” (Jurkatis, 2022, p. 23)
 - use the problems of the single tick test to motivate extended rules like EMO / LR?
 - that lead to a fine-grained  fragmentation?
 ![[visualization-of-quote-and-tick.png]]

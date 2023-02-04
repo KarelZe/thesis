@@ -19,3 +19,6 @@
 	- [[@huDoesOptionTrading2014]]
 - and its consequences are an important, but understudied, cause for concern.
 - Commonly stock trade classifcation algorithms are used
+
+
+- “Who is buying and who is selling are important elements in determining the information content of trades, the order imbalance and inventory accumulation of liquidity providers, the price impact of large trades, the effective spread, and many other related questions. Unfortunately, commonly available high frequency databases do not provide in? formation on trade direction. Consequently, empirical researchers have relied on trade direction algorithms to classify trades as buyer or seller motivated.” ([[@ellisAccuracyTradeClassification2000]], p. 529)

@@ -2,10 +2,48 @@
 title: The Accuracy of Trade Classification Rules: Evidence from Nasdaq
 authors: Katrina Ellis, Roni Michaely, Maureen O'Hara
 year: 2000
-tags : #trade-classification 
-status : #📥
+tags : #trade-classification #lee-ready #emo #stocks #tick-rule #quote-rule 
+status : #📦 
 related:
-
+- [[@leeInferringTradeDirection1991]]
 
 ## Notes
-- They estimate a logit model and find that the proximity of the transaction price to the quotes is the most important determinant of the probability of misclassification. [[@theissenTestAccuracyLee2000]]
+- They estimate a logit model / logistic regression and find that the proximity of the transaction price to the quotes is the most important determinant of the probability of misclassification. [[@theissenTestAccuracyLee2000]]
+
+## Annotations
+
+“Who is buying and who is selling are important elements in determining the information content of trades, the order imbalance and inventory accumulation of liquidity providers, the price impact of large trades, the effective spread, and many other related questions. Unfortunately, commonly available high frequency databases do not provide in? formation on trade direction. Consequently, empirical researchers have relied on trade direction algorithms to classify trades as buyer or seller motivated.” ([Ellis et al., 2000, p. 529](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=2&annotation=L65XADM3))
+
+“In this paper, we investigate the applicability and accuracy of trade direction algorithms to Nasdaq data.” ([Ellis et al., 2000, p. 530](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=3&annotation=5QZKXMFZ))
+
+“Our findings are both reassuring and cautionary. We find that the standard classification rules for sorting trades into buys and sells are comparably as accu? rate for Nasdaq trades as for NYSE trades. The quote rule successfully classifies 76.4% ofthe trades, the tick rule successfully classifies 77.66% of the trades, and the combination ofthe two (labeled the LR classification) is successful in 81.05% !For the derivationof these approaches,see Hasbrouck(1988), Blume, Mackinlay,and Terker (1989), and Lee andReady (1991). The success rate for classifying trades inside the quotes, however, is substantially lower, falling to approximately 60% for midpoint trades and to only 55% for trades that are inside the quotes but not at the midpoint.” ([Ellis et al., 2000, p. 531](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=4&annotation=GNU62MLW))
+
+“Examining further the misclassification of trades reveals a number of regularities. Large trades are less accurately classified as are trades in periods of rapid trading. These findings can be almost entirely attributed to the fact that large trades and trades during high volume periods are more frequently executed in between the quotes. We also find that trades executed on Electronic Communications Networks (ECNs) may be particularly prone to miscalculation for the very same reason: a much larger portion of those trades executes in between the quote. We also find that over 4% of trades are executed outside the quotes, and that as much as 35% of the trades above (below) the ask (bid) are seller- (buyer-) initiated trades. These trades pose severe problems for any trade classification algorithm.” ([Ellis et al., 2000, p. 531](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=4&annotation=6Q3MXGWD))
+
+“Based on these findings, we develop a new trade classification algorithm that improves upon classification of trades away from the quotes, resulting in an improvement over existing algorithms when applied to Nasdaq data. For sorting trades into buys and sells, our proposed algorithm achieves an overall success rate of 81.9%, a modest improvement compared to the LR value of 81.0%.” ([Ellis et al., 2000, p. 531](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=4&annotation=TBI6IDEA))
+
+“A more substantial improvement arises when our algorithm is used for calculating effective spreads. In particular, we find that using the LR algorithm significantly overstates the size of the effective spread in the Nasdaq market.2 Using the correct buy/sell indicator from the Nasdaq audit data, we calculate an average effec? tive spread of 1.34%, whereas using the LR classifications results in an effective spread of 1.96%.” ([Ellis et al., 2000, p. 531](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=4&annotation=9VPBNHNN))
+
+“he sample contains 313 Nasdaq stocks traded between September 27,1996, and September 29, 1997. These stocks began trading following their IPO sometime during this period. Consequently, for each stock, the time series of data varies from three months to 12 months.” ([Ellis et al., 2000, p. 532](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=5&annotation=ZQ5327VA))
+
+“Of the three candidate algorithms, therefore, LR is the most successful, yielding an improvement of 3.4% over the tick rule alone and an improvement of 4.65% over the quote rule alone. These differences are statistically significant.” ([Ellis et al., 2000, p. 535](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=8&annotation=5HKKLQ5R))
+
+“The quote rule (and, by extension, LR's algorithm) is very successful in correctly classifying trades executed at the bid and ask prices. The quote rule correctly classifies 88.68% of these trades. Because the quotes represent dealers' offers to buy or sell at these prices, this high success rate should not be surprising.” ([Ellis et al., 2000, p. 536](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=9&annotation=KLSHP9N3))
+
+“Trades that occur at the midpoint of the spread cannot be signed using the quote rule, but rely instead on the tick rule. Here, we find that the algorithm correctly classifies 60.52% of all trades. Trades can also occur within the quotes but not at the midpoint. Using LR's algorithm, the success rate of classifying these trades is a surprisingly low 55.23%. Finally, the success rate of classifying trades that occur outside the spread is only 64.77%. T” ([Ellis et al., 2000, p. 536](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=9&annotation=SMPELREN))
+
+“Overall, there is a monotonic relationship: better classification for smaller trades. For example, trades of less than 200 shares are correctly classified 81.73% of the time compared with 77.85% for trades over 10,000 shares. This is in contrast to Odders-White's (2000) finding that accuracy is lower for smaller NYSE trades.” ([Ellis et al., 2000, p. 536](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=9&annotation=SDMJDLDI))
+
+“Conditioning on the location of the trade, we find trade classification accuracy increases for larger trades, but overall accuracy is lower.” ([Ellis et al., 2000, p. 536](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=9&annotation=E56HF6MG))
+
+“The regression shows trade size, firm size, trading speed, and quoting speed are each less significant in determining the probability of correct classification than is proximity to the quotes. The probability of correct classification increases with trade size, decreases with firm size, increases with the time between trades (less rapid trading), and increases with the time between a quote update and a trade.” ([Ellis et al., 2000, p. 539](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=12&annotation=96FSFA7I))
+
+“We have also demonstrated a problem unique to Nasdaq?trades that occur outside of the quotes perform poorly with respect to trade classification.” ([Ellis et al., 2000, p. 539](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=12&annotation=4A96AGZC))
+
+“All trades executed at the ask quote are categorized as buys. All trades executed at the bid quote are categorized as sells. All other trades are categorized by the tick rule.” ([Ellis et al., 2000, p. 540](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=13&annotation=CUZ2F74R))
+
+“There is also an improvement, but to a lesser extent, for trades outside the quote: from a 64.8% success rate under the LR procedure to 65.8% under the alternative procedure. This improvement translates to an overall success rate of 81.87% for our candidate algorithm, compared to 81.05% for the LR algorithm.” ([Ellis et al., 2000, p. 540](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=13&annotation=9TI52E9M))
+
+“We have documented the success of various trade classification algorithms on a sample of Nasdaq data. Overall, we find that extant trade classification algo? rithms perform adequately in sorting buy and sell trades, with approximately 81% of all trades correctly classified by LR's (1991) algorithm.” ([Ellis et al., 2000, p. 550](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=23&annotation=LJTZVDBY))
+
+“We found that the tick rule performs more reliably than the quote rule for trades away from the quotes, and that using the tick rule for all trades away from the quotes and the quote rule for trades at the quotes provides an improvement over Lee and Ready's algorithm. This improvement arises primarily because the new algorithm is better at classifying trades between quotes. However, trades between the quotes only accounted for 12.7% of our test sample. For trades excluded from our test sample (24% of all trades), occurrence within the quotes was much higher (23.2%) suggesting that, overall, use ofthe tick-quote rule instead of the LR algorithm may be more reliable for Nasdaq data.” ([Ellis et al., 2000, p. 550](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=23&annotation=M99Q5KIM))
