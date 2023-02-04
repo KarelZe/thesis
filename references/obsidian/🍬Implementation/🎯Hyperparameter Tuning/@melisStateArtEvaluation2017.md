@@ -34,7 +34,7 @@
 	- To make model evaluation cheaper, models must become less sensitive to hyperparameters and the number of hyperparameters viewer.
 
 Validation loss vs. hyperparameters:
- ![[validation-loss-vs-hyperparam 1.png]]
+ ![[validation-loss-vs-hyperparam.png]]
 
 ## Annotations 📖
 

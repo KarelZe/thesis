@@ -1,6 +1,4 @@
 
-[[👪Related works notes]]
-
 **Trade classification on option data sets** 💸
 
 While classical trade classification algorithms are extensively tested in the stock markets (e.g., [[@chakrabartyTradeClassificationAlgorithms2012]]; [[@odders-whiteOccurrenceConsequencesInaccurate2000]]), few works have examined trade classification in option markets. 
@@ -24,3 +22,5 @@ In summary, machine learning has been applied successfully in the context of tra
 
 [^1:] Major concerns are data pre-processing favours approaches non-reliant on gradient descent, an unclear model specification, and optimization. We have contacted the authors about these concerns.
 
+**Notes:**
+[[👪Related works notes]]

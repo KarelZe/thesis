@@ -25,4 +25,4 @@ Embedding components:
 ![[🤖FTTransformer]]
 
 **Notes:**
-[[🤖transformer notes]]
+[[🤖Transformer notes]]

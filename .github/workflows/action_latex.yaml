@@ -18,6 +18,7 @@ jobs:
             expose.tex
             thesis.tex
           working_directory: reports
+          latexmk_use_lualatex: true
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')

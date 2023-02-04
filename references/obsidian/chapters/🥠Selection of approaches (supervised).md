@@ -6,7 +6,7 @@
 
 <mark style="background: #BBFABBA6;">“Tabular data is a database that is structured in a tabular form. It arranges data elements in vertical columns (features) and horizontal rows (samples)” ([Yoon et al., 2020, p. 1](zotero://select/library/items/XSYUS7JZ)) ([pdf](zotero://open-pdf/library/items/78GQQ36U?page=1&annotation=8MAKL2B9))</mark>
 
-Due to a unsatisfactory research situation, for trade calssification (see chapter [[👪Related work]]) we base
+Due to a unsatisfactory research situation, for trade calssification (see chapter [[👪Related Work]]) we base
 
 We define the following criteria a model should meet:
 
