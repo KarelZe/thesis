@@ -19,3 +19,7 @@
 - combines the quote and reverse tick rule
 - performs fairly well for options as shown in [[@grauerOptionTradeClassification2022]]
 - Lee and Ready SAS implementatin https://github.com/jblocher/sas_util/blob/master/LR_Trade_ID.sas
+
+- Poor performance on option data sets explain why
+
+“The established methods, most notably the algorithms of Lee and Ready (1991) (LR), Ellis et al. (2000) (EMO), and Chakrabarty et al. (2007) (CLNV), classify trades based on the proximity of the transaction price to the quotes in effect at the time of the trade. This is problematic due to the increased frequency of order submission and cancellation. With several quote changes taking place at the time of the trade, it is not clear which quotes to select for the decision rule of the algorithm.” (Jurkatis, 2022, p. 6)
