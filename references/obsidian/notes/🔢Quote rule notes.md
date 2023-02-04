@@ -3,3 +3,4 @@
 - See [[@hasbrouckTradesQuotesInventories1988]] . Might be one of the first to mention the quote rule. It is however not very clearly defined. Paper also discusses some (handwavy) approaches to treat midpoint transactions.
 	Adapted from [[@olbrysEvaluatingTradeSide2018]]. Rewrite to formula
 (copied from [[@carrionTradeSigningFast2020]])
+- works best in [[@savickasInferringDirectionOption2003]]

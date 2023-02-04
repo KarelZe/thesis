@@ -27,7 +27,6 @@
 - [[@pressImprovingTransformerModels2020.md]]
 - [[@chenExcelFormerNeuralNetwork2023.md]]
 - [[@abeDeepLearningForecasting2018.md]]
-- [[@chakrabartyEvaluatingTradeClassification2015 1.md]]
 - [[👨‍👩‍👧‍👦Related Works/@zouStockMarketPrediction2022.md]]
 - [[👨‍👩‍👧‍👦Related Works/@zhuClusteringStructureMicrostructure2021.md]]
 - [[🎨transformer.canvas]]
