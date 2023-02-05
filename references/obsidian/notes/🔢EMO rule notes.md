@@ -14,7 +14,21 @@
 - **Limitations:** “If the second trade of the day takes place at the same price as the first one, both trades cannot be classified by the tick rule. The LR and EMO rules also lose some trades since they are combinations of the tick and the quote rules.” (Savickas and Wilson, 2003, p. 886) -> Wouldn't this be filled by the prev. trade that is different, even if it is from long ago?
 - <mark style="background: #FFB86CA6;">(for a short discussion see [[@carrionTradeSigningFast2020]])</mark>
 
-
-**Pseudo code:**
+**Notation:**
+Turn it into simple formula, instead of lengthy algorithm
 ![[emo-algo.png]]
+
+Similar to LR algorithm in  [[@carrionTradeSigningFast2020]]:
+
+The tick rule (TICK) relies solely on trade prices for classifying trades and does not use any quote data. To classify trades, the tick rule compares the current trade price to the price of the preceding trade. A trade is classified as a buy if the trade price is higher than the preceding trade price (uptick). Likewise, a trade is classified as a sell if the trade price is lower than the preceding trade price (downtick). If the preceding trade price is the same, then the tick rule looks back to the last different price to classify the trade. Likewise, a trade is classified as a sell if it occurs on a zero-downtick. Formally denoting the trade price of security $i$ at time $t$ as $P_{i, t}$ and $\Delta P_{i, t}$ as the price change between two successive trades and the assigned trade direction at time $t$ as Trade, we have:
+If $\Delta P_{i, t}>0$, Trade $_{i, t}=$ Buy,
+If $\Delta P_{i, t}<0$, Trade ${i, t}=$ Sell,
+If $\Delta P_{i, t}=0$, Trade $_{i, t}=$ Trade $_{i, t-1}$.
+The LR algorithm is based on a combination of the tick rule and the quote rule. Using the quote rule, a trade is classified as a buy if the price is above the midpoint of the quoted bid and ask and as a sell if the price is below the midpoint. Denoting the midpoint of the quoted spread by $m_{i, t}$, the predicted trade direction as per the quote rule is as follows:
+$$
+\begin{aligned}
+& \text { If } P_{i, t}>m_{i, t}, \text { Trade }_{i, t}=\text { Buy, } \\
+& \text { If } P_{i, t}<m_{i, t} \text { Trade }_{i, t}=\text { Sell. }
+\end{aligned}
+$$
 
