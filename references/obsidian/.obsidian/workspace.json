@@ -23,7 +23,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/🤖TabTransformer notes.md",
+                "file": "chapters/🤖Transformer.md",
                 "mode": "source",
                 "source": false
               }
@@ -88,7 +88,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/🤖TabTransformer notes.md",
+                "file": "chapters/🤖Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +116,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/🤖TabTransformer notes.md"
+                "file": "chapters/🤖Transformer.md"
               }
             }
           },
@@ -129,7 +129,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -146,17 +146,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "af3519714ff43635",
+  "active": "716b7df63052bda1",
   "lastOpenFiles": [
-    "notes/🅰️attention notes.md",
     "notes/🤖Transformer notes.md",
+    "notes/🤖TabTransformer notes.md",
+    "notes/🅰️attention notes.md",
     "notes/🧵Positional encoding notes.md",
     "chapters/🥠Selection of approaches (supervised).md",
     "notes/🔢LR algorithm notes.md",
     "notes/🔢CLNV method notes.md",
     "notes/🔢EMO rule notes.md",
     "chapters/🔢LR algorithm.md",
-    "notes/🔢Quote rule notes.md",
-    "chapters/👨‍🍳Pre-Processing.md"
+    "notes/🔢Quote rule notes.md"
   ]
 }

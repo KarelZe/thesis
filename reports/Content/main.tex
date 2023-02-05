@@ -324,7 +324,9 @@ In summary, machine learning has been applied successfully in the context of tra
 % \subsubsection{Adaptions for Probabilistic
 %   Classification (0.5~p)}\label{sec:adaptions-for-probablistic-classification}
 
-\subsection{Transformer Networks (8 p)}\label{sec:transformer-networks}
+\subsection{Transformer Networks}\label{sec:transformer-networks}
+
+\subsubsection{Architectural Overview}\label{sec:architectural-overview}
 
 \begin{landscape}
   \begin{figure}
@@ -335,9 +337,11 @@ In summary, machine learning has been applied successfully in the context of tra
   \end{figure}
 \end{landscape}
 
-\subsubsection{Network Architecture (2.5~p)}\label{sec:network-architecture}
+\subsubsection{Token Embedding}\label{sec:token-embeddings}
 
-\subsubsection{Attention (0.5~p)}\label{sec:attention}
+\subsubsection{Positional Encoding}\label{sec:positional-encoding}
+
+\subsubsection{Attention}\label{sec:attention}
 
 % \begin{equation}
 %   \t{softmax}( \m{A})[t_\mathrm{z}, t_\mathrm{x}] ~:=~ \frac{\exp A[t_\mathrm{z},t_\mathrm{x}]}{ \sum_{t} \exp A[t,t_\mathrm{x}]},
@@ -368,15 +372,20 @@ In summary, machine learning has been applied successfully in the context of tra
 %   \Return $\m{\tilde V} = \m{V}\cdot \t{softmax}\left( \m{S} / \sqrt{d_\t{attn}} \right)$    
 % \end{algorithm}
 
-\subsubsection{Positional Encoding (0.5~p)}\label{sec:positional-encoding}
 
-\subsubsection{Embeddings (0.5~p)}\label{sec:embeddings}
+\subsubsection{Position-wise Feed-Forward Networks}\label{sec:position-wise-ffn}
 
-\subsubsection{Extensions in
-  TabTransformer (2~p)}\label{sec:extensions-in-tabtransformer}
+\subsubsection{Residual Connections}\label{sec:residual-connections}
 
-  \subsubsection{Extensions in
-  FTTransformer (2~p)}\label{sec:extensions-in-fttransformer}
+\subsubsection{Layer Normalization}\label{sec:layer-norm}
+
+\subsection{Transformer Networks For Tabular Data}\label{sec:tabular-transformer}
+
+\subsubsection{Tabular Embeddings}\label{sec:tabular-embeddings}
+
+\subsubsection{TabTransformer}\label{sec:tabtransformer}
+
+\subsubsection{FTTransformer}\label{sec:fttransformer}
 
 
 \newpage
