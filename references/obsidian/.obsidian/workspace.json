@@ -11,15 +11,13 @@
           {
             "id": "106d0f5f21abda1b",
             "type": "leaf",
-            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
                 "file": "notes/🔢LR algorithm notes.md",
                 "mode": "source",
                 "source": false
-              },
-              "pinned": true
+              }
             }
           },
           {
