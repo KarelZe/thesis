@@ -1,4 +1,4 @@
-Tags: #trade-classification #CLVN 
+Tags: #trade-classification #CLNV 
 
 - CLNV-Method is a hybrid of tick and quote rules when transactions prices are closer to the ask and bid, and the the tick rule when transaction prices are closer to the midpoint [[@chakrabartyTradeClassificationAlgorithms2007]]. Authors continue the trend to deeper / more sophisticated rules.
 - extension to the [[@ellisAccuracyTradeClassification2000]] algorithm. Algorithm was invented after the EMO rule. Thus the improvement, comes from a higher segmented decision surface. (also see graphics [[visualization-of-quote-and-tick.png]])
