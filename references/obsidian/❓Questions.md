@@ -26,5 +26,5 @@
 - Opinions on weekly release info 📧 (e. g., every sunday) with closed issues and completed tasks + short bi-weekly meeting. -> *Meeting scheduled. Release notes sent.*
 - Who would co-supervise / grade the thesis? What is his / her special focus e. g., economical inference/interpretability? -> *Prof. Dr. Uhrig-Homburg (1), Prof. Dr. Ruckes (2). Prof. Uhrig-Homburg is very open to new ideas.* 
 - Discuss what to do with low-quality papers e. g., [[@ronenMachineLearningTrade2022]] or [[@blazejewskiLocalNonparametricModel2005]]? Cite, but be critical? Is it ok to also leave some poor papers out? -> *Ok, to leave out or point out what is problematic.*
-- What to do with [[@hansenApplicationsMachineLearning]]? Thesis does something similar but was not published. Mostly different techniques / different data set / focus on EDA.
-- Discuss citations of pre-prints? Some important concepts in ML have only been published on [archive.org](www.archive.org). -> *Citing preprints is ok.*
+- What to do with `@hansenApplicationsMachineLearning`? Thesis does something similar but was not published. Mostly different techniques / different data set / focus on EDA.
+- Discuss citations of pre-prints? Some important concepts in ML have only been published on `www.archive.org`. -> *Citing preprints is ok.*

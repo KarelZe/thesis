@@ -1,3 +1,5 @@
+Tags: #trade-classification 
+
 - Why is there a need for hybrid classification rules? What are the problems of the tick and quote rule?
 - The previous trade classification rules are applicable to certain trades or come with their own drawbacks e. g., they perform poorly for a greater distance to quotes. To mitigate the disadvantages, rules are combined to hybrids through ensembeling. In certain cases through stacking.
 - “Sophisticated algorithms combine quote and tick rule: trades at the midpoint are always classified by the tick rule and trades at best bid or best ask by the quote rule. The three most common algorithms differ in the choice of how to split up the remaining trades between quote and tick rule, as illustrated in [[#^3d69f3]]” ([[@poppeSensitivityVPINChoice2016]]; p. 9)
@@ -13,4 +15,4 @@
 
 **Algorithms:**
 ![[pseudocode-of-algorithms.png]]
-(found in [[👨‍👩‍👧‍👦Related Works/@jurkatisInferringTradeDirections2022]]). Overly complex description but helpful for implementation?
+(found in [[@jurkatisInferringTradeDirections2022]]). Overly complex description but helpful for implementation?

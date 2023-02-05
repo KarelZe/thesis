@@ -1,7 +1,7 @@
 *title:* On Embeddings for Numerical Features in Tabular Deep Learning
 *authors:* Yury Gorishniy, Ivan Rubachev, Artem Babenko
 *year:* 2022
-*tags:* #embeddings #transformer #tabular-data
+*tags:* #embeddings #transformer #tabular
 *status:* #📥
 *related:*
 - article with explanations. https://towardsdatascience.com/transformers-for-tabular-data-part-3-piecewise-linear-periodic-encodings-1fc49c4bd7bc

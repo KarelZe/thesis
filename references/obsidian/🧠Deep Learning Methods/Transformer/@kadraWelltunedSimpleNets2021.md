@@ -1,7 +1,7 @@
 *title:* Well-Tuned Simple Nets Excel on Tabular Datasets
 *authors:* Arlind Kadra, Marius Lindauer, Frank Hutter, Josif Grabocka
 *year:* 2020
-*tags:* #tabular-data #deep-learning #neural_network #lr-scheduling #dropout #sgd #adam #batch-normalization #gbd #cyclic 
+*tags:* #tabular #deep-learning #neural_network #lr-scheduling #dropout #sgd #adam #batch-normalization #gbm  #cyclic 
 *status:* #📥
 *related:*
 - [[@borisovDeepNeuralNetworks2022]]

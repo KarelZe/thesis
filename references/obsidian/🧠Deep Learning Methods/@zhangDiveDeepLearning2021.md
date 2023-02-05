@@ -2,7 +2,7 @@
 *title:* Dive into Deep Learning
 *authors:* Aston Zhang, Zachary C Lipton, Mu Li, Alexander J Smola
 *year:* 2022
-*tags:* #deep-learning #gradient_boosting #semi-supervised #transformer
+*tags:* #deep-learning #gbm #semi-supervised #transformer
 *status:* #📥
 *code:* [2.3. Linear Algebra — Dive into Deep Learning 0.17.0 documentation (d2l.ai)](https://d2l.ai/chapter_preliminaries/linear-algebra.html?highlight=frobenius)
 

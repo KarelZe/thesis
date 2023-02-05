@@ -2,7 +2,7 @@
 title: VIME: Extending the Success of Self- and Semi-supervised Learning to Tabular Domain
 authors: Jinsung Yoon, Yao Zhang, James Jordon, Mihaela Schaar
 year: 2019
-*tags:* #deep-learning #gradient_boosting  #semi-supervised #self-supervised
+*tags:* #deep-learning #gbm  #semi-supervised #self-supervised
 *status:* #📦 
 *related:* 
 *code:* [https://github.com/jsyoon0823/VIME](https://github.com/jsyoon0823/VIME)

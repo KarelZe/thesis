@@ -2,7 +2,7 @@
 title: TabTransformer: Tabular Data Modeling Using Contextual Embeddings
 authors: Xin Huang, Ashish Khetan, Milan Cvitkovic, Zohar Karnin
 year: 2020
-*tags:* #deep-learning #gradient_boosting #semi-supervised #tabular-data #supervised-learning #transformer #pretraining #robustness
+*tags:* #deep-learning #gbm #semi-supervised #tabular #supervised-learning #transformer #pre-training #robustness
 *status:* #📦 
 *related:* 
 - [[@borisovDeepNeuralNetworks2022]] 

@@ -1,3 +1,5 @@
+Tags: #trade-classification #quote-rule 
+
 
 **Notation:** For notation see [[@carrionTradeSigningFast2020]] or  [[@jurkatisInferringTradeDirections2022]] or [[@olbrysEvaluatingTradeSide2018]]..  Denoting the midpoint of the quoted spread by $m_{i, t}$, the predicted trade direction as per the quote rule is as follows:
 $$

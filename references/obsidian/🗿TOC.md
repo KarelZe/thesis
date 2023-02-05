@@ -65,7 +65,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ^5db625
 [[🎄Decison_trees]]
 ### Gradient Boosting Procedure 🟡
-[[🐈gradient-boosting]]
+[[🐈Gradient Boosting]]
 ## Transformer
 
 ### Architectural Overview
@@ -124,7 +124,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 describe if data set is actually used. Write similarily to 
 
 ### Exploratory Data Analysis
-[[🚏Exploratory data analysis]]
+[[🚏Exploratory Data Analysis]]
 
 ### Data Pre-Processing 🟡
 [[👨‍🍳Pre-Processing]]

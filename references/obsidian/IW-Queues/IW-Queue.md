@@ -33,7 +33,7 @@ interval: 1
 | [[🏅Feature importance results]]                |       60 |       |        1 | 1970-01-01 |
 | [[🪄Feature Engineering]]                       |     62.5 |       |        1 | 1970-01-01 |
 | [[🐈extensions-to-gradient-boosting]]           |       70 |       |        1 | 1970-01-01 |
-| [[🚏Exploratory data analysis]]                 |     72.5 |       |        1 | 1970-01-01 |
+| [[🚏Exploratory Data Analysis]]                 |     72.5 |       |        1 | 1970-01-01 |
 | [[🧭Evaluation metric]]                         |       75 |       |        1 | 1970-01-01 |
 | [[🌏Environment]]                               |     77.5 |       |        1 | 1970-01-01 |
 | [[🔢EMO rule]]                                  |       80 |       |        1 | 1970-01-01 |
@@ -43,4 +43,4 @@ interval: 1
 | [[🔢Depth rule]]                                |       90 |       |        1 | 1970-01-01 |
 | [[🔢CLNV method]]                               |       95 |       |        1 | 1970-01-01 |
 | [[🔢Basic rules]]                               |     97.5 |       |        1 | 1970-01-01 |
-| [[🐈gradient-boosting]]                         |        5 |       |        8 | 2023-02-07 |
+| [[🐈Gradient Boosting]]                         |        5 |       |        8 | 2023-02-07 |

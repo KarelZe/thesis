@@ -2,7 +2,7 @@
 *authors:* Sharan Narang, Hyung Won Chung, Yi Tay, William Fedus, Thibault Fevry, Michael Matena, Karishma Malkan, Noah Fiedel, Noam Shazeer, Zhenzhong Lan, Yanqi Zhou, Wei Li, Nan Ding, Jake Marcus, Adam Roberts, Colin Raffel
 *year:* 2021
 *tags:* 
-*status:* #transformer #layer-norm #activations #depth
+*status:* #transformer #layernorm #activations #depth
 *related:*
 *code:*
 *review:*

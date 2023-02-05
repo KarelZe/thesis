@@ -1,6 +1,4 @@
-- 
-
-
+Tags: #trade-classification  #tick-rule 
 
 One of the first works who mention the tick test is [[@holthausenEffectLargeBlock1987]] (referred to as tick classification rule) or [[@hasbrouckTradesQuotesInventories1988]] (referred to as transaction rule)
 

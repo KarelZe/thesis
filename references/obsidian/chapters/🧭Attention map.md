@@ -37,7 +37,7 @@ $$
 \text { rollout } & =\hat{\mathbf{A}}^{(1)} \cdot \hat{\mathbf{A}}^{(2)} \ldots \ldots \cdot \hat{\mathbf{A}}^{(B)}
 \end{aligned}
 $$
-In each layer the raw attention scores $\mathbf{A}^{(b)}$ are averaged over $h$ heads, denoted by $\mathbb{E}_h$. The identity matrix $I$ is added to account for the residual connections present in the  [[network_architecture]]. While *rollout attention* considers all attention layers in the calculation of feature attributions, it does not consider a signal and attributes equal weights to all attention heads [[@cheferTransformerInterpretabilityAttention2021]] (p. 786). 
+In each layer the raw attention scores $\mathbf{A}^{(b)}$ are averaged over $h$ heads, denoted by $\mathbb{E}_h$. The identity matrix $I$ is added to account for the residual connections present in the  [[🗼Overview Transformer]] . While *rollout attention* considers all attention layers in the calculation of feature attributions, it does not consider a signal and attributes equal weights to all attention heads [[@cheferTransformerInterpretabilityAttention2021]] (p. 786). 
 
 In an effort to explain the decision-making process of any Transformer-based architecture, and in particular architectures based on self-attention like [[🤖TabTransformer]] or [[🤖FTTransformer]], [[@cheferGenericAttentionmodelExplainability2021]] (p. 3) propose to incorporate gradients when averaging across the heads of a layer, as shown in Equation (...):
 %%%

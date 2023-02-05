@@ -23,27 +23,49 @@
             }
           },
           {
-            "id": "f35a250acbe1a2dc",
+            "id": "931fd82100d5ac94",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🚏exploratory data analysis.md",
+                "file": "🍬Implementation/🔥Speed-up PyTorch.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "49c64c7f85cbab57",
+            "id": "811fa247fd14f7e5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/🔢Tick test notes.md",
+                "file": "❓Questions.md",
                 "mode": "source",
                 "source": false
               }
+            }
+          },
+          {
+            "id": "a3ff0ccf58116bde",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🏅Results.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f35a250acbe1a2dc",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "graph",
+              "state": {},
+              "pinned": true
             }
           },
           {
@@ -97,7 +119,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       },
       {
         "id": "4dadd3fc5e6f2baa",
@@ -159,9 +181,9 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "s",
                 "matchingCase": false,
-                "explainSearch": false,
+                "explainSearch": true,
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
@@ -188,7 +210,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/🔢Tick test notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -205,7 +226,7 @@
             "state": {
               "type": "tag",
               "state": {
-                "sortOrder": "frequency",
+                "sortOrder": "alphabetical",
                 "useHierarchy": false
               }
             }
@@ -215,9 +236,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "notes/🔢Tick test notes.md"
-              }
+              "state": {}
             }
           },
           {
@@ -229,11 +248,11 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 438.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -246,17 +265,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "49c64c7f85cbab57",
+  "active": "f35a250acbe1a2dc",
   "lastOpenFiles": [
-    "notes/🔢Quote rule notes.md",
-    "notes/🔢Basic rules notes.md",
     "notes/🔢LR algorithm notes.md",
-    "notes/🔢Tradesize rule notes.md",
-    "notes/🔢Depth rule notes.md",
-    "notes/🔢Tick test notes.md",
+    "broken links output.md",
     "notes/🔢Hybrid rules notes.md",
-    "notes/🔢EMO rule notes.md",
-    "chapters/👶Introduction.md",
-    "🔗Classical rules/@savickasInferringDirectionOption2003.md"
+    "chapters/🏅Results.md",
+    "🍬Implementation/🔥Speed-up PyTorch.md",
+    "❓Questions.md",
+    "👨‍👩‍👧‍👦Related Works/@jurkatisInferringTradeDirections2022.md",
+    "🍬Implementation/🧪Feature Engineering/@jurkatisInferringTradeDirections2022.md",
+    "🔗Classical rules/@savickasInferringDirectionOption2003.md",
+    "🍬Implementation/🔢Preprocessing/@lemorvanWhatGoodImputation2021.md"
   ]
 }

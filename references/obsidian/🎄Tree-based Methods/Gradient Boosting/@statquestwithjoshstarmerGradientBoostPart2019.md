@@ -2,7 +2,7 @@
 title: Gradient Boost Part 2 (of 4): Regression Details
 authors: StatQuest
 year: 2019
-tags :  #supervised-learning #gbm #decision #gradient_boosting 
+tags :  #supervised-learning #gbm #decision #gbm 
 status : #📦 
 related: 
 - [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]

@@ -107,7 +107,7 @@ https://www.baeldung.com/cs/transformer-text-embeddings
 (see https://www.youtube.com/watch?v=EixI6t5oif0)
 - attention was originally introduced in the Bahdu paper. But was not the most central part.
 - attention is like a (convoluted (soft)) dictionary lookup. like in a dict we have keys and values and want to query the dictionary. keys and values are a vector of quotes. measure the similarity with the dotproduct. we measure similarity between query and key (attention weights) and the result is normalized. We take weighted average of all values weighted by the attention weights. Note output can also be average over multiple 
-![[attention-visualization.png]]
+
 - q (word to translate), k, v (words in source language)
 - We not just have one query, but multiple. Also an attention matrix. We use multi-head attention
 - Multi-head attention splits the queries along the embedding dimension. Also outputs are split. Works empirically better. Requires less compute. (only implementation details. Not the gist of attention.)

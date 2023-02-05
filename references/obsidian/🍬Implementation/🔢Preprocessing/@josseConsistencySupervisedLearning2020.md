@@ -1,7 +1,7 @@
 *title:* On the consistency of supervised learning with missing values
 *authors:* Julie Josse, Nicolas Prost, Erwan Scornet, Gaël Varoquaux
 *year:* 2020
-*tags:* #gradient_boosting #decision-trees #missing-value #imputation #nan 
+*tags:* #gbm #decision-trees #missing-value #imputation #nan 
 *status:* #📦 
 *related:*
 - [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]

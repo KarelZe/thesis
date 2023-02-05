@@ -1,7 +1,7 @@
 *title:* Natural Language Processing with Transformers
 *authors:* Lewis Tunstall
 *year:* 2022
-*tags:* #transformer #nlp #tokenization #deep-learning  #layer-norm
+*tags:* #transformer #nlp #tokenization #deep-learning  #layernorm
 *status:* #📦 
 *related:*
 *code:*

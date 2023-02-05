@@ -2,7 +2,7 @@
 title: On Inferring the Direction of Option Trades
 authors: Robert Savickas, Arthur J Wilson
 year: 2003
-tags : #trade-classification #lr #emo #classical-rules #quote-rule #tick-rule 
+tags : #trade-classification #lr #emo #quote-rule #tick-rule #application 
 status : #📦 
 related:
 - [[@hasbrouckTradesQuotesInventories1988]]
@@ -17,7 +17,7 @@ related:
 - Author correctly sign 83% (quote), 80% (LR), 77% (EMO), and 59% (tick method) of all classifiable trades, respectively. This is much higher than the later work of [[@grauerOptionTradeClassification2022]].
 - Precision is up to **24 % lower** for **options** than for stock data. (Savickas and Wilson, 2003, p. 882)
 - “We find that the components of index option complex trades not executed on the Retail Automated Execution System are misclassified almost 50% of the time by any method. The elimination of these trades (15% of the sample) results in a success rate of over 87% for the quote rule.” (Savickas and Wilson, 2003, p. 881)
-
+- They apply trade classification to effective spread calculation. Could easily adapt this for my problem.
 
 ## Data Set
 - “We use two datasets covering the period July 3, 1995 to December 31, 1995; both are provided by CBOE.”  (Savickas and Wilson, 2003, p. 882) This is very **tiny**. 

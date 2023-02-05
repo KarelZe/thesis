@@ -2,7 +2,7 @@
 title: CatBoost: unbiased boosting with categorical features
 authors: Liudmila Prokhorenkova, Gleb Gusev, Aleksandr Vorobev, Anna Veronika Dorogush, Andrey Gulin
 year: 2019
-tags :  #supervised-learning #catboost #gbm #decision #target-leakage #gradient_boosting 
+tags :  #supervised-learning #gbm #gbm #decision #target-leakage #gbm 
 status : #📦 
 related: 
 - [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]

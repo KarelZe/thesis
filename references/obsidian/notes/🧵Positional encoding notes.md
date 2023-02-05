@@ -206,7 +206,7 @@ $$
 \mathbf{v}^{(i)}=\left[\cos \left(\omega_0 x_i\right), \sin \left(\omega_0 x_i\right), \ldots, \cos \left(\omega_{n-1} x_i\right), \sin \left(\omega_{n-1} x_i\right)\right]
 $$
 We now build the full linear transformation by using a bunch of blockdiagonal linear transformations. Each block will have a different matrix, since the frequencies that the block acts on are different. For example, in order to translate the $k$ th dial with frequency omega_k by dx units, we would need a total angle shift of delta=omega_ $k^* d x$. The $T$ matrix can now be written as:
-![[block-matrix-pe.png]]
+
 If you take the transpose of this, you can directly insert it into our previous $\mathrm{PE}(\mathrm{x}+\mathrm{dx})=\mathrm{PE}(\mathrm{x})^* \mathrm{~T}$ equation, thereby proving by construction the existence of a translation matrix!
 
 - The row-vector is an alternating series of sines and cosines, with frequencies that decrease according to a geometric series
@@ -236,7 +236,7 @@ That is true, because a definition for T(k) can be found with no dependence on
 
 (4)T(k)=[Φ1(k)0⋯00Φ2(k)⋯000⋱000⋯Φdmodel2(k)],
 
-where 0 denotes 2×2 all-zero matrices and the #dmodel2 transposed [rotation matrices](https://en.wikipedia.org/wiki/Rotation_matrix) Φ(k) positioned on the main diagonal are defined by  
+where 0 denotes 2×2 all-zero matrices and the transposed [rotation matrices](https://en.wikipedia.org/wiki/Rotation_matrix) Φ(k) positioned on the main diagonal are defined by  
 
 (5)Φm(k)=[cos⁡(rmk)−sin⁡(rmk)sin⁡(rmk)cos⁡(rmk)]⊺,
 
