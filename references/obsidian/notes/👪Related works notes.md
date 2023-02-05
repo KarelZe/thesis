@@ -1,5 +1,6 @@
 
 **Machine learning:**
+- [[@boweNewClassicalBayesian]] Bayesian classifier.
 
 - Some feature sets contain as many as 42 features, some of which a forward looking (cp. [[@ronenMachineLearningTrade2022]] (p. 49)).
 

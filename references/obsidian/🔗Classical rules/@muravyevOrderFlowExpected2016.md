@@ -1,7 +1,7 @@
 *title:* Order Flow and Expected Option Returns: Order Flow and Expected Option Returns
 *authors:* Dmitriy Muravyev
 *year:* 2016
-*tags:* #trade-classification #option-trade-classification #application
+*tags:* #trade-classification  #application
 *status:* #📦 
 *related:*
 - [[@huDoesOptionTrading2014]]

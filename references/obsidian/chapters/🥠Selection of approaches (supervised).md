@@ -53,3 +53,5 @@ We define the following criteria a model should meet:
 - Why to formulate problem as probabilistic classification problem: https://www.youtube.com/watch?v=RXMu96RJj_s
 - for use of transformer-based models in finance see [[@zouStockMarketPrediction2022]]
 - Non-parametric model of [[@kossenSelfAttentionDatapointsGoing2021]]
+
+![[decision-process-supervised-semi.jpg]]

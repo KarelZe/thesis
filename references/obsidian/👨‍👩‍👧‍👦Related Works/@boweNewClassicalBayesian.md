@@ -1,7 +1,7 @@
 *title:* New Classical and Bayesian Estimators for Classifying Trade Direction in the Absence of Quotes
 *authors:* Michael Bowe, Sungjun Cho, Stuart Hyde, Iljin Sung
 *year:* 2018
-*tags:* #option-trade-classification #trade-classification #probabilistic-classification #bvc #markov-chain #bayesian 
+*tags:*  #trade-classification #probabilistic-classification #bvc #markov-chain #bayesian 
 *status:* #📦 
 *related:*
 - [[@easleyDiscerningInformationTrade2016]] (authors adapt their Bayesian view of trade classification)
