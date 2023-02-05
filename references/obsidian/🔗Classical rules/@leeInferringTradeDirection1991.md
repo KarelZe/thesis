@@ -9,6 +9,9 @@ related:
 - [[@holthausenEffectLargeBlock1987]]
 - [[@ellisAccuracyTradeClassification2000]]
 - [[@chakrabartyTradeClassificationAlgorithms2007]]
+**code:**
+- https://github.com/jblocher/sas_util/blob/master/LR_Trade_ID.sas
+
 
 ## Notes
 - Most cited paper in journal of finance.

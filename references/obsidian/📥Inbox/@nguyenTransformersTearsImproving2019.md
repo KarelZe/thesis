@@ -1,7 +1,7 @@
 *title:* Transformers without Tears: Improving the Normalization of Self-Attention
 *authors:* Toan Q. Nguyen, Julian Salazar
 *year:* 2019
-*tags:* #transformer #layer-norm #residual-connections 
+*tags:* #transformer #layernorm #residual-connections 
 *status:* #📦 
 *related:*
 *code:*

@@ -1,10 +1,36 @@
+Tags: #trade-classification #emo
+
+- **Observation:** “The quote rule (and, by extension, LR's algorithm) is very successful in correctly classifying trades executed at the bid and ask prices. The quote rule correctly classifies 88.68% of these trades. Because the quotes represent dealers' offers to buy or sell at these prices, this high success rate should not be surprising.” ([Ellis et al., 2000, p. 536](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=9&annotation=KLSHP9N3))
+- **Observation:** “Trades that occur at the midpoint of the spread cannot be signed using the quote rule, but rely instead on the tick rule. Here, we find that the algorithm correctly classifies 60.52% of all trades. Trades can also occur within the quotes but not at the midpoint. Using LR's algorithm, the success rate of classifying these trades is a surprisingly low 55.23%. Finally, the success rate of classifying trades that occur outside the spread is only 64.77%. T” ([Ellis et al., 2000, p. 536](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=9&annotation=SMPELREN)) -> Based on the observation that trades inside the quotes are poorly classified. 
+- “All trades executed at the ask quote are categorized as buys. All trades executed at the bid quote are categorized as sells. All other trades are categorized by the tick rule.” ([Ellis et al., 2000, p. 540](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=13&annotation=CUZ2F74R))
+- **By intuition:** turns the principle of LR up-side-down: apply the tick rule to all trades except those at the best bid and ask.
+- **variant:** The tick rule can be exchanged for the reverse tick rule, as previously studied in [[@grauerOptionTradeClassification2022]]. Reverse tick test originates from [[@leeInferringTradeDirection1991]].
+- **data set:** “In this paper, we investigate the applicability and accuracy of trade direction algorithms to Nasdaq data.” ([Ellis et al., 2000, p. 530](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=3&annotation=5QZKXMFZ))
+- **results:** 💸 they use out-of-sample testing, similar to how it is done in machine learning
+- **results:** 💸“There is also an improvement, but to a lesser extent, for trades outside the quote: from a 64.8% success rate under the LR procedure to 65.8% under the alternative procedure. This improvement translates to an overall success rate of 81.87% for our candidate algorithm, compared to 81.05% for the LR algorithm.” ([Ellis et al., 2000, p. 540](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=13&annotation=9TI52E9M)) “We have documented the success of various trade classification algorithms on a sample of Nasdaq data. Overall, we find that extant trade classification algo? rithms perform adequately in sorting buy and sell trades, with approximately 81% of all trades correctly classified by LR's (1991) algorithm.” ([Ellis et al., 2000, p. 550](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=23&annotation=LJTZVDBY))
+- “Specifically, the only difference between the tick and the EMO rules is that the latter uses the quote rule for at-the-quote trades. Consequently, the EMO method outperforms the tick rule only for those trades. Similarly, the LR and EMO methods treat at-the-quote and at-midspread trades exactly the same, but the LR approach applies the quote rule to all other trades.” ([[@savickasInferringDirectionOption2003]], p. 891)
+- **Effective spread:** “The tick rule severely underestimates effective spread due to its low classification success. The LR and EMO methods take their respective places on the continuum between the quote and the tick rules.” ([[@savickasInferringDirectionOption2003]], 2003, p. 901)
+- **Methodology:** They perform logistic regression to determine that e. g. , trade size, firm size etc. determines the probability of correct classification most
+- **Effective spreads:** “However, the results in the previous sections indicate that the correct classification rate of the EMO technique is lower than that of the quote and the LR methods. Thus, the EMO method, like all the other approaches, must be used with care. It combines spread underestimation of the tick method with the overestimation of the quote method in such proportions as to yield spread estimates that happen to be close to the actual values.” ([[@savickasInferringDirectionOption2003]], 2003, p. 897)
+- **Effective spreads:** “A more substantial improvement arises when our algorithm is used for calculating effective spreads. In particular, we find that using the LR algorithm significantly overstates the size of the effective spread in the Nasdaq market.2 Using the correct buy/sell indicator from the Nasdaq audit data, we calculate an average effective spread of 1.34%, whereas using the LR classifications results in an effective spread of 1.96%.” ([Ellis et al., 2000, p. 531](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=4&annotation=9VPBNHNN))
+- **Limitations:** “If the second trade of the day takes place at the same price as the first one, both trades cannot be classified by the tick rule. The LR and EMO rules also lose some trades since they are combinations of the tick and the quote rules.” (Savickas and Wilson, 2003, p. 886) -> Wouldn't this be filled by the prev. trade that is different, even if it is from long ago?
+- <mark style="background: #FFB86CA6;">(for a short discussion see [[@carrionTradeSigningFast2020]])</mark>
+
+**Notation:**
+Turn it into simple formula, instead of lengthy algorithm
 ![[emo-algo.png]]
 
-- combination of quote rule and tick rule. Use tick rule to classify all trades except trades at hte ask and bid at which points the quote rule is applied. A trade is classified as  abuy (sell) if it is executed at the ask (bid).
-- turns the principle of LR up-side-down: apply the tick rule to all trades except those at the best bid and ask.
-- classify trades by the quote rule first and then tick rule
-- Based on the observation that trades inside the quotes are poorly classified. Proposed algorithm can improve
-- They perform logistic regression to determin that e. g. , trade size, firm size etc. determines the proablity of correct classification most
-- cite from [[@ellisAccuracyTradeClassification2000]]
+Similar to LR algorithm in  [[@carrionTradeSigningFast2020]]:
 
-The tick rule can be exchanged for the reverse tick rule, as previously studied in [[@grauerOptionTradeClassification2022]].
+The tick rule (TICK) relies solely on trade prices for classifying trades and does not use any quote data. To classify trades, the tick rule compares the current trade price to the price of the preceding trade. A trade is classified as a buy if the trade price is higher than the preceding trade price (uptick). Likewise, a trade is classified as a sell if the trade price is lower than the preceding trade price (downtick). If the preceding trade price is the same, then the tick rule looks back to the last different price to classify the trade. Likewise, a trade is classified as a sell if it occurs on a zero-downtick. Formally denoting the trade price of security $i$ at time $t$ as $P_{i, t}$ and $\Delta P_{i, t}$ as the price change between two successive trades and the assigned trade direction at time $t$ as Trade, we have:
+If $\Delta P_{i, t}>0$, Trade $_{i, t}=$ Buy,
+If $\Delta P_{i, t}<0$, Trade ${i, t}=$ Sell,
+If $\Delta P_{i, t}=0$, Trade $_{i, t}=$ Trade $_{i, t-1}$.
+The LR algorithm is based on a combination of the tick rule and the quote rule. Using the quote rule, a trade is classified as a buy if the price is above the midpoint of the quoted bid and ask and as a sell if the price is below the midpoint. Denoting the midpoint of the quoted spread by $m_{i, t}$, the predicted trade direction as per the quote rule is as follows:
+$$
+\begin{aligned}
+& \text { If } P_{i, t}>m_{i, t}, \text { Trade }_{i, t}=\text { Buy, } \\
+& \text { If } P_{i, t}<m_{i, t} \text { Trade }_{i, t}=\text { Sell. }
+\end{aligned}
+$$
+

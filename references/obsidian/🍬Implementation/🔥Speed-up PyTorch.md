@@ -78,14 +78,14 @@ This summary is derived from [Data Movement Is All You Need: A Case Study on Op
 
 ## Timing PyTorch
 - https://pytorch.org/tutorials/recipes/recipes/benchmark.html
-![[benchmarking-util-pytorch.png]]
+
 
 ## Model
 - See various implementation tricks used here: https://github.com/microsoft/DeepSpeed-MII/tree/main/examples/benchmark/txt2img
 
 
 Data parallelism or model parallelism:
-![[forms-of-parallelism.png]]
+
 
 ## Data Loader
 - Use pinned memory in data loader: https://discuss.pytorch.org/t/when-to-set-pin-memory-to-true/19723/20 and https://developer.nvidia.com/blog/how-optimize-data-transfers-cuda-cc/

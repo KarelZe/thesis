@@ -1,7 +1,7 @@
 *title:* Quantifying Attention Flow in Transformers
 *authors:* Samira Abnar, Willem Zuidema
 *year:* 2020
-*tags:* #attention #multiheaded-attention #attentention-visualization #transformer
+*tags:* #attention #multiheaded-attention #attention-visualization #transformer
 *status:* #📦 
 *related:*
 - [[@cheferTransformerInterpretabilityAttention2021]] (use rollout as a benchmark)

@@ -2,7 +2,7 @@
 title: Random Forests
 authors: Leo Breiman
 year: 2001
-tags :  #bagging #boosting #rf #supervised-learning #bootstrap
+tags :  #bagging #boosting #random-forest #supervised-learning #bootstrap
 status : #📦 
 related: 
 - [[@hastietrevorElementsStatisticalLearning2009]]

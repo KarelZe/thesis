@@ -1,7 +1,7 @@
 *title:* Designing Machine Learning Systems
 *authors:* Chip Huyen
 *year:* 
-*tags:* #feature-enginering #target-leakage #evaluation #robustness #pretraining 
+*tags:* #feature-enginering #target-leakage #evaluation #robustness #pre-training 
 *status:* #📦 
 *related:* [[@banachewiczKaggleBookData2022]]
 *code:*

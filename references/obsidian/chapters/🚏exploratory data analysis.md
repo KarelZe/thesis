@@ -1,5 +1,8 @@
 - insert stats from `2.0-mb-data_preprocessing_loading_splitting.ipynb`
 
+- for analysis on CBOE data set see [[@easleyOptionVolumeStock1998]]. Could adapt their analysis of the trade times etc. for my own sample.
+
+
 - compare against [[@coxExploratoryDataAnalysis2017]]
 - explain why we look just into the training set
 
@@ -29,6 +32,14 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 - exploratory data analysis has been first introduced / coined by Tuckey. Found in [[@kuhnFeatureEngineeringSelection2020]]
 - Cite [[@rubinInferenceMissingData1976]] for different patterns in missing data.
 - on missingness see [[@kuhnFeatureEngineeringSelection2020]]
-- ![[visualization-of-missingness.png]]
+
 
 - Investigate skewness and outliers. See e. g., https://scientistcafe.com/ids/resolve-skewness.html and https://scientistcafe.com/ids/outliers.html.
+
+
+“First, the percentage of trades going off at the midpoint of the spread is far lower in CBOE trades than in NYSE trades. Vijh offers the explanation that the market design of the CBOE—a competitive dealer system—might be the cause of this phenomenon as marketmakers offer their lowest quotes, and hence are not willing to bargain on transactions prices. An alternative explanation is that if informed trading occurs on the CBOE, and, if it is harder to detect given the multiplicity of dealers, then marketmakers protect themselves by trading at quoted prices more often” ([Easley et al., 1998, p. 454](zotero://select/library/items/593W67XA)) ([pdf](zotero://open-pdf/library/items/ZBEQIUNK?page=24&annotation=APMBYNEV))
+
+“A second observation from Table II is that, over time, the percentage of trades executed at the spread midpoint shows a strong downward trend. This should make trade data more easily classifiable using quote data alone. Also, although studies of NYSE transactions report a roughly even split between buys and sells, it is clear that trades on the CBOE are increasingly buys. Hence, options are actively bought, rather than sold. This strengthens the argument against using transactions prices in studies of option marketstock market interactions, as these prices are more likely to be at the ask than at the bid and, hence, would bias upward the implied stock price.” ([Easley et al., 1998, p. 454](zotero://select/library/items/593W67XA)) ([pdf](zotero://open-pdf/library/items/ZBEQIUNK?page=24&annotation=2LW9T8MQ))
+
+“Trading hours on the CBOE begin at 8:30 a.m. and end at 3:00 p.m., resulting in 78 5-minute intervals during each trading day.22 The option volume series reveal a distinct U-shaped intraday pattern. Both put and call option trading reach a peak about 45 minutes after the opening. The peak volume is almost 2 percent of daily traded volume for calls and about 2.75 percent of daily volume for puts. The volume falls to less than 0.5 percent of the daily volume by noon. It rises again in the afternoon and, although the level of the afternoon peak is not as high as the morning one for puts, it is marginally higher than the morning peak for calls. Trading volume then quickly falls off toward the close. These volume patterns have two interesting implications. First, because early morning and late afternoon are the periods of high volume, such periods may include more informed trades as it is easier for informed traders to "hide" in the volume at that time (see Admati and Pfleiderer (1988) and Foster and Viswanathan (1990) for discussion of such behavior). Second, because peak option volume lags peak stock volume (which occurs at the opening) by about 45 minutes, the multiple regression results of our study must take this into account.” (Easley et al., 1998, p. 455)
+

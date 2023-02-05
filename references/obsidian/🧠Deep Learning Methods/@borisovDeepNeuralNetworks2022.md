@@ -2,7 +2,7 @@
 title: Deep Neural Networks and Tabular Data: A Survey
 authors: Vadim Borisov, Tobias Leemann, Kathrin Seßler, Johannes Haug, Martin Pawelczyk, Gjergji Kasneci
 year: 2022
-*tags:* #deep-learning #gradient_boosting #semi-supervised
+*tags:* #deep-learning #gbm #semi-supervised
 *status:* #📥
 *related:* 
 *code:* 

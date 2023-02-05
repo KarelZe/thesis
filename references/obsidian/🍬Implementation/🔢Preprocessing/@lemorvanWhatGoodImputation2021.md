@@ -1,7 +1,7 @@
 *title:* What’s a good imputation to predict with missing values?
 *authors:* Marine Le Morvan, Julie Josse, Erwan Scornet, Gael Varoquaux
 *year:* 2020
-*tags:* #imputation #gbm #gbdt #bayes-optimal #missing-value #regression 
+*tags:* #imputation #gbm #bayes-optimal #missing-value #regression 
 *status:* #📦 
 *related:*
 - [[@rubinInferenceMissingData1976]] (the classification is used in the paper)

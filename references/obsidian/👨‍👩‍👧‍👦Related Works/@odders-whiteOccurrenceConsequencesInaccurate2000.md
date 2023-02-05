@@ -1,7 +1,7 @@
 *title:* On the Occurrence and Consequences of Inaccurate Trade Classification
 *authors:* Elizabeth R Odders-White
 *year:* 1999
-*tags:* #classical-rules #lr #result-evaluation #evaluation
+*tags:* #lr #result-evaluation #evaluation
 *status:* #📦 
 *related:*
 - [[@leeInferringTradeDirection1991]] ()

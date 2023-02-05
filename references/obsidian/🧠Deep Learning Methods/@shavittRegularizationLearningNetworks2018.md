@@ -2,7 +2,7 @@
 *authors:* Ira Shavitt, Eran Segal
 *year:* 2017
 *tags:* 
-*status:* #📦 #tabular-data #regularization #gbm #neural_network 
+*status:* #📦 #tabular #regularization #gbm #neural_network 
 *related:*
 - [[@heBagTricksImage2018]]
 

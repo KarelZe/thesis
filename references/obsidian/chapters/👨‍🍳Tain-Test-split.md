@@ -36,7 +36,7 @@ A classical train test split is advantegous for a number of reasons:
 **Moving window:**
 - Why no moving window. Reason about computational complexity.
 **Evaluate similarity of train, test and validation set:**
-- Perform [[adversarial_validation]] or https://medium.com/mlearning-ai/adversarial-validation-battling-overfitting-334372b950ba. More of a practioner's approach than a scientific approach though. 
+- Perform adversarial validation or https://medium.com/mlearning-ai/adversarial-validation-battling-overfitting-334372b950ba. More of a practioner's approach than a scientific approach though. 
 - discuss how split is chosen? Try to align with other works.
 - compare distributions of data as part of the data analysis?
 - Think about using a $\chi^2$ test to estimate the similarity between train and test set. Came up with this idea while reading [[@aitkenIntradayAnalysisProbability1995]]. Could help finding features or feature transformations that yield a similar train and test set.

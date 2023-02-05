@@ -2,7 +2,7 @@
 title: Obtaining Calibrated Probabilities from Boosting
 authors: Alexandru Niculescu-Mizil Rich Caruana
 year: 2012
-tags :  #supervised-learning #gbm #decision #gradient_boosting #probabilistic-classification
+tags :  #supervised-learning #gbm #decision #gbm #probabilistic-classification
 status : #📦 
 related: 
 - [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]

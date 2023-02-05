@@ -2,7 +2,7 @@
 title: An Introduction to Statistical Learning
 authors: Gareth James, Daniela Witten, Trevor Hastie, Robert Tibshirani
 year: 2012
-tags :  #supervised-learning #gbm #decision #gradient_boosting 
+tags :  #supervised-learning #gbm #decision #gbm 
 status : #📦 
 related: 
 - [[🎄Tree-based Methods/Gradient Boosting/@friedmanGreedyFunctionApproximation2001]]

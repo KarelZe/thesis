@@ -19,7 +19,7 @@ In chapter [[🧵Positional Embedding]] we reckoned that using only the token em
 
 Like in chapter [[🛌Token Embedding]] the dimension of the embedding $e_{d}$ affects the expressiveness of the network and is a tunable hyerparameter. One major drawback of learned embeddings is, that they contribute to the parameter count of the model through the embedding matrix or increased layer capacity of subsequent layers. 
 
-To this end, embeddings are non-exclusive to Transformer-based architectures, and can be used in other deep learning-based approaches, and even classical machine learning models, like [[🐈gradient-boosting]]. Covering these combinations is outside the scope of this work. We refer the reader to [[@gorishniyEmbeddingsNumericalFeatures2022]] for an in-depth comparison. Next, our focus is on two concrete examples of Transformers for tabular data.
+To this end, embeddings are non-exclusive to Transformer-based architectures, and can be used in other deep learning-based approaches, and even classical machine learning models, like [[🐈Gradient Boosting]]. Covering these combinations is outside the scope of this work. We refer the reader to [[@gorishniyEmbeddingsNumericalFeatures2022]] for an in-depth comparison. Next, our focus is on two concrete examples of Transformers for tabular data.
 
 ## Notes
 [[💤Embeddings for tabular data notes]]

@@ -1,7 +1,7 @@
 *title:* Transfer Learning with Deep Tabular Models
 *authors:* Roman Levin, Valeriia Cherepanova, Avi Schwarzschild, Arpit Bansal, C. Bayan Bruss, Tom Goldstein, Andrew Gordon Wilson, Micah Goldblum
 *year:* 2022
-*tags:* #pretraining #semi-supervised #transformer #tabular-data #transfer-learning
+*tags:* #pre-training #semi-supervised #transformer #tabular #transfer-learning
 *status:* #📦 
 *related:*
 - [[@huangTabTransformerTabularData2020]]

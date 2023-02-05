@@ -1,3 +1,4 @@
+Tags: #trade-classification #trade-size-rule
 
 Motivated by the diminishing performance of the classical algorithms (such as the previously introduced tick test and quote rule) for option trades, where the trade size matches the bid or ask size, [[@grauerOptionTradeClassification2022]] propose to 
 Due to the restrictions on the trade size, this rule needs to be combined with other rules.

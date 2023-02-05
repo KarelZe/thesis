@@ -2,7 +2,7 @@
 *title:** Tabular Data: Deep Learning is Not All You Need
 *authors:** Ravid Shwartz-Ziv, Amitai Armon
 *year:** 2021
-*tags:* #deep-learning #gradient_boosting #supervised-learning #gbm 
+*tags:* #deep-learning #gbm #supervised-learning #gbm 
 *status:* #📥
 *related:* 
 - [[@borisovDeepNeuralNetworks2022]]

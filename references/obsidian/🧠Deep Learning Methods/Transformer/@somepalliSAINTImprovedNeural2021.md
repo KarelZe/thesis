@@ -1,7 +1,7 @@
 *title:* Saint: Improved Neural Networks for Tabular Data Via Row Attention and Contrastive Pre-Training
 *authors:* Gowthami Somepalli, Micah Goldblum, Avi Schwarzschild, C. Bayan Bruss, Tom Goldstein
 *year:* 2021
-*tags:* #supervised-learning #semi-supervised #deep-learning #tabular-data #supervised-learning #transformer #attention
+*tags:* #supervised-learning #semi-supervised #deep-learning #tabular #supervised-learning #transformer #attention
 *status:* #📦 
 *related:*
 - [[@arikTabNetAttentiveInterpretable2020]] (other transformer)

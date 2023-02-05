@@ -6,9 +6,94 @@
       {
         "id": "9d9a45cd3aa297af",
         "type": "tabs",
+        "dimension": 59.46242457487658,
         "children": [
           {
+            "id": "106d0f5f21abda1b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/🔢LR algorithm notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "931fd82100d5ac94",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🍬Implementation/🔥Speed-up PyTorch.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "811fa247fd14f7e5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "❓Questions.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "a3ff0ccf58116bde",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/🏅Results.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f35a250acbe1a2dc",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "graph",
+              "state": {},
+              "pinned": true
+            }
+          },
+          {
             "id": "9d2370f6be1b0498",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/🔢EMO rule notes.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "c4910e11fb86d3ce",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "chapters/👪Related Work.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "b26ed1356679f086",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -20,47 +105,24 @@
             }
           },
           {
-            "id": "6589e1a5ad3ea35c",
+            "id": "72df4f4857043b8e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🔢Depth rule.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d1c4a41bddb11c9e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🔢CLNV method.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "aa74e6e2d33e949d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/🔢Hybrid rules notes.md",
+                "file": "🔗Classical rules/@grauerOptionTradeClassification2022.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       },
       {
         "id": "4dadd3fc5e6f2baa",
         "type": "tabs",
+        "dimension": 40.53757542512342,
         "children": [
           {
             "id": "9d844892f8391483",
@@ -117,9 +179,9 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "spars",
+                "query": "s",
                 "matchingCase": false,
-                "explainSearch": false,
+                "explainSearch": true,
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
@@ -146,7 +208,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/🔢Hybrid rules notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +224,7 @@
             "state": {
               "type": "tag",
               "state": {
-                "sortOrder": "frequency",
+                "sortOrder": "alphabetical",
                 "useHierarchy": false
               }
             }
@@ -173,9 +234,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "notes/🔢Hybrid rules notes.md"
-              }
+              "state": {}
             }
           },
           {
@@ -187,11 +246,11 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 438.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -204,17 +263,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "aa74e6e2d33e949d",
+  "active": "f35a250acbe1a2dc",
   "lastOpenFiles": [
-    "notes/🔢CLNV method notes.md",
-    "👨‍👩‍👧‍👦Related Works/@chakrabartyTradeClassificationAlgorithms2007.md",
-    "chapters/🏅Robustness.md",
-    "🔗Classical rules/@chakrabartyEvaluatingTradeClassification2015 1.md",
-    "notes/🔢Tick test notes.md",
-    "chapters/🔢CLNV method.md",
-    "notes/🔢Depth rule notes.md",
-    "notes/🔢Tradesize rule notes.md",
-    "notes/🔢EMO rule notes.md",
-    "notes/🔢Quote rule notes.md"
+    "notes/🔢LR algorithm notes.md",
+    "broken links output.md",
+    "notes/🔢Hybrid rules notes.md",
+    "chapters/🏅Results.md",
+    "🍬Implementation/🔥Speed-up PyTorch.md",
+    "❓Questions.md",
+    "👨‍👩‍👧‍👦Related Works/@jurkatisInferringTradeDirections2022.md",
+    "🍬Implementation/🧪Feature Engineering/@jurkatisInferringTradeDirections2022.md",
+    "🔗Classical rules/@savickasInferringDirectionOption2003.md",
+    "🍬Implementation/🔢Preprocessing/@lemorvanWhatGoodImputation2021.md"
   ]
 }

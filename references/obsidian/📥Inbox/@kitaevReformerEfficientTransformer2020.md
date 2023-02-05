@@ -1,7 +1,7 @@
 *title:* Reformer: The Efficient Transformer
 *authors:* Nikita Kitaev, Łukasz Kaiser, Anselm Levskaya
 *year:* 2020
-*tags:* #transformer #self-attention #multi-headed-attention #efficinece
+*tags:* #transformer #self-attention #multiheaded-attention #efficinece
 *status:* #📦 
 *related:*
 *code:*

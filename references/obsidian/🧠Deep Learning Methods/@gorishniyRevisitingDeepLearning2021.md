@@ -2,7 +2,7 @@
 title: Revisiting Deep Learning Models for Tabular Data
 authors: Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, Artem Babenko
 year: 2020
-*tags:* #deep-learning #gradient_boosting #semi-supervised #transformer #tabtransformer #sota
+*tags:* #deep-learning #gbm #semi-supervised #transformer #tabtransformer #sota
 *status:* #📦 
 *related:* 
 - [[@borisovDeepNeuralNetworks2022]]
