@@ -2,7 +2,7 @@
 title: Demand-Based Option Pricing
 authors: Nicolae Gârleanu, Lasse Heje Pedersen, Allen M. Poteshman
 year: 2009
-tags : #trade-classification #option-trade-classification #lr
+tags : #trade-classification  #lr
 status : #📦 
 related:
 - [[@grauerOptionTradeClassification2022]]

@@ -1,6 +1,6 @@
 {
   "collapse-filter": false,
-  "search": "#trade-classification",
+  "search": "",
   "showTags": true,
   "showAttachments": false,
   "hideUnresolved": false,
@@ -17,6 +17,6 @@
   "repelStrength": 10,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 0.7514342322277722,
+  "scale": 1.476986098068692,
   "close": false
 }

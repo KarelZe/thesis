@@ -32,7 +32,7 @@ Yet, embedding and contextualizing of only the categorical inputs remains imperf
 In a small experimental setup, [[@somepalliSAINTImprovedNeural2021]] (p. 8) address this concern for the TabTransformer by also embedding numerical inputs, which leads to a lift in AUC by 2.34 % merely through embedding. Their observation integrates with a wider strand of literature that suggests, that models can profit from numerical embeddings, as we derived in chapter [[💤Embeddings For Tabular Data]]. To dwell on this idea, we introduce the [[🤖FTTransformer]] next.
 
 **Notes on TabTransformer:**
-[[TabTransformer notes]]
+[[🤖TabTransformer notes]]
 
 
 [^1:] Additional embeddings may be created. Similar to special tokens in the vocabulary, like the $\texttt{[UNK]}$ token for handing out-of-vocabulary items, an additional category can be reserved for unseen categories. Similarly, [[@huangTabTransformerTabularData2020]] use a separate embedding for missing categories.

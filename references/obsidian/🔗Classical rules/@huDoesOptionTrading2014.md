@@ -1,7 +1,7 @@
 *title:* Does Option Trading Convey Stock Price Information?
 *authors:* Jianfeng Hu
 *year:* 2013
-*tags:* #trade-classification #option-trade-classification #application 
+*tags:* #trade-classification  #application 
 *status:* #📦 
 *related:*
 - [[@muravyevOrderFlowExpected2016]]

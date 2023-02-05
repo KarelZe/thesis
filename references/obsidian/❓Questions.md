@@ -1,10 +1,14 @@
 ## Open
-- I'm currently struggling to obtain cluster resources with gpus through SLURM or Jupyter. Some nodes are down and my jobs seem have low priority. 
-- I tried to feature engineer the largest dataset (incl. quotes from all exchanges) but ran into out-of-memory errors even on the largest cluster instances and with careful garbage collection. I'll no longer use date features, due to the missing economical foundations and marginal performance improvements (see https://wandb.ai/fbv/thesis/runs/2xvaz9dl). Thus, I'd stick to the 3 smaller ones (classical, yours, yours + option features). Did you study the feature set for the upcoming paper? 
-- Regarding the theoretical background, what can I assume to be common knowledge regarding ML e. g., back propagation, feed-forward network, or bias?
-- Ask for CBOE.
+
+- Progress slowed down lately. Currently, I have written roughly 20 pages (14 Transformer, 2 related work + other). However, I plan to revise some chapters / rewrite them from scratch, as the why remains unclear for the Transformers and some paragraphs are hard to understand.
+- Ask about scope of related work. Currently, trade classification in option markets (i) and trade classification with machine learning (ii). Already spent two days improving the chapters, but still not satisfied.
+- Ask for CBOE for unlabelled data. Poses a major risk as I'm not sure regarding performance / training times etc. 
 
 ## Closed
+- I'm currently struggling to obtain cluster resources with gpus through SLURM or Jupyter. Some nodes are down and my jobs seem have low priority. 
+- Regarding the theoretical background, what can I assume to be common knowledge regarding ML e. g., back propagation, feed-forward network, or bias?
+- I tried to feature engineer the largest dataset (incl. quotes from all exchanges) but ran into out-of-memory errors even on the largest cluster instances and with careful garbage collection. I'll no longer use date features, due to the missing economical foundations and marginal performance improvements (see https://wandb.ai/fbv/thesis/runs/2xvaz9dl). Thus, I'd stick to the 3 smaller ones (classical, yours, yours + option features). Did you study the feature set for the upcoming paper? -> It's ok. Just consider the remaining feature sets. Feature set definition is now ok.
+- Regarding the theoretical background, what can I assume to be common knowledge regarding ML e. g., back propagation, feed-forward network, or bias? -> Everything should be understandable with basic ml knowledge. Intuition should be clear.
 - Ask what the `day_vol` feature is. Found no meta data for it. -> It's the daily volume per option series. 
 - Discuss correlated features in feature importance calculation. -> Open. I Still need to find a solution.
 - Ask for feedback regarding the toc. Indicate where I deviate from my initial expose (i. e., swap TabNet for FTTransformer due to slow training and no implementation of Rosenthal's rule due to low importance. Added ablation study, simulation, and list of algorithms). -> ok, but might be to fine-grained. Use bold text instead of chapters.

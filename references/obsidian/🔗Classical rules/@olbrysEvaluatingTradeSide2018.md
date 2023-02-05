@@ -2,7 +2,7 @@
 title: Evaluating Trade Side Classification Algorithms Using Intraday Data from the Warsaw Stock Exchange
 authors: Joanna Olbrys, Michał Mursztyn
 year: 2017
-tags : #trade-classification #lr #CLVN #emo 
+tags : #trade-classification #lr #CLNV #emo 
 status : #📦 
 related:
 - [[@hasbrouckTradesQuotesInventories1988]]
