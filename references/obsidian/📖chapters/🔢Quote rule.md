@@ -1,6 +1,6 @@
 The quote rule compares the trade price against the corresponding quotes at the time of the trade. <mark style="background: #FFB86CA6;">(Intuition?)</mark> If the trade price $P_{i,t}$ is above the midpoint of the bid-ask spread, denoted by $m_{i,t}$, the trade is classified as a buy and if it is below the midpoint, as a sell ([[@harrisDayEndTransactionPrice1989]] p.41). Thus, the classification rule, is formally given by:
 $$
-\tag{10}
+%\tag{10}
   \begin{equation}
     \text{Trade}_{i,t}=
     \begin{cases}

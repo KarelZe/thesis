@@ -7,9 +7,9 @@
   "bibtexFile": "",
   "citationTemplates": {
     "bare": "\\citep{#id}",
-    "surrounded": "\\autocite[#pre][#post]{#id}",
-    "pre": "\\autocite[#pre]{#id}",
-    "post": "\\autocite[][#post]{#id}",
+    "surrounded": "\\textcite[#pre][#post]{#id}",
+    "pre": "\\textcite[#pre]{#id}",
+    "post": "\\textcite[][#post]{#id}",
     "paren": "\\citet{#id}"
   }
 }
