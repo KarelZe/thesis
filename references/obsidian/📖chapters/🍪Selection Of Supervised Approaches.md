@@ -21,4 +21,4 @@
 
 
 **Notes:**
-[[🍪Selection of supervised appraoches notes]]
+[[🍪Selection of supervised approaches notes]]

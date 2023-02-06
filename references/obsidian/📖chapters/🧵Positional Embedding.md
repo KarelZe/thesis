@@ -11,7 +11,7 @@ with $0<i \leq d_{\mathrm{e}} / 2$, the maximum sequence length $\ell_{\max}$, w
 ![[positional-encoding.png]]
 <mark style="background: #FFB8EBA6;">(Similar to [[@zhangDiveDeepLearning2021]] (p. 409); check y-labels. I thought that patterns fade for the latter positions in the sequence. See also here: https://www.borealisai.com/research-blogs/tutorial-16-transformers-ii-extensions/)</mark> ^1f2fe5
 
-Using trigonometric functions for the positional embedding is favourable, due to being zero-centred, and resulting in values in the closed range of $[-1,1]$. These properties are long known to promote the convergence of neural networks (cp. [[@lecunEfficientBackProp2012 1]] (p. 8 f) or [[📥Inbox/@ioffeBatchNormalizationAccelerating2015]] (p. 2)). 
+Using trigonometric functions for the positional embedding is favourable, due to being zero-centred, and resulting in values in the closed range of $[-1,1]$. These properties are long known to promote the convergence of neural networks (cp. [[@lecunEfficientBackProp2012 1]] (p. 8 f) or[[@ioffeBatchNormalizationAccelerating2015]] (p. 2)). 
 
 The reason for encoding with both the sine and cosine is more subtle, as either one would suffice for absolute embeddings. [[@vaswaniAttentionAllYou2017]] (p. 6) hypothesize, that besides learning the *absolute position* i. e., fifth place in sequence, providing both sine and cosine also enables the model to attend to *relative positions*, i. e., two places from a given token. The detailed proof is given in  [[@zhangDiveDeepLearning2021]] (p. 410).
 
