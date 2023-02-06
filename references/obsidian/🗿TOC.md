@@ -54,7 +54,7 @@ The following section introduces common rules for signing option trades. We star
 ## Selection of Approaches
 
 ^d8f019
-[[🥠Selection of approaches (supervised)]]
+[[🍪Selection Of Supervised Approaches]]
 
 ## Gradient Boosted Trees  🟢
 
@@ -99,7 +99,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ## Selection of Approaches
 
 ^c77130
-[[🥠Selection of approaches (semi-supervised)]]
+[[🍪Selection Of Semisupervised Approaches]]
 ## Extensions to Gradient Boosted Trees
 [[🐈Extension to Gradient Boosting]]
 
@@ -118,7 +118,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 - describe and reason about applied feature engineering
 - describe and reason about test and training split
 ### ISE Data Set 🟡
-[[🌏ISE dataset]]
+[[🌏Ise dataset]]
 
 ### CBOE Data Set 🟡
 describe if data set is actually used. Write similarily to 

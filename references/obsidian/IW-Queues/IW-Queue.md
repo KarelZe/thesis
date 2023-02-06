@@ -11,8 +11,8 @@ interval: 1
 | [[👨‍🍳Tain-Test-split]]                        |       15 |       |        2 | 2022-12-15 |
 | [[🔢Tradesize Rule]]                            |     17.5 |       |        1 | 1970-01-01 |
 | [[🔢Tick test]]                                 |       20 |       |        1 | 1970-01-01 |
-| [[🥠Selection of approaches (semi-supervised)]] |     22.5 |       |        1 | 1970-01-01 |
-| [[🥠Selection of approaches (supervised)]]      |       25 |       |        1 | 1970-01-01 |
+| [[🍪Selection Of Semisupervised Approaches]] |     22.5 |       |        1 | 1970-01-01 |
+| [[🍪Selection Of Supervised Approaches]]      |       25 |       |        1 | 1970-01-01 |
 | [[🏅Robustness]]                                |     27.5 |       |        1 | 1970-01-01 |
 | [[semi-supervised]]                             |       28 |       |        1 | 1970-01-01 |
 | [[🏅Results of semi-supervised]]                |       30 |       |        1 | 1970-01-01 |
@@ -24,7 +24,7 @@ interval: 1
 | [[💡Tuning of models (semi-supervised)]]        |       41 |       |        1 | 1970-01-01 |
 | [[🔢LR algorithm notes]]                              |     42.5 |       |        1 | 1970-01-01 |
 | [[pre-training]]                                |       45 |       |        1 | 1970-01-01 |
-| [[🌏ISE dataset]]                               |       45 |       |        1 | 1970-01-01 |
+| [[🌏Ise dataset]]                               |       45 |       |        1 | 1970-01-01 |
 | [[💡Training of models (supervised)]]           |       47 |       |        1 | 1970-01-01 |
 | [[👶Introduction]]                              |     47.5 |       |        1 | 1970-01-01 |
 | [[💡Hyperparameter tuning]]                     |       50 |       |        1 | 1970-01-01 |

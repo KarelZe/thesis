@@ -1,1 +1,0 @@
-Bayesian search uses surrogate models and an acquisition function to determine which of the most promising points should be evaluated next. Methods include expected improvement, knowledge gradient, and entropy search.
