@@ -1,0 +1,15 @@
+{
+  "logOutput": false,
+  "copyWhole": true,
+  "inlineDelimiter": "",
+  "mintedListings": false,
+  "citeCommand": "extended",
+  "bibtexFile": "",
+  "citationTemplates": {
+    "bare": "\\citep{#id}",
+    "surrounded": "\\autocite[#pre][#post]{#id}",
+    "pre": "\\autocite[#pre]{#id}",
+    "post": "\\autocite[][#post]{#id}",
+    "paren": "\\citet{#id}"
+  }
+}

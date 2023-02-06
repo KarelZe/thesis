@@ -6,6 +6,138 @@
       {
         "id": "9d9a45cd3aa297af",
         "type": "tabs",
+        "dimension": 36.69491525423729,
+        "children": [
+          {
+            "id": "6a18cf819fe4635b",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🍪Selection of supervised approaches notes.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "4389bbcf0d4c6288",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🔢Quote rule.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "71843775552d92f7",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🔢Tick test.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "10bca5bdd974fb96",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/👪Related Work.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "685385ef7e95018f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🔢Basic rules notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "81dce15f0bc37426",
+        "type": "tabs",
+        "dimension": 32.79661016949152,
+        "children": [
+          {
+            "id": "dcad40aca53e1e87",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🔢Quote rule notes.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "b4412fd962d56c24",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@holdenLiquidityMeasurementProblems2014.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "43ac2ec920b94350",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🔢Tick test notes.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "cc332a8ab14123c2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@savickasInferringDirectionOption2003.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "98f847228f79bc8c",
+        "type": "tabs",
+        "dimension": 30.508474576271187,
         "children": [
           {
             "id": "f35a250acbe1a2dc",
@@ -16,21 +148,8 @@
               "state": {},
               "pinned": true
             }
-          },
-          {
-            "id": "af3519714ff43635",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "chapters/🤖Transformer.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -72,7 +191,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 367.5
+    "width": 399.5110321044922
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -88,7 +207,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "chapters/🤖Transformer.md",
+                "file": "📖chapters/🔢Quote rule.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +235,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "chapters/🤖Transformer.md"
+                "file": "📖chapters/🔢Quote rule.md"
               }
             }
           },
@@ -133,7 +252,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 438.5
+    "width": 438.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -146,17 +266,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "716b7df63052bda1",
+  "active": "4389bbcf0d4c6288",
   "lastOpenFiles": [
-    "notes/🤖Transformer notes.md",
-    "notes/🤖TabTransformer notes.md",
-    "notes/🅰️attention notes.md",
-    "notes/🧵Positional encoding notes.md",
-    "chapters/🥠Selection of approaches (supervised).md",
-    "notes/🔢LR algorithm notes.md",
-    "notes/🔢CLNV method notes.md",
-    "notes/🔢EMO rule notes.md",
-    "chapters/🔢LR algorithm.md",
-    "notes/🔢Quote rule notes.md"
+    "📑notes/🔢Quote rule notes.md",
+    "📖chapters/🔢Quote rule.md",
+    "📥Inbox/@holdenLiquidityMeasurementProblems2014.md",
+    "📥Inbox/@savickasInferringDirectionOption2003.md",
+    "📑notes/🔢Tick test notes.md",
+    "📑notes/🔢Basic rules notes.md",
+    "📖chapters/🔢Tick test.md",
+    "📑notes/🍪Selection of supervised approaches notes.md",
+    "📖chapters/👶Introduction.md",
+    "📖chapters/🔢Basic rules.md"
   ]
 }

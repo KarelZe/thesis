@@ -38,40 +38,23 @@ In summary, machine learning has been applied successfully in the context of tra
 
 \subsubsection{Quote Rule (0.75~p)}\label{sec:quote-rule}
 
-% \begin{algorithm}
+The quote rule compares the trade price against the corresponding quotes at the time of the trade. If the trade price $P_{i,t}$ is above the midpoint of the bid-ask spread, denoted by $m_{i,t}$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][p.41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule is formally given by:
 
-%   % input/ouput names
-%   \SetKwInOut{Input}{Input}
-%   \SetKwInOut{Output}{Output}
-
-%   % caption
-%   % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
-%   \caption{$\operatorname{\mathtt{quote}}$ \label{sec:alg:quote-rule}}
-
-%   \Input{%
-%     $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
-%   }
-%   \Output{%
-%     $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
-%   }
-
-%   \BlankLine % blank line for spacing
-
-%   % start of the pseudocode
-%   $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
-
-%   \uIf{$t_i > m_i$}{%
-%     \Return{$o_i =1$}
-%   }
-%   \uElseIf{$t_i < m_i$}{%
-%     \Return{$o_i =-1$}
-%   }
-%   \uElse{%
-%     \Return
-%   }
-% \end{algorithm}
+\begin{equation}
+    \text{Trade}_{i,t}=
+    \begin{cases}
+      0, & \text{if}\ P_{i, t}>m_{i, t} \\
+      1, & \text{if}\ P_{i, t}<m_{i, t}.  \\
+      %\\\texttt{[NAN]}, & \text{otherwise} %
+    \end{cases}
+\end{equation}
 
 
+By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][p.241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing mid-spread trades based on the subsequent quotes, contemporaneous, or the subsequent transaction. However, the most common approach to overcome this limitation is, to combine the quote rule with other approaches, such as the tick rule, into an ensemble.
+
+The quote rule requires to match \emph{one} bid and ask quotes with each trade based on a timestamp. Due to the finite resolution of the dataset's timestamps and active markets, multiple quote changes can co-occur at the time of the trade, some of which, are actually after the trade. As such, it remains unclear which quote to consider in trade classification, and a \emph{quote timing technique} must be employed. Empirically, \textcite[][p.1{,}765]{holdenLiquidityMeasurementProblems2014} observe, that the most common choice is to use the last quote by order from the time increment (e.g., the second) before the trade.
+
+In contrast to the tick rule, the quote rule requires both trade price and quote data, and is thus less data efficient. The reduced dependence on past transaction prices and the focus on quotes has nonetheless positively impacted classification accuracies in option markets, as the studies of \textcite[][p.886]{savickasInferringDirectionOption2003} and \textcite[][p.3]{grauerOptionTradeClassification2022} reveal. Especially, if trade classification is performed on the NBBO.
 
 
 \subsubsection{Tick Test (0.75~p)}\label{sec:tick-test}
