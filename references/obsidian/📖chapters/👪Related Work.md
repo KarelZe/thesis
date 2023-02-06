@@ -1,7 +1,7 @@
 
 **Trade classification on option data sets** 💸
 
-While classical trade classification algorithms are extensively tested in the stock markets (e.g., [[@chakrabartyTradeClassificationAlgorithms2012]]; [[@odders-whiteOccurrenceConsequencesInaccurate2000]]), few works have examined trade classification in option markets.  (Add [[@easleyOptionVolumeStock1998]] and [[@ellisAccuracyTradeClassification2000]]. They don't compare but apply to options / futures -> put this first 🤯)
+While classical trade classification algorithms are extensively tested in the stock markets (e.g., [[@chakrabartyTradeClassificationAlgorithms2012]]; [[@odders-whiteOccurrenceConsequencesInaccurate2000]]), few works have examined trade classification in option markets.  (Add [[@easleyOptionVolumeStock1998]] and [[@ellisAccuracyTradeClassification2000]] [[@easleyDiscerningInformationTrade2016]]. They don't compare but apply to options / futures -> put this first 🤯)
 
 [[@savickasInferringDirectionOption2003]] (p. 882 f.) are the first to compare the tick rule, quote rule, the Lee and Ready algorithm, and the EMO rule for options traded at the CBOE. The data set spans a period from July 3, 1995 - December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule ($78.98~\%$) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
 

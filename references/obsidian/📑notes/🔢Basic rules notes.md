@@ -1,5 +1,8 @@
 Tags: #trade-classification 
 
+Denote sells with $0$ and buys with $1$.
+
+
 
 **Synonyms**
 1. Broader term is **trade site classification** = assign the side to a to a transaction and differentiate between buyer- and seller-initiated transactions
@@ -31,3 +34,7 @@ Tags: #trade-classification
 (see [[@theissenTestAccuracyLee2000]] for more details)
 - Different views on iniatiting party (i. e. [[@odders-whiteOccurrenceConsequencesInaccurate2000]] vs. [[@chakrabartyTradeClassificationAlgorithms2012]]) (see [[@aktasTradeClassificationAccuracy2014]] for more details)
 - Submitters of market orders are called liquidity demanders, while submitters of limit orders stored stored in the book are liquidity providers.
+
+“the bulk volume classification (BVC) methodology and tick rules. Tick rule approaches use simple movements in trade prices (upticks or downticks) to classify a trade as either a buy or a sell. The 2 This problem is also particularly acute in the new swap trading markets. The Dodd-Frank Wall Street Reform and Consumer Protection Act currently requires reporting of nonblock trades to the Swap Data Repository, but current reporting rules allow a 30-minute delay. So there is no way to determine the correct order of trades. See also Ding, Hanna, and Hendershot (2014) for evidence on how speed differences between proprietary feeds and the consolidated tape complicate knowing current quotes. 3 See Hasbrouck (2013) for an excellent analysis of quote volatility and its implications. 4 These changes also mean that trade information will not be linked with other variables of interest such as trader identity. For example, Lee and Radhakrishnan (2000) and Campbell, Ramdorai, and Schwartz (2008) propose size cutoff rules on trades that they argue identify institutional trading. Even using data from the year 2000, Campbell, Ramdorai, and Schwartz note problems in identification arising from what they suspect was algorithmic trading. With trade sizes now all collapsing to minimum levels, and institutions trading dynamically with limit orders, inferring trader identity from trade size is a daunting task. bulk volume technique, which was first applied in Easley, Lopez de Prado, and O’Hara (2011), aggregates trades over short time or volume intervals and then uses a standardized price change between the beginning and end of the interval to approximate the percentage of buy and sell order flow. Each of these techniques maps observable data into proxies for trading intentions, but how well any of these approaches works in the new high frequency world is unclear.” ([[@easleyDiscerningInformationTrade2016]],, p. 270)
+
+“The BVC approach relies on order flows, not individual orders, and is agnostic about what the underlying information has to be. Its statistical basis is more forgiving with respect to the data difficulties (i.e., time stamp issues, orders out of sequence, massive data bases) characteristic of modern markets. As such, BVC can be a useful addition to the microstructure tool kit.” ([[@easleyDiscerningInformationTrade2016]], p. 271)
