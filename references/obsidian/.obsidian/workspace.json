@@ -75,6 +75,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "chapters/🤖Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,7 +102,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "chapters/🤖Transformer.md"
+              }
             }
           },
           {
@@ -130,7 +133,7 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f35a250acbe1a2dc",
+  "active": "716b7df63052bda1",
   "lastOpenFiles": [
     "📥Inbox/@zouStockMarketPrediction2022 2.md",
     "📥Inbox/@zouStockMarketPrediction2022 1.md",
