@@ -53,7 +53,7 @@ By definition, the quote rule cannot classify trades at the midpoint of the quot
 
 The quote rule requires to match \emph{one} bid and ask quotes with each trade based on a timestamp. Due to the finite resolution of the dataset's timestamps and active markets, multiple quote changes can co-occur at the time of the trade, some of which, are actually after the trade. As such, it remains unclear which quote to consider in trade classification, and a \emph{quote timing technique} must be employed. Empirically, \textcite[][1765]{holdenLiquidityMeasurementProblems2014} observe, that the most common choice is to use the last quote by order from the time increment (e.g., the second) before the trade.
 
-In contrast to the tick rule, the quote rule requires both trade price and quote data, and is thus less data efficient. The reduced dependence on past transaction prices and the focus on quotes has nonetheless positively impacted classification accuracies in option markets, as the studies of \textcite[][p.886]{savickasInferringDirectionOption2003} and \textcite[][3]{grauerOptionTradeClassification2022} reveal. Especially, if trade classification is performed on the NBBO.
+In contrast to the tick rule, the quote rule requires both trade price and quote data, and is thus less data efficient. The reduced dependence on past transaction prices and the focus on quotes has nonetheless positively impacted classification accuracies in option markets, as the studies of \textcite[][886]{savickasInferringDirectionOption2003} and \textcite[][3]{grauerOptionTradeClassification2022} reveal. Especially, if trade classification is performed on the NBBO.
 
 
 \subsubsection{Tick Test (0.75~p)}\label{sec:tick-test}

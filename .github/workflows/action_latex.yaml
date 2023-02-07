@@ -30,7 +30,7 @@ jobs:
       - name: save tmp copy
         run: |
           mkdir ~/tmplatex
-          mv reports/thesis.pdf "~/tmplatex/${{github.event.repository.updated_at}}"-thesis.pdf
+          mv reports/thesis.pdf ~/tmplatex/"${{github.event.repository.updated_at}}"-thesis.pdf
       - name: setup target repo
         uses: actions/checkout@v3
         with:
@@ -45,5 +45,5 @@ jobs:
         run: |
           mv ~/tmplatex/thesis.pdf "${{github.event.repository.updated_at}}"-thesis.pdf
           git add -A
-          git commit -m "Updated thesis at ${{github.event.repository.updated_at}}"
+          git commit -m "Most recent version"
           git push origin main

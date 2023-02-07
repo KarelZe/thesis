@@ -8,7 +8,9 @@
 
 In cases where the tick
 
-Due to being an ensemble of the tick rule and quote rule its maximum success rate 
+Due to being an ensemble of the tick rule and quote rule its the accuracy is bound by the accuracy of its ensemble members.
+
+The CLNV method has not yet seen a wide adaption for classifying option trades.
 
 **Notes:**
 [[🔢CLVN method notes]]
