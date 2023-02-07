@@ -4,6 +4,7 @@
 
 Be particularly careful if you’re working with time series data, since random splits of the data can easily cause leakage and overfitting — see Wang and Ruf [2022] for more on this. For a broader discussion of data leakage, see [Cawley and Talbot, 2010] and [Kaufman et al., 2012] (from [[@lonesHowAvoidMachine2022]])
 
+authors use a true out-of-sample test set to test their hypothesis. April for training and May to June for testing. Also, they test their hypothesis on a second data set. [[@chakrabartyTradeClassificationAlgorithms2007]] (p. 3809)
 
 **How:**
 We perform a split into three disjoint sets.

@@ -1,9 +1,10 @@
+---
 name: Build LaTeX document
 on:
   push:
     paths:
-    - 'reports/**'
-  workflow_dispatch:
+      - reports/**
+  workflow_dispatch: null
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -26,3 +27,23 @@ jobs:
           files: |
             reports/expose.pdf
             reports/thesis.pdf
+      - name: save tmp copy
+        run: |
+          mkdir ~/tmplatex
+          mv reports/thesis.pdf ~/tmplatex/thesis.pdf
+      - name: setup target repo
+        uses: actions/checkout@v3
+        with:
+          repository: KarelZe/thesis2video
+          ref: main
+          token: ${{secrets.API_TOKEN_GITHUB}}
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "action@markusbilz.com"
+      - name: Move file and push
+        run: |
+          mv ~/tmplatex/thesis.pdf ${{github.event.repository.pushed_at}}-thesis.pdf
+          git add -A
+          git commit -m "Version @ ${{github.event.repository.pushed_at}}"
+          git push origin main

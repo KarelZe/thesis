@@ -1,3 +1,4 @@
+- “Although extant algorithms are adequate to the basic job of sorting trades, our work suggests that a refinement to the extant methods of classifying trades will do even better.” (Ellis et al., 2000, p. 539) -> nice word "extant methods"
 - Limit to view, yet theoretically promising techniques as derived in [[#^d8f019]]
 - "The validity of many economic studies hinges on the ability to acurately classify trades as buyer or seller-initiated." (found in [[@odders-whiteOccurrenceConsequencesInaccurate2000]])
 - trade site classification matters for several reasons, market liquidity measures, short sells, study of bid-ask-spreads.
