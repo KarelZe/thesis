@@ -48,7 +48,7 @@ The following section introduces common rules for signing option trades. We star
 ### Ellis-Michaely-O’Hara Rule
 [[🔢EMO rule]]
 ### Chakrabarty-Li-Nguyen-Van-Ness Method
-[[🔢CLNV method]]
+[[🔢CLVN method]]
 
 # 🧠 Supervised Approaches
 ## Selection of Approaches

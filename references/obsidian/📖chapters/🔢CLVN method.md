@@ -5,5 +5,10 @@
 - Use the problems of the single tick test to motivate extended rules like EMO / LR?
 - What lead to a fine-grained  fragmentation?
 
+
+In cases where the tick
+
+Due to being an ensemble of the tick rule and quote rule its maximum success rate 
+
 **Notes:**
-[[🔢CLNV method notes]]
+[[🔢CLVN method notes]]

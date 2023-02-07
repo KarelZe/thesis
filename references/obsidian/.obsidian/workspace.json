@@ -29,7 +29,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🔢CLNV method.md",
+                "file": "📖chapters/🔢CLVN method.md",
                 "mode": "source",
                 "source": false
               },
@@ -87,7 +87,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🔢CLNV method notes.md",
+                "file": "📑notes/🔢CLVN method notes.md",
                 "mode": "source",
                 "source": false
               },
@@ -170,7 +170,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🔢CLNV method notes.md",
+                "file": "📖chapters/🔢CLVN method.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -198,7 +198,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🔢CLNV method notes.md"
+                "file": "📖chapters/🔢CLVN method.md"
               }
             }
           },
@@ -229,17 +229,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "52eb36f53bd4ee73",
+  "active": "0ed95dc2f275a975",
   "lastOpenFiles": [
+    "📑notes/🔢CLVN method notes.md",
+    "📖chapters/🔢CLVN method.md",
     "📑notes/🔢EMO rule notes.md",
-    "📖chapters/🔢CLNV method.md",
     "📑notes/🔢Tradesize rule notes.md",
     "🍿Paper 2 movie.md",
     "📖chapters/🤖Transformer.md",
     "📖chapters/🔢Quote rule.md",
     "📖chapters/🔢Depth rule.md",
     "📑notes/🔢Depth rule notes.md",
-    "📖chapters/🔢Tradesize Rule.md",
-    "📥Inbox/@holdenLiquidityMeasurementProblems2014.md"
+    "📖chapters/🔢Tradesize Rule.md"
   ]
 }

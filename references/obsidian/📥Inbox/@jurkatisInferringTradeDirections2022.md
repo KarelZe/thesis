@@ -1,7 +1,7 @@
 *title:* Inferring trade directions in fast markets
 *authors:* Simon Jurkatis
 *year:* 2022
-*tags:* #lr #CLNV #result-evaluation #trade-classification 
+*tags:* #lr #CLVN #result-evaluation #trade-classification 
 *stXatus:* #📦 
 - [[@chakrabartyTradeClassificationAlgorithms2012]]
 - [[@leeInferringTradeDirection1991]]
