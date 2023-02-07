@@ -8,9 +8,11 @@
 
 In cases where the tick
 
-Due to being an ensemble of the tick rule and quote rule its the accuracy is bound by the accuracy of its ensemble members.
+The CLVN method is a extension to the [[🔢EMO rule]] proposed in ([[@chakrabartyTradeClassificationAlgorithms2012]] 3809).
 
-The CLNV method has not yet seen a wide adaption for classifying option trades.
+Due to being an (mixed?) ensemble of the tick rule and quote rule, the accuracy is bound by the accuracy of its ensemble members. 
+
+The CLVN method has not yet been widely adapted for classifying option trades. Part of this 
 
 **Notes:**
 [[🔢CLVN method notes]]

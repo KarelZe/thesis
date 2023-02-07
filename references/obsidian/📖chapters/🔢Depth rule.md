@@ -1,6 +1,6 @@
 As the chapter [[🔢Tick test]] unveils, the tick rule yields significantly lower success rates than the quote rule. For midspread trades, that can otherwise not be classified by the advantageous [[🔢Quote rule]], ([[@grauerOptionTradeClassification2022]] p.14) propose the *depth rule*.
 
-The depth rule infers the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity on one trade side, trades are classified as a buy for a larger ask size and sell for a higher bid size ([[@grauerOptionTradeClassification2022]] p. 14).
+The depth rule infers the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity on one trade side, trades are classified as a buy for a larger ask size and sell for a higher bid size ([[@grauerOptionTradeClassification2022]] 14).
 
 Let $\tilde{A}_{i,t}$ denote the quoted size of the ask and $\tilde{B}_{i,t}$ the size of the bid. The depth rule is formally given by: 
 
