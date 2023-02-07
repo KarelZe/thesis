@@ -45,5 +45,5 @@ jobs:
         run: |
           mv ~/tmplatex/thesis.pdf ${{github.event.repository.updated_at}}-thesis.pdf
           git add -A
-          git commit -m "Version @" -m "${{github.event.repository.updated_at}}"
+          git commit -m "Version @ ${{github.event.repository.updated_at}}"
           git push origin main
