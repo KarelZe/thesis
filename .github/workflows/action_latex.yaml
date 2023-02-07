@@ -33,7 +33,7 @@ jobs:
       - name: Push drafts to another repo
         uses: cpina/github-action-push-to-another-repository@ssh-deploy-key
         env:
-          SSH_DEPLOY_KEY: ${{secrets.THESIS_2_VIDEO}}
+          API_TOKEN_GITHUB: ${{secrets.THESIS_2_VIDEO}}
         with:
           source-directory: output/
           destination-github-username: 'KarelZe'
