@@ -49,7 +49,7 @@ The quote rule compares the trade price against the corresponding quotes at the 
   \end{cases}
 \end{equation}
 
-By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][p.241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing mid-spread trades based on the subsequent quotes, contemporaneous, or the subsequent transaction. However, the most common approach to overcome this limitation is, to combine the quote rule with other approaches, such as the tick rule, into an ensemble.
+By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing mid-spread trades based on the subsequent quotes, contemporaneous, or the subsequent transaction. However, the most common approach to overcome this limitation is, to combine the quote rule with other approaches, such as the tick rule, into an ensemble.
 
 The quote rule requires to match \emph{one} bid and ask quotes with each trade based on a timestamp. Due to the finite resolution of the dataset's timestamps and active markets, multiple quote changes can co-occur at the time of the trade, some of which, are actually after the trade. As such, it remains unclear which quote to consider in trade classification, and a \emph{quote timing technique} must be employed. Empirically, \textcite[][p.1{,}765]{holdenLiquidityMeasurementProblems2014} observe, that the most common choice is to use the last quote by order from the time increment (e.g., the second) before the trade.
 
