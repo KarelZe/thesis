@@ -4,7 +4,7 @@
 
 \section{Related Work (3~p)}\label{sec:related-work}
 
-\textbf{Trade Classification in Option Markets}\emoji{input-numbers}
+\textbf{Trade Classification in Option Markets}
 
 While classical trade classification algorithms are extensively tested in the stock markets (e.g., \textcite{chakrabartyTradeClassificationAlgorithms2012}; \textcite{odders-whiteOccurrenceConsequencesInaccurate2000}), few works have examined trade classification in option markets.
 
@@ -14,7 +14,7 @@ The most exhaustive study is the one of \textcite[\pno~1f.]{grauerOptionTradeCla
 
 The work of \textcite{grauerOptionTradeClassification2022} is important in two ways. First, the data set is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
 
-\textbf{Trade classification using machine learning}\emoji{heavy-dollar-sign}
+\textbf{Trade classification using machine learning}
 
 \textcite[\pno~5]{rosenthalModelingTradeDirection2012} bridges the gap between classical trade classification and machine learning by fitting a logistic regression model on lagged and unlagged predictors inherent to the tick rule, quote rule, and EMO algorithm, as well as a sector-specific and a time-specific term. Instead of using the rule's discretized outcome as a feature, \textcite[\pno~481f.]{rosenthalModelingTradeDirection2012} models the rules through so-called information strength functions. The proximity to the quotes, central to the EMO algorithm, is thus modelled by a proximity function. Likewise, the information strength of the quote and tick rule is estimated as the log return between the trade price and the midpoint or the previous trade price. However, it only improves the accuracy of the EMO algorithm by a marginal $2~\%$ for Nasdaq stocks and $1.1~\%$ for NYSE stocks \textcite[\pno~15]{rosenthalModelingTradeDirection2012}. Our work aims to improve the model by exploring non-linear estimators and minimizing data modelling assumptions.
 

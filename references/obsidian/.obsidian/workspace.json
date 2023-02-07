@@ -96,12 +96,8 @@
             "id": "f6790998234e2d7b",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🤖Transformer.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ],
@@ -110,7 +106,7 @@
       {
         "id": "98f847228f79bc8c",
         "type": "tabs",
-        "dimension": 27.573062261753496,
+        "dimension": 27.573062261753492,
         "children": [
           {
             "id": "f35a250acbe1a2dc",
@@ -180,7 +176,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🤖Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -207,9 +202,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "📖chapters/🤖Transformer.md"
-              }
+              "state": {}
             }
           },
           {
@@ -241,6 +234,8 @@
   },
   "active": "f6790998234e2d7b",
   "lastOpenFiles": [
+    "🍿Paper 2 movie.md",
+    "📖chapters/🤖Transformer.md",
     "📖chapters/🔢Quote rule.md",
     "📖chapters/🔢Depth rule.md",
     "📑notes/🔢Depth rule notes.md",
@@ -248,8 +243,6 @@
     "📖chapters/🔢Tradesize Rule.md",
     "📥Inbox/@holdenLiquidityMeasurementProblems2014.md",
     "📑notes/🔢Tick test notes.md",
-    "📖chapters/🔢Tick test.md",
-    "📑notes/🔢Quote rule notes.md",
-    "📥Inbox/@savickasInferringDirectionOption2003.md"
+    "📖chapters/🔢Tick test.md"
   ]
 }

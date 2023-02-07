@@ -26,3 +26,16 @@ jobs:
           files: |
             reports/expose.pdf
             reports/thesis.pdf
+      - name: Rename file and move
+        run: mv reports/thesis.pdf output/"${{github.event.repository.updated_at}}"-thesis.pdf
+      - name: Push drafts to another repo
+        uses: cpina/github-action-push-to-another-repository@ssh-deploy-key
+        env:
+          SSH_DEPLOY_KEY: ${{secrets.THESIS_2_VIDEO}}
+        with:
+          source-directory: output/
+          destination-github-username: 'KarelZe'
+          destination-repository-name: 'thesis2video'
+          user-email: action@markusbilz.com
+          commit-message: pushed from $GITHUB_REF
+          target-branch: main
