@@ -43,7 +43,7 @@ jobs:
           git config user.email "action@markusbilz.com"
       - name: Move file and push
         run: |
-          mv ~/tmplatex/thesis.pdf ${{github.event.repository.updated_at}}-thesis.pdf
+          mv ~/tmplatex/thesis.pdf ${{github.event.repository.pushed_at}}-thesis.pdf
           git add -A
-          git commit -m "Version @ ${{github.event.repository.updated_at}}"
+          git commit -m "Version @ ${{github.event.repository.pushed_at}}"
           git push origin main
