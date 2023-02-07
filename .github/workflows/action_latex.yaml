@@ -31,9 +31,9 @@ jobs:
           mkdir output
           mv reports/thesis.pdf output/"${{github.event.repository.updated_at}}"-thesis.pdf
       - name: Push drafts to another repo
-        uses: cpina/github-action-push-to-another-repository@ssh-deploy-key
+        uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{secrets.THESIS_2_VIDEO}}
+          API_TOKEN_GITHUB: ${{secrets.API_TOKEN_GITHUB}}
         with:
           source-directory: output/
           destination-github-username: 'KarelZe'

@@ -23,13 +23,13 @@
             }
           },
           {
-            "id": "ffc17ed0156c7f98",
+            "id": "0ed95dc2f275a975",
             "type": "leaf",
             "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🔢Depth rule.md",
+                "file": "📖chapters/🔢CLNV method.md",
                 "mode": "source",
                 "source": false
               },
@@ -69,39 +69,33 @@
         "dimension": 35.66285472257518,
         "children": [
           {
-            "id": "4389bbcf0d4c6288",
+            "id": "67335f41ab43e19f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🔢Quote rule.md",
+                "file": "📑notes/🔢EMO rule notes.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "0ed95dc2f275a975",
+            "id": "52eb36f53bd4ee73",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🔢Tradesize rule notes.md",
+                "file": "📑notes/🔢CLNV method notes.md",
                 "mode": "source",
                 "source": false
-              }
-            }
-          },
-          {
-            "id": "f6790998234e2d7b",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
+              },
+              "pinned": true
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       },
       {
         "id": "98f847228f79bc8c",
@@ -176,6 +170,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "📑notes/🔢CLNV method notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -202,7 +197,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "📑notes/🔢CLNV method notes.md"
+              }
             }
           },
           {
@@ -232,17 +229,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f6790998234e2d7b",
+  "active": "52eb36f53bd4ee73",
   "lastOpenFiles": [
+    "📑notes/🔢EMO rule notes.md",
+    "📖chapters/🔢CLNV method.md",
+    "📑notes/🔢Tradesize rule notes.md",
     "🍿Paper 2 movie.md",
     "📖chapters/🤖Transformer.md",
     "📖chapters/🔢Quote rule.md",
     "📖chapters/🔢Depth rule.md",
     "📑notes/🔢Depth rule notes.md",
-    "📑notes/🔢Tradesize rule notes.md",
     "📖chapters/🔢Tradesize Rule.md",
-    "📥Inbox/@holdenLiquidityMeasurementProblems2014.md",
-    "📑notes/🔢Tick test notes.md",
-    "📖chapters/🔢Tick test.md"
+    "📥Inbox/@holdenLiquidityMeasurementProblems2014.md"
   ]
 }
