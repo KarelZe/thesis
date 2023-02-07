@@ -151,7 +151,7 @@ Like the quote rule, the depth rule has additional dependencies on quote data. D
 \subsubsection{Ellis-Michaely-O'Hara
   Rule (0.75~p)}\label{sec:ellis-michaely-ohara-rule}
 
-\textcite[][536]{ellisAccuracyTradeClassification2000} examine the performance of the previous algorithms for stocks traded at NASDAQ. By analysing miss-classified trades with regard to the proximity of the trade to the quotes, they observe, that the quote rule and by extension of the LR algorithm performs particularly well at classifying trades executed at the bid and ask price but trail the performance of the tick rule for trades inside or outside the spread \textcite[][535--536]{ellisAccuracyTradeClassification2000}. The authors combine these observations into a single rule, known as the EMO algorithm.
+\textcite[][536]{ellisAccuracyTradeClassification2000} examine the performance of the previous algorithms for stocks traded at NASDAQ. By analysing miss-classified trades with regard to the proximity of the trade to the quotes, they observe, that the quote rule and by extension of the LR algorithm performs particularly well at classifying trades executed at the bid and ask price but trail the performance of the tick rule for trades inside or outside the spread \autocite[][535--536]{ellisAccuracyTradeClassification2000}. The authors combine these observations into a single rule, known as the EMO algorithm.
 
 As such, the EMO algorithm \autocite[][540]{ellisAccuracyTradeClassification2000} extends the tick rule by classifying trades at the quotes using the quote rule, and all other trades with the tick test. Formally, the classification rule is given by:
 

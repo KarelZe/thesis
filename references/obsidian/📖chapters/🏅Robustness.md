@@ -26,3 +26,6 @@
 (from [[@carionEndtoEndObjectDetection2020]]; 12)
 
 ![[rules-across-underlyings.png]]
+
+
+“Trade size may also affect the accuracy of trade classification rules. Odders-White (2000) finds that the success rate is higher for large trades than for small trades while Ellis et al. (2000) find that large trades are more frequently misclassified than small trades” (Chakrabarty et al., 2007, p. 3814)

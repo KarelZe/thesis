@@ -12,6 +12,8 @@ The goal of my feature set definition is:
 - Some feature ideas like order imbalance could be adapted from [[@aitkenIntradayAnalysisProbability1995]].
 - [[@blazejewskiLocalNonparametricModel2005]] use more previous trades to a $k$-nn search. Not feasible, as my data set only contains the previous trade and it misses rather often already.
 - [[@ronenMachineLearningTrade2022]] suggest to use models that can handle time series components. This would limit our choices. Thus we use feature engineering to induce a notion of time into our models.
+- 
+“In addition to the location of transaction prices relative to the quotes, we also examine other factors that affect classification accuracy rates. These factors include tick condition, trade size, time between the current trade and the immediate previous trade (trade distance), time between the current trade and the last quote update (quote distance), and the percentage spread. Our results indicate that the probability of correct classification is positively correlated with the percentage spread, trade distance, and quote distance and negatively correlated with trade size” ([[@chakrabartyTradeClassificationAlgorithms2007]] 2007, p. 3808)
 
 <mark style="background: #ABF7F7A6;">TODO: Add to each feature, where it has been used.
 TODO: Point out some interesting features here in the text.
