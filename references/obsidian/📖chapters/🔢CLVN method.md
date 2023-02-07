@@ -12,9 +12,17 @@ The CLVN method is a extension to the [[🔢EMO rule]] proposed in ([[@chakrabar
 
 Due to being an (mixed?) ensemble of the tick rule and quote rule, the accuracy is bound by the accuracy of its ensemble members. 
 
-In the spirit of ([[@leeInferringTradeDirection1991]])
+In the spirit of ([[@leeInferringTradeDirection1991]]) the backward-looking tick rule, can be replaced by the reverse tick test. 
 
-The CLVN method has not yet been documented for signing option trades. Part of this might be due to the stronger reliance on the tick rule, which has lead to a 
+$$
+\begin{aligned}
+& \text { If } P_{i, t}>m_{i, t} \text { Trade }_{i, t}=\text { Buy, } \\
+& \text { If } P_{i, t}<m_{i, t}, \text { Trade }_{i, t}=\text { Sell. } \\
+&
+\end{aligned}
+$$
+
+The CLVN method has not yet been documented for signing option trades. Part of this might be due to the stronger reliance on the tick rule, which has lead to a deteriorating performance in past studies (cp. [[@savickasInferringDirectionOption2003]], [[@grauerOptionTradeClassification2022]]).
 
 **Notes:**
 [[🔢CLVN method notes]]
