@@ -1,9 +1,10 @@
+---
 name: Build LaTeX document
 on:
   push:
     paths:
-    - 'reports/**'
-  workflow_dispatch:
+      - reports/**
+  workflow_dispatch: null
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -26,18 +27,17 @@ jobs:
           files: |
             reports/expose.pdf
             reports/thesis.pdf
-      - name: Rename file and move
-        run: |
-          mkdir output
-          mv reports/thesis.pdf output/"${{github.event.repository.updated_at}}"-thesis.pdf
-      - name: Push drafts to another repo
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{secrets.API_TOKEN_GITHUB}}
+      - name: setup target repo
+        uses: actions/checkout@v3
         with:
-          source-directory: output/
-          destination-github-username: 'KarelZe'
-          destination-repository-name: 'thesis2video'
-          user-email: action@markusbilz.com
-          commit-message: pushed from $GITHUB_REF
-          target-branch: main
+          repository: KarelZe/thesis2video
+          ref: main
+          token: ${{secrets.API_TOKEN_GITHUB}}
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "action@markusbilz.com"
+      - name: Rename file and push
+        run: |
+          mv ~/thesis/reports/thesis.pdf "${{github.event.repository.updated_at}}"-thesis.pdf
+          git push origin master
