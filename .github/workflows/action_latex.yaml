@@ -27,6 +27,10 @@ jobs:
           files: |
             reports/expose.pdf
             reports/thesis.pdf
+      - name: save tmp copy
+        run: |
+          mkdir ~/tmplatex
+          mv reports/thesis.pdf "~/tmplatex/${{github.event.repository.updated_at}}"-thesis.pdf
       - name: setup target repo
         uses: actions/checkout@v3
         with:
@@ -37,7 +41,9 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "action@markusbilz.com"
-      - name: Rename file and push
+      - name: Move file and push
         run: |
-          mv ~/thesis/reports/thesis.pdf "${{github.event.repository.updated_at}}"-thesis.pdf
-          git push origin master
+          mv ~/tmplatex/thesis.pdf "${{github.event.repository.updated_at}}"-thesis.pdf
+          git add -A
+          git commit -m "Updated thesis at ${{github.event.repository.updated_at}}"
+          git push origin main
