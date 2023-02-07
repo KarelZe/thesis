@@ -27,7 +27,7 @@ jobs:
             reports/expose.pdf
             reports/thesis.pdf
       - name: Rename file and move
-        run: mv reports/thesis.pdf output/"${{github.event.repository.updated_at}}"-thesis.pdf
+        run: mkdir output && mv reports/thesis.pdf output/"${{github.event.repository.updated_at}}"-thesis.pdf
       - name: Push drafts to another repo
         uses: cpina/github-action-push-to-another-repository@ssh-deploy-key
         env:
