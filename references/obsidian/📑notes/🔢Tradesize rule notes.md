@@ -3,6 +3,8 @@ Tags: #trade-classification #trade-size-rule
 Motivated by the diminishing performance of the classical algorithms (such as the previously introduced tick test and quote rule) for option trades, where the trade size matches the bid or ask size, [[@grauerOptionTradeClassification2022]] propose to 
 Due to the restrictions on the trade size, this rule needs to be combined with other rules.
 
+In a similar vein, the *trade size rule* reuses the ask and bid quote size to improve the classification performance of trades where the trade size equals the ask quote or bid quote sizes.
+
 **Notes:**
 - proposed on the ISE and CBOE dataset
 - “We hypothesize that this overall weak performance is driven by sophisticated customers often using limit orders instead of market orders when implementing their trading strategy. Potential reasons are that bid-ask spreads are relatively high and option bid and ask quotes are updated infrequently (see Muravyev and Pearson (2020) for a related discussion on liquidity timing). When a customer’s limit order is filled by a market maker, the order is systematically misclassified by quote rules. We identify such limit orders by comparing trade sizes with bid and ask quote sizes and propose a correction to their classification.” (see [[@grauerOptionTradeClassification2022]]) For the idea of sophisticated customers in US law (see [[@fletcherSophisticatedInvestorsFederal1988]])
@@ -16,6 +18,7 @@ Due to the restrictions on the trade size, this rule needs to be combined with o
 - Accuracy of 79.92 % on the 22.3 % of the trades that could classified, not all!. (see [[@grauerOptionTradeClassification2022]])
 - “We find that about 80% of all trades, for which either the bid or ask quote size corresponds to the trade size, are correctly classified using our newly proposed rule. Considering all trades in the matched ISE dataset, our trade size rule improves the performance of the classification algorithms by about 11%.” ([[@grauerOptionTradeClassification2022]], p. 4)
 - “The out-of-sample tests on the CBOE dataset, which we perform as the second step in our research plan, confirm the superior performance of our two new trade classification rules. We find that about 85% of all trades, for which either the bid or ask quote size corresponds to the trade size, are correctly classified using our newly proposed trade size rule.” ([[@grauerOptionTradeClassification2022]], p. 4)
+- trade size matches exactly either the bid or ask quote size, it is likely that the quote came from a customer, the market maker found it attractive and, therefore, decided to fill it completely. (see [[@grauerOptionTradeClassification2022]])
 - Couple with other algorithms if trade sizes and quote sizes do not match / or if the trade size matches both the bid and ask size. For other 
 - Requires other rules, similar to the quote rule, as only a small proportion can be matched.
 - tested on option data / similar data set. Not frequently used in literature.
