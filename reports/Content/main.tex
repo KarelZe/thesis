@@ -85,12 +85,12 @@ Like the quote rule, the depth rule has additional dependencies on quote data. D
 As the chapter \ref{sec:quote-rule} derives, quote-based approaches are generally preferred due to the improved performance relative to the tick test \textcite[][13]{grauerOptionTradeClassification2022} stress that the quote rule, however, systematically misclassifies limit orders and propose an alternative procedure to identify and override predictions for them.
 
 \begin{equation}
-    \text{Trade}_{i,t}=
-    \begin{cases}
-      1, & \text{if}\ \tilde{P}_{i, t} = \tilde{B}_{i, t}\ \text{and}\ \tilde{P}_{i, t} \neq \tilde{A}_{i, t}\\
-      0, & \text{if}\ \tilde{P}_{i, t} = \tilde{A}_{i, t}\ \text{and}\ \tilde{P}_{i, t} \neq \tilde{B}_{i, t}\\
-    \end{cases}
-\label{eq:trade-size-rule}
+  \text{Trade}_{i,t}=
+  \begin{cases}
+    1, & \text{if}\ \tilde{P}_{i, t} = \tilde{B}_{i, t}\ \text{and}\ \tilde{P}_{i, t} \neq \tilde{A}_{i, t} \\
+    0, & \text{if}\ \tilde{P}_{i, t} = \tilde{A}_{i, t}\ \text{and}\ \tilde{P}_{i, t} \neq \tilde{B}_{i, t} \\
+  \end{cases}
+  \label{eq:trade-size-rule}
 \end{equation}
 
 The \emph{trade size rule} in Equation \ref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{P}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the prevailing bid or ask, with a trade size equalling the quoted size \textcite[][13]{grauerOptionTradeClassification2022}. By definition, when both the size of the ask and bid correspond with the trade size, no class can be assigned.
@@ -143,7 +143,7 @@ The \emph{trade size rule} in Equation \ref{eq:trade-size-rule} classifies based
 \subsubsection{Ellis-Michaely-O'Hara
   Rule (0.75~p)}\label{sec:ellis-michaely-ohara-rule}
 
-\textcite[][536]{ellisAccuracyTradeClassification2000} examine the performance of the previous algorithms for stocks traded at NASDAQ. By analysing miss-classified trades with regard to the proximity of the trade to the quotes, they observe, that the quote rule and by extension of the LR algorithm performs particularly well at classifying trades executed at the bid and ask price but trail the performance of the tick rule for trades inside or outside the spread \autocite[][535--536]{ellisAccuracyTradeClassification2000}. The authors combine these observations into a single rule, known as the EMO algorithm.
+\textcite[][536]{ellisAccuracyTradeClassification2000} examine the performance of the previous algorithms for stocks traded at NASDAQ. By analyzing miss-classified trades with regard to the proximity of the trade to the quotes, they observe, that the quote rule and by extension of the LR algorithm performs particularly well at classifying trades executed at the bid and the ask price but trail the performance of the tick rule for trades inside or outside the spread \autocite[][535--536]{ellisAccuracyTradeClassification2000}. The authors combine these observations into a single rule, known as the EMO algorithm.
 
 As such, the EMO algorithm \autocite[][540]{ellisAccuracyTradeClassification2000} extends the tick rule by classifying trades at the quotes using the quote rule, and all other trades with the tick test. Formally, the classification rule is given by:
 
@@ -162,6 +162,23 @@ Equation \ref{eq:emo-rule} embeds both the quote and tick rule. As trades off th
 \subsubsection{Chakrabarty-Li-Nguyen-Van-Ness
   Method (0.75~p)}\label{sec:chakarabarty-li-nguyen-van-ness-method}
 
+Like the previous two algorithms, the CLVN method \autocite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the EMO rule by a fragmented treatment of trades inside the quotes, which are notoriously hard to classify. \textcite[][3809]{chakrabartyTradeClassificationAlgorithms2012} segment the spread into ten equal-width bins and classify trades around the midpoint (4th - 7th decile) by the tick rule and trades close to the quotes EMO rule trades outside the quotes are categorized by the tick rule.
+\begin{equation}
+  \text{Trade}_{i,t}=
+  \begin{cases}
+    1,                     & \text{if}\ P_{i, t} \in \left(\frac{3}{10} B_{i,t} + \frac{7}{10} A_{i,t}, A_{i, t}\right] \\
+    0,                     & \text{if}\ P_{i, t} \in \left[ B_{i,t}, \frac{7}{10} B_{i,t} + \frac{3}{10} A_{i,t}\right) \\
+    \operatorname{tick}(), & \text{else}.                                                                                
+  \end{cases}
+  \label{eq:clvn-rule}
+\end{equation}
+
+The algorithm, as summarized in Equation \ref{eq:clvn-rule}, is derived from a performance comparison of the tick rule / EMO rule against the quote rule / LR algorithm on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the 1st to 3rd deciles are classified by the quote rule. Counted from the bid, the first decile starts at $B_{i,t}$ and  $B_{i,t} + \frac{3}{10}(A_{i,t} - B_{i,t}) = \frac{7}{10} B_{i,t} + \frac{3}{10} A_{i,t}$ marks the beginning of the 3rd decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical CLVN method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be replaced by the reverse tick test.
+
+
+\textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the decision, which of the base rules is applied, is inferred from \emph{static} cut-off points at the decile boundaries of the spread -- including the midspread and the quotes -- current classification rules may not realize their full potential. A obvious question is, if classifiers, \emph{learned} on price and quote data, can adapt to the data and thereby improve over traditional trade classification rules.
+
+The trend towards sophisticated, hybrid rules, sometimes combining as many as four base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) \emph{ensembles} found in machine learning and expresses the need for better classifiers. In the subsequent section, we provide an overview of state-of-the-art machine learning approaches for classification. We start by framing trade classification as a supervised learning problem.
 \newpage
 \section{Supervised Approaches (12~p)}\label{sec:supervised-approaches}
 

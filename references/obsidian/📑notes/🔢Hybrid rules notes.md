@@ -1,5 +1,21 @@
 Tags: #trade-classification 
 
+Long form:
+$$
+  \begin{equation}
+
+    \text{Trade}_{i,t}=
+    \begin{cases}
+      \operatorname{tick}(), & \text{if}\ P_{i, t} \in \left(A_{i, t}, \infty\right) \\
+      1, & \text{if}\ P_{i, t} \in \left[\frac{3}{10} B_{i,t} + \frac{7}{10} A_{i,t}, A_{i, t}\right] \\
+      \operatorname{tick}(), & \text{if}\ P_{i, t} \in \left(\frac{7}{10} B_{i,t} + \frac{3}{10} A_{i,t}, \frac{3}{10} B_{i,t} + \frac{7}{10} A_{i,t}\right) \\
+      0, & \text{if} P_{i, t} \in \left[ B_{i,t}, \frac{7}{10} B_{i,t} + \frac{3}{10} A_{i,t}\right] \\
+	  \operatorname{tick}(), & \text{if} \ P_{i, t} \in \left(-\infty, B_{i, t}\right) \\
+    \end{cases}
+  \end{equation}
+$$
+
+
 - Why is there a need for hybrid classification rules? What are the problems of the tick and quote rule?
 - The previous trade classification rules are applicable to certain trades or come with their own drawbacks e. g., they perform poorly for a greater distance to quotes. To mitigate the disadvantages, rules are combined to hybrids through ensembeling. In certain cases through stacking.
 - “Sophisticated algorithms combine quote and tick rule: trades at the midpoint are always classified by the tick rule and trades at best bid or best ask by the quote rule. The three most common algorithms differ in the choice of how to split up the remaining trades between quote and tick rule, as illustrated in [[#^3d69f3]]” ([[@poppeSensitivityVPINChoice2016]]; p. 9)
