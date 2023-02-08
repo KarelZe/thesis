@@ -33,7 +33,7 @@ The following section introduces common rules for signing option trades. We star
 [[🔢Depth rule]]
 
 ### Trade Size Rule
-[[🔢Tradesize Rule]]
+[[🔢Trade Size Rule]]
 ## Hybrid Rules
 
 ^a043d0
@@ -48,7 +48,7 @@ The following section introduces common rules for signing option trades. We star
 ### Ellis-Michaely-O’Hara Rule
 [[🔢EMO rule]]
 ### Chakrabarty-Li-Nguyen-Van-Ness Method
-[[🔢CLVN method]]
+[[🔢CLNV method]]
 
 # 🧠 Supervised Approaches
 ## Selection of Approaches

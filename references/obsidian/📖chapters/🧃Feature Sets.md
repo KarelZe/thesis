@@ -13,6 +13,10 @@ The goal of my feature set definition is:
 - [[@blazejewskiLocalNonparametricModel2005]] use more previous trades to a $k$-nn search. Not feasible, as my data set only contains the previous trade and it misses rather often already.
 - [[@ronenMachineLearningTrade2022]] suggest to use models that can handle time series components. This would limit our choices. Thus we use feature engineering to induce a notion of time into our models.
 
+“In addition to the location of transaction prices relative to the quotes, we also examine other factors that affect classification accuracy rates. These factors include tick condition, trade size, time between the current trade and the immediate previous trade (trade distance), time between the current trade and the last quote update (quote distance), and the percentage spread. Our results indicate that the probability of correct classification is positively correlated with the percentage spread, trade distance, and quote distance and negatively correlated with trade size” ([[@chakrabartyTradeClassificationAlgorithms2007]] 2007, p. 3808)
+
+For their analysis they also apply the log, but do not state why: “Eq. (2) is the probit model and Eq. (1) is the trading cost equation. Yi is effective spread, Xi is a vector of variables that includes the log of market capitalization, the log of trade size, the inverse of price, and the number of market makers.” ([[@chakrabartyTradeClassificationAlgorithms2007]], p. 3817)
+
 <mark style="background: #ABF7F7A6;">TODO: Add to each feature, where it has been used.
 TODO: Point out some interesting features here in the text.
 TODO: We are less concerned about providing redundant data to the model, as trees do not base their splitting process on correlation. Also, with neural nets being a universal function approximator.

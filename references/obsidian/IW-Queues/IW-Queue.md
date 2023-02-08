@@ -9,7 +9,7 @@ interval: 1
 | [[🎄Decison_trees]]                             |       10 |       |        2 | 2022-12-15 |
 | [[🤖Transformer]]                               |     12.5 |       |        2 | 2022-12-15 |
 | [[👨‍🍳Tain-Test-split]]                        |       15 |       |        2 | 2022-12-15 |
-| [[🔢Tradesize Rule]]                            |     17.5 |       |        1 | 1970-01-01 |
+| [[🔢Trade Size Rule]]                            |     17.5 |       |        1 | 1970-01-01 |
 | [[🔢Tick test]]                                 |       20 |       |        1 | 1970-01-01 |
 | [[🍪Selection Of Semisupervised Approaches]] |     22.5 |       |        1 | 1970-01-01 |
 | [[🍪Selection Of Supervised Approaches]]      |       25 |       |        1 | 1970-01-01 |
@@ -41,6 +41,6 @@ interval: 1
 | [[🤖Pre-training of Transformers]]              |       85 |       |        1 | 1970-01-01 |
 | [[🧓Discussion]]                                |     87.5 |       |        1 | 1970-01-01 |
 | [[🔢Depth rule]]                                |       90 |       |        1 | 1970-01-01 |
-| [[🔢CLVN method]]                               |       95 |       |        1 | 1970-01-01 |
+| [[🔢CLNV method]]                               |       95 |       |        1 | 1970-01-01 |
 | [[🔢Basic rules]]                               |     97.5 |       |        1 | 1970-01-01 |
 | [[🐈Gradient Boosting]]                         |        5 |       |        8 | 2023-02-07 |

@@ -1,3 +1,5 @@
+<mark style="background: #BBFABBA6;">Ellis, Michaely and O’Hara (2000) study the accuracy of the quote, tick and Lee and Ready methods using NASDAQ data that contain 313 stocks traded between September 27, 1996, and September 29, 1997.</mark>
+
 ([[@ellisAccuracyTradeClassification2000]] 536) examine the performance of the previous algorithms for stocks traded at NASDAQ. By analysing miss-classified trades with regard to the proximity of the trade to the quotes, they observe, that the [[🔢Quote rule]] and by extension of the [[🔢LR algorithm]] performs particularly well at classifying trades executed at the bid and ask price but trail the performance of the tick rule for trades inside or outside the spread ([[@ellisAccuracyTradeClassification2000]] 535-536). The authors combine these observations into a single rule, known as the EMO algorithm.
 
 As such, the EMO algorithm ([[@ellisAccuracyTradeClassification2000]] 540) extends the tick rule by classifying trades at the quotes using the quote rule, and all other trades with the tick test. Formally, the classification rule is given by:

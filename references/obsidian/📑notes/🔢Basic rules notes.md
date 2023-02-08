@@ -2,6 +2,7 @@ Tags: #trade-classification
 
 Denote sells with $0$ and buys with $1$.
 
+“The trade indicator is a binary variable stating whether the buyer or seller of an asset has initiated the trade by submitting a market order or an immediately executed limit order.” (Frömmel et al., 2021, p. 4)
 
 
 **Synonyms**
