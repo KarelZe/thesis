@@ -16,6 +16,13 @@ Tags: #trade-classification #CLVN
 - Use clear formula 🟰
 ![[clnv-method-visualization.png]]
 (image copied from [[@chakrabartyTradeClassificationAlgorithms2007]])
+
+From the algorithm it remains unclear what is the upper boundary of the third quartile. I decided to to classify it with the tick rule similar to algorithm in [[@jurkatisInferringTradeDirections2022]] and the assumption that intverals go like $[0, \frac{1}{10}), [\frac{1}{10}, \frac{2}{10})...$ 
+
+![[pseudocode-of-algorithms.png]]
+(found in [[@jurkatisInferringTradeDirections2022]]). Overly complex description but helpful for implementation?
+
+
 - **word explanation:** “The CLNV algorithm assigns the trade initiator to the buying (selling) side if the transaction price is equal to the ask (bid) or up to 30% of the spread below (above) the ask (bid). For all trades above (below) the ask (bid) or within a 40% range of the spread around the mid-point, the tick-test is used. The classification algorithms in pseudo code are summarized in Table A2 in the Appendi” ([[@jurkatisInferringTradeDirections2022]], 2022, p. 7)
 - **dataset:** “The evidence for the success of our algorithm is based on INET data. While INET handles the largest share of NASDAQ stocks, we also verify the success rate of our algorithm using data from the ArcaEx, the second largest venue for NASDAQ stocks. We obtain one week’s complete order book and trade data (September 12–16, 2005) for a sample of the top 100 (by trading volume) NASDAQ stocks traded on the ArcaEx, and compare the accuracy rates of the various trade classification algorithms with the actual numbers of buy/sell-initiated trades.” ([Chakrabarty et al., 2007, p. 3815](zotero://select/library/items/XSSKWNCJ)) ([pdf](zotero://open-pdf/library/items/VQAL9PWT?page=10&annotation=XIFPZQET))
 - results: “The overall success rates of the LR, EMO, and tick rules are 74.42%, 75.80%, and 75.40%, respectively.  ([Chakrabarty et al., 2007, p. 3821](zotero://select/library/items/XSSKWNCJ)) ([pdf](zotero://open-pdf/library/items/VQAL9PWT?page=16&annotation=I4A9CCUN))
