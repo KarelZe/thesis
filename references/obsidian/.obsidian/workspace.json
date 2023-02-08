@@ -23,13 +23,13 @@
             }
           },
           {
-            "id": "e6804cd1e32b4e2b",
+            "id": "72ab3cecfcdd5f5d",
             "type": "leaf",
             "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🔢CLNV method.md",
+                "file": "📖chapters/🔢Trade Size Rule.md",
                 "mode": "source",
                 "source": false
               },
@@ -42,7 +42,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🏅Robustness.md",
+                "file": "📖chapters/🏅Feature importance measure.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,8 +69,37 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "cc23e8ea8f01e2e7",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🔢Trade Size Rule Notes.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "45c897f094afeb47",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🔢Tick test notes.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "98f847228f79bc8c",
@@ -116,7 +145,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "s",
+                "query": "bettering",
                 "matchingCase": false,
                 "explainSearch": true,
                 "collapseAll": false,
@@ -145,7 +174,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🔢CLNV method.md",
+                "file": "📖chapters/🔢Trade Size Rule.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -173,7 +202,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🔢CLNV method.md"
+                "file": "📖chapters/🔢Trade Size Rule.md"
               }
             }
           },
@@ -204,17 +233,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "e6804cd1e32b4e2b",
+  "active": "72ab3cecfcdd5f5d",
   "lastOpenFiles": [
-    "📑notes/🔢CLNV method notes.md",
-    "📖chapters/🔢CLNV method.md",
+    "📑notes/🔢Trade Size Rule Notes.md",
+    "📖chapters/🔢Trade Size Rule.md",
+    "📖chapters/🏅Feature importance measure.md",
+    "📖chapters/👶Introduction.md",
+    "📑notes/🔢Basic rules notes.md",
+    "📖chapters/🔢Basic rules.md",
     "📖chapters/🏅Robustness.md",
-    "📖chapters/🧭Kernel SHAP.md",
     "📑notes/🔢Tick test notes.md",
-    "📖chapters/🔢Tick test.md",
-    "📖chapters/🔢LR algorithm.md",
-    "📑notes/🔢Hybrid rules notes.md",
-    "📖chapters/🔢Hybrid rules.md",
-    "📖chapters/👨‍🍳Tain-Test-split.md"
+    "📑notes/🍪Selection of supervised approaches notes.md",
+    "📖chapters/🔢EMO rule.md"
   ]
 }

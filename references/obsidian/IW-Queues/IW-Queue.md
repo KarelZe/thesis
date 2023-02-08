@@ -9,7 +9,7 @@ interval: 1
 | [[🎄Decison_trees]]                             |       10 |       |        2 | 2022-12-15 |
 | [[🤖Transformer]]                               |     12.5 |       |        2 | 2022-12-15 |
 | [[👨‍🍳Tain-Test-split]]                        |       15 |       |        2 | 2022-12-15 |
-| [[🔢Tradesize Rule]]                            |     17.5 |       |        1 | 1970-01-01 |
+| [[🔢Trade Size Rule]]                            |     17.5 |       |        1 | 1970-01-01 |
 | [[🔢Tick test]]                                 |       20 |       |        1 | 1970-01-01 |
 | [[🍪Selection Of Semisupervised Approaches]] |     22.5 |       |        1 | 1970-01-01 |
 | [[🍪Selection Of Supervised Approaches]]      |       25 |       |        1 | 1970-01-01 |

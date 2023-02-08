@@ -33,7 +33,7 @@ The following section introduces common rules for signing option trades. We star
 [[🔢Depth rule]]
 
 ### Trade Size Rule
-[[🔢Tradesize Rule]]
+[[🔢Trade Size Rule]]
 ## Hybrid Rules
 
 ^a043d0

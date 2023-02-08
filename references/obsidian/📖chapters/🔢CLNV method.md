@@ -1,3 +1,5 @@
+<mark style="background: #D2B3FFA6;">(What is the intuition?)</mark>
+
 Like the previous two algorithms, the CLVN method ([[@chakrabartyTradeClassificationAlgorithms2012]] 3809) is a hybrid of the quote and tick rule and extends the EMO rule by a fragmented treatment of trades inside the quotes, which are notoriously hard to classify. ([[@chakrabartyTradeClassificationAlgorithms2012]] 3809) segment the spread into ten equal-width bins and classify trades around the midpoint (4th - 7th decile) by the tick rule and trades close to the quotes (1st-2nd, 9th-10th decile) by the quote rule. Like in the [[🔢EMO rule]] trades outside the quotes are categorized by the tick rule.
 $$
 tbd

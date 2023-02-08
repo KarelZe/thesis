@@ -78,32 +78,24 @@ Let $\tilde{A}_{i,t}$ denote the quoted size of the ask and $\tilde{B}_{i,t}$ th
 
 As shown in Equation \ref{eq:depth-rule}, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for inferring the trade's aggressor. Due to these restrictive conditions, the depth rule can only sign a small fraction of all trades and is best stacked with others rules.
 
-Like the quote rule, the depth rule has additional dependencies on quote data. Despite being applied to midspread trades only, \textcite[][4]{grauerOptionTradeClassification2022} report an improvement in the overall accuracy $1.2~\%$ for the CBOE data set and by $0.8~\%$ on the ISE sample merely through the depth rule. The rule has not yet been tested in other markets.
-
+Like the quote rule, the depth rule has additional dependencies on quote data. Despite being applied to midpoint trades only, \textcite[][4]{grauerOptionTradeClassification2022} report an improvement in the overall accuracy $1.2~\%$ for the CBOE data set and by $0.8~\%$ on the ISE sample merely through the depth rule. The rule has not yet been tested in other markets.
 
 \subsubsection{Trade Size Rule (0.75~p)}\label{sec:trade-size-rule}
 
+As the chapter \ref{sec:quote-rule} derives, quote-based approaches are generally preferred due to the improved performance relative to the tick test \textcite[][13]{grauerOptionTradeClassification2022} stress that the quote rule, however, systematically misclassifies limit orders and propose an alternative procedure to identify and override predictions for them.
 
+\begin{equation}
+    \text{Trade}_{i,t}=
+    \begin{cases}
+      1, & \text{if}\ \tilde{P}_{i, t} = \tilde{B}_{i, t}\ \text{and}\ \tilde{P}_{i, t} \neq \tilde{A}_{i, t}\\
+      0, & \text{if}\ \tilde{P}_{i, t} = \tilde{A}_{i, t}\ \text{and}\ \tilde{P}_{i, t} \neq \tilde{B}_{i, t}\\
+    \end{cases}
+\label{eq:trade-size-rule}
+\end{equation}
 
-%     $\tilde{t}_i$ trade size at $i$, $\tilde{a}_i$ ask size at $i$, and $\tilde{b}_i$ bid size at $i$.
-%   }
-%   \Output{%
-%     $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
-%   }
+The \emph{trade size rule} in Equation \ref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{P}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the prevailing bid or ask, with a trade size equalling the quoted size \textcite[][13]{grauerOptionTradeClassification2022}. By definition, when both the size of the ask and bid correspond with the trade size, no class can be assigned.
 
-%   \BlankLine % blank line for spacing
-
-%   \uIf{$\tilde{a}_i = \tilde{t}_i$ \And $\tilde{b}_i \neq \tilde{t}_i$}{%
-%     \Return{$o_i =-1$}
-%   }
-%   \uElseIf{$\tilde{b}_i = \tilde{t}_i$ \And $\tilde{a}_i \neq \tilde{t}_i$}{%
-%     \Return{$o_i =1$}
-%   }
-%   \uElse{%
-%     \Return \tcc*{apply secondary rule}
-%   }
-% \end{algorithm}
-
+\textcite[][13]{grauerOptionTradeClassification2022} report an accuracy of $79.92~\%$ for the subset of option trades at the ISE ($22.3~\%$ of all trades) that can be signed using the methodology, which contributes to a performance improvement of $11~\%$ for the entire sample. Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \textcite[][15]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades inside or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces three such hybrid algorithms, that combine the tick and quote rule into more sophisticated algorithms to address the limitations of the former.
 
 \subsection{Hybrid Rules (2.5~p)}\label{sec:hybrid-rules}
 

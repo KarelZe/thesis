@@ -6,6 +6,8 @@ Accuracy has been tested in [[@odders-whiteOccurrenceConsequencesInaccurate2000]
 **Algorithm:** Use a combination of quote and tick rule. Use tick rule to classify trades at midpoint and use the quote rule elsewhere.
 ![[lr-algo.png]]
 
+- “The tick test will only misclassify the second midpoint trade after the arrival of the standing order if it misclassifies the first midpoint trade and the second trade is in the same direction as the first trade (i.e., another buy).” (Lee and Ready, 1991, p. 11)
+
 Precise description from [[@carrionTradeSigningFast2020]] (Similar efforts in [[@jurkatisInferringTradeDirections2022]] or [[@olbrysEvaluatingTradeSide2018]]): 
 The tick rule (TICK) relies solely on trade prices for classifying trades and does not use any quote data. To classify trades, the tick rule compares the current trade price to the price of the preceding trade. A trade is classified as a buy if the trade price is higher than the preceding trade price (uptick). Likewise, a trade is classified as a sell if the trade price is lower than the preceding trade price (downtick). If the preceding trade price is the same, then the tick rule looks back to the last different price to classify the trade. Likewise, a trade is classified as a sell if it occurs on a zero-downtick. Formally denoting the trade price of security $i$ at time $t$ as $P_{i, t}$ and $\Delta P_{i, t}$ as the price change between two successive trades and the assigned trade direction at time $t$ as Trade, we have:
 If $\Delta P_{i, t}>0$, Trade $_{i, t}=$ Buy,
@@ -39,6 +41,16 @@ $$
 
 **Effective spread:** “The quote and the tick rules are the two extremes. The LR and EMO methods take their respective places on the continuum between the quote and the tick rules. The EMO approach uses the quote rule to a lesser extent than does the LR algorithm; therefore, the EMO method exhibits a lower degree of spread overestimation than does the LR method.” ([[@savickasInferringDirectionOption2003]], 2003, p. 897)
 **Effective spread:** “The tick rule severely underestimates effective spread due to its low classification success. The LR and EMO methods take their respective places on the continuum between the quote and the tick rules.” ([[@savickasInferringDirectionOption2003]], 2003, p. 901)
+
+“Additionally, trade direction may not always be unambiguously determined. While LR assume that trades generally occur only when a market buy or sell order arrives, trades that do not involve market orders also can occur, such as when two limit orders are crossed. Although the trade can be classified by the tick test or LR's algorithm, the true direction of the trade is ambiguous. Classifying such trades as buys or sells may lead to erroneous conclusions in empirical studies.” ([[@finucaneDirectTestMethods2000]], 2000, p. 559)
+
+“hen the sample trades are classified by their location relative to the quoted spread, it becomes apparent that the accuracy of the tick test (and LR's algorithm that uses the tick test to classify mid-spread trades) for mid-spread trades is far lower than the 85% predicted by LR's model. T” ([[@finucaneDirectTestMethods2000]], p. 562)
+
+“he worse than expected performance for mid-spread trades can be explained by the relatively high percentage of market order crosses, trades where the market order comprises part of one side of the trade, stopped orders, and trades that occur when quotes change between trades” ([[@finucaneDirectTestMethods2000]], p. 562)
+
+“Contrary to expectations, the performance of the tick test is only marginally worse than LR's algorithm for trades that occur at the quoted bid or ask.” ([[@finucaneDirectTestMethods2000]], p. 562)
+
+“Further? more, LR's algorithm is less than 100% accurate for trades at the bid or ask; both methods incorrectly classify at least 10% of the trades at the bid or ask” ([[@finucaneDirectTestMethods2000]], p. 562)
 
 **Limitations:** 👩‍🚒 “The established methods, most notably the algorithms of Lee and Ready (1991) (LR), Ellis et al. (2000) (EMO), and Chakrabarty et al. (2007) (CLNV), classify trades based on the proximity of the transaction price to the quotes in effect at the time of the trade. This is problematic due to the increased frequency of order submission and cancellation. With several quote changes taking place at the time of the trade, it is not clear which quotes to select for the decision rule of the algorithm.” (Jurkatis, 2022, p. 6)
 **Limitations:** 👩‍🚒 “If the second trade of the day takes place at the same price as the first one, both trades cannot be classified by the tick rule. The LR and EMO rules also lose some trades since they are combinations of the tick and the quote rules.” (Savickas and Wilson, 2003, p. 886) -> Wouldn't this be filled by the prev. trade that is different, even if it is from long ago?
