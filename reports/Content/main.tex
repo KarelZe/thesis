@@ -8,7 +8,7 @@
 
 While classical trade classification algorithms are extensively tested in the stock markets (e.g., \textcite{chakrabartyTradeClassificationAlgorithms2012}; \textcite{odders-whiteOccurrenceConsequencesInaccurate2000}), few works have examined trade classification in option markets.
 
-\textcite[\pno~882f.]{savickasInferringDirectionOption2003} are the first to compare the tick rule, quote rule, the Lee and Ready algorithm and the EMO rule for options traded at the CBOE. The data set spans a period from July 3, 1995 - December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule ($78.98~\%$) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
+\textcite[882--883]{savickasInferringDirectionOption2003} are the first to compare the tick rule, quote rule, the Lee and Ready algorithm and the EMO rule for options traded at the CBOE. The data set spans a period from July 3, 1995 - December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule ($78.98~\%$) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
 
 The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}.  The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the ISE and CBOE classical rules like the popular Lee and Ready algorithm only achieve accuracies of $62.53~\%$ or $62.03~\%$ and are thus significantly smaller than in the stock market. In line with the research of  \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the reported success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The \textit{depth rule} is an alternative to the tick rule for classifying mid spread trades in the Lee and Ready algorithm and EMO rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the \textit{trade size rule}, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between $73~\%$ and $75~\%$ surpassing previous rules by more than $10~\%$, at the cost of data efficiency.
 
@@ -57,11 +57,42 @@ In contrast to the tick rule, the quote rule requires both trade price and quote
 
 \subsubsection{Tick Test (0.75~p)}\label{sec:tick-test}
 
+Based on the rationale that buys increase the trade price and sells lower them, the \emph{tick test} classifies trades by the change in trade price \textcite[][271]{easleyDiscerningInformationTrade2016}. Its first use is documented in \textcites[cp.][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}.
 
+We denote the trade price of the $i$-th security at time $t$ as $P_{i,t}$ and the price change between two successive trades. The tick test is formally defined as
+
+\begin{equation}
+  \text{Trade}_{i,t}=
+  \begin{cases}
+    1,                     & \text{if}\ P_{i, t} > P_{i, t-1} \\
+    0,                     & \text{if}\ P_{i, t} < P_{i, t-1} \\
+    P_{i,t-1} = P_{i,t-2}, & \text{else}.
+  \end{cases}
+  \label{eq:tick-test}
+\end{equation}
+
+
+If the trade price is higher than the previous price (uptick) the trade is classified as a buy. Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price. \autocite[][3]{leeInferringTradeDirection1991}
+
+By this means, the tick rule can sign all trades as long as there is a last distinguishable trade price. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed in \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick, is misclassified as buys by tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks will be erroneously classified as a sell.
+
+A variant of the tick test is the \emph{reverse tick test} as applied in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the trade price of the next, distinguishable trade price. As donated in Equation \ref{eq:tick-test} the trade is classified as seller-initiated, if the next trade is on an uptick or a zero uptick, and classified as buyer-initiated for trades at a downtick or a zero downtick. \autocite[][735--636]{leeInferringTradeDirection1991}.
+
+\begin{equation}
+  \text{Trade}_{i,t}=
+  \begin{cases}
+    1,                     & \text{if}\ P_{i, t} > P_{i, t+1} \\
+    0,                     & \text{if}\ P_{i, t} < P_{i, t+1} \\
+    P_{i,t+1} = P_{i,t+2}, & \text{else}
+  \end{cases}
+  \label{eq:reverse-tick-test}
+\end{equation}
+
+Both the tick test and reverse tick test result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}. In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades recorded at the ISE and CBOE. This result contradicts results in the stock market \textcite[][737]{leeInferringTradeDirection1991}.
 
 \subsubsection{Depth Rule (0.75~p)}\label{sec:depth-rule}
 
-As the chapter tick test unveils, the tick rule yields significantly lower success rates than the quote rule. For midspread trades, that can otherwise not be classified by the advantageous quote rule,\textcite[][14]{grauerOptionTradeClassification2022} propose the \emph{depth rule}.
+As the chapter \ref{sec:quote-rule} unveils, the tick rule yields significantly lower success rates than the quote rule. For midspread trades, that can otherwise not be classified by the advantageous quote rule, \textcite[][14]{grauerOptionTradeClassification2022} propose the \emph{depth rule}.
 
 The depth rule infers the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity on one trade side, trades are classified as a buy for a larger ask size and sell for a higher bid size \textcite[][14]{grauerOptionTradeClassification2022}.
 
@@ -100,45 +131,7 @@ The \emph{trade size rule} in Equation \ref{eq:trade-size-rule} classifies based
 \subsection{Hybrid Rules (2.5~p)}\label{sec:hybrid-rules}
 
 \subsubsection{Lee and Ready Algorithm (1 p)}\label{sec:lee-and-ready-algorithm}
-% '
-% \begin{algorithm}
 
-%   % input/ouput names
-%   \SetKwInOut{Input}{Input}
-%   \SetKwInOut{Output}{Output}
-
-%   % caption
-%   % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
-%   \caption{$\operatorname{\mathtt{lee-ready}}{(t_i, a_i, b_i)}$ \label{sec:alg:lee-ready-algorithm}}
-
-%   \Input{%
-%     $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
-%   }
-%   \Output{%
-%     $o_i \in\{-1,1\}$ trade initiator at $i$. \\
-%   }
-
-%   \BlankLine % blank line for spacing
-
-%   % start of the pseudocode
-%   $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
-
-%   \For{$1, \cdots, I$}{
-%     \uIf{$t_i > m_i$}{
-%       \Return{$o_i = 1$}
-%     }
-%     \uElseIf{$t_i < m_i$}{
-%       \Return{$o_i = -1$}
-%     }
-%     \Else{
-%       \Return{$o_i = \operatorname{\mathtt{tick}}{(t_i, a_i, b_i)}$} \tcc*{see Section \ref{sec:tick-test}.}
-%     }
-%   } % end for i
-%   % TODO: set input and output params
-% \end{algorithm}
-
-% \subsubsection{Reverse Lee and Ready
-%   Algorithm (0.5~p)}\label{sec:reverse-lee-and-ready-algorithm}
 
 \subsubsection{Ellis-Michaely-O'Hara
   Rule (0.75~p)}\label{sec:ellis-michaely-ohara-rule}
@@ -168,7 +161,7 @@ Like the previous two algorithms, the CLVN method \autocite[][3809]{chakrabartyT
   \begin{cases}
     1,                     & \text{if}\ P_{i, t} \in \left(\frac{3}{10} B_{i,t} + \frac{7}{10} A_{i,t}, A_{i, t}\right] \\
     0,                     & \text{if}\ P_{i, t} \in \left[ B_{i,t}, \frac{7}{10} B_{i,t} + \frac{3}{10} A_{i,t}\right) \\
-    \operatorname{tick}(), & \text{else}.                                                                                
+    \operatorname{tick}(), & \text{else}.
   \end{cases}
   \label{eq:clvn-rule}
 \end{equation}
@@ -279,36 +272,6 @@ The trend towards sophisticated, hybrid rules, sometimes combining as many as fo
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
 
 \subsubsection{Attention}\label{sec:attention}
-
-% \begin{equation}
-%   \t{softmax}( \m{A})[t_\mathrm{z}, t_\mathrm{x}] ~:=~ \frac{\exp A[t_\mathrm{z},t_\mathrm{x}]}{ \sum_{t} \exp A[t,t_\mathrm{x}]},
-% \end{equation}
-% \begin{equation}\label{eq:mask}
-%   \text{Mask}[t_\t{z},t_\t{x}] = \left\{{1~~~ \text{for bidirectional attention} 
-%                                  \atop [\![t_\t{z}\!≤\!t_\t{x}]\!]~~ \text{for unidirectional att.}}\right.
-% \end{equation}
-
-% %-------------------------------%
-% \begin{algorithm}[h] % Attention
-% %-------------------------------%
-%   \caption{$\m{\tilde V}\gets$~\texttt{Attention}$(\m{X},\m{Z}|\bmcWqkv,\text{Mask})$}
-%   \label{algo:attention}
-%   \KwIn{$\m{X}\in\mathbb{R}^{d_\t{x}\times\ell_\t{x}}, \m{Z}\in\mathbb{R}^{d_\t{z}\times\ell_\t{z}}$, vector representations of primary and context  sequence.}
-%   \KwOut{$\m{\tilde V}\in\mathbb{R}^{d_\t{out}\times\ell_\t{x}} $, updated representations of tokens in $\m{X}$, folding in information from tokens in $\m{Z}$.}
-%   \KwParam{$\bmcWqkv$ consisting of: 
-%           $\m{W_q}\in\mathbb{R}^{d_\t{attn}\times d_\t{x}}$, $\v{b_q}\in\mathbb{R}^{d_\t{attn}}$
-%            $\m{W_k}\in\mathbb{R}^{d_\t{attn}\times d_\t{z}}$, $\v{b_k}\in\mathbb{R}^{d_\t{attn}}$
-%            $\m{W_v}\in\mathbb{R}^{d_\t{out}\times d_\t{z}}$, ~$\v{b_v}\in\mathbb{R}^{d_\t{out}}$.}
-%   \KwHyper{Mask$\in\!\!\{0,\!1\}^{\ell_\t{z}\times\ell_\t{x}}$} %$\uparrow$\eqref{eq:mask}}
-%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   $\m{Q} \gets \m{W_q} \m{X} + \v{b_q} \v{1}^\intercal$ ~ [\![$\m{Q}\t{uery}\in\mathbb{R}^{d_\t{attn}\times\ell_\t{x}}$]\!] \;
-%   $\m{K} \gets \m{W_k} \m{Z} + \v{b_k} \v{1}^\intercal$ ~ [\![$\m{K}\t{ey}\in\mathbb{R}^{d_\t{attn}\times\ell_\t{z}}$]\!] \;
-%   $\m{V} \gets \m{W_v} \m{Z} + \v{b_v} \v{1}^\intercal$ ~ [\![$\m{V}\t{alue}\in\mathbb{R}^{d_\t{out}\times\ell_\t{z}}$]\!] \;
-%   $\m{S} \gets \m{K}^\intercal \m{Q}$ ~ [\![$\m{S}\t{core}\in\mathbb{R}^{\ell_\t{z}\times\ell_\t{x}}$]\!] \;
-%   $\forall t_\t{z}, t_\t{x},$ if $\neg$Mask$[t_\t{z},t_\t{x}]$ then $S[t_\t{z},t_\t{x}] \gets -\infty  $ \;
-%   \Return $\m{\tilde V} = \m{V}\cdot \t{softmax}\left( \m{S} / \sqrt{d_\t{attn}} \right)$    
-% \end{algorithm}
-
 
 \subsubsection{Position-wise Feed-Forward Networks}\label{sec:position-wise-ffn}
 

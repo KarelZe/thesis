@@ -1,9 +1,6 @@
 #gbm #transformer #supervised-learning #deep-learning 
 
 
-
-
-
 **Why probabilistic classification:**
 - Due to a unsatisfactory research situation, for trade classification (see chapter [[👪Related Work]]) we base
 - Use classification methods (*probabilistic classifier*) that can return probabilities instead of class-only for better analysis. Using probabilistic trade classification rules might have been studied in [[@easleyDiscerningInformationTrade2016]]

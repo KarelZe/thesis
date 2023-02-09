@@ -11,41 +11,6 @@
 	\usepackage[style=bwl-FU,backend=biber,natbib=true,maxcitenames=2]{biblatex}
 	\addbibresource{Content/bibliography.bib}
 
-% --------------------------------- Algorithm ---------------------------------
-\usepackage[linesnumbered, ruled]{algorithm2e}
-
-% change algorithm font size
-\SetAlFnt{\normalsize}
-
-% change algorithm caption style
-\newcommand{\xAlCapSty}[1]{\small\sffamily\bfseries#1}
-\SetAlCapSty{xAlCapSty}
-
-\SetAlCapSkip{1em}
-\SetKwInput{KwParam}{Parameters}
-\SetKwInput{KwHyper}{Hyperparameters}
-
-% comment style (algorithms)
-\newcommand{\xCommentSty}[1]{\ttfamily\textcolor{blue}{#1}}
-\SetCommentSty{xCommentSty}
-
-% change line number style
-\newcommand\mynlfont[1]{\scriptsize\sffamily\textcolor{gray}{#1}}
-\SetNlSty{mynlfont}{}{}
-
- % add the line numbers
-\LinesNumbered
-
-% comments right justified
-\SetSideCommentRight
-
-% don't print semicolon
-\DontPrintSemicolon
-
-% ruled algorithm
-\RestyleAlgo{algoruled}
-
-
 % Format and layout
 	\usepackage[left=3cm,right=3cm,bottom=3cm]{geometry} % Specifies left and right side margins.
 	\usepackage{setspace} % Package that enables modifing the line spacing.
@@ -164,12 +129,6 @@
 	\setcounter{page}{1}\renewcommand{\thepage}{\roman{page}} % Sets the numbering to roman small.
 	\newpage
 	\tableofcontents
-
-% List of Algorithms (comment out if there are no figures in the thesis)
-\newpage
-\listofalgorithms % Inserts the list of algorithms from algorithm package
-\addcontentsline{toc}{section}{List of Algorithms} % Adds the list of figures to the table of contents.
-
 
 % List of Figures (comment out if there are no figures in the thesis)
 	\newpage

@@ -4,101 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "9d9a45cd3aa297af",
-        "type": "tabs",
-        "dimension": 35.10593220338983,
-        "children": [
-          {
-            "id": "6a18cf819fe4635b",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🍪Selection of supervised approaches notes.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "106d26afbe6ac5ca",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🔢EMO rule.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "cfcc451141d62be0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🔢CLNV method.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ],
-        "currentTab": 2
-      },
-      {
         "id": "2785db0e51818bf2",
         "type": "tabs",
-        "dimension": 35.10593220338983,
+        "dimension": 49.568965517241374,
         "children": [
-          {
-            "id": "0b5c7cf912d57d27",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🔢CLNV method notes.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "45c897f094afeb47",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🔢Tick test notes.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "1934968841d72664",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🔢Hybrid rules notes.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
           {
             "id": "94415710fad4ab13",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "🖼️Media/pseudocode-of-algorithms.png"
+                "file": "📖chapters/🔢Tick Test.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -107,7 +25,7 @@
       {
         "id": "98f847228f79bc8c",
         "type": "tabs",
-        "dimension": 29.78813559322034,
+        "dimension": 50.431034482758626,
         "children": [
           {
             "id": "f35a250acbe1a2dc",
@@ -178,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🔢CLNV method.md",
+                "file": "📖chapters/🔢Tick Test.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -206,7 +124,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🔢CLNV method.md"
+                "file": "📖chapters/🔢Tick Test.md"
               }
             }
           },
@@ -237,17 +155,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "cfcc451141d62be0",
+  "active": "94415710fad4ab13",
   "lastOpenFiles": [
-    "📑notes/🔢CLNV method notes.md",
+    "📑notes/🍪Selection of supervised approaches notes.md",
+    "📖chapters/🔢Tick Test.md",
     "📑notes/🔢Tick test notes.md",
     "📑notes/🔢Hybrid rules notes.md",
+    "📑notes/🔢Basic rules notes.md",
+    "📖chapters/🔢Basic rules.md",
+    "📖chapters/🔢Quote Rule.md",
+    "📑notes/🔢LR algorithm notes.md",
     "🖼️Media/pseudocode-of-algorithms.png",
-    "📖chapters/🔢CLNV method.md",
-    "📖chapters/🔢EMO rule.md",
-    "📑notes/🍪Selection of supervised approaches notes.md",
-    "📖chapters/🔢Tick test.md",
-    "📖chapters/🔢Trade Size Rule.md",
-    "📑notes/🔢Trade Size Rule Notes.md"
+    "📖chapters/🔢Hybrid rules.md"
   ]
 }

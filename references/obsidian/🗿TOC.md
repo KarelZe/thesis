@@ -26,11 +26,11 @@ The following section introduces common rules for signing option trades. We star
 
 [[🔢Basic rules]]
 ### Quote Rule
-[[🔢Quote rule]]
+[[🔢Quote Rule]]
 ### Tick Test
-[[🔢Tick test]]
+[[🔢Tick Test]]
 ### Depth Rule 🟢
-[[🔢Depth rule]]
+[[🔢Depth Rule]]
 
 ### Trade Size Rule
 [[🔢Trade Size Rule]]
@@ -46,9 +46,9 @@ The following section introduces common rules for signing option trades. We star
 [[🔢LR algorithm notes]]
 
 ### Ellis-Michaely-O’Hara Rule
-[[🔢EMO rule]]
+[[🔢EMO Rule]]
 ### Chakrabarty-Li-Nguyen-Van-Ness Method
-[[🔢CLNV method]]
+[[🔢CLNV Method]]
 
 # 🧠 Supervised Approaches
 ## Selection of Approaches
