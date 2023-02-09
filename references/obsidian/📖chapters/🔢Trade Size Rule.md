@@ -1,5 +1,5 @@
 
-As the chapter [[🔢Quote rule]] derives, quote-based approaches are generally preferred due to the improved performance relative to the [[🔢Tick test]]. (More general background on the problem?) ([[@grauerOptionTradeClassification2022]] 13) stress that the quote rule, however, systematically misclassifies limit orders and propose an alternative procedure to identify and override predictions for them.
+As the chapter [[🔢Quote Rule]] derives, quote-based approaches are generally preferred due to the improved performance relative to the [[🔢Tick Test]]. (More general background on the problem?) ([[@grauerOptionTradeClassification2022]] 13) stress that the quote rule, however, systematically misclassifies limit orders and propose an alternative procedure to identify and override predictions for them.
 
 $$
 \tag{10}

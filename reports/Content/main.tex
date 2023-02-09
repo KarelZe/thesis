@@ -8,7 +8,7 @@
 
 While classical trade classification algorithms are extensively tested in the stock markets (e.g., \textcite{chakrabartyTradeClassificationAlgorithms2012}; \textcite{odders-whiteOccurrenceConsequencesInaccurate2000}), few works have examined trade classification in option markets.
 
-\textcite[\pno~882f.]{savickasInferringDirectionOption2003} are the first to compare the tick rule, quote rule, the Lee and Ready algorithm and the EMO rule for options traded at the CBOE. The data set spans a period from July 3, 1995 - December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule ($78.98~\%$) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
+\textcite[882--883]{savickasInferringDirectionOption2003} are the first to compare the tick rule, quote rule, the Lee and Ready algorithm and the EMO rule for options traded at the CBOE. The data set spans a period from July 3, 1995 - December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule ($78.98~\%$) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
 
 The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}.  The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the ISE and CBOE classical rules like the popular Lee and Ready algorithm only achieve accuracies of $62.53~\%$ or $62.03~\%$ and are thus significantly smaller than in the stock market. In line with the research of  \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the reported success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The \textit{depth rule} is an alternative to the tick rule for classifying mid spread trades in the Lee and Ready algorithm and EMO rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the \textit{trade size rule}, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between $73~\%$ and $75~\%$ surpassing previous rules by more than $10~\%$, at the cost of data efficiency.
 
@@ -100,45 +100,7 @@ The \emph{trade size rule} in Equation \ref{eq:trade-size-rule} classifies based
 \subsection{Hybrid Rules (2.5~p)}\label{sec:hybrid-rules}
 
 \subsubsection{Lee and Ready Algorithm (1 p)}\label{sec:lee-and-ready-algorithm}
-% '
-% \begin{algorithm}
 
-%   % input/ouput names
-%   \SetKwInOut{Input}{Input}
-%   \SetKwInOut{Output}{Output}
-
-%   % caption
-%   % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
-%   \caption{$\operatorname{\mathtt{lee-ready}}{(t_i, a_i, b_i)}$ \label{sec:alg:lee-ready-algorithm}}
-
-%   \Input{%
-%     $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
-%   }
-%   \Output{%
-%     $o_i \in\{-1,1\}$ trade initiator at $i$. \\
-%   }
-
-%   \BlankLine % blank line for spacing
-
-%   % start of the pseudocode
-%   $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
-
-%   \For{$1, \cdots, I$}{
-%     \uIf{$t_i > m_i$}{
-%       \Return{$o_i = 1$}
-%     }
-%     \uElseIf{$t_i < m_i$}{
-%       \Return{$o_i = -1$}
-%     }
-%     \Else{
-%       \Return{$o_i = \operatorname{\mathtt{tick}}{(t_i, a_i, b_i)}$} \tcc*{see Section \ref{sec:tick-test}.}
-%     }
-%   } % end for i
-%   % TODO: set input and output params
-% \end{algorithm}
-
-% \subsubsection{Reverse Lee and Ready
-%   Algorithm (0.5~p)}\label{sec:reverse-lee-and-ready-algorithm}
 
 \subsubsection{Ellis-Michaely-O'Hara
   Rule (0.75~p)}\label{sec:ellis-michaely-ohara-rule}
@@ -279,36 +241,6 @@ The trend towards sophisticated, hybrid rules, sometimes combining as many as fo
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
 
 \subsubsection{Attention}\label{sec:attention}
-
-% \begin{equation}
-%   \t{softmax}( \m{A})[t_\mathrm{z}, t_\mathrm{x}] ~:=~ \frac{\exp A[t_\mathrm{z},t_\mathrm{x}]}{ \sum_{t} \exp A[t,t_\mathrm{x}]},
-% \end{equation}
-% \begin{equation}\label{eq:mask}
-%   \text{Mask}[t_\t{z},t_\t{x}] = \left\{{1~~~ \text{for bidirectional attention} 
-%                                  \atop [\![t_\t{z}\!≤\!t_\t{x}]\!]~~ \text{for unidirectional att.}}\right.
-% \end{equation}
-
-% %-------------------------------%
-% \begin{algorithm}[h] % Attention
-% %-------------------------------%
-%   \caption{$\m{\tilde V}\gets$~\texttt{Attention}$(\m{X},\m{Z}|\bmcWqkv,\text{Mask})$}
-%   \label{algo:attention}
-%   \KwIn{$\m{X}\in\mathbb{R}^{d_\t{x}\times\ell_\t{x}}, \m{Z}\in\mathbb{R}^{d_\t{z}\times\ell_\t{z}}$, vector representations of primary and context  sequence.}
-%   \KwOut{$\m{\tilde V}\in\mathbb{R}^{d_\t{out}\times\ell_\t{x}} $, updated representations of tokens in $\m{X}$, folding in information from tokens in $\m{Z}$.}
-%   \KwParam{$\bmcWqkv$ consisting of: 
-%           $\m{W_q}\in\mathbb{R}^{d_\t{attn}\times d_\t{x}}$, $\v{b_q}\in\mathbb{R}^{d_\t{attn}}$
-%            $\m{W_k}\in\mathbb{R}^{d_\t{attn}\times d_\t{z}}$, $\v{b_k}\in\mathbb{R}^{d_\t{attn}}$
-%            $\m{W_v}\in\mathbb{R}^{d_\t{out}\times d_\t{z}}$, ~$\v{b_v}\in\mathbb{R}^{d_\t{out}}$.}
-%   \KwHyper{Mask$\in\!\!\{0,\!1\}^{\ell_\t{z}\times\ell_\t{x}}$} %$\uparrow$\eqref{eq:mask}}
-%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   $\m{Q} \gets \m{W_q} \m{X} + \v{b_q} \v{1}^\intercal$ ~ [\![$\m{Q}\t{uery}\in\mathbb{R}^{d_\t{attn}\times\ell_\t{x}}$]\!] \;
-%   $\m{K} \gets \m{W_k} \m{Z} + \v{b_k} \v{1}^\intercal$ ~ [\![$\m{K}\t{ey}\in\mathbb{R}^{d_\t{attn}\times\ell_\t{z}}$]\!] \;
-%   $\m{V} \gets \m{W_v} \m{Z} + \v{b_v} \v{1}^\intercal$ ~ [\![$\m{V}\t{alue}\in\mathbb{R}^{d_\t{out}\times\ell_\t{z}}$]\!] \;
-%   $\m{S} \gets \m{K}^\intercal \m{Q}$ ~ [\![$\m{S}\t{core}\in\mathbb{R}^{\ell_\t{z}\times\ell_\t{x}}$]\!] \;
-%   $\forall t_\t{z}, t_\t{x},$ if $\neg$Mask$[t_\t{z},t_\t{x}]$ then $S[t_\t{z},t_\t{x}] \gets -\infty  $ \;
-%   \Return $\m{\tilde V} = \m{V}\cdot \t{softmax}\left( \m{S} / \sqrt{d_\t{attn}} \right)$    
-% \end{algorithm}
-
 
 \subsubsection{Position-wise Feed-Forward Networks}\label{sec:position-wise-ffn}
 
