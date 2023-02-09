@@ -57,7 +57,38 @@ In contrast to the tick rule, the quote rule requires both trade price and quote
 
 \subsubsection{Tick Test (0.75~p)}\label{sec:tick-test}
 
+Based on the rationale that buys increase the trade price and sells lower them, the \emph{tick test} classifies trades by the change in trade price \textcite[][271]{easleyDiscerningInformationTrade2016}. Its first use is documented in \textcites[cp.][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}.
 
+We denote the trade price of the $i$-th security at time $t$ as $P_{i,t}$ and the price change between two successive trades. The tick test is formally defined as
+
+\begin{equation}
+  \text{Trade}_{i,t}=
+  \begin{cases}
+    1,                     & \text{if}\ P_{i, t} > P_{i, t-1} \\
+    0,                     & \text{if}\ P_{i, t} < P_{i, t-1} \\
+    P_{i,t-1} = P_{i,t-2}, & \text{else}.
+  \end{cases}
+  \label{eq:tick-test}
+\end{equation}
+
+
+If the trade price is higher than the previous price (uptick) the trade is classified as a buy. Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price. \autocite[][3]{leeInferringTradeDirection1991}
+
+By this means, the tick rule can sign all trades as long as there is a last distinguishable trade price. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed in \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick, is misclassified as buys by tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks will be erroneously classified as a sell.
+
+A variant of the tick test is the \emph{reverse tick test} as applied in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the trade price of the next, distinguishable trade price. As donated in Equation \ref{eq:tick-test} the trade is classified as seller-initiated, if the next trade is on an uptick or a zero uptick, and classified as buyer-initiated for trades at a downtick or a zero downtick. \autocite[][735--636]{leeInferringTradeDirection1991}.
+
+\begin{equation}
+  \text{Trade}_{i,t}=
+  \begin{cases}
+    1,                     & \text{if}\ P_{i, t} > P_{i, t+1} \\
+    0,                     & \text{if}\ P_{i, t} < P_{i, t+1} \\
+    P_{i,t+1} = P_{i,t+2}, & \text{else}
+  \end{cases}
+  \label{eq:reverse-tick-test}
+\end{equation}
+
+Both the tick test and reverse tick test result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}. In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades recorded at the ISE and CBOE. This result contradicts results in the stock market \textcite[][737]{leeInferringTradeDirection1991}.
 
 \subsubsection{Depth Rule (0.75~p)}\label{sec:depth-rule}
 
@@ -130,7 +161,7 @@ Like the previous two algorithms, the CLVN method \autocite[][3809]{chakrabartyT
   \begin{cases}
     1,                     & \text{if}\ P_{i, t} \in \left(\frac{3}{10} B_{i,t} + \frac{7}{10} A_{i,t}, A_{i, t}\right] \\
     0,                     & \text{if}\ P_{i, t} \in \left[ B_{i,t}, \frac{7}{10} B_{i,t} + \frac{3}{10} A_{i,t}\right) \\
-    \operatorname{tick}(), & \text{else}.                                                                                
+    \operatorname{tick}(), & \text{else}.
   \end{cases}
   \label{eq:clvn-rule}
 \end{equation}
