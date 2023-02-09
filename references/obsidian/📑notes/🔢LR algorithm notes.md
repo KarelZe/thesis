@@ -1,6 +1,10 @@
 Tags: #trade-classification #lee-ready 
 
+
+
 Accuracy has been tested in [[@odders-whiteOccurrenceConsequencesInaccurate2000]], [[@finucaneDirectTestMethods2000]] and [[@leeInferringInvestorBehavior2000]] on TORQ data set which contains the true label. (see [[@bessembinderIssuesAssessingTrade2003]])
+
+“Additionally, trade direction may not always be unambiguously determined. While LR assume that trades generally occur only when a market buy or sell order arrives, trades that do not involve market orders also can occur, such as when two limit orders are crossed. Although the trade can be classified by the tick test or LR's algorithm, the true direction of the trade is ambiguous. Classifying such trades as buys or sells may lead to erroneous conclusions in empirical studies.” (Finucane, 2000, p. 559)
 
 **Algorithm:** See [[@leeInferringTradeDirection1991]]
 **Algorithm:** Use a combination of quote and tick rule. Use tick rule to classify trades at midpoint and use the quote rule elsewhere.

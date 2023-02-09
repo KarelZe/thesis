@@ -76,7 +76,7 @@ If the trade price is higher than the previous price (uptick) the trade is class
 
 By this means, the tick rule can sign all trades as long as there is a last distinguishable trade price. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed in \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick, is misclassified as buys by tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks will be erroneously classified as a sell.
 
-A variant of the tick test is the \emph{reverse tick test} as applied in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the trade price of the next, distinguishable trade price. As donated in Equation \ref{eq:tick-test} the trade is classified as seller-initiated, if the next trade is on an uptick or a zero uptick, and classified as buyer-initiated for trades at a downtick or a zero downtick. \autocite[][735--636]{leeInferringTradeDirection1991}.
+A variant of the tick test is the \emph{reverse tick test} as applied in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the trade price of the next, distinguishable trade price. As donated in Equation \ref{eq:tick-test} the trade is classified as seller-initiated, if the next trade is on an uptick or a zero uptick, and classified as buyer-initiated for trades at a downtick or a zero downtick \autocite[][735--636]{leeInferringTradeDirection1991}.
 
 \begin{equation}
   \text{Trade}_{i,t}=
@@ -88,7 +88,7 @@ A variant of the tick test is the \emph{reverse tick test} as applied in \textci
   \label{eq:reverse-tick-test}
 \end{equation}
 
-Both the tick test and reverse tick test result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}. In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades recorded at the ISE and CBOE. This result contradicts results in the stock market \textcite[][737]{leeInferringTradeDirection1991}.
+Both the tick test and reverse tick test result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}. In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades recorded at the ISE and CBOE. This result contradicts results in the stock market \textcite[][737]{leeInferringTradeDirection1991}. Lags behind quote based classification.
 
 \subsubsection{Depth Rule (0.75~p)}\label{sec:depth-rule}
 
@@ -131,6 +131,19 @@ The \emph{trade size rule} in Equation \ref{eq:trade-size-rule} classifies based
 \subsection{Hybrid Rules (2.5~p)}\label{sec:hybrid-rules}
 
 \subsubsection{Lee and Ready Algorithm (1 p)}\label{sec:lee-and-ready-algorithm}
+
+The popular \emph{Lee and Ready} algorithm combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs trades according to the quote rule trades. Trades at the midpoint of the spread, which cannot be classified with the quote rule, are classified with the tick rule and quote rule, the LR algorithm can thus be defined as:
+
+\begin{equation}
+  \text{Trade}_{i,t}=
+  \begin{cases}
+    1,                     & \text{if}\ P_{i, t} > m_{i, t} \\
+    0,                     & \text{if}\ P_{i, t} < m_{i, t} \\
+    \operatorname{tick}(), & \text{else}.
+  \end{cases}
+\end{equation}
+
+The strength of the algorithm lies in combining the strong classification accuracies of the quote rule with the universal applicability of the tick test. As it requires both trade and quote data, it is less data-efficient than its parts.
 
 
 \subsubsection{Ellis-Michaely-O'Hara
