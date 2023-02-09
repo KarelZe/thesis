@@ -1,5 +1,21 @@
 Tags: #trade-classification #CLVN 
 
+Long form:
+$$
+  \begin{equation}
+
+    \text{Trade}_{i,t}=
+    \begin{cases}
+      \operatorname{tick}(), & \text{if}\ P_{i, t} \in \left(A_{i, t}, \infty\right) \\
+      1, & \text{if}\ P_{i, t} \in \left[\frac{3}{10} B_{i,t} + \frac{7}{10} A_{i,t}, A_{i, t}\right] \\
+      \operatorname{tick}(), & \text{if}\ P_{i, t} \in \left(\frac{7}{10} B_{i,t} + \frac{3}{10} A_{i,t}, \frac{3}{10} B_{i,t} + \frac{7}{10} A_{i,t}\right) \\
+      0, & \text{if} P_{i, t} \in \left[ B_{i,t}, \frac{7}{10} B_{i,t} + \frac{3}{10} A_{i,t}\right] \\
+	  \operatorname{tick}(), & \text{if} \ P_{i, t} \in \left(-\infty, B_{i, t}\right) \\
+    \end{cases}
+  \end{equation}
+$$
+
+
 - “We compare the accuracy rates of various algorithms in classifying ECN trades. We divide trades according to their price distribution relative to quotes. We expect the classification rules to perform better when trades occur at the ask or bid. When trades receive price improvement, buys and sells will execute at prices inside the quotes. In these instances, not only does the quote rule meet with some challenge, the tick rule will also be more difficult as buys (sells) will more likely occur on downticks (upticks).” (Chakrabarty et al., 2007, p. 3811)
 
 - “We find that ECN trades are difficult to classify as the overall success rates of the LR, EMO, and tick rules are 74.42%, 75.80%, and 75.40%, respectively. Our algorithm modestly outperforms these three, with an overall success rate of 76.52%, but we show that our algorithm substantially outperforms the others for trades inside the quotes. For trades inside 1 Our primary sample is from the INET ECN. We use ArcaEx data to confirm the robustness of our results across another ECN. Table 3 reports results using the ArcaEx data. All other tables use the INET sample. B. Chakrabarty et al. / Journal of Banking & Finance 31 (2007) 3806–3821 380” (Chakrabarty et al., 2007, p. 3807) “the quotes our success rate is 76.32% compared to 71.85% for the LR rule and 71.35% for both the tick and EMO rules. We also find that a significant proportion of trades execute outside the quotes. This phenomenon, called a ‘‘trade-through’’, is prevalent for NASDAQ markets due to the absence of the trade-through rule in our study period.2” (Chakrabarty et al., 2007, p. 3808)

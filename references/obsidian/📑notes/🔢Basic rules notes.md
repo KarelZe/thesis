@@ -5,6 +5,10 @@ Denote sells with $0$ and buys with $1$.
 “The trade indicator is a binary variable stating whether the buyer or seller of an asset has initiated the trade by submitting a market order or an immediately executed limit order.” (Frömmel et al., 2021, p. 4)
 
 
+<mark style="background: #FFB86CA6;">“Methods of inferring trade direction can be classified as: tick tests, which use changes in trade prices; the quote method, which compares trade prices to quotes;” (Finucane, 2000, p. 557)
+</mark>
+
+
 **Synonyms**
 1. Broader term is **trade site classification** = assign the side to a to a transaction and differentiate between buyer- and seller-initiated transactions
 2. It's also sometimes called trade sign classification
