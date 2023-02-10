@@ -1,6 +1,6 @@
 \section{Introduction (2~p)}\label{sec:introduction}
 
-% The authors acknowledge support by the state of Baden-Württemberg through \href{https://www.bwhpc.de/}{bwHPC}.
+The authors acknowledge support by the state of Baden-Württemberg through \href{https://www.bwhpc.de/}{bwHPC}.
 
 \section{Related Work (3~p)}\label{sec:related-work}
 
@@ -8,19 +8,19 @@
 
 While classical trade classification algorithms are extensively tested in the stock markets (e.g., \textcite{chakrabartyTradeClassificationAlgorithms2012}; \textcite{odders-whiteOccurrenceConsequencesInaccurate2000}), few works have examined trade classification in option markets.
 
-\textcite[882--883]{savickasInferringDirectionOption2003} are the first to compare the tick rule, quote rule, the Lee and Ready algorithm and the EMO rule for options traded at the CBOE. The data set spans a period from July 3, 1995 - December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule ($78.98~\%$) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
+\textcite[882--883]{savickasInferringDirectionOption2003} are the first to compare the tick rule, quote rule, the Lee and Ready algorithm and the \gls{EMO} rule for options traded at the \gls{CBOE}. The data set spans a period from July 3, 1995 - December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule (\SI{78.98}{\percent}) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
 
-The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}.  The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the ISE and CBOE classical rules like the popular Lee and Ready algorithm only achieve accuracies of $62.53~\%$ or $62.03~\%$ and are thus significantly smaller than in the stock market. In line with the research of  \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the reported success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The \textit{depth rule} is an alternative to the tick rule for classifying mid spread trades in the Lee and Ready algorithm and EMO rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the \textit{trade size rule}, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between $73~\%$ and $75~\%$ surpassing previous rules by more than $10~\%$, at the cost of data efficiency.
+The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}.  The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the  \gls{ISE} and \gls{CBOE} classical rules like the popular Lee and Ready algorithm only achieve accuracies of \SI{62.53}{\percent} or \SI{62.03}{\percent} and are thus significantly smaller than in the stock market. In line with the research of  \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the reported success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The \textit{depth rule} is an alternative to the tick rule for classifying mid spread trades in the Lee and Ready algorithm and \gls{EMO} rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the \textit{trade size rule}, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing previous rules by more than \SI{10}{\percent}, at the cost of data efficiency.
 
 The work of \textcite{grauerOptionTradeClassification2022} is important in two ways. First, the data set is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
 
 \textbf{Trade classification using machine learning}
 
-\textcite[5]{rosenthalModelingTradeDirection2012} bridges the gap between classical trade classification and machine learning by fitting a logistic regression model on lagged and unlagged predictors inherent to the tick rule, quote rule, and EMO algorithm, as well as a sector-specific and a time-specific term. Instead of using the rule's discretized outcome as a feature, \textcite[481-482]{rosenthalModelingTradeDirection2012} models the rules through so-called information strength functions. The proximity to the quotes, central to the EMO algorithm, is thus modelled by a proximity function. Likewise, the information strength of the quote and tick rule is estimated as the log return between the trade price and the midpoint or the previous trade price. However, it only improves the accuracy of the EMO algorithm by a marginal $2~\%$ for Nasdaq stocks and $1.1~\%$ for NYSE stocks \textcite[15]{rosenthalModelingTradeDirection2012}. Our work aims to improve the model by exploring non-linear estimators and minimizing data modelling assumptions.
+\textcite[5]{rosenthalModelingTradeDirection2012} bridges the gap between classical trade classification and machine learning by fitting a logistic regression model on lagged and unlagged predictors inherent to the tick rule, quote rule, and \gls{EMO} algorithm, as well as a sector-specific and a time-specific term. Instead of using the rule's discretized outcome as a feature, \textcite[481-482]{rosenthalModelingTradeDirection2012} models the rules through so-called information strength functions. The proximity to the quotes, central to the \gls{EMO} algorithm, is thus modelled by a proximity function. Likewise, the information strength of the quote and tick rule is estimated as the log return between the trade price and the midpoint or the previous trade price. However, it only improves the accuracy of the \gls{EMO} algorithm by a marginal \SI{2}{\percent} for Nasdaq stocks and \SI{1.1}{\percent} for \gls{NYSE} stocks \textcite[15]{rosenthalModelingTradeDirection2012}. Our work aims to improve the model by exploring non-linear estimators and minimizing data modelling assumptions.
 
 The work of \textcite[483]{blazejewskiLocalNonParametricModel2005} compares a $k$-nearest neighbour classifier against logistic regression, as well as simple heuristics like the majority vote over past trades for signing trades at the Australian stock exchange. Their results indicate that the parametric $k$-nearest neighbour classifier improves upon a linear logistic regression in terms of classification accuracy, even when trained on fewer features. The work is unique from the remaining works about feature set definition. Notably, \textcite[3]{blazejewskiLocalNonParametricModel2005} use no quote or trade prices, but rather the order book volumes, trade sizes, and past trade signs for classification. No accuracies for classical trade signing rules are reported, which impedes a comparison across different works. In line with their results, we focus on non-linear models in the form of gradient boosting and transformers. Additionally, our paper addresses the mentioned shortcomings by benchmarking against state-of-the-art trade classification rules. We share the idea of using the trade size, as well as the bid and ask sizes for classification for some of our feature sets, but greedily predict using non-historic features.
 
-Closest to our work is a publication of \textcite[1--58]{ronenMachineLearningTrade2022}. Therein, the authors compare a selection of machine learning algorithms against classical trade signing rules in the bond and stock market. Their comparison is the first to consider both logistic regression, a random forest, as well as feed-forward networks. Over a wide range of feature sets the tree-based ensemble consistently outperforms by out-of-sample accuracy the tick rule and Lee and Ready algorithm, as well as all remaining machine learning models. For the TRACE and ITCH data set, their best variant of the random forest outperforms the tick rule by $8.3~\%$ and $3.3~\%$, respectively \autocite[57]{ronenMachineLearningTrade2022}. Whilst the superiority of random forests is consistent for the bond and equity market, fitted classifiers do not transfer across markets, as diminishing accuracies for the transfer learning by model transfer indicate.
+Closest to our work is a publication of \textcite[1--58]{ronenMachineLearningTrade2022}. Therein, the authors compare a selection of machine learning algorithms against classical trade signing rules in the bond and stock market. Their comparison is the first to consider both logistic regression, a random forest, as well as feed-forward networks. Over a wide range of feature sets the tree-based ensemble consistently outperforms by out-of-sample accuracy the tick rule and Lee and Ready algorithm, as well as all remaining machine learning models. For the TRACE and ITCH data set, their best variant of the random forest outperforms the tick rule by \SI{8.3}{\percent} and \SI{3.3}{\percent}, respectively \autocite[57]{ronenMachineLearningTrade2022}. Whilst the superiority of random forests is consistent for the bond and equity market, fitted classifiers do not transfer across markets, as diminishing accuracies for the transfer learning by model transfer indicate.
 
 The results convincingly demonstrate the potential of machine learning, i.e., of tree-based ensembles, for trade classification. Yet, the comparability of the results is limited by the classifier's reliance on additional features beyond quote and price data. Albeit, \textcite[4]{ronenMachineLearningTrade2022} consider a wide range of approaches, their selection leaves the latest advancements in artificial neural networks and ensemble learning aside and is mainly guided by computational constraints. Even if the focus is on standard techniques, the unclear research agenda concerning model selection, tuning, and testing hampers the transferability of their results to the yet unstudied option market.
 
@@ -50,7 +50,7 @@ The quote rule compares the trade price against the corresponding quotes at the 
 
 By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing mid-spread trades based on the subsequent quotes, contemporaneous, or the subsequent transaction. However, the most common approach to overcome this limitation is, to combine the quote rule with other approaches, such as the tick rule, into an ensemble.
 
-The quote rule requires to match \emph{one} bid and ask quotes with each trade based on a timestamp. Due to the finite resolution of the dataset's timestamps and active markets, multiple quote changes can co-occur at the time of the trade, some of which, are actually after the trade. As such, it remains unclear which quote to consider in trade classification, and a \emph{quote timing technique} must be employed. Empirically, \textcite[][1765]{holdenLiquidityMeasurementProblems2014} observe, that the most common choice is to use the last quote by order from the time increment (e.g., the second) before the trade.
+The quote rule requires to match \emph{one} bid and ask quotes with each trade based on a timestamp. Due to the finite resolution of the dataset's timestamps and active markets, multiple quote changes can co-occur at the time of the trade, some of which, are actually after the trade. As such, it remains unclear which quote to consider in trade classification, and a quote timing technique must be employed. Empirically, \textcite[][1765]{holdenLiquidityMeasurementProblems2014} observe, that the most common choice is to use the last quote by order from the time increment (e.g., the second) before the trade.
 
 In contrast to the tick rule, the quote rule requires both trade price and quote data, and is thus less data efficient. The reduced dependence on past transaction prices and the focus on quotes has nonetheless positively impacted classification accuracies in option markets, as the studies of \textcite[][886]{savickasInferringDirectionOption2003} and \textcite[][3]{grauerOptionTradeClassification2022} reveal. Especially, if trade classification is performed on the NBBO.
 
@@ -76,7 +76,7 @@ If the trade price is higher than the previous price (uptick) the trade is class
 
 By this means, the tick rule can sign all trades as long as there is a last distinguishable trade price. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed in \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick, is misclassified as buys by tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks will be erroneously classified as a sell.
 
-A variant of the tick test is the \emph{reverse tick test} as applied in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the trade price of the next, distinguishable trade price. As donated in Equation \ref{eq:tick-test} the trade is classified as seller-initiated, if the next trade is on an uptick or a zero uptick, and classified as buyer-initiated for trades at a downtick or a zero downtick \autocite[][735--636]{leeInferringTradeDirection1991}.
+A variant of the tick test is the reverse tick test as applied in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the trade price of the next, distinguishable trade price. As donated in \cref{eq:tick-test} the trade is classified as seller-initiated, if the next trade is on an uptick or a zero uptick, and classified as buyer-initiated for trades at a downtick or a zero downtick \autocite[][735--636]{leeInferringTradeDirection1991}.
 
 \begin{equation}
   \text{Trade}_{i,t}=
@@ -88,11 +88,11 @@ A variant of the tick test is the \emph{reverse tick test} as applied in \textci
   \label{eq:reverse-tick-test}
 \end{equation}
 
-Both the tick test and reverse tick test result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}. In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades recorded at the ISE and CBOE. This result contradicts results in the stock market \textcite[][737]{leeInferringTradeDirection1991}. Lags behind quote based classification.
+Both the tick test and reverse tick test result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}. In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades recorded at the \gls{ISE} and \gls{CBOE}. This result contradicts results in the stock market \textcite[][737]{leeInferringTradeDirection1991}. Lags behind quote based classification.
 
 \subsubsection{Depth Rule (0.75~p)}\label{sec:depth-rule}
 
-As the chapter \ref{sec:quote-rule} unveils, the tick rule yields significantly lower success rates than the quote rule. For midspread trades, that can otherwise not be classified by the advantageous quote rule, \textcite[][14]{grauerOptionTradeClassification2022} propose the \emph{depth rule}.
+As the \cref{sec:quote-rule} unveils, the tick rule yields significantly lower success rates than the quote rule. For midspread trades, that can otherwise not be classified by the advantageous quote rule, \textcite[][14]{grauerOptionTradeClassification2022} propose the depth rule.
 
 The depth rule infers the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity on one trade side, trades are classified as a buy for a larger ask size and sell for a higher bid size \textcite[][14]{grauerOptionTradeClassification2022}.
 
@@ -107,13 +107,13 @@ Let $\tilde{A}_{i,t}$ denote the quoted size of the ask and $\tilde{B}_{i,t}$ th
   \label{eq:depth-rule}
 \end{equation}
 
-As shown in Equation \ref{eq:depth-rule}, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for inferring the trade's aggressor. Due to these restrictive conditions, the depth rule can only sign a small fraction of all trades and is best stacked with others rules.
+As shown in \cref{eq:depth-rule}, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for inferring the trade's aggressor. Due to these restrictive conditions, the depth rule can only sign a small fraction of all trades and is best stacked with others rules.
 
-Like the quote rule, the depth rule has additional dependencies on quote data. Despite being applied to midpoint trades only, \textcite[][4]{grauerOptionTradeClassification2022} report an improvement in the overall accuracy $1.2~\%$ for the CBOE data set and by $0.8~\%$ on the ISE sample merely through the depth rule. The rule has not yet been tested in other markets.
+Like the quote rule, the depth rule has additional dependencies on quote data. Despite being applied to midpoint trades only, \textcite[][4]{grauerOptionTradeClassification2022} report an improvement in the overall accuracy \SI{1.2}{\percent} for the  \gls{CBOE} data set and by \SI{0.8}{\percent} on the  \gls{ISE} sample merely through the depth rule. The rule has not yet been tested in other markets.
 
 \subsubsection{Trade Size Rule (0.75~p)}\label{sec:trade-size-rule}
 
-As the chapter \ref{sec:quote-rule} derives, quote-based approaches are generally preferred due to the improved performance relative to the tick test \textcite[][13]{grauerOptionTradeClassification2022} stress that the quote rule, however, systematically misclassifies limit orders and propose an alternative procedure to identify and override predictions for them.
+As the \cref{sec:quote-rule} derives, quote-based approaches are generally preferred due to the improved performance relative to the tick test \textcite[][13]{grauerOptionTradeClassification2022} stress that the quote rule, however, systematically misclassifies limit orders and propose an alternative procedure to identify and override predictions for them.
 
 \begin{equation}
   \text{Trade}_{i,t}=
@@ -124,15 +124,15 @@ As the chapter \ref{sec:quote-rule} derives, quote-based approaches are generall
   \label{eq:trade-size-rule}
 \end{equation}
 
-The \emph{trade size rule} in Equation \ref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{P}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the prevailing bid or ask, with a trade size equalling the quoted size \textcite[][13]{grauerOptionTradeClassification2022}. By definition, when both the size of the ask and bid correspond with the trade size, no class can be assigned.
+The trade size rule in \cref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{P}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the prevailing bid or ask, with a trade size equalling the quoted size \textcite[][13]{grauerOptionTradeClassification2022}. By definition, when both the size of the ask and bid correspond with the trade size, no class can be assigned.
 
-\textcite[][13]{grauerOptionTradeClassification2022} report an accuracy of $79.92~\%$ for the subset of option trades at the ISE ($22.3~\%$ of all trades) that can be signed using the methodology, which contributes to a performance improvement of $11~\%$ for the entire sample. Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \textcite[][15]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades inside or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces three such hybrid algorithms, that combine the tick and quote rule into more sophisticated algorithms to address the limitations of the former.
+\textcite[][13]{grauerOptionTradeClassification2022} report an accuracy of \SI{79.92}{\percent} for the subset of option trades at the  \gls{ISE} (\SI{22.3}{\percent} of all trades) that can be signed using the methodology, which contributes to a performance improvement of \SI{11}{\percent} for the entire sample. Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \textcite[][15]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades inside or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces three such hybrid algorithms, that combine the tick and quote rule into more sophisticated algorithms to address the limitations of the former.
 
 \subsection{Hybrid Rules (2.5~p)}\label{sec:hybrid-rules}
 
 \subsubsection{Lee and Ready Algorithm (1 p)}\label{sec:lee-and-ready-algorithm}
 
-The popular \emph{Lee and Ready} algorithm combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs trades according to the quote rule trades. Trades at the midpoint of the spread, which cannot be classified with the quote rule, are classified with the tick rule and quote rule, the LR algorithm can thus be defined as:
+The popular \gls{LR} algorithm combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs trades according to the quote rule trades. Trades at the midpoint of the spread, which cannot be classified with the quote rule, are classified with the tick rule and quote rule, the \gls{LR} algorithm can thus be defined as:
 
 \begin{equation}
   \text{Trade}_{i,t}=
@@ -149,9 +149,9 @@ The strength of the algorithm lies in combining the strong classification accura
 \subsubsection{Ellis-Michaely-O'Hara
   Rule (0.75~p)}\label{sec:ellis-michaely-ohara-rule}
 
-\textcite[][536]{ellisAccuracyTradeClassification2000} examine the performance of the previous algorithms for stocks traded at NASDAQ. By analyzing miss-classified trades with regard to the proximity of the trade to the quotes, they observe, that the quote rule and by extension of the LR algorithm performs particularly well at classifying trades executed at the bid and the ask price but trail the performance of the tick rule for trades inside or outside the spread \autocite[][535--536]{ellisAccuracyTradeClassification2000}. The authors combine these observations into a single rule, known as the EMO algorithm.
+\textcite[][536]{ellisAccuracyTradeClassification2000} examine the performance of the previous algorithms for stocks traded at NASDAQ. By analyzing miss-classified trades with regard to the proximity of the trade to the quotes, they observe, that the quote rule and by extension of the \gls{LR} algorithm performs particularly well at classifying trades executed at the bid and the ask price but trail the performance of the tick rule for trades inside or outside the spread \autocite[][535--536]{ellisAccuracyTradeClassification2000}. The authors combine these observations into a single rule, known as the \gls{EMO} algorithm.
 
-As such, the EMO algorithm \autocite[][540]{ellisAccuracyTradeClassification2000} extends the tick rule by classifying trades at the quotes using the quote rule, and all other trades with the tick test. Formally, the classification rule is given by:
+As such, the \gls{EMO} algorithm \autocite[][540]{ellisAccuracyTradeClassification2000} extends the tick rule by classifying trades at the quotes using the quote rule, and all other trades with the tick test. Formally, the classification rule is given by:
 
 \begin{equation}
   \text{Trade}_{i,t}=
@@ -163,12 +163,12 @@ As such, the EMO algorithm \autocite[][540]{ellisAccuracyTradeClassification2000
   \label{eq:emo-rule}
 \end{equation}
 
-Equation \ref{eq:emo-rule} embeds both the quote and tick rule. As trades off the quotes are classified by the tick rule, the algorithm's overall success rate is dominated by the tick test. For option markets \autocites[cp.][891]{savickasInferringDirectionOption2003}[][21]{grauerOptionTradeClassification2022} this dependence caused the performance to lag behind quote-based approaches, contrary to the successful adaption in the stock market \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][3818]{chakrabartyTradeClassificationAlgorithms2007}. In \textcite[][31--35]{grauerOptionTradeClassification2022} the authors achieve minor improvements in classification accuracy on option exchange data by applying the reverse tick test as a proxy for the tick test.
+\Cref{eq:emo-rule} embeds both the quote and tick rule. As trades off the quotes are classified by the tick rule, the algorithm's overall success rate is dominated by the tick test. For option markets \autocites[cp.][891]{savickasInferringDirectionOption2003}[][21]{grauerOptionTradeClassification2022} this dependence caused the performance to lag behind quote-based approaches, contrary to the successful adaption in the stock market \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][3818]{chakrabartyTradeClassificationAlgorithms2007}. In \textcite[][31--35]{grauerOptionTradeClassification2022} the authors achieve minor improvements in classification accuracy on option exchange data by applying the reverse tick test as a proxy for the tick test.
 
 \subsubsection{Chakrabarty-Li-Nguyen-Van-Ness
   Method (0.75~p)}\label{sec:chakarabarty-li-nguyen-van-ness-method}
 
-Like the previous two algorithms, the CLVN method \autocite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the EMO rule by a fragmented treatment of trades inside the quotes, which are notoriously hard to classify. \textcite[][3809]{chakrabartyTradeClassificationAlgorithms2012} segment the spread into ten equal-width bins and classify trades around the midpoint (4th - 7th decile) by the tick rule and trades close to the quotes EMO rule trades outside the quotes are categorized by the tick rule.
+Like the previous two algorithms, the \gls{CLVN} method \autocite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the \gls{EMO} rule by a fragmented treatment of trades inside the quotes, which are notoriously hard to classify. \textcite[][3809]{chakrabartyTradeClassificationAlgorithms2012} segment the spread into ten equal-width bins and classify trades around the midpoint (4th - 7th decile) by the tick rule and trades close to the quotes \gls{EMO} rule trades outside the quotes are categorized by the tick rule.
 \begin{equation}
   \text{Trade}_{i,t}=
   \begin{cases}
@@ -179,12 +179,12 @@ Like the previous two algorithms, the CLVN method \autocite[][3809]{chakrabartyT
   \label{eq:clvn-rule}
 \end{equation}
 
-The algorithm, as summarized in Equation \ref{eq:clvn-rule}, is derived from a performance comparison of the tick rule / EMO rule against the quote rule / LR algorithm on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the 1st to 3rd deciles are classified by the quote rule. Counted from the bid, the first decile starts at $B_{i,t}$ and  $B_{i,t} + \frac{3}{10}(A_{i,t} - B_{i,t}) = \frac{7}{10} B_{i,t} + \frac{3}{10} A_{i,t}$ marks the beginning of the 3rd decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical CLVN method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be replaced by the reverse tick test.
+The algorithm, as summarized in \cref{eq:clvn-rule}, is derived from a performance comparison of the tick rule / \gls{EMO} rule against the quote rule / \gls{LR} algorithm on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the 1st to 3rd deciles are classified by the quote rule. Counted from the bid, the first decile starts at $B_{i,t}$ and  $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ marks the beginning of the 3rd decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \gls{CLVN} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be replaced by the reverse tick test.
 
 
 \textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the decision, which of the base rules is applied, is inferred from \emph{static} cut-off points at the decile boundaries of the spread -- including the midspread and the quotes -- current classification rules may not realize their full potential. A obvious question is, if classifiers, \emph{learned} on price and quote data, can adapt to the data and thereby improve over traditional trade classification rules.
 
-The trend towards sophisticated, hybrid rules, sometimes combining as many as four base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) \emph{ensembles} found in machine learning and expresses the need for better classifiers. In the subsequent section, we provide an overview of state-of-the-art machine learning approaches for classification. We start by framing trade classification as a supervised learning problem.
+The trend towards sophisticated, hybrid rules, sometimes combining as many as four base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) ensembles found in machine learning and expresses the need for better classifiers. In the subsequent section, we provide an overview of state-of-the-art machine learning approaches for classification. We start by framing trade classification as a supervised learning problem.
 \newpage
 \section{Supervised Approaches (12~p)}\label{sec:supervised-approaches}
 
@@ -194,78 +194,8 @@ The trend towards sophisticated, hybrid rules, sometimes combining as many as fo
 
 \subsubsection{Decision Tree (0.5~p)}\label{sec:decision-tree}
 
-% A decision tree splits the feature space $\mathbb{R}^m$ into several disjoint regions $R$ through a sequence of recursive splits. A single split leads to two new sub-regions for a binary decision tree, whose shape depends on the attribute used for splitting and the previously performed splits. The tree is grown in size until a minimum threshold for the number of samples within a node or some other stopping criterion applies \autocite{breimanClassificationRegressionTrees2017}.
-% Trees can be utilised for classification and regression tasks. Our introduction focuses on the regression setting only.
-
-% A region corresponds to a node in the tree. For each terminal node of the tree or unsplit region, the response variable $f(x)$ is constant \autocite{breimanClassificationRegressionTrees2017}. For a tree with $M$ regions, the response for $x$ can be modelled as
-% $$
-%   f(x)=\sum_{m=1}^{M} \gamma_{m} \mathbbm{1}\left(x \in R_{m}\right),
-% $$
-% with $\mathbbm{1}$ being the indicator function for region conformance and $\gamma_m$ being the region's constant \autocite{hastietrevorElementsStatisticalLearning2009}. In the regression case, $\gamma_m$ is simply the average overall response variables of this particular region. As $\gamma_m$ is shared among all samples within the region, the estimates of the tree are similar to a histogram approximating the true regression surface.
-
-% So far, it remains open how the best split can be found. The best split is where the deviation of all regions estimates and the true response variables diminishes. Over the entire tree, this error can be captured in the \gls{SSE} given by
-
-% $$
-%   E(M)=\frac{1}{N} \sum_{m \in M} \sum_{i \in R_m}\left(y_{i}-f(x_i)\right)^{2},
-% $$
-
-% which is subsequently minimized \autocite{breimanClassificationRegressionTrees2017}. Following \textcite{breimanClassificationRegressionTrees2017} we scan all combinations of possible $m$ and potential split values $s$ and choose the split, that leads to the largest improvement in the error of the child nodes compared to their parent node $E(m)$:
-
-% $$
-%   \Delta E(s, m)=E(m)-E\left(m_{l}\right)-E\left(m_{r}\right).
-% $$
-
-
-% Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample is in its region, the tree would achieve the highest fit but perform poorly on unseen data. For trees that generalise, \textit{cost complexity pruning} procedures are employed. If pruned, their ability to capture non-linearities and adaptability to numerical and categorical data makes trees a flexible estimator.
-
-
 \subsubsection{Gradient Boosting
   Procedure (1.5 p)}\label{sec:gradient-boosting-procedure}
-
-%   One approach that aims to reduce the bias is \textit{gradient boosting}, which was popularised for regression by \textcite{friedmanGreedyFunctionApproximation2001}. Gradient boosting sequentially combines the approximations of several over-simplified models (so-called
-%   \textit{weak-learners}) to an ensemble estimate. Shallow decision trees are commonly used weak learners.
-
-%   The following introduction is adapted from \textcite{hastietrevorElementsStatisticalLearning2009}. For a \textit{boosted tree} several decision trees are combined through summation:
-
-%   $$
-%     f_{M}(x)=\sum_{m=1}^{M} T\left(x ; \Theta_{m}\right).
-%   $$
-
-%   Here, $M$ sets the number of iterations or trees being built. Instead of fitting trees directly to the data, the model in the $m$-th iteration is fitted to the residuals of the previous model. In this greedy approach, previously built trees remain unaltered while being the foundations for trees in later iterations.
-
-%   At each iteration, one seeks to find the optimal parameter set $\Theta_{m}=\left\{R_{j m}, \gamma_{j m}\right\}_{1}^{J_{m}}$ for the $m$-th iteration, that minimizes the loss $\mathcal{L}$ between the true value and the composite prediction from the current model $f_{m-1}\left(x_{i}\right)$ and the tree, updating the residuals:
-
-%   \begin{equation}
-%     \label{eq:boosting-min-loss}
-%     \hat{\Theta}_{m}=\arg \min _{\Theta_{m}} \sum_{i=1}^{N} \mathcal{L}\left(y_{i}, f_{m-1}\left(x_{i}\right)+T\left(x_{i} ; \Theta_{m}\right)\right).
-%   \end{equation}
-
-%   A common loss function for regression is the \textit{squared error loss}, which can be solved analytically by taking the derivative and setting it equal to zero. The predictions of a tree $T\left(x_{i}; \Theta_{m}\right)$, that yields the maximum decrease of Equation \ref{eq:boosting-min-loss} are similar to the components of the \textit{negative gradient descent}. However, the major drawback is that the gradient is only defined for data points $x_i$ seen during training, contradicting the creation of a generalising model $f_{M}(x)$. A more robust approach can be found in \textit{gradient boosting}.
-
-%   Focusing only on the update step, which is executed $m = 1,\ldots, M$-times, \textit{gradient boosting} starts by calculating the negative gradient of the loss between the observed value for the $i$-th sample and its current predicted value:
-%   $$
-%     r_{i m}=-{\left[\frac{\partial \mathcal{L}\left(y_{i}, f\left(x_{i}\right)\right)}{\partial f\left(x_{i}\right)}\right]}_{f=f_{m-1}}.
-%   $$
-%   The components of the negative gradient are referred to as \textit{pseudo residuals}. Subsequently, a regression tree is then fit on these pseudo residuals. The $m$-th regression tree contains $J$ terminal regions denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. The predicted estimate $\gamma_{j,m}$ for the $j$-th region is obtained by minimising a loss such as the squared loss:
-
-%   $$
-%     \gamma_{j m}=\arg \min _{\gamma} \sum_{x_{i} \in R_{j m}} \mathcal{L}\left(y_{i}, f_{m-1}\left(x_{i}\right)+\gamma\right).
-%   $$
-
-%   Recall from Section
-%    \ref{sec:decision-tree} that the estimate $\gamma_{jm}$ is constant for the entire region. As before, the best estimate is simply the average of all residuals within a region.
-
-%   An improved estimate for $x$ is calculated from the previous estimate by adding the trees fitted on the residuals, as shown in Equation \ref{eq:boosting-final-estimate}. The latter moves the prediction towards the greatest descent and thus improves the overall prediction:
-
-%   \begin{equation}\label{eq:boosting-final-estimate}
-%     f_{m}(x)=f_{m-1}(x)+\nu \sum_{j=1}^{J_{m}} \gamma_{j m} \mathbbm{1}\left(x \in R_{j m}\right).
-%   \end{equation}
-
-%   Only proportional steps towards the negative gradient are taken to prevent overfitting. The pace is controlled by the learning rate $\nu \in (0, 1]$. While a small learning rate slows down learning, it allows more differently shaped trees to attack the residuals. After $M$ iterations we obtain the final estimate calculated as: $\hat{f}(x)=f_{M}(x)$.
-
-
-% \subsubsection{Adaptions for Probabilistic
-%   Classification (0.5~p)}\label{sec:adaptions-for-probablistic-classification}
 
 \subsection{Transformer Networks}\label{sec:transformer-networks}
 

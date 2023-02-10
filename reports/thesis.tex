@@ -37,7 +37,7 @@
 	\usepackage{subfig} % Enables graphs consisting of several figures.
 	\graphicspath{{./Graphs/}} % Tells LATEX that the images are kept in a folder named images under the directory of the main document.
 	\usepackage[hypcap=false]{caption} % Provides many ways to customise captions.
-
+	\usepackage{siunitx} % Enables the use of SI units e. g., proper handling of percent
 % Mathematics
     \usepackage{amscd,amsfonts,amsmath,amssymb,amsthm,amscd,bbm} % Extends the maths set.
 
@@ -80,7 +80,7 @@
 
 % --------------------------------- Definition of hyperlinks ---------------------------------
 % Hyperreferences
-	\usepackage{hyperref}
+\usepackage{hyperref}
 	\definecolor{darkblue}{rgb}{0,0,.5}
 	\hypersetup{
 	    pdfstartview={FitH},
@@ -89,8 +89,9 @@
         citecolor=darkblue,
         urlcolor=black,
         bookmarksopen
-        }
-
+}
+\usepackage[capitalise]{cleveref} % Enables the use of \cref{} to refer to figures, etc. with Fig.
+\creflabelformat{equation}{#2#1#3} % omit round brackets
 
 	\usepackage[acronym]{glossaries}
 	\makeglossaries
@@ -98,11 +99,17 @@
 	\newacronym{ANN}{ANN}{artificial neural network}
 	\newacronym{AUC}{AUC}{area under the curve}
 	\newacronym{CRSP}{CRSP}{Center for Research in Securities Prices}
+	\newacronym{CBOE}{CBOE}{Chicago Board Options Exchange}
+	\newacronym{CLVN}{CLVN}{Chakrabarty-Li-Nguyen-Van-Ness}
+	\newacronym{EMO}{EMO}{Ellis-Michaely-O’Hara}
 	\newacronym{FFN}{FFN}{feed-forward network}
+	\newacronym{ISE}{ISE}{International Securities Exchange}
 	\newacronym{GBM}{GBM}{gradient boosting machine}
-	\newacronym[firstplural=long short-term memories (LSTMs)]{LSTM}{LSTM}{long short-term memory}
+	\newacronym{LR}{LR}{Lee-Ready}
 	\newacronym{MAE}{MAE}{mean absolute error}
 	\newacronym{MSE}{MSE}{mean squared error}
+	\newacronym{NYSE}{NYSE}{New York Stock Exchange}
+	\newacronym{NASDAQ}{NASDAQ}{National Association of Securities Dealers Automated Quotations}
 	\newacronym{RMSE}{RMSE}{root mean squared error}
 	\newacronym{RF}{RF}{random forest}
 	\newacronym{SSE}{SSE}{sum of squared errors}
@@ -120,30 +127,30 @@
 
 % ----------------------------------- Start of document -----------------------------------
 \begin{document}
-	\setcounter{page}{2} % Cover pages and title page are not numbered. Start numbering from page 2.
+\setcounter{page}{2} % Cover pages and title page are not numbered. Start numbering from page 2.
 
 % Title page
 \input{Content/Titlepage_Thesis} % Exclude title page (with %) that is not being used.
 
 % Table of contents
-	\setcounter{page}{1}\renewcommand{\thepage}{\roman{page}} % Sets the numbering to roman small.
-	\newpage
-	\tableofcontents
+\setcounter{page}{1}\renewcommand{\thepage}{\roman{page}} % Sets the numbering to roman small.
+\newpage
+\tableofcontents
 
 % List of Figures (comment out if there are no figures in the thesis)
-	\newpage
-	\listoffigures % Inserts the list of figures.
-	\addcontentsline{toc}{section}{List of Figures} % Adds the list of figures to the table of contents.
+\newpage
+\listoffigures % Inserts the list of figures.
+\addcontentsline{toc}{section}{List of Figures} % Adds the list of figures to the table of contents.
 
 % List of tables (comment out if there are no tables in the thesis)
-	\newpage
-	\listoftables % Inserts the list of figures.
-	\addcontentsline{toc}{section}{List of Tables} % Adds the list of tables to the table of contents.
+\newpage
+\listoftables % Inserts the list of figures.
+\addcontentsline{toc}{section}{List of Tables} % Adds the list of tables to the table of contents.
 
 % Main text section
-    \newpage
-	\setcounter{page}{1}\renewcommand{\thepage}{\arabic{page}} % Sets the numbering to arabic.
-	\include{Content/main}
+\newpage
+\setcounter{page}{1}\renewcommand{\thepage}{\arabic{page}} % Sets the numbering to arabic.
+\include{Content/main}
 
 % Bibliography
 \newpage
