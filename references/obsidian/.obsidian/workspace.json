@@ -46,7 +46,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🔢Basic rules notes.md",
+                "file": "📑notes/🔢Hybrid rules notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -127,7 +127,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🔢Basic rules notes.md",
+                "file": "📖chapters/🔢LR Algorithm.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -155,7 +155,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🔢Basic rules notes.md"
+                "file": "📖chapters/🔢LR Algorithm.md"
               }
             }
           },
@@ -186,17 +186,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "9c09f0a4673701f6",
+  "active": "e87aa9ab943386a7",
   "lastOpenFiles": [
+    "📖chapters/🔢Tick Test.md",
+    "📖chapters/🔢LR Algorithm.md",
+    "📑notes/🔢Hybrid rules notes.md",
+    "📑notes/🔢Basic rules notes.md",
     "📖chapters/🏅Feature importance measure.md",
     "📖chapters/🧃Feature Sets.md",
     "📖chapters/🤖Transformer.md",
-    "📑notes/🔢Basic rules notes.md",
     "📑notes/🔢LR algorithm notes.md",
-    "📖chapters/🔢LR Algorithm.md",
-    "📖chapters/🔢Tick Test.md",
     "📖chapters/🔢EMO Rule.md",
-    "📑notes/🅰️attention notes.md",
-    "📑notes/🔢EMO rule notes.md"
+    "📑notes/🅰️attention notes.md"
   ]
 }

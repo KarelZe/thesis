@@ -2,7 +2,7 @@ As the chapter [[🔢Tick Test]] unveils, the tick rule yields significantly low
 
 The depth rule infers the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity on one trade side, trades are classified as a buy for a larger ask size and sell for a higher bid size ([[@grauerOptionTradeClassification2022]] 14).
 
-Let $\tilde{A}_{i,t}$ denote the quoted size of the ask and $\tilde{B}_{i,t}$ the size of the bid. The depth rule is formally given by: 
+Let $\tilde{a}_{i,t}$ denote the quoted size of the ask and $\tilde{b}_{i,t}$ the size of the bid. The depth rule is formally given by: 
 
 $$
 \tag{5}
@@ -10,8 +10,8 @@ $$
 \begin{equation}
     \text{Trade}_{i,t}=
     \begin{cases}
-      0, & \text{if}\ P_{i, t} = m_{i, t}\ \text{and}\ \tilde{A}_{i,t} < \tilde{B}_{i,t}\\
-      1, & \text{if}\ P_{i, t} = m_{i, t}\ \text{and}\ \tilde{A}_{i,t} > \tilde{B}_{i,t}.  \\
+      0, & \text{if}\ p_{i, t} = m_{i, t}\ \text{and}\ \tilde{a}_{i,t} < \tilde{b}_{i,t}\\
+      1, & \text{if}\ p_{i, t} = m_{i, t}\ \text{and}\ \tilde{a}_{i,t} > \tilde{b}_{i,t}.  \\
     \end{cases}
   \end{equation}
 $$

@@ -4,8 +4,8 @@ Tags: #trade-classification #quote-rule
 **Notation:** For notation see [[@carrionTradeSigningFast2020]] or  [[@jurkatisInferringTradeDirections2022]] or [[@olbrysEvaluatingTradeSide2018]]..  Denoting the midpoint of the quoted spread by $m_{i, t}$, the predicted trade direction as per the quote rule is as follows:
 $$
 \begin{aligned}
-& \text { If } P_{i, t}>m_{i, t} \text { Trade }_{i, t}=\text { Buy, } \\
-& \text { If } P_{i, t}<m_{i, t}, \text { Trade }_{i, t}=\text { Sell. } \\
+& \text { If } p_{i, t}>m_{i, t} \text { Trade }_{i, t}=\text { Buy, } \\
+& \text { If } p_{i, t}<m_{i, t}, \text { Trade }_{i, t}=\text { Sell. } \\
 &
 \end{aligned}
 $$

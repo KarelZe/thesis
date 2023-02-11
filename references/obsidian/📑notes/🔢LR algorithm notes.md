@@ -13,15 +13,15 @@ Accuracy has been tested in [[@odders-whiteOccurrenceConsequencesInaccurate2000]
 - “The tick test will only misclassify the second midpoint trade after the arrival of the standing order if it misclassifies the first midpoint trade and the second trade is in the same direction as the first trade (i.e., another buy).” (Lee and Ready, 1991, p. 11)
 
 Precise description from [[@carrionTradeSigningFast2020]] (Similar efforts in [[@jurkatisInferringTradeDirections2022]] or [[@olbrysEvaluatingTradeSide2018]]): 
-The tick rule (TICK) relies solely on trade prices for classifying trades and does not use any quote data. To classify trades, the tick rule compares the current trade price to the price of the preceding trade. A trade is classified as a buy if the trade price is higher than the preceding trade price (uptick). Likewise, a trade is classified as a sell if the trade price is lower than the preceding trade price (downtick). If the preceding trade price is the same, then the tick rule looks back to the last different price to classify the trade. Likewise, a trade is classified as a sell if it occurs on a zero-downtick. Formally denoting the trade price of security $i$ at time $t$ as $P_{i, t}$ and $\Delta P_{i, t}$ as the price change between two successive trades and the assigned trade direction at time $t$ as Trade, we have:
-If $\Delta P_{i, t}>0$, Trade $_{i, t}=$ Buy,
-If $\Delta P_{i, t}<0$, Trade $_{i, t}=$ Sell,
-If $\Delta P_{i, t}=0$, Trade $_{i, t}=$ Trade $_{i, t-1}$.
+The tick rule (TICK) relies solely on trade prices for classifying trades and does not use any quote data. To classify trades, the tick rule compares the current trade price to the price of the preceding trade. A trade is classified as a buy if the trade price is higher than the preceding trade price (uptick). Likewise, a trade is classified as a sell if the trade price is lower than the preceding trade price (downtick). If the preceding trade price is the same, then the tick rule looks back to the last different price to classify the trade. Likewise, a trade is classified as a sell if it occurs on a zero-downtick. Formally denoting the trade price of security $i$ at time $t$ as $p_{i, t}$ and $\Delta p_{i, t}$ as the price change between two successive trades and the assigned trade direction at time $t$ as Trade, we have:
+If $\Delta p_{i, t}>0$, Trade $_{i, t}=$ Buy,
+If $\Delta p_{i, t}<0$, Trade $_{i, t}=$ Sell,
+If $\Delta p_{i, t}=0$, Trade $_{i, t}=$ Trade $_{i, t-1}$.
 The LR algorithm is based on a combination of the tick rule and the quote rule. Using the quote rule, a trade is classified as a buy if the price is above the midpoint of the quoted bid and ask and as a sell if the price is below the midpoint. Denoting the midpoint of the quoted spread by $m_{i, t}$, the predicted trade direction as per the quote rule is as follows:
 $$
 \begin{aligned}
-& \text { If } P_{i, t}>m_{i, t}, \text { Trade }_{i, t}=\text { Buy, } \\
-& \text { If } P_{i, t}<m_{i, t} \text { Trade }_{i, t}=\text { Sell. }
+& \text { If } p_{i, t}>m_{i, t}, \text { Trade }_{i, t}=\text { Buy, } \\
+& \text { If } p_{i, t}<m_{i, t} \text { Trade }_{i, t}=\text { Sell. }
 \end{aligned}
 $$
 

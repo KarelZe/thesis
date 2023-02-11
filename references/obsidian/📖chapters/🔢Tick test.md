@@ -1,6 +1,6 @@
 Based on the rationale that buys increase the trade price and sells lower them, the *tick test* classifies trades by the change in trade price ([[@easleyDiscerningInformationTrade2016]] 271). Its first use is documented in (cp. [[@holthausenEffectLargeBlock1987]] 244) and ([[@hasbrouckTradesQuotesInventories1988]] 240). 
 
-We denote the trade price of the $i$-th security at time $t$ as $P_{i,t}$ and the price change between two successive trades. The tick test is formally defined as 
+We denote the trade price of the $i$-th security at time $t$ as $p_{i,t}$ and the price change between two successive trades. The tick test is formally defined as 
 
 $$
   \begin{equation}
@@ -8,9 +8,9 @@ $$
     \text{Trade}_{i,t}=
 
     \begin{cases}
-      1, & \text{if}\ P_{i, t} > P_{i, t-1}\\
-      0, & \text{if}\ P_{i, t} < P_{i, t-1}\\
-	  P_{i,t-1} = P_{i,t-2},& \text{else}.
+      1, & \text{if}\ p_{i, t} > p_{i, t-1}\\
+      0, & \text{if}\ p_{i, t} < p_{i, t-1}\\
+	  p_{i,t-1} = p_{i,t-2},& \text{else}.
     \end{cases}
   \end{equation}
 $$
@@ -26,8 +26,8 @@ $$
   \begin{equation}
     \text{Trade}_{i,t}=
     \begin{cases}
-      1, & \text{if}\ P_{i, t} > P_{i, t+1}\\
-      0, & \text{if}\ P_{i, t} < P_{i, t+1}\\
+      1, & \text{if}\ p_{i, t} > p_{i, t+1}\\
+      0, & \text{if}\ p_{i, t} < p_{i, t+1}\\
 	  P_{i,t+1} = P_{i,t+2},& \text{else}
     \end{cases}
   \end{equation}
