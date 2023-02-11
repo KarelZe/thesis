@@ -132,6 +132,12 @@ The trade size rule in \cref{eq:trade-size-rule} classifies based on a match bet
 
 \subsection{Hybrid Rules}\label{sec:hybrid-rules}
 
+The basic trade classification rules from \cref{sec:basic-rules} can be combined into a hybrid algorithm to enforce universal applicability to all trades and or to improve the classification performance.
+
+Popular variants include the \gls{LR} algorithm, the \gls{EMO} rule, and \gls{CLNV} method. All three algorithms utilize the quote and tick rule to a varying degree, as depicted in \cref{fig:hybrid-algorithms}. Both rules are selected based on the proximity of the trade price to the quotes. We study all algorithms in detail in \cref{sec:lee-and-ready-algorithm} {sec:ellis-michaely-ohara-rule}{sec:chakarabarty-li-nguyen-van-ness-methode}.
+
+\textcite[][18]{grauerOptionTradeClassification2022} combine rules like the trade size rule, depth rule, as well as other basic or hybrid rules through stacking. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the primary rules and their ordering. Like before all rules are applied mutually exclusively. Theoretically, all algorithms can be stacked. As such, we don't discuss this concept as a separate rule.
+
 \begin{figure}[h!]
   \setkeys{Gin}{height=60mm}
   \subfloat[\acrshort{LR} Algorithm]{%
@@ -150,6 +156,7 @@ The trade size rule in \cref{eq:trade-size-rule} classifies based on a match bet
   \includegraphics{grauer-algo}
   }
   \caption{Hybrid Trade Classification Rules}
+  \label{fig:hybrid-algorithms}
 \end{figure}
 
 \subsubsection{Lee and Ready Algorithm}\label{sec:lee-and-ready-algorithm}
@@ -208,7 +215,6 @@ Like the previous two algorithms, the \gls{CLNV} method \autocite[][3809]{chakra
 \end{equation}
 
 The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $b_{i,t}$ and  $b_{i,t} + \tfrac{3}{10} (a_{i,t} - b_{i,t}) = \tfrac{7}{10} b_{i,t} + \tfrac{3}{10} a_{i,t}$ marks the beginning of the \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \gls{CLNV} method uses the backwards-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
-
 
 \textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, which of the base rules is applied, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and the quotes. Thus, current classification rules may not realize their full potential. A obvious question is, if classifiers, \emph{learned} on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
 
