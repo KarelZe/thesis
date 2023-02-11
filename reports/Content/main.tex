@@ -27,16 +27,17 @@ The results convincingly demonstrate the potential of machine learning, i.e., of
 In summary, machine learning has been applied successfully in the context of trade classification. To the best of our knowledge, no previous work perform machine learning-based classification in the options markets.
 
 \newpage
-\section{Rule-Based Approaches (5.5~p)}\label{sec:rule-based-approaches}
+\section{Rule-Based Approaches}\label{sec:rule-based-approaches}
 
+Every option trade has a buyer and seller side. For many problems in option research, it's vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. Consequently, we denote it by $y \in \{0,1\}$, whereby $y=0$ indicates a trade that was initiated by a seller and $y=1$ by a buyer. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
 
-% The following section introduces common rules for signing option trades. We start by introducing the classical quote and tick rule and continue with the more recent depth and trade size rule. In section \ref{hybrid-rules} we combine some rules from section \ref{basic-rules} to hybrids thereof. We conclude this chapter by drawing a connection to ensemble learning.
+The following section introduces basic rules for option trade classification. We start with the classical quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we exclude classification rules for aggregated trades, like the \gls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
-\subsection{Basic Rules (3~p)}\label{sec:basic-rules}
+\subsection{Basic Rules}\label{sec:basic-rules}
 
-% Starting with the quote rule, we describe the most common rule for signing option trades, which can either be used as-is or joint in more complex rules.
+This chapter presents preliminary classification rules, that may be used for trade classification as-is or integrated into a hybrid algorithm.
 
-\subsubsection{Quote Rule (0.75~p)}\label{sec:quote-rule}
+\subsubsection{Quote Rule}\label{sec:quote-rule}
 
 The quote rule compares the trade price against the corresponding quotes at the time of the trade. If the trade price $p_{i,t}$ of the $i$-th security at time $t$ is above the midpoint of the bid-ask spread, denoted by $m_{i,t} = \tfrac{1}{2}(b_{i,t} + a_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $D = \left\{(p_{i,t}, m_{i,t}) \in \mathbb{R}^2: p_{i,t} \neq m_{i,t}\right\}$ is given by:
 
@@ -56,7 +57,7 @@ The quote rule requires to match one bid and ask quote with each trade based on 
 In contrast to the tick rule, the quote rule requires both trade price and quote data, and limits the data efficiency. The reduced dependence on past transaction prices and the focus on quotes has nonetheless positively impacted classification accuracies in option markets, as studies of \textcite[][886]{savickasInferringDirectionOption2003} and \textcite[][3]{grauerOptionTradeClassification2022} reveal. Especially, if trade classification is performed on the NBBO.
 
 
-\subsubsection{Tick Test (0.75~p)}\label{sec:tick-test}
+\subsubsection{Tick Test}\label{sec:tick-test}
 
 Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. Its was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}.
 
@@ -93,7 +94,7 @@ Both the tick test and reverse tick test result in the same classification, if t
 
 In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades recorded at the \gls{ISE} and \gls{CBOE}, but both cannot reach up to quote-based approaches and calls for more sophisticated approaches. This result contradicts results in the stock market \textcite[][737]{leeInferringTradeDirection1991}.
 
-\subsubsection{Depth Rule (0.75~p)}\label{sec:depth-rule}
+\subsubsection{Depth Rule}\label{sec:depth-rule}
 
 As the \cref{sec:quote-rule} unveils, the tick rule yields significantly lower success rates than the quote rule. For midspread trades, that can otherwise not be classified by the advantageous quote rule, \textcite[][14]{grauerOptionTradeClassification2022} propose the depth rule.
 
@@ -113,7 +114,7 @@ As shown in \cref{eq:depth-rule}, the depth rule classifies midspread trades onl
 
 Like the quote rule, the depth rule has additional dependencies on quote data. Despite being applied to midpoint trades only, \textcite[][4]{grauerOptionTradeClassification2022} report an improvement in the overall accuracy by \SI{1.2}{\percent} for \gls{CBOE} data and by \SI{0.8}{\percent} for trades from the \gls{ISE} merely through the depth rule. The rule has not yet been tested in other markets.
 
-\subsubsection{Trade Size Rule (0.75~p)}\label{sec:trade-size-rule}
+\subsubsection{Trade Size Rule}\label{sec:trade-size-rule}
 
 As the \cref{sec:quote-rule} derives, quote-based approaches are generally preferred due to the better performance relative to the tick test. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $D = \left\{(\tilde{p}_{i, t} , \tilde{a}_{i, t} , \tilde{b}_{i,t}) \in \mathbb{R}^3: \tilde{p}_{i,t} = \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \ \text{or} \ \tilde{p}_{i,t} \neq  \tilde{a}_{i,t} = \tilde{b}_{i,t} \right\}$ the trade size rule, $\operatorname{tsize} \colon D \to \left\{0,1\right\}$, is defined as:
 \begin{equation}
@@ -127,9 +128,9 @@ As the \cref{sec:quote-rule} derives, quote-based approaches are generally prefe
 
 The trade size rule in \cref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{p}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the prevailing bid or ask, with a trade size equalling the quoted size \autocite[][13]{grauerOptionTradeClassification2022}. By definition, when both the size of the ask and bid correspond with the trade size, the result is ambiguous.
 
-\textcite[][13]{grauerOptionTradeClassification2022} obtain an accuracy of \SI{79.92}{\percent} for the subset of option trades at the  \gls{ISE} (\SI{22.3}{\percent} of all trades) that can be signed using the methodology, which contributes to a performance improvement of \SI{11}{\percent} for the entire sample. Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \textcite[][15]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades inside or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces three hybrid algorithms, that combine basic into more sophisticated algorithms.
+\textcite[][13]{grauerOptionTradeClassification2022} obtain an accuracy of \SI{79.92}{\percent} for the subset of option trades at the  \gls{ISE} (\SI{22.3}{\percent} of all trades) that can be signed using the methodology, which contributes to a performance improvement of \SI{11}{\percent} for the entire sample. Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \autocite[][15]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades inside or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces three hybrid algorithms, that combine basic rules into more sophisticated algorithms.
 
-\subsection{Hybrid Rules (2.5~p)}\label{sec:hybrid-rules}
+\subsection{Hybrid Rules}\label{sec:hybrid-rules}
 
 \begin{figure}[h!]
   \setkeys{Gin}{height=60mm}
@@ -151,7 +152,7 @@ The trade size rule in \cref{eq:trade-size-rule} classifies based on a match bet
   \caption{Hybrid Trade Classification Rules}
 \end{figure}
 
-\subsubsection{Lee and Ready Algorithm (1 p)}\label{sec:lee-and-ready-algorithm}
+\subsubsection{Lee and Ready Algorithm}\label{sec:lee-and-ready-algorithm}
 
 The popular \gls{LR} algorithm \autocite{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs trades according to the quote rule. Trades at the midpoint of the spread, which cannot be classified with the quote rule, are classified with the tick rule and quote rule, the \gls{LR} algorithm can thus be defined as:
 
@@ -169,7 +170,7 @@ The strength of the algorithm lies in combining the strong classification accura
 
 
 \subsubsection{Ellis-Michaely-O'Hara
-  Rule (0.75~p)}\label{sec:ellis-michaely-ohara-rule}
+  Rule}\label{sec:ellis-michaely-ohara-rule}
 
 \textcite[][536]{ellisAccuracyTradeClassification2000} examine the performance of the previous algorithms for stocks traded at NASDAQ. By analyzing miss-classified trades with regard to the proximity of the trade to the quotes, they observe, that the quote rule and by extension of the \gls{LR} algorithm performs particularly well at classifying trades executed at the bid and the ask price but trail the performance of the tick rule for trades inside or outside the spread \autocite[][535--536]{ellisAccuracyTradeClassification2000}. The authors combine these observations into a single rule, known as the \gls{EMO} algorithm.
 
@@ -186,7 +187,7 @@ As such, the \gls{EMO} algorithm extends the tick rule by classifying trades at 
   \label{eq:emo-rule}
 \end{equation}
 
-\Cref{eq:emo-rule} embeds both the quote and tick rule. As trades off the quotes are classified by the tick rule, the algorithm's overall success rate is dominated by the tick test assuming most trades are off-the-quotes. For option markets \autocites[cp.][891]{savickasInferringDirectionOption2003}[][21]{grauerOptionTradeClassification2022} this dependence caused the performance to lag behind quote-based approaches, contrary to the successful adaption in the stock market \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][3818]{chakrabartyTradeClassificationAlgorithms2007}. \textcite[][31--35]{grauerOptionTradeClassification2022} achieve minorimprovements in classification accuracy for option trades by applying the reverse tick test as a proxy for the tick test.
+\Cref{eq:emo-rule} embeds both the quote and tick rule. As trades off the quotes are classified by the tick rule, the algorithm's overall success rate is dominated by the tick test assuming most trades are off-the-quotes. For option markets \autocites[cp.][891]{savickasInferringDirectionOption2003}[][21]{grauerOptionTradeClassification2022} this dependence caused the performance to lag behind quote-based approaches, contrary to the successful adaption in the stock market \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][3818]{chakrabartyTradeClassificationAlgorithms2007}. \textcite[][31--35]{grauerOptionTradeClassification2022} improve classification accuracy for option trades by applying the reverse tick test as a proxy for the tick test.
 
 \subsubsection{Chakrabarty-Li-Nguyen-Van-Ness
   Method (0.75~p)}\label{sec:chakarabarty-li-nguyen-van-ness-method}
@@ -206,12 +207,12 @@ Like the previous two algorithms, the \gls{CLNV} method \autocite[][3809]{chakra
   \label{eq:CLNV-rule}
 \end{equation}
 
-The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $b_{i,t}$ and  $b_{i,t} + \tfrac{3}{10} (a_{i,t} - b_{i,t}) = \tfrac{7}{10} b_{i,t} + \tfrac{3}{10} a_{i,t}$ marks the beginning of the \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \gls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
+The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $b_{i,t}$ and  $b_{i,t} + \tfrac{3}{10} (a_{i,t} - b_{i,t}) = \tfrac{7}{10} b_{i,t} + \tfrac{3}{10} a_{i,t}$ marks the beginning of the \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \gls{CLNV} method uses the backwards-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
 
 
 \textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, which of the base rules is applied, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and the quotes. Thus, current classification rules may not realize their full potential. A obvious question is, if classifiers, \emph{learned} on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
 
-The trend towards sophisticated, hybrid rules, combining as many as four base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) ensembles found in machine learning and expresses the need for better classifiers. In the subsequent section, we provide an overview of state-of-the-art machine learning approaches for classification. We start by framing trade classification as a supervised learning problem.
+The trend towards sophisticated, hybrid rules, combining as many as four base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) ensembles found in machine learning and expresses the need for better classifiers. In the subsequent section, we provide an overview of state-of-the-art machine learning-based classifiers. We start by framing trade classification as a supervised learning problem.
 \newpage
 \section{Supervised Approaches (12~p)}\label{sec:supervised-approaches}
 
