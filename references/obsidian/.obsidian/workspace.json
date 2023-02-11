@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🔢Tick Test.md",
+                "file": "📑notes/🔢LR algorithm notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -188,6 +188,7 @@
   },
   "active": "e87aa9ab943386a7",
   "lastOpenFiles": [
+    "📑notes/🔢LR algorithm notes.md",
     "📖chapters/🔢Tick Test.md",
     "📖chapters/🔢LR Algorithm.md",
     "📑notes/🔢Hybrid rules notes.md",
@@ -195,7 +196,6 @@
     "📖chapters/🏅Feature importance measure.md",
     "📖chapters/🧃Feature Sets.md",
     "📖chapters/🤖Transformer.md",
-    "📑notes/🔢LR algorithm notes.md",
     "📖chapters/🔢EMO Rule.md",
     "📑notes/🅰️attention notes.md"
   ]
