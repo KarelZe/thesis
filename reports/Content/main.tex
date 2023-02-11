@@ -131,9 +131,29 @@ The trade size rule in \cref{eq:trade-size-rule} classifies based on a match bet
 
 \subsection{Hybrid Rules (2.5~p)}\label{sec:hybrid-rules}
 
+\begin{figure}[h!]
+  \setkeys{Gin}{height=60mm}
+  \subfloat[\acrshort{LR} Algorithm]{%
+  \includegraphics{lr-algo}
+  }
+  \hfill%
+  \subfloat[\acrshort{EMO} Rule]{%
+  \includegraphics{emo-algo}
+  }
+  \hfill%
+  \subfloat[\acrshort{CLNV} Rule]{%
+  \includegraphics{clnv-algo}
+  }
+  \hfill%
+  \subfloat[Stacked Rules of \textcite{grauerOptionTradeClassification2022}]{%
+  \includegraphics{grauer-algo}
+  }
+  \caption{Hybrid Trade Classification Rules}
+\end{figure}
+
 \subsubsection{Lee and Ready Algorithm (1 p)}\label{sec:lee-and-ready-algorithm}
 
-The popular \gls{LR} algorithm combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs trades according to the quote rule. Trades at the midpoint of the spread, which cannot be classified with the quote rule, are classified with the tick rule and quote rule, the \gls{LR} algorithm can thus be defined as:
+The popular \gls{LR} algorithm \autocite{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs trades according to the quote rule. Trades at the midpoint of the spread, which cannot be classified with the quote rule, are classified with the tick rule and quote rule, the \gls{LR} algorithm can thus be defined as:
 
 \begin{equation}
   \operatorname{lr} \colon \mathbb{R}^3 \to \left\{0,1\right\}, \quad
