@@ -106,7 +106,7 @@ def loc_files() -> dict:
     Returns:
         dict: Dict with filename as key and file contents as values.
     """
-    os.chdir("../../reports")
+    os.chdir("../../../reports")
     files = glob.glob("./**/*.tex", recursive=True)
 
     typer.echo(f"files checked: {files}")
@@ -115,7 +115,7 @@ def loc_files() -> dict:
     matches_per_file = {}
 
     for fname in files:
-        with open(fname, encoding="utf8") as infile:
+        with open(fname, encoding="latin1") as infile:
             file_contents = infile.read()
             matches_per_file[fname] = file_contents
 
