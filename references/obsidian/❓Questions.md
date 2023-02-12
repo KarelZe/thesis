@@ -1,6 +1,7 @@
 ## Open
 
-- Progress slowed down lately. Currently, I have written roughly 20 pages (14 Transformer, 2 related work + other). However, I plan to revise some chapters / rewrite them from scratch, as the why remains unclear for the Transformers and some paragraphs are hard to understand.
+- Progress slowed down lately. Currently, I have written roughly 29 pages (9 classical algorithms, 14 Transformer, 2 related work + other). However, I plan to revise the Transformer chapters / rewrite them from scratch, as the why remains unclear for the Transformers and some paragraphs are hard to understand.
+- Ask about classification rules. Do you also want a short discussion with the different views on the trade initiator? Do you like the mix of formal definition, intuition etc. Do you regard your stacking approach as a another hybrid algorithm?
 - Ask about scope of related work. Currently, trade classification in option markets (i) and trade classification with machine learning (ii). Already spent two days improving the chapters, but still not satisfied.
 - Ask for CBOE for unlabelled data. Poses a major risk as I'm not sure regarding performance / training times etc. 
 

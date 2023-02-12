@@ -21,18 +21,6 @@
             }
           },
           {
-            "id": "47bafc56ce1baa90",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🔢Basic rules notes.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "e87aa9ab943386a7",
             "type": "leaf",
             "state": {
@@ -44,8 +32,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "8ced9dafaca4ec30",
@@ -139,7 +126,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🔢Basic rules notes.md",
+                "file": "📑notes/🔢Hybrid rules notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -167,7 +154,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🔢Basic rules notes.md"
+                "file": "📑notes/🔢Hybrid rules notes.md"
               }
             }
           },
@@ -198,17 +185,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "47bafc56ce1baa90",
+  "active": "94415710fad4ab13",
   "lastOpenFiles": [
+    "❓Questions.md",
+    "📑notes/🔢Basic rules notes.md",
     "📖chapters/🔢Hybrid rules.md",
     "📑notes/🔢Hybrid rules notes.md",
     "📑notes/🔢LR algorithm notes.md",
     "📖chapters/🔢Basic rules.md",
-    "📑notes/🔢Basic rules notes.md",
     "🖼️Media/visualization-of-quote-and-tick.png",
     "📖chapters/🔢LR Algorithm.md",
     "📖chapters/🔢Tick Test.md",
-    "📖chapters/🏅Feature importance measure.md",
-    "📖chapters/🧃Feature Sets.md"
+    "📖chapters/🏅Feature importance measure.md"
   ]
 }
