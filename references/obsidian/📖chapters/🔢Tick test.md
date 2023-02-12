@@ -1,6 +1,6 @@
 Based on the rationale that buys increase the trade price and sells lower them, the *tick test* classifies trades by the change in trade price ([[@easleyDiscerningInformationTrade2016]] 271). Its first use is documented in (cp. [[@holthausenEffectLargeBlock1987]] 244) and ([[@hasbrouckTradesQuotesInventories1988]] 240). 
 
-We denote the trade price of the $i$-th security at time $t$ as $P_{i,t}$ and the price change between two successive trades. The tick test is formally defined as 
+We denote the trade price of the $i$-th security at time $t$ as $p_{i,t}$ and the price change between two successive trades. The tick test is formally defined as 
 
 $$
   \begin{equation}
@@ -8,13 +8,15 @@ $$
     \text{Trade}_{i,t}=
 
     \begin{cases}
-      1, & \text{if}\ P_{i, t} > P_{i, t-1}\\
-      0, & \text{if}\ P_{i, t} < P_{i, t-1}\\
-	  P_{i,t-1} = P_{i,t-2},& \text{else}.
+      1, & \text{if}\ p_{i, t} > p_{i, t-1}\\
+      0, & \text{if}\ p_{i, t} < p_{i, t-1}\\
+	  p_{i,t-1} = p_{i,t-2},& \text{else}.
     \end{cases}
   \end{equation}
 $$
 If the trade price is higher than the previous price (uptick) the trade is classified as a buy. Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price. ([[@leeInferringTradeDirection1991]] 3)
+
+<mark style="background: #BBFABBA6;">“The primary limitation of the tick test is its relative imprecision when compared to a quote-based approach, particularly if the prevailing quote has changed or it has been a long time since the last trade.” (Lee and Ready, 1991, p. 3)</mark> -> employs no constraints
 
 By this means, the tick rule can sign all trades as long as there is a last distinguishable trade price. Being only dependent on transaction data makes the tick rule highly data efficient ([[@odders-whiteOccurrenceConsequencesInaccurate2000]] 264) or ([[@theissenTestAccuracyLee2000]] 1). Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed in ([[@finucaneDirectTestMethods2000]] 557--558). For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick, is misclassified as buys by tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks will be erroneously classified as a sell. 
 
@@ -24,8 +26,8 @@ $$
   \begin{equation}
     \text{Trade}_{i,t}=
     \begin{cases}
-      1, & \text{if}\ P_{i, t} > P_{i, t+1}\\
-      0, & \text{if}\ P_{i, t} < P_{i, t+1}\\
+      1, & \text{if}\ p_{i, t} > p_{i, t+1}\\
+      0, & \text{if}\ p_{i, t} < p_{i, t+1}\\
 	  P_{i,t+1} = P_{i,t+2},& \text{else}
     \end{cases}
   \end{equation}

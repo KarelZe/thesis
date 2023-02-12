@@ -1,4 +1,20 @@
-Tags: #trade-classification #CLVN 
+Tags: #trade-classification #CLNV 
+
+Long form:
+$$
+  \begin{equation}
+
+    \text{Trade}_{i,t}=
+    \begin{cases}
+      \operatorname{tick}(), & \text{if}\ p_{i, t} \in \left(a_{i, t}, \infty\right) \\
+      1, & \text{if}\ p_{i, t} \in \left[\frac{3}{10} b_{i,t} + \frac{7}{10} a_{i,t}, a_{i, t}\right] \\
+      \operatorname{tick}(), & \text{if}\ p_{i, t} \in \left(\frac{7}{10} b_{i,t} + \frac{3}{10} a_{i,t}, \frac{3}{10} b_{i,t} + \frac{7}{10} a_{i,t}\right) \\
+      0, & \text{if} p_{i, t} \in \left[ b_{i,t}, \frac{7}{10} b_{i,t} + \frac{3}{10} a_{i,t}\right] \\
+	  \operatorname{tick}(), & \text{if} \ p_{i, t} \in \left(-\infty, b_{i, t}\right) \\
+    \end{cases}
+  \end{equation}
+$$
+
 
 Long form:
 $$

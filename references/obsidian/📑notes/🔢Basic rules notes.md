@@ -1,8 +1,29 @@
 Tags: #trade-classification 
 
-Denote sells with $0$ and buys with $1$.
+In absence of the . 
 
-“The trade indicator is a binary variable stating whether the buyer or seller of an asset has initiated the trade by submitting a market order or an immediately executed limit order.” (Frömmel et al., 2021, p. 4)
+We start by the popular quote rule and tick test in Section ... and continue with two recent alternatives. 
+
+Because every trade has both a buyer and a seller, it is necessary to classify the “active” side of each option transaction.
+
+- requires separatiing buys from sells in the raw trading data
+
+While the information about the initator of a trade is missing in public data sets ... we infer the 
+
+**Possible openings:** 
+
+“The improved ability to discern whether a trade was a buy order or a sell order is of particular importance” ([[@leeInferringTradeDirection1991]], p. 1)
+“Therefore, trade classification rules (TCR) have been developed in order to classify trades as buyer- or seller-initiated, when the true originator is unknown” (Frömmel et al., 2021, p. 4)
+
+“The trade indicator is a binary variable stating whether the buyer or seller of an asset has initiated the trade by submitting a market order or an immediately executed limit order.” ([[@frommelAccuracyTradeClassification2021]], p. 4)
+
+“The goal of the trade side classification is to determine the initiator of the transaction and to classify trades as being either buyer or seller motivated. However, a formal definition of a trade initiator is rarely stated in the literature.” ([[@olbrysEvaluatingTradeSide2018]], p. 4)
+
+“Trade classification rules (hereafter referred to as TCR) are intended to indicate the party to a trade who initiates a transaction. It may by either a buyer or a seller. Such indication made directly from the data is nowadays in mostly cases inaccessible, since the majority of public databases including transaction data do not contain information of trade initiators and trade direction.” ([[@nowakAccuracyTradeClassification2020]], p. 65)
+
+
+“Methods of inferring trade direction can be classified as: tick tests, which use changes in trade prices; the quote method, which compares trade prices to quotes;” (Finucane, 2000, p. 557)
+
 
 
 <mark style="background: #FFB86CA6;">“Methods of inferring trade direction can be classified as: tick tests, which use changes in trade prices; the quote method, which compares trade prices to quotes;” (Finucane, 2000, p. 557)

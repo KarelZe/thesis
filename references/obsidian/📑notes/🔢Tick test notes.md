@@ -9,10 +9,10 @@ One of the first works who mention the tick test is [[@holthausenEffectLargeBloc
 “his approach eschews any distributional assumptions and relies instead on the basic notion that buys raise prices and sells lower them. But how well this approximation works to infer trades, or underlying information, is debatable,” (Easley et al., 2016, p. 271)
 
 **Algorithm:** Formal description in [[@olbrysEvaluatingTradeSide2018]] and [[@carrionTradeSigningFast2020]] (see below) and [[@jurkatisInferringTradeDirections2022]]:
-Formally denoting the trade price of security $i$ at time $t$ as $P_{i, t}$ and $\Delta P_{i, t}$ as the price change between two successive trades and the assigned trade direction at time $t$ as Trade, we have:
-If $\Delta P_{i, t}>0$, Trade $_{i, t}=$ Buy,
-If $\Delta P_{i, t}<0$, Trade $_{i, t}=$ Sell,
-If $\Delta P_{i, t}=0$, Trade $_{i, t}=$ Trade $_{i, t-1}$.
+Formally denoting the trade price of security $i$ at time $t$ as $p_{i, t}$ and $\Delta p_{i, t}$ as the price change between two successive trades and the assigned trade direction at time $t$ as Trade, we have:
+If $\Delta p_{i, t}>0$, Trade $_{i, t}=$ Buy,
+If $\Delta p_{i, t}<0$, Trade $_{i, t}=$ Sell,
+If $\Delta p_{i, t}=0$, Trade $_{i, t}=$ Trade $_{i, t-1}$.
 
 **Informal description:** Tick tests use changes in trade prices and look at previous trade prices to infer trade direction. If the trade occurs at a higher price, hence uptick, as the previous trade its classified as as buyer-initiated. If the trade occurs at a lower price its seller-initiated. If the price change is zero, the last price is taken, that is different from the current price. (see e. g., [[@grauerOptionTradeClassification2022]] or [[@finucaneDirectTestMethods2000]] or [[@leeInferringTradeDirection1991]] for similar framing)
 

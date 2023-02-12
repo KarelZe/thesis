@@ -9,8 +9,8 @@ $$
     \text{Trade}_{i,t}=
 
     \begin{cases}
-      1, & \text{if}\ P_{i, t} = A_{i, t} \\
-      0, & \text{if}\ P_{i, t} = B_{i, t}  \\
+      1, & \text{if}\ p_{i, t} = a_{i, t} \\
+      0, & \text{if}\ p_{i, t} = b_{i, t}  \\
 	  \operatorname{tick}(), & \text{else}.
     \end{cases}
   \end{equation}
