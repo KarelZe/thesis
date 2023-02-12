@@ -1,4 +1,4 @@
-The basic trade classification rules from [[🔢Basic rules]] can be combined into a hybrid algorithm to enforce a universal applicability to all trades and or to improve the classification performance.
+ The basic trade classification rules from [[🔢Basic rules]] can be combined into a hybrid algorithm to enforce a universal applicability to all trades and or to improve the classification performance.
 
 Popular variants include the LR algorithm, the EMO rule, and CLVN method. All three algorithms utilize the quote and tick rule to a varying degree, as depicted in Figure a) - c)., Both rules are selected based on the proximity of the trade price to the quotes. We study all algorithms in detail in ... . 
 

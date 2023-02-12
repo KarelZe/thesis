@@ -26,7 +26,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🔢Hybrid rules.md",
+                "file": "📑notes/🔢Basic rules notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -139,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🔢Hybrid rules.md",
+                "file": "📑notes/🔢Basic rules notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -167,7 +167,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🔢Hybrid rules.md"
+                "file": "📑notes/🔢Basic rules notes.md"
               }
             }
           },
@@ -200,6 +200,7 @@
   },
   "active": "47bafc56ce1baa90",
   "lastOpenFiles": [
+    "📖chapters/🔢Hybrid rules.md",
     "📑notes/🔢Hybrid rules notes.md",
     "📑notes/🔢LR algorithm notes.md",
     "📖chapters/🔢Basic rules.md",
@@ -208,7 +209,6 @@
     "📖chapters/🔢LR Algorithm.md",
     "📖chapters/🔢Tick Test.md",
     "📖chapters/🏅Feature importance measure.md",
-    "📖chapters/🧃Feature Sets.md",
-    "📖chapters/🤖Transformer.md"
+    "📖chapters/🧃Feature Sets.md"
   ]
 }

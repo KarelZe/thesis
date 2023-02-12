@@ -92,11 +92,14 @@
         urlcolor=black,
         bookmarksopen
 }
-\usepackage[capitalise]{cleveref} % Enables the use of \cref{} to refer to figures, etc. with Fig.
+\usepackage[capitalise, noabbrev]{cleveref} % Enables the use of \cref{} to refer to figures, etc. with Fig.
 \creflabelformat{equation}{#2#1#3} % omit round brackets
 
-	\usepackage[acronym]{glossaries}
+	\usepackage[acronym, savewrites=true, nomain]{glossaries}
 	\makeglossaries
+
+	% https://tex.stackexchange.com/questions/98494/glossaries-dont-print-single-occurences/230664#230664
+	\glsenableentrycount % if only used once, dont abbrevate
 
 	\newacronym{ANN}{ANN}{artificial neural network}
 	\newacronym{AUC}{AUC}{area under the curve}
@@ -109,8 +112,7 @@
 	\newacronym{ISE}{ISE}{International Securities Exchange}
 	\newacronym{GBM}{GBM}{gradient boosting machine}
 	\newacronym{LR}{LR}{Lee-Ready}
-	\newacronym{MAE}{MAE}{mean absolute error}
-	\newacronym{MSE}{MSE}{mean squared error}
+	\newacronym[first={national best bid and offer}]{NBBO}{NBBO}{national best bid and offer}
 	\newacronym{NYSE}{NYSE}{New York Stock Exchange}
 	\newacronym{NASDAQ}{NASDAQ}{National Association of Securities Dealers Automated Quotations}
 	\newacronym{RMSE}{RMSE}{root mean squared error}
