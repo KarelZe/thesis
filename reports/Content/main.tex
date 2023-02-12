@@ -1,6 +1,7 @@
 \section{Introduction (2~p)}\label{sec:introduction}
 
-The authors acknowledge support by the state of Baden-Württemberg through \href{https://www.bwhpc.de/}{bwHPC}.
+\footnote{The authors acknowledge support by the state of Baden-Württemberg through \href{https://www.bwhpc.de/}{bwHPC}.}
+\newpage
 
 \section{Related Work (3~p)}\label{sec:related-work}
 
@@ -94,7 +95,7 @@ As donated in \cref{eq:tick-test} the trade is classified as seller-initiated, i
 
 Both the tick test and reverse tick test result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}.
 
-In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades recorded at the \cgls{ISE} and \cgls{CBOE}, but both cannot compete with quote-based approaches and calls for more sophisticated approaches. This findings contradict results in the stock market \autocite[][737]{leeInferringTradeDirection1991}.
+In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades recorded at the \cgls{ISE} and \cgls{CBOE}, but both cannot compete with quote-based approaches and calls for more sophisticated approaches. These findings contradict the results in the stock market \autocite[][737]{leeInferringTradeDirection1991}.
 
 \subsubsection{Depth Rule}\label{sec:depth-rule}
 
@@ -164,7 +165,7 @@ Popular variants include the \cgls{LR} algorithm, the \cgls{EMO} rule, and the \
 
 \subsubsection{Lee and Ready Algorithm}\label{sec:lee-and-ready-algorithm}
 
-The popular \cgls{LR} algorithm \autocite{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs the trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified with the tick rule. The \cgls{LR} algorithm, $\operatorname{lr} \colon \mathbb{R}^3 \to \left\{0,1\right\}$, can thus be defined as:
+The popular \cgls{LR} algorithm \autocite{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs the trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified by the tick rule. The \cgls{LR} algorithm, $\operatorname{lr} \colon \mathbb{R}^3 \to \left\{0,1\right\}$, are defined as:
 
 \begin{equation}
   \operatorname{lr}(p_{i,t-1}, p_{i,t}, m_{i,t})=
@@ -184,7 +185,6 @@ The strength of the algorithm lies in combining the strong classification accura
 \textcite[][536]{ellisAccuracyTradeClassification2000} examine the performance of the previous algorithms for stocks traded at NASDAQ. By analysing miss-classified trades with regard to the proximity of the trade to the quotes, they observe, that the quote rule and by extension of the \cgls{LR} algorithm performs particularly well at classifying trades executed at the bid and the ask price but trail the performance of the tick rule for trades inside or outside the spread \autocite[][535--536]{ellisAccuracyTradeClassification2000}. The authors combine these observations into a single rule, known as the \cgls{EMO} algorithm.
 
 As such, the \cgls{EMO} algorithm extends the tick rule by classifying trades at the quotes using the quote rule, and all other trades with the tick test. Formally, the classification rule is given by:
-
 \begin{equation}
   \operatorname{emo} \colon \mathbb{R}^4 \to \left\{0, 1 \right\}, \quad
   \operatorname{emo}(p_{i, t-1}, p_{i, t}, a_{i, t}, b_{i, t})=
