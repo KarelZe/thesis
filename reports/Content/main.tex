@@ -11,7 +11,7 @@ While classical trade classification algorithms are extensively tested in the st
 
 \textcite[882--883]{savickasInferringDirectionOption2003} are the first to compare the tick rule, quote rule, the Lee and Ready algorithm and the \cgls{EMO} rule for options traded at the \cgls{CBOE}. The data set spans a period from July 3, 1995 -- December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule (\SI{78.98}{\percent}) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
 
-The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}.  The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the \cgls{ISE}, and \cgls{CBOE} classical rules like the popular Lee and Ready algorithm only achieve accuracies of \SI{62.53}{\percent} or \SI{62.03}{\percent} and are thus significantly smaller than in the stock market. In line with the research of  \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the reported success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The \textit{depth rule} is an alternative to the tick rule for classifying midspread trades in the Lee and Ready algorithm and \cgls{EMO} rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the \textit{trade size rule}, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing previous rules by more than \SI{10}{\percent}, at the cost of data efficiency.
+The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}.  The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the \cgls{ISE}, and \cgls{CBOE} classical rules like the popular Lee and Ready algorithm only achieve accuracies of \SI{62.53}{\percent} or \SI{62.03}{\percent} and are thus significantly smaller than in the stock market. In line with the research of  \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the reported success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The \textit{depth rule} is an alternative to the tick rule for classifying midspread trades in the Lee and Ready algorithm and \cgls{EMO} rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the \textit{trade size rule}, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing primary rules by more than \SI{10}{\percent}, at the cost of data efficiency.
 
 The work of \textcite{grauerOptionTradeClassification2022} is important in two ways. First, the data set is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
 
@@ -30,7 +30,15 @@ In summary, machine learning has been applied successfully in the context of tra
 \newpage
 \section{Rule-Based Approaches}\label{sec:rule-based-approaches}
 
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. Consequently, we denote it by $y \in \{0,1\}$, whereby $y=0$ indicates a seller-initiated and $y=1$ a buyer-initiated trade. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
+
+At this point, it remains unclear, what characterizes the trade initiator. We discuss common views in literature in the next section.
+
+\subsection{Trade Initiator}\label{sec:trade-initiator}
+
+(...)
+
+Consequently, we denote it by $y \in \{0,1\}$, whereby $y=0$ indicates a seller-initiated and $y=1$ a buyer-initiated trade.
 
 The following section introduces basic rules for option trade classification. We start with the classical quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we exclude classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
@@ -152,7 +160,7 @@ The basic trade classification rules from \cref{sec:basic-rules} can be combined
   \includegraphics{clnv-algo}
   }
   \hfill%
-  \subfloat[Stacked Rules of \textcite{grauerOptionTradeClassification2022}\label{fig:hybrid-grauer}]{%
+  \subfloat[Hybrid Rule Through Stacking\label{fig:hybrid-grauer}]{%
   \includegraphics{grauer-algo}
   }
   \caption[Comparison Between Hybrid Trade Classification Rules]{Comparison between hybrid trade classification rules. The Figure visualizes the components of the \acrshort{LR} algorithm, \acrshort{EMO} rule, the \acrshort{CLNV} method, and an arbitrary, stacked combination relative to the quotes. Rules at the midpoint or the quotes are slightly exaggerated for better readability. Own work inspired by \textcite[][167]{poppeSensitivityVPINChoice2016}.}
@@ -161,8 +169,7 @@ The basic trade classification rules from \cref{sec:basic-rules} can be combined
 
 Popular variants include the \cgls{LR} algorithm, the \cgls{EMO} rule, and the \cgls{CLNV} method. All three algorithms utilize the quote and tick rule to a varying extent, as depicted in \cref{fig:hybrid-lr,fig:hybrid-emo,fig:hybrid-clnv}. Basic rules are selected based on the proximity of the trade price to the quotes. We study all algorithms in detail in \cref{sec:lee-and-ready-algorithm,sec:ellis-michaely-ohara-rule,sec:chakarabarty-li-nguyen-van-ness-method}.
 
-\textcite[][18]{grauerOptionTradeClassification2022} combine rules like the trade size rule, depth rule, as well as other basic or hybrid rules through stacking. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the previous rules and their ordering. Like before all rules are applied mutually exclusively. Theoretically, all algorithms can be stacked. As it's no separate algorithm, we don't discuss the concept as a separate rule. Instead we refer to the \textcite[][1--29]{grauerOptionTradeClassification2022} and our discussion on the classification rule's domain for possible arrangments.
-
+\textcite[][18]{grauerOptionTradeClassification2022} combine rules like the trade size rule, depth rule, as well as other basic or hybrid rules through stacking. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the previous rules and their ordering. We cover this generic approach in \cref{sec:stacked-rule}.
 \subsubsection{Lee and Ready Algorithm}\label{sec:lee-and-ready-algorithm}
 
 The popular \cgls{LR} algorithm \autocite{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs the trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified by the tick rule. The \cgls{LR} algorithm, $\operatorname{lr} \colon \mathbb{R}^3 \to \left\{0,1\right\}$, are defined as:
@@ -218,9 +225,16 @@ Like the previous two algorithms, the \cgls{CLNV} method \autocite[][3809]{chakr
 
 The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\cgls{EMO} rule) against the quote rule (\cgls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $b_{i,t}$ and ends at $b_{i,t} + \tfrac{3}{10} (a_{i,t} - b_{i,t}) = \tfrac{7}{10} b_{i,t} + \tfrac{3}{10} a_{i,t}$, the end of the \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \cgls{CLNV} method uses the backwards-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
 
+\subsubsection{Stacked Rule}\label{sec:stacked-rule}
+
+(...)
+
+Like before all rules are applied mutually exclusively. Theoretically, all algorithms can be stacked. As it's no separate algorithm, we don't discuss the concept as a separate rule. Instead we refer to the \textcite[][1--29]{grauerOptionTradeClassification2022} and our discussion on the classification rule's domain for possible arrangments.
+
 \textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and the quotes. Hence, current classification rules may not realize their full potential. A obvious question is, if classifiers, \emph{learned} on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
 
 The trend towards sophisticated, hybrid rules, combining as many as four base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) ensembles found in machine learning and expresses the need for better classifiers. In the subsequent section, we provide an overview of state-of-the-art machine learning-based classifiers. We start by framing trade classification as a supervised learning problem.
+
 \newpage
 \section{Supervised Approaches (12~p)}\label{sec:supervised-approaches}
 
@@ -242,7 +256,7 @@ The trend towards sophisticated, hybrid rules, combining as many as four base ru
     \begin{center}
       \includegraphics[width=\textwidth]{classical_transformer}
     \end{center}
-    \caption{Own drawing inspired by \textcite{daiTransformerXLAttentiveLanguage2019}}
+    \caption[Overview Over the Transformer Architecture]{Overview Over the Transformer Architecture. Own work inspired by \textcite{daiTransformerXLAttentiveLanguage2019}}.
   \end{figure}
 \end{landscape}
 
