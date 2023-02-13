@@ -4,20 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "2785db0e51818bf2",
+        "id": "decdc03bd4248657",
         "type": "tabs",
         "dimension": 56.506994489190326,
         "children": [
           {
-            "id": "e87aa9ab943386a7",
+            "id": "afa6591fd355c25c",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🔢Basic rules notes.md",
+                "file": "📖chapters/🔢Hybrid rules.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "pinned": true
             }
           },
           {
@@ -26,14 +28,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🎨Inspiration.md",
+                "file": "📑notes/🔢Hybrid rules notes.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "98f847228f79bc8c",
@@ -108,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🎨Inspiration.md",
+                "file": "📖chapters/🔢Hybrid rules.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🎨Inspiration.md"
+                "file": "📖chapters/🔢Hybrid rules.md"
               }
             }
           },
@@ -167,15 +168,15 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "5bb944c61799117b",
+  "active": "afa6591fd355c25c",
   "lastOpenFiles": [
+    "📑notes/🔢Hybrid rules notes.md",
+    "📖chapters/🎨Inspiration.md",
     "📑notes/🔢Basic rules notes.md",
     "📖chapters/🔢Basic rules.md",
     "📖chapters/🔢Hybrid rules.md",
-    "📖chapters/🎨Inspiration.md",
     "🗿TOC.md",
     "🖼️Media/Untitled.md",
-    "📑notes/🔢Hybrid rules notes.md",
     "❓Questions.md",
     "📑notes/🔢LR algorithm notes.md",
     "🖼️Media/visualization-of-quote-and-tick.png"
