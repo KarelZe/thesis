@@ -229,7 +229,15 @@ The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a perform
 
 (...)
 
-Like before all rules are applied mutually exclusively. Theoretically, all algorithms can be stacked. As it's no separate algorithm, we don't discuss the concept as a separate rule. Instead we refer to the \textcite[][1--29]{grauerOptionTradeClassification2022} and our discussion on the classification rule's domain for possible arrangments.
+\begin{figure}[ht!]
+\begin{center}
+  \includegraphics[height=60mm]{stacking-algo}
+\end{center}
+\caption[Visualization Of A Stacked Rules]{Visualization of a stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured areas indicate the domain of the base rules. Despite being classifiable by all rules, as indicated by the arrows inside the domains, only the trade size rule is applied, as it is the first rule to classify the trade entirely. Own drawing.}
+\label{fig:stacking-algo}
+\end{figure}
+
+Like before all rules are applied mutually exclusively. Theoretically, all algorithms can be stacked. As it's no separate algorithm, we don't discuss the concept as a separate rule. Instead we refer to the \textcite[][1--29]{grauerOptionTradeClassification2022} and our discussion on the classification rule's domain for possible arrangements.
 
 \textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and the quotes. Hence, current classification rules may not realize their full potential. A obvious question is, if classifiers, \emph{learned} on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
 

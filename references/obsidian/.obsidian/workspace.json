@@ -32,7 +32,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "98f847228f79bc8c",
@@ -107,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🔢Basic rules notes.md",
+                "file": "📖chapters/🎨Inspiration.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -135,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🔢Basic rules notes.md"
+                "file": "📖chapters/🎨Inspiration.md"
               }
             }
           },
@@ -166,8 +167,9 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "e87aa9ab943386a7",
+  "active": "5bb944c61799117b",
   "lastOpenFiles": [
+    "📑notes/🔢Basic rules notes.md",
     "📖chapters/🔢Basic rules.md",
     "📖chapters/🔢Hybrid rules.md",
     "📖chapters/🎨Inspiration.md",
@@ -175,7 +177,6 @@
     "🖼️Media/Untitled.md",
     "📑notes/🔢Hybrid rules notes.md",
     "❓Questions.md",
-    "📑notes/🔢Basic rules notes.md",
     "📑notes/🔢LR algorithm notes.md",
     "🖼️Media/visualization-of-quote-and-tick.png"
   ]
