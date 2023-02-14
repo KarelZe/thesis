@@ -2,15 +2,18 @@ Tags: #trade-classification #lee-ready
 
 
 
+
 Accuracy has been tested in [[@odders-whiteOccurrenceConsequencesInaccurate2000]], [[@finucaneDirectTestMethods2000]] and [[@leeInferringInvestorBehavior2000]] on TORQ data set which contains the true label. (see [[@bessembinderIssuesAssessingTrade2003]])
+
+A second difficulty is that signing trades also requires relating the trade price to the prevailing quote. Traders taking the market maker’s bid (ask) were presumed to be sellers (buyers), and trades falling in between were signed using a tick-based algorithm. The Lee-Ready (1991) algorithm also suggested using a five-second delay between the reported quote and trade price to reflect the fact that the mechanism reporting quotes to the tape was not the same as the trade-reporting mechanism. Even in the simpler world of specialist trading, trade classification errors were substantial. ([[@easleyFlowToxicityLiquidity2012]])
 
 “Additionally, trade direction may not always be unambiguously determined. While LR assume that trades generally occur only when a market buy or sell order arrives, trades that do not involve market orders also can occur, such as when two limit orders are crossed. Although the trade can be classified by the tick test or LR's algorithm, the true direction of the trade is ambiguous. Classifying such trades as buys or sells may lead to erroneous conclusions in empirical studies.” (Finucane, 2000, p. 559)
 
-**Algorithm:** See [[@leeInferringTradeDirection1991]]
-**Algorithm:** Use a combination of quote and tick rule. Use tick rule to classify trades at midpoint and use the quote rule elsewhere.
-![[lr-algo.png]]
 
-- “The tick test will only misclassify the second midpoint trade after the arrival of the standing order if it misclassifies the first midpoint trade and the second trade is in the same direction as the first trade (i.e., another buy).” (Lee and Ready, 1991, p. 11)
+
+**Algorithm:** “However, based on the data for 114 and 318 spread, we expect that the best approach for these trades is to classify those that occur in the middle of the spread using the tick test and other trades inside the spread as buys (sells) if they are closer to the ask (bid).” ([[@leeInferringTradeDirection1991]], p. 13)
+**Algorithm:** Use a combination of quote and tick rule. Use tick rule to classify trades at midpoint and use the quote rule elsewhere.
+“The tick test will only misclassify the second midpoint trade after the arrival of the standing order if it misclassifies the first midpoint trade and the second trade is in the same direction as the first trade (i.e., another buy).” ([[@leeInferringTradeDirection1991]], p. 11)
 
 Precise description from [[@carrionTradeSigningFast2020]] (Similar efforts in [[@jurkatisInferringTradeDirections2022]] or [[@olbrysEvaluatingTradeSide2018]]): 
 The tick rule (TICK) relies solely on trade prices for classifying trades and does not use any quote data. To classify trades, the tick rule compares the current trade price to the price of the preceding trade. A trade is classified as a buy if the trade price is higher than the preceding trade price (uptick). Likewise, a trade is classified as a sell if the trade price is lower than the preceding trade price (downtick). If the preceding trade price is the same, then the tick rule looks back to the last different price to classify the trade. Likewise, a trade is classified as a sell if it occurs on a zero-downtick. Formally denoting the trade price of security $i$ at time $t$ as $p_{i, t}$ and $\Delta p_{i, t}$ as the price change between two successive trades and the assigned trade direction at time $t$ as Trade, we have:
