@@ -54,7 +54,7 @@
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{stacking-algo.pdf}}%
-    \put(0.83683528,0.47845575){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}*\\\end{tabular}}}}%
+    \put(0.72343867,0.62065189){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}*\\\end{tabular}}}}%
     \put(0.49861593,0.06434023){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small\textsf{trade size rule}\normalsize\end{tabular}}}}%
     \put(0.68416214,0.1727444){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small\textsf{quote rule}\end{tabular}}}}%
     \put(0.85804487,0.27282586){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small\textsf{tick test}\end{tabular}}}}%
