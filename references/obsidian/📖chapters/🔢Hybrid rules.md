@@ -1,8 +1,19 @@
- The basic trade classification rules from [[🔢Basic rules]] can be combined into a hybrid algorithm to enforce a universal applicability to all trades and or to improve the classification performance.
+ The basic trade classification rules from [[🔢Basic rules]] can be combined into a hybrid algorithm to enforce universal applicability to all trades and or to improve the classification performance.
 
-Popular variants include the LR algorithm, the EMO rule, and CLVN method. All three algorithms utilize the quote and tick rule to a varying degree, as depicted in Figure a) - c)., Both rules are selected based on the proximity of the trade price to the quotes. We study all algorithms in detail in ... . 
 
-([[@grauerOptionTradeClassification2022]] 18) combine rules like the trade size rule, depth rule, as well as other basic or hybrid rules through stacking. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the primary rules and their ordering. Like before all rules are applied mutually-exclusively. Theoretically, all algorithms can be stacked. As such, we don't discuss this concept as a separate rule.
+The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. ([[@grauerOptionTradeClassification2022]] 18) combine multiple rules like the trade size rule, depth rule, as well as other basic or hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached (Other ways to combine the results are possible such as a meta classifier, or majority vote. Trades that can not be classified by any classifier get assigned randomly.). The classification is now dependent on the employed rules but also on their ordering.  
+
+As shown in Figure (...) for a hybrid rule consisting of $\operatorname{tsize}(\cdots) \to \operatorname{quote}(\cdots) \to \operatorname{tick}(\cdots)$, an exemplary trade cannot be classified by the primary trade size rule and is signed by the quote rule, which is the first rule in the stack, able to classify the trade. Other trades can be classifiable by the trade size rule, which rules out the classification of the quote and tick rule. Theoretically, stacked rules can grow to great depth with an arbitrary arrangement. In practice, rules may be ordered greedily and new rules added if there are unclassified trades.
+
+([[@chakrabartyTradeClassificationAlgorithms2007]]3811) and ([[@grauerOptionTradeClassification2022]]18) continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from static cut-off points at the decile boundaries of the spread including the midspread and the quotes. Hence, current classification rules may not realize their full potential. A obvious question is, if classifiers, learned on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
+
+The trend towards sophisticated, hybrid rules, combining as many as four base rules into a single classifier ([[@grauerOptionTradeClassification2022]]18), has conceptual parallels to ensembles found in machine learning and expresses the need for better classifiers. In the subsequent section, we provide an overview of state-of-the-art machine learning-based classifiers. We start by framing trade classification as a supervised learning problem.
+
+
+
+
+
+![[stacking-algo.png]]
 
 **Notes:**
 [[🔢Hybrid rules notes]]
