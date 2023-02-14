@@ -27,9 +27,9 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      showgrid="true"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="190.3885"
-     inkscape:cy="140.3607"
+     inkscape:zoom="4"
+     inkscape:cx="81.125001"
+     inkscape:cy="144.25"
      inkscape:window-width="2560"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -256,10 +256,6 @@
        id="path21346" />
     <path
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.204093;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 146.59215,111.94261 -15.90745,9.18418"
-       id="path21348" />
-    <path
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.204093;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        d="m 127.14971,121.12679 1.76749,1.02046 v 0"
        id="path21356" />
     <path
@@ -268,10 +264,10 @@
        id="path21360"
        sodipodi:nodetypes="cc" />
     <path
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.204093;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 128.9172,124.18818 v -2.04093 l 1.7675,-1.02046 c 1.95855,1.13077 1.95855,1.13077 0,0"
        id="path21354"
-       sodipodi:nodetypes="cccc" />
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.204093;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 146.59215,111.94261 c -5.89156,3.4017 -11.78356,6.80264 -17.67495,10.20464 v 2.04093"
+       sodipodi:nodetypes="ccc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.31997px;font-family:cmss12;-inkscape-font-specification:'cmss12, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.204093;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
