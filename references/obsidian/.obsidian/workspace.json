@@ -28,13 +28,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🔢Hybrid rules notes.md",
+                "file": "📖chapters/🎨Inspiration.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "98f847228f79bc8c",
@@ -109,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🔢Hybrid rules.md",
+                "file": "📖chapters/🎨Inspiration.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🔢Hybrid rules.md"
+                "file": "📖chapters/🎨Inspiration.md"
               }
             }
           },
@@ -168,13 +169,13 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "afa6591fd355c25c",
+  "active": "5bb944c61799117b",
   "lastOpenFiles": [
+    "📖chapters/🔢Hybrid rules.md",
     "📑notes/🔢Hybrid rules notes.md",
     "📖chapters/🎨Inspiration.md",
     "📑notes/🔢Basic rules notes.md",
     "📖chapters/🔢Basic rules.md",
-    "📖chapters/🔢Hybrid rules.md",
     "🗿TOC.md",
     "🖼️Media/Untitled.md",
     "❓Questions.md",
