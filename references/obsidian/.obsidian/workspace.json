@@ -28,13 +28,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@aktasTradeClassificationAccuracy2014.md",
+                "file": "📖chapters/🔢Trade Initiator.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "98f847228f79bc8c",
@@ -109,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🔢LR algorithm.md",
+                "file": "📖chapters/🔢Trade Initiator.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🔢LR algorithm.md"
+                "file": "📖chapters/🔢Trade Initiator.md"
               }
             }
           },
@@ -168,11 +169,11 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "51b52105a3069d30",
+  "active": "b05197d0981df572",
   "lastOpenFiles": [
-    "📖chapters/🔢Trade Initiator.md",
-    "📖chapters/🔢LR algorithm.md",
     "📑notes/🔢Trade Initiator notes.md",
+    "📖chapters/🔢LR algorithm.md",
+    "📖chapters/🔢Trade Initiator.md",
     "📑notes/🔢Basic rules notes.md",
     "📥Inbox/@aktasTradeClassificationAccuracy2014.md",
     "📖chapters/🌏Ise dataset.md",
