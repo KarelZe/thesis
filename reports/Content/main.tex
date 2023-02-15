@@ -250,7 +250,7 @@ The most basic application is in the \gls{LR} algorithm. For a more complex exam
 \begin{center}
   \input{./Graphs/stacking-algo.pdf_tex}
 \end{center}
-\caption[Visualization Of A Stacked Rules]{Visualization of a stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured shapes indicate the domain of the base rules in a simplified scale. The trade is not classifiable by the trade size rule, as indicated by the arrows outside the rule's domain. The quote rule is applied, as it is the first rule to classify the trade entirely. Own drawing.}
+\caption[Visualization Of A Stacked Rule]{Visualization of a stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured shapes indicate the domain of the base rules in a simplified scale. The trade is not classifiable by the trade size rule, as indicated by the arrows outside the rule's domain. The quote rule is applied, as it is the first rule to classify the trade entirely. Own drawing.}
 \label{fig:stacking-algo}
 \end{figure}
 
@@ -302,6 +302,11 @@ The output of the decoder is finally passed through a linear layer with a softma
 For its original application, machine translation, both the encoder and decoder are used. Yet, the modular design allows adapting Transformers to a wider range of use cases, some of which only require the encoder or decoder. \textcite[][16--17]{raffelExploringLimitsTransfer2020} differentiate these modes: encoder-only architecture, which encodes the input to obtain an enriched representation, decoder-only architectures to generate new tokens and encoder-decoder models for sequence-to-sequence modelling autoregressively. As our focus is on the probabilistic classification of tabular data, the goal is to learn an enriched representation of the input for classifying the label, here $y$, rather than generating new samples. As such, encoder-only Transformers suffice. This observation also guides the structure in the next chapters, which is limited to embeddings and the inner workings of the encoder.
 
 \subsubsection{Token Embedding}\label{sec:token-embeddings}
+
+\gls{M}
+\gls{matrix}
+\gls{M}
+\gls{matrix}
 
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
 
