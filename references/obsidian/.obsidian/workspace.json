@@ -23,7 +23,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🗼Overview Transformer.md",
+                "file": "📖chapters/🛌Token Embedding.md",
                 "mode": "source",
                 "source": false
               }
@@ -88,7 +88,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🗼Overview Transformer.md",
+                "file": "📖chapters/🛌Token Embedding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +116,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🗼Overview Transformer.md"
+                "file": "📖chapters/🛌Token Embedding.md"
               }
             }
           },
@@ -149,8 +149,8 @@
   },
   "active": "637dd163e6116a86",
   "lastOpenFiles": [
-    "📥Inbox/@narangTransformerModificationsTransfer2021.md",
     "📖chapters/🗼Overview Transformer.md",
+    "📥Inbox/@narangTransformerModificationsTransfer2021.md",
     "📑notes/🤖Transformer notes.md",
     "📑notes/🗼Overview transformer notes.md",
     "📖chapters/🤖Transformer.md",
