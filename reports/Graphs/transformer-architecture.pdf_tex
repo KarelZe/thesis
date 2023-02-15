@@ -1,0 +1,115 @@
+%% Creator: Inkscape 1.2.2 (732a01da63, 2022-12-09), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'transformer-architecture.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{645.45323181bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.55774765)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{transformer-architecture.pdf}}%
+    \put(0.04056281,0.29569362){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Mat Mul\end{tabular}}}}%
+    \put(0.01621309,0.17773134){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Mat Mul\end{tabular}}}}%
+    \put(0.0243629,0.21728343){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Scale\end{tabular}}}}%
+    \put(0.01724005,0.25660417){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Softmax\end{tabular}}}}%
+    \put(0.05158463,0.13656019){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{K}$}\end{tabular}}}}%
+    \put(0.01566531,0.13706732){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{Q}$}\end{tabular}}}}%
+    \put(0.09230797,0.13632888){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{V}$}\end{tabular}}}}%
+    \put(0.33196196,0.30147608){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%
+    \put(0.31641641,0.26446835){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Concatenate\end{tabular}}}}%
+    \put(0.25209968,0.11759375){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{K}$}\end{tabular}}}}%
+    \put(0.59666063,0.04612238){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Input Embedding\end{tabular}}}}%
+    \put(0.79531368,0.04473469){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Output Embedding\end{tabular}}}}%
+    \put(0.61355691,0.15899618){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Multi-Head\end{tabular}}}}%
+    \put(0.61001291,0.19045278){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add \& Norm\end{tabular}}}}%
+    \put(0.6073623,0.23740638){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Feed Forward\end{tabular}}}}%
+    \put(0.60981411,0.28250959){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add \& Norm\end{tabular}}}}%
+    \put(0.82215582,0.17032979){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Masked\end{tabular}}}}%
+    \put(0.81312357,0.15506409){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Multi-Head\end{tabular}}}}%
+    \put(0.80672137,0.13979835){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Self-Attention\end{tabular}}}}%
+    \put(0.8099775,0.2038681){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add \& Norm\end{tabular}}}}%
+    \put(0.81295889,0.32252424){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add \& Norm\end{tabular}}}}%
+    \put(0.8170997,0.28991116){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Multi-Head\end{tabular}}}}%
+    \put(0.81069494,0.27464545){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Self-Attention\end{tabular}}}}%
+    \put(0.63736448,0.08336154){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}+\end{tabular}}}}%
+    \put(0.52965336,0.21288872){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$L\times$\end{tabular}}}}%
+    \put(0.56991395,0.32607764){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Encoder\end{tabular}}}}%
+    \put(0.73713383,0.4518906){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Decoder\end{tabular}}}}%
+    \put(0.94151051,0.25105299){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$L\times$\end{tabular}}}}%
+    \put(0.60319936,0.12101354){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{K}$\end{tabular}}}}%
+    \put(0.27372145,0.20895663){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Scaled Dot-Product Attention\end{tabular}}}}%
+    \put(0.83996125,0.08313023){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}+\end{tabular}}}}%
+    \put(0.80971148,0.37340994){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Feed Forward\end{tabular}}}}%
+    \put(0.81256102,0.41874447){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add \& Norm\end{tabular}}}}%
+    \put(0.8304178,0.46500417){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%
+    \put(0.82518125,0.49669206){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Softmax\end{tabular}}}}%
+    \put(0.61584214,0.00263824){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}inputs\end{tabular}}}}%
+    \put(0.82149207,0.00263824){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}targets\end{tabular}}}}%
+    \put(0.51852325,0.08845011){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Positional\end{tabular}}}}%
+    \put(0.51852325,0.07064014){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Embedding\end{tabular}}}}%
+    \put(0.90080198,0.0856745){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Positional\end{tabular}}}}%
+    \put(0.90080198,0.0678645){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Embedding\end{tabular}}}}%
+    \put(0.65269503,0.12055089){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{V}$\end{tabular}}}}%
+    \put(0.62804776,0.12078223){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{Q}$\end{tabular}}}}%
+    \put(0.80509308,0.11716255){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{K}$\end{tabular}}}}%
+    \put(0.85458876,0.11669997){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{V}$\end{tabular}}}}%
+    \put(0.82994149,0.11693128){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{Q}$\end{tabular}}}}%
+    \put(0.80230744,0.25521475){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{K}$\end{tabular}}}}%
+    \put(0.85180304,0.2547522){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{V}$\end{tabular}}}}%
+    \put(0.82715584,0.25498344){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{Q}$\end{tabular}}}}%
+    \put(0.82387439,0.54827165){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Output\end{tabular}}}}%
+    \put(0.80839128,0.53046166){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Probabilities\end{tabular}}}}%
+    \put(0.34353656,0.1180563){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{V}$}\end{tabular}}}}%
+    \put(0.43298439,0.11851892){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{Q}$}\end{tabular}}}}%
+    \put(0.24157794,0.15575798){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%
+    \put(0.33301252,0.15598929){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%
+    \put(0.42246035,0.15645188){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%
+    \put(0.60715223,0.14373044){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Self-Attention\end{tabular}}}}%
+  \end{picture}%
+\endgroup%

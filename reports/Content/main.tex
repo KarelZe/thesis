@@ -13,11 +13,11 @@ While classical trade classification algorithms are extensively tested in the st
 
 The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}.  The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the \cgls{ISE}, and \cgls{CBOE} classical rules like the popular Lee and Ready algorithm only achieve accuracies of \SI{62.53}{\percent} or \SI{62.03}{\percent} and are thus significantly smaller than in the stock market. In line with the research of  \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the reported success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The \textit{depth rule} is an alternative to the tick rule for classifying midspread trades in the Lee and Ready algorithm and \cgls{EMO} rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the \textit{trade size rule}, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing primary rules by more than \SI{10}{\percent}, at the cost of data efficiency.
 
-The work of \textcite{grauerOptionTradeClassification2022} is important in two ways. First, the data set is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
+The work of \textcite[1--39]{grauerOptionTradeClassification2022} is important in two ways. First, the data set is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
 
 \textbf{Trade classification using machine learning}
 
-\textcite[5]{rosenthalModelingTradeDirection2012} bridges the gap between classical trade classification and machine learning by fitting a logistic regression model on lagged and unlagged predictors inherent to the tick rule, quote rule, and \cgls{EMO} algorithm, as well as a sector-specific and a time-specific term. Instead of using the rule's discretized outcome as a feature, \textcite[481-482]{rosenthalModelingTradeDirection2012} models the rules through so-called information strength functions. The proximity to the quotes, central to the \cgls{EMO} algorithm, is thus modelled by a proximity function. Likewise, the information strength of the quote and tick rule is estimated as the log return between the trade price and the midpoint or the previous trade price. However, it only improves the accuracy of the \cgls{EMO} algorithm by a marginal \SI{2}{\percent} for Nasdaq stocks and \SI{1.1}{\percent} for \cgls{NYSE} stocks \textcite[15]{rosenthalModelingTradeDirection2012}. Our work aims to improve the model by exploring non-linear estimators and minimizing data modelling assumptions.
+\textcite[5]{rosenthalModelingTradeDirection2012} bridges the gap between classical trade classification and machine learning by fitting a logistic regression model on lagged and unlagged predictors inherent to the tick rule, quote rule, and \cgls{EMO} algorithm, as well as a sector-specific and a time-specific term. Instead of using the rule's discretized outcome as a feature, \textcite[481--482]{rosenthalModelingTradeDirection2012} models the rules through so-called information strength functions. The proximity to the quotes, central to the \cgls{EMO} algorithm, is thus modelled by a proximity function. Likewise, the information strength of the quote and tick rule is estimated as the log return between the trade price and the midpoint or the previous trade price. However, it only improves the accuracy of the \cgls{EMO} algorithm by a marginal \SI{2}{\percent} for Nasdaq stocks and \SI{1.1}{\percent} for \cgls{NYSE} stocks \textcite[15]{rosenthalModelingTradeDirection2012}. Our work aims to improve the model by exploring non-linear estimators and minimizing data modelling assumptions.
 
 The work of \textcite[483]{blazejewskiLocalNonParametricModel2005} compares a $k$-nearest neighbour classifier against logistic regression, as well as simple heuristics like the majority vote over past trades for signing trades at the Australian stock exchange. Their results indicate that the parametric $k$-nearest neighbour classifier improves upon a linear logistic regression in terms of classification accuracy, even when trained on fewer features. The work is unique from the remaining works about feature set definition. Notably, \textcite[3]{blazejewskiLocalNonParametricModel2005} use no quote or trade prices, but rather the order book volumes, trade sizes, and past trade signs for classification. No accuracies for classical trade signing rules are reported, which impedes a comparison across different works. In line with their results, we focus on non-linear models in the form of gradient boosting and transformers. Additionally, our paper addresses the mentioned shortcomings by benchmarking against state-of-the-art trade classification rules. We share the idea of using the trade size, as well as the bid and ask sizes for classification for some of our feature sets, but greedily predict using non-historic features.
 
@@ -32,11 +32,15 @@ In summary, machine learning has been applied successfully in the context of tra
 
 Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
 
-At this point, it remains unclear, what characterizes the trade initiator. We discuss common views in literature in the next section.
+At this point, it remains unclear, what characterizes the trade initiator. We discuss common views in literature next.
 
 \subsection{Trade Initiator}\label{sec:trade-initiator}
 
-(...)
+Two views are prevailing in literature:
+\begin{itemize}
+	\item \textbf{Immediacy definition:} Traders how demand for immediate execution.
+	\item \textbf{Chronological definition:} Trade initiator is the trader who places the order last. We adopt the \emph{chronological view}.
+\end{itemize}
 
 Consequently, we denote it by $y \in \{0,1\}$, whereby $y=0$ indicates a seller-initiated and $y=1$ a buyer-initiated trade.
 
@@ -234,11 +238,11 @@ Like the previous two algorithms, the \cgls{CLNV} method \autocite[][3809]{chakr
   \label{eq:CLNV-rule}
 \end{equation}
 
-The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\cgls{EMO} rule) against the quote rule (\cgls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $b_{i,t}$ and ends at $b_{i,t} + \tfrac{3}{10} (a_{i,t} - b_{i,t}) = \tfrac{7}{10} b_{i,t} + \tfrac{3}{10} a_{i,t}$, the end of the \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \cgls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
+The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\cgls{EMO} rule) against the quote rule (\cgls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $b_{i,t}$ and ends at $b_{i,t} + \tfrac{3}{10} (a_{i,t} - b_{i,t}) = \tfrac{7}{10} b_{i,t} + \tfrac{3}{10} a_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \cgls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
 
 \subsubsection{Stacked Rule}\label{sec:stacked-rule}
 
-The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{A trade, which can not be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their ordering.
+The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which can not be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their ordering.
 
 The most basic application is in the \gls{LR} algorithm. For a more complex example consider the hybrid rule consisting of $\operatorname{tsize}(\cdot) \to \operatorname{quote}(\cdot) \to \operatorname{tick}(\cdot)$ in \cref{fig:stacking-algo}, an exemplary trade cannot be classified by the primary trade size rule and is signed by the quote rule, which is the first rule in the stack, able to classify the trade. Other trades can be classifiable by the trade size rule, which rules out the classification of the quote and tick rule. Theoretically, stacked rules can grow to great depth with an arbitrary arrangement. In practice, rules may be ordered greedily and new rules added if there are unclassified trades.
 
@@ -246,7 +250,7 @@ The most basic application is in the \gls{LR} algorithm. For a more complex exam
 \begin{center}
   \input{./Graphs/stacking-algo.pdf_tex}
 \end{center}
-\caption[Visualization Of A Stacked Rules]{Visualization of a stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured shapes indicate the domain of the base rules in a simplified scale. The trade is not classifiable by the trade size rule, as indicated by the arrows outside the rule's domain. The quote rule is applied, as it is the first rule to classify the trade entirely. Own drawing.}
+\caption[Visualization Of A Stacked Rule]{Visualization of a stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured shapes indicate the domain of the base rules in a simplified scale. The trade is not classifiable by the trade size rule, as indicated by the arrows outside the rule's domain. The quote rule is applied, as it is the first rule to classify the trade entirely. Own drawing.}
 \label{fig:stacking-algo}
 \end{figure}
 
@@ -268,18 +272,40 @@ The trend towards sophisticated, hybrid rules, combining as many as four base ru
 
 \subsection{Transformer Networks}\label{sec:transformer-networks}
 
+The subsequent chapters provide an introduction to classifiers based on the Transformer architecture.
+
 \subsubsection{Architectural Overview}\label{sec:architectural-overview}
 
+The \emph{Transformer} is a neural network architecture of \textcite[][6002--6006]{vaswaniAttentionAllYou2017} proposed for sequence-to-sequence modelling. Its original application is in machine translation, whereby sentences in the source language are translated into sentences in the target language. More precisely, the sentence is first decomposed into individual tokens and mapped into a sequence of embeddings, which are rich vector representations of the raw input. The Transformer then processes the embeddings to generate the output sequence. 
+
+As the network operates on embeddings, rather than words, the architecture is not constrained to process textual data. It has been successfully adapted to other representations including image data \autocites[][2--5]{parmarImageTransformer2018}[][3]{dosovitskiyImageWorth16x162021} and tabular data \autocite[cp.][18932]{gorishniyRevisitingDeepLearning2021}. The latter is important for our work, as derived in \cref{sec:selection-of-approaches}. At times we fall back to the Transformer for machine translations, to develop a deeper understanding of the architecture and its components.
+
+Following the architecture for machine translation of \textcite[][3]{sutskeverSequenceSequenceLearning2014}, the network features two main components: the encoder and the decoder. A sequence of tokens is first mapped to a sequence of embeddings and augmented with positional information. The encoder receives these embeddings and creates an enriched representation from it by encoding the context in which the input appears i.e., the surrounding words. The output of the encoder is then fed to the decoder. The decoder takes the embedded target sequence along with parts of the encoded representation of the input, to autoregressively generate the output sequence, i.e., the translation in the target language token by token \autocite[][3]{vaswaniAttentionAllYou2017}. The complete architecture is depicted in \cref{fig:transformer-architecture-overview}. It serves as a guide through the subsequent sub-chapters.
+
+The encoder consists of $L=6$ stacked Transformer blocks \autocite[][6]{vaswaniAttentionAllYou2017}. Each block itself is composed of two sub-layers: a multi-head self-attention layer, followed by a position-wise, feed-forward network. Both components serve a distinct purpose in the Transformer. The self-attention mechanism encodes the context in which the input appears onto the embeddings, whereas the feed-forward network serves as a long-term memory persisting information outside the immediate context. In the multi-head self-attention mechanism of the encoder, inputs can learn from any token of the input sequence, even if the token appears causally before the other input. Each of the sub-layers is surrounded by skip connections \autocite[][2]{heDeepResidualLearning2015} and followed by layer normalization \autocite[][4]{baLayerNormalization2016} to facilitate and stabilize training. Stacking multiple Transformer blocks allows the model to learn hierarchical features from the inputs and targets. Applied to language processing, the first layers in the stack extract coarse-grained syntactic features, and subsequent layers learn fine-grained semantic features \autocites[][3651]{jawaharWhatDoesBERT2019}[][4596]{tenneyBERTRediscoversClassical2019}. For tabular data, this translates to frequent feature combinations or infrequent feature interactions.
+
+Aside from the multi-headed self-attention and feed-forward sub-layer, the decoder contains a third sub-layer for multi-headed self-attention on the output of the encoder, known as cross-attention. Also, the multi-headed self-attention mechanism in the decoder differs from the one in the encoder. Specifically, future parts of the output sequence are causally masked to prevent the model from learning on subsequent tokens during training, which enforces the autoregressive properties of the model \autocites[][3]{vaswaniAttentionAllYou2017}[][15]{narangTransformerModificationsTransfer2021}.
+
 \begin{landscape}
-  \begin{figure}
+  \begin{figure}[h]
     \begin{center}
-      \includegraphics[width=\textwidth]{classical_transformer}
+      {\renewcommand\normalsize{\scriptsize\sf}%
+      \normalsize
+      \input{./Graphs/transformer-architecture.pdf_tex}}
     \end{center}
-    \caption[Overview Over the Transformer Architecture]{Overview Over the Transformer Architecture. Own work inspired by \textcite{daiTransformerXLAttentiveLanguage2019}}.
+    \caption[Overview Over the Transformer Architecture]{Overview Over the Transformer Architecture. The left part shows the self-attention mechanism discussed in \cref{sec:attention}. The centre part depicts the multi-headed self-attention mechanism, as covered in \cref{sec:attention}. The right part shows the encoder and decoder stack, as well as the embedding mechanism as covered in \cref{sec:token-embeddings} onwards. Own work inspired by \textcite[][3]{tayEfficientTransformersSurvey2022}.}
+    \label{fig:transformer-architecture-overview}
   \end{figure}
 \end{landscape}
+The output of the decoder is finally passed through a linear layer with a softmax activation function to unembed the output and retrieve the probabilities of the next token \autocite[][5]{vaswaniAttentionAllYou2017}. Since the output sequence is generated autoregressively, the most probable token is fed back as input to the decoder to provide context for the following tokens until the remaining sequence is generated.
+
+For its original application, machine translation, both the encoder and decoder are used. Yet, the modular design allows adapting Transformers to a wider range of use cases, some of which only require the encoder or decoder. \textcite[][16--17]{raffelExploringLimitsTransfer2020} differentiate these modes: encoder-only architecture, which encodes the input to obtain an enriched representation, decoder-only architectures to generate new tokens and encoder-decoder models for sequence-to-sequence modelling autoregressively. As our focus is on the probabilistic classification of tabular data, the goal is to learn an enriched representation of the input for classifying the label, here $y$, rather than generating new samples. As such, encoder-only Transformers suffice. This observation also guides the structure in the next chapters, which is limited to embeddings and the inner workings of the encoder.
 
 \subsubsection{Token Embedding}\label{sec:token-embeddings}
+
+\gls{M}
+\gls{matrix}
+
 
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
 
