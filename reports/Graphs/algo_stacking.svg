@@ -27,9 +27,9 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      showgrid="true"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="-30.759145"
-     inkscape:cy="80.610173"
+     inkscape:zoom="5.6568542"
+     inkscape:cx="110.13188"
+     inkscape:cy="4.065864"
      inkscape:window-width="2560"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -227,7 +227,7 @@
     </g>
     <path
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.204093;stroke-dasharray:0.408185, 0.204093;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
-       d="m 144.82465,104.79937 13.44576,-7.547364"
+       d="m 144.82465,104.79937 18.55553,-4.53773"
        id="path19792"
        sodipodi:nodetypes="cc" />
     <path
@@ -272,18 +272,18 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.31997px;font-family:cmss12;-inkscape-font-specification:'cmss12, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.204093;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       x="157.65021"
-       y="99.25975"
+       x="163.05763"
+       y="102.41821"
        id="text19914-2"><tspan
          sodipodi:role="line"
          id="tspan19970-4"
-         x="157.65021"
-         y="99.25975"
+         x="163.05763"
+         y="102.41821"
          style="stroke-width:0.204093">*</tspan><tspan
          sodipodi:role="line"
          id="tspan19972-2"
-         x="157.65021"
-         y="104.65971"
+         x="163.05763"
+         y="107.81818"
          style="stroke-width:0.204093" /></text>
     <text
        xml:space="preserve"
