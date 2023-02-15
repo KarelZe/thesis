@@ -4,43 +4,8 @@
     "type": "split",
     "children": [
       {
-        "id": "decdc03bd4248657",
-        "type": "tabs",
-        "dimension": 47.13216957605986,
-        "children": [
-          {
-            "id": "51b52105a3069d30",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🔢LR algorithm.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "b05197d0981df572",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🔢Trade Initiator.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ],
-        "currentTab": 1
-      },
-      {
         "id": "98f847228f79bc8c",
         "type": "tabs",
-        "dimension": 52.86783042394015,
         "children": [
           {
             "id": "f35a250acbe1a2dc",
@@ -51,8 +16,21 @@
               "state": {},
               "pinned": true
             }
+          },
+          {
+            "id": "637dd163e6116a86",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🗼Overview Transformer.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -110,7 +88,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🔢Trade Initiator.md",
+                "file": "📖chapters/🗼Overview Transformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -138,7 +116,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🔢Trade Initiator.md"
+                "file": "📖chapters/🗼Overview Transformer.md"
               }
             }
           },
@@ -169,17 +147,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "b05197d0981df572",
+  "active": "637dd163e6116a86",
   "lastOpenFiles": [
-    "📑notes/🔢Trade Initiator notes.md",
+    "📖chapters/🤖Transformer.md",
+    "🖼️Media/Pasted image 20230126132519.png",
     "📖chapters/🔢LR algorithm.md",
     "📖chapters/🔢Trade Initiator.md",
+    "📑notes/🔢Trade Initiator notes.md",
     "📑notes/🔢Basic rules notes.md",
     "📥Inbox/@aktasTradeClassificationAccuracy2014.md",
     "📖chapters/🌏Ise dataset.md",
     "📖chapters/🔢Tick test.md",
-    "📥Inbox/@easleyOptionVolumeStock1998.md",
-    "📑notes/🔢LR algorithm notes.md",
-    "📑notes/🔢Quote rule notes.md"
+    "📥Inbox/@easleyOptionVolumeStock1998.md"
   ]
 }
