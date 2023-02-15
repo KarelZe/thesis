@@ -278,16 +278,18 @@ The subsequent chapters provide an introduction to classifiers based on the Tran
 
 The \emph{Transformer} is a neural network architecture of \textcite[][6002--6006]{vaswaniAttentionAllYou2017} proposed for sequence-to-sequence modelling. Its original application is in machine translation, whereby sentences in the source language are translated into sentences in the target language. More precisely, the sentence is first decomposed into individual tokens and mapped into a sequence of embeddings, which are rich vector representations of the raw input. The Transformer then processes the embeddings to generate the output sequence. 
 
-As the network operates on embeddings, rather than words, the architecture is not constrained to process textual data. It has been successfully adapted to other representations including image data \autocites[][2--5]{parmarImageTransformer2018}[][3]{dosovitskiyImageWorth16x162021} and tabular data \autocite[cp.][18{,}932]{gorishniyRevisitingDeepLearning2021}. The latter is important for our work, as derived in \cref{sec:selection-of-approaches}. At times we fall back to the Transformer for machine translations, to develop a deeper intuition for the architecture and its components.
+As the network operates on embeddings, rather than words, the architecture is not constrained to process textual data. It has been successfully adapted to other representations including image data \autocites[][2--5]{parmarImageTransformer2018}[][3]{dosovitskiyImageWorth16x162021} and tabular data \autocite[cp.][18{,}932]{gorishniyRevisitingDeepLearning2021}. The latter is important for our work, as derived in \cref{sec:selection-of-approaches}. At times we fall back to the Transformer for machine translations, to develop a deeper understanding for the architecture and its components.
 
 Following the architecture for machine translation of \textcite[][3]{sutskeverSequenceSequenceLearning2014}, the network features two main components: the \emph{encoder} and the \emph{decoder}. A sequence of tokens is first mapped to a sequence of embeddings and augmented with positional information. The encoder receives these embeddings and creates an enriched representation from it by encoding the context in which the input appears i.e., the surrounding words. The output of the encoder is then fed to the decoder. The decoder takes the embedded target sequence along with parts of the encoded representation of the input, to autoregressively generate the output sequence, i.e., the translation in the target language token by token \autocite[][3]{vaswaniAttentionAllYou2017}. The complete architecture is depicted in \cref{fig:transformer-architecture-overview}. It serves as a guide through the subsequent sub-chapters.
 
 \begin{landscape}
   \begin{figure}[ht!]
     \begin{center}
-      \includegraphics[width=\textwidth]{classical_transformer}
+      {\renewcommand\normalsize{\scriptsize\sf}%
+      \normalsize
+      \input{./Graphs/transformer-architecture.pdf_tex}}
     \end{center}
-    \caption[Overview Over the Transformer Architecture]{Overview Over the Transformer Architecture. Own work inspired by \textcite{daiTransformerXLAttentiveLanguage2019}}
+    \caption[Overview Over the Transformer Architecture]{Overview Over the Transformer Architecture. The left part shows the self-attention mechanism discussed in \cref{sec:attention}. The centre part depicts the multi-headed self-attention mechanism, as covered in \cref{sec:attention}. The right part shows the encoder and decoder stack, as well as the embedding mechanism as covered in \cref{sec:token-embeddings} onwards. Own work inspired by \textcite[][3]{tayEfficientTransformersSurvey2022}.}
     \label{fig:transformer-architecture-overview}
   \end{figure}
 \end{landscape}
