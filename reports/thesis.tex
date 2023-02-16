@@ -137,8 +137,8 @@ bookmarksopen
 \newglossaryentry{L}{type=symbols,name={\ensuremath{L}},sort=L, description={number of layers in the encoder / decoder}, unit={\ensuremath{\in \mathbb{N}}}}
 \newglossaryentry{t}{type=symbols,name={\ensuremath{t}},sort=t, description={index of token in sequence},unit={\ensuremath{\in\left[\ell_{\max }\right]}}}
 \newglossaryentry{x}{type=symbols,name={\ensuremath{x}},sort=x, description={primary token sequence}, unit={\ensuremath{\equiv x[1] x[2] \ldots x[\ell] \in V^{\ell}}}}
-\newglossaryentry{y}{type=symbols,name={\ensuremath{y}},sort=y, description={trade initiator / label}, unit={\ensuremath{\in \{0,1\}}}}
-\newglossaryentry{X}{type=symbols,name={\ensuremath{\boldsymbol{X}}},sort=x, description={feature matrix}}
+\newglossaryentry{y}{type=symbols,name={\ensuremath{y}},sort=y, description={trade initiator / target}, unit={\ensuremath{\in \{0,1\}}}}
+\newglossaryentry{X}{type=symbols,name={\ensuremath{\boldsymbol{X}}},sort=X, description={encoded primary token sequence }, unit={\ensuremath{\in \mathbb{R}^{d_e \times \ell_x}}}}
 
 \newglossarystyle{dotglos}{%
     \setglossarystyle{list}%
@@ -214,7 +214,7 @@ bookmarksopen
 \newglossaryentry{overfitting}{name={overfitting},plural={overfitting},description={Creating a model that fits the training data closely, but does not generalize on unseen data.}}
 \newglossaryentry{token}{name={token},plural={tokens},description={Item in a vocabulary. For textual data, tokens can be an individual character, sub-word, a word. 
 For tabular data, a token corresponds to a column in the data set.}}
-
+\newglossaryentry{exploding-gradient}{name={exploding gradient},plural={exploding gradients},description={Exploding gradients is a problem encountered in training deep neural networks with backpropagation. Error gradients can accumulate, and result in very large parameter updates and unstable training of the network. The opposite is the vanishing gradient problem, whereby gradients become successively smaller during backpropagation, resulting in no or small parameter updates of the network. In both cases, the network does not converge.}}
 % ----------------------------------- Start of document -----------------------------------
 \begin{document}
 \setcounter{page}{2} % Cover pages and title page are not numbered. Start numbering from page 2.

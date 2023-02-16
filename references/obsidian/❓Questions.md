@@ -1,9 +1,10 @@
 ## Open
 
-- Progress slowed down lately. Currently, I have written roughly 29 pages (9 classical algorithms, 14 Transformer, 2 related work + other). However, I plan to revise the Transformer chapters / rewrite them from scratch, as the why remains unclear for the Transformers and some paragraphs are hard to understand.
-- Ask about classification rules. Do you also want a short discussion with the different views on the trade initiator? Do you like the mix of formal definition, intuition etc. Do you regard your stacking approach as a another hybrid algorithm?
-- Ask about scope of related work. Currently, trade classification in option markets (i) and trade classification with machine learning (ii). Already spent two days improving the chapters, but still not satisfied.
-- Ask for CBOE for unlabelled data. Poses a major risk as I'm not sure regarding performance / training times etc. 
+- Progress slowed down lately. Currently, I have written roughly 29 pages (10 classical algorithms, 14 Transformer, 2 related works + others). The final document currently has 42 pages (excl. some drafted chapters). However, I started to revise the Transformer chapters / rewrite them from scratch, as the why remains unclear for the Transformers and some paragraphs are hard to understand.
+- Ask about classification rules. Do you also want a short discussion with the different views on the trade initiator? Do you like the mix of formal definition, intuition etc.? Do you regard your stacking approach as another hybrid algorithm? (see chapter) Also, discuss the view adopted in their paper.
+Ask if the glossary is ok.
+Ask about the scope of related work. Currently, trade classification in option markets (i) and trade classification with machine learning (ii). 
+- Ask for CBOE and unlabelled data. This poses a major risk as I'm not sure about performance/training times etc. 
 
 ## Closed
 - I'm currently struggling to obtain cluster resources with gpus through SLURM or Jupyter. Some nodes are down and my jobs seem have low priority. 

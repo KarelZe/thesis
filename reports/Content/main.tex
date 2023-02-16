@@ -358,9 +358,19 @@ with $W_{\text {mlp } 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times d_{\mathrm{e}
 
 \textcite[][9]{vaswaniAttentionAllYou2017} set the hidden dimension to be two to eight magnitudes of the embedding dimension. The large capacity strengthens the model's ability to retain information but also contributes significantly to the high computational requirements and memory footprint of Transformers \autocites[][5]{tayEfficientTransformersSurvey2022}[][1]{kitaevReformerEfficientTransformer2020}. Both linear transformations are separated by a \gls{ReLU} \gls{activation-function} \autocite[][318]{glorotDeepSparseRectifier2011} to introduce non-linearities to the network.
 
-Like the attention layer, the position-wise \gls{FFN} is surrounded by residual connections (see \cref{sec:residual-connections}), followed by layer normalization (see \cref{sec:layer-norm}). Optionally, dropout \autocite[][1930]{srivastavaDropoutSimpleWay} is added to prevent the model from \gls{overfitting}.
+Like the attention layer, the position-wise \gls{FFN} is surrounded by residual connections (see \cref{sec:residual-connections}), followed by layer normalization (see \cref{sec:layer-norm}). Both are vital for the training process and convergence of the overall network, as we show. Optionally, dropout \autocite[][1930]{srivastavaDropoutSimpleWay} is added to prevent the model from \gls{overfitting}.
 
 \subsubsection{Residual Connections}\label{sec:residual-connections}
+
+Recall from earlier chapters, that the encoder stacks multiple Transformer blocks, each of which consists of several sub-layers, resulting in a deep network.  While depth is required to learn hierarchical representations, the training of such a network is complicated. As neural networks are commonly trained using back-propagation, which relies on the gradient of the error to be propagated through the network starting at the last layer, vanishing or \glspl{exploding-gradient} pose a major difficulty in training deep neural nets \autocite[][1]{heDeepResidualLearning2015}. Without countermeasures, stacking multiple layers in the encoder and decoder of the Transformers impedes the gradient information to flow efficiently through the network and hampers the training behaviour \autocite[][1811]{wangLearningDeepTransformer2019}.
+
+As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} add residual connections \autocite[][1--2]{heDeepResidualLearning2015} around each sub-layer. Like in \cref{eq:residual-connection}, the encoded token sequence $\gls{X} \in \mathbb{R}^{\gls{d}_e \times \gls{ell}_x}$ consists of the sub-layer's output added element-wisely to its input:
+\begin{equation}
+  \gls{X} = \gls{X} + \operatorname{sub\_layer}\left(\gls{X}\right).
+  \label{eq:residual-connection}
+\end{equation}
+
+Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sub-layer and hence reach deeper layers within the stack. Also, vanishing or \glspl{exploding-gradient} are mitigated, as gradients can bypass the sub-layer, eventually contributing towards an easier optimization \autocite[][3591]{liuRethinkingSkipConnection2020}.  Residual connections moreover help to preserve the positional embeddings (see \cref{sec:positional-encoding}), as the layer's inputs are maintained in the identity mapping. Another technique to improve the training behaviour is layer normalization.
 
 \subsubsection{Layer Normalization}\label{sec:layer-norm}
 
