@@ -181,7 +181,7 @@ The basic trade classification rules from \cref{sec:basic-rules} can be combined
 
 Popular variants include the \cgls{LR} algorithm, the \cgls{EMO} rule, and the \cgls{CLNV} method. All three algorithms utilize the quote and tick rule to a varying extent, as depicted in \cref{fig:hybrid-lr,fig:hybrid-emo,fig:hybrid-clnv}. Basic rules are selected based on the proximity of the trade price to the quotes. We study all algorithms in detail in \cref{sec:lee-and-ready-algorithm,sec:ellis-michaely-ohara-rule,sec:chakarabarty-li-nguyen-van-ness-method}.
 
-\textcite[][18]{grauerOptionTradeClassification2022} combine rules like the trade size rule, depth rule, as well as other basic or hybrid rules through stacking. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the primary rules and their ordering. We cover this generic approach last.
+\textcite[][18]{grauerOptionTradeClassification2022} combine basic or hybrid rules through stacking. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the primary rules and their ordering. We cover this generic approach last.
 \subsubsection{Lee and Ready Algorithm}\label{sec:lee-and-ready-algorithm}
 
 The popular \cgls{LR} algorithm \autocite[][745]{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs the trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified by the tick rule. The \cgls{LR} algorithm, $\operatorname{lr} \colon \mathbb{R}^3 \to \left\{0,1\right\}$, are defined as:
@@ -250,7 +250,7 @@ The most basic application is in the \gls{LR} algorithm. For a more complex exam
 \begin{center}
   \input{./Graphs/stacking-algo.pdf_tex}
 \end{center}
-\caption[Visualization Of A Stacked Rule]{Visualization of a stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured shapes indicate the domain of the base rules in a simplified scale. The trade is not classifiable by the trade size rule, as indicated by the arrows outside the rule's domain. The quote rule is applied, as it is the first rule to classify the trade entirely. Own drawing.}
+\caption[Visualization Of A Stacked Rule]{Visualization of a stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured shapes indicate the domain of the base rules in a modified scale. The trade is not classifiable by the trade size rule, as indicated by the arrows outside the rule's domain. The quote rule is applied, as it is the first rule to classify the trade entirely. Own drawing.}
 \label{fig:stacking-algo}
 \end{figure}
 
@@ -287,7 +287,7 @@ The encoder consists of $\gls{L}=6$ stacked Transformer blocks \autocite[][6]{va
 Aside from the multi-headed self-attention and feed-forward sub-layer, the decoder contains a third sub-layer for multi-headed self-attention on the output of the encoder, known as cross-attention. Also, the multi-headed self-attention mechanism in the decoder differs from the one in the encoder. Specifically, future parts of the output sequence are causally masked to prevent the model from learning on subsequent \glspl{token} during training, which enforces the autoregressive properties of the model \autocites[][3]{vaswaniAttentionAllYou2017}[][15]{narangTransformerModificationsTransfer2021}.
 
 \begin{landscape}
-  \begin{figure}[h]
+  \begin{figure}[ht]
     \begin{center}
       {\renewcommand\normalsize{\scriptsize\sf}%
       \normalsize
@@ -299,13 +299,48 @@ Aside from the multi-headed self-attention and feed-forward sub-layer, the decod
 \end{landscape}
 The output of the decoder is finally passed through a linear layer with a softmax activation function to unembed the output and retrieve the probabilities of the next \gls{token} \autocite[][5]{vaswaniAttentionAllYou2017}. Since the output sequence is generated autoregressively, the most probable \gls{token} is fed back as input to the decoder to provide context for the following \glspl{token} until the remaining sequence is generated.
 
-For its original application, machine translation, both the encoder and decoder are used. Yet, the modular design allows adapting Transformers to a wider range of use cases, some of which only require the encoder or decoder. \textcite[][16--17]{raffelExploringLimitsTransfer2020} differentiate these modes: encoder-only architecture, which encodes the input to obtain an enriched representation, decoder-only architectures to generate new \glspl{token} and encoder-decoder models for sequence-to-sequence modelling autoregressively. As our focus is on the probabilistic classification of tabular data, the goal is to learn an enriched representation of the input for classifying the label, here $y$, rather than generating new samples. As such, encoder-only Transformers suffice. This observation also guides the structure in the next chapters, which is limited to \glspl{embedding} and the inner workings of the encoder.
+For its original application, machine translation, both the encoder and decoder are used. Yet, the modular design allows adapting Transformers to a wider range of use cases, some of which only require the encoder or decoder. \textcite[][16--17]{raffelExploringLimitsTransfer2020} differentiate these modes: encoder-only architecture, which encodes the input to obtain an enriched representation, decoder-only architectures to generate new \glspl{token} and encoder-decoder models for sequence-to-sequence modelling autoregressively. As our focus is on the probabilistic classification of tabular data, the goal is to learn an enriched representation of the input for classifying the label, here $\gls{y}$, rather than generating new samples. As such, encoder-only Transformers suffice. This observation also guides the structure in the next chapters, which is limited to \glspl{embedding} and the inner workings of the encoder.
 
 \subsubsection{Token Embedding}\label{sec:token-embeddings}
 
-\gls{ell}
 
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
+
+In practice, the order of words is important for the overall meaning of a sentence. As such, \textcite[][6]{vaswaniAttentionAllYou2017} propose to inject information on the token's position within the sequence through a \emph{positional encoding}, that is added onto the token embedding. Contrary to sequences, columns in tabular data sets are arranged in an arbitrary order, which weakens the need for positional information. However, unless the embeddings per feature are unique, a positional embedding is also required so that the model can relate the otherwise identical embeddings to specific features and distinguish them \autocites[][3]{huangTabTransformerTabularData2020}[][15]{somepalliSAINTImprovedNeural2021}.
+
+Like token embeddings, positional embeddings can also be learned \autocite[cp.][4174]{devlinBERTPretrainingDeep2019}. Due to better, extrapolation capabilities, \textcite[][6]{vaswaniAttentionAllYou2017}, propose an positional encoding $W_p: \mathbb{N} \rightarrow \mathbb{R}^{d_{e}}$ based on sine and cosine signals to encode the \emph{absolute} position of the token:
+
+\begin{equation}
+\begin{aligned}
+W_p[2 i-1, t] & =\sin \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right), \\
+W_p[2 i, t] & =\cos \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right).
+\end{aligned}
+\label{eq:sinusodal-encoding}
+\end{equation}
+
+with $0<i \leq \gls{d}_{e} / 2$, the maximum sequence length $\gls{ellmax}$, which is arbitrarily set to $\gls{ellmax}=10{,}000$, and $\gls{t}$ is again the position of the token in the sequence. As shown in \cref{eq:sinusodal-encoding} the frequency decreases across the position dimension and alternates between sine and cosine for the embedding dimension. Each embedding thus contains a pattern, easily distinguishable by the model. 
+
+We visualize the positional encoding in \cref{fig:positional-embedding} with an embedding dimension of 96 and 64 tokens. One can see the alternating pattern between even and odd columns and the unique pattern for each token's position. 
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics{positional-encoding.pdf}
+  \end{center}
+  \caption[Positional Encoding]{Positional Encoding. Own work.}
+  \label{fig:positional-embedding}
+\end{figure}
+
+Using trigonometric functions for the positional embedding is favourable, due to being zero-centred, and resulting in values in the closed range of $[-1,1]$. These properties are long known to promote the convergence of neural networks \autocites[][8-9]{lecunEfficientBackProp2012}[][2]{ioffeBatchNormalizationAccelerating2015}.
+
+The reason for encoding with both the sine and cosine is more subtle, as either one would suffice for absolute embeddings. \textcite[][6]{vaswaniAttentionAllYou2017} hypothesize, that besides learning the \emph{absolute} position i.e., fifth place in sequence, providing both sine and cosine also enables the model to attend to \emph{relative} positions, i.e., two places from a given token.
+
+The positional embedding is finally added element-wisely to the token embedding to form a token's initial embedding $\gls{e}$. For the $\gls{t}$-th token of a sequence $\gls{x}$, the embedding becomes:
+\begin{equation}
+  \boldsymbol{e}=W_e[:, x[t]]+W_p[:, t].
+  \label{eq:positional-embedding}
+\end{equation}
+
+Intuitionally, adding the positional encoding leads to a rotation of the token embedding in the embedding space. As the positional embedding is different for every location within the sequence, otherwise identical tokens, now have a unique embedding.
 
 \subsubsection{Attention}\label{sec:attention}
 

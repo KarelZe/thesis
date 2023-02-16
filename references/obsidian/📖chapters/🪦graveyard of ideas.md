@@ -1,5 +1,10 @@
 
 
+## Positional Embedding
+Positional embeddings are not the only way to fix the location, however. Later works, like ([[@daiTransformerXLAttentiveLanguage2019]]4--5), remove the positional encoding in favour of a *relative position encoding*, which is only considered during computation.
+
+
+
 
 
 Test log-normality visually with qq-plots (https://stackoverflow.com/questions/46935289/quantile-quantile-plot-using-seaborn-and-scipy) or using statistical tests e. g.,  log-transform + normality test. https://stats.stackexchange.com/questions/134924/tests-for-lognormal-distribution

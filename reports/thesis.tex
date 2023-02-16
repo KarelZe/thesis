@@ -126,13 +126,16 @@ bookmarksopen
 % see https://tex.stackexchange.com/questions/347586/symbols-as-glossary-entry-indicators
 %Symbols
 \newglossaryentry{V}{type=symbols,name={\ensuremath{\cong[N_\t{V}]}},sort=V, description={vocabulary}}
-\newglossaryentry{ell}{type=symbols,name={\ensuremath{\ell}}, sort=ell, description={length of token sequence}, unit={\ensuremath{\in \mathbb{N}}}}
-\newglossaryentry{ellmax}{type=symbols,name={\ensuremath{\ell_{\max}}},sort=ell-max, description={maximum sequence length}}
+\newglossaryentry{ell}{type=symbols,name={\ensuremath{d_e}}, sort=ell, description={length of token sequence}, unit={\ensuremath{\in \mathbb{N}}}}
+\newglossaryentry{e}{type=symbols,name={\ensuremath{e}}, sort=e, description={vector representation / embedding of a token}, unit={\ensuremath{\in \mathbb{R}^{d_e}}}}
+\newglossaryentry{d}{type=symbols,name={\ensuremath{d}}, sort=d, description={dimension of a vector}, unit={\ensuremath{\in \mathbb{N}}}}
+\newglossaryentry{ellmax}{type=symbols,name={\ensuremath{\ell_{\max}}},sort=ell-max, description={maximum sequence length}, unit={\ensuremath{\in \mathbb{N}}}}
 \newglossaryentry{h}{type=symbols,name={\ensuremath{h}},sort=h, description={index of attention heads}}
 \newglossaryentry{H}{type=symbols,name={\ensuremath{H}},sort=H, description={number of attention heads}}
 \newglossaryentry{L}{type=symbols,name={\ensuremath{L}},sort=L, description={number of layers in the encoder / decoder}, unit={\ensuremath{\in \mathbb{N}}}}
-\newglossaryentry{t}{type=symbols,name={\ensuremath{t}},sort=t, description={index of token in sequence}}
-\newglossaryentry{y}{type=symbols,name={\ensuremath{y}},sort=y, description={label}, unit={\ensuremath{\in \{0,1\}}}}
+\newglossaryentry{t}{type=symbols,name={\ensuremath{t}},sort=t, description={index of token in sequence},unit={\ensuremath{\in\left[\ell_{\max }\right]}}}
+\newglossaryentry{x}{type=symbols,name={\ensuremath{x}},sort=x, description={primary token sequence}, unit={\ensuremath{\equiv x[1] x[2] \ldots x[\ell] \in V^{\ell}}}}
+\newglossaryentry{y}{type=symbols,name={\ensuremath{y}},sort=y, description={trade initiator / label}, unit={\ensuremath{\in \{0,1\}}}}
 \newglossaryentry{X}{type=symbols,name={\ensuremath{\boldsymbol{X}}},sort=x, description={feature matrix}}
 
 \newglossarystyle{dotglos}{%
