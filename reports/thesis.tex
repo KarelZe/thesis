@@ -115,11 +115,13 @@ bookmarksopen
 \newacronym{ISE}{ISE}{International Securities Exchange}
 \newacronym{GBM}{GBM}{gradient boosting machine}
 \newacronym{LR}{LR}{Lee-Ready}
+\newacronym{MLP}{MLP}{multi-layer perceptron}
 \newacronym[first={national best bid and offer}]{NBBO}{NBBO}{national best bid and offer}
 \newacronym{NYSE}{NYSE}{New York Stock Exchange}
 \newacronym{NASDAQ}{NASDAQ}{National Association of Securities Dealers Automated Quotations}
 \newacronym{RMSE}{RMSE}{root mean squared error}
 \newacronym{RF}{RF}{random forest}
+\newacronym{ReLU}{ReLU}{Rectified Linear Units}
 \newacronym{SSE}{SSE}{sum of squared errors}
 \newacronym{SHAP}{SHAP}{SHapley Additive exPlanations}
 
@@ -206,9 +208,12 @@ bookmarksopen
 %   \end{document}
 
 %Glossary
+\newglossaryentry{activation-function}{name={activation function},plural={activation functions}, description={An activation function is a function, that breaks up the linearity of the neural network. It determines if neurons are activated or not. Common variants include ReLU, Softmax, and GELU.}}
 \newglossaryentry{embedding}{name={embedding},plural={embeddings},description={Numerical vector representation of the input, e.g. a word, category, or scalar.}}
+\newglossaryentry{feed-forward-network}{name={feed-forward network},plural={feed-forward networks},description={Neural networks without recursion. Well-known variants are \glspl{MLP}.}}
+\newglossaryentry{overfitting}{name={overfitting},plural={overfitting},description={Creating a model that fits the training data closely, but does not generalize on unseen data.}}
 \newglossaryentry{token}{name={token},plural={tokens},description={Item in a vocabulary. For textual data, tokens can be an individual character, sub-word, a word. 
-For tabular data, a token corresponds to a column.}}
+For tabular data, a token corresponds to a column in the data set.}}
 
 % ----------------------------------- Start of document -----------------------------------
 \begin{document}

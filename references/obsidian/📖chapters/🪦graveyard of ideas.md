@@ -4,8 +4,15 @@
 Positional embeddings are not the only way to fix the location, however. Later works, like ([[@daiTransformerXLAttentiveLanguage2019]]4--5), remove the positional encoding in favour of a *relative position encoding*, which is only considered during computation.
 
 
+## Point-wise FFN
+and ([[@gevaTransformerFeedForwardLayers2021]]).
+
+Later variants (see e. g., [[@devlinBERTPretrainingDeep2019]] or [[@radfordImprovingLanguageUnderstanding]]) commonly replace the $\operatorname{ReLU}$ with the *Gaussian Error Linear Units* $\operatorname{GELU}$ ([[@hendrycksGaussianErrorLinear2020]], p. 2) activation, which has empirically proven to improve the performance and convergence behaviour of Transformers ([[@narangTransformerModificationsTransfer2021]], p. 16; and [[@shazeerGLUVariantsImprove2020]] p. 4).
+
+Like the [[🅰️Attention]] sub-layer, the feed-forward sub-layer is surrounded by residual connections ([[@heDeepResidualLearning2015]]) and followed by a layer-normalization ([[@baLayerNormalization2016]] (p. 4)) layer. 
 
 
+### Normality
 
 Test log-normality visually with qq-plots (https://stackoverflow.com/questions/46935289/quantile-quantile-plot-using-seaborn-and-scipy) or using statistical tests e. g.,  log-transform + normality test. https://stats.stackexchange.com/questions/134924/tests-for-lognormal-distribution
 
