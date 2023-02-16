@@ -23,7 +23,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🔗Residual connections.md",
+                "file": "❓Questions.md",
                 "mode": "source",
                 "source": false
               }
@@ -106,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🔗Residual connections.md",
+                "file": "❓Questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -134,7 +134,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🔗Residual connections.md"
+                "file": "❓Questions.md"
               }
             }
           },
@@ -167,8 +167,8 @@
   },
   "active": "d30764df2aa753c7",
   "lastOpenFiles": [
-    "📖chapters/🪦graveyard of ideas.md",
     "📖chapters/🔗Residual connections.md",
+    "📖chapters/🪦graveyard of ideas.md",
     "📖chapters/🎱Position-wise FFN.md",
     "📖chapters/🅰️Attention.md",
     "📖chapters/🧵Positional Embedding.md",
