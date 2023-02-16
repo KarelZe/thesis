@@ -18,12 +18,12 @@
             }
           },
           {
-            "id": "637dd163e6116a86",
+            "id": "c3b87f7615fbe325",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🧵Positional Embedding.md",
+                "file": "📖chapters/🎱Position-wise FFN.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,8 +48,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -107,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🧵Positional Embedding.md",
+                "file": "📖chapters/🎱Position-wise FFN.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -135,7 +134,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🧵Positional Embedding.md"
+                "file": "📖chapters/🎱Position-wise FFN.md"
               }
             }
           },
@@ -166,17 +165,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "637dd163e6116a86",
+  "active": "c3b87f7615fbe325",
   "lastOpenFiles": [
+    "📖chapters/🪦graveyard of ideas.md",
+    "📖chapters/🎱Position-wise FFN.md",
+    "📖chapters/🅰️Attention.md",
+    "📖chapters/🧵Positional Embedding.md",
     "📖chapters/💤Embeddings For Tabular Data.md",
     "📖chapters/🛌Token Embedding.md",
-    "📖chapters/🧵Positional Embedding.md",
-    "📖chapters/🪦graveyard of ideas.md",
     "📖chapters/🗼Overview Transformer.md",
     "📥Inbox/@narangTransformerModificationsTransfer2021.md",
     "📑notes/🤖Transformer notes.md",
-    "📑notes/🗼Overview transformer notes.md",
-    "📖chapters/🤖Transformer.md",
-    "🖼️Media/Pasted image 20230126132519.png"
+    "📑notes/🗼Overview transformer notes.md"
   ]
 }
