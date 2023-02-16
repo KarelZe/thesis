@@ -362,6 +362,16 @@ Like the attention layer, the position-wise \gls{FFN} is surrounded by residual 
 
 \subsubsection{Residual Connections}\label{sec:residual-connections}
 
+Recall from \cref{sec:architectural-overview}, that both the encoder and decoder stack multiple Transformer blocks, each of which consists of several sub-layers, resulting in deep networks. As neural networks are commonly trained using back-propagation, which relies on the gradient of the error to be propagated through the network starting at the last layer, vanishing or \glspl{exploding-gradient} pose a major difficulty in training deep neural networks \autocite[][1]{heDeepResidualLearning2015}. Likewise, for Transformers, stacking multiple layers in the encoder and decoder, not just prevents the gradient information to flow efficiently through the network, but also hampers the overall training performance \autocite[][;  p. 1,811]{wangLearningDeepTransformer2019}.
+
+As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} add residual connections \autocite[][1--2]{heDeepResidualLearning2015} around each sub-layer. As shown in \cref{eq:residual-connection}, the encoded token sequence $\gls{X} \in \mathbb{R}^{\gls{d}_e \times \gls{ell}_x}$ consists of the layer's output added element-wisely to its input:
+\begin{equation}
+  \gls{X} = \gls{X} + \operatorname{sub\_layer}\left(\gls{X}\right).
+  \label{eq:residual-connection}
+\end{equation}
+
+Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sub-layer and hence reach deeper layers within the stack. Also, vanishing or \glspl{exploding-gradient} are mitigated, as gradients can bypass the sub-layer, eventually contributing towards an easier optimization \autocite[][3591]{liuRethinkingSkipConnection2020}.  Residual connections moreover help to preserve the positional embeddings (see \cref{sec:positional-encoding}), as the layer's inputs are maintained in the identity mapping. Another technique to improve the training behaviour is layer normalization.
+
 \subsubsection{Layer Normalization}\label{sec:layer-norm}
 
 \subsection{Transformer Networks For Tabular Data}\label{sec:tabular-transformer}
