@@ -1,11 +1,6 @@
 
 
-Two views are prevailing in literature:
-- **immediacy definition:** Traders how demand for immediate execution
-- **chronological definition:** Trade initiator is the one who places order last (our definition)
-
-We adopt the *chronological view*
-
+Following a common track in in literature, we 
 **Notes:**
 [[🔢Trade Initiator notes]]
 

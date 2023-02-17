@@ -28,23 +28,11 @@ The results convincingly demonstrate the potential of machine learning, i.e., of
 In summary, machine learning has been applied successfully in the context of trade classification. To the best of our knowledge, no previous work perform machine learning-based classification in the options markets.
 
 \newpage
-\section{Rule-Based Approaches}\label{sec:rule-based-approaches}
+\section{Rule-Based Approaches}\label{sec:rule-based-approaches} 
 
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. Consequently, we denote it by $\gls{y} \in \{0,1\}$, whereby $y=0$ indicates a seller-initiated and $y=1$ a buyer-initiated trade. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
 
-At this point, it remains unclear, what characterizes the trade initiator. We discuss common views in literature next.
-
-\subsection{Trade Initiator}\label{sec:trade-initiator}
-
-Two views are prevailing in literature:
-\begin{itemize}
-	\item \textbf{Immediacy definition:} Traders how demand for immediate execution.
-	\item \textbf{Chronological definition:} Trade initiator is the trader who places the order last. We adopt the chronological view.
-\end{itemize}
-
-Consequently, we denote it by $\gls{y} \in \{0,1\}$, whereby $y=0$ indicates a seller-initiated and $y=1$ a buyer-initiated trade.
-
-The following section introduces basic rules for option trade classification. We start with the classical quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we exclude classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
+The following section introduces basic rules for option trade classification. We start with the classical quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
 \subsection{Basic Rules}\label{sec:basic-rules}
 
@@ -72,7 +60,7 @@ The quote rule requires both price and quote data, which affects the data effici
 
 \subsubsection{Tick Test}\label{sec:tick-test}
 
-Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}.
+A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}.
 
 The tick test, $\operatorname{tick}\colon \mathbb{R}^2 \to \left\{0,1\right\}$, is defined as:
 
