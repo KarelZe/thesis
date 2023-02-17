@@ -25,7 +25,7 @@
       {
         "id": "b3420484b60c8ed1",
         "type": "tabs",
-        "dimension": 31.228813559322035,
+        "dimension": 47.54237288135593,
         "children": [
           {
             "id": "11a392cbf2a84d00",
@@ -33,7 +33,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🔢Trade Initiator.md",
+                "file": "📖chapters/🧭Attention map.md",
                 "mode": "source",
                 "source": false
               }
@@ -44,7 +44,7 @@
       {
         "id": "aeb1f3ebc9e06223",
         "type": "tabs",
-        "dimension": 37.54237288135593,
+        "dimension": 21.228813559322035,
         "children": [
           {
             "id": "e6d4b984bf6335c8",
@@ -127,7 +127,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🔢Trade Initiator.md",
+                "file": "📖chapters/🧭Attention map.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -155,7 +155,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🔢Trade Initiator.md"
+                "file": "📖chapters/🧭Attention map.md"
               }
             }
           },
@@ -188,15 +188,15 @@
   },
   "active": "11a392cbf2a84d00",
   "lastOpenFiles": [
-    "📑notes/🔢Trade Initiator notes.md",
+    "📖chapters/🔢LR algorithm.md",
     "📑notes/🔢LR algorithm notes.md",
+    "📖chapters/🧃Feature Sets.md",
+    "📖chapters/🔢Trade Initiator.md",
+    "📑notes/🔢Trade Initiator notes.md",
     "❓Questions.md",
     "📖chapters/🔗Residual connections.md",
     "📖chapters/🪦graveyard of ideas.md",
     "📖chapters/🎱Position-wise FFN.md",
-    "📖chapters/🅰️Attention.md",
-    "📖chapters/🧵Positional Embedding.md",
-    "📖chapters/💤Embeddings For Tabular Data.md",
-    "📖chapters/🛌Token Embedding.md"
+    "📖chapters/🅰️Attention.md"
   ]
 }

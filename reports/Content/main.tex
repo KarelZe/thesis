@@ -36,11 +36,11 @@ The following section introduces basic rules for option trade classification. We
 
 \subsection{Basic Rules}\label{sec:basic-rules}
 
-This chapter presents foundational classification rules, that may be used for trade classification as-is or integrated into a hybrid algorithm.
+This chapter presents foundational classification rules, that may be used for trade classification independently or integrated into a hybrid algorithm.
 
 \subsubsection{Quote Rule}\label{sec:quote-rule}
 
-The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security at time $t$ by $p_{i,t}$ and the contemporaneous ask by $a_{i,t}$ and bid by $b_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, denoted by $m_{i,t} = \tfrac{1}{2}(b_{i,t} + a_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $D = \left\{(p_{i,t}, m_{i,t}) \in \mathbb{R}^2: p_{i,t} \neq m_{i,t}\right\}$ is given by:
+The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $(p_{i,t})_{t\in\mathbb{N}}$ and the contemporaneous ask at $t$ by $a_{i,t}$ and bid by $b_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, denoted by $m_{i,t} = \tfrac{1}{2}(b_{i,t} + a_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $D = \left\{(p_{i,t}, m_{i,t}) \in \mathbb{R}^2: p_{i,t} \neq m_{i,t}\right\}$ is given by:
 
 \begin{equation}
   \operatorname{quote}\colon D \to \left\{0, 1\right\},\quad
@@ -364,6 +364,9 @@ Intuitively, the residual connection provides an alternative path for informatio
 
 \subsection{Transformer Networks For Tabular Data}\label{sec:tabular-transformer}
 
+The subsequent sections introduce two adaptions of the classical Transformer for the
+tabular domain. We start with the \emph{TabTransformer} of \textcite{huangTabTransformerTabularData2020}.
+
 \subsubsection{TabTransformer}\label{sec:tabtransformer}
 
 \subsubsection{FTTransformer}\label{sec:fttransformer}
@@ -377,9 +380,7 @@ Intuitively, the residual connection provides an alternative path for informatio
 \subsection{Extensions to Gradient Boosted
   Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
 
-\subsection{Extensions to TabTransformer (2~p)}\label{sec:extensions-to-tabtransformer}
-
-\subsection{Extensions to FTTransformer (2~p)}\label{sec:extensions-to-fttransformer}
+\subsection{Extensions to Transformer (2~p)}\label{sec:extensions-to-transformer}
 
 
 \newpage
