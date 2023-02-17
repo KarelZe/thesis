@@ -7,7 +7,9 @@ relates to [[🌏Ise dataset]]
 - “Because evaluating the performance of trade classification algorithms requires information on the true side of the trade, we combine information from intraday transaction data and daily Open/Close data to arrive at such a benchmark. Our two Open/Close datasets are available on a daily level and cover trading volume at the ISE and the CBOE, respectively.” ([[@grauerOptionTradeClassification2022]], p. 8) https://datashop.cboe.com/documents/Option_Trades_Layout.pdf and https://datashop.cboe.com/documents/Option_Quotes_Layout.pdf
 - “We take advantage of the fact that if there were only customer buy (sell) orders on a specific day for a given option series at one particular exchange, Open/Close data allows to classify all transactions in the LiveVol dataset on that day at the respective exchange as buy (sell) orders.” ([[@grauerOptionTradeClassification2022]], p. 8)
 - https://www.cboe.com/us/equities/trading/offerings/order_types_and_routing/
+- “We take advantage of the fact that if there were only customer buy (sell) orders on a specific day for a given option series at one particular exchange, Open/Close data allows to classify all transactions in the LiveVol dataset on that day at the respective exchange as buy (sell) orders.” (Grauer et al., 2022, p. 8) “Consistent with previous literature, we assume that the customer is the party with a demand for options.” (Grauer et al., 2022, p. 8) “Therefore, we use the customer buy/sell indicator obtained from Open/Close data as the benchmark to empirically validate the accuracy of trade classification methods applied to intraday option transactions from LiveVol.” (Grauer et al., 2022, p. 8)
 
+Following a common track in literature, we 
 
 ## Views
 - There are different views of what is considered as buyer / seller initiated i. e. [[@odders-whiteOccurrenceConsequencesInaccurate2000]] vs. [[@ellisAccuracyTradeClassification2000]]
