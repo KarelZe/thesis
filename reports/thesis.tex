@@ -145,12 +145,18 @@ bookmarksopen
     \setglossarystyle{list}%
     \renewcommand*{\glossentry}[2]{%
         \item[\glsentryitem{##1}\glstarget{##1}{\glossentryname{##1}}]
-        \ifglshassymbol{##1}{\glossentrysymbol{##1}\quad}{}%
-		\glsentryunit{##1}\quad%
+        \ifglshassymbol{##1}{\glossentrysymbol{##1}}{}%
+		\glsentryunit{##1}\quad\parindent20mm%
 		\glossentrydesc{##1}%
         \unskip\leaders\hbox to 2.9mm{\hss.}\hfill##2}%
     \renewcommand*{\glsgroupskip}{}%
 }
+
+% \renewcommand*{\glossentry}[2]{%
+% \item[]\makebox[\glslistdottedwidth][l]{%
+% \glsentryitem{##1}%
+% \glstarget{##1}{\glossentryname{##1}}%
+% \unskip\leaders\hbox to 2.9mm{\hss.}\hfill\strut}\glossentrydesc{##1}}%
 
 % \renewcommand{\glossentry}[2]{%
 % \glsentryitem{##1}\glstarget{##1}{\glossentryname{##1}} & $\acem{##1}$ & \glossentrydesc{##1}\tabularnewline
