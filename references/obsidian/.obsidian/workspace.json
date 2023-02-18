@@ -33,10 +33,24 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🧭Attention map.md",
+                "file": "📖chapters/🧃Feature Sets.md",
                 "mode": "source",
                 "source": false
               }
+            }
+          },
+          {
+            "id": "83ba6a7cab4ea6ea",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🪦graveyard of ideas.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
             }
           }
         ]
@@ -127,7 +141,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🧭Attention map.md",
+                "file": "📖chapters/🧃Feature Sets.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -155,7 +169,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🧭Attention map.md"
+                "file": "📖chapters/🧃Feature Sets.md"
               }
             }
           },
@@ -188,15 +202,15 @@
   },
   "active": "11a392cbf2a84d00",
   "lastOpenFiles": [
-    "📖chapters/🔢LR algorithm.md",
-    "📑notes/🔢LR algorithm notes.md",
-    "📖chapters/🧃Feature Sets.md",
-    "📖chapters/🔢Trade Initiator.md",
-    "📑notes/🔢Trade Initiator notes.md",
-    "❓Questions.md",
-    "📖chapters/🔗Residual connections.md",
     "📖chapters/🪦graveyard of ideas.md",
-    "📖chapters/🎱Position-wise FFN.md",
-    "📖chapters/🅰️Attention.md"
+    "📖chapters/🔢LR algorithm.md",
+    "📖chapters/🧃Feature Sets.md",
+    "📑notes/🔢Tick test notes.md",
+    "📑notes/🔢Hybrid rules notes.md",
+    "📖chapters/🔢Hybrid rules.md",
+    "📖chapters/🧭Attention map.md",
+    "📑notes/🔢LR algorithm notes.md",
+    "📖chapters/🔢Trade Initiator.md",
+    "📑notes/🔢Trade Initiator notes.md"
   ]
 }

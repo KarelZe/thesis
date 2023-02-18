@@ -1,0 +1,32 @@
+\begin{tabular}{@{}llllll@{}}
+    \toprule
+    Feature Name              & Feature Category     & FS 1 & FS 2 & FS 3 & Transform     \\ \midrule
+    trade price               & tick rule            & x    & x    & x    & $\log(\cdot)$ \\
+    price lag (ex)            & tick rule            & x    & x    & x    & $\log(\cdot)$ \\
+    price lag (all)           & tick rule            & x    & x    & x    & $\log(\cdot)$ \\
+    price change lag (ex)     & tick rule            & x    & x    & x    &               \\
+    price change lag (all)    & tick rule            & x    & x    & x    &               \\
+    priced lead (ex)          & reverse tick rule    & x    & x    & x    & $\log(\cdot)$ \\
+    price lead (all)          & reverse tick rule    & x    & x    & x    & $\log(\cdot)$ \\
+    change lead (ex)          & reverse tick rule    & x    & x    & x    &               \\
+    change lead (all)         & reverse tick rule    & x    & x    & x    &               \\
+    bid (all)                 & quote rule           & x    & x    & x    & $\log(\cdot)$ \\
+    bid (ex)                  & quote rule           & x    & x    & x    & $\log(\cdot)$ \\
+    ask (all)                 & quote rule           & x    & x    & x    & $\log(\cdot)$ \\
+    ask (ex)                  & quote rule           & x    & x    & x    & $\log(\cdot)$ \\
+    proximity to quotes (ex)  & \gls{EMO}/\gls{CLNV} & x    & x    & x    &               \\
+    proximity to quotes (all) & \gls{EMO}/\gls{CLNV} & x    & x    & x    &               \\
+    bid ask size ratio (ex)   & depth rule           &      & x    & x    &               \\
+    bid size (ex)             & depth rule           &      & x    & x    &               \\
+    ask size (ex)             & depth rule           &      & x    & x    &               \\
+    rel. bid size (ex)        & trade size rule      &      & x    & x    &               \\
+    rel. ask size (ex)        & trade size rule      &      & x    & x    &               \\
+    trade size (ex)           & trade size rule      &      & x    & x    &               \\
+    strike price              & option               &      &      & x    & $\log(\cdot)$ \\
+    volume option series      & option               &      &      & x    & $\log(\cdot)$ \\
+    root                      & option               &      &      & x    & binarize      \\
+    time to maturity          & option               &      &      & x    &               \\
+    moneyness                 & option               &      &      & x    &               \\
+    option type               & option               &      &      & x    & binarize      \\
+    issue type                & option               &      &      & x    & binarize      \\ \bottomrule
+\end{tabular}

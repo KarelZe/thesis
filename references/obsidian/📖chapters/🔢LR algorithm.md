@@ -13,6 +13,7 @@ $$
 
 The algorithm is derived from an analysis of stock trades inside the quotes ([[@leeInferringTradeDirection1991]] 742). <mark style="background: #FFF3A3A6;">-> Better to grab the two points from the paper.</mark>
 
+<mark style="background: #ABF7F7A6;">quoted spreads are available </mark> “Studies examining more recent data have found more mixed results, with LR accuracy lower than TR rates in some cases, and ranging from 72.1%-93.57%. Ellis et al. (2000) attribute lower LR rates in recent data to high order submission and cancellation rates along with significant market fragmentation which render quote/trade matching less precise.” (Ronen et al., 2022, p. 7)
 
 
 <mark style="background: #FFF3A3A6;">Based on their observations, the authors recommended using the quote-based approach over the tick test due to its greater precision. They also demonstrated that the tick test correctly classified approximately 85% of trades at the spread midpoint in a simple model. This suggests that combining the two methods would be optimal, given the high predicted accuracy of the tick method for midpoint trades and the likely superiority of the quote method.</mark>

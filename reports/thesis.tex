@@ -32,6 +32,8 @@
 \usepackage{multirow,multicol} % With this package it is now possible to combine columns and rows within tables.
 \usepackage{graphicx} % Allows to implement graphics.
 \usepackage[font={sf, small}]{subfig} % Enables graphs consisting of several figures.
+\usepackage[font={sf, small}]{floatrow} % enables to format tables
+
 \graphicspath{{./Graphs/}} % Tells LATEX that the images are kept in a folder named images under the directory of the main document.
 \usepackage[hypcap=false,font={sf, small}]{caption} % Provides many ways to customise captions.
 \usepackage{siunitx} % Enables the use of SI units e. g., proper handling of percent
@@ -55,7 +57,7 @@
 \newcommand{\postalcode}{76133} % Enter your postal code.
 \newcommand{\city}{Karlsruhe} % Enter your city/town.
 \newcommand{\email}{markus.bilz@student.kit.edu} % Enter your email adress.
-\newcommand{\typeofthesis}{Master's Thesis} % specify the type of thesis: Seminar Thesis, Bachelor Thesis, Master Thesi
+\newcommand{\typeofthesis}{Master's Thesis} % specify the type of thesis: Seminar Thesis, Bachelor Thesis, Master Thesis
 
 %--------------------------------- Information in xmpdata ---------------------------------
 % definition from macro doesn't seem to work.
@@ -259,4 +261,11 @@ For tabular data, a token corresponds to a column in the data set.}}
 % Glossary
 \newpage
 \printglossary[type=main,title=Glossary,style=index]
+
+
+% Appendix
+\newpage
+\appendix % Enumerates appendix with letters.
+\include{Content/Appendix}
+
 \end{document}
