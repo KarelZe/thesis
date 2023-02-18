@@ -361,7 +361,7 @@ Intuitively, the residual connection provides an alternative path for informatio
 
 \subsection{Transformer Networks For Tabular Data}\label{sec:tabular-transformer}
 
-Due to the differences between textual and tabular data, the Transformer of \textcite[][]{vaswaniAttentionAllYou2017} needs to be tailored to the tabular domain. We present two state-of-the-art adaptations: the TabTransformer of \textcite[][2]{huangTabTransformerTabularData2020} and the FTTransformer of \textcite[][4]{gorishniyRevisitingDeepLearning2021}. Both architectures are depicted in \cref{fig:tabtransformer} and \cref{fig:fttransformer}, respectively. They share a encoder-only architecture, but are distinct with regard to their embedding strategy and layer arrangement, as we show in the the subsequent chapters.
+Due to the differences between textual and tabular data, the Transformer of \textcite[][]{vaswaniAttentionAllYou2017} needs to be tailored to the tabular domain. We present two state-of-the-art adaptations: the TabTransformer of \textcite[][2]{huangTabTransformerTabularData2020} and the FT-Transformer of \textcite[][4]{gorishniyRevisitingDeepLearning2021}. Both architectures are depicted in \cref{fig:tabtransformer} and \cref{fig:fttransformer}, respectively. They share an encoder-only architecture, but are distinct concerning their embedding strategy and layer arrangement, as we explain in the subsequent chapters.
 
 \begin{figure}[ht]
   \subfloat[Architecture of the TabTransformer.\label{fig:tabtransformer}]{%
@@ -370,12 +370,12 @@ Due to the differences between textual and tabular data, the Transformer of \tex
         \input{./Graphs/tabtransformer.pdf_tex}}
   }
   \hfill%
-  \subfloat[Architecture of the FTTransformer.\label{fig:fttransformer}]{%
+  \subfloat[Architecture of the FT-Transformer.\label{fig:fttransformer}]{%
     {\renewcommand\normalsize{\scriptsize}%
         \normalsize
         \input{./Graphs/fttransformer.pdf_tex}}
   }
-  \caption[Comparison Between Tabular Transformer.]{Comparison between the TabTransformer and the FTTransformer. Both architectures are encoder-only, but differ by their embedding strategy and the layer arrangement. The TabTransformer is a post-norm Transformer, that processes embeddings of categorical features-only. Continuous inputs are concatenated with the contextualized embeddings. The FT-Transformer features a pre-norm set-up and contextualizes both continuous and categorical embeddings. The output probabilities are retrieved from a special $\texttt{[CLS]}$ token. Own work inspired by \textcites[][2]{huangTabTransformerTabularData2020}[][4]{gorishniyRevisitingDeepLearning2021}.}
+  \caption[Comparison Between Tabular Transformer.]{Comparison between the TabTransformer and the FT-Transformer. Both architectures are encoder-only but differ in their embedding strategy and layer arrangement. The TabTransformer is a post-norm Transformer, that processes embeddings of categorical features only. Continuous inputs are concatenated with the contextualized embeddings. The FT-Transformer features a pre-norm set-up and contextualizes both continuous and categorical embeddings. The output probabilities are retrieved from a special $\texttt{[CLS]}$ token. Own work inspired by \textcites[][2]{huangTabTransformerTabularData2020}[][4--5]{gorishniyRevisitingDeepLearning2021}.}
   \label{fig:tabular-transformer}
 \end{figure}
 
@@ -400,9 +400,9 @@ Analogous to \cref{sec:architectural-overview}, the embedding of each row, or $X
 
 In large-scale experiments \textcite[][5--6]{huangTabTransformerTabularData2020} can show that the use of contextual \glspl{embedding} elevates both the robustness to noise and missing data of the model. For various binary classification tasks, the TabTransformer outperforms other deep learning models e.g., vanilla \glspl{MLP} and tree-based approaches in terms of \gls{AUC}.
 
-Yet, embedding and contextualizing of only the categorical inputs remain imperfect, as no numerical data is considered in the attention mechanism, and correlations between categorical and numerical features are lost due to the processing in different sub-networks. \textcite[][2]{somepalliSAINTImprovedNeural2021}. Also, the robustness to noise is hardly improved for numerical inputs. In a small experimental setup, \textcite[][8]{somepalliSAINTImprovedNeural2021} address this concern for the TabTransformer by also embedding numerical inputs, which leads to a lift in \gls{AUC} by \SI{2.34}{\percent} merely through numerical embedding. Their observation integrates with a wider strand of literature that suggests that models can profit from numerical embeddings, as we derived in \cref{sec:token-embeddings}. To expand on this idea, we introduce the FTTransformer next.
+Yet, embedding and contextualizing of only the categorical inputs remain imperfect, as no numerical data is considered in the attention mechanism, and correlations between categorical and numerical features are lost due to the processing in different sub-networks. \textcite[][2]{somepalliSAINTImprovedNeural2021}. Also, the robustness to noise is hardly improved for numerical inputs. In a small experimental setup, \textcite[][8]{somepalliSAINTImprovedNeural2021} address this concern for the TabTransformer by also embedding numerical inputs, which leads to a lift in \gls{AUC} by \SI{2.34}{\percent} merely through numerical embedding. Their observation integrates with a wider strand of literature that suggests that models can profit from numerical embeddings, as we derived in \cref{sec:token-embeddings}. To expand on this idea, we introduce the FT-Transformer next.
 
-\subsubsection{FTTransformer}\label{sec:fttransformer}
+\subsubsection{FT-Transformer}\label{sec:fttransformer}
 
 
 \newpage
