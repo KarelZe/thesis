@@ -33,7 +33,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🍔Layer Norm.md",
+                "file": "📑notes/🧵Positional encoding notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -141,7 +141,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🍔Layer Norm.md",
+                "file": "📑notes/🧵Positional encoding notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,7 +169,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🍔Layer Norm.md"
+                "file": "📑notes/🧵Positional encoding notes.md"
               }
             }
           },
@@ -202,8 +202,8 @@
   },
   "active": "11a392cbf2a84d00",
   "lastOpenFiles": [
-    "📥Inbox/@vaswaniAttentionAllYou2017.md",
     "📖chapters/🍔Layer Norm.md",
+    "📥Inbox/@vaswaniAttentionAllYou2017.md",
     "📖chapters/🤖TabTransformer.md",
     "📥Inbox/@huangTabTransformerTabularData2020.md",
     "📖chapters/🔢LR algorithm.md",

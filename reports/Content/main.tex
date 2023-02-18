@@ -308,7 +308,7 @@ with $0<i \leq \gls{d}_{e} / 2$, the maximum sequence length $\gls{ellmax}$, whi
 
 We visualize the positional encoding in \cref{fig:positional-embedding} with an embedding dimension of 96 and 64 tokens. One can see the alternating pattern between even and odd columns and the unique pattern for each token's position.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics{positional-encoding.pdf}
   \caption[Positional Encoding]{Positional Encoding. Own work.}
@@ -361,26 +361,23 @@ Intuitively, the residual connection provides an alternative path for informatio
 
 \subsection{Transformer Networks For Tabular Data}\label{sec:tabular-transformer}
 
-The subsequent sections introduce two adaptions of the classical Transformer for the
-tabular domain. We start with the \emph{TabTransformer} of \textcite{huangTabTransformerTabularData2020}.
+Due to the differences between textual and tabular data, the Transformer of \textcite[][]{vaswaniAttentionAllYou2017} needs to be tailored to the tabular domain. We present two state-of-the-art adaptations: the TabTransformer of \textcite[][2]{huangTabTransformerTabularData2020} and the FTTransformer of \textcite[][4]{gorishniyRevisitingDeepLearning2021}. Both architectures are depicted in \cref{fig:tabtransformer} and \cref{fig:fttransformer}, respectively. They share a encoder-only architecture, but are distinct with regard to their embedding strategy and layer arrangement, as we show in the the subsequent chapters.
 
-%\begin{landscape}
-\begin{figure}[h]
-  \subfloat[Architecture of TabTransformer. Own work.\label{fig:tabtransformer}]{%
+\begin{figure}[ht]
+  \subfloat[Architecture of the TabTransformer.\label{fig:tabtransformer}]{%
     {\renewcommand\normalsize{\scriptsize}%
         \normalsize
         \input{./Graphs/tabtransformer.pdf_tex}}
   }
   \hfill%
-  \subfloat[Architecture of FTTransformer. Own work.\label{fig:fttransformer}]{%
+  \subfloat[Architecture of the FTTransformer.\label{fig:fttransformer}]{%
     {\renewcommand\normalsize{\scriptsize}%
         \normalsize
         \input{./Graphs/fttransformer.pdf_tex}}
   }
-  \caption[Comparison Between Tabular Transformers]{Comparison Between Tabular Transformer.}
+  \caption[Comparison Between Tabular Transformer.]{Comparison between the TabTransformer and the FTTransformer. Both architectures are encoder-only, but differ by their embedding strategy and the layer arrangement. The TabTransformer is a post-norm Transformer, that processes embeddings of categorical features-only. Continuous inputs are concatenated with the contextualized embeddings. The FT-Transformer features a pre-norm set-up and contextualizes both continuous and categorical embeddings. The output probabilities are retrieved from a special $\texttt{[CLS]}$ token. Own work inspired by \textcites[][2]{huangTabTransformerTabularData2020}[][4]{gorishniyRevisitingDeepLearning2021}.}
   \label{fig:tabular-transformer}
 \end{figure}
-% \end{landscape}
 
 \subsubsection{TabTransformer}\label{sec:tabtransformer}
 
