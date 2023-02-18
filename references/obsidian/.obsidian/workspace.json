@@ -33,7 +33,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🧃Feature Sets.md",
+                "file": "📖chapters/🍔Layer Norm.md",
                 "mode": "source",
                 "source": false
               }
@@ -141,7 +141,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🧃Feature Sets.md",
+                "file": "📖chapters/🍔Layer Norm.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,7 +169,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🧃Feature Sets.md"
+                "file": "📖chapters/🍔Layer Norm.md"
               }
             }
           },
@@ -202,15 +202,15 @@
   },
   "active": "11a392cbf2a84d00",
   "lastOpenFiles": [
-    "📖chapters/🪦graveyard of ideas.md",
+    "📥Inbox/@vaswaniAttentionAllYou2017.md",
+    "📖chapters/🍔Layer Norm.md",
+    "📖chapters/🤖TabTransformer.md",
+    "📥Inbox/@huangTabTransformerTabularData2020.md",
     "📖chapters/🔢LR algorithm.md",
     "📖chapters/🧃Feature Sets.md",
+    "📖chapters/🪦graveyard of ideas.md",
     "📑notes/🔢Tick test notes.md",
     "📑notes/🔢Hybrid rules notes.md",
-    "📖chapters/🔢Hybrid rules.md",
-    "📖chapters/🧭Attention map.md",
-    "📑notes/🔢LR algorithm notes.md",
-    "📖chapters/🔢Trade Initiator.md",
-    "📑notes/🔢Trade Initiator notes.md"
+    "📖chapters/🔢Hybrid rules.md"
   ]
 }

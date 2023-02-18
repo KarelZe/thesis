@@ -1,0 +1,76 @@
+%% Creator: Inkscape 1.2.2 (732a01da63, 2022-12-09), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'tabtransformer.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{161.96195984bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1.7501924)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{tabtransformer.pdf}}%
+    \put(0.16152165,0.17420429){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Input Embedding\end{tabular}}}}%
+    \put(0.22296391,0.58640686){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Multi-Head\end{tabular}}}}%
+    \put(0.21996272,0.53088694){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Self-Attention\end{tabular}}}}%
+    \put(0.2405977,0.70081219){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add \& Norm\end{tabular}}}}%
+    \put(0.23095739,0.87241984){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Feed Forward\end{tabular}}}}%
+    \put(0.23987427,1.03561523){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add \& Norm\end{tabular}}}}%
+    \put(-0.00273397,0.78578651){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$L\times$\end{tabular}}}}%
+    \put(0.3782979,0.43656462){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{V}$\end{tabular}}}}%
+    \put(0.19829489,0.43908829){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{K}$\end{tabular}}}}%
+    \put(0.28865811,0.43824702){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{Q}$\end{tabular}}}}%
+    \put(0.38066035,1.71354674){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}output probabilities\end{tabular}}}}%
+    \put(0.46385042,1.246752){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Concatenate\end{tabular}}}}%
+    \put(0.75899214,1.03308373){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Norm\end{tabular}}}}%
+    \put(0.44285756,1.38302874){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Feed Forward\end{tabular}}}}%
+    \put(0.50792547,1.51846416){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%
+    \put(0.48888873,1.63371048){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Softmax\end{tabular}}}}%
+    \put(0.13878505,0.00981045){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}categorical inputs\end{tabular}}}}%
+    \put(0.59470068,0.00981045){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}continous inputs\end{tabular}}}}%
+  \end{picture}%
+\endgroup%

@@ -1,0 +1,88 @@
+%% Creator: Inkscape 1.2.2 (732a01da63, 2022-12-09), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'fttransformer.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{126.91496658bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,2.23349975)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{fttransformer.pdf}}%
+    \put(0.30204081,0.25709308){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Input Embedding\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{fttransformer.pdf}}%
+    \put(0.3853371,0.8718127){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Multi-Head\end{tabular}}}}%
+    \put(0.35304969,0.79482694){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Self-Attention\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{fttransformer.pdf}}%
+    \put(0.48323728,1.0292835){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{fttransformer.pdf}}%
+    \put(0.36829519,1.3488911){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Feed Forward\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{fttransformer.pdf}}%
+    \put(0.48323728,1.52035933){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{fttransformer.pdf}}%
+    \put(-0.00328938,0.01330478){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}categorical and continuous inputs\end{tabular}}}}%
+    \put(0.25175559,2.18268645){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}output probabilities\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{fttransformer.pdf}}%
+    \put(-0.00379095,1.09810416){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$L\times$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{fttransformer.pdf}}%
+    \put(0.45742376,1.89245716){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{fttransformer.pdf}}%
+    \put(0.43302159,2.06509188){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Softmax\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{fttransformer.pdf}}%
+    \put(0.46319765,1.71865597){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Norm\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{fttransformer.pdf}}%
+    \put(0.45690496,0.51491222){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Norm\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{fttransformer.pdf}}%
+    \put(0.4545541,1.19145376){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Norm\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{fttransformer.pdf}}%
+    \put(0.52491109,0.660096){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{V}$\end{tabular}}}}%
+    \put(0.28734259,0.66342657){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{K}$\end{tabular}}}}%
+    \put(0.40660522,0.66231638){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{Q}$\end{tabular}}}}%
+    \put(0.01414491,1.64881845){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\texttt{[CLS]}$\end{tabular}}}}%
+  \end{picture}%
+\endgroup%
