@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{127.41098785bp}%
+    \setlength{\unitlength}{126.91496658bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,25 +50,39 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,2.22480474)%
+  \begin{picture}(1,2.23349975)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{fttransformer.pdf}}%
-    \put(0.32390043,0.24922229){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Input Embedding\end{tabular}}}}%
-    \put(0.41135277,0.84399168){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Multi-Head\end{tabular}}}}%
-    \put(0.38005344,0.76936292){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Self-Attention\end{tabular}}}}%
-    \put(0.39386019,1.19225963){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Feed Forward\end{tabular}}}}%
-    \put(0.50528239,1.3607401){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add\end{tabular}}}}%
-    \put(0.4971504,0.99690981){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add\end{tabular}}}}%
-    \put(0.027421,0.01289749){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}categorical and continuous inputs\end{tabular}}}}%
-    \put(0.28222119,2.17554679){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Output Probabilities\end{tabular}}}}%
-    \put(0.47840513,1.88427275){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%
-    \put(0.45474996,2.05162229){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Softmax\end{tabular}}}}%
-    \put(0.48400312,1.71579247){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Norm\end{tabular}}}}%
-    \put(-0.00367507,1.06448614){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$L\times$\end{tabular}}}}%
-    \put(0.22122302,1.60253245){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\texttt{[CLS]}$\end{tabular}}}}%
-    \put(0.55157945,0.64608001){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{V}$\end{tabular}}}}%
-    \put(0.31493583,0.6493977){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{K}$\end{tabular}}}}%
-    \put(0.43373417,0.6482918){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{Q}$\end{tabular}}}}%
+    \put(0.30204081,0.25709308){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Input Embedding\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{fttransformer.pdf}}%
+    \put(0.3853371,0.8718127){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Multi-Head\end{tabular}}}}%
+    \put(0.35304969,0.79482694){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Self-Attention\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{fttransformer.pdf}}%
+    \put(0.48323728,1.0292835){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{fttransformer.pdf}}%
+    \put(0.36829519,1.3488911){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Feed Forward\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{fttransformer.pdf}}%
+    \put(0.48323728,1.52035933){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Add\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{fttransformer.pdf}}%
+    \put(-0.00328938,0.01330478){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}categorical and continuous inputs\end{tabular}}}}%
+    \put(0.25175559,2.18268645){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}output probabilities\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{fttransformer.pdf}}%
+    \put(-0.00379095,1.09810416){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$L\times$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{fttransformer.pdf}}%
+    \put(0.45742376,1.89245716){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{fttransformer.pdf}}%
+    \put(0.43302159,2.06509188){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Softmax\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{fttransformer.pdf}}%
+    \put(0.46319765,1.71865597){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Norm\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{fttransformer.pdf}}%
+    \put(0.45690496,0.51491222){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Norm\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{fttransformer.pdf}}%
+    \put(0.4545541,1.19145376){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Norm\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{fttransformer.pdf}}%
+    \put(0.52491109,0.660096){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{V}$\end{tabular}}}}%
+    \put(0.28734259,0.66342657){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{K}$\end{tabular}}}}%
+    \put(0.40660522,0.66231638){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{Q}$\end{tabular}}}}%
+    \put(0.01414491,1.64881845){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\texttt{[CLS]}$\end{tabular}}}}%
   \end{picture}%
 \endgroup%

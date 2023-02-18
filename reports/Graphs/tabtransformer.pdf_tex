@@ -64,7 +64,7 @@
     \put(0.3782979,0.43656462){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{V}$\end{tabular}}}}%
     \put(0.19829489,0.43908829){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{K}$\end{tabular}}}}%
     \put(0.28865811,0.43824702){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{Q}$\end{tabular}}}}%
-    \put(0.38066035,1.71354674){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Output Probabilites\end{tabular}}}}%
+    \put(0.38066035,1.71354674){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}output probabilities\end{tabular}}}}%
     \put(0.46385042,1.246752){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Concatenate\end{tabular}}}}%
     \put(0.75899214,1.03308373){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Norm\end{tabular}}}}%
     \put(0.44285756,1.38302874){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Feed Forward\end{tabular}}}}%
