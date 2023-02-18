@@ -11,11 +11,11 @@
 
 % Format and layout
 \usepackage[left=3cm,right=3cm,bottom=3cm]{geometry} % Specifies left and right side margins.
-\usepackage{setspace} % Package that enables modifing the line spacing.
+\usepackage{setspace} % Package that enables modifying the line spacing.
 \setstretch{1.3} % Sets a line spacing of 1.3.
-\parindent0pt % Sets the left indent at new paragraph.
+\parindent0pt % Sets the left indent at a new paragraph.
  \parskip10pt % Sets the space between two paragraphs.
-\usepackage{footmisc} % Implements a range of footnotes options.
+\usepackage{footmisc} % Implements a range of footnote options.
 \renewcommand{\footnotelayout}{\setstretch{1}} % Sets a line spacing of 1 for the footnotes.
 \pagestyle{headings} % Creates a header using the page number and the heading of the current section.
 \usepackage{eurosym} % Usage of €
@@ -23,7 +23,7 @@
 \usepackage{pdflscape}
 
 % Colors
-\usepackage{xcolor} % Enables the definition of more colors.
+\usepackage{xcolor} % Enables the definition of more colours.
 \usepackage{colorprofiles} % load colour profiles for pdf/a standard
 
 % Tables and Graphs
@@ -36,7 +36,7 @@
 
 \graphicspath{{./Graphs/}} % Tells LATEX that the images are kept in a folder named images under the directory of the main document.
 \usepackage[hypcap=false,font={sf, small}]{caption} % Provides many ways to customise captions.
-\usepackage{siunitx} % Enables the use of SI units e. g., proper handling of percent
+\usepackage{siunitx} % Enables the use of SI units e. g., proper handling of percentage
 \usepackage[super]{nth} % 1st, 2nd etc.
 \usepackage{import} % path for inkscape graphics
 % Mathematics
@@ -53,10 +53,10 @@
 \newcommand{\name}{Markus Bilz} % Enter your name.
 \newcommand{\dateofthesis}{15 April 2023} % Enter the submission date of your thesis.
 \newcommand{\titleofthesis}{Forget About the Rules: Improving Option Trade Classification With Machine Learning} % Enter the title of your thesis.
-\newcommand{\streetadress}{Mathystr.~14-16 // XI-11} % Enter your street adress.
+\newcommand{\streetadress}{Mathystr.~14-16 // XI-11} % Enter your street address.
 \newcommand{\postalcode}{76133} % Enter your postal code.
 \newcommand{\city}{Karlsruhe} % Enter your city/town.
-\newcommand{\email}{markus.bilz@student.kit.edu} % Enter your email adress.
+\newcommand{\email}{markus.bilz@student.kit.edu} % Enter your email address.
 \newcommand{\typeofthesis}{Master's Thesis} % specify the type of thesis: Seminar Thesis, Bachelor Thesis, Master Thesis
 
 %--------------------------------- Information in xmpdata ---------------------------------
@@ -68,7 +68,7 @@
 \Keywords{trade-classification\sep machine-learning\sep transformer}
 \end{filecontents*}
 
-% --------------------------------- Information in desription ---------------------------------
+% --------------------------------- Information in description ---------------------------------
 \pdfinfo {
  /Title (\titleofthesis)
  /Author (\name)
@@ -251,7 +251,7 @@ For tabular data, a token corresponds to a column in the data set.}}
 
 % Main text section
 \newpage
-\setcounter{page}{1}\renewcommand{\thepage}{\arabic{page}} % Sets the numbering to arabic.
+\setcounter{page}{1}\renewcommand{\thepage}{\arabic{page}} % Sets the numbering to Arabic.
 \include{Content/main}
 
 % Bibliography
