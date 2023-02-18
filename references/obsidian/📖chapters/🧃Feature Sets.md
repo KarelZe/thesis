@@ -32,50 +32,33 @@ TODO: Introduce the word "feature crosses" and motivation in deep learning https
 https://financetrain.com/why-lognormal-distribution-is-used-to-describe-stock-prices
 </mark>
 
-| Feature               | Feature Category            | Why? | FS 1 (Classical) | FS 2 (F1 + Grauer) | FS 3 (F2 + temp) | FS 4 (F3 + Others) | Transform   |
-| --------------------- | ----------------------------|----- | ---------------- | ------------------ | ---------------- | ------------------ | ----------- |
-| TRADE_PRICE           | tick rule                   | See [[@leeInferringTradeDirection1991]]     | ✅               | ✅                 | ✅               | ✅                 | log         |
-| price_ex_lag          | tick rule                   | See above.     | ✅               | ✅                 | ✅               | ✅                 | log         |
-| price_all_lag         | tick rule                   | See above.    | ✅               | ✅                 | ✅               |✅                   | log         |
-| chg_ex_lag            | tick rule                   | See above.     | ✅               | ✅                 | ✅               | ✅                 | standardize |
-| chg_all_lag           | tick rule                   | See above.     | ✅               | ✅                  | ✅               |✅                   | standardize |
-| price_ex_lead         | reverse tick rule           | See above.     | ✅               | ✅                 | ✅               | ✅                 | log         |
-| price_all_lead        | reverse tick rule           | See above.     | ✅               | ✅                  | ✅               |✅                    | log         |
-| chg_ex_lead           | reverse tick rule           | See above.     | ✅               | ✅                 | ✅               | ✅                 | standardize |
-| chg_all_lead          | reverse tick rule           | See above.     | ✅               | ✅                  | ✅               |✅                    | standardize |
-| BEST_BID              | quote rule                  | See above.   | ✅               | ✅                  | ✅               | ✅                   | log         |
-| bid_ex                | quote rule                  | See above.    | ✅               | ✅                 | ✅               | ✅                 | log         |
-| BEST_ASK              | quote rule                  | See above.    | ✅               | ✅                  | ✅               | ✅                    | log         |
-| mid_ex                | mid quote 🆕                | See above.     |                  |                     |                  |                    | log         |
-| mid_best              | mid quote 🆕                | See above.     |                  |                     |                  |                    | log         |
-| ask_ex                | quote rule                   | See [[@leeInferringTradeDirection1991]]     | ✅               | ✅                 | ✅               | ✅                 | log         |
-| bid_ask_ratio_ex      | Ratio of ask and bid 🆕      | ?     |                  | ✅                 | ✅               | ✅                 | standardize |
-| spread_ex             | Absolute spread 🆕           | ?     |                  |                     |                  |                    | standardize |
-| spread_best           | Absolute spread 🆕           | ?     |                  |                     |                   |                   | standardize |
-| price_rel_nbb         | Tradeprice rel to nbb 🆕     | Relates trade exchange with nation-wide best.     |                  | ✅                 | ✅               | ✅                 | standardize |
-| price_rel_nbo         | Tradeprice rel to nbo 🆕     | See above.     |                  | ✅                 | ✅               | ✅                 | standardize |
-| prox_ex               | EMO / CLNV                   | Most important predictor in [[@ellisAccuracyTradeClassification2000]] and [[@chakrabartyTradeClassificationAlgorithms2012]]    | ✅               | ✅                 | ✅                | ✅                | standardize|
-| prox_best             | EMO / CLNV                   | See above.     | ✅                | ✅                 | ✅                |✅                 | standardize |
-| bid_ask_size_ratio_ex | Depth rule                   | See [[@grauerOptionTradeClassification2022]]      |                  | ✅                 | ✅               | ✅                 | standardize |
-| bid_size_ex           | Depth rule / Trade size rule | See above.    |                  | ✅                 | ✅               | ✅                 | standardize |
-| ask_size_ex           | Depth rule / Trade size rule | See above.     |                  | ✅                 | ✅               | ✅                 | standardize |
-| rel_bid_size_ex       | Trade size rule              | See above.     |                  | ✅                 | ✅               | ✅                 | standardize |
-| rel_ask_size_ex       | Trade size rule              | See above.     |                  | ✅                 | ✅               | ✅                 | standardize |
-| TRADE_SIZE            | Trade size rule              | See above.     |                  | ✅                 | ✅               | ✅                 | standardize |
-| STR_PRC               | option                       | ?     |                  |                    |                  | ✅                 | log         |
-| day_vol               | option                       | ?     |                  |                    |                  | ✅                 | log         |
-| bin_root              | option 🦺(many `UNKWN`)        | ?     |                  |                    |                  | ✅                 | binarize    |
-| time_to_maturity      | option                       | ?     |                  |                    |                  | ✅                 | standardize |
-| moneyness             | option                       | ?     |                  |                    |                  | ✅                 | standardize |
-| bin_option_type       | option                       | ?     |                  |                    |                  | ✅                 | binarize    |
-| bin_issue_type        | option                       | See [[@ronenMachineLearningTrade2022]]. Learn temporal patterns. Data is ordered by time.      |                  |                    |                  | ✅                 | binarize    |
-| date_month_sin        | date                         | See above.     |                  |                    | ✅               | ✅                 | pos enc     |
-| date_month_cos        | date                         | See above.     |                  |                    | ✅               | ✅                 | pos enc     |
-| date_day_sin          | date                         | See above.     |                  |                    | ✅               | ✅                 | pos enc     |
-| date_day_cos          | date                         | See above.     |                  |                    | ✅               | ✅                 | pos enc     |
-| date_weekday_sin      | date                         | See above.     |                  |                    | ✅               | ✅                 | pos enc     |
-| date_weekday_cos      | date                         | See above.     |                  |                    | ✅               | ✅                 | pos enc     |
-| date_time_sin         | date                         | See above.     |                  |                    | ✅               | ✅                 | pos enc     |
-| date_time_cos         | date                         | See above.     |                  |                    | ✅               | ✅                 | pos enc     |
-| date_year             | date 🦺(uniformative)        | See above.     |                  |                    |                  |                    | None        |
-
+| Feature               | Feature Category             | FS 1 (Classical) | FS 2 (F 1 + Grauer) | FS 3 (FS 2 + Others) | Transform |
+|-----------------------|------------------------------|------------------|---------------------|----------------------|-----------|
+| TRADE_PRICE           | tick rule                    | x                | x                   | x                    | log       |
+| price_ex_lag          | tick rule                    | x                | x                   | x                    | log       |
+| price_all_lag         | tick rule                    | x                | x                   | x                    | log       |
+| chg_ex_lag            | tick rule                    | x                | x                   | x                    |           |
+| chg_all_lag           | tick rule                    | x                | x                   | x                    |           |
+| price_ex_lead         | reverse tick rule            | x                | x                   | x                    | log       |
+| price_all_lead        | reverse tick rule            | x                | x                   | x                    | log       |
+| chg_ex_lead           | reverse tick rule            | x                | x                   | x                    |           |
+| chg_all_lead          | reverse tick rule            | x                | x                   | x                    |           |
+| BEST_BID              | quote rule                   | x                | x                   | x                    | log       |
+| bid_ex                | quote rule                   | x                | x                   | x                    | log       |
+| BEST_ASK              | quote rule                   | x                | x                   | x                    | log       |
+| ask_ex                | quote rule                   | x                | x                   | x                    | log       |
+| prox_ex               | EMO / CLNV                   | x                | x                   | x                    |           |
+| prox_best             | EMO / CLNV                   | x                | x                   | x                    |           |
+| bid_ask_size_ratio_ex | depth rule                   |                  | x                   | x                    |           |
+| bid_size_ex           | depth rule / trade size rule |                  | x                   | x                    |           |
+| ask_size_ex           | depth rule / trade size rule |                  | x                   | x                    |           |
+| rel_bid_size_ex       | trade size rule              |                  | x                   | x                    |           |
+| rel_ask_size_ex       | trade size rule              |                  | x                   | x                    |           |
+| TRADE_SIZE            | trade size rule              |                  | x                   | x                    |           |
+| STR_PRC               | option                       |                  |                     | x                    | log       |
+| day_vol               | option                       |                  |                     | x                    | log       |
+| bin_root              | option                       |                  |                     | x                    | binarize  |
+| time_to_maturity      | option                       |                  |                     | x                    |           |
+| moneyness             | option                       |                  |                     | x                    |           |
+| bin_option_type       | option                       |                  |                     | x                    | binarize  |
+| bin_issue_type        | option                       |                  |                     | x                    | binarize  |
