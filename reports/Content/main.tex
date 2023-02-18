@@ -139,27 +139,27 @@ The basic trade classification rules from \cref{sec:basic-rules} can be combined
 
 
 \begin{figure}[ht!]
-  \setkeys{Gin}{height=60mm}
+  %\setkeys{Gin}{height=60mm}
   \subfloat[\acrshort{LR} Algorithm\label{fig:hybrid-lr}]{%
-    {\renewcommand\normalsize{\tiny\sf}%
+    {\renewcommand\normalsize{\tiny}%
         \normalsize
         \input{./Graphs/lr-algo.pdf_tex}}
   }
   \hfill%
   \subfloat[\acrshort{EMO} Rule\label{fig:hybrid-emo}]{%
-    {\renewcommand\normalsize{\tiny\sf}%
+    {\renewcommand\normalsize{\tiny}%
         \normalsize
         \input{./Graphs/emo-algo.pdf_tex}}
   }
   \hfill%
   \subfloat[\acrshort{CLNV} Rule\label{fig:hybrid-clnv}]{%
-    {\renewcommand\normalsize{\tiny\sf}%
+    {\renewcommand\normalsize{\tiny}%
         \normalsize
         \input{./Graphs/clnv-algo.pdf_tex}}
   }
   \hfill%
   \subfloat[Hybrid Rule Through Stacking\label{fig:hybrid-grauer}]{%
-    {\renewcommand\normalsize{\tiny\sf}%
+    {\renewcommand\normalsize{\tiny}%
         \normalsize
         \input{./Graphs/grauer-algo.pdf_tex}}
   }
@@ -276,7 +276,7 @@ Aside from the multi-headed self-attention and feed-forward sub-layer, the decod
 \begin{landscape}
   \begin{figure}[ht]
     \centering
-    {\renewcommand\normalsize{\scriptsize\sf}%
+    {\renewcommand\normalsize{\scriptsize}%
       \normalsize
       \input{./Graphs/transformer-architecture.pdf_tex}}
     \caption[Overview Over the Transformer Architecture]{Overview Over the Transformer Architecture. The left part shows the self-attention mechanism discussed in \cref{sec:attention}. The centre part depicts the multi-headed self-attention mechanism, as covered in \cref{sec:attention}. The right part shows the encoder and decoder stack, as well as the \gls{embedding} mechanism as covered in \cref{sec:token-embeddings} onwards. Own work inspired by \textcite[][3]{tayEfficientTransformersSurvey2022}.}
@@ -364,11 +364,30 @@ Intuitively, the residual connection provides an alternative path for informatio
 The subsequent sections introduce two adaptions of the classical Transformer for the
 tabular domain. We start with the \emph{TabTransformer} of \textcite{huangTabTransformerTabularData2020}.
 
+%\begin{landscape}
+\begin{figure}[h]
+  \subfloat[Architecture of TabTransformer. Own work.\label{fig:tabtransformer}]{%
+    {\renewcommand\normalsize{\scriptsize}%
+        \normalsize
+        \input{./Graphs/tabtransformer.pdf_tex}}
+  }
+  \hfill%
+  \subfloat[Architecture of FTTransformer. Own work.\label{fig:fttransformer}]{%
+    {\renewcommand\normalsize{\scriptsize}%
+        \normalsize
+        \input{./Graphs/tabtransformer.pdf_tex}}
+  }
+  \caption[Comparison Between Tabular Transformers]{Comparison Between Tabular Transformer.}
+  \label{fig:tabular-transformer}
+\end{figure}
+% \end{landscape}
+
 \subsubsection{TabTransformer}\label{sec:tabtransformer}
 
 (...)
 
-Besides feature-specific embedding, a \emph{shared embedding} is learned. This embedding is equal for all categories of one feature and is combined with the feature-specific embeddings to enable the model to distinguish classes in one column from those in other columns \autocite[][10]{huangTabTransformerTabularData2020}. It may be added or concatenated. For the variant that adds the shared embedding element-wisely, the embedding matrix $W_S$ is of dimension $\mathbb{R}^{e_d \times m}$. Overall, the joint embedding of $x_j$ is given by:
+
+Besides feature-specific embedding, a \emph{shared embedding} is learned. This embedding is equal for all categories of one feature and is combined with the feature-specific embeddings to enable the model to distinguish classes in one column from those in other columns \autocite[][10]{huangTabTransformerTabularData2020}. It may be added or concatenated. For the variant that adds the shared embedding element-wisely, the embedding matrix $W_S$ is of dimension $\mathbb{R}^{e_e \times m}$. Overall, the joint embedding of $x_j$ is given by:
 
 \begin{subequations}
   \begin{align}
@@ -380,7 +399,7 @@ Besides feature-specific embedding, a \emph{shared embedding} is learned. This e
 
 Both approaches from \cref{eq:tabtransformer-embedding-elementwise,eq:tabtransformer-embedding-concat}, achieve similar performance experiments of \textcite[][11]{huangTabTransformerTabularData2020}. No additional positional embedding is required, as embeddings are unique per feature.
 
-Analogous to \cref{sec:architectural-overview}, the embedding of each row, or $X = [e_1, \cdots, e_m]$, is subsequently passed through several Transformer layers, ultimately resulting in contextualized embeddings. At the end of the encoder, the contextual embeddings are flattened and concatenated with the numerical features into a ($e_{d}  \times m + c$)-dimensional vector, which serves as input to the \gls{MLP} \autocite[][3]{huangTabTransformerTabularData2020}. Like before, a linear layer and a softmax activation are used to retrieve the class probabilities.
+Analogous to \cref{sec:architectural-overview}, the embedding of each row, or $X = [e_1, \cdots, e_m]$, is subsequently passed through several Transformer layers, ultimately resulting in contextualized embeddings. At the end of the encoder, the contextual embeddings are flattened and concatenated with the numerical features into a ($d_{e}  \times m + c$)-dimensional vector, which serves as input to the \gls{MLP} \autocite[][3]{huangTabTransformerTabularData2020}. Like before, a linear layer and a softmax activation are used to retrieve the class probabilities.
 
 In large-scale experiments \textcite[][5--6]{huangTabTransformerTabularData2020} can show that the use of contextual \glspl{embedding} elevates both the robustness to noise and missing data of the model. For various binary classification tasks, the TabTransformer outperforms other deep learning models e.g., vanilla \glspl{MLP} and tree-based approaches in terms of \gls{AUC}.
 
@@ -424,7 +443,7 @@ Yet, embedding and contextualizing of only the categorical inputs remain imperfe
 \subsubsection{Training of Supervised
   Models (4~p)}\label{sec:training-of-supervised-models}
 
-  \textcite[][12]{huangTabTransformerTabularData2020} recommend an overall ratio of $\tfrac{7}{8}$ feature-specific embeddings versus $\tfrac{1}{8}$ shared embeddings.
+\textcite[][12]{huangTabTransformerTabularData2020} recommend an overall ratio of $\tfrac{7}{8}$ feature-specific embeddings versus $\tfrac{1}{8}$ shared embeddings.
 
 \subsubsection{Training of Semi-Supervised
   Models (4~p)}\label{sec:training-of-semi-supervised-models}
