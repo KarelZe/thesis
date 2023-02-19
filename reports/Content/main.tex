@@ -350,10 +350,33 @@ As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connecti
 \end{equation}
 calculated with the statistics $m = \sum_{i=1}^{d_{e}} \boldsymbol{e}[i] / d_{e}$ and $v = \sum_{i=1}^{d_{e}}(\boldsymbol{e}[i]-m)^2 / d_{e}$. Typically, the scale $\gamma$ and bias $\beta$ are set to preserve a zero mean and unit variance.
 
+Until now it remains unclear, how the layer normalization intertwines with the sub-layers and the residual connections. Transformers are distinguished by the order in which layer normalization is added into the pre-norm and post-norm Transformer. Post-norm Transformers add layer normalization to the sub-layer \emph{after} adding the input from the residual connections. The arrangement is depicted in \cref{fig:post-norm-residual}. In contrast for the pre-norm Transformer, the normalization is applied \emph{before} the self-attention and feed-forward sub-layers and inside the residual connections. Pre-norm requires one additional normalization layer to pass only well-conditioned outputs from the Transformer block to the successive layers \autocite[][5]{xiongLayerNormalizationTransformer2020}. The setup is depicted in \cref{fig:pre-norm-residual}.
+
+\begin{figure}[ht]
+  \subfloat[Post-Norm Residual Unit.\label{fig:post-norm-residual}]{%
+    % {\renewcommand\normalsize{\scriptsize}%
+    %     \normalsize
+    %     \input{./Graphs/tabtransformer.pdf_tex}}
+    \includegraphics[width=5cm]{example-image-a}
+  }
+  \hfill%
+  \subfloat[Pre-Norm Residual Unit.\label{fig:pre-norm-residual}]{%
+    % {\renewcommand\normalsize{\scriptsize}%
+    %     \normalsize
+    %     \input{./Graphs/fttransformer.pdf_tex}}
+    \includegraphics[width=5cm]{example-image-b}
+  }
+  \caption[Pre-norm residual unit and post-norm residual unit]{Examples of pre-norm residual unit and post-norm residual unit. Own work inspired by \textcite[][2]{wangLearningDeepTransformer2019}.}
+  \label{fig:norm-residual}
+\end{figure}
+
+(...)
+
+We come back to these techniques in the subsequent Section and \cref{sec:training-and-tuning}. 
 
 \subsection{Transformer Networks For Tabular Data}\label{sec:tabular-transformer}
 
-Due to the differences between textual and tabular data, the Transformer of \textcite[][]{vaswaniAttentionAllYou2017} needs to be tailored to the tabular domain. We present two state-of-the-art adaptations: the TabTransformer of \textcite[][2]{huangTabTransformerTabularData2020} and the FT-Transformer of \textcite[][4]{gorishniyRevisitingDeepLearning2021}. Both architectures are depicted in \cref{fig:tabtransformer} and \cref{fig:fttransformer}, respectively. They share an encoder-only architecture, but are distinct concerning their embedding strategy and layer arrangement, as we explain in the subsequent chapters.
+Many of the concepts in \cref{sec:transformer-networks} can be adapted to the tabular domain and only minor architectural changes are necessary. We cover two state-of-the-art adaptations: the TabTransformer of \textcite[][2]{huangTabTransformerTabularData2020} and the FT-Transformer of \textcite[][4]{gorishniyRevisitingDeepLearning2021} that extend the classical Transformer. Both architectures are depicted in \cref{fig:tabtransformer} and \cref{fig:fttransformer}, respectively. They share an encoder-only architecture, but are distinct concerning their embedding strategy and layer arrangement, as we explain in the subsequent chapters.
 
 \begin{figure}[ht]
   \subfloat[Architecture of the TabTransformer.\label{fig:tabtransformer}]{%
