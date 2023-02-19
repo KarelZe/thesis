@@ -40,7 +40,7 @@ This chapter presents foundational classification rules, that may be used for tr
 
 \subsubsection{Quote Rule}\label{sec:quote-rule}
 
-The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $p_i = \langle p_{i,1},p_{i,2},\dots,p_{i,T}\rangle$ and the corresponding ask at $t$ by $a_{i,t}$ and bid by $b_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, denoted by $m_{i,t} = \tfrac{1}{2}(b_{i,t} + a_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} \neq m_{i,t}\right\}$ is given by:
+The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $\gls{p}_i = \langle p_{i,1},p_{i,2},\dots,p_{i,T}\rangle$ and the corresponding ask at $t$ by $\gls{a}_{i,t}$ and bid by $\gls{b}_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, denoted by $\gls{m}_{i,t} = \tfrac{1}{2}(b_{i,t} + a_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} \neq m_{i,t}\right\}$ is given by:
 
 \begin{equation}
   \operatorname{quote}\colon D \to \left\{0, 1\right\},\quad
@@ -100,7 +100,7 @@ As the \cref{sec:quote-rule} unveils, the tick rule yields significantly lower s
 
 The depth rule infers the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity at one trade side, trades are classified as a buy (sell) for a larger ask (bid) size \autocite[][14]{grauerOptionTradeClassification2022}.
 
-Let $\tilde{a}_{i,t}$ denote the quoted size of the ask and $\tilde{b}_{i,t}$ of the bid. We set the domain as $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} = m_{i,t} \land \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \right\}$. The depth rule, $\operatorname{depth} \colon D \to \left\{0,1\right\}$, is now defined as:
+Let $\gls{a-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{b-tilde}_{i,t}$ of the bid, and $\gls{p-tilde}_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} = \gls{m}_{i,t} \land \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \right\}$. The depth rule, $\operatorname{depth} \colon D \to \left\{0,1\right\}$, is now defined as:
 \begin{equation}
   \operatorname{depth}(i, t)=
   \begin{cases}
