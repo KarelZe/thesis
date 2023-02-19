@@ -40,11 +40,11 @@ This chapter presents foundational classification rules, that may be used for tr
 
 \subsubsection{Quote Rule}\label{sec:quote-rule}
 
-The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $(p_{i,t})_{t\in\mathbb{N}}$ and the contemporaneous ask at $t$ by $a_{i,t}$ and bid by $b_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, denoted by $m_{i,t} = \tfrac{1}{2}(b_{i,t} + a_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $D = \left\{(p_{i,t}, m_{i,t}) \in \mathbb{R}^2: p_{i,t} \neq m_{i,t}\right\}$ is given by:
+The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $p_i = \langle p_{i,1},p_{i,2},\dots,p_{i,T}\rangle$ and the corresponding ask at $t$ by $a_{i,t}$ and bid by $b_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, denoted by $m_{i,t} = \tfrac{1}{2}(b_{i,t} + a_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} \neq m_{i,t}\right\}$ is given by:
 
 \begin{equation}
   \operatorname{quote}\colon D \to \left\{0, 1\right\},\quad
-  \operatorname{quote}(p_{i,t}, m_{i,t})=
+  \operatorname{quote}(i, t)=
   \begin{cases}
     0, & \text{if}\ p_{i, t}>m_{i, t}  \\
     1, & \text{if}\ p_{i, t}<m_{i, t}. \\
@@ -60,42 +60,39 @@ The quote rule requires both price and quote data, which affects the data effici
 
 \subsubsection{Tick Test}\label{sec:tick-test}
 
-A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}.
-
-The tick test, $\operatorname{tick}\colon \mathbb{R}^2 \to \left\{0,1\right\}$, is defined as:
+A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test, $\operatorname{tick}\colon \mathbb{N}^2 \to \left\{0,1\right\}$, is defined as:
 
 \begin{equation}
-  \operatorname{tick}(p_{i, t-1}, p_{i,t})=
+  \operatorname{tick}(i, t)=
   \begin{cases}
-    1,                                       & \text{if}\ p_{i, t} > p_{i, t-1} \\
+    1,                                       & \text{if}\ t=1 \lor p_{t}>p_{t-1} \\
     0,                                       & \text{if}\ p_{i, t} < p_{i, t-1} \\
-    \operatorname{tick}(p_{i,t-2}, p_{i,t}), & \text{else}.
+    \operatorname{tick}(i, t-1), & \text{else}.
   \end{cases}
   \label{eq:tick-test}
 \end{equation}
 
-
-Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy. Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[][3]{leeInferringTradeDirection1991}.
+Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy~\footnote{To end recursion at $t=1$, we sign the trade to be buyer-initiated. Other choices are possible, e.g., random assignment or based on another rule. Similarly done for \cref{eq:reverse-tick-test}.}.  Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[][3]{leeInferringTradeDirection1991}.
 
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed in \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick, is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
 
-The reverse tick test, $\operatorname{rtick} \colon \mathbb{R}^2 \to \left\{0, 1\right\}$, is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the trade price of the next, distinguishable trade price.
+The reverse tick test, $\operatorname{rtick} \colon \mathbb{N}^2 \to \left\{0, 1\right\}$, is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the trade price of the next, distinguishable trade price.
 
 \begin{equation}
-  \operatorname{rtick}(p_{i, t}, p_{i,t+1})=
+  \operatorname{rtick}(i, t)=
   \begin{cases}
-    1,                                        & \text{if}\ p_{i, t} > p_{i, t+1} \\
+    1,                                        & \text{if}\ t+1=T \lor p_{i, t} > p_{i, t+1}\\
     0,                                        & \text{if}\ p_{i, t} < p_{i, t+1} \\
-    \operatorname{rtick}(p_{i,t}, p_{i,t+2}), & \text{else}
+    \operatorname{rtick}(i, t+1), & \text{else}
   \end{cases}
   \label{eq:reverse-tick-test}
 \end{equation}
 
-As donated in \cref{eq:tick-test} the trade is classified as seller-initiated, if the next trade is on an uptick or a zero uptick, and classified as buyer-initiated for trades at a downtick or a zero downtick \autocite[][735--636]{leeInferringTradeDirection1991}.
+As denoted in \cref{eq:tick-test} the trade is classified as seller-initiated, if the next trade is on an uptick or a zero uptick, and classified as buyer-initiated for trades at a downtick or a zero downtick \autocite[][735--636]{leeInferringTradeDirection1991}.
 
-Both the tick test and reverse tick test result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}.
+Both tests result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}.
 
-In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades recorded at the \cgls{ISE} and \cgls{CBOE}, but both cannot compete with quote-based approaches and calls for more sophisticated approaches. These findings contradict the results in the stock market \autocite[][737]{leeInferringTradeDirection1991}.
+In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades, but both cannot compete with quote-based approaches and calls for more sophisticated approaches. These findings contradict the results from the stock market \autocite[][737]{leeInferringTradeDirection1991}.
 
 \subsubsection{Depth Rule}\label{sec:depth-rule}
 
@@ -103,12 +100,12 @@ As the \cref{sec:quote-rule} unveils, the tick rule yields significantly lower s
 
 The depth rule infers the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity at one trade side, trades are classified as a buy (sell) for a larger ask (bid) size \autocite[][14]{grauerOptionTradeClassification2022}.
 
-Let $\tilde{a}_{i,t}$ denote the quoted size of the ask and $\tilde{b}_{i,t}$ of the bid. We set the domain as $D = \left\{(p_{i,t}, m_{i,t}, \tilde{a}_{i,t}, \tilde{b}_{i,t}) \in \mathbb{R}^4: p_{i,t} = m_{i,t} \ \text{and} \ \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \right\}$. The depth rule, $\operatorname{depth} \colon D \to \left\{0,1\right\}$, is now defined as:
+Let $\tilde{a}_{i,t}$ denote the quoted size of the ask and $\tilde{b}_{i,t}$ of the bid. We set the domain as $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} = m_{i,t} \land \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \right\}$. The depth rule, $\operatorname{depth} \colon D \to \left\{0,1\right\}$, is now defined as:
 \begin{equation}
-  \operatorname{depth}(p_{i,t}, m_{i,t}, \tilde{a}_{i,t}, \tilde{b}_{i,t})=
+  \operatorname{depth}(i, t)=
   \begin{cases}
-    0, & \text{if}\ \tilde{a}_{i,t} < \tilde{b}_{i,t} \ \text{and}\ p_{i, t} = m_{i, t}  \\
-    1, & \text{if}\ \tilde{a}_{i,t} > \tilde{b}_{i,t} \ \text{and}\ p_{i, t} = m_{i, t}. \\
+    0, & \text{if}\ \tilde{a}_{i,t} < \tilde{b}_{i,t} \land p_{i, t} = m_{i, t}  \\
+    1, & \text{if}\ \tilde{a}_{i,t} > \tilde{b}_{i,t} \land p_{i, t} = m_{i, t}. \\
   \end{cases}
   \label{eq:depth-rule}
 \end{equation}
@@ -119,9 +116,9 @@ Like the quote rule, the depth rule has additional dependencies on quote data. D
 
 \subsubsection{Trade Size Rule}\label{sec:trade-size-rule}
 
-As the \cref{sec:tick-test} derives, quote-based approaches are generally preferred due to the stronger performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $D = \left\{(\tilde{p}_{i, t} , \tilde{a}_{i, t} , \tilde{b}_{i,t}) \in \mathbb{R}^3: \tilde{p}_{i,t} = \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \ \text{or} \ \tilde{p}_{i,t} \neq  \tilde{a}_{i,t} = \tilde{b}_{i,t} \right\}$ the trade size rule, $\operatorname{tsize} \colon D \to \left\{0,1\right\}$, is defined as:
+As the \cref{sec:tick-test} derives, quote-based approaches are generally preferred due to their stronger performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $D = \left\{(i, t) \in \mathbb{N}^2: \tilde{p}_{i,t} = \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \lor \tilde{p}_{i,t} \neq  \tilde{a}_{i,t} = \tilde{b}_{i,t} \right\}$ the trade size rule, $\operatorname{tsize} \colon D \to \left\{0,1\right\}$, is defined as:
 \begin{equation}
-  \operatorname{tsize}(\tilde{p}_{i, t} , \tilde{a}_{i, t} , \tilde{b}_{i,t})=
+  \operatorname{tsize}(i, t)=
   \begin{cases}
     1, & \text{if}\ \tilde{p}_{i, t} = \tilde{b}_{i, t} \neq \tilde{a}_{i, t}  \\
     0, & \text{if}\ \tilde{p}_{i, t} = \tilde{a}_{i, t} \neq \tilde{b}_{i, t}. \\
@@ -172,14 +169,14 @@ Popular variants include the \cgls{LR} algorithm, the \cgls{EMO} rule, and the \
 \textcite[][18]{grauerOptionTradeClassification2022} combine basic or hybrid rules through stacking. One such combination is depicted in \cref{fig:hybrid-grauer}. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the primary rules and their ordering. We cover this generic approach last.
 \subsubsection{Lee and Ready Algorithm}\label{sec:lee-and-ready-algorithm}
 
-The popular \cgls{LR} algorithm \autocite[][745]{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs the trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified by the tick rule. The \cgls{LR} algorithm, $\operatorname{lr} \colon \mathbb{R}^3 \to \left\{0,1\right\}$, are defined as:
+The popular \cgls{LR} algorithm \autocite[][745]{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs the trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified by the tick rule. The \cgls{LR} algorithm, $\operatorname{lr} \colon \mathbb{N}^2 \to \left\{0,1\right\}$, are defined as:
 
 \begin{equation}
-  \operatorname{lr}(p_{i,t-1}, p_{i,t}, m_{i,t})=
+  \operatorname{lr}(i, t)=
   \begin{cases}
     1,                                       & \text{if}\ p_{i, t} > m_{i, t} \\
     0,                                       & \text{if}\ p_{i, t} < m_{i, t} \\
-    \operatorname{tick}(p_{i,t-1}, p_{i,t}), & \text{else}.
+    \operatorname{tick}(i, t), & \text{else}.
   \end{cases}
 \end{equation}
 
@@ -196,12 +193,12 @@ The \gls{LR} algorithm is the basis for more advanced algorithms, such as the \g
 
 As such, the \cgls{EMO} algorithm extends the tick rule by classifying trades at the quotes using the quote rule, and all other trades with the tick test. Formally, the classification rule is given by:
 \begin{equation}
-  \operatorname{emo} \colon \mathbb{R}^4 \to \left\{0, 1 \right\}, \quad
-  \operatorname{emo}(p_{i, t-1}, p_{i, t}, a_{i, t}, b_{i, t})=
+  \operatorname{emo} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
+  \operatorname{emo}(i, t)=
   \begin{cases}
     1,                                         & \text{if}\ p_{i, t} = a_{i, t} \\
     0,                                         & \text{if}\ p_{i, t} = b_{i, t} \\
-    \operatorname{tick}(p_{i, t-1}, p_{i, t}), & \text{else}.
+    \operatorname{tick}(i, t), & \text{else}.
   \end{cases}
   \label{eq:emo-rule}
 \end{equation}
@@ -214,15 +211,13 @@ As such, the \cgls{EMO} algorithm extends the tick rule by classifying trades at
 Like the previous two algorithms, the \cgls{CLNV} method \autocite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the \cgls{EMO} rule by a differentiated treatment of trades inside the quotes, which are notoriously hard to classify. The authors segment the bid-ask spread into deciles (ten equal-width bins) and classify trades around the midpoint (\nth{4} to \nth{7} decile) by the tick rule and trades close or outside the quotes are categorized by the tick rule.
 
 \begin{equation}
-  \begin{aligned}
-     & \operatorname{clnv} \colon \mathbb{R}^4 \to \left\{0, 1 \right\} \\
-     & \operatorname{clnv}(p_{i, t-1}, p_{i, t}, a_{i, t}, b_{i, t})=
+    \operatorname{clnv} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
+    \operatorname{clnv}(i, t)=
     \begin{cases}
       1,                                         & \text{if}\ p_{i, t} \in \left(\frac{3}{10} b_{i,t} + \frac{7}{10} a_{i,t}, a_{i, t}\right] \\
       0,                                         & \text{if}\ p_{i, t} \in \left[ b_{i,t}, \frac{7}{10} b_{i,t} + \frac{3}{10} a_{i,t}\right) \\
-      \operatorname{tick}(p_{i, t-1}, p_{i, t}), & \text{else}
+      \operatorname{tick}(i, t), & \text{else}
     \end{cases}
-  \end{aligned}
   \label{eq:CLNV-rule}
 \end{equation}
 
@@ -243,7 +238,7 @@ The most basic application is in the \gls{LR} algorithm. For a more complex exam
 
 \textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} and \textcite[][18]{grauerOptionTradeClassification2022} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and the quotes. Hence, current classification rules may not realize their full potential. A obvious question is, if classifiers, \emph{learned} on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
 
-The trend towards sophisticated, hybrid rules, combining as many as four base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) ensembles found in machine learning and expresses the need for better classifiers. In the subsequent section, we provide an overview of state-of-the-art machine learning-based classifiers. We start by framing trade classification as a supervised learning problem.
+The trend towards sophisticated, hybrid rules, combining as many as four base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) ensembles found in machine learning and expresses the need for better classifiers. We provide an overview of state-of-the-art machine learning-based classifiers. We start by framing trade classification as a supervised learning problem.
 
 \newpage
 \section{Supervised Approaches (12~p)}\label{sec:supervised-approaches}
