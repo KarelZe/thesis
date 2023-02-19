@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🧵Positional encoding notes.md",
+                "file": "📑notes/🔢LR algorithm notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -106,8 +106,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 399.5110321044922,
-    "collapsed": true
+    "width": 399.5110321044922
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -123,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🧵Positional encoding notes.md",
+                "file": "📑notes/🔢LR algorithm notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🧵Positional encoding notes.md"
+                "file": "📑notes/🔢LR algorithm notes.md"
               }
             }
           },
@@ -184,6 +183,7 @@
   },
   "active": "11a392cbf2a84d00",
   "lastOpenFiles": [
+    "📑notes/🧵Positional encoding notes.md",
     "📖chapters/🍔Layer Norm.md",
     "📥Inbox/@vaswaniAttentionAllYou2017.md",
     "📖chapters/🤖TabTransformer.md",
@@ -192,7 +192,6 @@
     "📖chapters/🧃Feature Sets.md",
     "📖chapters/🪦graveyard of ideas.md",
     "📑notes/🔢Tick test notes.md",
-    "📑notes/🔢Hybrid rules notes.md",
-    "📖chapters/🔢Hybrid rules.md"
+    "📑notes/🔢Hybrid rules notes.md"
   ]
 }
