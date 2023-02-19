@@ -51,6 +51,8 @@
 | date_time_cos         | date                         | See above.                                                                                                                  |                  |                    | x                  | pos enc     |
 | date_year             | date 🦺(uniformative)         | See above.                                                                                                                  |                  |                    |                    | None        |
 
+## LR algorithm
+The algorithm is derived from an analysis of stock trades inside the quotes ([[@leeInferringTradeDirection1991]] 742). 
 
 ## Residual Connections
 

@@ -3,7 +3,17 @@ Tags: #trade-classification #lee-ready
 
 
 
+
 Accuracy has been tested in [[@odders-whiteOccurrenceConsequencesInaccurate2000]], [[@finucaneDirectTestMethods2000]] and [[@leeInferringInvestorBehavior2000]] on TORQ data set which contains the true label. (see [[@bessembinderIssuesAssessingTrade2003]])
+
+quoted spreads are available  “Studies examining more recent data have found more mixed results, with LR accuracy lower than TR rates in some cases, and ranging from 72.1%-93.57%. Ellis et al. (2000) attribute lower LR rates in recent data to high order submission and cancellation rates along with significant market fragmentation which render quote/trade matching less precise.” ([[@ronenMachineLearningTrade2022]]., 2022, p. 7)
+
+
+Based on their observations, the authors recommended using the quote-based approach over the tick test due to its greater precision. They also demonstrated that the tick test correctly classified approximately 85% of trades at the spread midpoint in a simple model. This suggests that combining the two methods would be optimal, given the high predicted accuracy of the tick method for midpoint trades and the likely superiority of the quote method.
+
+“First, they noted that &the primary limitation of the tick test is its relative imprecision when compared to a quotebased approach'. This implies that the quote method should be employed whenever possible. Furthermore, in the context of a simple model, they demonstrated that the tick test correctly classiffied roughly 85% of trades occurring at the spread midpoint. The high predicted rate of accuracy of the tick method for midpoint trades, along with the likely superiority of the quote method, suggested that the proposed combination of the two was optimal.” ([[@odders-whiteOccurrenceConsequencesInaccurate2000]], p. 264)
+
+“Although LR's method is perhaps the most commonly used method for classifying trades, its general acceptance has been based in large part upon a simple analytical model that suggests a high degree of accuracy. LR predict that the tick test can be expected to correctly classify at least 85% of the trades that occur at the midpoint of the spread and at least 90% of bid or ask trades, but their predictions are based in part on a model that assumes constant quoted prices and independent Poisson processes for the arrival of market buy and sell orders and buy and sell orders being worked by floor brokers. To the extent that their assumptions are not met, LR's predictions may not accurately reflect the precision of the tick test when it is applied to actual financial markets.” ([[@finucaneDirectTestMethods2000]], p. 557)
 
 A second difficulty is that signing trades also requires relating the trade price to the prevailing quote. Traders taking the market maker’s bid (ask) were presumed to be sellers (buyers), and trades falling in between were signed using a tick-based algorithm. The Lee-Ready (1991) algorithm also suggested using a five-second delay between the reported quote and trade price to reflect the fact that the mechanism reporting quotes to the tape was not the same as the trade-reporting mechanism. Even in the simpler world of specialist trading, trade classification errors were substantial. ([[@easleyFlowToxicityLiquidity2012]])
 
