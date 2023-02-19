@@ -350,8 +350,7 @@ As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connecti
 \end{equation}
 calculated with the statistics $m = \sum_{i=1}^{d_{e}} \boldsymbol{e}[i] / d_{e}$ and $v = \sum_{i=1}^{d_{e}}(\boldsymbol{e}[i]-m)^2 / d_{e}$. Typically, the scale $\gamma$ and bias $\beta$ are set to preserve a zero mean and unit variance.
 
-Until now it remains unclear, how the layer normalization intertwines with the sub-layers and the residual connections. Transformers are distinguished by the order in which layer normalization is added into the pre-norm and post-norm Transformer. Post-norm Transformers add layer normalization to the sub-layer \emph{after} adding the input from the residual connections. The arrangement is depicted in \cref{fig:post-norm-residual}. In contrast for the pre-norm Transformer, the normalization is applied \emph{before} the self-attention and feed-forward sub-layers and inside the residual connections. Pre-norm requires one additional normalization layer to pass only well-conditioned outputs from the Transformer block to the successive layers \autocite[][5]{xiongLayerNormalizationTransformer2020}. The setup is depicted in \cref{fig:pre-norm-residual}.
-
+Until now it remains unclear, how the layer normalization intertwines with the sub-layers and the residual connections. Transformers are distinguished by the order in which layer normalization is added into the pre-norm and post-norm Transformer. 
 \begin{figure}[ht]
   \subfloat[Post-Norm Residual Unit.\label{fig:post-norm-residual}]{%
     % {\renewcommand\normalsize{\scriptsize}%
@@ -370,9 +369,9 @@ Until now it remains unclear, how the layer normalization intertwines with the s
   \label{fig:norm-residual}
 \end{figure}
 
-(...)
+Post-norm Transformers add layer normalization to the sub-layer \emph{after} adding the input from the residual connections. The arrangement is depicted in \cref{fig:post-norm-residual}. In contrast for the pre-norm Transformer, the normalization is applied \emph{before} the self-attention and feed-forward sub-layers and inside the residual connections. Pre-norm requires one additional normalization layer to pass only well-conditioned outputs from the Transformer block to the successive layers \autocite[][5]{xiongLayerNormalizationTransformer2020}. The setup is depicted in \cref{fig:pre-norm-residual}.
 
-We come back to these techniques in the subsequent Section and \cref{sec:training-and-tuning}. 
+\textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalization, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of this wide-spread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. Also, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in vanishing gradients, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in the subsequent Section and \cref{sec:training-and-tuning}. 
 
 \subsection{Transformer Networks For Tabular Data}\label{sec:tabular-transformer}
 
