@@ -65,8 +65,8 @@ A common alternative to the quote rule is the tick test. Based on the rationale 
 \begin{equation}
   \operatorname{tick}(i, t)=
   \begin{cases}
-    1,                                       & \text{if}\ t=1 \lor p_{t}>p_{t-1} \\
-    0,                                       & \text{if}\ p_{i, t} < p_{i, t-1} \\
+    1,                           & \text{if}\ t=1 \lor p_{t}>p_{t-1} \\
+    0,                           & \text{if}\ p_{i, t} < p_{i, t-1}  \\
     \operatorname{tick}(i, t-1), & \text{else}.
   \end{cases}
   \label{eq:tick-test}
@@ -81,8 +81,8 @@ The reverse tick test, $\operatorname{rtick} \colon \mathbb{N}^2 \to \left\{0, 1
 \begin{equation}
   \operatorname{rtick}(i, t)=
   \begin{cases}
-    1,                                        & \text{if}\ t+1=T \lor p_{i, t} > p_{i, t+1}\\
-    0,                                        & \text{if}\ p_{i, t} < p_{i, t+1} \\
+    1,                            & \text{if}\ t+1=T \lor p_{i, t} > p_{i, t+1} \\
+    0,                            & \text{if}\ p_{i, t} < p_{i, t+1}            \\
     \operatorname{rtick}(i, t+1), & \text{else}
   \end{cases}
   \label{eq:reverse-tick-test}
@@ -169,22 +169,20 @@ Popular variants include the \cgls{LR} algorithm, the \cgls{EMO} rule, and the \
 \textcite[][18]{grauerOptionTradeClassification2022} combine basic or hybrid rules through stacking. One such combination is depicted in \cref{fig:hybrid-grauer}. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the primary rules and their ordering. We cover this generic approach last.
 \subsubsection{Lee and Ready Algorithm}\label{sec:lee-and-ready-algorithm}
 
-The popular \cgls{LR} algorithm \autocite[][745]{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single algorithm. The algorithm signs the trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified by the tick rule. The \cgls{LR} algorithm, $\operatorname{lr} \colon \mathbb{N}^2 \to \left\{0,1\right\}$, are defined as:
+The popular \cgls{LR} algorithm \autocite[][745]{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single rule, which is derived from two observations. First, \textcite[][735--743]{leeInferringTradeDirection1991} observe a higher precision of the quote rule over the tick rule, which makes it their preferred choice. Second, by the means of a simple model, the authors demonstrate that the tick test can correctly classify at least \SI{85.0}{\percent} of all midspread trades if the model's assumptions of constant quotes between trades and the arrival of the market and standing orders following a Poisson process are met.
+
+In combination, the algorithm primarily signs trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified by the tick rule. Overall:
 
 \begin{equation}
-  \operatorname{lr}(i, t)=
+  \operatorname{lr} \colon \mathbb{N}^2 \to \left\{0,1\right\}\quad\operatorname{lr}(i,t)=
   \begin{cases}
-    1,                                       & \text{if}\ p_{i, t} > m_{i, t} \\
-    0,                                       & \text{if}\ p_{i, t} < m_{i, t} \\
+    1,                         & \text{if}\ p_{i, t} > m_{i, t} \\
+    0,                         & \text{if}\ p_{i, t} < m_{i, t} \\
     \operatorname{tick}(i, t), & \text{else}.
   \end{cases}
 \end{equation}
 
-The strength of the algorithm lies in combining the strong classification accuracies of the quote rule with the universal applicability of the tick test.
-
-As it requires both trade and quote data, it is less data-efficient than its parts. Even if data is readily available, in past studies the algorithm does not significantly outperform the quote rule \autocites[][30--32]{grauerOptionTradeClassification2022}[][886]{savickasInferringDirectionOption2003}.  Nevertheless, the algorithm is a common choice in option research \autocite[cp.][453]{easleyOptionVolumeStock1998}.
-
-The \gls{LR} algorithm is the basis for more advanced algorithms, such as the \gls{EMO} rule, which we cover next.
+As the algorithm requires both trade and quote data, it is less data-efficient than its parts. Even if data is readily available, in past option studies the algorithm does not significantly outperform the quote rule and outside the model's tight assumptions the expected accuracy of the tick test is unmet \autocites[][30--32]{grauerOptionTradeClassification2022}[][886]{savickasInferringDirectionOption2003}. Nevertheless, the algorithm is a common choice in option research \autocite[cp.][453]{easleyOptionVolumeStock1998}. It is also the basis for more advanced algorithms, such as the \gls{EMO} rule, which we cover next.
 
 \subsubsection{Ellis-Michaely-O'Hara
   Rule}\label{sec:ellis-michaely-ohara-rule}
@@ -196,8 +194,8 @@ As such, the \cgls{EMO} algorithm extends the tick rule by classifying trades at
   \operatorname{emo} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
   \operatorname{emo}(i, t)=
   \begin{cases}
-    1,                                         & \text{if}\ p_{i, t} = a_{i, t} \\
-    0,                                         & \text{if}\ p_{i, t} = b_{i, t} \\
+    1,                         & \text{if}\ p_{i, t} = a_{i, t} \\
+    0,                         & \text{if}\ p_{i, t} = b_{i, t} \\
     \operatorname{tick}(i, t), & \text{else}.
   \end{cases}
   \label{eq:emo-rule}
@@ -211,13 +209,13 @@ As such, the \cgls{EMO} algorithm extends the tick rule by classifying trades at
 Like the previous two algorithms, the \cgls{CLNV} method \autocite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the \cgls{EMO} rule by a differentiated treatment of trades inside the quotes, which are notoriously hard to classify. The authors segment the bid-ask spread into deciles (ten equal-width bins) and classify trades around the midpoint (\nth{4} to \nth{7} decile) by the tick rule and trades close or outside the quotes are categorized by the tick rule.
 
 \begin{equation}
-    \operatorname{clnv} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
-    \operatorname{clnv}(i, t)=
-    \begin{cases}
-      1,                                         & \text{if}\ p_{i, t} \in \left(\frac{3}{10} b_{i,t} + \frac{7}{10} a_{i,t}, a_{i, t}\right] \\
-      0,                                         & \text{if}\ p_{i, t} \in \left[ b_{i,t}, \frac{7}{10} b_{i,t} + \frac{3}{10} a_{i,t}\right) \\
-      \operatorname{tick}(i, t), & \text{else}
-    \end{cases}
+  \operatorname{clnv} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
+  \operatorname{clnv}(i, t)=
+  \begin{cases}
+    1,                         & \text{if}\ p_{i, t} \in \left(\frac{3}{10} b_{i,t} + \frac{7}{10} a_{i,t}, a_{i, t}\right] \\
+    0,                         & \text{if}\ p_{i, t} \in \left[ b_{i,t}, \frac{7}{10} b_{i,t} + \frac{3}{10} a_{i,t}\right) \\
+    \operatorname{tick}(i, t), & \text{else}
+  \end{cases}
   \label{eq:CLNV-rule}
 \end{equation}
 
