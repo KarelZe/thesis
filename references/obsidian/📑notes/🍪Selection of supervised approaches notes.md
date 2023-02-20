@@ -1,6 +1,8 @@
 #gbm #transformer #supervised-learning #deep-learning 
 
 
+For a given data set with $n$ examples and $m$ features $\mathcal{D}=\left\{\left(\mathbf{x}_i, y_i\right)\right\}\left(|\mathcal{D}|=n, \mathbf{x}_i \in \mathbb{R}^m, y_i \in \mathbb{R}\right)$ to
+
 **Why probabilistic classification:**
 - Due to a unsatisfactory research situation, for trade classification (see chapter [[👪Related Work]]) we base
 - Use classification methods (*probabilistic classifier*) that can return probabilities instead of class-only for better analysis. Using probabilistic trade classification rules might have been studied in [[@easleyDiscerningInformationTrade2016]]

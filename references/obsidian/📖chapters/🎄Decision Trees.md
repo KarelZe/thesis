@@ -1,9 +1,15 @@
-A decision tree  splits the feature space $\mathbb{R}^m$ into several disjoint regions $R$ through a sequence of recursive splits. A single split leads to two new sub-regions for a binary decision tree, whose shape depends on the attribute used for splitting and the previously performed splits. The tree is grown in size until a minimum threshold for the number of samples within a node or some other stopping criterion applies [[@breimanClassificationRegressionTrees2017]] (p. 42). Trees can be utilised for classification and regression tasks. 
-Dispite our overall focus on (trade) classification, only the regression variant is introduced, as its the variant used in the *gradient boosting algorithm* [[@friedmanAdditiveLogisticRegression2000]] (p. 9). 
 
-A region corresponds to a node in the tree. For each terminal node of the tree or unsplit region, the response variable $f(x)$ is constant [[@breimanClassificationRegressionTrees2017]] (p. 229). For a tree with $M$ regions, the response for the numerical input $x$ can be modelled as $$f(x)=\sum_{m=1}^{M} \gamma_{m} \mathbb{I}\left(x \in R_{m}\right),$$ with $\mathbb{I}$ being the indicator function for region conformance and $\gamma_m$ being the region's constant [@hastietrevorElementsStatisticalLearning2009]. In the regression case, $\gamma_m$ is simply the average over all response variables of this particular region. As $\gamma_m$ is shared among all samples within the region, the estimates of the tree are similar to a histogram approximating the true regression surface. 
+Decision trees can be used in classification and regression. Counterintuitive to our initial problem framing of trade classification as a probabilistic classification task ([[🍪Selection Of Supervised Approaches]]), the focus is on regression trees only, as it is the prevailing prediction model used within the gradient boosting algorithm ([[@friedmanAdditiveLogisticRegression2000]]9). The ensemble method later adapts to classification.
 
-So far, it remains open how the best split can be found. The best split is where the deviation of all regions estimates and the true response variables diminishes. Over the entire tree, this error can be captured in the SSE given by $$E(M)=\frac{1}{N} \sum_{m \in M} \sum_{i \in R_m}\left(y_{i}-f(x_i)\right)^{2},$$ which is subsequently minimized [@breimanClassificationRegressionTrees2017]. 
+A decision tree splits the feature space $\mathbb{R}^p$ into several disjoint regions $R$ through a sequence of recursive splits. For a binary decision tree, a single split leads to two new sub-regions, whose shape is determined by the features considered for splitting and the preceding splits. Trees are grown in depth until a minimum threshold for the number of samples within a node or some other stopping criterion applies ([[@breimanClassificationRegressionTrees2017]]42). 
+
+A region corresponds to a terminal node in the tree. For each terminal node of the tree or unsplit region, the predicted response value is constant for the entire region and shared by all its samples  ([[@breimanClassificationRegressionTrees2017]] 229). 
+For a tree with $M$ regions $R_1, R_2,\ldots, R_M$,  and some numerical input $x$ the tree can be modelled as: $$f(x)=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(x \in R_{m}\right),$$where $\mathbb{I}$ is the indicator function for region conformance and $c_m$  the region's constant ([[@hastietrevorElementsStatisticalLearning2009]]326). In the regression case, $c_m$ is the mean of all target variables $y_i$ in the specific region. Since all samples of a region share a common response value, the tree estimates resemble a histogram that approximates the true regression surface.
+
+---
+
+<mark style="background: #FFB86CA6;">(greedy)</mark>
+So far, it remains open how the best split can be found. The best split is where the deviation of all regions estimates and the true response variables diminishes. Over the entire tree, this error can be captured in the SSE given by $$E(M)=\frac{1}{N} \sum_{m \in M} \sum_{i \in R_m}\left(y_{i}-f(x_i)\right)^{2},$$ which is subsequently minimized [[@breimanClassificationRegressionTrees2017]]. 
 
 <mark style="background: #FF5582A6;">TODO: Add link between binary classification and regression as footnote? See [[@breimanClassificationRegressionTrees2017]]. </mark>
 
@@ -19,6 +25,7 @@ Trivially, growing deeper trees leads to an improvement in the SSE. Considering 
 <mark style="background: #FF5582A6;">FIXME: Make drawbacks clearer. Trees are grown greedily. Thus, only the current split is being considered. </mark>
 
 <mark style="background: #FF5582A6;">FIXME: More attractive opening: The prediction accuracy can be further enhanced by growing an ensemble of decision trees [[@breimanRandomForests2001]]. </mark>
+
 
 The expected error of the tree can be decreased through combining multiple trees in an ensemble. Two popular approaches include *bagging* [[@breimanBaggingPredictors1996]] and *boosting* [[@schapireStrengthWeakLearnability1990]]. Both differ with regard to the error term being minimized, which is both reflected in the training procedure and complexity of the ensemble members. Most notably, bagging aims at decreasing the variance, whereas boosting addresses both bias and variance [[@schapireBoostingMarginNew1998]] (p. 1672) (also [[@breimanRandomForests2001]] (p. 29).
 

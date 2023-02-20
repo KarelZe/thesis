@@ -63,7 +63,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ### Decision Tree 🟡
 
 ^5db625
-[[🎄Decison_trees]]
+[[🎄Decision Trees]]
 ### Gradient Boosting Procedure 🟡
 [[🐈Gradient Boosting]]
 ## Transformer

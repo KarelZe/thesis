@@ -76,7 +76,7 @@ Considering the cases in \cref{eq:tick-test} the trade price is higher than the 
 
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed in \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick, is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
 
-The reverse tick test, $\operatorname{rtick} \colon \mathbb{N}^2 \to \left\{0, 1\right\}$, is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the trade price of the next, distinguishable trade price.
+The reverse tick test, $\operatorname{rtick} \colon \mathbb{N}^2 \to \left\{0, 1\right\}$, is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
 
 \begin{equation}
   \operatorname{rtick}(i, t)=
@@ -246,6 +246,15 @@ The trend towards sophisticated, hybrid rules, combining as many as four base ru
 \subsection{Gradient Boosted Trees (2~p)}\label{sec:gradient-boosted-trees}
 
 \subsubsection{Decision Tree (0.5~p)}\label{sec:decision-tree}
+
+Decision trees can be used in classification and regression. Counterintuitive to our initial problem framing of trade classification as a probabilistic classification task in \cref{sec:selection-of-approaches}, the focus is on regression trees only, as it is the prevailing prediction model used within the gradient boosting algorithm \autocite[][9]{friedmanAdditiveLogisticRegression2000}. The ensemble method later adapts to classification.
+
+A decision tree splits the feature space $\mathbb{R}^m$ into several disjoint regions $R$ through a sequence of recursive splits. For a binary decision tree, a single split leads to two new sub-regions, whose shape is determined by the features considered for splitting and the preceding splits. Trees are grown in depth until a minimum threshold for the number of samples within a node or some other stopping criterion applies \autocite[][42]{breimanClassificationRegressionTrees2017}.
+
+A region corresponds to a terminal node in the tree. For each terminal node of the tree or unsplit region, the predicted response value is constant for the entire region and shared by all its samples \autocite[][229]{breimanClassificationRegressionTrees2017}.
+
+For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $x$ the tree can be modelled as: $$f(x)=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(x \in R_{m}\right),$$where $\mathbb{I}$ is the indicator function for region conformance and $c_m$  the region's constant \autocite[][326]{hastietrevorElementsStatisticalLearning2009}. In the regression case, $c_m$ is the mean of all target variables $y_i$ in the specific region. Since all samples of a region share a common response value, the tree estimates resemble a histogram that approximates the true regression surface.
+
 
 \subsubsection{Gradient Boosting
   Procedure (1.5 p)}\label{sec:gradient-boosting-procedure}
