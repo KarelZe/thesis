@@ -250,11 +250,19 @@ The trend towards sophisticated, hybrid rules, combining as many as four base ru
 Decision trees can be used in classification and regression. Counterintuitive to our initial problem framing of trade classification as a probabilistic classification task in \cref{sec:selection-of-approaches}, the focus is on regression trees only, as it is the prevailing prediction model used within the gradient boosting algorithm \autocite[][9]{friedmanAdditiveLogisticRegression2000}. The ensemble method later adapts to classification.
 
 A decision tree splits the feature space $\mathbb{R}^m$ into several disjoint regions $R$ through a sequence of recursive splits. For a binary decision tree, a single split leads to two new sub-regions, whose shape is determined by the features considered for splitting and the preceding splits. Trees are grown in depth until a minimum threshold for the number of samples within a node or some other stopping criterion applies \autocite[][42]{breimanClassificationRegressionTrees2017}.
-
 A region corresponds to a terminal node in the tree. For each terminal node of the tree or unsplit region, the predicted response value is constant for the entire region and shared by all its samples \autocite[][229]{breimanClassificationRegressionTrees2017}.
 
-For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $x$ the tree can be modelled as: $$f(x)=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(x \in R_{m}\right),$$where $\mathbb{I}$ is the indicator function for region conformance and $c_m$  the region's constant \autocite[][326]{hastietrevorElementsStatisticalLearning2009}. In the regression case, $c_m$ is the mean of all target variables $y_i$ in the specific region. Since all samples of a region share a common response value, the tree estimates resemble a histogram that approximates the true regression surface.
+For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $x$ the tree can be modelled as:
+\begin{equation}
+  f(x)=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(x \in R_{m}\right),
+  \label{eq:decision-tree}
+\end{equation}
 
+where $\mathbb{I}$ is the indicator function for region conformance and $c_m$  the region's constant \autocite[][326]{hastietrevorElementsStatisticalLearning2009}. In the regression case, $c_m$ is the mean of all target variables $y_i$ in the specific region. Since all samples of a region share a common response value, the tree estimates resemble a histogram that approximates the true regression surface.
+
+Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample has its region, the tree would achieve a perfect fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence \emph{variance}, size complexity pruning procedures are employed. Likewise, if the decision tree is too simplistic, a high bias contributes to the model's overall expected error. Both extremes are to be avoided.
+
+Ensemble methods, such as \emph{bagging} \autocite{breimanBaggingPredictors1996} and \emph{boosting} \autocite{schapireStrengthWeakLearnability1990}, decrease the expected error of the decision tree by combining multiple trees in a single model. Both approaches differ in the error term being minimized, which is reflected in the training procedure and the complexity of the ensemble members. More specifically, bagging aims at decreasing the variance, whereas boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we derive \gls{GBM}, a variant of boosting introduced by \textcite{friedmanGreedyFunctionApproximation2001} and apply it to probabilistic classification.
 
 \subsubsection{Gradient Boosting
   Procedure (1.5 p)}\label{sec:gradient-boosting-procedure}

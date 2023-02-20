@@ -14,7 +14,19 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🎄Decision Trees.md",
+                "file": "📥Inbox/@shiQuantizedTrainingGradient2022.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "6c5fbf29dd7cc3b5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
                 "mode": "source",
                 "source": false
               }
@@ -30,7 +42,8 @@
               "pinned": true
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "dfdb305ca3005947",
@@ -120,7 +133,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🎄Decision Trees.md",
+                "file": "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -148,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🎄Decision Trees.md"
+                "file": "📥Inbox/@friedmanGreedyFunctionApproximation2001.md"
               }
             }
           },
@@ -179,17 +192,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "e6d4b984bf6335c8",
+  "active": "6c5fbf29dd7cc3b5",
   "lastOpenFiles": [
-    "📑notes/🍪Selection of supervised approaches notes.md",
+    "📥Inbox/@shiQuantizedTrainingGradient2022.md",
     "📖chapters/🎄Decision Trees.md",
+    "📥Inbox/@keLightGBMHighlyEfficient2017.md",
+    "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
+    "📑notes/🍪Selection of supervised approaches notes.md",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📖chapters/🎋Ablation study.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/🪦graveyard of ideas.md",
-    "📖chapters/🍔Layer Norm.md",
-    "🖼️Media/layer-norm-first-last.png",
-    "📑notes/🍔Layer norm notes.md",
-    "📑notes/🔗residual connections notes.md",
-    "📖chapters/🔢LR algorithm.md"
+    "📖chapters/🍔Layer Norm.md"
   ]
 }
