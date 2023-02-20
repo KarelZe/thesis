@@ -1,5 +1,9 @@
 #gbm #transformer #supervised-learning #deep-learning 
 
+We consider a learning problem with a hidden function $y$ : $\mathcal{X} \subseteq \mathbb{R}^d \rightarrow \mathcal{Y} \subseteq \mathbb{R}$ where we are given a set $X_{\text {train }} \subseteq \mathcal{X}$ and $y_{\text {train }} \in \mathcal{Y}^{X_{\text {train }}}: y_i=y\left(x_i\right)$ and our goal is to come up with a prediction function $\hat{y}: \mathcal{X} \rightarrow \mathbb{R}$ such that $\hat{y}(x)$ is close to $y(x)$ for all $x \in \mathcal{X}$. Many learning tasks can be modeled in this way, by defining a suitable feature representation for the objects of interest and by defining a sensible loss function to measure the closeness of $\hat{y}$ to $y$. A well known way to come up with a function $\hat{y}$ are decision trees and random forests, which we will now introduce.
+https://mlai.cs.uni-bonn.de/publications/welke2021-dsf.pdf
+
+For a given data set with $n$ examples and $m$ features $\mathcal{D}=\left\{\left(\mathbf{x}_i, y_i\right)\right\}\left(|\mathcal{D}|=n, \mathbf{x}_i \in \mathbb{R}^m, y_i \in \mathbb{R}\right)$ to
 
 **Why probabilistic classification:**
 - Due to a unsatisfactory research situation, for trade classification (see chapter [[👪Related Work]]) we base

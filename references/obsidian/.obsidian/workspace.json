@@ -6,6 +6,7 @@
       {
         "id": "aeb1f3ebc9e06223",
         "type": "tabs",
+        "dimension": 58.05084745762712,
         "children": [
           {
             "id": "e6d4b984bf6335c8",
@@ -13,19 +14,19 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🪦graveyard of ideas.md",
+                "file": "📥Inbox/@shiQuantizedTrainingGradient2022.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "58ea7c782ed5628e",
+            "id": "6c5fbf29dd7cc3b5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🍔Layer Norm.md",
+                "file": "📖chapters/🎄Decision Trees.md",
                 "mode": "source",
                 "source": false
               }
@@ -47,6 +48,7 @@
       {
         "id": "dfdb305ca3005947",
         "type": "tabs",
+        "dimension": 41.94915254237288,
         "children": [
           {
             "id": "89af1d1b43ca7870",
@@ -131,7 +133,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🍔Layer Norm.md",
+                "file": "📖chapters/🎄Decision Trees.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -159,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🍔Layer Norm.md"
+                "file": "📖chapters/🎄Decision Trees.md"
               }
             }
           },
@@ -190,17 +192,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "58ea7c782ed5628e",
+  "active": "6c5fbf29dd7cc3b5",
   "lastOpenFiles": [
-    "🖼️Media/layer-norm-first-last.png",
-    "📖chapters/🍔Layer Norm.md",
-    "📑notes/🍔Layer norm notes.md",
-    "📑notes/🔗residual connections notes.md",
+    "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
+    "📖chapters/🎄Decision Trees.md",
+    "📥Inbox/@shiQuantizedTrainingGradient2022.md",
+    "📥Inbox/@keLightGBMHighlyEfficient2017.md",
+    "📑notes/🍪Selection of supervised approaches notes.md",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📖chapters/🎋Ablation study.md",
+    "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/🪦graveyard of ideas.md",
-    "📖chapters/🔢LR algorithm.md",
-    "📑notes/🔢LR algorithm notes.md",
-    "📑notes/🧵Positional encoding notes.md",
-    "📥Inbox/@vaswaniAttentionAllYou2017.md",
-    "📖chapters/🤖TabTransformer.md"
+    "📖chapters/🍔Layer Norm.md"
   ]
 }
