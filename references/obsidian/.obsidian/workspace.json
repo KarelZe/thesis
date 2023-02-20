@@ -26,7 +26,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
+                "file": "📖chapters/🎄Decision Trees.md",
                 "mode": "source",
                 "source": false
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
+                "file": "📖chapters/🎄Decision Trees.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -161,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📥Inbox/@friedmanGreedyFunctionApproximation2001.md"
+                "file": "📖chapters/🎄Decision Trees.md"
               }
             }
           },
@@ -194,10 +194,10 @@
   },
   "active": "6c5fbf29dd7cc3b5",
   "lastOpenFiles": [
-    "📥Inbox/@shiQuantizedTrainingGradient2022.md",
-    "📖chapters/🎄Decision Trees.md",
-    "📥Inbox/@keLightGBMHighlyEfficient2017.md",
     "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
+    "📖chapters/🎄Decision Trees.md",
+    "📥Inbox/@shiQuantizedTrainingGradient2022.md",
+    "📥Inbox/@keLightGBMHighlyEfficient2017.md",
     "📑notes/🍪Selection of supervised approaches notes.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📖chapters/🎋Ablation study.md",

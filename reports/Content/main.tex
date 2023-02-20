@@ -260,6 +260,24 @@ For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $x$
 
 where $\mathbb{I}$ is the indicator function for region conformance and $c_m$  the region's constant \autocite[][326]{hastietrevorElementsStatisticalLearning2009}. In the regression case, $c_m$ is the mean of all target variables $y_i$ in the specific region. Since all samples of a region share a common response value, the tree estimates resemble a histogram that approximates the true regression surface.
 
+So far, it remains open how the best split can be found. The best split is where the deviation between the prediction and the true response variable diminishes. Over the entire tree, this error can be captured in the \gls{SSE} given by:
+\begin{equation}
+  E(M)=\frac{1}{N} \sum_{m \in M} \sum_{x_{i} \in R_m}\left(y_{i}-c_{m}\right)^{2},
+\end{equation}
+
+which is subsequently minimized \textcite[][231]{breimanClassificationRegressionTrees2017}. As documented in \textcite[][326]{hastietrevorElementsStatisticalLearning2009} we start with the entire dataset and scan through all combinations of features and possible split values. For a split by the feature $j$ and value $s$, the child nodes are given by a pair of half-planes:
+
+\begin{equation}
+  R_1(j, s)=\left\{X \mid X_j \leq s\right\} \text { and } R_2(j, s)=\left\{X \mid X_j>s\right\}.
+\end{equation}
+
+Thereby, the feature $j$ and value $s$ are selected in a way, that the combined error in the child nodes is minimized:
+\begin{equation}
+  \min _{j, s}\left[\min _{c_1} \sum_{x_i \in R_1(j, s)}\left(y_i-c_1\right)^2+\min _{c_2} \sum_{x_i \in R_2(j, s)}\left(y_i-c_2\right)^2\right].
+\end{equation}
+
+The procedure is repeated on the so-created child nodes. Note that, splits are performed greedily to keep computations tractable. This entails, that only the reduction in \gls{SSE} of the current node is considered, and not the improvement from any subsequent splits in the child nodes. Computational costs may still be high, when there are many split candidates, due to a large feature count or possible split values. Common approximations are to split on quantized features (see papers in) \autocite{keLightGBMHighlyEfficient2017} or on a random feature subset.
+
 Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample has its region, the tree would achieve a perfect fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence \emph{variance}, size complexity pruning procedures are employed. Likewise, if the decision tree is too simplistic, a high bias contributes to the model's overall expected error. Both extremes are to be avoided.
 
 Ensemble methods, such as \emph{bagging} \autocite{breimanBaggingPredictors1996} and \emph{boosting} \autocite{schapireStrengthWeakLearnability1990}, decrease the expected error of the decision tree by combining multiple trees in a single model. Both approaches differ in the error term being minimized, which is reflected in the training procedure and the complexity of the ensemble members. More specifically, bagging aims at decreasing the variance, whereas boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we derive \gls{GBM}, a variant of boosting introduced by \textcite{friedmanGreedyFunctionApproximation2001} and apply it to probabilistic classification.
