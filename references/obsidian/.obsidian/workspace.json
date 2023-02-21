@@ -29,6 +29,22 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "57a9ea81f3e7b96c",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          },
+          {
+            "id": "2efbef6630d30740",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
           }
         ],
         "currentTab": 1
@@ -169,15 +185,15 @@
   },
   "active": "34eca00751a3e05d",
   "lastOpenFiles": [
-    "📥Inbox/@voitaAnalyzingMultiHeadSelfAttention2019.md",
+    "🖼️Media/attention-map-saint.png",
     "📖chapters/🧭Attention map.md",
-    "📖chapters/🅰️Attention.md",
+    "🖼️Media/attention-map-for-heads.png",
     "📑notes/🧭Attention map notes.md",
+    "📥Inbox/@voitaAnalyzingMultiHeadSelfAttention2019.md",
+    "📖chapters/🅰️Attention.md",
     "📖chapters/🪄Feature Engineering.md",
     "📥Inbox/@shiQuantizedTrainingGradient2022.md",
     "📖chapters/🎄Decision Trees.md",
-    "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
-    "📥Inbox/@keLightGBMHighlyEfficient2017.md",
-    "📑notes/🍪Selection of supervised approaches notes.md"
+    "📥Inbox/@friedmanGreedyFunctionApproximation2001.md"
   ]
 }

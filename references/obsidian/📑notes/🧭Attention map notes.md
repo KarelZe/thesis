@@ -54,8 +54,9 @@ A research on what transformers actually learn for simple language models: https
 A library that can also investigate models across multiple nodes:
 https://transformer-circuits.pub/2021/garcon/index.html
 
+## Visualization
+
 For visualization see also:
 http://nlp.seas.harvard.edu/annotated-transformer/
-%%
-
-%%
+![[attention-map-saint.png]] ^401670
+(Copied from [[@somepalliSAINTImprovedNeural2021]])
