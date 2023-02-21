@@ -10,18 +10,47 @@ import re
 import typer
 
 
-def check_formulae(file_name: str, file_contents: str) -> None:
+def check_citation(file_name: str, file_contents: str) -> None:
     r"""
-    Check if formula contains `\times` or `\quad`.
+    Check if all citations include page counts.
 
     Args:
         file_name (str): file name
         file_contents (str): contents of file
     """
-    matches = re.findall(r"\\times|\\quad|×", file_contents)
+    matches = re.findall(
+        r"\\autocite{|\\autocite\[\]{|\\textcite{|\\textcite\[\]{"
+        r"\\autocites{|\\autocites\[\]{|\\textcites{|\\textcites\[\]{"
+        r"\\autocite\[\]\[\]{|\\textcite{|\\textcite\[\]\[\]{"
+        r"\\autocites\[\]\[\]{|\\textcites\[\]\[\]{",
+        file_contents,
+    )
     if matches:
         msg = typer.style(
-            f"{file_name}: {matches} (prefer \\cdot over \\times)",
+            f"{file_name}: {matches} (missing page counts in citation)",
+            fg=typer.colors.YELLOW,
+        )
+        typer.echo(msg)
+
+
+def check_formulae(file_name: str, file_contents: str) -> None:
+    r"""
+    Check if formula contains `\times` or `\quad`.
+    Consistently use `boldsymbol` (instead of `mathbf`).
+    Consistently use `emph` (instead of `textit`).
+    Consistently use `tfrac` (instead of `frac`)
+    Avoid use of `mathrm` (instead of `textit`).
+
+    Args:
+        file_name (str): file name
+        file_contents (str): contents of file
+    """
+    matches = re.findall(r"\\dot\s|×|\\mathbf|\\mathrm|\\textit", file_contents)
+    if matches:
+        msg = typer.style(
+            f"{file_name}: {matches} (prefer \\times over \\cdot; prefer"
+            f"\\boldsymbol over \\mathbf; prefer \\emph over \\textit; prefer"
+            f"\\tfrac over \\frac, avoid \\mathrm)",
             fg=typer.colors.YELLOW,
         )
         typer.echo(msg)
@@ -38,7 +67,7 @@ def check_acronyms(file_name: str, file_contents: str, acronyms: list) -> None:
     """
     matches = []
     for acronym in acronyms:
-        match = re.findall(f"{acronym} |{acronym}s ", file_contents.lower())
+        match = re.findall(f"\s{acronym}\s| {acronym}s", file_contents.lower())
         if match:
             matches.extend(match)
 
@@ -93,7 +122,7 @@ def check_refs(file_name: str, file_contents: str) -> None:
     matches = re.findall(r, file_contents)
     if matches:
         msg = typer.style(
-            f"{file_name}: {matches} (prefer capitalized e. g., Eq.)",
+            f"{file_name}: {matches} (prefer capitalized e. g., Eq. through Cref)",
             fg=typer.colors.YELLOW,
         )
         typer.echo(msg)
@@ -166,10 +195,19 @@ def check_formalia(files: dict, vocabulary: list, acronyms: list) -> None:
         files (dict): dict with filename as key and list of urls
     """
     for file_name, file_contents in files.items():
-        check_formulae(file_name, file_contents)
-        check_refs(file_name, file_contents)
-        check_acronyms(file_name, file_contents, acronyms)
-        check_hyphens(file_name, file_contents, vocabulary)
+
+        if file_name not in [
+            ".\\expose.tex",
+            ".\\presentation.tex",
+            ".\\thesis.tex",
+            ".\\Content\\Titlepage_Thesis.tex",
+            ".\Content\main-expose.tex",
+        ]:
+            check_hyphens(file_name, file_contents, vocabulary)
+            check_citation(file_name, file_contents)
+            check_formulae(file_name, file_contents)
+            check_refs(file_name, file_contents)
+            check_acronyms(file_name, file_contents, acronyms)
 
     msg = typer.style("All files checked. 🍰✨🚀", fg=typer.colors.GREEN)
     typer.echo(msg)
