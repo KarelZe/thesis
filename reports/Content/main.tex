@@ -503,6 +503,14 @@ Yet, embedding and contextualizing of only the categorical inputs remain imperfe
 \subsubsection{Feature Importance
   Measure (2~p)}\label{sec:feature-importance-measure}
 
+\textbf{Attention Maps}
+
+\begin{equation}
+  \label{eq:attention-map-weighted}
+\end{equation}
+
+In absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all transformer blocks. Due to the limitation that TabTransformer (see \cref{sec:tabtransformer}) only performs self-attention on categorical features, no feature attributions for numerical features are calculated. The level of agreement between attributions from attention maps and kernel \gls{SHAP} is quantified by calculating Spearman's rank correlation between them.
+
 \subsubsection{Evaluation Metric (1~p)}\label{sec:evaluation-metric}
 
 \newpage
