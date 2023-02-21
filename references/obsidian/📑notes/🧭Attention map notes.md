@@ -7,7 +7,7 @@ $$
 $$
 Notation from [[@cheferTransformerInterpretabilityAttention2021]] (p. 786).
 
-While not explored systematically for the tabular domain, the roles of different attention heads have been studied intensively in transformer-based machine translation (see e. g., [[@voitaAnalyzingMultiHeadSelfAttention2019]], [[@tangAnalysisAttentionMechanisms2018]]).  [[@voitaAnalyzingMultiHeadSelfAttention2019]] observe that attention heads have varying importance and serve distinct purposes like learning positional or syntactic relations between tokens. Also, all attention layers contribute to the model's prediction. 
+While not explored systematically for the tabular domain, the roles of different attention heads have been studied intensively in transformer-based machine translation (cp. [[@voitaAnalyzingMultiHeadSelfAttention2019]]) and  (cp. [[@tangAnalysisAttentionMechanisms2018]]).  [[@voitaAnalyzingMultiHeadSelfAttention2019]] observe that attention heads have varying importance and serve distinct purposes like learning positional or syntactic relations between tokens. Also, all attention layers contribute to the model's prediction. 
 
 
 ## Cheffer
