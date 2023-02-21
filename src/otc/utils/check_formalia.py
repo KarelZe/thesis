@@ -20,7 +20,9 @@ def check_citation(file_name: str, file_contents: str) -> None:
     """
     matches = re.findall(
         r"\\autocite{|\\autocite\[\]{|\\textcite{|\\textcite\[\]{"
-        r"\\autocites{|\\autocites\[\]{|\\textcites{|\\textcites\[\]{",
+        r"\\autocites{|\\autocites\[\]{|\\textcites{|\\textcites\[\]{"
+        r"\\autocite\[\]\[\]{|\\textcite{|\\textcite\[\]\[\]{"
+        r"\\autocites\[\]\[\]{|\\textcites\[\]\[\]{",
         file_contents,
     )
     if matches:
@@ -39,15 +41,14 @@ def check_formulae(file_name: str, file_contents: str) -> None:
     Consistently use `tfrac` (instead of `frac`)
     Avoid use of `mathrm` (instead of `textit`).
 
-
     Args:
         file_name (str): file name
         file_contents (str): contents of file
     """
-    matches = re.findall(r"\\times|×|\\mathbf|\\mathrm|\\textit", file_contents)
+    matches = re.findall(r"\\dot\s|×|\\mathbf|\\mathrm|\\textit", file_contents)
     if matches:
         msg = typer.style(
-            f"{file_name}: {matches} (prefer \\cdot over \\times; prefer"
+            f"{file_name}: {matches} (prefer \\times over \\cdot; prefer"
             f"\\boldsymbol over \\mathbf; prefer \\emph over \\textit; prefer"
             f"\\tfrac over \\frac, avoid \\mathrm)",
             fg=typer.colors.YELLOW,
@@ -66,7 +67,7 @@ def check_acronyms(file_name: str, file_contents: str, acronyms: list) -> None:
     """
     matches = []
     for acronym in acronyms:
-        match = re.findall(f" {acronym}| {acronym}s", file_contents.lower())
+        match = re.findall(f"\s{acronym}\s| {acronym}s", file_contents.lower())
         if match:
             matches.extend(match)
 
@@ -200,6 +201,7 @@ def check_formalia(files: dict, vocabulary: list, acronyms: list) -> None:
             ".\\presentation.tex",
             ".\\thesis.tex",
             ".\\Content\\Titlepage_Thesis.tex",
+            ".\Content\main-expose.tex",
         ]:
             check_hyphens(file_name, file_contents, vocabulary)
             check_citation(file_name, file_contents)
