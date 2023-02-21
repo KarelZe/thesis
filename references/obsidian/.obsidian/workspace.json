@@ -6,7 +6,6 @@
       {
         "id": "aeb1f3ebc9e06223",
         "type": "tabs",
-        "dimension": 53.09322033898305,
         "children": [
           {
             "id": "f35a250acbe1a2dc",
@@ -24,7 +23,31 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🧭Attention map.md",
+                "file": "📖chapters/🧭Attention Map.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "343653c686990511",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🅰️attention notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f7b32ee8fdb62316",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@jainAttentionNotExplanation2019.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,25 +71,6 @@
           }
         ],
         "currentTab": 1
-      },
-      {
-        "id": "d3f20b99af3e23e1",
-        "type": "tabs",
-        "dimension": 46.90677966101695,
-        "children": [
-          {
-            "id": "4015a9ebe6dd49d6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🧭Attention map notes.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ]
       }
     ],
     "direction": "vertical"
@@ -124,7 +128,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🧭Attention map.md",
+                "file": "📖chapters/🧭Attention Map.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -152,7 +156,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🧭Attention map.md"
+                "file": "📖chapters/🧭Attention Map.md"
               }
             }
           },
@@ -185,15 +189,15 @@
   },
   "active": "34eca00751a3e05d",
   "lastOpenFiles": [
+    "📑notes/🅰️attention notes.md",
+    "📖chapters/🧭Attention Map.md",
     "📖chapters/🅰️Attention.md",
-    "📖chapters/🧭Attention map.md",
+    "📥Inbox/@jainAttentionNotExplanation2019.md",
+    "📖chapters/🧭Kernel SHAP.md",
+    "📖chapters/🧭Evaluation metric.md",
     "📑notes/🧭Attention map notes.md",
-    "🖼️Media/attention-map-saint.png",
-    "🖼️Media/attention-map-for-heads.png",
-    "📥Inbox/@voitaAnalyzingMultiHeadSelfAttention2019.md",
-    "📖chapters/🪄Feature Engineering.md",
-    "📥Inbox/@shiQuantizedTrainingGradient2022.md",
-    "📖chapters/🎄Decision Trees.md",
-    "📥Inbox/@friedmanGreedyFunctionApproximation2001.md"
+    "📥Inbox/@gevaTransformerFeedForwardLayers2021.md",
+    "📥Inbox/@bastingsElephantInterpretabilityRoom2020.md",
+    "🖼️Media/attention-map-saint.png"
   ]
 }

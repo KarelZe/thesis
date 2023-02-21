@@ -21,6 +21,8 @@
 While not explored systematically for the tabular domain, the roles of different attention heads have been studied intensively in transformer-based machine translation (see e. g., [[@voitaAnalyzingMultiHeadSelfAttention2019]], [[@tangAnalysisAttentionMechanisms2018]]).  [[@voitaAnalyzingMultiHeadSelfAttention2019]] observe that attention heads have varying importance and serve distinct purposes like learning positional or syntactic relations between tokens. Also, all attention layers contribute to the model's prediction. 
 
 
+Heads have a different importance and many can even be pruned: [[@michelAreSixteenHeads2019]]
+
 Attention is a concept originally introduced in [[@bahdanauNeuralMachineTranslation2016]]
 
 

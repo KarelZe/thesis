@@ -1,10 +1,6 @@
-Relates to #attention #shap #random-feature-permutation  
+Relates to #attention #shap #random-feature-permutation #explainability #interpreability 
 
-In addition to [[🧭Kernel SHAP]], transformer-based models offer some interpretability through their attention mechanism. 
-
-(Controversy in literature -> subspect to larger debate -> controversy embarked around the question)
-
-Feature attributions can be derived from attention by visualizing features that the model  is paying attention to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in Figure [[#^401670]].
+In addition to [[🧭Kernel SHAP]], transformer-based models offer *some* interpretability through their attention mechanism [^1] . Recall from our discussion on attention (Cref [[🅰️Attention]]) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features that the model attends to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in Figure [[#^401670]].
 
 (figure)
 
@@ -33,6 +29,7 @@ In absence of ground truth for the true feature attribution, we also calculate a
 The next chapter discusses different metrics to assess the prediction quality of our models.
 
 [^1:] Notation from [[@cheferTransformerInterpretabilityAttention2021]] (p. 786).
+[^2:] One has to distinguish interpretability through *explainability* from *transparency* ([[@liptonMythosModelInterpretability2017]] 4--5). In recent research a major controversy embarked around the question, whether attention offers explanations to model predictions (cp. [[@bastingsElephantInterpretabilityRoom2020]]150) (cp. [[@jainAttentionNotExplanation2019]] 5--7) and (cp. [[@wiegreffeAttentionNotNot2019]]9). The debate sparked around opposing definitions of explainability and the consistency of attention scores with other, established feature-importance measures. Our focus is less on post-hoc explainability of the model, but rather on transparency. Consistent with ([[@wiegreffeAttentionNotNot2019]]8) we view attention scores as a vehicle to model transparency. 
 
 **Notes:**
 [[🧭Attention map notes]]
