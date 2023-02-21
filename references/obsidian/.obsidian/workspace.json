@@ -23,7 +23,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🧭Attention Map.md",
+                "file": "📖chapters/🪦graveyard of ideas.md",
                 "mode": "source",
                 "source": false
               }
@@ -128,7 +128,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🧭Attention Map.md",
+                "file": "📖chapters/🪦graveyard of ideas.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -156,7 +156,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🧭Attention Map.md"
+                "file": "📖chapters/🪦graveyard of ideas.md"
               }
             }
           },
@@ -189,8 +189,8 @@
   },
   "active": "34eca00751a3e05d",
   "lastOpenFiles": [
-    "📑notes/🅰️attention notes.md",
     "📖chapters/🧭Attention Map.md",
+    "📑notes/🅰️attention notes.md",
     "📖chapters/🅰️Attention.md",
     "📥Inbox/@jainAttentionNotExplanation2019.md",
     "📖chapters/🧭Kernel SHAP.md",
