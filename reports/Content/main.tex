@@ -136,30 +136,31 @@ The basic trade classification rules from \cref{sec:basic-rules} can be combined
 
 
 \begin{figure}[ht!]
-  %\setkeys{Gin}{height=60mm}
-  \subfloat[\acrshort{LR} Algorithm\label{fig:hybrid-lr}]{%
-    {\renewcommand\normalsize{\tiny}%
+  \hfill
+  \subfloat[\acrshort{LR} Algorithm\label{fig:hybrid-lr}]{
+    {\renewcommand\normalsize{\tiny}
         \normalsize
         \input{./Graphs/lr-algo.pdf_tex}}
   }
-  \hfill%
-  \subfloat[\acrshort{EMO} Rule\label{fig:hybrid-emo}]{%
-    {\renewcommand\normalsize{\tiny}%
+  \hfill
+  \subfloat[\acrshort{EMO} Rule\label{fig:hybrid-emo}]{
+    {\renewcommand\normalsize{\tiny}
         \normalsize
         \input{./Graphs/emo-algo.pdf_tex}}
   }
-  \hfill%
-  \subfloat[\acrshort{CLNV} Rule\label{fig:hybrid-clnv}]{%
-    {\renewcommand\normalsize{\tiny}%
+  \hfill
+  \subfloat[\acrshort{CLNV} Rule\label{fig:hybrid-clnv}]{
+    {\renewcommand\normalsize{\tiny}
         \normalsize
         \input{./Graphs/clnv-algo.pdf_tex}}
   }
-  \hfill%
-  \subfloat[Hybrid Rule Through Stacking\label{fig:hybrid-grauer}]{%
-    {\renewcommand\normalsize{\tiny}%
+  \hfill
+  \subfloat[Hybrid Rule Through Stacking\label{fig:hybrid-grauer}]{
+    {\renewcommand\normalsize{\tiny}
         \normalsize
         \input{./Graphs/grauer-algo.pdf_tex}}
   }
+  \hfill\null
   \caption[Comparison Between Hybrid Trade Classification Rules]{Comparison between hybrid trade classification rules. The Figure visualizes the components of the \acrshort{LR} algorithm, \acrshort{EMO} rule, the \acrshort{CLNV} method, and an arbitrary, stacked combination relative to the quotes. Rules at the midpoint or the quotes are slightly exaggerated for better readability. Own work inspired by \textcite[][167]{poppeSensitivityVPINChoice2016}.}
   \label{fig:hybrid-algorithms}
 \end{figure}
@@ -385,45 +386,49 @@ As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connecti
 \end{equation}
 calculated with the statistics $m = \sum_{i=1}^{d_{e}} \boldsymbol{e}[i] / d_{e}$ and $v = \sum_{i=1}^{d_{e}}(\boldsymbol{e}[i]-m)^2 / d_{e}$. Typically, the scale $\gamma$ and bias $\beta$ are set to preserve a zero mean and unit variance.
 
-Until now it remains unclear, how the layer normalization intertwines with the sub-layers and the residual connections. Transformers are distinguished by the order in which layer normalization is added into the pre-norm and post-norm Transformer. 
+Until now it remains unclear, how the layer normalization intertwines with the sub-layers and the residual connections. Transformers are distinguished by the order in which layer normalization is added into the pre-norm and post-norm Transformer.
 \begin{figure}[ht]
-  \subfloat[Post-Norm Residual Unit.\label{fig:post-norm-residual}]{%
+  \hfill
+  \subfloat[Post-Norm Residual Unit.\label{fig:post-norm-residual}]{
     % {\renewcommand\normalsize{\scriptsize}%
     %     \normalsize
     %     \input{./Graphs/tabtransformer.pdf_tex}}
     \includegraphics[width=5cm]{example-image-a}
   }
-  \hfill%
-  \subfloat[Pre-Norm Residual Unit.\label{fig:pre-norm-residual}]{%
+  \hfill
+  \subfloat[Pre-Norm Residual Unit.\label{fig:pre-norm-residual}]{
     % {\renewcommand\normalsize{\scriptsize}%
     %     \normalsize
     %     \input{./Graphs/fttransformer.pdf_tex}}
     \includegraphics[width=5cm]{example-image-b}
   }
+  \hfill\null
   \caption[Pre-norm residual unit and post-norm residual unit]{Examples of pre-norm residual unit and post-norm residual unit. Own work inspired by \textcite[][2]{wangLearningDeepTransformer2019}.}
   \label{fig:norm-residual}
 \end{figure}
 
 Post-norm Transformers add layer normalization to the sub-layer \emph{after} adding the input from the residual connections. The arrangement is depicted in \cref{fig:post-norm-residual}. In contrast for the pre-norm Transformer, the normalization is applied \emph{before} the self-attention and feed-forward sub-layers and inside the residual connections. Pre-norm requires one additional normalization layer to pass only well-conditioned outputs from the Transformer block to the successive layers \autocite[][5]{xiongLayerNormalizationTransformer2020}. The setup is depicted in \cref{fig:pre-norm-residual}.
 
-\textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalization, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of this wide-spread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. Also, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in vanishing gradients, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in the subsequent Section and \cref{sec:training-and-tuning}. 
+\textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalization, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of this wide-spread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. Also, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in vanishing gradients, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in the subsequent Section and \cref{sec:training-and-tuning}.
 
 \subsection{Transformer Networks For Tabular Data}\label{sec:tabular-transformer}
 
 Many of the concepts in \cref{sec:transformer-networks} can be adapted to the tabular domain and only minor architectural changes are necessary. We cover two state-of-the-art adaptations: the TabTransformer of \textcite[][2]{huangTabTransformerTabularData2020} and the FT-Transformer of \textcite[][4]{gorishniyRevisitingDeepLearning2021} that extend the classical Transformer. Both architectures are depicted in \cref{fig:tabtransformer} and \cref{fig:fttransformer}, respectively. They share an encoder-only architecture, but are distinct concerning their embedding strategy and layer arrangement, as we explain in the subsequent chapters.
 
 \begin{figure}[ht]
-  \subfloat[Architecture of the TabTransformer.\label{fig:tabtransformer}]{%
-    {\renewcommand\normalsize{\scriptsize}%
+  \hfill
+  \subfloat[Architecture of the TabTransformer.\label{fig:tabtransformer}]{
+    {\renewcommand\normalsize{\scriptsize}
         \normalsize
         \input{./Graphs/tabtransformer.pdf_tex}}
   }
-  \hfill%
-  \subfloat[Architecture of the FT-Transformer.\label{fig:fttransformer}]{%
-    {\renewcommand\normalsize{\scriptsize}%
+  \hfill
+  \subfloat[Architecture of the FT-Transformer.\label{fig:fttransformer}]{
+    {\renewcommand\normalsize{\scriptsize}
         \normalsize
         \input{./Graphs/fttransformer.pdf_tex}}
   }
+  \hfill\null
   \caption[Comparison Between Tabular Transformer.]{Comparison between the TabTransformer and the FT-Transformer. Both architectures are encoder-only but differ in their embedding strategy and layer arrangement. The TabTransformer is a post-norm Transformer, that processes embeddings of categorical features only. Continuous inputs are concatenated with the contextualized embeddings. The FT-Transformer features a pre-norm set-up and contextualizes both continuous and categorical embeddings. The output probabilities are retrieved from a special $\texttt{[CLS]}$ token. Own work inspired by \textcites[][2]{huangTabTransformerTabularData2020}[][4--5]{gorishniyRevisitingDeepLearning2021}.}
   \label{fig:tabular-transformer}
 \end{figure}
@@ -502,6 +507,47 @@ Yet, embedding and contextualizing of only the categorical inputs remain imperfe
 
 \subsubsection{Feature Importance
   Measure (2~p)}\label{sec:feature-importance-measure}
+
+\textbf{Attention Maps}
+
+In addition to random feature permutation, Transformer-based models offer \emph{some} interpretability through their attention mechanism~\footnote{One has to distinguish interpretability through \emph{explainability} from \emph{transparency} \autocite[][4--5]{liptonMythosModelInterpretability2017}. In recent research a major controversy embarked around the question, of whether attention offers explanations to model predictions \autocites[cp.][150]{bastingsElephantInterpretabilityRoom2020}[][5--7]{jainAttentionNotExplanation2019}[][9]{wiegreffeAttentionNotNot2019}. The debate sparked around opposing definitions of explainability and the consistency of attention scores with other, established feature-importance measures. Our focus is less on post-hoc explainability of the model, but rather on transparency. Consistent with \textcite[][8]{wiegreffeAttentionNotNot2019} we view attention scores as a vehicle to model transparency.
+}. Recall from our discussion on attention (see \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features that the model is paying attention to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in \cref{fig:attention-maps}.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics{attention-maps.pdf}
+  \caption[Attention Maps]{Attention Maps. Own work based on code of \textcite{zhangDiveDeepLearning2021}.}
+  \label{fig:attention-maps}
+\end{figure}
+
+In the tabular domain, various approaches have been investigated in the literature to obtain attention from multiple attention heads and transformer blocks. \textcite[][18]{somepalliSAINTImprovedNeural2021} and \textcite[][11]{borisovDeepNeuralNetworks2022} gather attention maps from the first attention layer only, and \textcite[][11]{borisovDeepNeuralNetworks2022} obtain feature attributions by taking the diagonal of the attention matrix $\boldsymbol{A}$ or through column-wise summation. In contrast, \textcite[][10]{gorishniyRevisitingDeepLearning2021} leverage all attention matrices by averaging over multiple transformer blocks, attention heads, and samples to obtain global feature attributions. Given \cref{sec:architectural-overview,sec:attention}, where we emphasized the unique role of attention heads and lower sublayers, both approaches may be myopic, as attention heads may contribute unequally to the result, or as later attention layers are neglected altogether.
+
+While not explored systematically in the tabular domain yet, the rollout attention method of \textcite[][3]{abnarQuantifyingAttentionFlow2020} combines raw attention from multiple layers through recursive matrix multiplication with the weight matrices from attention layers below, as shown in this Equation~\footnote{Notation from adapted from \textcite[][786]{cheferTransformerInterpretabilityAttention2021}.}:
+\begin{equation}
+  \begin{aligned}
+    \hat{\boldsymbol{A}}^{(l)} & =\boldsymbol{I}+\mathbb{E}_h \boldsymbol{A}^{(l)}                                                  \\
+    \operatorname { rollout }  & =\hat{\boldsymbol{A}}^{(1)} \cdot \hat{\boldsymbol{A}}^{(2)} \ldots\cdot\hat{\boldsymbol{A}}^{(L)}
+  \end{aligned}
+  \label{eq:attention-map-rollout}
+\end{equation}
+
+In each layer the raw attention scores $\boldsymbol{A}^{(l)}$ are averaged over $h$ heads, denoted by $\mathbb{E}_h$. The identity matrix $\boldsymbol{I}$ is added to account for the residual connections (\cref{sec:residual-connections-layer-norm}). While rollout attention considers all attention layers in the calculation of feature attributions, it does not consider a signal and attributes equal weights to all attention heads \autocite[][786]{cheferTransformerInterpretabilityAttention2021}.
+
+In an attempt to explain the decision-making process of multi-modal Transformers, including self-attention-based Transformers, \textcite[][3]{cheferTransformerInterpretabilityAttention2021} incorporate gradients to weight the head's contribution when averaging over the heads of a layer, as shown in \cref{eq:attention-map-weighted}. Like before, all attention layers are considered.
+
+\begin{equation}
+  \begin{aligned}
+    \bar{\boldsymbol{A}}^{(l)} & =I+ \mathbb{E}_h\left(\left(\nabla \boldsymbol{A}^{(l)} \odot \boldsymbol{A}^{(l)}\right)^{+}\right) \\
+    \operatorname {w\_rollout} & =\bar{\boldsymbol{A}}^{(1)} \cdot \bar{\boldsymbol{A}}^{(2)} \ldots \cdot \bar{\boldsymbol{A}}^{(L)}
+  \end{aligned}
+  \label{eq:attention-map-weighted}
+\end{equation}
+
+In this approach, the element-wise product between the gradient of the attention map $\nabla \boldsymbol{A}^{(l)}=\frac{\partial y_t}{\partial \boldsymbol{A}}$ for the model's target class $t$ and the attention map $\boldsymbol{A}^{(l)}$ is calculated to weight the attention head's importance. As previously suggested in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. Like all other presented approaches \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and is therefore computationally efficient.
+
+In absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all transformer blocks. Due to the limitation that TabTransformer (see \cref{sec:tabtransformer}) only performs self-attention on categorical features, no feature attributions for numerical features are calculated. The level of agreement between attributions from attention maps and kernel \gls{SHAP} is quantified by calculating Spearman's rank correlation between them.
+
+The next chapter discusses different metrics to assess the prediction quality of our models.
 
 \subsubsection{Evaluation Metric (1~p)}\label{sec:evaluation-metric}
 

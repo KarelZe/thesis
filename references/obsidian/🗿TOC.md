@@ -151,7 +151,7 @@ describe if data set is actually used. Write similarily to
 [[🏅Feature importance measure]]
 ### Evaluation Metric
 [[🧭Evaluation metric]]
-[[🧭Attention map]]
+[[🧭Attention Map]]
 
 # 🏁 Results
 [[🏅Results]]
