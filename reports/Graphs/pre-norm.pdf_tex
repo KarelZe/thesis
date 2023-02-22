@@ -1,6 +1,6 @@
 %% Creator: Inkscape 1.2.2 (732a01da63, 2022-12-09), www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file 'post-norm.pdf' (pdf, eps, ps)
+%% Accompanies image file 'pre-norm.pdf' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -53,11 +53,12 @@
   \begin{picture}(1,0.2857143)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
-    \put(0,0){\includegraphics[width=\unitlength,page=1]{post-norm.pdf}}%
-    \put(0.21342833,0.09222667){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Sublayer\end{tabular}}}}%
-    \put(0.56806605,0.09331488){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Layer Norm\end{tabular}}}}%
-    \put(0.4823899,0.09543226){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}+\end{tabular}}}}%
-    \put(0.87506548,0.09113328){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{X}$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{pre-norm.pdf}}%
+    \put(0.17308132,0.09222667){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Layer Norm\end{tabular}}}}%
+    \put(0.52343001,0.09331488){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Sublayer\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{pre-norm.pdf}}%
+    \put(0.79973588,0.09447675){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}+\end{tabular}}}}%
+    \put(0.88107205,0.09113328){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{X}$\end{tabular}}}}%
     \put(0.05179726,0.09171844){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{X}$\end{tabular}}}}%
   \end{picture}%
 \endgroup%

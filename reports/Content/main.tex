@@ -386,18 +386,16 @@ calculated from the statistics $m = \sum_{i=1}^{d_{e}} \boldsymbol{e}[i] / d_{e}
 Until now it remains unclear, how the layer normalization intertwines with the sublayers and the residual connections. Transformers are distinguished by the order in which layer normalization is added into the pre-norm and post-norm Transformer.
 \begin{figure}[ht]
   \hfill
-  \subfloat[Post-Norm Residual Unit.\label{fig:post-norm-residual}]{
-    {\renewcommand\normalsize{\small}%
+  \subfloat[Post-Norm Residual Unit\label{fig:post-norm-residual}]{
+    {\renewcommand\normalsize{\footnotesize}%
         \normalsize
         \input{./Graphs/post-norm.pdf_tex}}
-    %\includegraphics[width=5cm]{example-image-a}
   }
   \hfill
-  \subfloat[Pre-Norm Residual Unit.\label{fig:pre-norm-residual}]{
-    % {\renewcommand\normalsize{\scriptsize}%
-    %     \normalsize
-    %     \input{./Graphs/fttransformer.pdf_tex}}
-    \includegraphics[width=5cm]{example-image-b}
+  \subfloat[Pre-Norm Residual Unit\label{fig:pre-norm-residual}]{
+    {\renewcommand\normalsize{\footnotesize}%
+        \normalsize
+        \input{./Graphs/pre-norm.pdf_tex}}
   }
   \hfill\null
   \caption[Pre-norm residual unit and post-norm residual unit]{Examples of pre-norm residual unit and post-norm residual unit. Own work inspired by \textcite[][2]{wangLearningDeepTransformer2019}.}
