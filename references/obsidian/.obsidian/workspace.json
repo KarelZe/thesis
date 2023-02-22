@@ -23,7 +23,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🪦graveyard of ideas.md",
+                "file": "📖chapters/🍔Layer Norm.md",
                 "mode": "source",
                 "source": false
               }
@@ -128,7 +128,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🪦graveyard of ideas.md",
+                "file": "📖chapters/🍔Layer Norm.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -156,7 +156,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🪦graveyard of ideas.md"
+                "file": "📖chapters/🍔Layer Norm.md"
               }
             }
           },
@@ -187,17 +187,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "34eca00751a3e05d",
+  "active": "8399eb31ec07fd72",
   "lastOpenFiles": [
+    "📑notes/🍔Layer norm notes.md",
+    "📖chapters/🤖TabTransformer.md",
+    "📑notes/🤖TabTransformer notes.md",
+    "📖chapters/🪦graveyard of ideas.md",
     "📖chapters/🧭Attention Map.md",
     "📑notes/🅰️attention notes.md",
     "📖chapters/🅰️Attention.md",
     "📥Inbox/@jainAttentionNotExplanation2019.md",
     "📖chapters/🧭Kernel SHAP.md",
-    "📖chapters/🧭Evaluation metric.md",
-    "📑notes/🧭Attention map notes.md",
-    "📥Inbox/@gevaTransformerFeedForwardLayers2021.md",
-    "📥Inbox/@bastingsElephantInterpretabilityRoom2020.md",
-    "🖼️Media/attention-map-saint.png"
+    "📖chapters/🧭Evaluation metric.md"
   ]
 }
