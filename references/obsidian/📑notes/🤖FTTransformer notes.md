@@ -1,4 +1,15 @@
 
+## Visualization
+
+![[mashup-tokenizer-fttransformer.png]]
+(by [[@devlinBERTPretrainingDeep2019]] (p. 4185) and [[@gorishniyRevisitingDeepLearning2021]] (p. 4)) ^23bb5c
+
+## Position of CLS-Token
+
+In the official implementation of [[@gorishniyRevisitingDeepLearning2021]], the $\texttt{[CLS]}$ token is appended to the tensor at the end. Recall from the chapter [🅰️Attention]] that order is preserved. Also, the tensor is expanded, thus final column is repeated to provide an initial embedding for the $\texttt{[CLS]}$ token. For the explanation in this work, we stick to the formulation in the paper. 
+
+## Other
+
 Exemplary, the encoding of the option type could be  $\text{P}\mapsto 1$; $\text{C}\mapsto 2$, which would result in a selection of the second column of the embedding matrix whenever a put is traded. 
 
 
