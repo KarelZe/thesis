@@ -23,8 +23,7 @@ Analogous to chapter [[🗼Overview Transformer]], the embedding of each row, or
 
 However, embedding and contextualizing of only the categorical inputs remains imperfect, as no numerical data is considered in the attention mechanism, and correlations between categorical and numerical features are lost due to the processing in different sub-networks ([[@somepalliSAINTImprovedNeural2021]]2). Also, the robustness to noise is hardly improved for numerical inputs. In a small experimental setup, ([[@somepalliSAINTImprovedNeural2021]]8) address this concern for the TabTransformer by also embedding numerical inputs, which leads to a lift in AUC by 2.34 % merely through embedding. Their observation integrates with a wider strand of literature that suggests, that models can profit from numerical embeddings, as we derived in chapter [[🛌Token Embedding]]. To dwell on this idea, we introduce the [[🤖FTTransformer]] next.
 
+[^1:] The split across different embedding matrices is only *logically*. Also, additional embeddings may be created, which affects the dimensionality of the embedding metric. Similar to special tokens in the vocabulary, like the $\texttt{[UNK]}$ token for handing out-of-vocabulary items, an additional category can be reserved for unseen categories. ([[@huangTabTransformerTabularData2020]]10) use a separate embedding for missing categories.
+
 **Notes on TabTransformer:**
 [[🤖TabTransformer notes]]
-
-
-[^1:] The split across different embedding matrices is only *logically*. Also, additional embeddings may be created, which affects the dimensionality of the embedding metric. Similar to special tokens in the vocabulary, like the $\texttt{[UNK]}$ token for handing out-of-vocabulary items, an additional category can be reserved for unseen categories. ([[@huangTabTransformerTabularData2020]]10) use a separate embedding for missing categories.
