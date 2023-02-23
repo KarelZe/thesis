@@ -1,4 +1,11 @@
+## Transformer
+
 At times we fall back to the Transformer for machine translations, to develop a deeper understanding of the architecture and its components.
+
+## TabTransformer
+Motivated by the success of contextual embeddings in natural language processing ([[@devlinBERTPretrainingDeep2019]]) ([[@liuRoBERTaRobustlyOptimized2019]]), ([[@huangTabTransformerTabularData2020]]4) propose with *TabTransformer* an adaption of the classical Transformer for the tabular domain. 
+
+In large-scale experiments ([[@huangTabTransformerTabularData2020]]5--6) can show, that the use of contextual embeddings elevates both the robustness to noise and missing data of the model. For various binary classification tasks, the TabTransformer outperforms other deep learning models e. g., vanilla multi-layer perceptrons in terms of *area under the curve* (AUC) and can compete with [[🐈Gradient Boosting]].  
 
 
 

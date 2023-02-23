@@ -30,6 +30,20 @@
             }
           },
           {
+            "id": "53fe9101ea69a657",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🤖TabTransformer.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
             "id": "343653c686990511",
             "type": "leaf",
             "state": {
@@ -40,37 +54,54 @@
                 "source": false
               }
             }
+          }
+        ],
+        "currentTab": 2
+      },
+      {
+        "id": "90bbdd3c2ee01632",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5a757cbf3d055cee",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🤖TabTransformer notes.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
           },
           {
-            "id": "f7b32ee8fdb62316",
+            "id": "3bd78a39ddc0342d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@jainAttentionNotExplanation2019.md",
+                "file": "📖chapters/👨‍🍳Tain-Test-split.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "57a9ea81f3e7b96c",
+            "id": "dad26e0868f82374",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "2efbef6630d30740",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🪦graveyard of ideas.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -128,7 +159,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🍔Layer Norm.md",
+                "file": "📖chapters/🤖TabTransformer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -156,7 +187,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🍔Layer Norm.md"
+                "file": "📖chapters/🤖TabTransformer.md"
               }
             }
           },
@@ -187,17 +218,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "8399eb31ec07fd72",
+  "active": "53fe9101ea69a657",
   "lastOpenFiles": [
-    "📑notes/🍔Layer norm notes.md",
+    "📖chapters/🪦graveyard of ideas.md",
     "📖chapters/🤖TabTransformer.md",
     "📑notes/🤖TabTransformer notes.md",
-    "📖chapters/🪦graveyard of ideas.md",
+    "📖chapters/👨‍🍳Tain-Test-split.md",
+    "📖chapters/🍔Layer Norm.md",
+    "📑notes/🍔Layer norm notes.md",
     "📖chapters/🧭Attention Map.md",
     "📑notes/🅰️attention notes.md",
     "📖chapters/🅰️Attention.md",
-    "📥Inbox/@jainAttentionNotExplanation2019.md",
-    "📖chapters/🧭Kernel SHAP.md",
-    "📖chapters/🧭Evaluation metric.md"
+    "📥Inbox/@jainAttentionNotExplanation2019.md"
   ]
 }
