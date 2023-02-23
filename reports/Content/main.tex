@@ -11,7 +11,7 @@ While classical trade classification algorithms are extensively tested in the st
 
 \textcite[882--883]{savickasInferringDirectionOption2003} were the first to compare the tick rule, quote rule, the Lee and Ready algorithm and the \cgls{EMO} rule for options traded at the \cgls{CBOE}. The data set spans a period from July 3, 1995 -- December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule (\SI{78.98}{\percent}) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
 
-The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}.  The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the \cgls{CBOE} and \cgls{ISE} classical rules like the popular Lee and Ready algorithm only achieve accuracies of \SI{62.03}{\percent} or \SI{62.53}{\percent} and are thus significantly smaller than in the stock market. In line with the research of  \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The \emph{depth rule} is an alternative to the tick rule for classifying midspread trades in the Lee and Ready algorithm and \cgls{EMO} rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the \emph{trade size rule}, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing primary rules by more than \SI{10}{\percent}, at the cost of data efficiency.
+The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}.The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the \cgls{CBOE} and \cgls{ISE} classical rules like the popular Lee and Ready algorithm only achieve accuracies of \SI{62.03}{\percent} or \SI{62.53}{\percent} and are thus significantly smaller than in the stock market. In line with the research of\textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The \emph{depth rule} is an alternative to the tick rule for classifying midspread trades in the Lee and Ready algorithm and \cgls{EMO} rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the \emph{trade size rule}, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing primary rules by more than \SI{10}{\percent}, at the cost of data efficiency.
 
 The work of \textcite[1--39]{grauerOptionTradeClassification2022} is relevant in two ways. First, the data set is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
 
@@ -43,12 +43,12 @@ This chapter presents foundational classification rules, that may be used for tr
 The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $\gls{p}_i = \langle p_{i,1},p_{i,2},\dots,p_{i,T}\rangle$ and the corresponding ask at $t$ by $\gls{a}_{i,t}$ and bid by $\gls{b}_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, denoted by $\gls{m}_{i,t} = \tfrac{1}{2}(b_{i,t} + a_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} \neq m_{i,t}\right\}$ is given by:
 
 \begin{equation}
-  \operatorname{quote}\colon D \to \left\{0, 1\right\},\quad
-  \operatorname{quote}(i, t)=
-  \begin{cases}
-    0, & \text{if}\ p_{i, t}>m_{i, t}  \\
-    1, & \text{if}\ p_{i, t}<m_{i, t}. \\
-  \end{cases}
+\operatorname{quote}\colon D \to \left\{0, 1\right\},\quad
+\operatorname{quote}(i, t)=
+\begin{cases}
+0, & \text{if}\ p_{i, t}>m_{i, t}\\
+1, & \text{if}\ p_{i, t}<m_{i, t}. \\
+\end{cases}
 \end{equation}
 
 By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing midspread trades including ones based on the subsequent quotes, and contemporaneous, or the subsequent transaction. Yet, the most common approach to overcome this limitation is, coupling the quote rule with other approaches, as done in \cref{sec:hybrid-rules}
@@ -63,29 +63,29 @@ The quote rule requires both price and quote data, which affects the data effici
 A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test, $\operatorname{tick}\colon \mathbb{N}^2 \to \left\{0,1\right\}$, is defined as:
 
 \begin{equation}
-  \operatorname{tick}(i, t)=
-  \begin{cases}
-    1,                           & \text{if}\ t=1 \lor p_{t}>p_{t-1} \\
-    0,                           & \text{if}\ p_{i, t} < p_{i, t-1}  \\
-    \operatorname{tick}(i, t-1), & \text{else}.
-  \end{cases}
-  \label{eq:tick-test}
+\operatorname{tick}(i, t)=
+\begin{cases}
+1, & \text{if}\ t=1 \lor p_{t}>p_{t-1} \\
+0, & \text{if}\ p_{i, t} < p_{i, t-1}\\
+\operatorname{tick}(i, t-1), & \text{else}.
+\end{cases}
+\label{eq:tick-test}
 \end{equation}
 
-Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy~\footnote{To end recursion at $t=1$, we sign the trade to be buyer-initiated. Other choices are possible, e.g., random assignment or based on another rule. Similarly done for \cref{eq:reverse-tick-test}.}.  Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[][3]{leeInferringTradeDirection1991}.
+Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy~\footnote{To end recursion at $t=1$, we sign the trade to be buyer-initiated. Other choices are possible, e.g., random assignment or based on another rule. Similarly done for \cref{eq:reverse-tick-test}.}.Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[][3]{leeInferringTradeDirection1991}.
 
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
 
 The reverse tick test, $\operatorname{rtick} \colon \mathbb{N}^2 \to \left\{0, 1\right\}$, is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
 
 \begin{equation}
-  \operatorname{rtick}(i, t)=
-  \begin{cases}
-    1,                            & \text{if}\ t+1=T \lor p_{i, t} > p_{i, t+1} \\
-    0,                            & \text{if}\ p_{i, t} < p_{i, t+1}            \\
-    \operatorname{rtick}(i, t+1), & \text{else}
-  \end{cases}
-  \label{eq:reverse-tick-test}
+\operatorname{rtick}(i, t)=
+\begin{cases}
+1,& \text{if}\ t+1=T \lor p_{i, t} > p_{i, t+1} \\
+0,& \text{if}\ p_{i, t} < p_{i, t+1}\\
+\operatorname{rtick}(i, t+1), & \text{else}
+\end{cases}
+\label{eq:reverse-tick-test}
 \end{equation}
 
 As denoted in \cref{eq:reverse-tick-test}, the trade is classified as seller-initiated, if the next trade is on an uptick or a zero uptick, and classified as buyer-initiated for trades at a downtick or a zero downtick \autocite[][735--636]{leeInferringTradeDirection1991}.
@@ -102,12 +102,12 @@ The depth rule infers the trade initiator from the quoted size at the best bid a
 
 Let $\gls{a-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{b-tilde}_{i,t}$ of the bid, and $\gls{p-tilde}_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} = \gls{m}_{i,t} \land \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \right\}$. The depth rule, $\operatorname{depth} \colon D \to \left\{0,1\right\}$, is now defined as:
 \begin{equation}
-  \operatorname{depth}(i, t)=
-  \begin{cases}
-    0, & \text{if}\ \tilde{a}_{i,t} < \tilde{b}_{i,t} \land p_{i, t} = m_{i, t}  \\
-    1, & \text{if}\ \tilde{a}_{i,t} > \tilde{b}_{i,t} \land p_{i, t} = m_{i, t}. \\
-  \end{cases}
-  \label{eq:depth-rule}
+\operatorname{depth}(i, t)=
+\begin{cases}
+0, & \text{if}\ \tilde{a}_{i,t} < \tilde{b}_{i,t} \land p_{i, t} = m_{i, t}\\
+1, & \text{if}\ \tilde{a}_{i,t} > \tilde{b}_{i,t} \land p_{i, t} = m_{i, t}. \\
+\end{cases}
+\label{eq:depth-rule}
 \end{equation}
 
 As shown in \cref{eq:depth-rule}, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for inferring the trade's aggressor. Due to these restrictive conditions in $D$, the depth rule can sign only a fraction of all trades and must be best stacked with other rules.
@@ -116,19 +116,19 @@ Like the quote rule, the depth rule has additional dependencies on quote data. D
 
 \subsubsection{Trade Size Rule}\label{sec:trade-size-rule}
 
-As \cref{sec:tick-test} derives, quote-based approaches are generally preferred due to their stronger performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $D = \left\{(i, t) \in \mathbb{N}^2: \tilde{p}_{i,t} = \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \lor \tilde{p}_{i,t} \neq  \tilde{a}_{i,t} = \tilde{b}_{i,t} \right\}$ the trade size rule, $\operatorname{tsize} \colon D \to \left\{0,1\right\}$, is defined as:
+As \cref{sec:tick-test} derives, quote-based approaches are generally preferred due to their stronger performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $D = \left\{(i, t) \in \mathbb{N}^2: \tilde{p}_{i,t} = \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \lor \tilde{p}_{i,t} \neq\tilde{a}_{i,t} = \tilde{b}_{i,t} \right\}$ the trade size rule, $\operatorname{tsize} \colon D \to \left\{0,1\right\}$, is defined as:
 \begin{equation}
-  \operatorname{tsize}(i, t)=
-  \begin{cases}
-    1, & \text{if}\ \tilde{p}_{i, t} = \tilde{b}_{i, t} \neq \tilde{a}_{i, t}  \\
-    0, & \text{if}\ \tilde{p}_{i, t} = \tilde{a}_{i, t} \neq \tilde{b}_{i, t}. \\
-  \end{cases}
-  \label{eq:trade-size-rule}
+\operatorname{tsize}(i, t)=
+\begin{cases}
+1, & \text{if}\ \tilde{p}_{i, t} = \tilde{b}_{i, t} \neq \tilde{a}_{i, t}\\
+0, & \text{if}\ \tilde{p}_{i, t} = \tilde{a}_{i, t} \neq \tilde{b}_{i, t}. \\
+\end{cases}
+\label{eq:trade-size-rule}
 \end{equation}
 
 The trade size rule in \cref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{p}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the contemporaneous bid or ask, with a trade size equalling the quoted size \autocite[][13]{grauerOptionTradeClassification2022}. When both the size of the ask and bid correspond with the trade size, the result is ambiguous.
 
-\textcite[][13]{grauerOptionTradeClassification2022} obtain an accuracy of \SI{79.92}{\percent} for the subset of option trades at the  \cgls{ISE} (\SI{22.3}{\percent} of all trades) that can be signed using the methodology, which elevates the performance by \SI{11}{\percent} for the entire sample. Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \autocite[][15]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades inside or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces four hybrid algorithms, that combine basic rules into more sophisticated algorithms.
+\textcite[][13]{grauerOptionTradeClassification2022} obtain an accuracy of \SI{79.92}{\percent} for the subset of option trades at the\cgls{ISE} (\SI{22.3}{\percent} of all trades) that can be signed using the methodology, which elevates the performance by \SI{11}{\percent} for the entire sample. Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \autocite[][15]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades inside or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces four hybrid algorithms, that combine basic rules into more sophisticated algorithms.
 
 \subsection{Hybrid Rules}\label{sec:hybrid-rules}
 
@@ -136,30 +136,30 @@ The basic trade classification rules from \cref{sec:basic-rules} can be combined
 
 
 \begin{figure}[ht!]
-  \hfill
-  \subfloat[\acrshort{LR} Algorithm\label{fig:hybrid-lr}]{
-    {\renewcommand\normalsize{\tiny}
-        \normalsize
-        \input{./Graphs/lr-algo.pdf_tex}}
-  }
-  \subfloat[\acrshort{EMO} Rule\label{fig:hybrid-emo}]{
-    {\renewcommand\normalsize{\tiny}
-        \normalsize
-        \input{./Graphs/emo-algo.pdf_tex}}
-  }
-  \subfloat[\acrshort{CLNV} Rule\label{fig:hybrid-clnv}]{
-    {\renewcommand\normalsize{\tiny}
-        \normalsize
-        \input{./Graphs/clnv-algo.pdf_tex}}
-  }
-  \subfloat[Hybrid Rule Through Stacking\label{fig:hybrid-grauer}]{
-    {\renewcommand\normalsize{\tiny}
-        \normalsize
-        \input{./Graphs/grauer-algo.pdf_tex}}
-  }
-  \hfill\null
-  \caption[Comparison Between Hybrid Trade Classification Rules]{Comparison between hybrid trade classification rules. The Figure visualizes the components of the \acrshort{LR} algorithm, \acrshort{EMO} rule, the \acrshort{CLNV} method, and an arbitrary, stacked combination relative to the quotes. Rules at the midpoint or the quotes are slightly exaggerated for better readability. Own work inspired by \textcite[][167]{poppeSensitivityVPINChoice2016}.}
-  \label{fig:hybrid-algorithms}
+\hfill
+\subfloat[\acrshort{LR} Algorithm\label{fig:hybrid-lr}]{
+{\renewcommand\normalsize{\tiny}
+\normalsize
+\input{./Graphs/lr-algo.pdf_tex}}
+}
+\subfloat[\acrshort{EMO} Rule\label{fig:hybrid-emo}]{
+{\renewcommand\normalsize{\tiny}
+\normalsize
+\input{./Graphs/emo-algo.pdf_tex}}
+}
+\subfloat[\acrshort{CLNV} Rule\label{fig:hybrid-clnv}]{
+{\renewcommand\normalsize{\tiny}
+\normalsize
+\input{./Graphs/clnv-algo.pdf_tex}}
+}
+\subfloat[Hybrid Rule Through Stacking\label{fig:hybrid-grauer}]{
+{\renewcommand\normalsize{\tiny}
+\normalsize
+\input{./Graphs/grauer-algo.pdf_tex}}
+}
+\hfill\null
+\caption[Comparison Between Hybrid Trade Classification Rules]{Comparison between hybrid trade classification rules. The Figure visualizes the components of the \acrshort{LR} algorithm, \acrshort{EMO} rule, the \acrshort{CLNV} method, and an arbitrary, stacked combination relative to the quotes. Rules at the midpoint or the quotes are slightly exaggerated for better readability. Own work inspired by \textcite[][167]{poppeSensitivityVPINChoice2016}.}
+\label{fig:hybrid-algorithms}
 \end{figure}
 
 Popular variants include the \cgls{LR} algorithm, the \cgls{EMO} rule, and the \cgls{CLNV} method. All three algorithms utilize the quote and tick rule to a varying extent, as depicted in \cref{fig:hybrid-lr,fig:hybrid-emo,fig:hybrid-clnv}. Basic rules are selected based on the proximity of the trade price to the quotes. We study all algorithms in detail in \cref{sec:lee-and-ready-algorithm,sec:ellis-michaely-ohara-rule,sec:chakarabarty-li-nguyen-van-ness-method}.
@@ -172,49 +172,49 @@ The popular \cgls{LR} algorithm \autocite[][745]{leeInferringTradeDirection1991}
 In combination, the algorithm primarily signs trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified by the tick rule. Overall:
 
 \begin{equation}
-  \operatorname{lr} \colon \mathbb{N}^2 \to \left\{0,1\right\}\quad\operatorname{lr}(i,t)=
-  \begin{cases}
-    1,                         & \text{if}\ p_{i, t} > m_{i, t} \\
-    0,                         & \text{if}\ p_{i, t} < m_{i, t} \\
-    \operatorname{tick}(i, t), & \text{else}.
-  \end{cases}
+\operatorname{lr} \colon \mathbb{N}^2 \to \left\{0,1\right\}\quad\operatorname{lr}(i,t)=
+\begin{cases}
+1, & \text{if}\ p_{i, t} > m_{i, t} \\
+0, & \text{if}\ p_{i, t} < m_{i, t} \\
+\operatorname{tick}(i, t), & \text{else}.
+\end{cases}
 \end{equation}
 
 As the algorithm requires both trade and quote data, it is less data-efficient than its subparts. Even if data is readily available, in past option studies the algorithm does not significantly outperform the quote rule and outside the model's tight assumptions the expected accuracy of the tick test is unmet \autocites[][30--32]{grauerOptionTradeClassification2022}[][886]{savickasInferringDirectionOption2003}. Nevertheless, the algorithm is a common choice in option research \autocite[cp.][453]{easleyOptionVolumeStock1998}. It is also the basis for more advanced algorithms, such as the \gls{EMO} rule, which we cover next.
 
 \subsubsection{Ellis-Michaely-O'Hara
-  Rule}\label{sec:ellis-michaely-ohara-rule}
+Rule}\label{sec:ellis-michaely-ohara-rule}
 
 \textcite[][536]{ellisAccuracyTradeClassification2000} examine the performance of the previous algorithms for stocks traded at \gls{NASDAQ}. By analysing miss-classified trades with regard to the proximity of the trade to the quotes, they observe, that the quote rule and by extension, the \cgls{LR} algorithm, perform particularly well at classifying trades executed at the bid and the ask price but trail the performance of the tick rule for trades inside or outside the spread \autocite[][535--536]{ellisAccuracyTradeClassification2000}. The authors combine these observations into a single rule, known as the \cgls{EMO} algorithm.
 
 As such, the \cgls{EMO} algorithm extends the tick rule by classifying trades at the quotes using the quote rule, and all other trades with the tick test. Formally, the classification rule is given by:
 \begin{equation}
-  \operatorname{emo} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
-  \operatorname{emo}(i, t)=
-  \begin{cases}
-    1,                         & \text{if}\ p_{i, t} = a_{i, t} \\
-    0,                         & \text{if}\ p_{i, t} = b_{i, t} \\
-    \operatorname{tick}(i, t), & \text{else}.
-  \end{cases}
-  \label{eq:emo-rule}
+\operatorname{emo} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
+\operatorname{emo}(i, t)=
+\begin{cases}
+1, & \text{if}\ p_{i, t} = a_{i, t} \\
+0, & \text{if}\ p_{i, t} = b_{i, t} \\
+\operatorname{tick}(i, t), & \text{else}.
+\end{cases}
+\label{eq:emo-rule}
 \end{equation}
 
 \Cref{eq:emo-rule} embeds both the quote and tick rule. As trades off the quotes are classified by the tick rule, the algorithm's overall success rate is dominated by the tick test assuming most trades are off-the-quotes. For option markets \autocites[cp.][891]{savickasInferringDirectionOption2003}[][21]{grauerOptionTradeClassification2022} this dependence causes the performance to lag behind quote-based approaches, contrary to the successful adaption in the stock market \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][3818]{chakrabartyTradeClassificationAlgorithms2007}. \textcite[][31--35]{grauerOptionTradeClassification2022} improve the classification accuracy for option trades by applying the reverse tick test as a proxy for the tick test.
 
 \subsubsection{Chakrabarty-Li-Nguyen-Van-Ness
-  Method}\label{sec:chakarabarty-li-nguyen-van-ness-method}
+Method}\label{sec:chakarabarty-li-nguyen-van-ness-method}
 
 Like the previous two algorithms, the \cgls{CLNV} method of \textcite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the \cgls{EMO} rule by a differentiated treatment of trades inside the quotes, which are notoriously hard to classify. The authors segment the bid-ask spread into deciles (ten equal-width bins) and classify trades around the midpoint (\nth{4} to \nth{7} decile) by the tick rule and trades close or outside the quotes are categorized by the tick rule.
 
 \begin{equation}
-  \operatorname{clnv} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
-  \operatorname{clnv}(i, t)=
-  \begin{cases}
-    1,                         & \text{if}\ p_{i, t} \in \left(\frac{3}{10} b_{i,t} + \frac{7}{10} a_{i,t}, a_{i, t}\right] \\
-    0,                         & \text{if}\ p_{i, t} \in \left[ b_{i,t}, \frac{7}{10} b_{i,t} + \frac{3}{10} a_{i,t}\right) \\
-    \operatorname{tick}(i, t), & \text{else}
-  \end{cases}
-  \label{eq:CLNV-rule}
+\operatorname{clnv} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
+\operatorname{clnv}(i, t)=
+\begin{cases}
+1, & \text{if}\ p_{i, t} \in \left(\frac{3}{10} b_{i,t} + \frac{7}{10} a_{i,t}, a_{i, t}\right] \\
+0, & \text{if}\ p_{i, t} \in \left[ b_{i,t}, \frac{7}{10} b_{i,t} + \frac{3}{10} a_{i,t}\right) \\
+\operatorname{tick}(i, t), & \text{else}
+\end{cases}
+\label{eq:CLNV-rule}
 \end{equation}
 
 The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\cgls{EMO} rule) against the quote rule (\cgls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $b_{i,t}$ and ends at $b_{i,t} + \tfrac{3}{10} (a_{i,t} - b_{i,t}) = \tfrac{7}{10} b_{i,t} + \tfrac{3}{10} a_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \cgls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
@@ -226,10 +226,10 @@ The previous algorithms are static concerning the used base rules and their alig
 The most basic application is in the \gls{LR} algorithm. For a more complex example consider the hybrid rule consisting of $\operatorname{tsize}(\cdot) \to \operatorname{quote}(\cdot) \to \operatorname{tick}(\cdot)$ in \cref{fig:stacking-algo}. An exemplary trade cannot be classified by the primary trade size rule and is signed by the quote rule, which is the first rule in the stack, able to classify the trade. Other trades can be classifiable by the trade size rule, which rules out the classification of the quote and tick rule. Theoretically, stacked rules can grow to great depth with an arbitrary arrangement. In practice, rules may be ordered greedily and new rules added if there are unclassified trades.
 
 \begin{figure}[ht!]
-  \centering
-  \input{./Graphs/stacking-algo.pdf_tex}
-  \caption[Visualization Of A Stacked Rule]{Visualization of a stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured shapes indicate the domain of the base rules in a modified scale. The trade is not classifiable by the trade size rule, as indicated by the arrows outside the rule's domain. The quote rule is applied, as it is the first rule to classify the trade entirely. Own drawing.}
-  \label{fig:stacking-algo}
+\centering
+\input{./Graphs/stacking-algo.pdf_tex}
+\caption[Visualization Of A Stacked Rule]{Visualization of a stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured shapes indicate the domain of the base rules in a modified scale. The trade is not classifiable by the trade size rule, as indicated by the arrows outside the rule's domain. The quote rule is applied, as it is the first rule to classify the trade entirely. Own drawing.}
+\label{fig:stacking-algo}
 \end{figure}
 
 \textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} and \textcite[][18]{grauerOptionTradeClassification2022} continue the move for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and the quotes. Hence, current classification rules may not unleash their full potential. A obvious question is, if classifiers, \emph{learned} on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
@@ -252,29 +252,29 @@ A region corresponds to a terminal node in the tree. For each terminal node of t
 
 For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $x$ the tree can be modelled as:
 \begin{equation}
-  f(x)=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(x \in R_{m}\right),
-  \label{eq:decision-tree}
+f(x)=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(x \in R_{m}\right),
+\label{eq:decision-tree}
 \end{equation}
 
-where $\mathbb{I}$ is the indicator function for region conformance and $c_m$  the region's constant \autocite[][326]{hastietrevorElementsStatisticalLearning2009}. In the regression case, $c_m$ is the mean of all target variables $y_i$ in the specific region. Since all samples of a region share a common response value, the tree estimates resemble a histogram that approximates the true regression surface.
+where $\mathbb{I}$ is the indicator function for region conformance and $c_m$the region's constant \autocite[][326]{hastietrevorElementsStatisticalLearning2009}. In the regression case, $c_m$ is the mean of all target variables $y_i$ in the specific region. Since all samples of a region share a common response value, the tree estimates resemble a histogram that approximates the true regression surface.
 
 So far, it remains open how the best split can be found. The best split is where the deviation between the prediction and the true response variable diminishes. Over the entire tree, this error can be captured in the \gls{SSE} given by:
 \begin{equation}
-  E(M)=\frac{1}{N} \sum_{m \in M} \sum_{x_{i} \in R_m}\left(y_{i}-c_{m}\right)^{2},
+E(M)=\frac{1}{N} \sum_{m \in M} \sum_{x_{i} \in R_m}\left(y_{i}-c_{m}\right)^{2},
 \end{equation}
 
 which is subsequently minimized \textcite[][231]{breimanClassificationRegressionTrees2017}. As documented in \textcite[][326]{hastietrevorElementsStatisticalLearning2009} we start with the entire dataset and scan through all combinations of features and possible split values. For a split by the feature $j$ and value $s$, the child nodes are given by a pair of half-planes:
 
 \begin{equation}
-  R_1(j, s)=\left\{X \mid X_j \leq s\right\} \text { and } R_2(j, s)=\left\{X \mid X_j>s\right\}.
+R_1(j, s)=\left\{X \mid X_j \leq s\right\} \text { and } R_2(j, s)=\left\{X \mid X_j>s\right\}.
 \end{equation}
 
 Thereby, the feature $j$ and value $s$ are selected in a way, that the combined error in the child nodes is minimized:
 \begin{equation}
-  \min _{j, s}\left[\min _{c_1} \sum_{x_i \in R_1(j, s)}\left(y_i-c_1\right)^2+\min _{c_2} \sum_{x_i \in R_2(j, s)}\left(y_i-c_2\right)^2\right].
+\min _{j, s}\left[\min _{c_1} \sum_{x_i \in R_1(j, s)}\left(y_i-c_1\right)^2+\min _{c_2} \sum_{x_i \in R_2(j, s)}\left(y_i-c_2\right)^2\right].
 \end{equation}
 
-The procedure is repeated on the so-created child nodes. Note that, splits are performed greedily to keep computations tractable. This entails, that only the reduction in \gls{SSE} of the current node is considered, and not the improvement from any subsequent splits in the child nodes. Computational costs may still be high, when there are many split candidates, due to a large feature count or possible split values. Common approximations are to split on quantized features or on a random feature subset.
+The procedure is repeated on the so-created child nodes. Note that, splits are performed greedily to keep computations tractable. This entails, that only the reduction in \gls{SSE} of the current node is considered, and not the improvement from any subsequent splits in the child nodes. Computational costs may still be high, when there are many split candidates, due to a large feature count or possible split values. Common approximations are to split on quantized features or random feature subsets.
 % TODO add citations where quantization is used. See ke (gradient boosting paper)
 
 Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample has its region, the tree would achieve a perfect fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence \emph{variance}, size complexity pruning procedures are employed. Likewise, if the decision tree is too simplistic, a high bias contributes to the model's overall expected error. Both extremes are to be avoided.
@@ -282,7 +282,7 @@ Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Consid
 Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredictors1996} and \emph{boosting} \autocite[][197--227]{schapireStrengthWeakLearnability1990}, decrease the expected error of the decision tree by combining multiple trees in a single model. Both approaches differ in the error term being minimized, which is reflected in the training procedure and the complexity of the ensemble members. More specifically, bagging aims at decreasing the variance, whereas boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we derive \gls{GBM}, a variant of boosting introduced by \textcite[][9]{friedmanGreedyFunctionApproximation2001} and apply it to probabilistic classification.
 
 \subsubsection{Gradient Boosting
-  Procedure (1.5 p)}\label{sec:gradient-boosting-procedure}
+Procedure (1.5 p)}\label{sec:gradient-boosting-procedure}
 
 \subsection{Transformer Networks}\label{sec:transformer-networks}
 
@@ -301,14 +301,14 @@ The encoder consists of $\gls{L}=6$ stacked Transformer blocks \autocite[][6]{va
 Aside from the multi-headed self-attention and feed-forward sublayer, the decoder contains a third sublayer for multi-headed self-attention on the output of the encoder, known as cross-attention. Also, the multi-headed self-attention mechanism in the decoder differs from the one in the encoder. Specifically, future parts of the output sequence are causally masked to prevent the model from learning on subsequent \glspl{token} during training, which enforces the autoregressive properties of the model \autocites[][3]{vaswaniAttentionAllYou2017}[][15]{narangTransformerModificationsTransfer2021}.
 
 \begin{landscape}
-  \begin{figure}[ht]
-    \centering
-    {\renewcommand\normalsize{\scriptsize}%
-      \normalsize
-      \input{./Graphs/transformer-architecture.pdf_tex}}
-    \caption[Overview Over the Transformer Architecture]{Overview Over the Transformer Architecture. The left part shows the self-attention mechanism discussed in \cref{sec:attention}. The central part depicts the multi-headed self-attention mechanism, as covered in \cref{sec:attention}. The right part shows the encoder and decoder stack, as well as the \gls{embedding} mechanism as covered in \cref{sec:token-embeddings} onwards. Own work inspired by \textcite[][3]{tayEfficientTransformersSurvey2022}.}
-    \label{fig:transformer-architecture-overview}
-  \end{figure}
+\begin{figure}[ht]
+\centering
+{\renewcommand\normalsize{\scriptsize}%
+\normalsize
+\input{./Graphs/transformer-architecture.pdf_tex}}
+\caption[Overview Over the Transformer Architecture]{Overview Over the Transformer Architecture. The left part shows the self-attention mechanism discussed in \cref{sec:attention}. The central part depicts the multi-headed self-attention mechanism, as covered in \cref{sec:attention}. The right part shows the encoder and decoder stack, as well as the \gls{embedding} mechanism as covered in \cref{sec:token-embeddings} onwards. Own work inspired by \textcite[][3]{tayEfficientTransformersSurvey2022}.}
+\label{fig:transformer-architecture-overview}
+\end{figure}
 \end{landscape}
 The output of the decoder is finally passed through a linear layer with a softmax activation function to unembed the output and retrieve the probabilities of the next \gls{token} \autocite[][5]{vaswaniAttentionAllYou2017}. Since the output sequence is generated autoregressively, the most probable \gls{token} is fed back as input to the decoder to provide context for the following \glspl{token} until the remaining sequence is generated.
 
@@ -321,23 +321,23 @@ For its original application, machine translation, both the encoder and decoder 
 
 In practice, the order of words is important for the overall meaning of a sentence. As such, \textcite[][6]{vaswaniAttentionAllYou2017} propose to inject information on the token's position within the sequence through a \emph{positional encoding}, that is added onto the token embedding. Contrary to sequences, columns in tabular data sets are arranged in an arbitrary order, which weakens the need for positional information. However, unless the embeddings per feature are unique, a positional embedding is also required so that the model can relate the otherwise identical embeddings to specific features and distinguish them \autocites[][3]{huangTabTransformerTabularData2020}[][15]{somepalliSAINTImprovedNeural2021}.
 
-Like token embeddings, positional embeddings can also be learned \autocite[cp.][4174]{devlinBERTPretrainingDeep2019}. Due to better, extrapolation capabilities, \textcite[][6]{vaswaniAttentionAllYou2017}, propose an positional encoding $W_p: \mathbb{N} \rightarrow \mathbb{R}^{d_{e}}$ based on sine and cosine signals to encode the \emph{absolute} position of the token:
+Like token embeddings, positional embeddings can also be learned \autocite[cp.][4174]{devlinBERTPretrainingDeep2019}. Due to better, extrapolation capabilities, \textcite[][6]{vaswaniAttentionAllYou2017}, propose an positional encoding $\boldsymbol{W}_p: \mathbb{N} \rightarrow \mathbb{R}^{d_{e}}$ based on sine and cosine signals to encode the \emph{absolute} position of the token:
 
 \begin{equation}
-  \begin{aligned}
-    W_p[2 i-1, t] & =\sin \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right), \\
-    W_p[2 i, t]   & =\cos \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right).
-  \end{aligned}
-  \label{eq:sinusodal-encoding}
+\begin{aligned}
+\boldsymbol{W}_p[2 i-1, t] & =\sin \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right), \\
+\boldsymbol{W}_p[2 i, t] & =\cos \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right).
+\end{aligned}
+\label{eq:sinusodal-encoding}
 \end{equation}
 
 with $0<i \leq \gls{d}_{e} / 2$, the maximum sequence length $\gls{ellmax}$, which is arbitrarily set to $\gls{ellmax}=10{,}000$, and $\gls{t}$ is again the position of the token in the sequence. As shown in \cref{eq:sinusodal-encoding} the frequency decreases across the position dimension and alternates between sine and cosine for the embedding dimension. Each embedding thus contains a pattern, easily distinguishable by the model.
 
 \begin{figure}[ht]
-  \centering
-  \includegraphics{positional-encoding.pdf}
-  \caption[Positional Encoding]{Positional encoding. The encoding is added onto the token embeddings to add positional information. The heatmap visualizes the uniquely identifying pattern created from sine and cosine signals at increasing frequencies across the embedding dimension. Own work.}
-  \label{fig:positional-embedding}
+\centering
+\includegraphics{positional-encoding.pdf}
+\caption[Positional Encoding]{Positional encoding. The encoding is added onto the token embeddings to add positional information. The heatmap visualizes the uniquely identifying pattern created from sine and cosine signals at increasing frequencies across the embedding dimension. Own work.}
+\label{fig:positional-embedding}
 \end{figure}
 
 The positional encoding is visualized in \cref{fig:positional-embedding}. One can see the alternating pattern between even and odd columns and the unique pattern for each token's position.
@@ -348,8 +348,8 @@ The reason for encoding with both the sine and cosine is more subtle, as either 
 
 The positional embedding is finally added per element to the token embedding to form a token's initial embedding $\gls{e}$. For the $\gls{t}$-th token of a sequence $\gls{x}$, the embedding becomes:
 \begin{equation}
-  \boldsymbol{e}=W_e[:, x[t]]+W_p[:, t].
-  \label{eq:positional-embedding}
+\gls{e}=\boldsymbol{W}_e[:, x[t]]+\boldsymbol{W}_p[:, t].
+\label{eq:positional-embedding}
 \end{equation}
 
 Intuitionally, adding the positional encoding leads to a rotation of the token embedding in the embedding space. As the positional embedding is different for every location within the sequence, otherwise identical \glspl{token}, now have a unique embedding.
@@ -362,10 +362,10 @@ The attention mechanism enables tokens to attend to other inputs in the immediat
 
 The network consists of a linear transformation, followed by a non-linear activation function and a second linear layer. For the $l$-th layer, the \gls{MLP} is given by
 \begin{equation}
-  X = X+W_{\mathrm{mlp} 2}^l \operatorname{ReLU}\left(W_{\mathrm{mlp} 1}^l X+b_{\mathrm{mlp} 1}^l 1^{\top}\right)+b_{\mathrm{mlp} 2}^l 1^{\top},
+\gls{X} = \gls{X}+\boldsymbol{W}_{\mathrm{mlp} 2}^l \operatorname{ReLU}\left(\boldsymbol{W}_{\mathrm{mlp} 1}^l \gls{X}+\boldsymbol{b}_{\mathrm{mlp} 1}^l 1^{\top}\right)+\boldsymbol{b}_{\mathrm{mlp} 2}^l 1^{\top},
 \end{equation}
 
-with $W_{\text {mlp } 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times d_{e}}, b_{\mathrm{mlp} 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}}}, W_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}} \times d_{\mathrm{mlp}}$ and $b_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}}$ being learnable parameters identical for all \glspl{embedding} in the layer. The network is applied to each embedding separately and identically.
+with $\boldsymbol{W}_{\text {mlp } 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times d_{e}}, \boldsymbol{b}_{\mathrm{mlp} 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}}}, \boldsymbol{W}_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}} \times d_{\mathrm{mlp}}$ and $\boldsymbol{b}_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}}$ being learnable parameters identical for all \glspl{embedding} in the layer. The network is applied to each embedding separately and identically.
 
 \textcite[][9]{vaswaniAttentionAllYou2017} set the hidden dimension to be two to eight magnitudes of the embedding dimension. The large capacity strengthens the model's ability to retain information but also contributes significantly to the high computational requirements and memory footprint of Transformers \autocites[][5]{tayEfficientTransformersSurvey2022}[][1]{kitaevReformerEfficientTransformer2020}. Both linear transformations are separated by a \gls{ReLU} \gls{activation-function} \autocite[][318]{glorotDeepSparseRectifier2011} to introduce non-linearities to the network.
 
@@ -377,29 +377,29 @@ Recall from earlier chapters, that the encoder stacks multiple Transformer block
 
 As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connections around each sublayer, whereby the output of the sublayer is added element-wisely to its input. Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sublayer and thereby reach deeper layers within the stack. Also, vanishing or \glspl{exploding-gradient} are mitigated, as gradients can bypass the sublayer, eventually contributing towards an easier optimization \autocite[][3591]{liuRethinkingSkipConnection2020}. Residual connections moreover help to preserve the positional embeddings (see \cref{sec:positional-encoding}), as the layer's inputs are maintained in the identity mapping. Another technique to improve the training behaviour is layer normalization.
 
-\textcite[][3]{vaswaniAttentionAllYou2017} extensively draw on layer normalization \autocite[][4]{baLayerNormalization2016} after the multi-headed attention and feed-forward sublayers. It is used for normalizing the activations of the sublayer and to stabilize and accelerate the training of the network \autocite[][2]{baLayerNormalization2016}. For the Transformer, the normalization statistics are calculated separately for every instance, which guarantees scalability across different batch sizes. For a vector $\boldsymbol{e}\in \mathbb{R}^{d_e}$ the normalized output is given by
+\textcite[][3]{vaswaniAttentionAllYou2017} extensively draw on layer normalization \autocite[][4]{baLayerNormalization2016} after the multi-headed attention and feed-forward sublayers. It is used for normalizing the activations of the sublayer and to stabilize and accelerate the training of the network \autocite[][2]{baLayerNormalization2016}. For the Transformer, the normalization statistics are calculated separately for every instance, which guarantees scalability across different batch sizes. For a vector $\gls{e}\in \mathbb{R}^{d_e}$ the normalized output is given by
 \begin{equation}
-  \widehat{\boldsymbol{e}}=\frac{\boldsymbol{e}-m}{\sqrt{v}} \odot \boldsymbol{\gamma}+\boldsymbol{\beta},
+\widehat{\gls{e}}=\frac{\gls{e}-m}{\sqrt{v}} \odot \boldsymbol{\gamma}+\boldsymbol{\beta},
 \end{equation}
-calculated from the statistics $m = \sum_{i=1}^{d_{e}} \boldsymbol{e}[i] / d_{e}$ and $v = \sum_{i=1}^{d_{e}}(\boldsymbol{e}[i]-m)^2 / d_{e}$. Typically, the scale $\gamma$ and bias $\beta$ are set to preserve a zero mean and unit variance.
+calculated from the statistics $m = \sum_{i=1}^{d_{e}} \gls{e}\left[i\right] / d_{e}$ and $v = \sum_{i=1}^{d_{e}}(\gls{e}\left[i\right]-m)^2 / d_{e}$. Typically, the scale $\gamma$ and bias $\beta$ are set to preserve a zero mean and unit variance.
 
 Until now it remains unclear, how the layer normalization intertwines with the sublayers and the residual connections. Transformers are distinguished by the order in which layer normalization is added into the pre-norm and post-norm Transformer.
 \begin{figure}[ht]
-  \hfill
-  \subfloat[Post-Norm Residual Unit\label{fig:post-norm-residual}]{
-    {\renewcommand\normalsize{\footnotesize}%
-        \normalsize
-        \input{./Graphs/post-norm.pdf_tex}}
-  }
-  \hfill
-  \subfloat[Pre-Norm Residual Unit\label{fig:pre-norm-residual}]{
-    {\renewcommand\normalsize{\footnotesize}%
-        \normalsize
-        \input{./Graphs/pre-norm.pdf_tex}}
-  }
-  \hfill\null
-  \caption[Pre-norm residual unit and post-norm residual unit]{Examples of pre-norm residual unit and post-norm residual unit. Own work inspired by \textcite[][2]{wangLearningDeepTransformer2019}.}
-  \label{fig:norm-residual}
+\hfill
+\subfloat[Post-Norm Residual Unit\label{fig:post-norm-residual}]{
+{\renewcommand\normalsize{\footnotesize}%
+\normalsize
+\input{./Graphs/post-norm.pdf_tex}}
+}
+\hfill
+\subfloat[Pre-Norm Residual Unit\label{fig:pre-norm-residual}]{
+{\renewcommand\normalsize{\footnotesize}%
+\normalsize
+\input{./Graphs/pre-norm.pdf_tex}}
+}
+\hfill\null
+\caption[Pre-norm residual unit and post-norm residual unit]{Examples of pre-norm residual unit and post-norm residual unit. Own work inspired by \textcite[][2]{wangLearningDeepTransformer2019}.}
+\label{fig:norm-residual}
 \end{figure}
 
 Post-norm Transformers add layer normalization to the sublayer \emph{after} adding the input from the residual connections. The arrangement is depicted in \cref{fig:post-norm-residual}. In contrast for the pre-norm Transformer, the normalization is applied \emph{before} the self-attention and feed-forward sublayers and inside the residual connections. Pre-norm requires one additional normalization layer to pass only well-conditioned outputs from the Transformer block to the successive layers \autocite[][5]{xiongLayerNormalizationTransformer2020}. The setup is depicted in \cref{fig:pre-norm-residual}.
@@ -411,45 +411,45 @@ Post-norm Transformers add layer normalization to the sublayer \emph{after} addi
 Many of the concepts in \cref{sec:transformer-networks} can be adapted to the tabular domain and only minor architectural changes are necessary. We cover two state-of-the-art adaptations: the TabTransformer of \textcite[][2]{huangTabTransformerTabularData2020} and the FT-Transformer of \textcite[][4]{gorishniyRevisitingDeepLearning2021} that extend the classical Transformer.
 
 \begin{figure}[ht]
-  \hfill
-  \subfloat[Architecture of the TabTransformer.\label{fig:tabtransformer}]{
-    {\renewcommand\normalsize{\scriptsize}
-        \normalsize
-        \input{./Graphs/tabtransformer.pdf_tex}}
-  }
-  \hfill
-  \subfloat[Architecture of the FT-Transformer.\label{fig:fttransformer}]{
-    {\renewcommand\normalsize{\scriptsize}
-        \normalsize
-        \input{./Graphs/fttransformer.pdf_tex}}
-  }
-  \hfill\null
-  \caption[Comparison Between Tabular Transformer.]{Comparison between the TabTransformer and the FT-Transformer. The TabTransformer features a post-norm Transformer to process categorical features. The FT-Transformer uses a pre-norm arrangement and operates on continuous and categorical embeddings. Own work inspired by \textcites[][2]{huangTabTransformerTabularData2020}[][4--5]{gorishniyRevisitingDeepLearning2021}.}
-  \label{fig:tabular-transformer}
+\hfill
+\subfloat[Architecture of the TabTransformer.\label{fig:tabtransformer}]{
+{\renewcommand\normalsize{\scriptsize}
+\normalsize
+\input{./Graphs/tabtransformer.pdf_tex}}
+}
+\hfill
+\subfloat[Architecture of the FT-Transformer.\label{fig:fttransformer}]{
+{\renewcommand\normalsize{\scriptsize}
+\normalsize
+\input{./Graphs/fttransformer.pdf_tex}}
+}
+\hfill\null
+\caption[Comparison Between Tabular Transformer.]{Comparison between the TabTransformer and the FT-Transformer. The TabTransformer features a post-norm Transformer to process categorical features. The FT-Transformer uses a pre-norm arrangement and operates on continuous and categorical embeddings. Own work inspired by \textcites[][2]{huangTabTransformerTabularData2020}[][4--5]{gorishniyRevisitingDeepLearning2021}.}
+\label{fig:tabular-transformer}
 \end{figure}
 Both architectures are depicted in \cref{fig:tabtransformer} and \cref{fig:fttransformer}, respectively. They share an encoder-only architecture, but are distinct concerning their embedding strategy and layer arrangement, as we explain in the subsequent chapters.
 
 \subsubsection{TabTransformer}\label{sec:tabtransformer}
 
-TabTransformer of \textcite[][4]{huangTabTransformerTabularData2020} adapts the classical Transformer to the tabular domain to increase performance as well as robustness to noise and missing data over conventional deep learning approaches. In a post-norm encoder, the embeddings of categorical features are contextualized, while numerical inputs are processed as scalars. The former are normalized using layer norm, concatenated with the contextual embeddings, and passed through a \gls{MLP}. More specifically, \textcite[][4--12]{huangTabTransformerTabularData2020} use a \gls{FFN} with two hidden layers, whilst other architectures are possible. For strictly numerical inputs, the model collapses to a \gls{MLP} with layer normalization. The joint architecture is depicted in \cref{fig:tabtransformer}.
+The TabTransformer of \textcite[][4]{huangTabTransformerTabularData2020} adapts the classical Transformer to the tabular domain to increase performance as well as robustness to noise and missing data over conventional deep learning approaches. Inputs are processed in two ways. In a post-norm encoder, the embeddings of categorical features are contextualized, while numerical inputs are processed as scalars. The former are normalized using layer norm, concatenated with the contextual embeddings, and passed through a \gls{MLP}. More specifically, \textcite[][4--12]{huangTabTransformerTabularData2020} use a \gls{FFN} with two hidden layers, whilst other architectures are possible. For strictly numerical inputs, the model collapses to a \gls{MLP} with layer normalization. The joint architecture is depicted in \cref{fig:tabtransformer}.
 
-Categorical must be embedded first, to be accessible in the encoder. The embedding approach of \textcite[][3]{huangTabTransformerTabularData2020} is dichotomous and extends our observations from \cref{sec:token-embeddings}. The embedding consists of a \emph{feature-specific embedding} and a \emph{shared embedding}. The \emph{feature-specific embedding}, uniquely identifies each category. It is queried with an integer key $c_j \in C_j \cong\left[N_{\mathrm{C_j}}\right]$ from the embedding matrix $W_j \in \mathbb{R}^{e_d \times N_{C_j}}$ of the respective categorical column $j$~\footnote{The split across different embedding matrices is only \emph{logically}. Additional embeddings may be created, which affects the dimensionality of the embedding metric. Similar to special tokens in the vocabulary, like the $\texttt{[UNK]}$ token for handing out-of-vocabulary items, an additional category can be reserved for unseen categories. I.~e., \textcite[][10]{huangTabTransformerTabularData2020} use a separate embedding for missing categories.}. Similar to \cref{sec:token-embeddings}, a previous label encoding must be employed, that maps each category to its unique integer keys.
+Categorical must be embedded first, to be accessible in the encoder. The embedding approach of \textcite[][3]{huangTabTransformerTabularData2020} is dichotomous and extends our observations from \cref{sec:token-embeddings}. It consists of a \emph{feature-specific embedding} and a \emph{shared embedding}. The \emph{feature-specific embedding}, uniquely identifies each category. Embeddings are queried with an integer key $c_j \in C_j \cong\left[N_{\mathrm{C_j}}\right]$ from the embedding matrix $\boldsymbol{W}_j \in \mathbb{R}^{e_d \times N_{C_j}}$ of the respective categorical column $j$~\footnote{The split between separate embedding matrices is only \emph{logically}. Additional embeddings may be created, which affects the dimensionality of the embedding metric. Similar to special tokens in the vocabulary, like the $\texttt{[UNK]}$ token for handing out-of-vocabulary items, a category can be reserved for unseen categories. \textcite[][10]{huangTabTransformerTabularData2020} use a separate embedding for missing categories.}. Similar to \cref{sec:token-embeddings}, a previous label encoding must be employed, that maps each category to its unique integer key.
 
-Besides feature-specific embedding, a \emph{shared embedding} is learned. This embedding is equal for all categories of one feature and is combined with the feature-specific embeddings to enable the model to distinguish classes in one column from those in other columns \autocite[][10]{huangTabTransformerTabularData2020}. It may be added or concatenated. For the variant that adds the shared embedding element-wisely, the embedding matrix $W_S$ is of dimension $\mathbb{R}^{e_e \times m}$. Overall, the joint embedding of $x_j$ is given by:
+Besides feature-specific embedding, a \emph{shared embedding} is learned. This embedding is equal for all categories of one feature and is combined with the feature-specific embeddings to enable the model to distinguish classes in one column from those in other columns \autocite[][10]{huangTabTransformerTabularData2020}. It may be added or concatenated. For the variant that adds the shared embedding element-wisely, the embedding matrix $\boldsymbol{W}_S$ is of dimension $\mathbb{R}^{d_e \times m}$. Overall, the joint embedding of $x_j$ is given by:
 
 \begin{subequations}
-  \begin{align}
-    e_j = W_j[:c_j] + W_S[:j]\label{eq:tabtransformer-embedding-elementwise} \\
-    \intertext{Alternatively, categorical embeddings can also be concatenated from the feature-specific and shared embeddings. In order to maintain the overall embedding dimension of $d_{e}$, the dimensionality of the feature-specific embedding must be reduced to $d_{e} - \gamma$  and the remaining dimensionality $\gamma$ is attributed to the shared embedding. With the embedding matrices $W_j \in \mathbb{R}^{e_{d} -\gamma \times N_{C_j}}$ and $W_S \in \mathbb{R}^{\gamma \times m}$ , the embedding is now given by:}
-    e_j = \left[W_j[:c_j], W_S[:j]\right]^T.\label{eq:tabtransformer-embedding-concat}
-  \end{align}
+\begin{align}
+\gls{e}_j = \boldsymbol{W}_j[:c_j] + \boldsymbol{W}_S[:j]\label{eq:tabtransformer-embedding-elementwise} \\
+\intertext{Alternatively, categorical embeddings can also be concatenated from the feature-specific and shared embeddings. In order to maintain the overall embedding dimension of $d_{e}$, the dimensionality of the feature-specific embedding must be reduced to $d_{e} - \gamma$and the remaining dimensionality $\gamma$ is attributed to the shared embedding. With the embedding matrices $\boldsymbol{W}_j \in \mathbb{R}^{d_{e} -\gamma \times N_{C_j}}$ and $\boldsymbol{W}_S \in \mathbb{R}^{\gamma \times m}$ , the embedding is now given by:}
+\gls{e}_j = \left[\boldsymbol{W}_j[:c_j], \boldsymbol{W}_S[:j]\right]^T.\label{eq:tabtransformer-embedding-concat}
+\end{align}
 \end{subequations}
 
 Both approaches from \cref{eq:tabtransformer-embedding-elementwise,eq:tabtransformer-embedding-concat}, achieve similar performance experiments of \textcite[][11]{huangTabTransformerTabularData2020}. No additional positional embedding is required, as embeddings are unique per feature.
 
-Analogous to \cref{sec:architectural-overview}, the embedding of each row, or $X = [e_1, \cdots, e_m]$, is subsequently passed through several Transformer layers, ultimately resulting in contextualized embeddings. At the end of the encoder, the contextual embeddings are flattened and concatenated with the numerical features into a ($d_{e}  \times m + c$)-dimensional vector, which serves as input to the \gls{MLP} \autocite[][3]{huangTabTransformerTabularData2020}. Like before, a linear layer and a softmax activation are used to retrieve the class probabilities.
+Analogous to \cref{sec:architectural-overview}, the embedding of each row, or $X = [\gls{e}_1, \cdots, \gls{e}_m]$, is subsequently passed through several Transformer layers, ultimately resulting in contextualized embeddings. At the end of the encoder, the contextual embeddings are flattened and concatenated with the numerical features into a ($d_{e}\times m + c$)-dimensional vector, which is input to a \gls{MLP} \autocite[][3]{huangTabTransformerTabularData2020}. Like before, a linear layer and a softmax activation are used to retrieve the class probabilities of $y$.
 
-However, embedding and contextualizing of only the categorical inputs remains imperfect, as no numerical data is considered in the attention mechanism, and correlations between categorical and numerical features are lost due to the processing in different subnetworks \autocite[][2]{somepalliSAINTImprovedNeural2021}. Also, the robustness to noise is hardly improved for numerical inputs. In a small experimental setup, \textcite[][8]{somepalliSAINTImprovedNeural2021} address this concern for the TabTransformer by also embedding numerical inputs, which leads to a lift in \gls{AUC} by \SI{2.34}{\percent} merely through numerical embedding. Their observation integrates with a wider strand of literature that suggests that models can profit from numerical embeddings, as we derived in \cref{sec:token-embeddings}. To expand on this idea, we introduce the FT-Transformer next.
+However, embedding and contextualizing of only the categorical inputs remains imperfect, as no numerical data is considered in the attention mechanism, and correlations between categorical and numerical features are broken due to the processing in different subnetworks \autocite[][2]{somepalliSAINTImprovedNeural2021}. Also, the robustness to noise is hardly improved for numerical inputs. In a small experimental setup, \textcite[][8]{somepalliSAINTImprovedNeural2021} address this concern for the TabTransformer by also embedding numerical inputs, which leads to a lift in \gls{AUC} by \SI{2.34}{\percent} merely through numerical embedding. Their observation integrates with a wider strand of literature that suggests that models can profit from numerical embeddings, as we derived in \cref{sec:token-embeddings}. To expand on this idea, we introduce the FT-Transformer next.
 
 \subsubsection{FT-Transformer}\label{sec:fttransformer}
 
@@ -462,7 +462,7 @@ However, embedding and contextualizing of only the categorical inputs remains im
 \subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches-1}
 
 \subsection{Extensions to Gradient Boosted
-  Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
+Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
 
 \subsection{Extensions to Transformer (2~p)}\label{sec:extensions-to-transformer}
 
@@ -489,12 +489,12 @@ However, embedding and contextualizing of only the categorical inputs remains im
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 
 \subsubsection{Training of Supervised
-  Models (4~p)}\label{sec:training-of-supervised-models}
+Models (4~p)}\label{sec:training-of-supervised-models}
 
 \textcite[][12]{huangTabTransformerTabularData2020} recommend an overall ratio of $\tfrac{7}{8}$ feature-specific embeddings versus $\tfrac{1}{8}$ shared embeddings.
 
 \subsubsection{Training of Semi-Supervised
-  Models (4~p)}\label{sec:training-of-semi-supervised-models}
+Models (4~p)}\label{sec:training-of-semi-supervised-models}
 
 
 \subsubsection{Hyperparameter Tuning (2~p)}\label{sec:hyperparameter-tuning}
@@ -503,7 +503,7 @@ However, embedding and contextualizing of only the categorical inputs remains im
 \subsection{Evaluation (3~p)}\label{sec:evaluation}
 
 \subsubsection{Feature Importance
-  Measure (2~p)}\label{sec:feature-importance-measure}
+Measure (2~p)}\label{sec:feature-importance-measure}
 
 \textbf{Attention Maps}
 
@@ -511,21 +511,21 @@ In addition to random feature permutation, Transformer-based models offer \emph{
 }. Recall from our discussion on attention (see \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features that the model is paying attention to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in \cref{fig:attention-maps}.
 
 \begin{figure}[ht]
-  \centering
-  \includegraphics{attention-maps.pdf}
-  \caption[Attention Maps]{Attention Maps. Own work.}
-  \label{fig:attention-maps}
+\centering
+\includegraphics{attention-maps.pdf}
+\caption[Attention Maps]{Attention Maps. Own work.}
+\label{fig:attention-maps}
 \end{figure}
 
 In the tabular domain, various approaches have been investigated in the literature to obtain attention from multiple attention heads and transformer blocks. \textcite[][18]{somepalliSAINTImprovedNeural2021} and \textcite[][11]{borisovDeepNeuralNetworks2022} gather attention maps from the first attention layer only, and \textcite[][11]{borisovDeepNeuralNetworks2022} obtain feature attributions by taking the diagonal of the attention matrix $\boldsymbol{A}$ or through column-wise summation. In contrast, \textcite[][10]{gorishniyRevisitingDeepLearning2021} leverage all attention matrices by averaging over multiple transformer blocks, attention heads, and samples to obtain global feature attributions. Given \cref{sec:architectural-overview,sec:attention}, where we emphasized the unique role of attention heads and lower sublayers, both approaches may be myopic, as attention heads may contribute unequally to the result, or as later attention layers are neglected altogether.
 
 While not explored systematically in the tabular domain yet, the rollout attention method of \textcite[][3]{abnarQuantifyingAttentionFlow2020} combines raw attention from multiple layers through recursive matrix multiplication with the weight matrices from attention layers below, as shown in this Equation~\footnote{Notation from adapted from \textcite[][786]{cheferTransformerInterpretabilityAttention2021}.}:
 \begin{equation}
-  \begin{aligned}
-    \hat{\boldsymbol{A}}^{(l)} & =\boldsymbol{I}+\mathbb{E}_h \boldsymbol{A}^{(l)}                                                  \\
-    \operatorname { rollout }  & =\hat{\boldsymbol{A}}^{(1)} \cdot \hat{\boldsymbol{A}}^{(2)} \ldots\cdot\hat{\boldsymbol{A}}^{(L)}
-  \end{aligned}
-  \label{eq:attention-map-rollout}
+\begin{aligned}
+\hat{\boldsymbol{A}}^{(l)} & =\boldsymbol{I}+\mathbb{E}_h \boldsymbol{A}^{(l)}\\
+\operatorname { rollout }& =\hat{\boldsymbol{A}}^{(1)} \cdot \hat{\boldsymbol{A}}^{(2)} \ldots\cdot\hat{\boldsymbol{A}}^{(L)}
+\end{aligned}
+\label{eq:attention-map-rollout}
 \end{equation}
 
 In each layer the raw attention scores $\boldsymbol{A}^{(l)}$ are averaged over $h$ heads, denoted by $\mathbb{E}_h$. The identity matrix $\boldsymbol{I}$ is added to account for the residual connections (\cref{sec:residual-connections-layer-norm}). While rollout attention considers all attention layers in the calculation of feature attributions, it does not consider a signal and attributes equal weights to all attention heads \autocite[][786]{cheferTransformerInterpretabilityAttention2021}.
@@ -533,11 +533,11 @@ In each layer the raw attention scores $\boldsymbol{A}^{(l)}$ are averaged over 
 In an attempt to explain the decision-making process of multi-modal Transformers, including self-attention-based Transformers, \textcite[][3]{cheferTransformerInterpretabilityAttention2021} incorporate gradients to weight the head's contribution when averaging over the heads of a layer, as shown in \cref{eq:attention-map-weighted}. Like before, all attention layers are considered.
 
 \begin{equation}
-  \begin{aligned}
-    \bar{\boldsymbol{A}}^{(l)} & =I+ \mathbb{E}_h\left(\left(\nabla \boldsymbol{A}^{(l)} \odot \boldsymbol{A}^{(l)}\right)^{+}\right) \\
-    \operatorname {w\_rollout} & =\bar{\boldsymbol{A}}^{(1)} \cdot \bar{\boldsymbol{A}}^{(2)} \ldots \cdot \bar{\boldsymbol{A}}^{(L)}
-  \end{aligned}
-  \label{eq:attention-map-weighted}
+\begin{aligned}
+\bar{\boldsymbol{A}}^{(l)} & =I+ \mathbb{E}_h\left(\left(\nabla \boldsymbol{A}^{(l)} \odot \boldsymbol{A}^{(l)}\right)^{+}\right) \\
+\operatorname {w\_rollout} & =\bar{\boldsymbol{A}}^{(1)} \cdot \bar{\boldsymbol{A}}^{(2)} \ldots \cdot \bar{\boldsymbol{A}}^{(L)}
+\end{aligned}
+\label{eq:attention-map-weighted}
 \end{equation}
 
 In this approach, the element-wise product between the gradient of the attention map $\nabla \boldsymbol{A}^{(l)}=\frac{\partial y_t}{\partial \boldsymbol{A}}$ for the model's target class $t$ and the attention map $\boldsymbol{A}^{(l)}$ is calculated to weight the attention head's importance. As previously suggested in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. Like all other presented approaches \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and is therefore computationally efficient.
@@ -552,10 +552,10 @@ The next chapter discusses different metrics to assess the prediction quality of
 \section{Results (12~p)}\label{sec:results}
 
 \subsection{Results of Supervised
-  Models (2~p)}\label{sec:results-of-supervised-models}
+Models (2~p)}\label{sec:results-of-supervised-models}
 
 \subsection{Results of Semi-Supervised
-  Models (2~p)}\label{sec:results-of-semi-supervised-models}
+Models (2~p)}\label{sec:results-of-semi-supervised-models}
 
 \subsection{Robustness of Results (3~p)}\label{sec:robustness-checks}
 
