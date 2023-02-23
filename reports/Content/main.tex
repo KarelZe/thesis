@@ -243,7 +243,7 @@ The trend towards sophisticated, hybrid rules, combining as many as four base ru
 
 \subsection{Gradient Boosted Trees (2~p)}\label{sec:gradient-boosted-trees}
 
-\subsubsection{Decision Tree (0.5~p)}\label{sec:decision-tree}
+\subsubsection{Decision Tree}\label{sec:decision-tree}
 
 Decision trees can be used in classification and regression. Counterintuitive to our initial problem framing of trade classification as a probabilistic classification task in \cref{sec:selection-of-approaches}, the focus is on regression trees only, as it is the prevailing prediction model used within the gradient boosting algorithm \autocite[][9]{friedmanAdditiveLogisticRegression2000}. The ensemble method later adapts to classification.
 
@@ -433,7 +433,7 @@ Both architectures are depicted in \cref{fig:tabtransformer} and \cref{fig:fttra
 
 The TabTransformer of \textcite[][4]{huangTabTransformerTabularData2020} adapts the classical Transformer to the tabular domain to increase performance as well as robustness to noise and missing data over conventional deep learning approaches. Inputs are processed in two ways. In a post-norm encoder, the embeddings of categorical features are contextualized, while numerical inputs are processed as scalars. The former are normalized using layer norm, concatenated with the contextual embeddings, and passed through a \gls{MLP}. More specifically, \textcite[][4--12]{huangTabTransformerTabularData2020} use a \gls{FFN} with two hidden layers, whilst other architectures are possible. For strictly numerical inputs, the model collapses to a \gls{MLP} with layer normalization. The joint architecture is depicted in \cref{fig:tabtransformer}.
 
-Categorical must be embedded first, to be accessible in the encoder. The embedding approach of \textcite[][3]{huangTabTransformerTabularData2020} is dichotomous and extends our observations from \cref{sec:token-embeddings}. It consists of a \emph{feature-specific embedding} and a \emph{shared embedding}. The \emph{feature-specific embedding}, uniquely identifies each category. Embeddings are queried with an integer key $c_j \in C_j \cong\left[N_{\mathrm{C_j}}\right]$ from the embedding matrix $\boldsymbol{W}_j \in \mathbb{R}^{e_d \times N_{C_j}}$ of the respective categorical column $j$~\footnote{The split between separate embedding matrices is only \emph{logically}. Additional embeddings may be created, which affects the dimensionality of the embedding metric. Similar to special tokens in the vocabulary, like the $\texttt{[UNK]}$ token for handing out-of-vocabulary items, a category can be reserved for unseen categories. \textcite[][10]{huangTabTransformerTabularData2020} use a separate embedding for missing categories.}. Similar to \cref{sec:token-embeddings}, a previous label encoding must be employed, that maps each category to its unique integer key.
+Categorical must be embedded first, to be accessible in the encoder. The embedding approach of \textcite[][3]{huangTabTransformerTabularData2020} is dichotomous and extends our observations from \cref{sec:token-embeddings}. It consists of a \emph{feature-specific embedding} and a \emph{shared embedding}. The \emph{feature-specific embedding}, uniquely identifies each category. Embeddings are queried with an integer key $c_j \in C_j \cong\left[N_{\mathrm{C_j}}\right]$ from the embedding matrix $\boldsymbol{W}_j \in \mathbb{R}^{d_e \times N_{C_j}}$ of the respective categorical column $j$~\footnote{The split between separate embedding matrices is only \emph{logically}. Additional embeddings may be created, which affects the dimensionality of the embedding metric. Similar to special tokens in the vocabulary, like the $\texttt{[UNK]}$ token for handing out-of-vocabulary items, a category can be reserved for unseen categories. \textcite[][10]{huangTabTransformerTabularData2020} use a separate embedding for missing categories.}. Similar to \cref{sec:token-embeddings}, a previous label encoding must be employed, that maps each category to its unique integer key.
 
 Besides feature-specific embedding, a \emph{shared embedding} is learned. This embedding is equal for all categories of one feature and is combined with the feature-specific embeddings to enable the model to distinguish classes in one column from those in other columns \autocite[][10]{huangTabTransformerTabularData2020}. It may be added or concatenated. For the variant that adds the shared embedding element-wisely, the embedding matrix $\boldsymbol{W}_S$ is of dimension $\mathbb{R}^{d_e \times m}$. Overall, the joint embedding of $x_j$ is given by:
 
@@ -453,8 +453,27 @@ However, embedding and contextualizing of only the categorical inputs remains im
 
 \subsubsection{FT-Transformer}\label{sec:fttransformer}
 
+TabTransformer is limited by the ability to process only categorical embeddings in the Transformer unit. \textcite[][5]{gorishniyRevisitingDeepLearning2021} propose with FT-Transformer a competing architecture, that pairs an embedding unit for both numerical and categorical inputs, dubbed the feature tokenizer, with a Transformer. The complete architecture is depicted in \cref{fig:fttransformer}. Notably, the Transformer units use a pre-norm setup for easier optimization, whereby the very first normalization layer in the encoder is removed due to a propitious performance \textcite[][17]{gorishniyRevisitingDeepLearning2021}. The upstream feature tokenizer transforms all features of $\boldsymbol{x}$ to their embeddings. If the $j$-th feature, $x_j$, is numerical, it is projected to its embedding $\gls{e}_j \in \mathbb{R}^{d_e}$ by element-wise multiplication with a learned vector $\boldsymbol{W}_j \in \mathbb{R}^{d_{e}}$. Moreover, a feature-dependent bias term $\boldsymbol{b}_j \in \mathbb{R}$ is added, as noted in \cref{eq:numerical-embeddings-ft}.
 
+\begin{subequations}
+\begin{align}
+\gls{e}_j= \boldsymbol{W}_j x_j +\boldsymbol{b}_j\label{eq:numerical-embeddings-ft}\\
+\intertext{For categorical inputs, the embedding is implemented as a lookup table, analogous to \cref{sec:token-embeddings}. The specific embeddings $\gls{e}_j$ are queried with a unique integer key $c_j \in C_j \cong\left[N_{\mathrm{C_j}}\right]$ from the learned embedding matrix $\boldsymbol{W}_j \in \mathbb{R}^{d_e \times N_{C_j}}$. Finally, a feature-specific bias term $\boldsymbol{b}_j$ is added as shown in \cref{eq:categorical-embeddings-ft}.}
+\gls{e}_{j}=\boldsymbol{W}_j[:c_j] +\boldsymbol{b}_j
+\label{eq:categorical-embeddings-ft}
+\end{align}
+\end{subequations}
 
+Recall from our discussion on self-attention (see \cref{sec:attention}), that each token encodes the tokens within the sequence. Based on this notion, \textcite[][4174]{devlinBERTPretrainingDeep2019} prepend a specialized $\texttt{[CLS]}$ token to the sequence, which stores the sequence's aggregate representation. Like any other token, the $\texttt{[CLS]}$ token is embedded first and contextualized in the encoder. Its final hidden state is then used for classification. \textcite[][4]{gorishniyRevisitingDeepLearning2021} adapt the idea of a $\texttt{[CLS]}$ token for tabular representation models. Similar to the embeddings of categorical or continuous features, the embedding of the $[\texttt{CLS}]$ token $\gls{e}_\texttt{[CLS]} \in \mathbb{R}^{d_{e}}$ is prepended to the column embeddings with $\gls{X} = \left[\gls{e}_\texttt{[CLS]}, \gls{e}_1, \gls{e}_2, \ldots \gls{e}_{n}\right]$, where $\gls{X} \in \mathbb{R}^{d_{e} \times n +1}$. Like before, $\gls{X}$ is passed through a stack of Transformer layers. The updated representation of the $\texttt{[CLS]}$ token is used exclusively for prediction:
+\begin{equation}
+P=\texttt{linear}\left(\texttt{ReLU}\left(\texttt{layer\_norm}\left(\gls{X}\left[:,0\right]\right)\right)\right).
+\label{eq:bert-ft}
+\end{equation}
+% TODO: Add softmax, think about ReLU
+
+\textcite[][8]{gorishniyRevisitingDeepLearning2021} achieve state-of-the-art performance through numerical and categorical embeddings. Embedding both categorical and continuous inputs enables the Transformer to attend to all other features, but at an increase in computational cost, that may only be justified by higher classification accuracies. While the linear embedding of continuous inputs from \cref{eq:numerical-embeddings-ft} is conceptually simple, later works of \textcite[][8]{gorishniyEmbeddingsNumericalFeatures2022} suggests, that more sophisticated periodic embeddings or piece-wise-linear embeddings, can further improve the model's performance for classification tasks. This idea has not yet been widely adopted by the research community, we focus on linear embeddings instead.
+
+In the subsequent section, extend all previous models including FT-Transformer for learning on partially labelled data.
 
 \newpage
 \section{Semi-Supervised Approaches (8~p)}\label{sec:semi-supervised-approaches}
