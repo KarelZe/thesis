@@ -1,3 +1,5 @@
+eschews data leakage problems
+
 - https://www.coursera.org/learn/machine-learning-projects#syllabus
 
 - see for split etc [[@raschkaModelEvaluationModel2020]]
