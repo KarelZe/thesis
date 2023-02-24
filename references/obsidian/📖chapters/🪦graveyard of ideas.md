@@ -1,3 +1,8 @@
+## Embeddings
+
+
+
+
 ## Transformer
 
 At times we fall back to the Transformer for machine translations, to develop a deeper understanding of the architecture and its components.
