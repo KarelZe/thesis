@@ -2,6 +2,8 @@
 
 - for analysis on CBOE data set see [[@easleyOptionVolumeStock1998]]. Could adapt their analysis of the trade times etc. for my own sample.
 
+Why? Avoids data leakage: “Exploratory Data Analysis (EDA) can be a powerful tool for identifying leakage. EDA [Tukey 1977] is the good practice of getting more intimate with the raw data, examining it through basic and interpretable visualization or statistical tools. Prejudice free and methodological, this kind of examination can expose leakage as patterns in the data that are surprising.” (Kaufman et al., 2012, p. 165)
+“On the very practical side, a good starting point for EDA is to look for any form of unexpected data properties. Common giveaways are found in identifiers, matching (or inconsistent matching) of identifiers (i.e., sample selection biases), surprises in distributions (spikes in densities of continuous values), and finally suspicious order in supposedly random data.” (Kaufman et al., 2012, p. 165)
 
 - compare against [[@coxExploratoryDataAnalysis2017]]
 - explain why we look just into the training set

@@ -3,3 +3,5 @@
 - https://mindfulmodeler.substack.com/p/shap-is-not-all-you-need
 
 - Zachary C Lipton. 2016. The mythos of model interpretability. arXiv preprint arXiv:1606.03490 (difference between transparency and interpretability)
+
+- for feature importance in finance see also [[@lopezdepradoAdvancesFinancialMachine2018]] p. 118 etc.
