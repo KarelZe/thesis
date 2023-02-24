@@ -427,7 +427,8 @@ Many of the concepts in \cref{sec:transformer-networks} can be adapted to the ta
 \caption[Comparison Between Tabular Transformer.]{Comparison between the TabTransformer and the FT-Transformer. The TabTransformer features a post-norm Transformer to process categorical features. The FT-Transformer uses a pre-norm arrangement and operates on continuous and categorical embeddings. Own work inspired by \textcites[][2]{huangTabTransformerTabularData2020}[][4--5]{gorishniyRevisitingDeepLearning2021}.}
 \label{fig:tabular-transformer}
 \end{figure}
-Both architectures are depicted in \cref{fig:tabtransformer} and \cref{fig:fttransformer}, respectively. They share an encoder-only architecture, but are distinct concerning their embedding strategy and layer arrangement, as we explain in the subsequent chapters.
+
+\cref{fig:tabular-transformer} provides a visual summary of both Transformer architectures, which we discuss in the following chapters.
 
 \subsubsection{TabTransformer}\label{sec:tabtransformer}
 
@@ -504,6 +505,13 @@ Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
 \subsubsection{Feature Engineering (1.5~p)}\label{sec:feature-engineering}
 
 \subsubsection{Train-Test Split (0.5~p)}\label{sec:train-test-split}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{train-test-split.pdf}
+    \caption[Training Schemes]{Training Schemes. Own work.}
+    \label{fig:train-test-split}
+\end{figure}
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 
