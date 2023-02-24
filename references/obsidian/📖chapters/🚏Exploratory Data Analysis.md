@@ -27,6 +27,48 @@ Perform EDA e. g., [AutoViML/AutoViz: Automatically Visualize any dataset, any s
 	- Use Weighting. Yes! Exponentially or linearily or date-based. Weights could be used in all models, as a feature or through penelization. CatBoost supports this through `Pool(weight=...)`. For PyTorch one could construct a weight tensor and used it when calculating the loss (https://stackoverflow.com/questions/66374709/adding-custom-weights-to-training-data-in-pytorch).
 
 - Visualize behaviour over time e. g., appearing `ROOT`s and calculate statistics. How many of the clients / percentage are in the train set and how many are just in the test set?
+
+Code vor viz
+```python 
+# from https://matplotlib.org/stable/gallery/lines_bars_and_markers/broken_barh.html
+import matplotlib.pyplot as plt
+
+  
+
+# Horizontal bar plot with gaps
+
+fig, ax = plt.subplots()
+
+ax.broken_barh([(110, 30), (150, 10)], (10, 9), facecolors='tab:blue')
+
+ax.broken_barh([(10, 50), (100, 20), (130, 10)], (20, 9),
+
+               facecolors=('tab:orange', 'tab:green', 'tab:red'))
+
+ax.set_ylim(5, 35)
+
+ax.set_xlim(0, 200)
+
+ax.set_xlabel('seconds since start')
+
+ax.set_yticks([15, 25], labels=['Bill', 'Jim'])     # Modify y-axis tick labels
+
+ax.grid(True)                                       # Make grid lines visible
+
+ax.annotate('race interrupted', (61, 25),
+
+            xytext=(0.8, 0.9), textcoords='axes fraction',
+
+            arrowprops=dict(facecolor='black', shrink=0.05),
+
+            fontsize=16,
+
+            horizontalalignment='right', verticalalignment='top')
+
+  
+
+plt.show()```
+
 ![[uuid_over_time.png]]
 (found at https://www.kaggle.com/competitions/ieee-fraud-detection/discussion/111284)
 
