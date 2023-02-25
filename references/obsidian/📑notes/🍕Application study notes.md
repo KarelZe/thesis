@@ -12,6 +12,8 @@ To see this, assume that the fundamental value of the stock in the example above
 
 - **Why it is important:** 
 - capture true spread faced by traders.
+- - “We define the true transaction cost for a market order as the difference between the average transaction price and the true value of the asset.” (Goettler et al., 2005, p. 2172)
+- When trades are executed inside or outside the posted spread, the quoted spread does no longer represent the true spread for a trader. 
 - “When trades are executed inside the posted bid-ask spread, the posted spread is no longer an accurate measure of transactions costs faced by investors.” (Petersen and Fialkowski, 1994, p. 209)
 - Petersen,M., and D. Fialkowski. "Postedversus Effective Spreads: Good Prices or Bad Quotes?" Journalof FinancialEconomics,35 (1994), 269-292. [[@petersenPostedEffectiveSpreads1994]]
 - “The effective bid-ask spread is one of the most prevalent measures of market illiquidity, used in diverse applications ranging from the evaluation of market structure changes (e.g., Hendershott et al., 2011) and transaction cost measures (e.g., Hasbrouck, 2009), to asset pricing (e.g., Korajczyk and Sadka, 2008), corporate finance (e.g., Fang et al., 2009), and macroeconomics (e.g., Næs et al., 2011).” ([[@hagstromerBiasEffectiveBidask2021]], p. 314)
