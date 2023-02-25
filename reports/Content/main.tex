@@ -30,7 +30,7 @@ In summary, machine learning has been applied successfully in the context of tra
 \newpage
 \section{Rule-Based Approaches}\label{sec:rule-based-approaches}
 
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. Consequently, we denote it by $\gls{y} \in \{0,1\}$, whereby $y=0$ indicates a seller-initiated and $y=1$ a buyer-initiated trade. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. Consequently, we denote it by $\gls{y} \in \{-1,1\}$, whereby $y=-1$ indicates a seller-initiated and $y=1$ a buyer-initiated trade. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
 
 TODO: Write about different views on trade initiator in one sentence. Might be due to technical limitations. Ours is likely similar to Ellis or Theissen -> also Savickas? (found in Peterson and Sirri)
 
@@ -45,11 +45,11 @@ This chapter presents foundational classification rules, that may be used for tr
 The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $\gls{p}_i = \langle p_{i,1},p_{i,2},\dots,p_{i,T}\rangle$ and the corresponding ask at $t$ by $\gls{a}_{i,t}$ and bid by $\gls{b}_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, denoted by $\gls{m}_{i,t} = \tfrac{1}{2}(b_{i,t} + a_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} \neq m_{i,t}\right\}$ is given by:
 
 \begin{equation}
-\operatorname{quote}\colon D \to \left\{0, 1\right\},\quad
+\operatorname{quote}\colon D \to \left\{-1, 1\right\},\quad
 \operatorname{quote}(i, t)=
 \begin{cases}
-0, & \text{if}\ p_{i, t}>m_{i, t}\\
-1, & \text{if}\ p_{i, t}<m_{i, t}. \\
+1,  & \text{if}\ p_{i, t}>m_{i, t}\\
+-1, & \text{if}\ p_{i, t}<m_{i, t}. \\
 \end{cases}
 \end{equation}
 
@@ -62,13 +62,13 @@ The quote rule requires both price and quote data, which affects the data effici
 
 \subsubsection{Tick Test}\label{sec:tick-test}
 
-A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test, $\operatorname{tick}\colon \mathbb{N}^2 \to \left\{0,1\right\}$, is defined as:
+A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test, $\operatorname{tick}\colon \mathbb{N}^2 \to \left\{-1, 1\right\}$, is defined as:
 
 \begin{equation}
 \operatorname{tick}(i, t)=
 \begin{cases}
 1, & \text{if}\ t=1 \lor p_{t}>p_{t-1} \\
-0, & \text{if}\ p_{i, t} < p_{i, t-1}\\
+-1,  & \text{if}\ p_{i, t} < p_{i, t-1}\\
 \operatorname{tick}(i, t-1), & \text{else}.
 \end{cases}
 \label{eq:tick-test}
@@ -78,13 +78,13 @@ Considering the cases in \cref{eq:tick-test} the trade price is higher than the 
 
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
 
-The reverse tick test, $\operatorname{rtick} \colon \mathbb{N}^2 \to \left\{0, 1\right\}$, is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
+The reverse tick test, $\operatorname{rtick} \colon \mathbb{N}^2 \to \left\{-1, 1\right\}$, is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
 
 \begin{equation}
 \operatorname{rtick}(i, t)=
 \begin{cases}
 1,& \text{if}\ t+1=T \lor p_{i, t} > p_{i, t+1} \\
-0,& \text{if}\ p_{i, t} < p_{i, t+1}\\
+-1,  & \text{if}\ p_{i, t} < p_{i, t+1}\\
 \operatorname{rtick}(i, t+1), & \text{else}
 \end{cases}
 \label{eq:reverse-tick-test}
@@ -99,18 +99,18 @@ In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe hi
 \subsubsection{Depth Rule}\label{sec:depth-rule}
 
 TODO: These proxies have in common that they factor in the order book imbalance the relative depth quoted at the best bid and ask prices. If traders care about transaction costs, the relatively wide ask-side spread deters buyers, whereas the tight bid-side spread may attract sellers. There are then more traders submitting market orders at the bid side, and the true effective spread is, on average, smaller than the average midpoint effective spread.
-TODO: Derive in greater detail why orderbook imblance makes sense! See my notes from Hagströmer
+TODO: Derive in greater detail why orderbook imbalance makes sense! See my notes from Hagströmer
 
 As \cref{sec:quote-rule} unveils, the tick rule yields significantly lower success rates than the quote rule. For midspread trades, that otherwise cannot be classified by the advantageous quote rule, \textcite[][14]{grauerOptionTradeClassification2022} propose the depth rule.
 
 The depth rule infers the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity at one trade side, trades are classified as a buy (sell) for a larger ask (bid) size \autocite[][14]{grauerOptionTradeClassification2022}.
 
-Let $\gls{a-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{b-tilde}_{i,t}$ of the bid, and $\gls{p-tilde}_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} = \gls{m}_{i,t} \land \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \right\}$. The depth rule, $\operatorname{depth} \colon D \to \left\{0,1\right\}$, is now defined as:
+Let $\gls{a-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{b-tilde}_{i,t}$ of the bid, and $\gls{p-tilde}_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} = \gls{m}_{i,t} \land \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \right\}$. The depth rule, $\operatorname{depth} \colon D \to \left\{-1, 1\right\}$, is now defined as:
 \begin{equation}
 \operatorname{depth}(i, t)=
 \begin{cases}
-0, & \text{if}\ \tilde{a}_{i,t} < \tilde{b}_{i,t} \land p_{i, t} = m_{i, t}\\
 1, & \text{if}\ \tilde{a}_{i,t} > \tilde{b}_{i,t} \land p_{i, t} = m_{i, t}. \\
+-1,  & \text{if}\ \tilde{a}_{i,t} < \tilde{b}_{i,t} \land p_{i, t} = m_{i, t} \\
 \end{cases}
 \label{eq:depth-rule}
 \end{equation}
@@ -121,12 +121,12 @@ Like the quote rule, the depth rule has additional dependencies on quote data. D
 
 \subsubsection{Trade Size Rule}\label{sec:trade-size-rule}
 
-As \cref{sec:tick-test} derives, quote-based approaches are generally preferred due to their stronger performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $D = \left\{(i, t) \in \mathbb{N}^2: \tilde{p}_{i,t} = \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \lor \tilde{p}_{i,t} \neq\tilde{a}_{i,t} = \tilde{b}_{i,t} \right\}$ the trade size rule, $\operatorname{tsize} \colon D \to \left\{0,1\right\}$, is defined as:
+As \cref{sec:tick-test} derives, quote-based approaches are generally preferred due to their stronger performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $D = \left\{(i, t) \in \mathbb{N}^2: \tilde{p}_{i,t} = \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \lor \tilde{p}_{i,t} \neq\tilde{a}_{i,t} = \tilde{b}_{i,t} \right\}$ the trade size rule, $\operatorname{tsize} \colon D \to \left\{-1, 1\right\}$, is defined as:
 \begin{equation}
 \operatorname{tsize}(i, t)=
 \begin{cases}
 1, & \text{if}\ \tilde{p}_{i, t} = \tilde{b}_{i, t} \neq \tilde{a}_{i, t}\\
-0, & \text{if}\ \tilde{p}_{i, t} = \tilde{a}_{i, t} \neq \tilde{b}_{i, t}. \\
+-1,  & \text{if}\ \tilde{p}_{i, t} = \tilde{a}_{i, t} \neq \tilde{b}_{i, t}. \\
 \end{cases}
 \label{eq:trade-size-rule}
 \end{equation}
@@ -179,10 +179,10 @@ The popular \cgls{LR} algorithm \autocite[][745]{leeInferringTradeDirection1991}
 In combination, the algorithm primarily signs trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified by the tick rule. Overall:
 
 \begin{equation}
-\operatorname{lr} \colon \mathbb{N}^2 \to \left\{0,1\right\}\quad\operatorname{lr}(i,t)=
+\operatorname{lr} \colon \mathbb{N}^2 \to \left\{-1, 1\right\}\quad\operatorname{lr}(i,t)=
 \begin{cases}
 1, & \text{if}\ p_{i, t} > m_{i, t} \\
-0, & \text{if}\ p_{i, t} < m_{i, t} \\
+-1,  & \text{if}\ p_{i, t} < m_{i, t} \\
 \operatorname{tick}(i, t), & \text{else}.
 \end{cases}
 \end{equation}
@@ -198,11 +198,11 @@ TODO: sucess rates are sensitive to trade location.
 
 As such, the \cgls{EMO} algorithm extends the tick rule by classifying trades at the quotes using the quote rule, and all other trades with the tick test. Formally, the classification rule is given by:
 \begin{equation}
-\operatorname{emo} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
+\operatorname{emo} \colon \mathbb{N}^2 \to \left\{-1, 1\right\}, \quad
 \operatorname{emo}(i, t)=
 \begin{cases}
 1, & \text{if}\ p_{i, t} = a_{i, t} \\
-0, & \text{if}\ p_{i, t} = b_{i, t} \\
+-1,  & \text{if}\ p_{i, t} = b_{i, t} \\
 \operatorname{tick}(i, t), & \text{else}.
 \end{cases}
 \label{eq:emo-rule}
@@ -216,11 +216,11 @@ Method}\label{sec:chakarabarty-li-nguyen-van-ness-method}
 Like the previous two algorithms, the \cgls{CLNV} method of \textcite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the \cgls{EMO} rule by a differentiated treatment of trades inside the quotes, which are notoriously hard to classify. The authors segment the bid-ask spread into deciles (ten equal-width bins) and classify trades around the midpoint (\nth{4} to \nth{7} decile) by the tick rule and trades close or outside the quotes are categorized by the tick rule.
 
 \begin{equation}
-\operatorname{clnv} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
+\operatorname{clnv} \colon \mathbb{N}^2 \to \left\{-1, 1\right\}, \quad
 \operatorname{clnv}(i, t)=
 \begin{cases}
 1, & \text{if}\ p_{i, t} \in \left(\frac{3}{10} b_{i,t} + \frac{7}{10} a_{i,t}, a_{i, t}\right] \\
-0, & \text{if}\ p_{i, t} \in \left[ b_{i,t}, \frac{7}{10} b_{i,t} + \frac{3}{10} a_{i,t}\right) \\
+-1,  & \text{if}\ p_{i, t} \in \left[ b_{i,t}, \frac{7}{10} b_{i,t} + \frac{3}{10} a_{i,t}\right) \\
 \operatorname{tick}(i, t), & \text{else}
 \end{cases}
 \label{eq:CLNV-rule}
