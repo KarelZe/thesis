@@ -6,7 +6,7 @@
       {
         "id": "aeb1f3ebc9e06223",
         "type": "tabs",
-        "dimension": 58.98305084745763,
+        "dimension": 42.31257941550191,
         "children": [
           {
             "id": "f35a250acbe1a2dc",
@@ -19,7 +19,7 @@
             }
           },
           {
-            "id": "00542bf949f61a9b",
+            "id": "04a8636560bedded",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -60,7 +60,7 @@
       {
         "id": "90bbdd3c2ee01632",
         "type": "tabs",
-        "dimension": 41.01694915254237,
+        "dimension": 57.68742058449809,
         "children": [
           {
             "id": "dad26e0868f82374",
@@ -75,8 +75,21 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "6c15910a0fa183e1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🍕Application study notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -193,18 +206,19 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "00542bf949f61a9b",
+  "active": "04a8636560bedded",
   "lastOpenFiles": [
     "📑notes/🍕Application study notes.md",
-    "📥Inbox/@petersenPostedEffectiveSpreads1994.md",
     "📖chapters/🍕Application study.md",
+    "📑notes/🍔Layer norm notes.md",
+    "📥Inbox/@leeMarketIntegrationPrice1993.md",
+    "📥Inbox/@petersenPostedEffectiveSpreads1994.md",
     "📥Inbox/@petersonEvaluationBiasesExecution2003.md",
     "📖chapters/🪦graveyard of ideas.md",
     "🖼️Media/effective-spead-options.png",
     "📑notes/🔢Trade Initiator notes.md",
     "📖chapters/🔢Trade initiator.md",
     "📖chapters/🔢Quote rule.md",
-    "📥Inbox/@leeMarketIntegrationPrice1993.md",
     "📑notes/🔢Depth rule notes.md",
     "📥Inbox/@goettlerEquilibriumDynamicLimit2005.md",
     "📥Inbox/@muravyevOptionsTradingCosts2020.md",
@@ -224,7 +238,6 @@
     "📖chapters/🧭Kernel SHAP.md",
     "📥Inbox/@kaufmanLeakageDataMining2012.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
-    "📥Inbox/@raschkaModelEvaluationModel2020.md",
-    "📖chapters/🧭Evaluation metric.md"
+    "📥Inbox/@raschkaModelEvaluationModel2020.md"
   ]
 }
