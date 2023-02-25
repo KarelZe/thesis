@@ -23,7 +23,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🛌Token Embedding.md",
+                "file": "📖chapters/🍕Application study.md",
                 "mode": "source",
                 "source": false
               }
@@ -42,7 +42,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🍕Application study.md",
+                "file": "📑notes/🔢Depth rule notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -185,15 +185,22 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "af8c06eb848ff45e",
+  "active": "00542bf949f61a9b",
   "lastOpenFiles": [
+    "📑notes/🔢Depth rule notes.md",
+    "📖chapters/🍕Application study.md",
+    "📥Inbox/@goettlerEquilibriumDynamicLimit2005.md",
+    "📥Inbox/@muravyevOptionsTradingCosts2020.md",
+    "📥Inbox/@leeMarketIntegrationPrice1993.md",
+    "📖chapters/🛌Token Embedding.md",
+    "📥Inbox/@hagstromerBiasEffectiveBidask2021.md",
+    "🖼️Media/asymmetric-spread.png",
+    "🖼️Media/midpoint-spread.png",
     "📥Inbox/@petersenPostedEffectiveSpreads1994.md",
     "📖chapters/🪦graveyard of ideas.md",
-    "📖chapters/🍕Application study.md",
     "📥Inbox/@petersonEvaluationBiasesExecution2003.md",
     "🖼️Media/eff-spread-finucane.png",
     "📑notes/🛌 Token embeddings notes.md",
-    "📖chapters/🛌Token Embedding.md",
     "📖chapters/💤Embeddings For Tabular Data.md",
     "📖chapters/👨‍🍳Tain-Test-split.md",
     "📑notes/👨‍🍳Train-Test-split notes.md",
@@ -209,9 +216,6 @@
     "📖chapters/🤖FTTransformer.md",
     "📑notes/🤖FTTransformer notes.md",
     "📖chapters/🤖TabTransformer.md",
-    "📖chapters/🍔Layer Norm.md",
-    "📑notes/🤖TabTransformer notes.md",
-    "📑notes/🍔Layer norm notes.md",
-    "📖chapters/🧭Attention Map.md"
+    "📖chapters/🍔Layer Norm.md"
   ]
 }
