@@ -80,6 +80,16 @@
             "id": "6c15910a0fa183e1",
             "type": "leaf",
             "state": {
+              "type": "image",
+              "state": {
+                "file": "🖼️Media/effective-spead-options.png"
+              }
+            }
+          },
+          {
+            "id": "1612067ab86a0a2b",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
                 "file": "📑notes/🍕Application study notes.md",
@@ -89,7 +99,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -210,13 +220,14 @@
   "lastOpenFiles": [
     "📑notes/🍕Application study notes.md",
     "📖chapters/🍕Application study.md",
+    "🖼️Media/effective-spead-options.png",
+    "📥Inbox/@Piwowar_2006.md",
     "📥Inbox/@ellisAccuracyTradeClassification2000.md",
     "📑notes/🍔Layer norm notes.md",
     "📥Inbox/@leeMarketIntegrationPrice1993.md",
     "📥Inbox/@petersenPostedEffectiveSpreads1994.md",
     "📥Inbox/@petersonEvaluationBiasesExecution2003.md",
     "📖chapters/🪦graveyard of ideas.md",
-    "🖼️Media/effective-spead-options.png",
     "📑notes/🔢Trade Initiator notes.md",
     "📖chapters/🔢Trade initiator.md",
     "📖chapters/🔢Quote rule.md",
@@ -236,8 +247,6 @@
     "📖chapters/🚏Exploratory Data Analysis.md",
     "📥Inbox/@lopezdepradoAdvancesFinancialMachine2018.md",
     "📥Inbox/@nagelMachineLearningAsset2021.md",
-    "📖chapters/🧭Kernel SHAP.md",
-    "📥Inbox/@kaufmanLeakageDataMining2012.md",
-    "📖chapters/🍪Selection Of Supervised Approaches.md"
+    "📖chapters/🧭Kernel SHAP.md"
   ]
 }
