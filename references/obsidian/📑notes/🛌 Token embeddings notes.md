@@ -21,6 +21,25 @@ print(cosine_sim)
 ```
 
 
+## Numerical embeddings: Why an how?
+See: https://blog.ayoungprogrammer.com/2018/01/deep-recurrent-neural-networks-for-mathematical-sequence-prediction.html
+Encoding numerical inputs for neural networks is difficult because the representation space is very large and there is no easy way to embed numbers into a smaller space without losing information. Some of the ways to currently handle this is:
+
+-   Scale inputs from minimum and maximum values to [-1, 1]
+-   One hot for each number
+-   One hot for different bins (e.g. [0-0], [1-2], [3-7], [8 – 19], [20, infty])
+
+In small integer number ranges, these methods can work well, but they don’t scale well for wider ranges. In the input scaling approach, precision is lost making it difficult to distinguish between two numbers close in value. For the binning methods, information about the mathematical properties of the numbers such as adjacency and scaling is lost.
+
+The desideratum of our embeddings of numbers to vectors are as follows:
+
+-   able to handle numbers of arbitrary length
+-   captures mathematical relationships between numbers (addition, multiplication, etc.)
+-   able to model sequences of numbers
+
+In this blog post, we will explore a novel approach for embedding numbers as vectors that include these desideratum.
+
+
 ## Notes from Phuong and Hutter
 (see [[@phuongFormalAlgorithmsTransformers2022]])
 ![[token-embedding.png]]
