@@ -32,8 +32,8 @@ In summary, machine learning has been applied successfully in the context of tra
 
 Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. Consequently, we denote it by $\gls{y} \in \{-1,1\}$, whereby $y=-1$ indicates a seller-initiated and $y=1$ a buyer-initiated trade. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
 
-TODO: Write about different views on trade initiator in one sentence. Might be due to technical limitations. Ours is likely similar to Ellis or Theissen -> also Savickas? (found in Peterson and Sirri)
-TODO: We use $\hat{y}$ to distinguish the predicted from the observed trade initiator.
+% TODO: Write about different views on trade initiator in one sentence. Might be due to technical limitations. Ours is likely similar to Ellis or Theissen -> also Savickas? (found in Peterson and Sirri)
+% TODO: We use $\hat{y}$ to distinguish the predicted from the observed trade initiator.
 
 The following section introduces basic rules for option trade classification. We start with the classical quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
@@ -99,8 +99,8 @@ In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe hi
 
 \subsubsection{Depth Rule}\label{sec:depth-rule}
 
-TODO: These proxies have in common that they factor in the order book imbalance the relative depth quoted at the best bid and ask prices. If traders care about transaction costs, the relatively wide ask-side spread deters buyers, whereas the tight bid-side spread may attract sellers. There are then more traders submitting market orders at the bid side, and the true effective spread is, on average, smaller than the average midpoint effective spread.
-TODO: Derive in greater detail why orderbook imbalance makes sense! See my notes from Hagströmer
+% TODO: These proxies have in common that they factor in the order book imbalance the relative depth quoted at the best bid and ask prices. If traders care about transaction costs, the relatively wide ask-side spread deters buyers, whereas the tight bid-side spread may attract sellers. There are then more traders submitting market orders at the bid side, and the true effective spread is, on average, smaller than the average midpoint effective spread.
+% TODO: Derive in greater detail why orderbook imbalance makes sense! See my notes from Hagströmer
 
 As \cref{sec:quote-rule} unveils, the tick rule yields significantly lower success rates than the quote rule. For midspread trades, that otherwise cannot be classified by the advantageous quote rule, \textcite[][14]{grauerOptionTradeClassification2022} propose the depth rule.
 
@@ -171,8 +171,8 @@ The basic trade classification rules from \cref{sec:basic-rules} can be combined
 Popular variants include the \cgls{LR} algorithm, the \cgls{EMO} rule, and the \cgls{CLNV} method. All three algorithms utilize the quote and tick rule to a varying extent, as depicted in \cref{fig:hybrid-lr,fig:hybrid-emo,fig:hybrid-clnv}. Basic rules are selected based on the proximity of the trade price to the quotes. We study all algorithms in detail in \cref{sec:lee-and-ready-algorithm,sec:ellis-michaely-ohara-rule,sec:chakarabarty-li-nguyen-van-ness-method}.
 
 
-TODO: Write "put forth by ..." to avoid redundancy with text below.
-\textcite[][18]{grauerOptionTradeClassification2022} combine basic or hybrid rules through stacking. One such combination is depicted in \cref{fig:hybrid-grauer}. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the primary rules and their ordering. We cover this generic approach last.
+As put forth by \textcite[][18]{grauerOptionTradeClassification2022}, basic or hybrid rules can be combined through stacking. One such combination is depicted in \cref{fig:hybrid-grauer}. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the primary rules and their ordering. We cover this generic approach last.
+
 \subsubsection{Lee and Ready Algorithm}\label{sec:lee-and-ready-algorithm}
 
 The popular \cgls{LR} algorithm \autocite[][745]{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single rule, which is derived from two observations. First, \textcite[][735--743]{leeInferringTradeDirection1991} observe a higher precision of the quote rule over the tick rule, which makes it their preferred choice. Second, by the means of a simple model, the authors demonstrate that the tick test can correctly classify at least \SI{85.0}{\percent} of all midspread trades if the model's assumptions of constant quotes between trades and the arrival of the market and standing orders following a Poisson process are met.
@@ -192,8 +192,6 @@ As the algorithm requires both trade and quote data, it is less data-efficient t
 
 \subsubsection{Ellis-Michaely-O'Hara
 Rule}\label{sec:ellis-michaely-ohara-rule}
-
-TODO: sucess rates are sensitive to trade location.
 
 \textcite[][536]{ellisAccuracyTradeClassification2000} examine the performance of the previous algorithms for stocks traded at \gls{NASDAQ}. By analysing miss-classified trades with regard to the proximity of the trade to the quotes, they observe, that the quote rule and by extension, the \cgls{LR} algorithm, perform particularly well at classifying trades executed at the bid and the ask price but trail the performance of the tick rule for trades inside or outside the spread \autocite[][535--536]{ellisAccuracyTradeClassification2000}. The authors combine these observations into a single rule, known as the \cgls{EMO} algorithm.
 
@@ -226,6 +224,8 @@ Like the previous two algorithms, the \cgls{CLNV} method of \textcite[][3809]{ch
 \end{cases}
 \label{eq:CLNV-rule}
 \end{equation}
+
+% TODO: sucess rates are sensitive to trade location.
 
 The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\cgls{EMO} rule) against the quote rule (\cgls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $b_{i,t}$ and ends at $b_{i,t} + \tfrac{3}{10} (a_{i,t} - b_{i,t}) = \tfrac{7}{10} b_{i,t} + \tfrac{3}{10} a_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \cgls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
 
@@ -516,12 +516,12 @@ Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
 
 \subsubsection{Train-Test Split (0.5~p)}\label{sec:train-test-split}
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics{train-test-split.pdf}
-    \caption[Training Schemes]{Training Schemes. Own work.}
-    \label{fig:train-test-split}
-\end{figure}
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics{train-test-split.pdf}
+%     \caption[Training Schemes]{Training Schemes. Own work.}
+%     \label{fig:train-test-split}
+% \end{figure}
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 
@@ -604,12 +604,12 @@ Models (2~p)}\label{sec:results-of-semi-supervised-models}
 \section{Application in Transaction Cost Estimation}\label{sec:application}
 \subsection{Simulation Setup}\label{sec:simulation-setup}
 \subsection{Simulation Results}\label{sec:simulation-results}
-\begin{table}[H]
-    \centering
-    \input{Content/effective-spread.tex}
-    \caption[Estimated Effective Spread]{Estimated Effective Spread}
-    \label{tab:effective-spread}
-\end{table}
+% \begin{table}[H]
+%     \centering
+%     \input{Content/effective-spread.tex}
+%     \caption[Estimated Effective Spread]{Estimated Effective Spread}
+%     \label{tab:effective-spread}
+% \end{table}
 
 \newpage
 \section{Discussion (3~p)}\label{sec:discussion}

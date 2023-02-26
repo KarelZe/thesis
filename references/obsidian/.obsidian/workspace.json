@@ -131,7 +131,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 399.5110321044922
+    "width": 399.5110321044922,
+    "collapsed": true
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -147,7 +148,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🍕Application study.md",
+                "file": "📑notes/🍕Application study notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -175,7 +176,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🍕Application study.md"
+                "file": "📑notes/🍕Application study notes.md"
               }
             }
           },
@@ -206,10 +207,10 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "04a8636560bedded",
+  "active": "6c15910a0fa183e1",
   "lastOpenFiles": [
-    "📑notes/🍕Application study notes.md",
     "📖chapters/🍕Application study.md",
+    "📑notes/🍕Application study notes.md",
     "📑notes/🍔Layer norm notes.md",
     "📥Inbox/@leeMarketIntegrationPrice1993.md",
     "📥Inbox/@petersenPostedEffectiveSpreads1994.md",
