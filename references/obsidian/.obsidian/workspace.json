@@ -6,7 +6,7 @@
       {
         "id": "aeb1f3ebc9e06223",
         "type": "tabs",
-        "dimension": 49.32203389830509,
+        "dimension": 55.5595798623687,
         "children": [
           {
             "id": "f35a250acbe1a2dc",
@@ -60,7 +60,7 @@
       {
         "id": "90bbdd3c2ee01632",
         "type": "tabs",
-        "dimension": 50.67796610169491,
+        "dimension": 44.44042013763129,
         "children": [
           {
             "id": "dad26e0868f82374",
@@ -131,8 +131,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 399.5110321044922,
-    "collapsed": true
+    "width": 399.5110321044922
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -148,7 +147,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🍕Application study notes.md",
+                "file": "📖chapters/🍕Application study.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -176,7 +175,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🍕Application study notes.md"
+                "file": "📖chapters/🍕Application study.md"
               }
             }
           },
@@ -207,10 +206,11 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "6c15910a0fa183e1",
+  "active": "04a8636560bedded",
   "lastOpenFiles": [
-    "📖chapters/🍕Application study.md",
     "📑notes/🍕Application study notes.md",
+    "📖chapters/🍕Application study.md",
+    "📥Inbox/@ellisAccuracyTradeClassification2000.md",
     "📑notes/🍔Layer norm notes.md",
     "📥Inbox/@leeMarketIntegrationPrice1993.md",
     "📥Inbox/@petersenPostedEffectiveSpreads1994.md",
@@ -238,7 +238,6 @@
     "📥Inbox/@nagelMachineLearningAsset2021.md",
     "📖chapters/🧭Kernel SHAP.md",
     "📥Inbox/@kaufmanLeakageDataMining2012.md",
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
-    "📥Inbox/@raschkaModelEvaluationModel2020.md"
+    "📖chapters/🍪Selection Of Supervised Approaches.md"
   ]
 }

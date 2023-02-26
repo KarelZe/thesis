@@ -603,13 +603,21 @@ Models (2~p)}\label{sec:results-of-semi-supervised-models}
 \newpage
 \section{Application in Transaction Cost Estimation}\label{sec:application}
 \subsection{Simulation Setup}\label{sec:simulation-setup}
+
+Albeit the classification accuracy is a reasonable measure for comparing classifiers, one cannot immediately infer how changes in accuracy e. g., an improvement by \SI{1}{\percent}, affect the application domains. In an attempt to make our results tangible, we apply all algorithms to estimate trading cost, a problem we previously identified to be reliant on correct trade classification (cp. \cref{sec:introduction}) and a common testing ground for trade classification rules \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][569]{finucaneDirectTestMethods2000}[][896--897]{savickasInferringDirectionOption2003}.
+
 \subsection{Simulation Results}\label{sec:simulation-results}
-% \begin{table}[H]
-%     \centering
-%     \input{Content/effective-spread.tex}
-%     \caption[Estimated Effective Spread]{Estimated Effective Spread}
-%     \label{tab:effective-spread}
-% \end{table}
+
+The actual and the estimated effective spreads, as well as the quoted spread, are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimated the effective spreads on a subset of rules for option trades at the \gls{CBOE}, which can be compared against.
+
+\begin{table}[H]
+    \centering
+    \input{Content/effective-spread.tex}
+    \caption[Estimated Effective Spread]{Estimated Effective Spread}
+    \label{tab:effective-spread}
+\end{table}
+
+A $t$-test is used to test if the estimated, effective spread is significantly different from the mean true effective spread / significantly greater than zero at $p=0.01$ \autocite[cp.][570]{finucaneDirectTestMethods2000}. Alternatively compare correlations $\rho$ and medians using the Wilcoxon test with null hypothesis of the equal medians with $p=0.01$ \autocite[cp.][12]{theissenTestAccuracyLee2000}.
 
 \newpage
 \section{Discussion (3~p)}\label{sec:discussion}
