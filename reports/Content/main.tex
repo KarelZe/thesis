@@ -124,6 +124,7 @@ Like the quote rule, the depth rule has additional dependencies on quote data. D
 
 \subsubsection{Trade Size Rule}\label{sec:trade-size-rule}
 
+% TODO: Think about writing as restriction? https://en.wikipedia.org/wiki/Restriction_(mathematics)
 As \cref{sec:tick-test} derives, quote-based approaches are generally preferred due to their stronger performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $D = \left\{(i, t) \in \mathbb{N}^2: \tilde{P}_{i,t} = \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \lor \tilde{P}_{i,t} \neq\tilde{A}_{i,t} = \tilde{B}_{i,t} \right\}$ the trade size rule, $\operatorname{tsize} \colon D \to \left\{-1, 1\right\}$, is defined as:
 \begin{equation}
 \operatorname{tsize}(i, t)=
@@ -250,6 +251,11 @@ The trend towards sophisticated, hybrid rules, combining as many as four base ru
 
 \newpage
 \section{Supervised Approaches (12~p)}\label{sec:supervised-approaches}
+
+All classical trade classification rules from \cref{sec:rule-based-approaches} perform \emph{discrete classification} and assign a class to the trade. Naturally, a more powerful insight is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives additional insights into the confidence of the prediction but calls for a \emph{probabilistic classifier}.
+
+Thus, we frame trade signing as a probabilistic classification problem. This is similar to the work of a \textcite[][272]{easleyDiscerningInformationTrade2016}, who retrieve probabilities from \emph{bulked} versions of the tick rule and \gls{BVC} algorithm, but on a \emph{trade-per-trade} level.
+
 
 \subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches}
 
