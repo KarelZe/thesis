@@ -254,8 +254,14 @@ The trend towards sophisticated, hybrid rules, combining as many as four base ru
 
 All classical trade classification rules from \cref{sec:rule-based-approaches} perform \emph{discrete classification} and assign a class to the trade. Naturally, a more powerful insight is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives additional insights into the confidence of the prediction but calls for a \emph{probabilistic classifier}.
 
-Thus, we frame trade signing as a probabilistic classification problem. This is similar to the work of a \textcite[][272]{easleyDiscerningInformationTrade2016}, who retrieve probabilities from \emph{bulked} versions of the tick rule and \gls{BVC} algorithm, but on a \emph{trade-per-trade} level.
+Thus, we frame trade signing as a probabilistic classification problem. This is similar to the work of a \textcite[][272]{easleyDiscerningInformationTrade2016}, who retrieve probabilities from \emph{bulked} versions of the tick rule and \gls{BVC} algorithm, but on a \emph{trade-per-trade} basis.
 
+Vice versa, for probability estimate $\hat{p}$ we can retrieve the most probable class in $\mathbb{Y}$ as:
+\begin{equation}
+    \hat{y}=\arg\max_{y \in \mathbb{Y}} \hat{p}(y).
+    \label{eq:arg-max-p}
+\end{equation}
+Cref-eq and \cref{eq:arg-max-p} allow us to switch between a discrete and probabilistic formulation for classical rules. Since the class probability estimates are either 0 or 1, no insight is gained into the confidence of the prediction. However, it offers a consistent way of evaluating classical trade classification rules and probabilistic classifiers in machine learning. In the following paragraph, we briefly discuss the selection of state-of-the-art classifiers that we consider for our empirical study.
 
 \subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches}
 
@@ -292,7 +298,7 @@ Thereby, the feature $j$ and value $s$ are selected in a way, that the combined 
 \min _{j, s}\left[\min _{c_1} \sum_{x_i \in R_1(j, s)}\left(y_i-c_1\right)^2+\min _{c_2} \sum_{x_i \in R_2(j, s)}\left(y_i-c_2\right)^2\right].
 \end{equation}
 
-The procedure is repeated on the so-created child nodes. Note that, splits are performed greedily to keep computations tractable. This entails, that only the reduction in \gls{SSE} of the current node is considered, and not the improvement from any subsequent splits in the child nodes. Computational costs may still be high, when there are many split candidates, due to a large feature count or possible split values. Common approximations are to2222 split on quantized features or random feature subsets.
+The procedure is repeated on the so-created child nodes. Note that, splits are performed greedily to keep computations tractable. This entails, that only the reduction in \gls{SSE} of the current node is considered, and not the improvement from any subsequent splits in the child nodes. Computational costs may still be high, when there are many split candidates, due to a large feature count or possible split values. Common approximations are to split on quantized features or random feature subsets.
 % TODO add citations where quantization is used. See ke (gradient boosting paper)
 
 Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample has its region, the tree would achieve a perfect fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence \emph{variance}, size complexity pruning procedures are employed. Likewise, if the decision tree is too simplistic, a high bias contributes to the model's overall expected error. Both extremes are to be avoided.

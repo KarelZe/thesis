@@ -24,15 +24,25 @@
 **Notes:**
 [[🍪Selection of supervised approaches notes]]
 
-Due to the tabular nature of the data, with features arranged in a row-column fashion, the token embedding (see chapter [[🛌Token Embedding]]) is replaced for a *column embedding*. Also the notation needs to be adapted to the tabular domain. We denote the data set with $D:=\left\{\left(\mathbf{x}_k, y_k\right) \right\}_{k=1,\cdots N}$ identified with $\left[N_{\mathrm{D}}\right]:=\left\{1, \ldots, N_{\mathrm{D}}\right\}$.  Each tuple $(\boldsymbol{x}, y)$ represents a row in the data set, and consist of the binary classification target $y \in \mathbb{R}$ and the vector of features $\boldsymbol{x} = \left\{\boldsymbol{x}_{\text{cat}}, \boldsymbol{x}_{\text{cont}}\right\}$, where $x_{\text{cont}} \in \mathbb{R}^c$ denotes all $c$ numerical features and $\boldsymbol{x}_{\text{cat}}\in \mathbb{R}^{m}$ all $m$ categorical features. We denote the cardinality of the $j$-th feature with $j \in 1, \cdots m$ with $N_{C_j}$.
+Formally, an "ordinary" classifier is some rule, or function, that assigns to a sample $x$ a class label $\hat{y}$
+$$
+\hat{y}=f(x)
+$$
+The samples come from some set $X$ (e.g., the set of all documents, or the set of all images), while the class labels form a finite set $Y$ defined prior to training.
+Probabilistic classifiers generalize this notion of classifiers: instead of functions, they are conditional distributions $\operatorname{Pr}(Y \mid X)$, meaning that for a given $x \in X$, they assign probabilities to all $y \in Y$ (and these probabilities sum to one). "Hard" classification can then be done using the optimal decision rule [2]:39-40
+$$
+\hat{y}=\arg \max _y \operatorname{Pr}(Y=y \mid X)
+$$
+or, in English, the predicted class is that which has the highest probability.
+Binary probabilistic classifiers are also called binary regression models in statistics. In econometrics, probabilistic classification in general is called discrete choice.
+
+Some classification models, such as naive Bayes, logistic regression and multilayer perceptrons (when trained under an appropriate loss function) are naturally probabilistic. Other models such as support vector machines are not, but methods exist to tum them into probabilistic classifiers.
 
 
 “We assume the reader is familiar with these concepts. For a complete reference see Hastie et al. [2009]. Let us just lay out our notation and say that in our framework we receive from an axiomatic data preparation stage an ordered set of multivariate observations W = (X , y). y is the outcome or target ordered set with individual elements y. Similarly, X and X are the feature-vector ordered set and element, respectively. Components of feature vectors are individual features, denoted x (ordered set) and x (element). Target and feature-vector elements y and X pertaining to the same element of W are said to be W-associated. The modeler’s goal is to infer the value of a target element, from its associated feature-vector element and from a separate group of observations, called the training examples Wtr. The solution to this problem is a model ˆ y = M(X , Wtr). We say that the model’s observational inputs for inferring ˆ y are X and Wtr, and this relation between the various entities in the framework is the base for our discussion.” ([[@kaufmanLeakageDataMining2012]], p. 158)
 
 Formally, we aim to model a target variable $Y \in \mathbb{Y}$ given some feature vector $X \in \mathbb{X}$ based on training data $\left\{\left(x_i, y_i\right)\right\}_{i=1}^n$ that has been sampled according to the joint distribution of $X$ and $Y$. We focus on models in the form of a single-valued scoring function $f: \mathbb{X} \rightarrow \mathbb{R}$. For instance, in regression problems $(\mathbb{Y}=\mathbb{R}), f$ typically models the conditional expectation of the target, i.e., $f(x) \approx E(Y \mid X=x)$, whereas in binary classification problems $(\mathbb{Y}=\{-1,1\}), f$ ty (found here[[@boleyBetterShortGreedy2021]]; do not cite but like their presentation)
 
-We consider a learning problem with a hidden function $y$ : $\mathcal{X} \subseteq \mathbb{R}^d \rightarrow \mathcal{Y} \subseteq \mathbb{R}$ where we are given a set $X_{\text {train }} \subseteq \mathcal{X}$ and $y_{\text {train }} \in \mathcal{Y}^{X_{\text {train }}}: y_i=y\left(x_i\right)$ and our goal is to come up with a prediction function $\hat{y}: \mathcal{X} \rightarrow \mathbb{R}$ such that $\hat{y}(x)$ is close to $y(x)$ for all $x \in \mathcal{X}$. Many learning tasks can be modeled in this way, by defining a suitable feature representation for the objects of interest and by defining a sensible loss function to measure the closeness of $\hat{y}$ to $y$. A well known way to come up with a function $\hat{y}$ are decision trees and random forests, which we will now introduce.
-https://mlai.cs.uni-bonn.de/publications/welke2021-dsf.pdf
 
 For a given data set with $n$ examples and $m$ features $\mathcal{D}=\left\{\left(\mathbf{x}_i, y_i\right)\right\}\left(|\mathcal{D}|=n, \mathbf{x}_i \in \mathbb{R}^m, y_i \in \mathbb{R}\right)$ to
 
