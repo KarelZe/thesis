@@ -1,3 +1,13 @@
+## Embeddings
+
+
+
+## Applicaton study
+See [[@jurkatisInferringTradeDirections2022]].
+Effective spread calculation. See e. g., [[@ellisAccuracyTradeClassification2000]].
+
+“To give the improvement in classification accuracy more economic meaning, I apply the trade classification methods to the estimation of transaction costs. The transaction costs in turn are used in a portfolio optimization exercise. The results show that an investor with a mean-variance utility function would be willing to forgo up to 33 bps on yearly returns to use the proposed algorithm to estimate transaction costs instead of the LR algorithm.” ([[@jurkatisInferringTradeDirections2022]], 2022, p. 7)
+
 ## Transformer
 
 At times we fall back to the Transformer for machine translations, to develop a deeper understanding of the architecture and its components.

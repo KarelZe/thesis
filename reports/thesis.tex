@@ -50,6 +50,11 @@
 % Depth
 \setcounter{secnumdepth}{3}
 
+% prevent footnotes from being split
+% https://texfaq.org/FAQ-splitfoot
+\interfootnotelinepenalty=10000
+
+
 % --------------------------------- Information on thesis ---------------------------------
 % Please fill in this information once at the beginning. This way, gaps will be filled in automatically in the following.
 \newcommand{\name}{Markus Bilz} % Enter your name.
@@ -134,23 +139,23 @@ bookmarksopen
 % see https://tex.stackexchange.com/questions/347586/symbols-as-glossary-entry-indicators
 %Symbols
 \newglossaryentry{V}{type=symbols,name={\ensuremath{\cong[N_\t{V}]}},sort=V, description={vocabulary}}
-\newglossaryentry{a}{type=symbols,name={\ensuremath{a}},sort=a, description={sequence of ask prices}, unit={\ensuremath{=\langle a_{1},a_{2},\dots,a_{T}\rangle}}}
-\newglossaryentry{b}{type=symbols,name={\ensuremath{b}},sort=b, description={sequence of bid prices}, unit={\ensuremath{=\langle b_{1},b_{2},\dots,b_{T}\rangle}}}
-\newglossaryentry{a-tilde}{type=symbols,name={\ensuremath{\tilde{a}}},sort=a-tilde, description={sequence of ask sizes}, unit={\ensuremath{=\langle \tilde{a}_{1},\tilde{a}_{2},\dots,\tilde{a}_{T}\rangle}}}
-\newglossaryentry{b-tilde}{type=symbols,name={\ensuremath{\tilde{b}}},sort=b-tilde, description={sequence of bid sizes}, unit={\ensuremath{=\langle \tilde{b}_{1},\tilde{b}_{2},\dots,\tilde{b}_{T}\rangle}}}
+\newglossaryentry{A}{type=symbols,name={\ensuremath{A}},sort=A, description={sequence of ask prices}, unit={\ensuremath{=\langle A_{1},A_{2},\dots,A_{T}\rangle}}}
+\newglossaryentry{B}{type=symbols,name={\ensuremath{B}},sort=B, description={sequence of bid prices}, unit={\ensuremath{=\langle B_{1},B_{2},\dots,B_{T}\rangle}}}
+\newglossaryentry{A-tilde}{type=symbols,name={\ensuremath{\tilde{A}}},sort=A-tilde, description={sequence of ask sizes}, unit={\ensuremath{=\langle \tilde{A}_{1},\tilde{A}_{2},\dots,\tilde{A}_{T}\rangle}}}
+\newglossaryentry{B-tilde}{type=symbols,name={\ensuremath{\tilde{B}}},sort=B-tilde, description={sequence of bid sizes}, unit={\ensuremath{=\langle \tilde{B}_{1},\tilde{B}_{2},\dots,\tilde{B}_{T}\rangle}}}
 \newglossaryentry{ell}{type=symbols,name={\ensuremath{d_e}}, sort=ell, description={length of token sequence}, unit={\ensuremath{\in \mathbb{N}}}}
 \newglossaryentry{e}{type=symbols,name={\ensuremath{\boldsymbol{e}}}, sort=e, description={vector representation / embedding of a token}, unit={\ensuremath{\in \mathbb{R}^{d_e}}}}
 \newglossaryentry{d}{type=symbols,name={\ensuremath{d}}, sort=d, description={dimension of a vector}, unit={\ensuremath{\in \mathbb{N}}}}
 \newglossaryentry{ellmax}{type=symbols,name={\ensuremath{\ell_{\max}}},sort=ell-max, description={maximum sequence length}, unit={\ensuremath{\in \mathbb{N}}}}
 \newglossaryentry{h}{type=symbols,name={\ensuremath{h}},sort=h, description={index of attention heads}}
 \newglossaryentry{H}{type=symbols,name={\ensuremath{H}},sort=H, description={number of attention heads}}
-\newglossaryentry{p}{type=symbols,name={\ensuremath{p}},sort=p, description={sequence of trade prices}, unit={\ensuremath{=\langle p_{1},p_{2},\dots,p_{T}\rangle}}}
-\newglossaryentry{p-tilde}{type=symbols,name={\ensuremath{\tilde{p}}},sort=p-tilde, description={sequence of trade sizes}, unit={\ensuremath{=\langle \tilde{p}_{1},\tilde{p}_{2},\dots,\tilde{p}_{T}\rangle}}}
+\newglossaryentry{P}{type=symbols,name={\ensuremath{P}},sort=p, description={sequence of trade prices}, unit={\ensuremath{=\langle P_{1},P_{2},\dots,P_{T}\rangle}}}
+\newglossaryentry{P-tilde}{type=symbols,name={\ensuremath{\tilde{P}}},sort=P-tilde, description={sequence of trade sizes}, unit={\ensuremath{=\langle \tilde{P}_{1},\tilde{P}_{2},\dots,\tilde{P}_{T}\rangle}}}
 \newglossaryentry{L}{type=symbols,name={\ensuremath{L}},sort=L, description={number of layers in the encoder / decoder}, unit={\ensuremath{\in \mathbb{N}}}}
-\newglossaryentry{m}{type=symbols,name={\ensuremath{m}},sort=m, description={sequence of spread midpoints}, unit={\ensuremath{\langle m_{1},m_{2},\dots,m_{T}\rangle}}}
+\newglossaryentry{M}{type=symbols,name={\ensuremath{M}},sort=m, description={sequence of spread midpoints}, unit={\ensuremath{\langle m_{1},m_{2},\dots,m_{T}\rangle}}}
 \newglossaryentry{t}{type=symbols,name={\ensuremath{t}},sort=t, description={index of token in sequence},unit={\ensuremath{\in\left[\ell_{\max }\right]}}}
 \newglossaryentry{x}{type=symbols,name={\ensuremath{x}},sort=x, description={primary token sequence}, unit={\ensuremath{\equiv x[1] x[2] \ldots x[\ell] \in V^{\ell}}}}
-\newglossaryentry{y}{type=symbols,name={\ensuremath{y}},sort=y, description={trade initiator / target}, unit={\ensuremath{\in \{0,1\}}}}
+\newglossaryentry{y}{type=symbols,name={\ensuremath{y}},sort=y, description={trade initiator / target}, unit={\ensuremath{\in \{-1,1\}}}}
 \newglossaryentry{X}{type=symbols,name={\ensuremath{\boldsymbol{X}}},sort=X, description={encoded primary token sequence }, unit={\ensuremath{\in \mathbb{R}^{d_e \times \ell_x}}}}
 
 \newglossarystyle{dotglos}{%

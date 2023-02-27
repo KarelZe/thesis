@@ -5,17 +5,19 @@
 
 \section{Related Work (3~p)}\label{sec:related-work}
 
-\textbf{Trade Classification in Option Markets}
+\subsection{Trade Classification in Option Markets}
+\label{sec:trade-classification-in-option-markets}
 
 While classical trade classification algorithms are extensively tested in the stock markets (e.g., \textcite[][3806--3821]{chakrabartyTradeClassificationAlgorithms2012}; \textcite[][259--286]{odders-whiteOccurrenceConsequencesInaccurate2000}), few works have examined trade classification in option markets.
 
 \textcite[882--883]{savickasInferringDirectionOption2003} were the first to compare the tick rule, quote rule, the Lee and Ready algorithm and the \cgls{EMO} rule for options traded at the \cgls{CBOE}. The data set spans a period from July 3, 1995 -- December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule (\SI{78.98}{\percent}) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
 
-The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}.The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the \cgls{CBOE} and \cgls{ISE} classical rules like the popular Lee and Ready algorithm only achieve accuracies of \SI{62.03}{\percent} or \SI{62.53}{\percent} and are thus significantly smaller than in the stock market. In line with the research of\textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The \emph{depth rule} is an alternative to the tick rule for classifying midspread trades in the Lee and Ready algorithm and \cgls{EMO} rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the \emph{trade size rule}, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing primary rules by more than \SI{10}{\percent}, at the cost of data efficiency.
+The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}. The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the \cgls{CBOE} and \cgls{ISE} classical rules like the popular Lee and Ready algorithm only achieve accuracies of \SI{62.03}{\percent} or \SI{62.53}{\percent} and are thus significantly smaller than in the stock market. In line with the research of \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The \emph{depth rule} is an alternative to the tick rule for classifying midspread trades in the Lee and Ready algorithm and \cgls{EMO} rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the \emph{trade size rule}, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing primary rules by more than \SI{10}{\percent}, at the cost of data efficiency.
 
 The work of \textcite[1--39]{grauerOptionTradeClassification2022} is relevant in two ways. First, the data set is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
 
-\textbf{Trade classification using machine learning}
+\subsection{Trade classification using machine learning}
+\label{sec:trade-classification-using-machine-learning}
 
 \textcite[5]{rosenthalModelingTradeDirection2012} bridges the gap between classical trade classification and machine learning by fitting a logistic regression model on lagged and unlagged predictors inherent to the tick rule, quote rule, and \cgls{EMO} algorithm, as well as a sector-specific and a time-specific term. Instead of using the rule's discretized outcome as a feature, he models the rules through so-called information strength functions \textcite[481--482]{rosenthalModelingTradeDirection2012}. The proximity to the quotes, central to the \cgls{EMO} algorithm, is thus modelled by a proximity function. Likewise, the information strength of the quote and tick rule is estimated as the log return between the trade price and the midpoint or the previous trade price. However, it only improves the accuracy of the \cgls{EMO} algorithm by a marginal \SI{2}{\percent} for \gls{NASDAQ} stocks and \SI{1.1}{\percent} for \cgls{NYSE} stocks \autocite[15]{rosenthalModelingTradeDirection2012}. Our work aims to improve the model by exploring non-linear estimators and minimizing data modelling assumptions.
 
@@ -30,7 +32,10 @@ In summary, machine learning has been applied successfully in the context of tra
 \newpage
 \section{Rule-Based Approaches}\label{sec:rule-based-approaches}
 
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. Consequently, we denote it by $\gls{y} \in \{0,1\}$, whereby $y=0$ indicates a seller-initiated and $y=1$ a buyer-initiated trade. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. Consequently, we denote it by $\gls{y} \in \{-1,1\}$, whereby $y=-1$ indicates a seller-initiated and $y=1$ a buyer-initiated trade. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
+
+% TODO: Write about different views on trade initiator in one sentence. Might be due to technical limitations. Ours is likely similar to Ellis or Theissen -> also Savickas? (found in Peterson and Sirri)
+% TODO: We use $\hat{y}$ to distinguish the predicted from the observed trade initiator.
 
 The following section introduces basic rules for option trade classification. We start with the classical quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
@@ -40,18 +45,18 @@ This chapter presents foundational classification rules, that may be used for tr
 
 \subsubsection{Quote Rule}\label{sec:quote-rule}
 
-The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $\gls{p}_i = \langle p_{i,1},p_{i,2},\dots,p_{i,T}\rangle$ and the corresponding ask at $t$ by $\gls{a}_{i,t}$ and bid by $\gls{b}_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, denoted by $\gls{m}_{i,t} = \tfrac{1}{2}(b_{i,t} + a_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} \neq m_{i,t}\right\}$ is given by:
+The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $\gls{P}_i = \langle P_{i,1},P_{i,2},\dots,P_{i,T}\rangle$ and the corresponding ask at $t$ by $\gls{A}_{i,t}$ and bid by $\gls{B}_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, denoted by $\gls{M}_{i,t} = \tfrac{1}{2}(B_{i,t} + A_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $D = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} \neq M_{i,t}\right\}$ is given by:
 
 \begin{equation}
-\operatorname{quote}\colon D \to \left\{0, 1\right\},\quad
+\operatorname{quote}\colon D \to \left\{-1, 1\right\},\quad
 \operatorname{quote}(i, t)=
 \begin{cases}
-0, & \text{if}\ p_{i, t}>m_{i, t}\\
-1, & \text{if}\ p_{i, t}<m_{i, t}. \\
+1,  & \text{if}\ P_{i, t}>M_{i, t}\\
+-1, & \text{if}\ P_{i, t}<M_{i, t}. \\
 \end{cases}
 \end{equation}
 
-By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing midspread trades including ones based on the subsequent quotes, and contemporaneous, or the subsequent transaction. Yet, the most common approach to overcome this limitation is, coupling the quote rule with other approaches, as done in \cref{sec:hybrid-rules}
+By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing midspread trades including ones based on the subsequent quotes, and contemporaneous, or the subsequent transaction. Yet, the most common approach to overcome this limitation is, coupling the quote rule with other approaches, as done in \cref{sec:hybrid-rules}.
 
 The quote rule requires matching one bid and ask quote with each trade based on a timestamp. Due to the finite resolution of the dataset's timestamps and active markets, multiple quote changes can co-occur at the time of the trade, some of which, may logically be after the trade. As such, it remains unclear which quote to consider in trade classification, and a quote timing technique must be employed. Empirically, the most common choice is to use the last quote in the order of the time increment (e.g., second) before the trade \autocite[][1765]{holdenLiquidityMeasurementProblems2014}.
 
@@ -60,13 +65,13 @@ The quote rule requires both price and quote data, which affects the data effici
 
 \subsubsection{Tick Test}\label{sec:tick-test}
 
-A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test, $\operatorname{tick}\colon \mathbb{N}^2 \to \left\{0,1\right\}$, is defined as:
+A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test, $\operatorname{tick}\colon \mathbb{N}^2 \to \left\{-1, 1\right\}$, is defined as:
 
 \begin{equation}
 \operatorname{tick}(i, t)=
 \begin{cases}
-1, & \text{if}\ t=1 \lor p_{t}>p_{t-1} \\
-0, & \text{if}\ p_{i, t} < p_{i, t-1}\\
+1, & \text{if}\ t=1 \lor P_{t}>P_{t-1} \\
+-1,  & \text{if}\ P_{i, t} < P_{i, t-1}\\
 \operatorname{tick}(i, t-1), & \text{else}.
 \end{cases}
 \label{eq:tick-test}
@@ -76,13 +81,13 @@ Considering the cases in \cref{eq:tick-test} the trade price is higher than the 
 
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
 
-The reverse tick test, $\operatorname{rtick} \colon \mathbb{N}^2 \to \left\{0, 1\right\}$, is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
+The reverse tick test, $\operatorname{rtick} \colon \mathbb{N}^2 \to \left\{-1, 1\right\}$, is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
 
 \begin{equation}
 \operatorname{rtick}(i, t)=
 \begin{cases}
-1,& \text{if}\ t+1=T \lor p_{i, t} > p_{i, t+1} \\
-0,& \text{if}\ p_{i, t} < p_{i, t+1}\\
+1,& \text{if}\ t+1=T \lor P_{i, t} > P_{i, t+1} \\
+-1,  & \text{if}\ P_{i, t} < P_{i, t+1}\\
 \operatorname{rtick}(i, t+1), & \text{else}
 \end{cases}
 \label{eq:reverse-tick-test}
@@ -96,16 +101,19 @@ In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe hi
 
 \subsubsection{Depth Rule}\label{sec:depth-rule}
 
+% TODO: These proxies have in common that they factor in the order book imbalance the relative depth quoted at the best bid and ask prices. If traders care about transaction costs, the relatively wide ask-side spread deters buyers, whereas the tight bid-side spread may attract sellers. There are then more traders submitting market orders at the bid side, and the true effective spread is, on average, smaller than the average midpoint effective spread.
+% TODO: Derive in greater detail why orderbook imbalance makes sense! See my notes from Hagströmer
+
 As \cref{sec:quote-rule} unveils, the tick rule yields significantly lower success rates than the quote rule. For midspread trades, that otherwise cannot be classified by the advantageous quote rule, \textcite[][14]{grauerOptionTradeClassification2022} propose the depth rule.
 
 The depth rule infers the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity at one trade side, trades are classified as a buy (sell) for a larger ask (bid) size \autocite[][14]{grauerOptionTradeClassification2022}.
 
-Let $\gls{a-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{b-tilde}_{i,t}$ of the bid, and $\gls{p-tilde}_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $D = \left\{(i, t) \in \mathbb{N}^2: p_{i,t} = \gls{m}_{i,t} \land \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \right\}$. The depth rule, $\operatorname{depth} \colon D \to \left\{0,1\right\}$, is now defined as:
+Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t}$ of the bid, and $\gls{P-tilde}_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $D = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} = \gls{M}_{i,t} \land \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \right\}$. The depth rule, $\operatorname{depth} \colon D \to \left\{-1, 1\right\}$, is now defined as:
 \begin{equation}
 \operatorname{depth}(i, t)=
 \begin{cases}
-0, & \text{if}\ \tilde{a}_{i,t} < \tilde{b}_{i,t} \land p_{i, t} = m_{i, t}\\
-1, & \text{if}\ \tilde{a}_{i,t} > \tilde{b}_{i,t} \land p_{i, t} = m_{i, t}. \\
+1, & \text{if}\ \tilde{A}_{i,t} > \tilde{B}_{i,t} \land P_{i, t} = M_{i, t}. \\
+-1,  & \text{if}\ \tilde{A}_{i,t} < \tilde{B}_{i,t} \land P_{i, t} = M_{i, t} \\
 \end{cases}
 \label{eq:depth-rule}
 \end{equation}
@@ -116,19 +124,19 @@ Like the quote rule, the depth rule has additional dependencies on quote data. D
 
 \subsubsection{Trade Size Rule}\label{sec:trade-size-rule}
 
-As \cref{sec:tick-test} derives, quote-based approaches are generally preferred due to their stronger performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $D = \left\{(i, t) \in \mathbb{N}^2: \tilde{p}_{i,t} = \tilde{a}_{i,t} \neq \tilde{b}_{i,t} \lor \tilde{p}_{i,t} \neq\tilde{a}_{i,t} = \tilde{b}_{i,t} \right\}$ the trade size rule, $\operatorname{tsize} \colon D \to \left\{0,1\right\}$, is defined as:
+As \cref{sec:tick-test} derives, quote-based approaches are generally preferred due to their stronger performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $D = \left\{(i, t) \in \mathbb{N}^2: \tilde{P}_{i,t} = \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \lor \tilde{P}_{i,t} \neq\tilde{A}_{i,t} = \tilde{B}_{i,t} \right\}$ the trade size rule, $\operatorname{tsize} \colon D \to \left\{-1, 1\right\}$, is defined as:
 \begin{equation}
 \operatorname{tsize}(i, t)=
 \begin{cases}
-1, & \text{if}\ \tilde{p}_{i, t} = \tilde{b}_{i, t} \neq \tilde{a}_{i, t}\\
-0, & \text{if}\ \tilde{p}_{i, t} = \tilde{a}_{i, t} \neq \tilde{b}_{i, t}. \\
+1, & \text{if}\ \tilde{P}_{i, t} = \tilde{B}_{i, t} \neq \tilde{A}_{i, t}\\
+-1,  & \text{if}\ \tilde{P}_{i, t} = \tilde{A}_{i, t} \neq \tilde{B}_{i, t}. \\
 \end{cases}
 \label{eq:trade-size-rule}
 \end{equation}
 
-The trade size rule in \cref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{p}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the contemporaneous bid or ask, with a trade size equalling the quoted size \autocite[][13]{grauerOptionTradeClassification2022}. When both the size of the ask and bid correspond with the trade size, the result is ambiguous.
+The trade size rule in \cref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{P}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the contemporaneous bid or ask, with a trade size equalling the quoted size \autocite[][13]{grauerOptionTradeClassification2022}. When both the size of the ask and bid correspond with the trade size, the result is ambiguous.
 
-\textcite[][13]{grauerOptionTradeClassification2022} obtain an accuracy of \SI{79.92}{\percent} for the subset of option trades at the\cgls{ISE} (\SI{22.3}{\percent} of all trades) that can be signed using the methodology, which elevates the performance by \SI{11}{\percent} for the entire sample. Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \autocite[][15]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades inside or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces four hybrid algorithms, that combine basic rules into more sophisticated algorithms.
+\textcite[][13]{grauerOptionTradeClassification2022} obtain an accuracy of \SI{79.92}{\percent} for the subset of option trades at the \cgls{ISE} (\SI{22.3}{\percent} of all trades) that can be signed using the methodology, which elevates the performance by \SI{11}{\percent} for the entire sample. Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \autocite[][15]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades inside or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces four hybrid algorithms, that combine basic rules into more sophisticated algorithms.
 
 \subsection{Hybrid Rules}\label{sec:hybrid-rules}
 
@@ -164,7 +172,9 @@ The basic trade classification rules from \cref{sec:basic-rules} can be combined
 
 Popular variants include the \cgls{LR} algorithm, the \cgls{EMO} rule, and the \cgls{CLNV} method. All three algorithms utilize the quote and tick rule to a varying extent, as depicted in \cref{fig:hybrid-lr,fig:hybrid-emo,fig:hybrid-clnv}. Basic rules are selected based on the proximity of the trade price to the quotes. We study all algorithms in detail in \cref{sec:lee-and-ready-algorithm,sec:ellis-michaely-ohara-rule,sec:chakarabarty-li-nguyen-van-ness-method}.
 
-\textcite[][18]{grauerOptionTradeClassification2022} combine basic or hybrid rules through stacking. One such combination is depicted in \cref{fig:hybrid-grauer}. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the primary rules and their ordering. We cover this generic approach last.
+
+As put forth by \textcite[][18]{grauerOptionTradeClassification2022}, basic or hybrid rules can be combined through stacking. One such combination is depicted in \cref{fig:hybrid-grauer}. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the primary rules and their ordering. We cover this generic approach last.
+
 \subsubsection{Lee and Ready Algorithm}\label{sec:lee-and-ready-algorithm}
 
 The popular \cgls{LR} algorithm \autocite[][745]{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single rule, which is derived from two observations. First, \textcite[][735--743]{leeInferringTradeDirection1991} observe a higher precision of the quote rule over the tick rule, which makes it their preferred choice. Second, by the means of a simple model, the authors demonstrate that the tick test can correctly classify at least \SI{85.0}{\percent} of all midspread trades if the model's assumptions of constant quotes between trades and the arrival of the market and standing orders following a Poisson process are met.
@@ -172,10 +182,10 @@ The popular \cgls{LR} algorithm \autocite[][745]{leeInferringTradeDirection1991}
 In combination, the algorithm primarily signs trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified by the tick rule. Overall:
 
 \begin{equation}
-\operatorname{lr} \colon \mathbb{N}^2 \to \left\{0,1\right\}\quad\operatorname{lr}(i,t)=
+\operatorname{lr} \colon \mathbb{N}^2 \to \left\{-1, 1\right\}\quad\operatorname{lr}(i,t)=
 \begin{cases}
-1, & \text{if}\ p_{i, t} > m_{i, t} \\
-0, & \text{if}\ p_{i, t} < m_{i, t} \\
+1, & \text{if}\ P_{i, t} > M_{i, t} \\
+-1,  & \text{if}\ P_{i, t} < M_{i, t} \\
 \operatorname{tick}(i, t), & \text{else}.
 \end{cases}
 \end{equation}
@@ -189,17 +199,17 @@ Rule}\label{sec:ellis-michaely-ohara-rule}
 
 As such, the \cgls{EMO} algorithm extends the tick rule by classifying trades at the quotes using the quote rule, and all other trades with the tick test. Formally, the classification rule is given by:
 \begin{equation}
-\operatorname{emo} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
+\operatorname{emo} \colon \mathbb{N}^2 \to \left\{-1, 1\right\}, \quad
 \operatorname{emo}(i, t)=
 \begin{cases}
-1, & \text{if}\ p_{i, t} = a_{i, t} \\
-0, & \text{if}\ p_{i, t} = b_{i, t} \\
+1, & \text{if}\ P_{i, t} = A_{i, t} \\
+-1,  & \text{if}\ P_{i, t} = B_{i, t} \\
 \operatorname{tick}(i, t), & \text{else}.
 \end{cases}
 \label{eq:emo-rule}
 \end{equation}
 
-\Cref{eq:emo-rule} embeds both the quote and tick rule. As trades off the quotes are classified by the tick rule, the algorithm's overall success rate is dominated by the tick test assuming most trades are off-the-quotes. For option markets \autocites[cp.][891]{savickasInferringDirectionOption2003}[][21]{grauerOptionTradeClassification2022} this dependence causes the performance to lag behind quote-based approaches, contrary to the successful adaption in the stock market \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][3818]{chakrabartyTradeClassificationAlgorithms2007}. \textcite[][31--35]{grauerOptionTradeClassification2022} improve the classification accuracy for option trades by applying the reverse tick test as a proxy for the tick test.
+\Cref{eq:emo-rule} embeds both the quote and tick rule. As trades off the quotes are classified by the tick rule, the algorithm's overall success rate is dominated by the tick test assuming most trades are off-the-quotes. For option markets \autocites[cp.][891]{savickasInferringDirectionOption2003}[][21]{grauerOptionTradeClassification2022} this dependence causes the performance to lag behind quote-based approaches, contrary to the successful adaption in the stock market \autocites[][541]{ellisAccuracyTradeClassification2000}[][3818]{chakrabartyTradeClassificationAlgorithms2007}. \textcite[][31--35]{grauerOptionTradeClassification2022} improve the classification accuracy for option trades by applying the reverse tick test as a proxy for the tick test.
 
 \subsubsection{Chakrabarty-Li-Nguyen-Van-Ness
 Method}\label{sec:chakarabarty-li-nguyen-van-ness-method}
@@ -207,17 +217,19 @@ Method}\label{sec:chakarabarty-li-nguyen-van-ness-method}
 Like the previous two algorithms, the \cgls{CLNV} method of \textcite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the \cgls{EMO} rule by a differentiated treatment of trades inside the quotes, which are notoriously hard to classify. The authors segment the bid-ask spread into deciles (ten equal-width bins) and classify trades around the midpoint (\nth{4} to \nth{7} decile) by the tick rule and trades close or outside the quotes are categorized by the tick rule.
 
 \begin{equation}
-\operatorname{clnv} \colon \mathbb{N}^2 \to \left\{0, 1 \right\}, \quad
+\operatorname{clnv} \colon \mathbb{N}^2 \to \left\{-1, 1\right\}, \quad
 \operatorname{clnv}(i, t)=
 \begin{cases}
-1, & \text{if}\ p_{i, t} \in \left(\frac{3}{10} b_{i,t} + \frac{7}{10} a_{i,t}, a_{i, t}\right] \\
-0, & \text{if}\ p_{i, t} \in \left[ b_{i,t}, \frac{7}{10} b_{i,t} + \frac{3}{10} a_{i,t}\right) \\
+1, & \text{if}\ P_{i, t} \in \left(\frac{3}{10} B_{i,t} + \frac{7}{10} A_{i,t}, A_{i, t}\right] \\
+-1,  & \text{if}\ P_{i, t} \in \left[ B_{i,t}, \frac{7}{10} B_{i,t} + \frac{3}{10} A_{i,t}\right) \\
 \operatorname{tick}(i, t), & \text{else}
 \end{cases}
 \label{eq:CLNV-rule}
 \end{equation}
 
-The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\cgls{EMO} rule) against the quote rule (\cgls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $b_{i,t}$ and ends at $b_{i,t} + \tfrac{3}{10} (a_{i,t} - b_{i,t}) = \tfrac{7}{10} b_{i,t} + \tfrac{3}{10} a_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \cgls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
+% TODO: sucess rates are sensitive to trade location.
+
+The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\cgls{EMO} rule) against the quote rule (\cgls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \cgls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
 
 \subsubsection{Stacked Rule}\label{sec:stacked-rule}
 
@@ -274,7 +286,7 @@ Thereby, the feature $j$ and value $s$ are selected in a way, that the combined 
 \min _{j, s}\left[\min _{c_1} \sum_{x_i \in R_1(j, s)}\left(y_i-c_1\right)^2+\min _{c_2} \sum_{x_i \in R_2(j, s)}\left(y_i-c_2\right)^2\right].
 \end{equation}
 
-The procedure is repeated on the so-created child nodes. Note that, splits are performed greedily to keep computations tractable. This entails, that only the reduction in \gls{SSE} of the current node is considered, and not the improvement from any subsequent splits in the child nodes. Computational costs may still be high, when there are many split candidates, due to a large feature count or possible split values. Common approximations are to split on quantized features or random feature subsets.
+The procedure is repeated on the so-created child nodes. Note that, splits are performed greedily to keep computations tractable. This entails, that only the reduction in \gls{SSE} of the current node is considered, and not the improvement from any subsequent splits in the child nodes. Computational costs may still be high, when there are many split candidates, due to a large feature count or possible split values. Common approximations are to2222 split on quantized features or random feature subsets.
 % TODO add citations where quantization is used. See ke (gradient boosting paper)
 
 Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample has its region, the tree would achieve a perfect fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence \emph{variance}, size complexity pruning procedures are employed. Likewise, if the decision tree is too simplistic, a high bias contributes to the model's overall expected error. Both extremes are to be avoided.
@@ -369,13 +381,13 @@ with $\boldsymbol{W}_{\text {mlp } 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times 
 
 \textcite[][9]{vaswaniAttentionAllYou2017} set the hidden dimension to be two to eight magnitudes of the embedding dimension. The large capacity strengthens the model's ability to retain information but also contributes significantly to the high computational requirements and memory footprint of Transformers \autocites[][5]{tayEfficientTransformersSurvey2022}[][1]{kitaevReformerEfficientTransformer2020}. Both linear transformations are separated by a \gls{ReLU} \gls{activation-function} \autocite[][318]{glorotDeepSparseRectifier2011} to introduce non-linearities to the network.
 
-Like the attention layer, the position-wise \gls{FFN} is surrounded by residual connections, followed by layer normalization (see \cref{sec:residual-connections-layer-norm}). Both are vital for the training process and convergence of the overall network, as we show. Optionally, dropout \autocite[][1930]{srivastavaDropoutSimpleWay} is added to prevent the model from \gls{overfitting}.
+Like the attention layer, the position-wise \gls{FFN} is surrounded by residual connections, followed by layer normalization (cp. \cref{sec:residual-connections-layer-norm}). Both are vital for the training process and convergence of the overall network, as we show. Optionally, dropout \autocite[][1930]{srivastavaDropoutSimpleWay} is added to prevent the model from \gls{overfitting}.
 
 \subsubsection{Residual Connections and Layer Normalization}\label{sec:residual-connections-layer-norm}
 
 Recall from earlier chapters, that the encoder stacks multiple Transformer blocks, each of which consists of several sublayers, resulting in a deep network. While depth is inevitable to learn hierarchical representations, the training of such a network is complicated. As neural networks are commonly trained using backpropagation, which relies on the gradient of the error to be propagated through the network starting at the last layer, vanishing or \glspl{exploding-gradient} pose a major difficulty in training deep neural nets \autocite[][1]{heDeepResidualLearning2015}. Without countermeasures, stacking multiple layers in the encoder and decoder of the Transformers impedes the gradient information to flow efficiently through the network and hampers the training behaviour \autocite[][1811]{wangLearningDeepTransformer2019}.
 
-As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connections around each sublayer, whereby the output of the sublayer is added element-wisely to its input. Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sublayer and thereby reach deeper layers within the stack. Also, vanishing or \glspl{exploding-gradient} are mitigated, as gradients can bypass the sublayer, eventually contributing towards an easier optimization \autocite[][3591]{liuRethinkingSkipConnection2020}. Residual connections moreover help to preserve the positional embeddings (see \cref{sec:positional-encoding}), as the layer's inputs are maintained in the identity mapping. Another technique to improve the training behaviour is layer normalization.
+As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connections around each sublayer, whereby the output of the sublayer is added element-wisely to its input. Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sublayer and thereby reach deeper layers within the stack. Also, vanishing or \glspl{exploding-gradient} are mitigated, as gradients can bypass the sublayer, eventually contributing towards an easier optimization \autocite[][3591]{liuRethinkingSkipConnection2020}. Residual connections moreover help to preserve the positional embeddings (cp. \cref{sec:positional-encoding}), as the layer's inputs are maintained in the identity mapping. Another technique to improve the training behaviour is layer normalization.
 
 \textcite[][3]{vaswaniAttentionAllYou2017} extensively draw on layer normalization \autocite[][4]{baLayerNormalization2016} after the multi-headed attention and feed-forward sublayers. It is used for normalizing the activations of the sublayer and to stabilize and accelerate the training of the network \autocite[][2]{baLayerNormalization2016}. For the Transformer, the normalization statistics are calculated separately for every instance, which guarantees scalability across different batch sizes. For a vector $\gls{e}\in \mathbb{R}^{d_e}$ the normalized output is given by
 \begin{equation}
@@ -465,7 +477,7 @@ TabTransformer is limited by the ability to process only categorical embeddings 
 \end{align}
 \end{subequations}
 
-Recall from our discussion on self-attention (see \cref{sec:attention}), that each token encodes the tokens within the sequence. Based on this notion, \textcite[][4174]{devlinBERTPretrainingDeep2019} prepend a specialized $\texttt{[CLS]}$ token to the sequence, which stores the sequence's aggregate representation. Like any other token, the $\texttt{[CLS]}$ token is embedded first and contextualized in the encoder. Its final hidden state is then used for classification. \textcite[][4]{gorishniyRevisitingDeepLearning2021} adapt the idea of a $\texttt{[CLS]}$ token for tabular representation models. Similar to the embeddings of categorical or continuous features, the embedding of the $[\texttt{CLS}]$ token $\gls{e}_\texttt{[CLS]} \in \mathbb{R}^{d_{e}}$ is prepended to the column embeddings with $\gls{X} = \left[\gls{e}_\texttt{[CLS]}, \gls{e}_1, \gls{e}_2, \ldots \gls{e}_{n}\right]$, where $\gls{X} \in \mathbb{R}^{d_{e} \times n +1}$. Like before, $\gls{X}$ is passed through a stack of Transformer layers. The updated representation of the $\texttt{[CLS]}$ token is used exclusively for prediction:
+Recall from our discussion on self-attention (cp. \cref{sec:attention}), that each token encodes the tokens within the sequence. Based on this notion, \textcite[][4174]{devlinBERTPretrainingDeep2019} prepend a specialized $\texttt{[CLS]}$ token to the sequence, which stores the sequence's aggregate representation. Like any other token, the $\texttt{[CLS]}$ token is embedded first and contextualized in the encoder. Its final hidden state is then used for classification. \textcite[][4]{gorishniyRevisitingDeepLearning2021} adapt the idea of a $\texttt{[CLS]}$ token for tabular representation models. Similar to the embeddings of categorical or continuous features, the embedding of the $[\texttt{CLS}]$ token $\gls{e}_\texttt{[CLS]} \in \mathbb{R}^{d_{e}}$ is prepended to the column embeddings with $\gls{X} = \left[\gls{e}_\texttt{[CLS]}, \gls{e}_1, \gls{e}_2, \ldots \gls{e}_{n}\right]$, where $\gls{X} \in \mathbb{R}^{d_{e} \times n +1}$. Like before, $\gls{X}$ is passed through a stack of Transformer layers. The updated representation of the $\texttt{[CLS]}$ token is used exclusively for prediction:
 \begin{equation}
 P=\texttt{linear}\left(\texttt{ReLU}\left(\texttt{layer\_norm}\left(\gls{X}\left[:,0\right]\right)\right)\right).
 \label{eq:bert-ft}
@@ -506,12 +518,12 @@ Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
 
 \subsubsection{Train-Test Split (0.5~p)}\label{sec:train-test-split}
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics{train-test-split.pdf}
-    \caption[Training Schemes]{Training Schemes. Own work.}
-    \label{fig:train-test-split}
-\end{figure}
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics{train-test-split.pdf}
+%     \caption[Training Schemes]{Training Schemes. Own work.}
+%     \label{fig:train-test-split}
+% \end{figure}
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 
@@ -535,7 +547,7 @@ Measure (2~p)}\label{sec:feature-importance-measure}
 \textbf{Attention Maps}
 
 In addition to random feature permutation, Transformer-based models offer \emph{some} interpretability through their attention mechanism~\footnote{One has to distinguish interpretability through \emph{explainability} from \emph{transparency} \autocite[][4--5]{liptonMythosModelInterpretability2017}. In recent research a major controversy embarked around the question, of whether attention offers explanations to model predictions \autocites[cp.][150]{bastingsElephantInterpretabilityRoom2020}[][5--7]{jainAttentionNotExplanation2019}[][9]{wiegreffeAttentionNotNot2019}. The debate sparked around opposing definitions of explainability and the consistency of attention scores with other, established feature-importance measures. Our focus is less on post-hoc explainability of the model, but rather on transparency. Consistent with \textcite[][8]{wiegreffeAttentionNotNot2019} we view attention scores as a vehicle to model transparency.
-}. Recall from our discussion on attention (see \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features that the model is paying attention to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in \cref{fig:attention-maps}.
+}. Recall from our discussion on attention (cp. \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features that the model is paying attention to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in \cref{fig:attention-maps}.
 
 \begin{figure}[ht]
 \centering
@@ -569,7 +581,7 @@ In an attempt to explain the decision-making process of multi-modal Transformers
 
 In this approach, the element-wise product between the gradient of the attention map $\nabla \boldsymbol{A}^{(l)}=\frac{\partial y_t}{\partial \boldsymbol{A}}$ for the model's target class $t$ and the attention map $\boldsymbol{A}^{(l)}$ is calculated to weight the attention head's importance. As previously suggested in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. Like all other presented approaches \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and is therefore computationally efficient.
 
-In absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all transformer blocks. Due to the limitation that TabTransformer (see \cref{sec:tabtransformer}) only performs self-attention on categorical features, no feature attributions for numerical features are calculated. The level of agreement between attributions from attention maps and kernel \gls{SHAP} is quantified by calculating Spearman's rank correlation between them.
+In absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all transformer blocks. Due to the limitation that TabTransformer (cp. \cref{sec:tabtransformer}) only performs self-attention on categorical features, no feature attributions for numerical features are calculated. The level of agreement between attributions from attention maps and kernel \gls{SHAP} is quantified by calculating Spearman's rank correlation between them.
 
 The next chapter discusses different metrics to assess the prediction quality of our models.
 
@@ -591,9 +603,46 @@ Models (2~p)}\label{sec:results-of-semi-supervised-models}
 \subsection{Ablation Study of Models (2~p)}\label{sec:ablation-study}
 
 \newpage
-\section{Application in Transaction Cost Estimation (optional)}\label{sec:application}
-\subsection{Simulation Setup (optional)}\label{sec:simulation-setup}
-\subsection{Simulation Results (optional)}\label{sec:simulation-results}
+\section{Application in Transaction Cost Estimation}\label{sec:application}
+\subsection{Simulation Setup}\label{sec:simulation-setup}
+
+% TODO: Make explanation more detailled? See e. g., https://s3.eu-central-1.amazonaws.com/up.raindrop.io/raindrop/files/526/059/341/MAS_Thesis_Mate_Nemes_final_Jan13.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAZWICFKR63DOESPJN%2F20230227%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20230227T054628Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJHMEUCIGh8t4%2BwrZPS53a0v4pmuMrfdSK0byfd6kOZymIodKHYAiEAmLEgZaZOGQnHox0E%2FKUKmzaSoLDsg%2FDOp3wOwqivzasq%2BAMIUxAAGgw2NjYyNjEzNDU0MDUiDER%2BrooXF33LN6%2FviirVA7XUNhcQEGET%2BR%2FFF2TxkIwpnMbB3sUSVe%2B37iVeKehJPZI4PlXs%2BvOrAyydlqpoERgBIRSbjH3otqvC8sSikw%2FOX5bg9RIQNWV988GpA4FiEwUYkck9d46o9X3GZ2ZHHHis7h5ADmBMsEUpRx5P3DkLXxOig7a6tb5%2BNDNExpPcTKaJOLL1CeM4g6dg9czBkZ1mHC6SCpTjQRBym0jndXXAFRpxrnLOG7lRzC1til7wdX9yVe7m8YgAixkTtrN0oZ81%2BunfpqVTs9dQ%2FeaaDkGwUMpdh8PKoG3V8aIKBclaaix%2BXCwkHA%2Fcq%2BbHRY7HDm4eAiZ1leUxvJfX1rx6GR8uP978qrSs3nZvep5aTi3CjeLX1fna%2FX2sE3VZr4xT8cy9vkq%2FpvQIPJ%2BhnYi1v%2BAq6y7g4RjTJmHHEm0nPTvuV0Lk1%2BSIFzYEsh1my8BKHKrr0WEHWYVcPsBNaP37a6fxzxwqJLSEMtEM7Zb%2BDNewrYEdavtiVSQGLob9LfFF3Bobc%2BhCs8xrunkNbJfMsCVBnDGPKFDRKHznBuuZu6SqXaj8bvxu1Q0YMxkImt%2Bi72zRGqUSSSLlKC9MCbbGlBt5b%2FkfCQrzFbL6PHiuZes10hwNoz4wwJTwnwY6pQGavPb2vsjGrOUbaRKmC9iQY5uvJZpHfQMgXMoTWVx58m6eU%2FotzkeDnwSVmZDIA4yu4%2B%2BKoScCFTXEDkULo8NJBITW0kX1zMG7U0sOdC%2B7TfT8VK7%2FsqDC7MjrNCCDvUxcpmCcddA2eR%2BKEn114AG9ZhNewTdGfIu4zV2w%2Bpa1lwalqqQkM5E9zKeI9mENGGtVMEcptjXJcl30O2%2BnkFkuJAxaGa8%3D&X-Amz-Signature=4f206295f4f0b090df3d32382188400b305c79ab9a45a18bbbc79e7824236dc7&X-Amz-SignedHeaders=host
+% TODO: read: Glosten, L. and Harris, L. (1988). Estimating the components of the bid/ask spread.Journal of financial Economics, 21(1):123–142.
+% TODO: read: Ho, T. and Stoll, H. (1981). Optimal dealer pricing under transactions and return uncertainty. Journal of Financial economics, 9(1):47–73.
+% TODO: read: Huang, R. and Stoll, H. (1997). The components of the bid-ask spread: a general approach. Review of Financial Studies, 10(4):995–1034.
+% TODO: read: Roll, R. (2012). A simple implicit measure of the effective bid-ask spread in an efficient market. The Journal of Finance, 39(4):1127–1139.
+% TODO: read: Petrella, G. (2006). Option bid-ask spread and scalping risk: Evidence from a covered warrants market. Journal of Futures Markets, 26(9):843–867.
+% TODO: read: Pinder, S. (2003). An empirical examination of the impact of market microstructure changes on the determinants of option bid–ask spreads. International Review of Financial Analysis, 12(5):563–577.
+
+Albeit the classification accuracy is a reasonable measure for comparing classifiers, one cannot immediately infer how changes in accuracy e.~g., an improvement by \SI{1}{\percent}, affect the application domains. In an attempt to make our results tangible, we apply all algorithms to estimate trading cost, a problem we previously identified to be reliant on correct trade classification (cp. \cref{sec:introduction}) and a common testing ground for trade classification rules \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][569]{finucaneDirectTestMethods2000}[][271--278]{petersonEvaluationBiasesExecution2003}[][896--897]{savickasInferringDirectionOption2003}.
+
+One of the most widely adopted measures for trading costs is the effective spread \autocite[][112]{Piwowar_2006}. It is defined as the difference between the trade price and the fundamental value of the asset \autocite[][238--239]{bessembinderIssuesAssessingTrade2003}. Following \textcite[][238--239]{bessembinderIssuesAssessingTrade2003}, we define the \emph{nominal, effective spread} as
+\begin{equation}
+    S_{i,t} = 2 (P_{i,t} - V_{i,t}) D_{i,t}.
+    \label{eq:effective-spread}
+\end{equation}
+
+Like before, $i$ indexes the security and $t$ denotes the trade. Here, $D_{i,t}$ is the trade direction, which is either $1$ for customer buy orders and $-1$ for customer sell orders. If the trade initiator is known, we set $D_{i,t} = y_{i,t}$ and $D_{i,t}=\hat{y}_{it}$, if inferred from a rule or classifier. As the fundamental value $V_{i,t}$ is unobserved at the time of the trade, we follow a common track in research and use the midpoint of the prevailing quotes as an observable proxy \footnote{An alternative treatment for options is discussed in \textcite[][4975--4976]{muravyevOptionsTradingCosts2020}. Our focus is on the midspread, as it is the most common proxy for the value.}. This is also a natural choice, assuming that, on average, the spread is symmetrical and centred around the true fundamental value \autocite[][1018]{leeMarketIntegrationPrice1993}. We multiply the so-obtained half-spread by $2$ to obtain the effective spread, which represents the cost for a round trip trade involving a buy and sell ex commissions.
+
+Readily apparent from \cref{eq:effective-spread}, poor estimates for the predicted trade direction, lead to an under or over-estimated effective spread, and hence to a skewed trade cost estimate. By comparing the true effective spread from the estimated, we can derive the economic significance. For convenience, we also calculate the \emph{relative effective spread} as
+\begin{equation}
+    {PS}_{i,t} = S_{i,t} / V_{i,t}.
+\end{equation}
+% TODO check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price?
+The subsequent section estimates both the nominal and relative effective spread for our test sets.
+
+\subsection{Simulation Results}\label{sec:simulation-results}
+
+The actual and the estimated effective spreads, as well as the quoted spread, are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimated the effective spreads on a subset of rules for option trades at the \gls{CBOE}, which can be compared against.
+
+\begin{table}[H]
+    \centering
+    \input{Content/effective-spread.tex}
+    \caption[Estimated Effective Spread]{Estimated Effective Spread}
+    \label{tab:effective-spread}
+\end{table}
+
+A $t$-test is used to test if the estimated, effective spread is significantly different from the mean true effective spread / significantly greater than zero at $p=0.01$ \autocite[cp.][570]{finucaneDirectTestMethods2000}. Alternatively compare correlations $\rho$ and medians using the Wilcoxon test with the null hypothesis of the equal medians with $p=0.01$ \autocite[cp.][12]{theissenTestAccuracyLee2000}.
 
 \newpage
 \section{Discussion (3~p)}\label{sec:discussion}
