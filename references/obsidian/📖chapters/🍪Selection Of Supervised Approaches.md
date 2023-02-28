@@ -58,8 +58,19 @@ z \in \mathcal{Z} & \text { Prediction, typically from } \mathbb{R} \\
 $$
 https://arxiv.org/pdf/2001.07248.pdf
 
+For a given data set with $n$ examples and $m$ features $\mathcal{D}=\left\{\left(\mathbf{x}_i, y_i\right)\right\}\left(|\mathcal{D}|=n, \mathbf{x}_i \in \mathbb{R}^m, y_i \in \mathbb{R}\right)$ to (from [[@chengWideDeepLearning2016]])
 
-For a given data set with $n$ examples and $m$ features $\mathcal{D}=\left\{\left(\mathbf{x}_i, y_i\right)\right\}\left(|\mathcal{D}|=n, \mathbf{x}_i \in \mathbb{R}^m, y_i \in \mathbb{R}\right)$ to
+Notation
+- $\mathbf{x} \in \mathbb{R}^d$ : feature inputs or covariates (usually high dimensional), described by the random variable $X$
+- $y \in\{1,2, \ldots, C\}$ : classes (labels), described by the random variable $Y$
+- Each instance of data is drawn from a join probability distribution $p^*(X, Y)$
+- $p^*(\mathbf{x}, y)$ : True distribution of $\mathbf{x}$ and $y$. Also denoted by $p^*(X, Y)$ or $p^*(X=\mathbf{x}, Y=y)$
+
+- $C$-class Classification problem setting:
+- true distribution is assumed to be a discrete distribution over $C$ classes
+- observed $y$ is a sample from conditional distribution $p^*(y \mid \mathbf{x})$ or $p^*(Y \mid X=\mathbf{x})$
+- Neural networks (discriminative classifiers) try and estimate $p_\theta(y \mid \mathbf{x})$ by fitting $\theta$ using $\mathcal{D}$ (training dataset)
+- During deployment, the $\mathrm{NN}$ is evaluated using a dataset $\mathcal{T}$, sampled from a distribution $q(\mathbf{x}, y)$ or $q(X, Y)$
 
 Classical trade classification rule (or at least the ones shown) perform hard classification. Some bulked trade classification algorithms can perform soft classification (See [[@easleyDiscerningInformationTrade2016]]). However, this is not the case for the algorithms working on a trade-per-trade basis. Still, one can derive probabilities. (See [[@easleyDiscerningInformationTrade2016]] for tick rule)
 
