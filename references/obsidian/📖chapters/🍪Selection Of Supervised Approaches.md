@@ -43,6 +43,21 @@ Some classification models, such as naive Bayes, logistic regression and multila
 
 Formally, we aim to model a target variable $Y \in \mathbb{Y}$ given some feature vector $X \in \mathbb{X}$ based on training data $\left\{\left(x_i, y_i\right)\right\}_{i=1}^n$ that has been sampled according to the joint distribution of $X$ and $Y$. We focus on models in the form of a single-valued scoring function $f: \mathbb{X} \rightarrow \mathbb{R}$. For instance, in regression problems $(\mathbb{Y}=\mathbb{R}), f$ typically models the conditional expectation of the target, i.e., $f(x) \approx E(Y \mid X=x)$, whereas in binary classification problems $(\mathbb{Y}=\{-1,1\}), f$ ty (found here[[@boleyBetterShortGreedy2021]]; do not cite but like their presentation)
 
+Assume that we are given a distribution $\mathcal{D}$ on $\mathcal{X} \times \mathcal{Y}$, where $\mathcal{X}$ is a feature space (typically $\mathbb{R}^k$ ) and $\mathcal{Y}$ is a target space (typically $\mathbb{R}$ for regression or $\{0,1\}$ for classification). ${ }^1$ We are also given a loss function $L(z, y): \mathcal{Z} \times \mathcal{Y} \rightarrow \mathbb{R}$, where $\mathcal{Z}$ is a space of predictions (typically $\mathbb{R}$ or $\{0,1\}$ ). Our goal is to minimize the expected loss $\mathcal{L}(f \mid \mathcal{D}):=\mathbb{E}_{\mathcal{D}} L(f(x), y)$
+https://arxiv.org/pdf/2001.07248.pdf
+
+
+$$
+\begin{array}{cl}
+x \in \mathcal{X} & \text { Features, typically from } \mathbb{R}^k \\
+y \in \mathcal{Y} & \text { Target, typically from } \mathbb{R} \text { or }\{0,1\} \\
+z \in \mathcal{Z} & \text { Prediction, typically from } \mathbb{R} \\
+\mathcal{D} & \text { Data distribution over } \mathcal{X} \times \mathcal{Y} \\
+\mathcal{D}_N=\left\{\left(x_i, y_i\right)\right\}_{i=1}^N & \text { I.i.d. samples from } \mathcal{D}
+\end{array}
+$$
+https://arxiv.org/pdf/2001.07248.pdf
+
 
 For a given data set with $n$ examples and $m$ features $\mathcal{D}=\left\{\left(\mathbf{x}_i, y_i\right)\right\}\left(|\mathcal{D}|=n, \mathbf{x}_i \in \mathbb{R}^m, y_i \in \mathbb{R}\right)$ to
 

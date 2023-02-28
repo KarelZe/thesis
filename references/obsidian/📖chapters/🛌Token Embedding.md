@@ -1,3 +1,6 @@
+https://dl.acm.org/doi/abs/10.1145/3447548.3467077?casa_token=FPqZg5hi1OQAAAAA%3ACK691Tha1MrR-jRIiYLGl60e2b4nby26dLOfIdZZ_ag_hTy3Gep2uKVrIHzi-lJdN8_XsnolvJfmjQ
+https://www.tandfonline.com/doi/abs/10.1080/01621459.2020.1775614?role=button&journalCode=uasa20&journalCode=uasa20&needAccess=true
+
 As explained in the previous chapter, transformers operate on sequences of numeric vector representations, the *embeddings*, rather than on raw strings. More specifically, [[@vaswaniAttentionAllYou2017]] feed pre-trained token embeddings into the model. To obtain token embeddings from the raw input sequences, the sequence is first split into constituent vocabulary elements, the *tokens*. 
 
 All known tokens are stored in a vocabulary. The vocabulary $V$ consists of $N_{V}=|V|$ elements and maps tokens onto their unique integer keys, referred to as *token-ids* [[@phuongFormalAlgorithmsTransformers2022]]. Apart from tokens in the training corpus, the vocabulary may include special tokens, like the $\texttt{[UNK]}$ token to handle out-of-vocabulary items, the $\texttt{[EOS]}$ token to mark the end of the sequence, or $\texttt{[CLS]}$ token for storing an aggregate representation of the sequence for classification (used in [[@devlinBERTPretrainingDeep2019]]; p. 4). 

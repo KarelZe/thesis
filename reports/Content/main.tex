@@ -32,7 +32,7 @@ In summary, machine learning has been applied successfully in the context of tra
 \newpage
 \section{Rule-Based Approaches}\label{sec:rule-based-approaches}
 
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. Consequently, we denote it by $\gls{y} \in \{-1,1\}$, whereby $y=-1$ indicates a seller-initiated and $y=1$ a buyer-initiated trade. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. Consequently, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, whereby $y=-1$ indicates a seller-initiated and $y=1$ a buyer-initiated trade. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
 
 % TODO: Write about different views on trade initiator in one sentence. Might be due to technical limitations. Ours is likely similar to Ellis or Theissen -> also Savickas? (found in Peterson and Sirri)
 % TODO: We use $\hat{y}$ to distinguish the predicted from the observed trade initiator.
@@ -45,10 +45,10 @@ This chapter presents foundational classification rules, that may be used for tr
 
 \subsubsection{Quote Rule}\label{sec:quote-rule}
 
-The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $\gls{P}_i = \langle P_{i,1},P_{i,2},\dots,P_{i,T}\rangle$ and the corresponding ask at $t$ by $\gls{A}_{i,t}$ and bid by $\gls{B}_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, denoted by $\gls{M}_{i,t} = \tfrac{1}{2}(B_{i,t} + A_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $D = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} \neq M_{i,t}\right\}$ is given by:
+The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $\gls{P}_i = \langle P_{i,1},P_{i,2},\dots,P_{i,T}\rangle$ and the corresponding ask at $t$ by $\gls{A}_{i,t}$ and bid by $\gls{B}_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, denoted by $\gls{M}_{i,t} = \tfrac{1}{2}(B_{i,t} + A_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $\mathcal{D} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} \neq M_{i,t}\right\}$ is given by:
 
 \begin{equation}
-\operatorname{quote}\colon D \to \left\{-1, 1\right\},\quad
+\operatorname{quote}\colon \mathcal{D} \to \mathcal{Y},\quad
 \operatorname{quote}(i, t)=
 \begin{cases}
 1,  & \text{if}\ P_{i, t}>M_{i, t}\\
@@ -65,7 +65,7 @@ The quote rule requires both price and quote data, which affects the data effici
 
 \subsubsection{Tick Test}\label{sec:tick-test}
 
-A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test, $\operatorname{tick}\colon \mathbb{N}^2 \to \left\{-1, 1\right\}$, is defined as:
+A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test, $\operatorname{tick}\colon \mathbb{N}^2 \to \mathcal{Y}$, is defined as:
 
 \begin{equation}
 \operatorname{tick}(i, t)=
@@ -81,7 +81,7 @@ Considering the cases in \cref{eq:tick-test} the trade price is higher than the 
 
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
 
-The reverse tick test, $\operatorname{rtick} \colon \mathbb{N}^2 \to \left\{-1, 1\right\}$, is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
+The reverse tick test, $\operatorname{rtick} \colon \mathbb{N}^2 \to \mathcal{Y}$, is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
 
 \begin{equation}
 \operatorname{rtick}(i, t)=
@@ -108,7 +108,7 @@ As \cref{sec:quote-rule} unveils, the tick rule yields significantly lower succe
 
 The depth rule infers the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity at one trade side, trades are classified as a buy (sell) for a larger ask (bid) size \autocite[][14]{grauerOptionTradeClassification2022}.
 
-Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t}$ of the bid, and $\gls{P-tilde}_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $D = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} = \gls{M}_{i,t} \land \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \right\}$. The depth rule, $\operatorname{depth} \colon D \to \left\{-1, 1\right\}$, is now defined as:
+Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t}$ of the bid, and $\gls{P-tilde}_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $\mathcal{D} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} = \gls{M}_{i,t} \land \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \right\}$. The depth rule, $\operatorname{depth} \colon \mathcal{D} \to \mathcal{Y}$, is now defined as:
 \begin{equation}
 \operatorname{depth}(i, t)=
 \begin{cases}
@@ -118,14 +118,14 @@ Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t
 \label{eq:depth-rule}
 \end{equation}
 
-As shown in \cref{eq:depth-rule}, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for inferring the trade's aggressor. Due to these restrictive conditions in $D$, the depth rule can sign only a fraction of all trades and must be best stacked with other rules.
+As shown in \cref{eq:depth-rule}, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for inferring the trade's aggressor. Due to these restrictive conditions in $\mathcal{D}$, the depth rule can sign only a fraction of all trades and must be best stacked with other rules.
 
 Like the quote rule, the depth rule has additional dependencies on quote data. Despite being applied to midpoint trades only, \textcite[][4]{grauerOptionTradeClassification2022} report an improvement in the overall accuracy by \SI{1.2}{\percent} for \cgls{CBOE} data and by \SI{0.8}{\percent} for trades from the \cgls{ISE} merely through the depth rule. The rule has not yet been tested in other markets.
 
 \subsubsection{Trade Size Rule}\label{sec:trade-size-rule}
 
 % TODO: Think about writing as restriction? https://en.wikipedia.org/wiki/Restriction_(mathematics)
-As \cref{sec:tick-test} derives, quote-based approaches are generally preferred due to their stronger performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $D = \left\{(i, t) \in \mathbb{N}^2: \tilde{P}_{i,t} = \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \lor \tilde{P}_{i,t} \neq\tilde{A}_{i,t} = \tilde{B}_{i,t} \right\}$ the trade size rule, $\operatorname{tsize} \colon D \to \left\{-1, 1\right\}$, is defined as:
+As \cref{sec:tick-test} derives, quote-based approaches are generally preferred due to their stronger performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $\mathcal{D} = \left\{(i, t) \in \mathbb{N}^2: \tilde{P}_{i,t} = \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \lor \tilde{P}_{i,t} \neq\tilde{A}_{i,t} = \tilde{B}_{i,t} \right\}$ the trade size rule, $\operatorname{tsize} \colon \mathcal{D} \to \mathcal{Y}$, is defined as:
 \begin{equation}
 \operatorname{tsize}(i, t)=
 \begin{cases}
@@ -183,7 +183,7 @@ The popular \cgls{LR} algorithm \autocite[][745]{leeInferringTradeDirection1991}
 In combination, the algorithm primarily signs trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified by the tick rule. Overall:
 
 \begin{equation}
-\operatorname{lr} \colon \mathbb{N}^2 \to \left\{-1, 1\right\}\quad\operatorname{lr}(i,t)=
+\operatorname{lr} \colon \mathbb{N}^2 \to \mathcal{Y}\quad\operatorname{lr}(i,t)=
 \begin{cases}
 1, & \text{if}\ P_{i, t} > M_{i, t} \\
 -1,  & \text{if}\ P_{i, t} < M_{i, t} \\
@@ -200,7 +200,7 @@ Rule}\label{sec:ellis-michaely-ohara-rule}
 
 As such, the \cgls{EMO} algorithm extends the tick rule by classifying trades at the quotes using the quote rule, and all other trades with the tick test. Formally, the classification rule is given by:
 \begin{equation}
-\operatorname{emo} \colon \mathbb{N}^2 \to \left\{-1, 1\right\}, \quad
+\operatorname{emo} \colon \mathbb{N}^2 \to \mathcal{Y}, \quad
 \operatorname{emo}(i, t)=
 \begin{cases}
 1, & \text{if}\ P_{i, t} = A_{i, t} \\
@@ -218,7 +218,7 @@ Method}\label{sec:chakarabarty-li-nguyen-van-ness-method}
 Like the previous two algorithms, the \cgls{CLNV} method of \textcite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the \cgls{EMO} rule by a differentiated treatment of trades inside the quotes, which are notoriously hard to classify. The authors segment the bid-ask spread into deciles (ten equal-width bins) and classify trades around the midpoint (\nth{4} to \nth{7} decile) by the tick rule and trades close or outside the quotes are categorized by the tick rule.
 
 \begin{equation}
-\operatorname{clnv} \colon \mathbb{N}^2 \to \left\{-1, 1\right\}, \quad
+\operatorname{clnv} \colon \mathbb{N}^2 \to \mathcal{Y}, \quad
 \operatorname{clnv}(i, t)=
 \begin{cases}
 1, & \text{if}\ P_{i, t} \in \left(\frac{3}{10} B_{i,t} + \frac{7}{10} A_{i,t}, A_{i, t}\right] \\
@@ -252,13 +252,13 @@ The trend towards sophisticated, hybrid rules, combining as many as four base ru
 \newpage
 \section{Supervised Approaches (12~p)}\label{sec:supervised-approaches}
 
-All classical trade classification rules from \cref{sec:rule-based-approaches} perform \emph{discrete classification} and assign a class to the trade. Naturally, a more powerful insight is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives additional insights into the confidence of the prediction but calls for a \emph{probabilistic classifier}.
+All classical trade classification rules from \cref{sec:rule-based-approaches}  perform \emph{discrete classification} and assign a class to the trade. Naturally, a more powerful insight is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives additional insights into the confidence of the prediction but calls for a \emph{probabilistic classifier}.
 
-Thus, we frame trade signing as a probabilistic classification problem. This is similar to the work of a \textcite[][272]{easleyDiscerningInformationTrade2016}, who retrieve probabilities from \emph{bulked} versions of the tick rule and \gls{BVC} algorithm, but on a \emph{trade-per-trade} basis.
+Thus, we frame trade signing as a probabilistic classification problem. This is similar to the work of \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis. The probabilistic view enables a richer evaluation in \cref{sec:results}, but constraints our selection to (semi-)supervised probablistic classifiers. To maintain comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
 
-Vice versa, for probability estimate $\hat{p}$ we can retrieve the most probable class in $\mathbb{Y}$ as:
+Vice versa, for probability estimate $\hat{p}$ we can retrieve the most probable class in $\mathcal{Y}$ as:
 \begin{equation}
-    \hat{y}=\arg\max_{y \in \mathbb{Y}} \hat{p}(y).
+    \hat{y}=\arg\max_{y \in \mathcal{Y}} \hat{p}(y).
     \label{eq:arg-max-p}
 \end{equation}
 Cref-eq and \cref{eq:arg-max-p} allow us to switch between a discrete and probabilistic formulation for classical rules. Since the class probability estimates are either 0 or 1, no insight is gained into the confidence of the prediction. However, it offers a consistent way of evaluating classical trade classification rules and probabilistic classifiers in machine learning. In the following paragraph, we briefly discuss the selection of state-of-the-art classifiers that we consider for our empirical study.
@@ -271,7 +271,7 @@ Cref-eq and \cref{eq:arg-max-p} allow us to switch between a discrete and probab
 
 Decision trees can be used in classification and regression. Counterintuitive to our initial problem framing of trade classification as a probabilistic classification task in \cref{sec:selection-of-approaches}, the focus is on regression trees only, as it is the prevailing prediction model used within the gradient boosting algorithm \autocite[][9]{friedmanAdditiveLogisticRegression2000}. The ensemble method later adapts to classification.
 
-A decision tree splits the feature space $\mathbb{R}^m$ into several disjoint regions $R$ through a sequence of recursive splits. For a binary decision tree, a single split leads to two new sub-regions, whose shape is determined by the features considered for splitting and the preceding splits. Trees are grown in depth until a minimum threshold for the number of samples within a node or some other stopping criterion applies \autocite[][42]{breimanClassificationRegressionTrees2017}.
+A decision tree splits the feature space into several disjoint regions $R$ through a sequence of recursive splits. For a binary decision tree, a single split leads to two new sub-regions, whose shape is determined by the features considered for splitting and the preceding splits. Trees are grown in depth until a minimum threshold for the number of samples within a node or some other stopping criterion applies \autocite[][42]{breimanClassificationRegressionTrees2017}.
 A region corresponds to a terminal node in the tree. For each terminal node of the tree or unsplit region, the predicted response value is constant for the entire region and shared by all its samples \autocite[][229]{breimanClassificationRegressionTrees2017}.
 
 For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $x$ the tree can be modelled as:

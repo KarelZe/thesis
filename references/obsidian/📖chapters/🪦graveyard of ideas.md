@@ -1,4 +1,5 @@
 ## Embeddings
+This is similar to the work of ([[@easleyDiscerningInformationTrade2016]] 272), who modify the tick rule and GLSC-BVC algorithm to obtain probability estimates of a buy from individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis.
 
 ## Applicaton study
 See [[@jurkatisInferringTradeDirections2022]].
