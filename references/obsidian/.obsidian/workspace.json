@@ -31,23 +31,9 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "97b57ab138a23cbe",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🍪Selection of supervised approaches notes.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       },
       {
         "id": "90bbdd3c2ee01632",
@@ -69,18 +55,6 @@
             }
           },
           {
-            "id": "accc15d16234503b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🍪Selection Of Supervised Approaches.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "afc98c827078ebb0",
             "type": "leaf",
             "state": {
@@ -92,8 +66,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -151,7 +124,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🍪Selection of supervised approaches notes.md",
+                "file": "📖chapters/🐈Gradient Boosting.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -179,7 +152,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🍪Selection of supervised approaches notes.md"
+                "file": "📖chapters/🐈Gradient Boosting.md"
               }
             }
           },
@@ -210,18 +183,18 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "97b57ab138a23cbe",
+  "active": "e300834b973153f0",
   "lastOpenFiles": [
     "📑notes/🍪Selection of supervised approaches notes.md",
+    "📥Inbox/@malininUncertaintyGradientBoosting2021.md",
+    "📥Inbox/@boleyBetterShortGreedy2021.md",
+    "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📖chapters/🪦graveyard of ideas.md",
     "📑notes/🍪Selection of semisupervised Approaches notes.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/💡Training of models (supervised).md",
     "📖chapters/🛌Token Embedding.md",
-    "📑notes/🐈Gradient Boosting notes.md",
-    "📥Inbox/@malininUncertaintyGradientBoosting2021.md",
-    "📥Inbox/@boleyBetterShortGreedy2021.md",
     "🖼️Media/effective-spead-options.png",
     "📑notes/🍕Application study notes.md",
     "📖chapters/🍕Application study.md",
