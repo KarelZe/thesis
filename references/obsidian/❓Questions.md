@@ -1,35 +1,35 @@
 ## Open
-
-- Progress slowed down lately. Currently, I have written roughly 29 pages (10 classical algorithms, 14 Transformer, 2 related works + others). The final document currently has 42 pages (excl. some drafted chapters). However, I started to revise the Transformer chapters / rewrite them from scratch, as the why remains unclear for the Transformers and some paragraphs are hard to understand.
-- Ask about classification rules. Do you also want a short discussion with the different views on the trade initiator? Do you like the mix of formal definition, intuition etc.? Do you regard your stacking approach as another hybrid algorithm? (see chapter) Also, discuss the view adopted in their paper.
-Ask if the glossary is ok.
-Ask about the scope of related work. Currently, trade classification in option markets (i) and trade classification with machine learning (ii). 
-- Ask for CBOE and unlabelled data. This poses a major risk as I'm not sure about performance/training times etc. 
+- Ask about self-plagiarism e.g., in chapter decision tree, as formulation and sources are similar.
+- Ask about the scope of related work. Currently, trade classification in option markets (i) and trade classification with machine learning (ii). 
 
 ## Closed
-- I'm currently struggling to obtain cluster resources with gpus through SLURM or Jupyter. Some nodes are down and my jobs seem have low priority. 
-- Regarding the theoretical background, what can I assume to be common knowledge regarding ML e. g., back propagation, feed-forward network, or bias?
+- Ask for CBOE and unlabelled data. This poses a major risk as I'm not sure about performance/training times etc. -> received some data but requires some rework.
+- Progress slowed down lately. Currently, I have written roughly 29 pages (10 classical algorithms, 14 Transformer, 2 related works + others). The final document currently has 42 pages (excl. some drafted chapters). However, I started to revise the Transformer chapters / rewrite them from scratch, as the why remains unclear for the Transformers and some paragraphs are hard to understand. -> ok.
+- Ask about classification rules. Do you also want a short discussion with the different views on the trade initiator? Do you like the mix of formal definition, intuition etc.? Do you regard your stacking approach as another hybrid algorithm? (see chapter) Also, discuss the view adopted in their paper. -> buy or sell is inferred from the customer side. Do not discuss the other views, but indicate the view taken in the empirical part.
+- Ask if the glossary is ok. -> Never seen before, but ok.
+- I'm currently struggling to obtain cluster resources with GPUs through SLURM or Jupyter. Some nodes are down and my jobs seem to have low priority. 
+- Regarding the theoretical background, what can I assume to be common knowledge regarding ML e. g., backpropagation, feed-forward network, or bias?
 - I tried to feature engineer the largest dataset (incl. quotes from all exchanges) but ran into out-of-memory errors even on the largest cluster instances and with careful garbage collection. I'll no longer use date features, due to the missing economical foundations and marginal performance improvements (see https://wandb.ai/fbv/thesis/runs/2xvaz9dl). Thus, I'd stick to the 3 smaller ones (classical, yours, yours + option features). Did you study the feature set for the upcoming paper? -> It's ok. Just consider the remaining feature sets. Feature set definition is now ok.
-- Regarding the theoretical background, what can I assume to be common knowledge regarding ML e. g., back propagation, feed-forward network, or bias? -> Everything should be understandable with basic ml knowledge. Intuition should be clear.
-- Ask what the `day_vol` feature is. Found no meta data for it. -> It's the daily volume per option series. 
+- Regarding the theoretical background, what can I assume to be common knowledge regarding ML e. g., backpropagation, feed-forward network, or bias? -> Everything should be understandable with basic ml knowledge. Intuition should be clear.
+- Ask what the `day_vol` feature is. Found no metadata for it. -> It's the daily volume per option series. 
 - Discuss correlated features in feature importance calculation. -> Open. I Still need to find a solution.
-- Ask for feedback regarding the toc. Indicate where I deviate from my initial expose (i. e., swap TabNet for FTTransformer due to slow training and no implementation of Rosenthal's rule due to low importance. Added ablation study, simulation, and list of algorithms). -> ok, but might be to fine-grained. Use bold text instead of chapters.
-- I marked TabNet as optional in my toc, due to the very slow training / convergence. Architecture is hard to optimize, as e. g., some gradients are hand-crafted and no approximations available. Similar expected performance. -> Change is ok.
-- Was able to improve the test accuracy of gradient-boosting approach to 72.84 % (ca. 6 % above SOTA) on the test set. Would this be sufficient for the thesis? It's hard to squeeze out more accuracy from these few features. -> Figures are ok.
+- Ask for feedback regarding the TOC. Indicate where I deviate from my initial expose (i. e., swap TabNet for FTTransformer due to slow training and no implementation of Rosenthal's rule due to low importance. Added ablation study, simulation, and list of algorithms). -> ok, but might be to fine-grained. Use bold text instead of chapters.
+- I marked TabNet as optional in my TOC, due to the very slow training/convergence. Architecture is hard to optimize, as e. g., some gradients are hand-crafted and no approximations are available. Similar expected performance. -> Change is ok.
+- Was able to improve the test accuracy of the gradient-boosting approach to 72.84 % (ca. 6 % above SOTA) on the test set. Would this be sufficient for the thesis? It's hard to squeeze out more accuracy from these few features. -> Figures are ok.
 - Discuss the idea of describing all rules as algorithms for preciseness. -> Ok, but not just. Add text as well.
-- Request final dataset e. g., CBOE data for comparison and unlabeled dataset for implementing and testing pre-training routines. -> Will provide. Might take some time.
+- Request final dataset e. g., CBOE data for comparison and unlabelled dataset for implementing and testing pre-training routines. -> Will provide. Might take some time.
 
 - How is the "time from the previous trade" calculated in table 9? Are there any restrictions regarding the option or underlying? -> time to the previous trade of the same option, as used in the tick rule.
 - Are there other master's students at the chair to share ideas with? There is no other student with similar topic.
 - Minor differences in accuracy for classical rules between the reported figures from the paper and my implementation. Differences are usually $\leq 1.3~\%$  (see [here.](https://github.com/KarelZe/thesis/blob/main/notebooks/4.0a-mb-classical_rules.ipynb)). I suspect the differences to come from `NaN` values, if e. g., `price_ex_lag` is missing, I would not classify using tick rule and assign a random class using `np.random.choice([-1, 1]`. In Grauer et al. for the tick rule the percentage of unclassified trades is $0~\%$ (see table 3). -> Note, there were some minor typos.
-- Do you have a preference regarding eda? I would do it on the training set only, then check if engineered features work on validation set. I currently use the whole data set, but plan to switch (see [here](https://github.com/KarelZe/thesis/blob/feature-engineering/notebooks/3.0a-mb-data_preprocessing_explanatory_data_analysis.ipynb)).  Different views possible (see e. g., [here](https://stats.stackexchange.com/questions/424263/should-exploratory-data-analysis-include-validation-set)). -> Training set only.
+- Do you have a preference regarding eda? I would do it on the training set only, then check if engineered features work on validation set. I currently use the whole data set but plan to switch (see [here](https://github.com/KarelZe/thesis/blob/feature-engineering/notebooks/3.0a-mb-data_preprocessing_explanatory_data_analysis.ipynb)).  Different views possible (see e. g., [here](https://stats.stackexchange.com/questions/424263/should-exploratory-data-analysis-include-validation-set)). -> Training set only.
 
 - How did you define "others" in table 9? Using special codes? -> From data on underlying. Will receive the additional feature.
 - Could I please get the current stock price for moneyness to integrate them in my robustness checks? -> Yes, will receive the additional feature.
 - Symbol / root is somewhat problematic, as some are only in the train set or test set. Could still use root and rely on embedding or use special codes as features. Might be wise to use a more generic feature like sector instead.
 - What are the expectations I have to meet in order to reach $\geq 1.3$?
-- Any feedback to toc / expose / first results? -> *It's ok.*
-- Opinions on weekly release info 📧 (e. g., every sunday) with closed issues and completed tasks + short bi-weekly meeting. -> *Meeting scheduled. Release notes sent.*
+- Any feedback to TOC / expose / first results? -> *It's ok.*
+- Opinions on weekly release info 📧 (e.g., every Sunday) with closed issues and completed tasks + short bi-weekly meeting. -> *Meeting scheduled. Release notes sent.*
 - Who would co-supervise / grade the thesis? What is his / her special focus e. g., economical inference/interpretability? -> *Prof. Dr. Uhrig-Homburg (1), Prof. Dr. Ruckes (2). Prof. Uhrig-Homburg is very open to new ideas.* 
 - Discuss what to do with low-quality papers e. g., [[@ronenMachineLearningTrade2022]] or [[@blazejewskiLocalNonparametricModel2005]]? Cite, but be critical? Is it ok to also leave some poor papers out? -> *Ok, to leave out or point out what is problematic.*
 - What to do with `@hansenApplicationsMachineLearning`? Thesis does something similar but was not published. Mostly different techniques / different data set / focus on EDA.
