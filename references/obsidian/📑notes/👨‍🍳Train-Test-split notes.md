@@ -5,9 +5,7 @@ The available data set is split into three disjoint sets. First, the training se
 
 
 
-## Ammos
-
-
+## Ammos 🗒️
 **Why?**
 - The split is required to get unbiased performance estimates of our models. It is not required for classical rules, as these rules have no parameters to estimates or hyperparameters to tune.
 - “Typically, machine learning involves a lot of experimentation, though – for example, the tuning of the **internal knobs of a learning algorithm**, the so-called hyperparameters. Running a learning algorithm over a training dataset with different hyperparameter settings will result in different models. Since we are typically interested in selecting the best-performing model from this set, we need to find a way to estimate their respective performances in order to rank them against each other.” ([[@raschkaModelEvaluationModel2020]], p. 4)
@@ -19,7 +17,7 @@ The available data set is split into three disjoint sets. First, the training se
 
 **Our split:**
 - We perform a *static* split into three disjoint sets. (aka holdout method)
-- We use a 60-20-20 split and assign dates to be either in one set to simplify evaluation.  How does the rounding to the next day work? test set should be long enough to allow a meaningful comparsion against Grauer
+- We use a 60-20-20 split and assign dates to be either in one set to simplify evaluation.  How does the rounding to the next day work? test set should be long enough to allow a meaningful comparison against Grauer
 - dates:
 ```python
 train = df[df.QUOTE_DATETIME.between("2005-05-02 00:00:01", "2013-10-24 23:59:00")]
@@ -76,10 +74,5 @@ test = df[df.QUOTE_DATETIME.between("2015-11-06 00:00:01", "2017-05-31 23:59:00"
 **Train-test-split in trade classification:**
 - *validation* Classical rules typically don't require a validation set, as the rules are free of hyperparameters.
 - *test* authors use a true out-of-sample test set to test their hypothesis. April for training and May to June for testing. Also, they test their hypothesis on a second data set. ([[@chakrabartyTradeClassificationAlgorithms2007]]3809)
-
-**Visualization:**
-![[viz-training-schemes.png]]
-
-
 
 
