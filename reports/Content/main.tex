@@ -482,7 +482,7 @@ Besides feature-specific embedding, a \emph{shared embedding} is learned. This e
 \begin{subequations}
     \begin{align}
         \gls{e}_j = \boldsymbol{W}_j[:c_j] + \boldsymbol{W}_S[:j]\label{eq:tabtransformer-embedding-elementwise} \\
-        \intertext{Alternatively, categorical embeddings can also be concatenated from the feature-specific and shared embeddings. In order to maintain the overall embedding dimension of $d_{e}$, the dimensionality of the feature-specific embedding must be reduced to $d_{e} - \gamma$and the remaining dimensionality $\gamma$ is attributed to the shared embedding. With the embedding matrices $\boldsymbol{W}_j \in \mathbb{R}^{d_{e} -\gamma \times N_{C_j}}$ and $\boldsymbol{W}_S \in \mathbb{R}^{\gamma \times m}$ , the embedding is now given by:}
+        \intertext{Alternatively, categorical embeddings can also be concatenated from the feature-specific and shared embeddings. In order to maintain the overall embedding dimension of $d_{e}$, the dimensionality of the feature-specific embedding must be reduced to $d_{e} - \gamma$ and the remaining dimensionality $\gamma$ is attributed to the shared embedding. With the embedding matrices $\boldsymbol{W}_j \in \mathbb{R}^{d_{e} -\gamma \times N_{C_j}}$ and $\boldsymbol{W}_S \in \mathbb{R}^{\gamma \times m}$ , the embedding is now given by:}
         \gls{e}_j = \left[\boldsymbol{W}_j[:c_j], \boldsymbol{W}_S[:j]\right]^T.\label{eq:tabtransformer-embedding-concat}
     \end{align}
 \end{subequations}

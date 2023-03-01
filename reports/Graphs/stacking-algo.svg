@@ -27,13 +27,13 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      showgrid="true"
-     inkscape:zoom="2"
-     inkscape:cx="-93.25"
-     inkscape:cy="144.5"
+     inkscape:zoom="8"
+     inkscape:cx="209.5625"
+     inkscape:cy="170.5"
      inkscape:window-width="2560"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
-     inkscape:window-y="36"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1">
     <inkscape:grid
@@ -342,7 +342,7 @@
          id="tspan934"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.283464"
          x="-2.7967298"
-         y="0.62092888">\small$p_{i,t}$\normalsize</tspan></text>
+         y="0.62092888">\small$P_{i,t}$\normalsize</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:6px;font-family:cmss12;-inkscape-font-specification:'cmss12, Normal';fill:none;stroke:#000000;stroke-width:0.283465;stroke-dasharray:0.566929, 0.283465"
@@ -354,7 +354,7 @@
          id="tspan934-2"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.283464"
          x="-45.154144"
-         y="22.200994">\small $p_{i,t}$\normalsize</tspan></text>
+         y="22.200994">\small $P_{i,t}$\normalsize</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:2.11667px;font-family:cmss12;-inkscape-font-specification:'cmss12, Normal';fill:none;stroke:#000000;stroke-width:0.1;stroke-dasharray:0.2, 0.1"
@@ -365,7 +365,7 @@
          id="tspan934-2-7"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0999999"
          x="119.85234"
-         y="100.64277">\small $\tilde{p}_{i, t}$\normalsize</tspan></text>
+         y="100.64277">\small $\tilde{P}_{i, t}$\normalsize</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:2.11667px;font-family:cmss12;-inkscape-font-specification:'cmss12, Normal';fill:none;stroke:#000000;stroke-width:0.1;stroke-dasharray:0.2, 0.1"
@@ -376,7 +376,7 @@
          id="tspan934-3"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0999999"
          x="173.14366"
-         y="117.23987">\small $p_{i,t-1}$\normalsize</tspan></text>
+         y="117.23987">\small $P_{i,t-1}$\normalsize</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:2.11667px;font-family:cmss12;-inkscape-font-specification:'cmss12, Normal';fill:none;stroke:#000000;stroke-width:0.1;stroke-dasharray:0.2, 0.1"
@@ -387,7 +387,7 @@
          id="tspan934-3-9"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0999999"
          x="160.33051"
-         y="125.53355">\small$m_{i,t}$\normalsize</tspan></text>
+         y="125.53355">\small$M_{i,t}$\normalsize</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:2.11667px;font-family:cmss12;-inkscape-font-specification:'cmss12, Normal';fill:none;stroke:#000000;stroke-width:0.1;stroke-dasharray:0.2, 0.1"
@@ -398,17 +398,18 @@
          id="tspan934-2-7-5"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0999999"
          x="109.03925"
-         y="137.78275">\small $\tilde{a}_{i, t}$\normalsize</tspan></text>
+         y="137.78275">\small $\tilde{A}_{i, t}$\normalsize</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:2.11667px;font-family:cmss12;-inkscape-font-specification:'cmss12, Normal';fill:none;stroke:#000000;stroke-width:0.1;stroke-dasharray:0.2, 0.1"
        x="148.70204"
        y="132.73137"
-       id="text936-5-2-9"><tspan
+       id="text936-5-2-9"
+       inkscape:label="text936-5-2-9"><tspan
          sodipodi:role="line"
          id="tspan934-2-7-0"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0999999"
          x="148.70204"
-         y="132.73137">\small$\tilde{b}_{i, t}$\normalsize</tspan></text>
+         y="132.73137">\small$\tilde{B}_{i, t}$\normalsize</tspan></text>
   </g>
 </svg>
