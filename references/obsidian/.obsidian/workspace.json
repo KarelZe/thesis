@@ -53,6 +53,20 @@
             }
           },
           {
+            "id": "10e99281351f2328",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🌏Dataset notes.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
             "id": "fb85b0f4ac4f833d",
             "type": "leaf",
             "pinned": true,
@@ -186,9 +200,10 @@
   },
   "active": "a2260b737ac42f97",
   "lastOpenFiles": [
+    "📖chapters/🌏Dataset.md",
+    "📑notes/🌏Dataset notes.md",
     "📑notes/🍕Application study notes.md",
     "📖chapters/🍕Application study.md",
-    "📖chapters/🌏Dataset.md",
     "📑notes/🔢Tick test notes.md",
     "📖chapters/👨‍🍳Tain-Test-split.md",
     "❓Questions.md",
@@ -215,7 +230,6 @@
     "📑notes/🍔Layer norm notes.md",
     "📥Inbox/@leeMarketIntegrationPrice1993.md",
     "📥Inbox/@petersenPostedEffectiveSpreads1994.md",
-    "📑notes/🔢Trade Initiator notes.md",
     "🖼️Media/asymmetric-spread.png",
     "🖼️Media/midpoint-spread.png",
     "🖼️Media/eff-spread-finucane.png"

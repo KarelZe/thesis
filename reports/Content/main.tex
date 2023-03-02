@@ -543,9 +543,10 @@ In the subsequent section, extend all previous models including FT-Transformer f
 
 \subsection{Data and Data Preparation (6 p)}\label{sec:data-and-data-preparation}
 
-\subsubsection{ISE Data Set (0.5~p)}\label{sec:ise-data-set}
+\subsubsection{Data Set (0.5~p)}\label{sec:data-set}
 
-\subsubsection{CBOE Data Set (0.5~p)}\label{sec:cboe-data-set}
+Testing the empirical accuracy of our approaches requires option trades where the true initiator is known. To arrive at labelled sample, we combine data from four individual data sources. Our primary source is LiveVol, which records option trades executed at US option exchanges at a transaction level. We limit our focus to option trades executed at the \gls{CBOE} and \gls{ISE}. LiveVol contains both trade and the matching quote data. Like most proprietary data sources, it does not distinguish the initiator nor does it include the involved trader types. For the \gls{CBOE} and \gls{ISE} exchange, the \gls{ISE} Open/Close Trade Profile and \gls{CBOE} Open-Close Volume Summary contain the buy and sell volumes for the option series by trader type aggregated on a daily level. A combination of the LiveVol data set with the \gls{ISE} Open/Close Trade Profile or the \gls{CBOE} Open-Close Volume Summary respectively, allows us to infer the trade initiator for a subset of trades, as we explain next. For evaluation and use in some of our machine learning models, we acquire additional underlying and option characteristics from IvyDB's OptionMetrics.
+
 
 \subsubsection{Exploratory Data Analysis (2~p)}\label{sec:exploratory-data-analysis}
 
