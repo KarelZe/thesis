@@ -1,8 +1,12 @@
 ## Open
-- Ask about self-plagiarism e.g., in chapter decision tree, as formulation and sources are similar.
+- What is part of the unlabelled dataset? Only customer trades where volume doesn't match or also professional customer trades, broker / deal trades etc.? 
+- Are summary statistics in Panel A.2 and B.2. Customer orders only or all account types?
+- What happens to the trade volumes of professional customers? (filtered out?) Or treated as ordinary customers?
 - Ask about the scope of related work. Currently, trade classification in option markets (i) and trade classification with machine learning (ii). 
 
 ## Closed
+- Ask about self-plagiarism e.g., in chapter decision tree, as formulation and sources are similar to previous seminar. -> It's ok, as long as entire chapter isn't the same.
+- EDA for unlabelled trades to investigate bias that can not be observed through summary statistics -> good idea.
 - Ask for CBOE and unlabelled data. This poses a major risk as I'm not sure about performance/training times etc. -> received some data but requires some rework.
 - Progress slowed down lately. Currently, I have written roughly 29 pages (10 classical algorithms, 14 Transformer, 2 related works + others). The final document currently has 42 pages (excl. some drafted chapters). However, I started to revise the Transformer chapters / rewrite them from scratch, as the why remains unclear for the Transformers and some paragraphs are hard to understand. -> ok.
 - Ask about classification rules. Do you also want a short discussion with the different views on the trade initiator? Do you like the mix of formal definition, intuition etc.? Do you regard your stacking approach as another hybrid algorithm? (see chapter) Also, discuss the view adopted in their paper. -> buy or sell is inferred from the customer side. Do not discuss the other views, but indicate the view taken in the empirical part.
@@ -18,7 +22,6 @@
 - Was able to improve the test accuracy of the gradient-boosting approach to 72.84 % (ca. 6 % above SOTA) on the test set. Would this be sufficient for the thesis? It's hard to squeeze out more accuracy from these few features. -> Figures are ok.
 - Discuss the idea of describing all rules as algorithms for preciseness. -> Ok, but not just. Add text as well.
 - Request final dataset e. g., CBOE data for comparison and unlabelled dataset for implementing and testing pre-training routines. -> Will provide. Might take some time.
-
 - How is the "time from the previous trade" calculated in table 9? Are there any restrictions regarding the option or underlying? -> time to the previous trade of the same option, as used in the tick rule.
 - Are there other master's students at the chair to share ideas with? There is no other student with similar topic.
 - Minor differences in accuracy for classical rules between the reported figures from the paper and my implementation. Differences are usually $\leq 1.3~\%$  (see [here.](https://github.com/KarelZe/thesis/blob/main/notebooks/4.0a-mb-classical_rules.ipynb)). I suspect the differences to come from `NaN` values, if e. g., `price_ex_lag` is missing, I would not classify using tick rule and assign a random class using `np.random.choice([-1, 1]`. In Grauer et al. for the tick rule the percentage of unclassified trades is $0~\%$ (see table 3). -> Note, there were some minor typos.

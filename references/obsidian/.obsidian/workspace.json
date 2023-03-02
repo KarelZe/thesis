@@ -6,7 +6,7 @@
       {
         "id": "aeb1f3ebc9e06223",
         "type": "tabs",
-        "dimension": 46.31147540983606,
+        "dimension": 52.60139287177387,
         "children": [
           {
             "id": "f35a250acbe1a2dc",
@@ -38,7 +38,7 @@
       {
         "id": "90bbdd3c2ee01632",
         "type": "tabs",
-        "dimension": 53.68852459016394,
+        "dimension": 47.39860712822614,
         "children": [
           {
             "id": "dad26e0868f82374",
@@ -188,8 +188,11 @@
   },
   "active": "afc98c827078ebb0",
   "lastOpenFiles": [
-    "📑notes/👨‍🍳Train-Test-split notes.md",
+    "❓Questions.md",
+    "📖chapters/🌏Ise dataset.md",
     "📖chapters/👨‍🍳Tain-Test-split.md",
+    "📑notes/👨‍🍳Train-Test-split notes.md",
+    "🖼️Media/summary-statistic.png",
     "🖼️Media/train-test-split.png",
     "viz-training-schemes.png.md",
     "🖼️Media/viz-training-schemes.png",
@@ -215,7 +218,6 @@
     "📥Inbox/@petersenPostedEffectiveSpreads1994.md",
     "📑notes/🔢Trade Initiator notes.md",
     "📖chapters/🔢Trade initiator.md",
-    "📖chapters/🔢Quote rule.md",
     "🖼️Media/asymmetric-spread.png",
     "🖼️Media/midpoint-spread.png",
     "🖼️Media/eff-spread-finucane.png"
