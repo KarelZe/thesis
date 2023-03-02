@@ -24,7 +24,7 @@ interval: 1
 | [[💡Tuning of models (semi-supervised)]]        |       41 |       |        1 | 1970-01-01 |
 | [[🔢LR algorithm notes]]                              |     42.5 |       |        1 | 1970-01-01 |
 | [[pre-training]]                                |       45 |       |        1 | 1970-01-01 |
-| [[🌏Ise dataset]]                               |       45 |       |        1 | 1970-01-01 |
+| [[🌏Dataset]]                               |       45 |       |        1 | 1970-01-01 |
 | [[💡Training of models (supervised)]]           |       47 |       |        1 | 1970-01-01 |
 | [[👶Introduction]]                              |     47.5 |       |        1 | 1970-01-01 |
 | [[💡Hyperparameter tuning]]                     |       50 |       |        1 | 1970-01-01 |

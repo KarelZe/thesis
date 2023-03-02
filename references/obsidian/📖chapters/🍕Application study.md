@@ -16,7 +16,7 @@ The subsequent section estimates both the nominal and relative effective spread 
 ## Results
 The actual and the estimated effective spreads, as well as the quoted spread, are shown in the (cref tab) aggregated by mean.  ([[@savickasInferringDirectionOption2003]] 896--897) previously estimated the effective spreads on a subset of rules for option trades at the gls-CBOE, which can be compared against.
 
-A $t$-test is used to test if the estimated, effective spread is significantly different from the mean true effective spread / significantly greater than zero at $p=0.01$ (cp.[[@finucaneDirectTestMethods2000]]570). Alternatively compare correlations $\rho$ and medians using the Wilcoxon test with null hypothesis of the equal medians with $p=0.01$ (cp.[[@theissenTestAccuracyLee2000]]12).
+A $t$-test is used to test if the estimated, effective spread is significantly different from the mean true effective spread / significantly greater than zero at $p=0.01$ (cp.[[@finucaneDirectTestMethods2000]]570). Similarily in [[@chakrabartyTradeClassificationAlgorithms2007]]. Alternatively compare correlations $\rho$ and medians using the Wilcoxon test with null hypothesis of the equal medians with $p=0.01$ (cp.[[@theissenTestAccuracyLee2000]]12).
 
 (🔥What can we see? How do the results compare?)
 

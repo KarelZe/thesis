@@ -1,6 +1,6 @@
 
 ## Trade Initiator in CBOE / ISE dataset
-relates to [[🌏Ise dataset]]
+relates to [[🌏Dataset]]
 
 
 ### How the trade initiator is obtained

@@ -87,6 +87,9 @@ Considering the cases in \cref{eq:tick-test} the trade price is higher than the 
 
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
 
+
+% sometimes dependency on data referred to as level-1 and level-2 (cp. chakrabarty 2015) Level-1 algorithms use only trade price data; level-2 algorithms use both trade and quote data.
+
 The reverse tick test is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
 
 \begin{equation}
@@ -664,7 +667,7 @@ Readily apparent from \cref{eq:effective-spread}, poor estimates for the predict
 \begin{equation}
     {PS}_{i,t} = S_{i,t} / V_{i,t}.
 \end{equation}
-% TODO check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price?
+% TODO check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does chakrabarty 2007?
 The subsequent section estimates both the nominal and relative effective spread for our test sets.
 
 \subsection{Simulation Results}\label{sec:simulation-results}
