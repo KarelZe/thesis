@@ -59,12 +59,12 @@
     \put(0.65969388,0.16374869){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small\textsf{quote rule}\end{tabular}}}}%
     \put(0.82735657,0.26025008){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small\textsf{tick test}\end{tabular}}}}%
     \put(0.50752513,0.48666048){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}*\\\end{tabular}}}}%
-    \put(0.55292495,0.77007285){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small$p_{i,t}$\normalsize\end{tabular}}}}%
-    \put(0.34680601,0.66506029){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $p_{i,t}$\normalsize\end{tabular}}}}%
-    \put(0.17618558,0.57655664){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $\tilde{p}_{i, t}$\normalsize\end{tabular}}}}%
-    \put(0.91128052,0.34761798){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $p_{i,t-1}$\normalsize\end{tabular}}}}%
-    \put(0.73453718,0.23321584){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small$m_{i,t}$\normalsize\end{tabular}}}}%
-    \put(0.02703098,0.06425167){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $\tilde{a}_{i, t}$\normalsize\end{tabular}}}}%
-    \put(0.57413536,0.13392983){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small$\tilde{b}_{i, t}$\normalsize\end{tabular}}}}%
+    \put(0.55292495,0.77007285){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small$P_{i,t}$\normalsize\end{tabular}}}}%
+    \put(0.34680601,0.66506029){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $P_{i,t}$\normalsize\end{tabular}}}}%
+    \put(0.17618558,0.57655664){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $\tilde{P}_{i, t}$\normalsize\end{tabular}}}}%
+    \put(0.91128052,0.34761798){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $P_{i,t-1}$\normalsize\end{tabular}}}}%
+    \put(0.73453718,0.23321584){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small$M_{i,t}$\normalsize\end{tabular}}}}%
+    \put(0.02703098,0.06425167){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $\tilde{A}_{i, t}$\normalsize\end{tabular}}}}%
+    \put(0.57413536,0.13392983){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small$\tilde{B}_{i, t}$\normalsize\end{tabular}}}}%
   \end{picture}%
 \endgroup%

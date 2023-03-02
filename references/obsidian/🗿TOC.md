@@ -118,7 +118,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 - describe and reason about applied feature engineering
 - describe and reason about test and training split
 ### ISE Data Set 🟡
-[[🌏Ise dataset]]
+[[🌏Dataset]]
 
 ### CBOE Data Set 🟡
 describe if data set is actually used. Write similarily to 

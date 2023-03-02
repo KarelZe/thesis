@@ -58,12 +58,12 @@
     \put(0.01621309,0.17773134){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Mat Mul\end{tabular}}}}%
     \put(0.0243629,0.21728343){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Scale\end{tabular}}}}%
     \put(0.01724005,0.25660417){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Softmax\end{tabular}}}}%
-    \put(0.05158463,0.13656019){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{K}$}\end{tabular}}}}%
-    \put(0.01566531,0.13706732){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{Q}$}\end{tabular}}}}%
-    \put(0.09230797,0.13632888){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{V}$}\end{tabular}}}}%
+    \put(0.05158463,0.13656019){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{W}_k$}\end{tabular}}}}%
+    \put(0.01566531,0.13706732){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{W}_q$}\end{tabular}}}}%
+    \put(0.09230797,0.13632888){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{W}_v$}\end{tabular}}}}%
     \put(0.33196196,0.30147608){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%
     \put(0.31641641,0.26446835){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Concatenate\end{tabular}}}}%
-    \put(0.25209968,0.11759375){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{K}$}\end{tabular}}}}%
+    \put(0.25209968,0.11759375){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{W}_k$}\end{tabular}}}}%
     \put(0.59666063,0.04612238){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Input Embedding\end{tabular}}}}%
     \put(0.79531368,0.04473469){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Output Embedding\end{tabular}}}}%
     \put(0.61355691,0.15899618){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Multi-Head\end{tabular}}}}%
@@ -82,7 +82,7 @@
     \put(0.56991395,0.32607764){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Encoder\end{tabular}}}}%
     \put(0.73713383,0.4518906){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Decoder\end{tabular}}}}%
     \put(0.94151051,0.25105299){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$L\times$\end{tabular}}}}%
-    \put(0.60319936,0.12101354){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{K}$\end{tabular}}}}%
+    \put(0.59081289,0.11965253){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{W}_k$\end{tabular}}}}%
     \put(0.27372145,0.20895663){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Scaled Dot-Product Attention\end{tabular}}}}%
     \put(0.83996125,0.08313023){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}+\end{tabular}}}}%
     \put(0.80971148,0.37340994){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Feed Forward\end{tabular}}}}%
@@ -95,18 +95,18 @@
     \put(0.51852325,0.07064014){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Embedding\end{tabular}}}}%
     \put(0.90080198,0.0856745){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Positional\end{tabular}}}}%
     \put(0.90080198,0.0678645){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Embedding\end{tabular}}}}%
-    \put(0.65269503,0.12055089){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{V}$\end{tabular}}}}%
-    \put(0.62804776,0.12078223){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{Q}$\end{tabular}}}}%
-    \put(0.80509308,0.11716255){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{K}$\end{tabular}}}}%
-    \put(0.85458876,0.11669997){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{V}$\end{tabular}}}}%
-    \put(0.82994149,0.11693128){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{Q}$\end{tabular}}}}%
-    \put(0.80230744,0.25521475){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{K}$\end{tabular}}}}%
-    \put(0.85180304,0.2547522){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{V}$\end{tabular}}}}%
-    \put(0.82715584,0.25498344){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{Q}$\end{tabular}}}}%
+    \put(0.64158217,0.11918987){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{W}_v$\end{tabular}}}}%
+    \put(0.61693489,0.11942122){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{W}_q$\end{tabular}}}}%
+    \put(0.79398022,0.11580157){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{W}_k$\end{tabular}}}}%
+    \put(0.84347589,0.11533899){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{W}_v$\end{tabular}}}}%
+    \put(0.81882862,0.1155703){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{W}_q$\end{tabular}}}}%
+    \put(0.79654374,0.2566557){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{W}_k$\end{tabular}}}}%
+    \put(0.84782237,0.25644786){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{W}_v$\end{tabular}}}}%
+    \put(0.82139214,0.25642439){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{W}_q$\end{tabular}}}}%
     \put(0.82387439,0.54827165){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Output\end{tabular}}}}%
     \put(0.80839128,0.53046166){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Probabilities\end{tabular}}}}%
-    \put(0.34353656,0.1180563){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{V}$}\end{tabular}}}}%
-    \put(0.43298439,0.11851892){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{Q}$}\end{tabular}}}}%
+    \put(0.34353656,0.1180563){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{W}_v$}\end{tabular}}}}%
+    \put(0.43298439,0.11851892){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textbf{$\boldsymbol{W}_q$}\end{tabular}}}}%
     \put(0.24157794,0.15575798){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%
     \put(0.33301252,0.15598929){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%
     \put(0.42246035,0.15645188){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Linear\end{tabular}}}}%

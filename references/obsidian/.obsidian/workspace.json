@@ -6,7 +6,7 @@
       {
         "id": "aeb1f3ebc9e06223",
         "type": "tabs",
-        "dimension": 56.71325709445151,
+        "dimension": 52.60139287177387,
         "children": [
           {
             "id": "f35a250acbe1a2dc",
@@ -19,17 +19,15 @@
             }
           },
           {
-            "id": "e300834b973153f0",
+            "id": "a2260b737ac42f97",
             "type": "leaf",
-            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🐈Gradient Boosting.md",
+                "file": "📖chapters/🌏Dataset.md",
                 "mode": "source",
                 "source": false
-              },
-              "pinned": true
+              }
             }
           }
         ],
@@ -38,7 +36,7 @@
       {
         "id": "90bbdd3c2ee01632",
         "type": "tabs",
-        "dimension": 43.2867429055485,
+        "dimension": 47.39860712822614,
         "children": [
           {
             "id": "dad26e0868f82374",
@@ -55,18 +53,21 @@
             }
           },
           {
-            "id": "afc98c827078ebb0",
+            "id": "fb85b0f4ac4f833d",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🛌Token Embedding.md",
+                "file": "📑notes/👨‍🍳Train-Test-split notes.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "pinned": true
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -124,7 +125,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🐈Gradient Boosting.md",
+                "file": "📖chapters/🌏Dataset.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -152,7 +153,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🐈Gradient Boosting.md"
+                "file": "📖chapters/🌏Dataset.md"
               }
             }
           },
@@ -183,8 +184,20 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "e300834b973153f0",
+  "active": "a2260b737ac42f97",
   "lastOpenFiles": [
+    "📑notes/🍕Application study notes.md",
+    "📖chapters/🍕Application study.md",
+    "📖chapters/🌏Dataset.md",
+    "📑notes/🔢Tick test notes.md",
+    "📖chapters/👨‍🍳Tain-Test-split.md",
+    "❓Questions.md",
+    "📑notes/👨‍🍳Train-Test-split notes.md",
+    "🖼️Media/summary-statistic.png",
+    "🖼️Media/train-test-split.png",
+    "viz-training-schemes.png.md",
+    "🖼️Media/viz-training-schemes.png",
+    "📖chapters/🐈Gradient Boosting.md",
     "📑notes/🍪Selection of supervised approaches notes.md",
     "📥Inbox/@malininUncertaintyGradientBoosting2021.md",
     "📥Inbox/@boleyBetterShortGreedy2021.md",
@@ -192,12 +205,9 @@
     "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📖chapters/🪦graveyard of ideas.md",
     "📑notes/🍪Selection of semisupervised Approaches notes.md",
-    "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/💡Training of models (supervised).md",
     "📖chapters/🛌Token Embedding.md",
     "🖼️Media/effective-spead-options.png",
-    "📑notes/🍕Application study notes.md",
-    "📖chapters/🍕Application study.md",
     "📥Inbox/@petersonEvaluationBiasesExecution2003.md",
     "📥Inbox/@hagstromerBiasEffectiveBidask2021.md",
     "📥Inbox/@Piwowar_2006.md",
@@ -206,15 +216,8 @@
     "📥Inbox/@leeMarketIntegrationPrice1993.md",
     "📥Inbox/@petersenPostedEffectiveSpreads1994.md",
     "📑notes/🔢Trade Initiator notes.md",
-    "📖chapters/🔢Trade initiator.md",
-    "📖chapters/🔢Quote rule.md",
-    "📑notes/🔢Depth rule notes.md",
-    "📥Inbox/@goettlerEquilibriumDynamicLimit2005.md",
-    "📥Inbox/@muravyevOptionsTradingCosts2020.md",
     "🖼️Media/asymmetric-spread.png",
     "🖼️Media/midpoint-spread.png",
-    "🖼️Media/eff-spread-finucane.png",
-    "📑notes/🛌 Token embeddings notes.md",
-    "🖼️Media/viz-training-schemes.png"
+    "🖼️Media/eff-spread-finucane.png"
   ]
 }

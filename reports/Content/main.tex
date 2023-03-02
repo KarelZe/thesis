@@ -34,8 +34,13 @@ In summary, machine learning has been applied successfully in the context of tra
 
 Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. The trade initiator is binary and can either be the seller or the buyer. Consequently, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, whereby $y=-1$ indicates a seller-initiated and $y=1$ a buyer-initiated trade. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
 
-% TODO: Write about different views on trade initiators in one sentence. Might be due to technical limitations. Ours is likely similar to Ellis or Theissen -> also Savickas? (found in Peterson and Sirri)
+% TODO: Write about different views on trade initiators in one sentence. Might be due to technical limitations. Ours is likely similar to Ellis or Theissen (p.3-4)-> also Savickas? (found in Peterson and Sirri)
 % TODO: We use $\hat{y}$ to distinguish the predicted from the observed trade initiator.
+% “Second, the present paper uses a different definition of the true trade classification than both Odders-White (1999) and Lightfoot et al. (1999). These authors consider a transaction to be buyer-initiated [seller-initiated] if the buy order [sell order] was placed last, chronologically. In contrast, we use a definition based on the position taken by the Makler (the equivalent of the specialist). If the Makler sold [bought] shares the transaction is classified as being buyer-initiated [seller-initiated]. This is similar to the approach in Ellis / Michaely / O’Hara (1999). They classify a trade as buyerinitiated [seller-initiated] if a customer or broker bought shares from [sold shares to] a marketmaker or if a customer bought shares from [sold shares to] a broker. Inter-broker and inter. 4 dealer trades are not classified. It is interesting to compare our results to those of Ellis / Michaely / O’Hara (1999) because the trading protocols in the two markets under scrutiny differ significantly. Whereas NASDAQ is a multiple dealer market, the Frankfurt Stock Exchange is a specialist market organized in a way similar to the NYSE.” ([Theissen, 2000, p. 4](zotero://select/library/items/ESEIBAMC)) ([pdf](zotero://open-pdf/library/items/2XMIU8NA?page=5&annotation=J2WH29SQ))
+
+% “We are not able to directly sign trades between two market makers (16.6% of the trades), or two brokers (4.5%). For 3.5% of the sample, we know that the trade took place on an ECN because one of the trader identities attached to the trade is the ECN identity code. We cannot sign the ECN trades as we do not have the time the orders were placed with the ECN. Because ECNs function as limit order books, we would need to know the time each order was placed and then use time priority to infer trade direction, with the later order being the trade motivator. (This is how Odders-White infers trade direction using the TORQ database.) Similarly, for the market maker-market maker and broker-broker trades, we do not know which party initiated the trade. In total, we exclude 24.6% of the sample that we cannot accurately sign.” ([Ellis et al., 2000, p. 533](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=6&annotation=XN5NQJMI))
+
+%“For the remaining 75.4% of the sample, knowing the identity of the trader and whether he was buying or selling allows us to determine directly whether the trade was buy- or sell-initiated. These are market maker-customer or brokercustomer trades (26.2%) and market maker-broker trades (49.2%). For example, suppose that a trade is recorded as a sell by the market maker and the other party is a customer. This trade only occurs because the customer wants to trade: the market maker is the liquidity provider, and we categorize such a trade as a buyinitiated trade.7” ([Ellis et al., 2000, p. 533](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=6&annotation=42WJF2N6))
 
 The following section introduces basic rules for option trade classification. We start with the classical quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
@@ -78,9 +83,12 @@ A common alternative to the quote rule is the tick test. Based on the rationale 
     \label{eq:tick-test}
 \end{equation}
 
-Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy~\footnote{To end recursion at $t=1$, we sign the trade to be buyer-initiated. Other choices are possible, e.g., random assignment or based on another rule. Similarly done for \cref{eq:reverse-tick-test}.}.Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[][3]{leeInferringTradeDirection1991}.
+Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy~\footnote{To end recursion at $t=1$, we sign the trade to be buyer-initiated. Other choices are possible, e.g., random assignment or based on another rule. Similarly done for \cref{eq:reverse-tick-test}.}. Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[][3]{leeInferringTradeDirection1991}.
 
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
+
+
+% sometimes dependency on data referred to as level-1 and level-2 (cp. chakrabarty 2015) Level-1 algorithms use only trade price data; level-2 algorithms use both trade and quote data.
 
 The reverse tick test is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
 
@@ -261,7 +269,7 @@ All classical trade classification rules from \cref{sec:rule-based-approaches}  
 
 Thus, we frame trade signing as a \emph{probabilistic} classification problem. This is similar to the work of \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis. To this end, a probabilistic view enables a richer evaluation, but constraints our selection to (semi-)supervised probabilistic classifiers. To maintain comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
 
-We introduce some more notation, which we will use throughout. Each data instance consists of a feature vector and the target. The former is given by $\boldsymbol{x} \in \mathbb{R}^m$ and described by a random variable $X$. Features in $\boldsymbol{x}$ may be numerical, e.g., the previous trade price or categorical e. g., the option type. Like before, the target or trade initiator is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $p^*(X, Y)$. The training set with $N$ i.i.d. samples drawn from $p^*$ is denoted by $\mathcal{D}_N=\left\{\left(x_i, y_i\right)\right\}_{i=1}^N$.
+We introduce some more notation, which we will use throughout. Each data instance consists of a feature vector and the target. The former is given by $\boldsymbol{x} \in \mathbb{R}^m$ and described by a random variable $X$. Features in $\boldsymbol{x}$ may be numerical, e.g., the previous trade price or categorical e.g., the option type. Like before, the target or trade initiator is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $p^*(X, Y)$. The training set with $N$ i.i.d. samples drawn from $p^*$ is denoted by $\mathcal{D}_N=\left\{\left(\boldsymbol{x}_i, y_i\right)\right\}_{i=1}^N$.
 
 For our machine learning classifiers, we aim to model $p_{\theta}(y \mid \boldsymbol{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
 
@@ -285,7 +293,7 @@ and 1, no insight is gained into the confidence of the prediction. However, it d
 
 \subsubsection{Decision Tree}\label{sec:decision-tree}
 
-Decision trees can be used in classification and regression. Counterintuitive to our initial problem framing of trade classification as a probabilistic classification task in \cref{sec:selection-of-approaches}, the focus is on regression trees only, as it is the prevailing prediction model used within the gradient boosting algorithm \autocite[][9]{friedmanAdditiveLogisticRegression2000}. The ensemble method later adapts to classification.
+Decision trees can be used in classification and regression. Counterintuitive to our initial problem framing of trade classification as a probabilistic classification task in \cref{sec:problem-framing}, the focus is on regression trees only, as it is the prevailing prediction model used within the gradient boosting algorithm \autocite[][9]{friedmanAdditiveLogisticRegression2000}. The ensemble method later adapts to classification.
 
 A decision tree splits the feature space into several disjoint regions $R$ through a sequence of recursive splits. For a binary decision tree, a single split leads to two new sub-regions, whose shape is determined by the features considered for splitting and the preceding splits. Trees are grown in depth until a minimum threshold for the number of samples within a node or some other stopping criterion applies \autocite[][42]{breimanClassificationRegressionTrees2017}.
 A region corresponds to a terminal node in the tree. For each terminal node of the tree or unsplit region, the predicted response value is constant for the entire region and shared by all its samples \autocite[][229]{breimanClassificationRegressionTrees2017}.
@@ -422,7 +430,7 @@ As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connecti
 \begin{equation}
     \widehat{\gls{e}}=\frac{\gls{e}-m}{\sqrt{v}} \odot \boldsymbol{\gamma}+\boldsymbol{\beta},
 \end{equation}
-calculated from the statistics $m = \sum_{i=1}^{d_{e}} \gls{e}\left[i\right] / d_{e}$ and $v = \sum_{i=1}^{d_{e}}(\gls{e}\left[i\right]-m)^2 / d_{e}$. Typically, the scale $\gamma$ and bias $\beta$ are set to preserve a zero mean and unit variance.
+calculated from the statistics $m = \sum_{i=1}^{d_{e}} \gls{e}\left[i\right] / d_{e}$ and $v = \sum_{i=1}^{d_{e}}(\gls{e}\left[i\right]-m)^2 / d_{e}$. Typically, the scale $\boldsymbol{\gamma}$ and bias $\boldsymbol{\beta}$ are set to preserve a zero mean and unit variance.
 
 Until now it remains unclear, how the layer normalization intertwines with the sublayers and the residual connections. Transformers are distinguished by the order in which layer normalization is added into the pre-norm and post-norm Transformer.
 \begin{figure}[ht]
@@ -482,14 +490,14 @@ Besides feature-specific embedding, a \emph{shared embedding} is learned. This e
 \begin{subequations}
     \begin{align}
         \gls{e}_j = \boldsymbol{W}_j[:c_j] + \boldsymbol{W}_S[:j]\label{eq:tabtransformer-embedding-elementwise} \\
-        \intertext{Alternatively, categorical embeddings can also be concatenated from the feature-specific and shared embeddings. In order to maintain the overall embedding dimension of $d_{e}$, the dimensionality of the feature-specific embedding must be reduced to $d_{e} - \gamma$and the remaining dimensionality $\gamma$ is attributed to the shared embedding. With the embedding matrices $\boldsymbol{W}_j \in \mathbb{R}^{d_{e} -\gamma \times N_{C_j}}$ and $\boldsymbol{W}_S \in \mathbb{R}^{\gamma \times m}$ , the embedding is now given by:}
+        \intertext{Alternatively, categorical embeddings can also be concatenated from the feature-specific and shared embeddings. In order to maintain the overall embedding dimension of $d_{e}$, the dimensionality of the feature-specific embedding must be reduced to $d_{e} - \gamma$ and the remaining dimensionality $\gamma$ is attributed to the shared embedding. With the embedding matrices $\boldsymbol{W}_j \in \mathbb{R}^{d_{e} -\gamma \times N_{C_j}}$ and $\boldsymbol{W}_S \in \mathbb{R}^{\gamma \times m}$ , the embedding is now given by:}
         \gls{e}_j = \left[\boldsymbol{W}_j[:c_j], \boldsymbol{W}_S[:j]\right]^T.\label{eq:tabtransformer-embedding-concat}
     \end{align}
 \end{subequations}
 
 Both approaches from \cref{eq:tabtransformer-embedding-elementwise,eq:tabtransformer-embedding-concat}, achieve similar performance experiments of \textcite[][11]{huangTabTransformerTabularData2020}. No additional positional embedding is required, as embeddings are unique per feature.
 
-Analogous to \cref{sec:architectural-overview}, the embedding of each row, or $X = [\gls{e}_1, \cdots, \gls{e}_m]$, is subsequently passed through several Transformer layers, ultimately resulting in contextualized embeddings. At the end of the encoder, the contextual embeddings are flattened and concatenated with the numerical features into a ($d_{e}\times m + c$)-dimensional vector, which is input to a \gls{MLP} \autocite[][3]{huangTabTransformerTabularData2020}. Like before, a linear layer and a softmax activation are used to retrieve the class probabilities of $y$.
+Analogous to \cref{sec:architectural-overview}, the embedding of each row, or $\boldsymbol{X} = [\gls{e}_1, \cdots, \gls{e}_m]$, is subsequently passed through several Transformer layers, ultimately resulting in contextualized embeddings. At the end of the encoder, the contextual embeddings are flattened and concatenated with the numerical features into a ($d_{e}\times m + c$)-dimensional vector, which is input to a \gls{MLP} \autocite[][3]{huangTabTransformerTabularData2020}. Like before, a linear layer and a softmax activation are used to retrieve the class probabilities of $y$.
 
 However, embedding and contextualizing of only the categorical inputs remains imperfect, as no numerical data is considered in the attention mechanism, and correlations between categorical and numerical features are broken due to the processing in different subnetworks \autocite[][2]{somepalliSAINTImprovedNeural2021}. Also, the robustness to noise is hardly improved for numerical inputs. In a small experimental setup, \textcite[][8]{somepalliSAINTImprovedNeural2021} address this concern for the TabTransformer by also embedding numerical inputs, which leads to a lift in \gls{AUC} by \SI{2.34}{\percent} merely through numerical embedding. Their observation integrates with a wider strand of literature that suggests that models can profit from numerical embeddings, as we derived in \cref{sec:token-embeddings}. To expand on this idea, we introduce the FT-Transformer next.
 
@@ -553,6 +561,8 @@ In the subsequent section, extend all previous models including FT-Transformer f
     \caption[Training Schemes]{Training Schemes. Own work.}
     \label{fig:train-test-split}
 \end{figure}
+
+Within the period, we filter out trades, where a true label can be inferred, to avoid duplicates with the supervised training set. For self-training, this is essential, as labelled and unlabelled data is provided to the model simultaneously.
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 
@@ -657,7 +667,7 @@ Readily apparent from \cref{eq:effective-spread}, poor estimates for the predict
 \begin{equation}
     {PS}_{i,t} = S_{i,t} / V_{i,t}.
 \end{equation}
-% TODO check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price?
+% TODO check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does chakrabarty 2007?
 The subsequent section estimates both the nominal and relative effective spread for our test sets.
 
 \subsection{Simulation Results}\label{sec:simulation-results}
