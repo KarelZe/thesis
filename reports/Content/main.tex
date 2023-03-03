@@ -16,7 +16,7 @@ The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassi
 
 The work of \textcite[1--39]{grauerOptionTradeClassification2022} is relevant in two ways. First, the data set is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
 
-\subsection{Trade classification using machine learning}
+\subsection{Trade Classification Using Machine Learning}
 \label{sec:trade-classification-using-machine-learning}
 
 \textcite[5]{rosenthalModelingTradeDirection2012} bridges the gap between classical trade classification and machine learning by fitting a logistic regression model on lagged and unlagged predictors inherent to the tick rule, quote rule, and \cgls{EMO} algorithm, as well as a sector-specific and a time-specific term. Instead of using the rule's discretized outcome as a feature, he models the rules through so-called information strength functions \textcite[481--482]{rosenthalModelingTradeDirection2012}. The proximity to the quotes, central to the \cgls{EMO} algorithm, is thus modelled by a proximity function. Likewise, the information strength of the quote and tick rule is estimated as the log return between the trade price and the midpoint or the previous trade price. However, it only improves the accuracy of the \cgls{EMO} algorithm by a marginal \SI{2}{\percent} for \gls{NASDAQ} stocks and \SI{1.1}{\percent} for \cgls{NYSE} stocks \autocite[15]{rosenthalModelingTradeDirection2012}. Our work aims to improve the model by exploring non-linear estimators and minimizing data modelling assumptions.
@@ -262,6 +262,7 @@ The most basic application is in the \gls{LR} algorithm. For a more complex exam
 The trend towards sophisticated, hybrid rules, combining as many as four base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) ensembles found in machine learning and expresses the need for better classifiers. We provide an overview of state-of-the-art machine learning-based classifiers. We start by framing trade classification as a supervised learning problem.
 
 \newpage
+\addtocontents{toc}{\protect\newpage}
 \section{Supervised Approaches (12~p)}\label{sec:supervised-approaches}
 \subsection{Problem Framing}\label{sec:problem-framing}
 
@@ -533,7 +534,7 @@ In the subsequent section, extend all previous models including FT-Transformer f
 \subsection{Extensions to Gradient Boosted
     Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
 
-\subsection{Extensions to Transformer (2~p)}\label{sec:extensions-to-transformer}
+\subsection{Extensions to Transformers (2~p)}\label{sec:extensions-to-transformer}
 
 
 \newpage

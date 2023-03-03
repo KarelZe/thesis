@@ -12,6 +12,9 @@ Testing the empirical accuracy of our approaches requires option trades where th
 **Sample Construction**
 Our sample construction follows ([[@grauerOptionTradeClassification2022]]7--9), fostering comparability between both works. We start with 
 LiveVol (What does it contain?)
+What is the definition of the trade initiator?
+
+ur definition of buyer- and seller-initiated trades is based on the position taken by the Makler. It has the potential advantage of being directly related to many traditional microstructure models which assume the presence of a market maker. It has, on the other hand, the drawback that only transactions involving the Makler as a buyer or a seller can be classified.
 
 Following a standard procedure in literature, we filter out option trades with a trade price equal or less than zero and eliminate trades with a negative or zero trade volume as well as large trades with a trade volume exceeding 10,000,000 contracts. We further remove cancelled or duplicated trades and eliminate entries with multiple underlying symbols for the same root.
 
