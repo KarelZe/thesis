@@ -139,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🌏Dataset.md",
+                "file": "📑notes/🌏Dataset notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -167,7 +167,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🌏Dataset.md"
+                "file": "📑notes/🌏Dataset notes.md"
               }
             }
           },
@@ -198,11 +198,12 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "a2260b737ac42f97",
+  "active": "10e99281351f2328",
   "lastOpenFiles": [
-    "📑notes/🌏Dataset notes.md",
-    "📑notes/👨‍🍳Train-Test-split notes.md",
     "📖chapters/🌏Dataset.md",
+    "📑notes/🌏Dataset notes.md",
+    "🗿TOC.md",
+    "📑notes/👨‍🍳Train-Test-split notes.md",
     "📑notes/🍕Application study notes.md",
     "📖chapters/🍕Application study.md",
     "📑notes/🔢Tick test notes.md",
@@ -229,7 +230,6 @@
     "📥Inbox/@ellisAccuracyTradeClassification2000.md",
     "📑notes/🍔Layer norm notes.md",
     "📥Inbox/@leeMarketIntegrationPrice1993.md",
-    "📥Inbox/@petersenPostedEffectiveSpreads1994.md",
     "🖼️Media/asymmetric-spread.png",
     "🖼️Media/midpoint-spread.png",
     "🖼️Media/eff-spread-finucane.png"

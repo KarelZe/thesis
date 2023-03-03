@@ -543,14 +543,28 @@ In the subsequent section, extend all previous models including FT-Transformer f
 
 \subsection{Data and Data Preparation (6 p)}\label{sec:data-and-data-preparation}
 
+The following chapter describes how we construct datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss we infer the trade initiator.
+
+
 \subsubsection{Data Set (0.5~p)}\label{sec:data-set}
 
+\textbf{Data}
+ 
 Testing the empirical accuracy of our approaches requires option trades where the true initiator is known. To arrive at labelled sample, we combine data from four individual data sources. Our primary source is LiveVol, which records option trades executed at US option exchanges at a transaction level. We limit our focus to option trades executed at the \gls{CBOE} and \gls{ISE}. LiveVol contains both trade and matching quote data. Like most proprietary data sources, it does not distinguish the initiator nor does it include the involved trader types. For the \gls{CBOE} and \gls{ISE} exchange, the \gls{ISE} Open/Close Trade Profile and \gls{CBOE} Open-Close Volume Summary contain the buy and sell volumes for the option series by trader type aggregated on a daily level. A combination of the LiveVol data set with the \gls{ISE} Open/Close Trade Profile or the \gls{CBOE} Open-Close Volume Summary respectively, allows us to infer the trade initiator for a subset of trades, as we explain next. For evaluation and use in some of our machine learning models, we acquire additional underlying and option characteristics from IvyDB's OptionMetrics.
+
+\textbf{Sample Construction}
+
+The Open/Close datasets for the ISE and CBOE contain the daily buy and sell volumes for the option series by trader type, the trade volume and whether a position was closed or opened. Four trader types are available: customer, professional customer, broker/dealer, and firm proprietary. (...) Trade volumes for customers and professional customers are further detailed into small-sized trades ($\leq 100$ contracts), medium-sized trades ($101-199$ contracts), and large trades. As well as, if an existing position was closed or new position is opened. We first sum buy and sell orders of all trader types to obtain the daily trading volume at the ISE or CBOE per option series and day. Similarly, we calculate the aggregate volumes of customer buy and sell orders identified by the account type »customer«.
+
+(...)
+
+To infer the true label, we exploit the fact, that if there were only customer buy or sell orders, hence the customer buy or sell volume equals the daily trading volume, we can confidently sign all transactions for the option series at the specific date and exchange as either buyer- or seller-initiated. The applicability of our labelling approach is constrained by the existence of non-customer or simultaneous customer buy and sell trades. The so-obtained trade initiator is merged with the LiveVol trades of the exchange based on a unique key consisting of the trade date, expiration date, root symbol of the underlying, option type, and strike price.
 
 For the \gls{ISE} trades, our matched sample spans from 2 May 2005 to 31 May 2017 and includes \num{49203747} trades. The period covers the full history of \gls{ISE} open/close data up to the last date the dataset was available to us. Our matched \gls{CBOE} sample consists of \num{37155412} trades between 1 January 2011 and 31 October 2017. The sample period is governed by a paradigm shift in the construction of the \gls{CBOE} open/close dataset and our most recent trade in LiveVol.
 
 Following our initial rationale for using semi-supervised methods, we reserve unlabelled customer trades between 24 October 2012 and 24 October 2013 at the \gls{ISE} for pre-training. We provide further details in \cref{sec:train-test-split}.
 
+While our procedure makes the inference of the true trade initiator partly feasible, concerns regarding a selection bias due to the excessive filtering have to be raised. We acknowledge these concerns as part of our exploratory data analysis in \cref{sec:exploratory-data-analysis}, in which we compare unmerged and merged sub-samples.
 
 \subsubsection{Exploratory Data Analysis (2~p)}\label{sec:exploratory-data-analysis}
 

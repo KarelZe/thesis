@@ -21,7 +21,8 @@ Specification: https://datashop.cboe.com/documents/OpenCloseSpecification.pdf
 - contains daily trade volumes for the option series by trader type
 1. Differentiated by whether position is opened `O` / closed `C`
 2. Differentiated by buy  `B` and sell  `S` 
-3. Differentiated by trader types: customer `C`, professional customer `U`, firm proprietary `F/L`, broker/dealer `B/J`. Market maker `M/N` (?)
+3. Differentiated by trader types: customer `C`, professional customer `U`, firm proprietary `F/L`, broker/dealer `B/J`. Market maker `M/N` 
+4. Differentiated by volume: (<100 Contracts Each) (`SM`)
 - aggregate buy and sell volumes by account type:
 	- $\{C\} \times \{B\} \times \{O,C\}$ (Customer buy (against market maker?))
 	- $\{C\} \times \{S\} \times \{O,C\}$ (Customer sell (against market maker?))
@@ -32,6 +33,11 @@ Specification: https://datashop.cboe.com/documents/OpenCloseSpecification.pdf
 	- $\left\{FL \right\} \times \{B\} \times \{O,C\}$ (firm proprietary buy)
 	- $\left\{FL \right\} \times \{S\} \times \{O,C\}$ (firm proprietary sell)
 - Sum all 8 groups to obtain total trade volume at exchange
+
+https://www.nasdaqtrader.com/content/ProductsServices/DATAPRODUCTS/ISE/ISE-GEMX%20Consolidated%20Trade%20Profile%20FAQs%20v2.pdF
+What do you mean by FIRM, CUSTOMER and PROFESSIONAL CUSTOMER trades, and can you provide an example? The four types of trades at ISE are:  MARKET MAKER  FIRM  CUSTOMER  PROFESSIONAL CUSTOMER If a retail trader enters an option order through a broker like optionsXpress, the broker will designate the order as a CUSTOMER order. When a member like Morgan Stanley or Goldman enters a trade on behalf of a large customer, institution or hedge fund, the trade is designated a CUSTOMER trade. When a member like Morgan Stanley or Goldman enters a trade for their own account, the trade is designated as FIRM trade. FIRM trades can be PROPRIETARY trades, executed on behalf of their own trading account or for another BROKER/DEALER who is not a member of the exchange. A PROFESSIONAL CUSTOMER is a high-activity CUSTOMER.
+
+9. What is your definition of PROFESSIONAL CUSTOMER? ISE introduced a new trade designation on October 1, 2009 called PROFESSIONAL CUSTOMER. Anyone who is not trading for as a MARKET MAKER or FIRM account that enters more than 390 orders per day over the course of a one-month period is considered a PROFESSIONAL CUSTOMER.
 
 ## Matching procedure
 - Classify transactions in the live vol data set, if the daily volume in livevol matches with customer buys or customer sells. What about professional customer orders?

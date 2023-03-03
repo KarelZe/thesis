@@ -9,6 +9,41 @@
 - https://www.molecularecologist.com/2020/04/23/simple-tools-for-mastering-color-in-scientific-figures/
 - look into [[@lonesHowAvoidMachine2022]]
 - https://brushingupscience.com/2016/03/26/figures-need-attention-to-detail/
+- https://tex.stackexchange.com/questions/23193/siunitx-how-can-i-avoid-adding-decimal-zeroes
+
+```latex
+\documentclass{scrbook}
+
+\usepackage[round-mode=places, round-integer-to-decimal, round-precision=2,
+    table-format = 1.2, 
+    table-number-alignment=center,
+    round-integer-to-decimal,
+    output-decimal-marker={,}
+    ]{siunitx} 
+\usepackage{booktabs}
+
+\begin{document}
+
+\begin{table}
+\centering
+\sisetup{table-format=1.3, round-precision=3, table-comparator=true, round-integer-to-decimal=false}
+\begin{tabular}{S[round-mode=places]S[round-mode=off]}
+\toprule
+{``Places''} & {``Off''}\\
+\midrule
+  5,2   &   5,2   \\
+  0,246 &   0,246 \\
+ <0,002 &  <0,002 \\
+ <0,002 &  <0,002 \\
+  0,007 &   0,007 \\
+  0,42  &   0,42  \\
+  6,9   &   6,9   \\
+390     & 390     \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{document}
+```
 # Title
 Forget About the Rules: Improving Trade Side Classification With Machine Learning
 
