@@ -24,7 +24,7 @@ dependencies =[
   "catboost==1.1",
   "fastparquet==2023.2.0",
   "gcsfs==2023.1.0",
-  "google-auth==2.16.1", # needed by w&b in runpod
+  "google-auth==2.16.2", # needed by w&b in runpod
   "modin==0.17.0",
   "numpy==1.23.4",
   "optuna==3.0.3",
