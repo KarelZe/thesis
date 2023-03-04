@@ -16,7 +16,7 @@ The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassi
 
 The work of \textcite[1--39]{grauerOptionTradeClassification2022} is relevant in two ways. First, the data set is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
 
-\subsection{Trade classification using machine learning}
+\subsection{Trade Classification Using Machine Learning}
 \label{sec:trade-classification-using-machine-learning}
 
 \textcite[5]{rosenthalModelingTradeDirection2012} bridges the gap between classical trade classification and machine learning by fitting a logistic regression model on lagged and unlagged predictors inherent to the tick rule, quote rule, and \cgls{EMO} algorithm, as well as a sector-specific and a time-specific term. Instead of using the rule's discretized outcome as a feature, he models the rules through so-called information strength functions \textcite[481--482]{rosenthalModelingTradeDirection2012}. The proximity to the quotes, central to the \cgls{EMO} algorithm, is thus modelled by a proximity function. Likewise, the information strength of the quote and tick rule is estimated as the log return between the trade price and the midpoint or the previous trade price. However, it only improves the accuracy of the \cgls{EMO} algorithm by a marginal \SI{2}{\percent} for \gls{NASDAQ} stocks and \SI{1.1}{\percent} for \cgls{NYSE} stocks \autocite[15]{rosenthalModelingTradeDirection2012}. Our work aims to improve the model by exploring non-linear estimators and minimizing data modelling assumptions.
@@ -36,7 +36,7 @@ Every option trade has a buyer and seller side. For a plethora of problems in op
 
 % TODO: Write about different views on trade initiators in one sentence. Might be due to technical limitations. Ours is likely similar to Ellis or Theissen (p.3-4)-> also Savickas? (found in Peterson and Sirri)
 % TODO: We use $\hat{y}$ to distinguish the predicted from the observed trade initiator.
-% “Second, the present paper uses a different definition of the true trade classification than both Odders-White (1999) and Lightfoot et al. (1999). These authors consider a transaction to be buyer-initiated [seller-initiated] if the buy order [sell order] was placed last, chronologically. In contrast, we use a definition based on the position taken by the Makler (the equivalent of the specialist). If the Makler sold [bought] shares the transaction is classified as being buyer-initiated [seller-initiated]. This is similar to the approach in Ellis / Michaely / O’Hara (1999). They classify a trade as buyerinitiated [seller-initiated] if a customer or broker bought shares from [sold shares to] a marketmaker or if a customer bought shares from [sold shares to] a broker. Inter-broker and inter. 4 dealer trades are not classified. It is interesting to compare our results to those of Ellis / Michaely / O’Hara (1999) because the trading protocols in the two markets under scrutiny differ significantly. Whereas NASDAQ is a multiple dealer market, the Frankfurt Stock Exchange is a specialist market organized in a way similar to the NYSE.” ([Theissen, 2000, p. 4](zotero://select/library/items/ESEIBAMC)) ([pdf](zotero://open-pdf/library/items/2XMIU8NA?page=5&annotation=J2WH29SQ))
+% “Second, the present paper uses a different definition of the true trade classification than both Odders-White (1999) and Lightfoot et al. (1999). These authors consider a transaction to be buyer-initiated [seller-initiated] if the buy order [sell order] was placed last, chronologically. In contrast, we use a definition based on the position taken by the Makler (the equivalent of the specialist). If the Makler sold [bought] shares the transaction is classified as being buyer-initiated [seller-initiated]. This is similar to the approach in Ellis / Michaely / O’Hara (1999). They classify a trade as buyer-initiated [seller-initiated] if a customer or broker bought shares from [sold shares to] a marketmaker or if a customer bought shares from [sold shares to] a broker. Inter-broker and inter. 4 dealer trades are not classified. It is interesting to compare our results to those of Ellis / Michaely / O’Hara (1999) because the trading protocols in the two markets under scrutiny differ significantly. Whereas NASDAQ is a multiple dealer market, the Frankfurt Stock Exchange is a specialist market organized in a way similar to the NYSE.” ([Theissen, 2000, p. 4](zotero://select/library/items/ESEIBAMC)) ([pdf](zotero://open-pdf/library/items/2XMIU8NA?page=5&annotation=J2WH29SQ))
 
 % “We are not able to directly sign trades between two market makers (16.6% of the trades), or two brokers (4.5%). For 3.5% of the sample, we know that the trade took place on an ECN because one of the trader identities attached to the trade is the ECN identity code. We cannot sign the ECN trades as we do not have the time the orders were placed with the ECN. Because ECNs function as limit order books, we would need to know the time each order was placed and then use time priority to infer trade direction, with the later order being the trade motivator. (This is how Odders-White infers trade direction using the TORQ database.) Similarly, for the market maker-market maker and broker-broker trades, we do not know which party initiated the trade. In total, we exclude 24.6% of the sample that we cannot accurately sign.” ([Ellis et al., 2000, p. 533](zotero://select/library/items/54BPHWMV)) ([pdf](zotero://open-pdf/library/items/TTB4YUW6?page=6&annotation=XN5NQJMI))
 
@@ -262,6 +262,7 @@ The most basic application is in the \gls{LR} algorithm. For a more complex exam
 The trend towards sophisticated, hybrid rules, combining as many as four base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) ensembles found in machine learning and expresses the need for better classifiers. We provide an overview of state-of-the-art machine learning-based classifiers. We start by framing trade classification as a supervised learning problem.
 
 \newpage
+\addtocontents{toc}{\protect\newpage}
 \section{Supervised Approaches (12~p)}\label{sec:supervised-approaches}
 \subsection{Problem Framing}\label{sec:problem-framing}
 
@@ -533,7 +534,7 @@ In the subsequent section, extend all previous models including FT-Transformer f
 \subsection{Extensions to Gradient Boosted
     Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
 
-\subsection{Extensions to Transformer (2~p)}\label{sec:extensions-to-transformer}
+\subsection{Extensions to Transformers (2~p)}\label{sec:extensions-to-transformer}
 
 
 \newpage
@@ -543,9 +544,35 @@ In the subsequent section, extend all previous models including FT-Transformer f
 
 \subsection{Data and Data Preparation (6 p)}\label{sec:data-and-data-preparation}
 
-\subsubsection{ISE Data Set (0.5~p)}\label{sec:ise-data-set}
+The following chapter describes how we construct datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss we infer the trade initiator.
 
-\subsubsection{CBOE Data Set (0.5~p)}\label{sec:cboe-data-set}
+
+\subsubsection{Data Set (0.5~p)}\label{sec:dataset}
+
+\textbf{Data Sources}
+ 
+Testing the empirical accuracy of our approaches requires option trades where the true initiator is known. To arrive at labelled sample, we combine data from four individual data sources. Our primary source is LiveVol, which records option trades executed at US option exchanges at a transaction level. We limit our focus to option trades executed at the \gls{CBOE} and \gls{ISE}. LiveVol contains both trade and matching quote data. Like most proprietary data sources, it does not distinguish the initiator nor does it include the involved trader types. For the \gls{CBOE} and \gls{ISE} exchange, the \gls{ISE} Open/Close Trade Profile and \gls{CBOE} Open-Close Volume Summary contain the buy and sell volumes for the option series by trader type aggregated on a daily level. A combination of the LiveVol data set with the open/close data, allows us to infer the trade initiator for a subset of trades, as we explain next. For evaluation and use in some of our machine learning models, we acquire additional underlying and option characteristics from IvyDB's OptionMetrics.
+
+\textbf{Trade Initiator}
+
+We base our definition of the trade initiator on the position taken by the customer. This is similar to \textcite[][533]{ellisAccuracyTradeClassification2000} who classify trades based on the position of the customer 
+
+(...).
+
+\textbf{Sample Construction}
+
+Our sample construction follows \textcite[][7--9]{grauerOptionTradeClassification2022}, fostering comparability between both works. We acquire transaction-level options trade data for all major US exchanges from LiveVol. The dataset is tabular, and each record is time-stamped to the second. For each transaction, the executing exchange, trade price, trade volume, quotes and quote sizes for the exchanges where the option is quoted, as well as the \gls{NBBO} are recorded. This is sufficient to estimate the quote rule, depth rule, and trade size rule. In addition, for tick-based algorithms, we add the previous and subsequent distinguishable trade prices. We can uniquely identify the traded option series from a distinct key consisting of the underlying, expiration date, option type and strike price. Our analysis is conducted on transactions at the \gls{ISE} and \gls{CBOE}. Following a standard procedure in literature, we filter out option trades with a trade price equal to or less than zero and eliminate trades with a negative or zero trade volume as well as large trades with a trading volume exceeding \num{10000000} contracts. We further remove cancelled or duplicated trades and eliminate entries with multiple underlying symbols for the same root.
+
+The open/close datasets for the \gls{ISE} and \gls{CBOE} contain the daily buy and sell volumes for the option series by trader type, the trade volume and whether a position was closed or opened. Four trader types are available: customer, professional customer, broker/dealer, and firm proprietary. »Customer« orders are placed by a retail trader or a member of the exchange on behalf of the customer. »Professional customers« are distinguished from the former by a high trading activity ($\geq390$ orders per day over one month period). Likewise, trades by a member are classified as »proprietary«, if executed for their account or »broker/dealer« if placed for non-members of the exchange \autocite[][2]{nasdaqincFrequentlyAskedQuestions2017}. Trade volumes for customers and professional customers are further detailed into small-sized trades ($\leq 100$ contracts), medium-sized trades (101--199 contracts), and large trades. As well as, if an existing position was closed or a new position is opened. We first sum buy and sell orders of all trader types and volumes to obtain the daily trading volumes at the \gls{ISE} or \gls{CBOE} per option series and day. Similarly, we calculate the aggregate of the customer buy and sell volumes identified by the account type »customer«. Despite commonalities, we do not consider professional customers as customers, as the trader type became only available mid-sample.
+% TODO:Why don't we include professional customers? 
+
+To infer the true label, we exploit that, if there were only customer buy or sell orders, hence the customer buy or sell volume equals the daily trading volume, we can confidently sign all transactions for the option series at the specific date and exchange as either buyer- or seller-initiated. The applicability of our labelling approach is constrained by the existence of non-customer or simultaneous customer buy and sell trades. The so-obtained trade initiator is merged with the LiveVol trades of the exchange based on the unique key for the option series.
+
+For the \gls{ISE} trades, our matched sample spans from 2 May 2005 to 31 May 2017 and includes \num{49203747} trades. The period covers the full history of \gls{ISE} open/close data up to the last date the dataset was available to us. Our matched \gls{CBOE} sample consists of \num{37155412} trades between 1 January 2011 and 31 October 2017. The sample period is governed by a paradigm shift in the construction of the \gls{CBOE} open/close dataset and the most recent trade in our LiveVol subscription.
+
+Following our initial rationale for using semi-supervised methods, we reserve unlabelled customer trades between 24 October 2012 and 24 October 2013 at the \gls{ISE} for pre-training. We provide further details in \cref{sec:train-test-split}.
+
+While our procedure makes the inference of the true trade initiator partly feasible, concerns regarding a selection bias due to the excessive filtering have to be raised. We acknowledge these concerns as part of our exploratory data analysis in \cref{sec:exploratory-data-analysis}, in which we compare unmerged and merged sub-samples.
 
 \subsubsection{Exploratory Data Analysis (2~p)}\label{sec:exploratory-data-analysis}
 
