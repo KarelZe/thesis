@@ -24,13 +24,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "❓Questions.md",
+                "file": "📖chapters/🌏Dataset.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "90bbdd3c2ee01632",
@@ -90,8 +91,26 @@
     "type": "split",
     "children": [
       {
+        "id": "5a94b45177c17d20",
+        "type": "tabs",
+        "dimension": 52.21238938053098,
+        "children": [
+          {
+            "id": "a2c95dd6c2797e02",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "empty",
+              "state": {},
+              "pinned": true
+            }
+          }
+        ]
+      },
+      {
         "id": "c5256196fcf4b790",
         "type": "tabs",
+        "dimension": 47.78761061946903,
         "children": [
           {
             "id": "8399eb31ec07fd72",
@@ -138,6 +157,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "📖chapters/🌏Dataset.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -164,7 +184,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "📖chapters/🌏Dataset.md"
+              }
             }
           },
           {
@@ -194,13 +216,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f35a250acbe1a2dc",
+  "active": "a2260b737ac42f97",
   "lastOpenFiles": [
-    "❓Questions.md",
+    "📥Inbox/@nasdaqinc.FrequentlyAskedQuestions2017.md",
     "📖chapters/🌏Dataset.md",
     "📑notes/🌏Dataset notes.md",
-    "🗿TOC.md",
+    "Writing Monster.md",
+    "🖼️Media/Pasted image 20230304083112.png",
     "📑notes/👨‍🍳Train-Test-split notes.md",
+    "📖chapters/🪦graveyard of ideas.md",
+    "❓Questions.md",
+    "🗿TOC.md",
     "📑notes/🍕Application study notes.md",
     "📖chapters/🍕Application study.md",
     "📑notes/🔢Tick test notes.md",
@@ -215,7 +241,6 @@
     "📥Inbox/@boleyBetterShortGreedy2021.md",
     "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
-    "📖chapters/🪦graveyard of ideas.md",
     "📑notes/🍪Selection of semisupervised Approaches notes.md",
     "📖chapters/💡Training of models (supervised).md",
     "📖chapters/🛌Token Embedding.md",
@@ -224,8 +249,6 @@
     "📥Inbox/@hagstromerBiasEffectiveBidask2021.md",
     "📥Inbox/@Piwowar_2006.md",
     "📥Inbox/@ellisAccuracyTradeClassification2000.md",
-    "📑notes/🍔Layer norm notes.md",
-    "📥Inbox/@leeMarketIntegrationPrice1993.md",
     "🖼️Media/asymmetric-spread.png",
     "🖼️Media/midpoint-spread.png",
     "🖼️Media/eff-spread-finucane.png"
