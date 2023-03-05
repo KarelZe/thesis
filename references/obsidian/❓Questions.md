@@ -3,9 +3,6 @@
 - Are summary statistics in Panel A.2 and B.2. Customer orders only or all account types?
 - What happens to the trade volumes of professional customers? (filtered out?) Or treated as ordinary customers?
 - Ask about the scope of related work. Currently, trade classification in option markets (i) and trade classification with machine learning (ii). 
-- Be aware of averages from averages. Symmetric trees. Why something is no problem. feature importance with tree. group features. 
-- linebreak 4
-- plural transfromers
 
 ## Closed
 - Ask about self-plagiarism e.g., in chapter decision tree, as formulation and sources are similar to previous seminar. -> It's ok, as long as entire chapter isn't the same.

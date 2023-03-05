@@ -3,6 +3,10 @@
 [[🤖Training of the Transformer]]
 
 
+Look into grooking: https://arxiv.org/pdf/2201.02177.pdf
+![[grocking.png]]
+
+
 [[@somepalliSAINTImprovedNeural2021]] use logistic regression. I really like the fact they also compare a simple logistic regression to these models, because if you’re not able to perform notably better relative to the simplest model one could do, then why would we care? The fact that logistic regression is at times competitive and even beats boosting/SAINT methods occasionally gives me pause though. Perhaps some of these data are not sufficiently complex to be useful in distinguishing these methods? It is realistic though. While it’s best not to assume as such, sometimes a linear model is appropriate given the features and target at hand.
 
 

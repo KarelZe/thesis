@@ -29,9 +29,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "fc25f137fc8f3970",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🧭Kernel SHAP.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       },
       {
         "id": "90bbdd3c2ee01632",
@@ -91,26 +103,8 @@
     "type": "split",
     "children": [
       {
-        "id": "5a94b45177c17d20",
-        "type": "tabs",
-        "dimension": 52.21238938053098,
-        "children": [
-          {
-            "id": "a2c95dd6c2797e02",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "empty",
-              "state": {},
-              "pinned": true
-            }
-          }
-        ]
-      },
-      {
         "id": "c5256196fcf4b790",
         "type": "tabs",
-        "dimension": 47.78761061946903,
         "children": [
           {
             "id": "8399eb31ec07fd72",
@@ -157,7 +151,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🌏Dataset.md",
+                "file": "📖chapters/🧭Kernel SHAP.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -185,7 +179,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🌏Dataset.md"
+                "file": "📖chapters/🧭Kernel SHAP.md"
               }
             }
           },
@@ -216,16 +210,20 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "a2260b737ac42f97",
+  "active": "fc25f137fc8f3970",
   "lastOpenFiles": [
-    "📥Inbox/@nasdaqinc.FrequentlyAskedQuestions2017.md",
+    "❓Questions.md",
+    "📖chapters/💡Training of models (supervised).md",
+    "🖼️Media/grocking.png",
+    "📖chapters/🛌Token Embedding.md",
+    "📖chapters/🥮Ablation Study.md",
     "📖chapters/🌏Dataset.md",
+    "📥Inbox/@nasdaqinc.FrequentlyAskedQuestions2017.md",
     "📑notes/🌏Dataset notes.md",
     "Writing Monster.md",
     "🖼️Media/Pasted image 20230304083112.png",
     "📑notes/👨‍🍳Train-Test-split notes.md",
     "📖chapters/🪦graveyard of ideas.md",
-    "❓Questions.md",
     "🗿TOC.md",
     "📑notes/🍕Application study notes.md",
     "📖chapters/🍕Application study.md",
@@ -242,13 +240,9 @@
     "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📑notes/🍪Selection of semisupervised Approaches notes.md",
-    "📖chapters/💡Training of models (supervised).md",
-    "📖chapters/🛌Token Embedding.md",
     "🖼️Media/effective-spead-options.png",
     "📥Inbox/@petersonEvaluationBiasesExecution2003.md",
     "📥Inbox/@hagstromerBiasEffectiveBidask2021.md",
-    "📥Inbox/@Piwowar_2006.md",
-    "📥Inbox/@ellisAccuracyTradeClassification2000.md",
     "🖼️Media/asymmetric-spread.png",
     "🖼️Media/midpoint-spread.png",
     "🖼️Media/eff-spread-finucane.png"
