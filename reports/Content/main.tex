@@ -545,7 +545,7 @@ In the subsequent section, extend all previous models including FT-Transformer f
 
 \subsection{Data and Data Preparation (6 p)}\label{sec:data-and-data-preparation}
 
-The following chapter describes how we construct datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss we infer the trade initiator.
+The following chapter describes how we construct datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we infer the trade initiator.
 
 
 \subsubsection{Data Set}\label{sec:dataset}
@@ -590,7 +590,7 @@ While our procedure makes the inference of the true trade initiator partly feasi
     \label{fig:train-test-split}
 \end{figure}
 
-Within the period, we filter out trades, where a true label can be inferred, to avoid duplicates with the supervised training set. For self-training, this is essential, as labelled and unlabelled data is provided to the model simultaneously.
+We pre-train a model on unlabelled samples from the last year of the training period, as depicted in \cref{fig:train-test-split}. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades where the true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are fed to the model simultaneously. 
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 

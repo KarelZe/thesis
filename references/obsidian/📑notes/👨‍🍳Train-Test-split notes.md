@@ -71,8 +71,5 @@ test = df[df.QUOTE_DATETIME.between("2015-11-06 00:00:01", "2017-05-31 23:59:00"
 **How can we test for serial correlations?**
 - I think it's ok to argue by example.
 
-**Train-test-split in trade classification:**
-- *validation* Classical rules typically don't require a validation set, as the rules are free of hyperparameters.
-- *test* authors use a true out-of-sample test set to test their hypothesis. April for training and May to June for testing. Also, they test their hypothesis on a second data set. ([[@chakrabartyTradeClassificationAlgorithms2007]]3809)
 
 

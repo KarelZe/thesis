@@ -19,31 +19,33 @@
             }
           },
           {
+            "id": "fc25f137fc8f3970",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/👨‍🍳Tain-Test-split.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
             "id": "a2260b737ac42f97",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🌏Dataset.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "fc25f137fc8f3970",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🛌Token Embedding.md",
+                "file": "📖chapters/🚏Exploratory Data Analysis.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       },
       {
         "id": "90bbdd3c2ee01632",
@@ -58,20 +60,6 @@
               "type": "markdown",
               "state": {
                 "file": "📖chapters/🪦graveyard of ideas.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "10e99281351f2328",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🌏Dataset notes.md",
                 "mode": "source",
                 "source": false
               },
@@ -151,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🛌Token Embedding.md",
+                "file": "📖chapters/👨‍🍳Tain-Test-split.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -179,7 +167,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🛌Token Embedding.md"
+                "file": "📖chapters/👨‍🍳Tain-Test-split.md"
               }
             }
           },
@@ -212,6 +200,12 @@
   },
   "active": "fc25f137fc8f3970",
   "lastOpenFiles": [
+    "📖chapters/🚏Exploratory Data Analysis.md",
+    "📖chapters/👨‍🍳Tain-Test-split.md",
+    "📑notes/👨‍🍳Train-Test-split notes.md",
+    "📥Inbox/@ellisAccuracyTradeClassification2000.md",
+    "📖chapters/🌏Dataset.md",
+    "📖chapters/🛌Token Embedding.md",
     "🖼️Media/visualization-token-embedding.png",
     "📑notes/💤Embeddings for tabular data notes.md",
     "📑notes/🛌 Token embeddings notes.md",
@@ -219,20 +213,16 @@
     "❓Questions.md",
     "📖chapters/💡Training of models (supervised).md",
     "🖼️Media/grocking.png",
-    "📖chapters/🛌Token Embedding.md",
     "📖chapters/🥮Ablation Study.md",
-    "📖chapters/🌏Dataset.md",
     "📥Inbox/@nasdaqinc.FrequentlyAskedQuestions2017.md",
     "📑notes/🌏Dataset notes.md",
     "Writing Monster.md",
     "🖼️Media/Pasted image 20230304083112.png",
-    "📑notes/👨‍🍳Train-Test-split notes.md",
     "📖chapters/🪦graveyard of ideas.md",
     "🗿TOC.md",
     "📑notes/🍕Application study notes.md",
     "📖chapters/🍕Application study.md",
     "📑notes/🔢Tick test notes.md",
-    "📖chapters/👨‍🍳Tain-Test-split.md",
     "🖼️Media/summary-statistic.png",
     "🖼️Media/train-test-split.png",
     "viz-training-schemes.png.md",
@@ -242,7 +232,6 @@
     "📥Inbox/@malininUncertaintyGradientBoosting2021.md",
     "📥Inbox/@boleyBetterShortGreedy2021.md",
     "📑notes/🐈Gradient Boosting notes.md",
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
     "🖼️Media/effective-spead-options.png",
     "🖼️Media/asymmetric-spread.png",
     "🖼️Media/midpoint-spread.png",
