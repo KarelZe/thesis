@@ -592,6 +592,13 @@ While our procedure makes the inference of the true trade initiator partly feasi
 
 We pre-train a model on unlabelled samples from the last year of the training period, as depicted in \cref{fig:train-test-split}. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades where the true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are fed to the model simultaneously. 
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics{learning-curves-gradient-boosting.pdf}
+    \caption[Learning Curves]{Learning Curves. Own work.}
+    \label{fig:learning-curves-gradient-boosting}
+\end{figure}
+
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 
 \subsubsection{Training of Supervised

@@ -53,6 +53,8 @@ Data may however be shuffled in the subsets.
 
 Data within folds may however be shuffled to to accelerate training.
 
+https://gsarantitis.wordpress.com/2020/04/16/data-shift-in-machine-learning-what-is-it-and-how-to-detect-it/
+
 
 
 ![[train-test-split.png]] ^a92764
