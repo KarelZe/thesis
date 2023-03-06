@@ -39,7 +39,7 @@ dependencies =[
   "seaborn==0.12.2",
   "shap==0.41.0",
   "torch==1.13.0",
-  "tqdm==4.64.1",
+  "tqdm==4.65.0",
   "typer==0.7.0",
   "wandb==0.13.5",
 ]
