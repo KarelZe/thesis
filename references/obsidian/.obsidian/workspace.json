@@ -36,7 +36,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🧭Kernel SHAP.md",
+                "file": "📖chapters/🛌Token Embedding.md",
                 "mode": "source",
                 "source": false
               }
@@ -151,7 +151,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🧭Kernel SHAP.md",
+                "file": "📖chapters/🛌Token Embedding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -179,7 +179,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🧭Kernel SHAP.md"
+                "file": "📖chapters/🛌Token Embedding.md"
               }
             }
           },
@@ -212,6 +212,10 @@
   },
   "active": "fc25f137fc8f3970",
   "lastOpenFiles": [
+    "🖼️Media/visualization-token-embedding.png",
+    "📑notes/💤Embeddings for tabular data notes.md",
+    "📑notes/🛌 Token embeddings notes.md",
+    "📖chapters/🧭Kernel SHAP.md",
     "❓Questions.md",
     "📖chapters/💡Training of models (supervised).md",
     "🖼️Media/grocking.png",
@@ -239,10 +243,7 @@
     "📥Inbox/@boleyBetterShortGreedy2021.md",
     "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
-    "📑notes/🍪Selection of semisupervised Approaches notes.md",
     "🖼️Media/effective-spead-options.png",
-    "📥Inbox/@petersonEvaluationBiasesExecution2003.md",
-    "📥Inbox/@hagstromerBiasEffectiveBidask2021.md",
     "🖼️Media/asymmetric-spread.png",
     "🖼️Media/midpoint-spread.png",
     "🖼️Media/eff-spread-finucane.png"

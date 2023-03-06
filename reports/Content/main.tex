@@ -248,6 +248,7 @@ The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a perform
 
 The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which can not be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their ordering.
 
+% TODO: Murjajev (quote + quote on nbbo)
 The most basic application is in the \gls{LR} algorithm. For a more complex example consider the hybrid rule consisting of $\operatorname{tsize}(\cdot) \to \operatorname{quote}(\cdot) \to \operatorname{tick}(\cdot)$ in \cref{fig:stacking-algo}. An exemplary trade cannot be classified by the primary trade size rule and is signed by the quote rule, which is the first rule in the stack, able to classify the trade. Other trades can be classifiable by the trade size rule, which rules out the classification of the quote and tick rule. Theoretically, stacked rules can grow to great depth with an arbitrary arrangement. In practice, rules may be ordered greedily and new rules added if there are unclassified trades.
 
 \begin{figure}[ht!]
@@ -362,7 +363,7 @@ Aside from the multi-headed self-attention and feed-forward sublayer, the decode
 \end{landscape}
 The output of the decoder is finally passed through a linear layer with a softmax activation function to unembed the output and retrieve the probabilities of the next \gls{token} \autocite[][5]{vaswaniAttentionAllYou2017}. Since the output sequence is generated autoregressively, the most probable \gls{token} is fed back as input to the decoder to provide context for the following \glspl{token} until the remaining sequence is generated.
 
-For its original application, machine translation, both the encoder and decoder are used. Yet, the modular design allows adapting Transformers to a wider range of use cases, some of which only require the encoder or decoder. \textcite[][16--17]{raffelExploringLimitsTransfer2020} differentiate these modes: encoder-only architecture, which encodes the input to obtain an enriched representation, decoder-only architectures to generate new \glspl{token} and encoder-decoder models for sequence-to-sequence modelling autoregressively. As our focus is on the probabilistic classification of tabular data, the goal is to learn an enriched representation of the input for classifying the label, here $\gls{y}$, rather than generating new samples. As such, encoder-only Transformers suffice. This insights also guides the structure in the next chapters, which is limited to \glspl{embedding} and the inner workings of the encoder.
+For its original application, machine translation, both the encoder and decoder are used. Yet, the modular design allows adapting Transformers to a wider range of use cases, some of which only require the encoder or decoder. \textcite[][16--17]{raffelExploringLimitsTransfer2020} differentiate these modes: encoder-only architecture, which encodes the input to obtain an enriched representation, decoder-only architectures to generate new \glspl{token} and encoder-decoder models for sequence-to-sequence modelling autoregressively. As our focus is on the probabilistic classification of tabular data, the goal is to learn an enriched representation of the input for classifying the label, here $\gls{y}$, rather than generating new samples. As such, encoder-only Transformers suffice. This insight also guides the structure in the next chapters, which is limited to \glspl{embedding} and the inner workings of the encoder.
 
 \subsubsection{Token Embedding}\label{sec:token-embeddings}
 
@@ -371,12 +372,12 @@ For its original application, machine translation, both the encoder and decoder 
 
 In practice, the order of words is important for the overall meaning of a sentence. As such, \textcite[][6]{vaswaniAttentionAllYou2017} propose to inject information on the token's position within the sequence through a \emph{positional encoding}, that is added onto the token embedding. Contrary to sequences, columns in tabular data sets are arranged in an arbitrary order, which weakens the need for positional information. However, unless the embeddings per feature are unique, a positional embedding is also required so that the model can relate the otherwise identical embeddings to specific features and distinguish them \autocites[][3]{huangTabTransformerTabularData2020}[][15]{somepalliSAINTImprovedNeural2021}.
 
-Like token embeddings, positional embeddings can also be learned \autocite[cp.][4174]{devlinBERTPretrainingDeep2019}. Due to better, extrapolation capabilities, \textcite[][6]{vaswaniAttentionAllYou2017}, propose an positional encoding $\boldsymbol{W}_p: \mathbb{N} \rightarrow \mathbb{R}^{d_{e}}$ based on sine and cosine signals to encode the \emph{absolute} position of the token:
+Like token embeddings, positional embeddings can also be learned \autocite[cp.][4174]{devlinBERTPretrainingDeep2019}. Due to better, extrapolation capabilities, \textcite[][6]{vaswaniAttentionAllYou2017}, propose an positional encoding $\gls{W-p}: \mathbb{N} \rightarrow \mathbb{R}^{d_{e}}$ based on sine and cosine signals to encode the \emph{absolute} position of the token:
 
 \begin{equation}
     \begin{aligned}
-        \boldsymbol{W}_p[2 i-1, t] & =\sin \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right), \\
-        \boldsymbol{W}_p[2 i, t]   & =\cos \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right).
+        \gls{W-p}[2 i-1, t] & =\sin \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right), \\
+        \gls{W-p}[2 i, t]   & =\cos \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right).
     \end{aligned}
     \label{eq:sinusodal-encoding}
 \end{equation}
@@ -398,7 +399,7 @@ The reason for encoding with both the sine and cosine is more subtle, as either 
 
 The positional embedding is finally added per element to the token embedding to form a token's initial embedding $\gls{e}$. For the $\gls{t}$-th token of a sequence $\gls{x}$, the embedding becomes:
 \begin{equation}
-    \gls{e}=\boldsymbol{W}_e[:, x[t]]+\boldsymbol{W}_p[:, t].
+    \gls{e}=\gls{W-e}[:, x[t]]+\gls{W-p}[:, t].
     \label{eq:positional-embedding}
 \end{equation}
 
@@ -547,7 +548,7 @@ In the subsequent section, extend all previous models including FT-Transformer f
 The following chapter describes how we construct datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss we infer the trade initiator.
 
 
-\subsubsection{Data Set (0.5~p)}\label{sec:dataset}
+\subsubsection{Data Set}\label{sec:dataset}
 
 \textbf{Data Sources}
  
@@ -609,6 +610,9 @@ Within the period, we filter out trades, where a true label can be inferred, to 
 
 \subsubsection{Feature Importance
     Measure (2~p)}\label{sec:feature-importance-measure}
+
+\textbf{Random Feature Permutation}
+
 
 \textbf{Attention Maps}
 
