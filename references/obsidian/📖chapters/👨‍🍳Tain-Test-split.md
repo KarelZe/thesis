@@ -53,10 +53,15 @@ Data may however be shuffled in the subsets.
 
 Data within folds may however be shuffled to to accelerate training.
 
+<mark style="background: #ABF7F7A6;">You don't randomly split in time-series datasets because it doesn't respect the temporal order and causes _data-leakage_, e.g. unintentionally inferring the trend of future samples.</mark>
+
+<mark style="background: #BBFABBA6;">In machine learning, train/test split splits the data randomly, as there’s no dependence from one observation to the other. That’s not the case with time series data. Here, you’ll want to use values at the rear of the dataset for testing and everything else for training.</mark>
+
 https://gsarantitis.wordpress.com/2020/04/16/data-shift-in-machine-learning-what-is-it-and-how-to-detect-it/
+https://datascience.stanford.edu/news/splitting-data-randomly-can-ruin-your-model
+https://scikit-learn.org/stable/modules/cross_validation.html#timeseries-cv
 
-
-
+![[accuracies.png]]
 ![[train-test-split.png]] ^a92764
 
 We pre-train a model on unlabelled samples from the last year of the training period, as depicted in Fig-[[#^a92764]]. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades where the true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are fed to the model simultaneously. 
