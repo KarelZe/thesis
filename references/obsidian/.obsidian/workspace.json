@@ -200,9 +200,10 @@
   },
   "active": "fc25f137fc8f3970",
   "lastOpenFiles": [
-    "🖼️Media/accuracies.png",
     "📑notes/👨‍🍳Train-Test-split notes.md",
     "📖chapters/👨‍🍳Tain-Test-split.md",
+    "🖼️Media/accuracies.png",
+    "🖼️Media/learning-curves-gbm.png",
     "📖chapters/🚏Exploratory Data Analysis.md",
     "📥Inbox/@ellisAccuracyTradeClassification2000.md",
     "📖chapters/🌏Dataset.md",
@@ -233,8 +234,6 @@
     "📥Inbox/@malininUncertaintyGradientBoosting2021.md",
     "📥Inbox/@boleyBetterShortGreedy2021.md",
     "🖼️Media/effective-spead-options.png",
-    "🖼️Media/asymmetric-spread.png",
-    "🖼️Media/midpoint-spread.png",
-    "🖼️Media/eff-spread-finucane.png"
+    "🖼️Media/asymmetric-spread.png"
   ]
 }

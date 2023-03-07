@@ -35,39 +35,55 @@ Angsichts der
 
 A second question is,
 
+The used split deviates from previous works and is motivated by two observations from the [[🚏Exploratory Data Analysis]]:
 
 - What do previous works do? 
 - <mark style="background: #BBFABBA6;">What is enough data?</mark>
 - covariance shift
 - 
 
+This makes the hold-out method highly 
+
 Parts of our trades are unlabelled, as .
 
 Recall from earlier, that only for a subset of the dataset the labels are known.
 
-
 We perform 
-
 
 Data may however be shuffled in the subsets.
 
 Data within folds may however be shuffled to to accelerate training.
 
-<mark style="background: #ABF7F7A6;">You don't randomly split in time-series datasets because it doesn't respect the temporal order and causes _data-leakage_, e.g. unintentionally inferring the trend of future samples.</mark>
+Prior works used ... the presence of. 
 
-<mark style="background: #BBFABBA6;">In machine learning, train/test split splits the data randomly, as there’s no dependence from one observation to the other. That’s not the case with time series data. Here, you’ll want to use values at the rear of the dataset for testing and everything else for training.</mark>
+Data is however , which would severley 
 
-https://gsarantitis.wordpress.com/2020/04/16/data-shift-in-machine-learning-what-is-it-and-how-to-detect-it/
-https://datascience.stanford.edu/news/splitting-data-randomly-can-ruin-your-model
-https://scikit-learn.org/stable/modules/cross_validation.html#timeseries-cv
+([[@hastietrevorElementsStatisticalLearning2009]]222) recommend the dataset into subsets based on the signal-to-noise-ratio in the data and the training sample size. Following common practice, we initially use 60 %  for training and 20 % each for validation and testing. Samples of one day are assigned to either one set to simplifying evaluation and the temporal ordering is maintained to avoid data leakage. Data within the training set may however be permuted to accelerate training.
 
-![[accuracies.png]]
-![[train-test-split.png]] ^a92764
+![[train-test-split.png]] ^a92764 
 
-We pre-train a model on unlabelled samples from the last year of the training period, as depicted in Fig-[[#^a92764]]. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades where the true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are fed to the model simultaneously. 
+Overall,  we use gls-ISE data from 2 May 2005 to 24 October 2013 to train and data between 25 October 2013 and 5 November 2015 to validate our models. The most recent trades until 31 May 2017 to assess the generalization error. The timespans for the gls-CBOE sample are adjusted accordingly. Here, the sets go from 1 January 1974 to 1 January 1974, 1 January 1974 to 1 January 1974, and 1 January 1974 to 1 January 1974, respectively, as visualized in Fig-[[#^a92764]].
+
+We pre-train a model on unlabelled samples from the last year of the training period, as depicted in Fig-[[#^a92764]]. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades for which true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously. 
+
+Question
+
+Still, we want to Given our observations ragarding the data shift in Section [[🚏Exploratory Data Analysis]] we want to verify the appropriateness of the chosen split. 
+
+We conduct this analysis on the training and validation set to avoid information leaking from the test set.
+-  data shift + s
+
+two sanity checks.
+
+We verify the appropriateness of the split by studying the learning 
+
+![[learning-curves-gbm.png]]
+
+We employ adversarial validation to the
 
 
 
+The next Section presents the training procedures. Our focus is on hyperparameter tuning on the validation set.
 
 **Notes:**
 [[👨‍🍳Train-Test-split notes]]
