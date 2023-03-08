@@ -139,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/👨‍🍳Tain-Test-split.md",
+                "file": "📑notes/👨‍🍳Train-Test-split notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -167,7 +167,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/👨‍🍳Tain-Test-split.md"
+                "file": "📑notes/👨‍🍳Train-Test-split notes.md"
               }
             }
           },
@@ -198,10 +198,13 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "fc25f137fc8f3970",
+  "active": "fb85b0f4ac4f833d",
   "lastOpenFiles": [
-    "📑notes/👨‍🍳Train-Test-split notes.md",
     "📖chapters/👨‍🍳Tain-Test-split.md",
+    "📑notes/👨‍🍳Train-Test-split notes.md",
+    "🖼️Media/learning-curves-bias-variance.png",
+    "🖼️Media/adv-validation-gradient-boosting.png",
+    "🖼️Media/learning-curves.png",
     "🖼️Media/accuracies.png",
     "🖼️Media/learning-curves-gbm.png",
     "📖chapters/🚏Exploratory Data Analysis.md",
@@ -228,12 +231,9 @@
     "🖼️Media/summary-statistic.png",
     "🖼️Media/train-test-split.png",
     "viz-training-schemes.png.md",
-    "🖼️Media/viz-training-schemes.png",
     "📖chapters/🐈Gradient Boosting.md",
     "📑notes/🍪Selection of supervised approaches notes.md",
     "📥Inbox/@malininUncertaintyGradientBoosting2021.md",
-    "📥Inbox/@boleyBetterShortGreedy2021.md",
-    "🖼️Media/effective-spead-options.png",
-    "🖼️Media/asymmetric-spread.png"
+    "📥Inbox/@boleyBetterShortGreedy2021.md"
   ]
 }

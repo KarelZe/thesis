@@ -590,7 +590,14 @@ While our procedure makes the inference of the true trade initiator partly feasi
     \label{fig:train-test-split}
 \end{figure}
 
-We pre-train a model on unlabelled samples from the last year of the training period, as depicted in \cref{fig:train-test-split}. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades where the true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are fed to the model simultaneously. 
+\begin{figure}[ht]
+    \centering
+    \includegraphics{adv-val-gradient-boosting.pdf}
+    \caption[Adversarial Validation]{Adversarial Validation. Own work.}
+    \label{fig:adv-validation}
+\end{figure}
+
+We pre-train a model on unlabelled samples from the last year of the training period, as depicted in \cref{fig:train-test-split}. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades where the true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously. 
 
 \begin{figure}[ht]
     \centering
@@ -599,12 +606,11 @@ We pre-train a model on unlabelled samples from the last year of the training pe
     \label{fig:learning-curves-gradient-boosting}
 \end{figure}
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics{adv-val-gradient-boosting.pdf}
-    \caption[Adversarial Validation]{Adversarial Validation. Own work.}
-    \label{fig:adv-validation}
-\end{figure}
+Several observations can be drawn from \cref{fig:learning-curves-gradient-boosting} (left). Adding more training instances will likely improve the accuracy of the training set. The low training error also indicates that the chosen model is sufficiently complex to fit the data, resulting in a low bias. The accuracy for the validation set plateaus at \SI{75.53}{\percent} after \num{9999999} samples, leaving a significant gap between the training and testing accuracy, indicating a high variance. Hence, adding older observations, before 1 January 1974, to the training set, improves the training performance, but little affects validation performance when all samples are assigned an equal weight. Naturally, patterns in older instances of the training set might not be as relevant as more recent ones for classifying trades out-of-sample, which could explain the stalling performance for extended training sets. We incorporate this idea by weighting training samples with decaying weights over time. Results are shown in \cref{fig:learning-curves-gradient-boosting} (right) exemplary for exponential weighting. Exponential weighting improves both overfitting and generalization performance as derived from the annealing of train and test scores and the overall improved performance with accuracies up to \SI{75.76}{\percent}. 
+
+While a smaller subsample of the training set would suffice in both cases, our training set encompasses the entire history to mitigate any sampling bias and we instead weight observations based on their temporal proximity. Overall, the training split minimizes data leakage and sensibly utilizes all available data.
+
+From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we emphasize regularization techniques in the training procedure as we show next. 
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 

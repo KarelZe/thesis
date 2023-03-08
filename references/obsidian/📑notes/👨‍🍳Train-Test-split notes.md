@@ -7,6 +7,9 @@ The available data set is split into three disjoint sets. First, the training se
 
 ## Ammos 🗒️
 
+As the Even in-sample a perfect classification a perfect classification may be illussinary to . .
+
+We do not achieve a perfect training accuracy which attribute to a low-signal-to-nose-ratio
 
 For the static training scheme we follow Gu et al. (2021) and Chen et al. (2021) and split the data set into three sets. We use data until November 2010 for training and validate our models on data from December 2010 to October 2015, as shown in figure 1a. The remaining data is used for out-of-sample testing until June 2020 for the annual and May 2021 for the monthly data set. This yields a classical 59.67- 20.46-19.86 % split for the annual horizon. While computationally cheap, a static scheme fails to leverage recent information for the prediction from December 2010 onwards. A promising alternative is a rolling scheme, that incorporates recent data through retraining a model on updating sets, as employed by Freyberger et al. (2020), Gu et al. (2020) or Grammig et al. (2020). In a rolling scheme, fixed-size training and validation windows gradually shift forward in time, thereby dropping older observations and incorporating newer ones. The performance is evaluated on then 4 EMPIRICAL STUDY 13 unseen data starting in November 2016. We set the window length to one year for the training and the validation set and refit our models annually, as visualised in figure 1b totalling in up to ten re-trainings, which is a balanced choice between data recency and computational feasibility.
 
@@ -19,7 +22,7 @@ https://datascience.stanford.edu/news/splitting-data-randomly-can-ruin-your-mode
 https://scikit-learn.org/stable/modules/cross_validation.html#timeseries-cv
 https://arxiv.org/pdf/1905.11744.pdf
 
-one of the fundamental assumptions of many statistical analyses  that data is statistically independent. (https://www.influxdata.com/blog/autocorrelation-in-time-series-data/)
+one of the fundamental assumptions of mafny statistical analyses  that data is statistically independent. (https://www.influxdata.com/blog/autocorrelation-in-time-series-data/)
 
 Convert between label and class: https://www.jmlr.org/papers/volume11/ojala10a/ojala10a.pdf
 
@@ -64,7 +67,15 @@ test = df[df.QUOTE_DATETIME.between("2015-11-06 00:00:01", "2017-05-31 23:59:00"
 
 - To verify the samples in the training and validation set are drawn from the same distribution, we perform adversarial validation.  
 
+![[learning-curves-bias-variance.png]]
+
+The new gap between the two learning curves suggests a substantial increase in variance. The low training MSEs corroborate this diagnosis of high variance. The large gap and the low training error also indicates an overfitting problem. Overfitting happens when the model performs well on the training set, but far poorer on the test (or validation) set. One more important observation we can make here is that _adding new training instances_ is very likely to lead to better models.
+
 **How much data is enough?**
+
+The new gap between the two learning curves suggests a substantial increase in variance. The low training MSEs corroborate this diagnosis of high variance. The large gap and the low training error also indicates an overfitting problem. Overfitting happens when the model performs well on the training set, but far poorer on the test (or validation) set. One more important observation we can make here is that _adding new training instances_ is very likely to lead to better models. The validation curve doesn’t plateau at the maximum training set size used. It still has potential to decrease and converge toward the training curve, similar to the convergence we see in the linear regression case. So far, we can conclude tha
+
+
 - more data is better, but what about the shift in data?
 - Plot learning curves to estimate whether performance will increase with the number of samples. Use it to motivate semi-supervised learning.  [Plotting Learning Curves — scikit-learn 1.1.2 documentation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html) and [Tutorial: Learning Curves for Machine Learning in Python for Data Science (dataquest.io)](https://www.dataquest.io/blog/learning-curves-machine-learning/)
 ![[learning-curves-samples.png]]

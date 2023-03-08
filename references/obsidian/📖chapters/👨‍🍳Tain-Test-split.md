@@ -24,6 +24,10 @@ The performed split is notably different from previous works.
 - *test* authors use a true out-of-sample test set to test their hypothesis. April for training and May to June for testing. Also, they test their hypothesis on a second data set. ([[@chakrabartyTradeClassificationAlgorithms2007]]3809)
  [[@ellisAccuracyTradeClassification2000]] use true out-of-sample testing / second test set.
 
+Prior research used random splits, cross-validation (), or. 
+
+In the absence of hyperparameters a suffices
+
 Both splits would ever estimate the model performance. 
 
 
@@ -58,32 +62,42 @@ Prior works used ... the presence of.
 
 Data is however , which would severley 
 
-([[@hastietrevorElementsStatisticalLearning2009]]222) recommend the dataset into subsets based on the signal-to-noise-ratio in the data and the training sample size. Following common practice, we initially use 60 %  for training and 20 % each for validation and testing. Samples of one day are assigned to either one set to simplifying evaluation and the temporal ordering is maintained to avoid data leakage. Data within the training set may however be permuted to accelerate training.
+([[@hastietrevorElementsStatisticalLearning2009]]222) recommend to split the dataset into subsets based on the signal-to-noise-ratio in the data and the training sample size. Following common practice, we initially use 60 %  for training and 20 % each for validation and testing. Samples of one day are assigned to either one set for precise evaluation and the temporal ordering is maintained to avoid data leakage. Data within the training set can be permuted to accelerate training.
 
 ![[train-test-split.png]] ^a92764 
-
 Overall,  we use gls-ISE data from 2 May 2005 to 24 October 2013 to train and data between 25 October 2013 and 5 November 2015 to validate our models. The most recent trades until 31 May 2017 to assess the generalization error. The timespans for the gls-CBOE sample are adjusted accordingly. Here, the sets go from 1 January 1974 to 1 January 1974, 1 January 1974 to 1 January 1974, and 1 January 1974 to 1 January 1974, respectively, as visualized in Fig-[[#^a92764]].
 
 We pre-train a model on unlabelled samples from the last year of the training period, as depicted in Fig-[[#^a92764]]. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades for which true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously. 
 
-Question
-
-Still, we want to Given our observations ragarding the data shift in Section [[🚏Exploratory Data Analysis]] we want to verify the appropriateness of the chosen split. 
-
-We conduct this analysis on the training and validation set to avoid information leaking from the test set.
--  data shift + s
-
+We want to underpin that the chosen split is appropriate for ... Still, we want to Given our observations ragarding the data shift in Section [[🚏Exploratory Data Analysis]] we want to verify the appropriateness of the chosen split. 
 two sanity checks.
+- If the size
 
-We verify the appropriateness of the split by studying the learning 
+We conduct this analysis on the training and validation set to avoid information leaking from the test set. A gradient-boosting model with default parameters is used to  
 
-![[learning-curves-gbm.png]]
+
+![[adv-validation-gradient-boosting.png]]
+
+Thus, if features
+
+For insights into the (...)
+At this point, here are a couple of things we could do to improve our model:
+
 
 We employ adversarial validation to the
+We verify the appropriateness of the split by studying the learning of 
 
 
+-  data shift + s
 
-The next Section presents the training procedures. Our focus is on hyperparameter tuning on the validation set.
+In a similar vein, we study the size of the dataset 
+From cref-fig we conclude that the chosen train-split and size of. A 
+
+![[learning-curves.png]]
+ 
+From (cref-fig) (a) several observations can be drawn. Adding more training instances will likely improve the accuracy of the training set. The low training error also indicates that the chosen model is sufficiently complex to fit the data, resulting in a low bias. The accuracy for the validation set plateaus at 75.53 % after (...) samples, leaving a significant gap between the training and testing accuracy, indicating a high variance. Hence, adding older instances, before 1 January 1974, to the training set, improves the training performance, but merely affects validation performance when all samples are assigned an equal weight. Naturally, patterns in older observations of the training set might not be as relevant as more recent ones for classifying trades out-of-sample, which could explain the stalling performance for extended training sets. We incorporate this idea by weighting training samples with decaying weights over time. Results are shown in (cref-fig) (b) exemplary for an exponential weighting. Exponential weighting improves both overfitting and generalization performance as derived from the annealing of train and test scores and the overall improved performance with accuracies up to 75.76 %. 
+
+While a smaller subsample of the training set would suffice in both cases, our training set encompasses the entire history to mitigate any sampling bias and we instead weight observations based on their temporal proximity, so that more recent observations have greater importance in the training set. From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we emphasize regularization techniques in the training procedure as we show next. 
 
 **Notes:**
 [[👨‍🍳Train-Test-split notes]]
