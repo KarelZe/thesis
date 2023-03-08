@@ -590,14 +590,23 @@ While our procedure makes the inference of the true trade initiator partly feasi
     \label{fig:train-test-split}
 \end{figure}
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics{adv-val-gradient-boosting.pdf}
-    \caption[Adversarial Validation]{Adversarial Validation. Own work.}
-    \label{fig:adv-validation}
-\end{figure}
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics{adv-val-gradient-boosting.pdf}
+%     \caption[Adversarial Validation]{Adversarial Validation. Own work.}
+%     \label{fig:adv-validation}
+% \end{figure}
 
-We pre-train a model on unlabelled samples from the last year of the training period, as depicted in \cref{fig:train-test-split}. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades where the true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously. 
+Optimally, samples in the train, validation, and test set come from the same distribution. The presence of the data shift, as observed in \cref{sec:exploratory-data-analysis} within the training set raises concerns, that the assumption holds. We test for the similarity of the training and validation set and identify problematic features using \emph{adversarial validation}. As such, we re-label all trades within the training set with $y=0$ and all trades of the validation set with $y=1$. We then train a classifier on a random subset of the composed data and predict the conformance to the train or validation set for the remaining samples. More specifically a gradient boosting classifier is used for its competitive predictions with default hyperparameters its computational efficiency. The performance is estimated using the \gls{MCC}, which is insensitive to class imbalances. Assuming train and test samples come from the same distribution, the obtained performance estimate is near a random guess, or $\operatorname{MCC} = 0$.
+
+(...)
+
+Overall,  we use \gls{ISE} data from 2 May 2005 to 24 October 2013 to train and data between 25 October 2013 and 5 November 2015 to validate our models. The most recent trades until 31 May 2017 to assess the generalization error. The timespans for the \gls{CBOE} sample are adjusted accordingly. Here, the sets go from 1 January 1974 to 1 January 1974, 1 January 1974 to 1 January 1974, and 1 January 1974 to 1 January 1974, respectively, as visualized in \cref{fig:train-test-split}.
+
+We pre-train a model on unlabelled samples from the last year of the training period, as depicted in \cref{fig:train-test-split}. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades for which true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously. 
+
+
+To study the appropriateness of the size of the training set, we study the learning curves of a classifier. Learning curves visualize the score of the classifier dependent on the size of the training set \autocite[][243]{hastietrevorElementsStatisticalLearning2009}. Moreover, they provide insights into the bias and variance of the estimators. We train a gradient boosting model with default parameters on ten subsets of the training set and evaluate on the validation set. To maintain the temporal ordering, we start training of the \SI{10.00}{\percent} most recent samples and add older observations as we progress. Gradient boosting is well-suited for this analysis for the same reasons given above.
 
 \begin{figure}[ht]
     \centering

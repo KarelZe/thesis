@@ -139,7 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/👨‍🍳Train-Test-split notes.md",
+                "file": "📖chapters/👨‍🍳Tain-Test-split.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -167,7 +167,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/👨‍🍳Train-Test-split notes.md"
+                "file": "📖chapters/👨‍🍳Tain-Test-split.md"
               }
             }
           },
@@ -198,10 +198,10 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "fb85b0f4ac4f833d",
+  "active": "fc25f137fc8f3970",
   "lastOpenFiles": [
-    "📖chapters/👨‍🍳Tain-Test-split.md",
     "📑notes/👨‍🍳Train-Test-split notes.md",
+    "📖chapters/👨‍🍳Tain-Test-split.md",
     "🖼️Media/learning-curves-bias-variance.png",
     "🖼️Media/adv-validation-gradient-boosting.png",
     "🖼️Media/learning-curves.png",

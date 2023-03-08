@@ -72,12 +72,11 @@ We pre-train a model on unlabelled samples from the last year of the training pe
 We want to underpin that the chosen split is appropriate for ... Still, we want to Given our observations ragarding the data shift in Section [[🚏Exploratory Data Analysis]] we want to verify the appropriateness of the chosen split. 
 two sanity checks.
 - If the size
+These are called _learning curves_. In a nutshell, a learning curve shows how error changes as the training set size increases.
 
-We conduct this analysis on the training and validation set to avoid information leaking from the test set. A gradient-boosting model with default parameters is used to  
+We conduct this analysis on the training and validation set to avoid information leaking from the test set. To estimate We first calculate the learning curves for 
 
-
-![[adv-validation-gradient-boosting.png]]
-
+We estimate the similarity of 
 Thus, if features
 
 For insights into the (...)
@@ -92,6 +91,19 @@ We verify the appropriateness of the split by studying the learning of
 
 In a similar vein, we study the size of the dataset 
 From cref-fig we conclude that the chosen train-split and size of. A 
+
+These are called _learning curves_. In a nutshell, a learning curve shows how error changes as the training set size increases.
+
+We employ an adversarial validation to 
+
+corrobates
+
+Optimally, samples in the train, validation, and test should come from the same distribution. The presence of the data shift, as observed in cref-[[🚏Exploratory Data Analysis]] within the training set raises concerns, that the assumption holds. We test for the similarity of the training and validation set and identify problematic features using *adversarial validation*. As such, we re-label all trades within the training set with 0 and all trades of the validation set with 1. We then train a classifier on a random subset of the composed data and predict the conformance to the train or validation set for the remaining samples. More specifically, we use a gradient boosting classifier, which gives competitive predictions with default hyperparameters and is least computationally demanding. As samples in the training set are more frequent than validation samples, performance is estimated using the gls-ROC-AUC, which is insensitive to class imbalances. Assuming train and test samples come from the same distribution, the obtained performance estimate is near a random guess.
+
+![[adv-validation-gradient-boosting.png]]
+(describe plot but use different measure)
+
+To study the appropriateness of the size of the training set, we study the *learning curves* of a classifier. Learning curves visualize the score of the classifier dependent on the size of the training set ([[@hastietrevorElementsStatisticalLearning2009]]243).  Moreover, learning curves provide insights into the bias and variance of the estimators. We train a gradient boosting model with default parameters on ten subsets of the training set and evaluate on the validation set. To maintain the temporal ordering, we start training of the 10 % most recent samples and add older observations as we progress. Gradient boosting is well-suited for this analysis for the reasons given above. 
 
 ![[learning-curves.png]]
  
