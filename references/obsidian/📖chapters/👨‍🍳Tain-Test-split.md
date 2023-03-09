@@ -69,34 +69,11 @@ Overall,  we use gls-ISE data from 2 May 2005 to 24 October 2013 to train and da
 
 We pre-train a model on unlabelled samples from the last year of the training period, as depicted in Fig-[[#^a92764]]. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades for which true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously. 
 
-We want to underpin that the chosen split is appropriate for ... Still, we want to Given our observations ragarding the data shift in Section [[🚏Exploratory Data Analysis]] we want to verify the appropriateness of the chosen split. 
-two sanity checks.
-- If the size
-These are called _learning curves_. In a nutshell, a learning curve shows how error changes as the training set size increases.
+So far two aspects remain open:
+- If the size of the resulting sets is appropriate for the complexity of the problem.
+- In presence of an observed concept drift in the training set (see cref-[[🚏Exploratory Data Analysis]]),
 
-We conduct this analysis on the training and validation set to avoid information leaking from the test set. To estimate We first calculate the learning curves for 
-
-We estimate the similarity of 
-Thus, if features
-
-For insights into the (...)
-At this point, here are a couple of things we could do to improve our model:
-
-
-We employ adversarial validation to the
-We verify the appropriateness of the split by studying the learning of 
-
-
--  data shift + s
-
-In a similar vein, we study the size of the dataset 
-From cref-fig we conclude that the chosen train-split and size of. A 
-
-These are called _learning curves_. In a nutshell, a learning curve shows how error changes as the training set size increases.
-
-We employ an adversarial validation to 
-
-corrobates
+We subsequently address these aspects to underpin our choice for the training split. The analysis is conducted on the training and validation set to avoid information leaking from the test set. 
 
 Optimally, samples in the train, validation, and test should come from the same distribution. The presence of the data shift, as observed in cref-[[🚏Exploratory Data Analysis]] within the training set raises concerns, that the assumption holds. We test for the similarity of the training and validation set and identify problematic features using *adversarial validation*. As such, we re-label all trades within the training set with 0 and all trades of the validation set with 1. We then train a classifier on a random subset of the composed data and predict the conformance to the train or validation set for the remaining samples. More specifically, we use a gradient boosting classifier, which gives competitive predictions with default hyperparameters and is least computationally demanding. As samples in the training set are more frequent than validation samples, performance is estimated using the gls-ROC-AUC, which is insensitive to class imbalances. Assuming train and test samples come from the same distribution, the obtained performance estimate is near a random guess.
 
@@ -106,8 +83,8 @@ Optimally, samples in the train, validation, and test should come from the same 
 To study the appropriateness of the size of the training set, we study the *learning curves* of a classifier. Learning curves visualize the score of the classifier dependent on the size of the training set ([[@hastietrevorElementsStatisticalLearning2009]]243).  Moreover, learning curves provide insights into the bias and variance of the estimators. We train a gradient boosting model with default parameters on ten subsets of the training set and evaluate on the validation set. To maintain the temporal ordering, we start training of the 10 % most recent samples and add older observations as we progress. Gradient boosting is well-suited for this analysis for the reasons given above. 
 
 ![[learning-curves.png]]
- 
-From (cref-fig) (a) several observations can be drawn. Adding more training instances will likely improve the accuracy of the training set. The low training error also indicates that the chosen model is sufficiently complex to fit the data, resulting in a low bias. The accuracy for the validation set plateaus at 75.53 % after (...) samples, leaving a significant gap between the training and testing accuracy, indicating a high variance. Hence, adding older instances, before 1 January 1974, to the training set, improves the training performance, but merely affects validation performance when all samples are assigned an equal weight. Naturally, patterns in older observations of the training set might not be as relevant as more recent ones for classifying trades out-of-sample, which could explain the stalling performance for extended training sets. We incorporate this idea by weighting training samples with decaying weights over time. Results are shown in (cref-fig) (b) exemplary for an exponential weighting. Exponential weighting improves both overfitting and generalization performance as derived from the annealing of train and test scores and the overall improved performance with accuracies up to 75.76 %. 
+
+From (cref-fig) (a) several observations can be drawn. Adding more training instances will likely improve the accuracy of the training set. The low training error also indicates that the chosen model is sufficiently complex to fit the data, resulting in a low bias. The accuracy for the validation set plateaus at 75.53 % after (...) samples, leaving a significant gap between the training and testing accuracy, indicating a high variance. Hence, adding older instances, before 1 January 1974, to the training set, improves the training performance, but merely affects validation performance when all samples are assigned an equal weight. Naturally, patterns in older observations of the training set might not be as relevant as more recent ones for classifying trades out-of-sample, which could explain the stalling performance for extended training sets. We incorporate this idea by weighting training samples with decaying weights over time. Results are shown in (cref-fig) (b) exemplary for an exponential weighting. Exponential weighting improves both overfitting and generalization performance as derived from the annealing of train and test scores and the overall improved performance with accuracies up to 75.76 %. <mark style="background: #FFB86CA6;">One question learning curves can not dissolve, is how much of the generalization error is irreduable.</mark>
 
 While a smaller subsample of the training set would suffice in both cases, our training set encompasses the entire history to mitigate any sampling bias and we instead weight observations based on their temporal proximity, so that more recent observations have greater importance in the training set. From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we emphasize regularization techniques in the training procedure as we show next. 
 
