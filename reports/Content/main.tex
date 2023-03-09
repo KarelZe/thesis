@@ -541,11 +541,15 @@ In the subsequent section, extend all previous models including FT-Transformer f
 \newpage
 \section{Empirical Study (19.5~p)}\label{sec:empirical-study}
 
-\subsection{Environment (0.5~p)}\label{sec:environment}
+In this Section, we demonstrate the effectiveness of gradient boosting and Transformers for trade classification. We benchmark against the \gls{LR}, \gls{EMO}, and \gls{CLNV} algorithm, as well as hybrids involving the trade size rule and depth rule on two datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}.
+
+Experiments were conducted on shared nodes of the bwHPC cluster, with 10 assigned Intel Xeon Gold 6230 cores at \SI{2.1}{\GHz}, an NVIDIA V100 \SI{32}{\giga\byte}, and \SI{92.160}{\giga\byte} random access memory running Red Hat Enterprise Linux release 8.4. For reproducibility, the implementation and experiment tracking are publicly available~\footnote{Code is available at~\url{https://github.com/KarelZe/thesis}. Experiments are tracked at \url{https://wandb.ai/fbv/thesis}.}.
+
+The subsequent section provides details on the dataset.
 
 \subsection{Data and Data Preparation (6 p)}\label{sec:data-and-data-preparation}
 
-The following chapter describes how we construct datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we infer the trade initiator.
+The following chapter describes how we construct datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we define and infer the trade initiator.
 
 
 \subsubsection{Data Set}\label{sec:dataset}
