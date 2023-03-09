@@ -587,6 +587,10 @@ While our procedure makes the inference of the true trade initiator partly feasi
 
 \subsubsection{Train-Test Split (0.5~p)}\label{sec:train-test-split}
 
+A static training scheme is computationally cheap, but fails to leverage recent information for the prediction beyond the training set's cut-off point. One such example, are new underlyings as observed in \cref{sec:exploratory-data-analysis}. An alternative is a rolling scheme, that incorporates recent data through training a model on updated sets, as employed by \textcite[][16]{ronenMachineLearningTrade2022}. In a rolling scheme, fixed-size training and validation windows gradually shift forward in time, thereby dropping older observations and incorporating newer ones. However, due to the large number of model combinations and computational requirements of  Transformers and gradient-boosted trees, a rolling window approach becomes practically intractable. In absence of an update mechanism, our results can be interpreted as a lower bound.
+
+Applying the holdout method we attribute the first \SI{60}{\percent} of our dataset for training and the next \SI{20}{\percent} each for validation and testing. Samples of one day are assigned to either one set for precise evaluation and the temporal ordering is maintained to avoid data leakage. Data within the training set can be permuted to accelerate training.
+
 \begin{figure}[ht]
     \centering
     \includegraphics{train-test-split.pdf}
@@ -594,21 +598,21 @@ While our procedure makes the inference of the true trade initiator partly feasi
     \label{fig:train-test-split}
 \end{figure}
 
+Overall,  we use \gls{ISE} data from 2 May 2005 to 24 October 2013 to train and data between 25 October 2013 and 5 November 2015 to validate our models. The most recent trades until 31 May 2017 to assess the generalization error. The timespans for the \gls{CBOE} sample are adjusted accordingly. Here, the sets go from 1 January 1974 to 1 January 1974, 1 January 1974 to 1 January 1974, and 1 January 1974 to 1 January 1974, respectively, as visualized in \cref{fig:train-test-split}.
+
+We pre-train a model on unlabelled samples from the last year of the training period, as depicted in \cref{fig:train-test-split}. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades for which true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously. 
+
+Our train-test-split makes two implicit assumptions, we want to test for. First, the size of the resulting training set is large enough, for the model to capture regularities in the data. Second, all subsets are drawn from the same distribution. So that, fitting the classifier on the training set and optimizing on the validation set can provide good estimates for the test set.  We analyse both aspects to underpin our choice. The analysis is conducted on the training and validation set to avoid information leaking from the test set.
+
+Optimally, samples in the train, validation, and test set come from the same distribution. The presence of the data shift, as observed in \cref{sec:exploratory-data-analysis} within the training set raises concerns, that the assumption holds. We test for the similarity of the training and validation set and identify problematic features using \emph{adversarial validation}. As such, we re-label all trades within the training set with $y=0$ and all trades of the validation set with $y=1$. We then train a classifier on a random subset of the composed data and predict the conformance to the train or validation set for the remaining samples. More specifically a gradient boosting classifier is used for its competitive predictions with default hyperparameters its computational efficiency. The performance is estimated using the \gls{MCC}, which is insensitive to class imbalances. Assuming train and test samples come from the same distribution, the obtained performance estimate is near a random guess, or $\operatorname{MCC} = 0$.
+
+(...)
 % \begin{figure}[ht]
 %     \centering
 %     \includegraphics{adv-val-gradient-boosting.pdf}
 %     \caption[Adversarial Validation]{Adversarial Validation. Own work.}
 %     \label{fig:adv-validation}
 % \end{figure}
-
-Optimally, samples in the train, validation, and test set come from the same distribution. The presence of the data shift, as observed in \cref{sec:exploratory-data-analysis} within the training set raises concerns, that the assumption holds. We test for the similarity of the training and validation set and identify problematic features using \emph{adversarial validation}. As such, we re-label all trades within the training set with $y=0$ and all trades of the validation set with $y=1$. We then train a classifier on a random subset of the composed data and predict the conformance to the train or validation set for the remaining samples. More specifically a gradient boosting classifier is used for its competitive predictions with default hyperparameters its computational efficiency. The performance is estimated using the \gls{MCC}, which is insensitive to class imbalances. Assuming train and test samples come from the same distribution, the obtained performance estimate is near a random guess, or $\operatorname{MCC} = 0$.
-
-(...)
-
-Overall,  we use \gls{ISE} data from 2 May 2005 to 24 October 2013 to train and data between 25 October 2013 and 5 November 2015 to validate our models. The most recent trades until 31 May 2017 to assess the generalization error. The timespans for the \gls{CBOE} sample are adjusted accordingly. Here, the sets go from 1 January 1974 to 1 January 1974, 1 January 1974 to 1 January 1974, and 1 January 1974 to 1 January 1974, respectively, as visualized in \cref{fig:train-test-split}.
-
-We pre-train a model on unlabelled samples from the last year of the training period, as depicted in \cref{fig:train-test-split}. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades for which true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously. 
-
 
 To study the appropriateness of the size of the training set, we study the learning curves of a classifier. Learning curves visualize the score of the classifier dependent on the size of the training set \autocite[][243]{hastietrevorElementsStatisticalLearning2009}. Moreover, they provide insights into the bias and variance of the estimators. We train a gradient boosting model with default parameters on ten subsets of the training set and evaluate on the validation set. To maintain the temporal ordering, we start training of the \SI{10.00}{\percent} most recent samples and add older observations as we progress. Gradient boosting is well-suited for this analysis for the same reasons given above.
 
@@ -619,11 +623,11 @@ To study the appropriateness of the size of the training set, we study the learn
     \label{fig:learning-curves-gradient-boosting}
 \end{figure}
 
-Several observations can be drawn from \cref{fig:learning-curves-gradient-boosting} (left). Adding more training instances will likely improve the accuracy of the training set. The low training error also indicates that the chosen model is sufficiently complex to fit the data, resulting in a low bias. The accuracy for the validation set plateaus at \SI{75.53}{\percent} after \num{9999999} samples, leaving a significant gap between the training and testing accuracy, indicating a high variance. Hence, adding older observations, before 1 January 1974, to the training set, improves the training performance, but little affects validation performance when all samples are assigned an equal weight. Naturally, patterns in older instances of the training set might not be as relevant as more recent ones for classifying trades out-of-sample, which could explain the stalling performance for extended training sets. We incorporate this idea by weighting training samples with decaying weights over time. Results are shown in \cref{fig:learning-curves-gradient-boosting} (right) exemplary for exponential weighting. Exponential weighting improves both overfitting and generalization performance as derived from the annealing of train and test scores and the overall improved performance with accuracies up to \SI{75.76}{\percent}. 
+Several observations can be drawn from \cref{fig:learning-curves-gradient-boosting} (left). Adding more training instances will likely improve the accuracy of the training set. The low training error also indicates that the chosen model is sufficiently complex to fit the data, resulting in a low bias. The accuracy for the validation set plateaus at \SI{75.53}{\percent} after \num{9999999} samples, leaving a significant gap between the training and testing accuracy, indicating a high variance. Hence, adding older observations, before 1 January 1974, to the training set, improves the training performance, but little affects validation performance when all samples are assigned an equal weight. Naturally, patterns in older instances of the training set might not be as relevant as more recent ones for classifying trades out-of-sample, which could explain the stalling performance for extended training sets. We incorporate this idea by weighting training samples with decaying weights over time. Results are shown in \cref{fig:learning-curves-gradient-boosting} (right) exemplary for exponential weighting. A weighting scheme improves both overfitting and generalization performance as derived from the annealing of train and test scores and the overall improved performance with accuracies up to \SI{75.76}{\percent}. 
 
 While a smaller subsample of the training set would suffice in both cases, our training set encompasses the entire history to mitigate any sampling bias and we instead weight observations based on their temporal proximity. Overall, the training split minimizes data leakage and sensibly utilizes all available data.
 
-From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we emphasize regularization techniques in the training procedure as we show next. 
+From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we emphasize regularization techniques in all our models as we show next. 
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 

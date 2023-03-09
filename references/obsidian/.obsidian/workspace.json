@@ -33,12 +33,12 @@
             }
           },
           {
-            "id": "a2260b737ac42f97",
+            "id": "740fa6e7b9bcb56a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🚏Exploratory Data Analysis.md",
+                "file": "📥Inbox/@lopezdepradoAdvancesFinancialMachine2018.md",
                 "mode": "source",
                 "source": false
               }
@@ -202,12 +202,14 @@
   "lastOpenFiles": [
     "📑notes/👨‍🍳Train-Test-split notes.md",
     "📖chapters/👨‍🍳Tain-Test-split.md",
+    "📥Inbox/@lopezdepradoAdvancesFinancialMachine2018.md",
+    "📥Inbox/@hyndmanForecastingPrinciplesPractice2021.md",
+    "📖chapters/🚏Exploratory Data Analysis.md",
     "🖼️Media/learning-curves-bias-variance.png",
     "🖼️Media/adv-validation-gradient-boosting.png",
     "🖼️Media/learning-curves.png",
     "🖼️Media/accuracies.png",
     "🖼️Media/learning-curves-gbm.png",
-    "📖chapters/🚏Exploratory Data Analysis.md",
     "📥Inbox/@ellisAccuracyTradeClassification2000.md",
     "📖chapters/🌏Dataset.md",
     "📖chapters/🛌Token Embedding.md",
@@ -233,7 +235,6 @@
     "viz-training-schemes.png.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📑notes/🍪Selection of supervised approaches notes.md",
-    "📥Inbox/@malininUncertaintyGradientBoosting2021.md",
-    "📥Inbox/@boleyBetterShortGreedy2021.md"
+    "📥Inbox/@malininUncertaintyGradientBoosting2021.md"
   ]
 }
