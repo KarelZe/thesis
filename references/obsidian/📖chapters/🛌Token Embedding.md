@@ -1,6 +1,14 @@
 https://dl.acm.org/doi/abs/10.1145/3447548.3467077?casa_token=FPqZg5hi1OQAAAAA%3ACK691Tha1MrR-jRIiYLGl60e2b4nby26dLOfIdZZ_ag_hTy3Gep2uKVrIHzi-lJdN8_XsnolvJfmjQ
 https://www.tandfonline.com/doi/abs/10.1080/01621459.2020.1775614?role=button&journalCode=uasa20&journalCode=uasa20&needAccess=true
 
+4 DISCUSSION We have seen that in the datasets we studied, small algorithmic binary operation tables, effects such as double descent or late generalization, and improvements to generalization from interventions like weight decay can be striking. This suggests that these datasets could be a good place to investigate aspects of generalization. For example, we plan to test whether various proposed measures of minima flatness correlate with generalization in our setting. We have also seen that visualizing the embedding spaces of these neural networks can show natural kinds of structure, for example in problems of modular arithmetic the topology of the embeddings tends to be circles or cylinders. We also see that the network tends to idiosyncratically organize the embeddings by various residues. Whilst the properties of these mathematical objects are familiar to us, we speculate that such visualizations could one day be a useful way to gain intuitions about novel mathematical objects.
+
+3.4 QUALITATIVE VISUALIZATION OF EMBEDDINGS In order to gain some insight into networks that generalize, we visualized the matrix of the output layer for the case of modular addition and S5. In Figure 3 we show t-SNE plots of the row vectors. For some networks we find clear reflections of the structure of the underlying mathematical objects in the plots. For example the circular topology of modular addition is shown with a ‘number line’ formed by adding 8 to each element. The structure is more apparent in networks that were optimized with weight decay. https://arxiv.org/pdf/2201.02177.pdf
+
+![[visualization-token-embedding.png]]
+---
+
+
 As explained in the previous chapter, transformers operate on sequences of numeric vector representations, the *embeddings*, rather than on raw strings. More specifically, [[@vaswaniAttentionAllYou2017]] feed pre-trained token embeddings into the model. To obtain token embeddings from the raw input sequences, the sequence is first split into constituent vocabulary elements, the *tokens*. 
 
 All known tokens are stored in a vocabulary. The vocabulary $V$ consists of $N_{V}=|V|$ elements and maps tokens onto their unique integer keys, referred to as *token-ids* [[@phuongFormalAlgorithmsTransformers2022]]. Apart from tokens in the training corpus, the vocabulary may include special tokens, like the $\texttt{[UNK]}$ token to handle out-of-vocabulary items, the $\texttt{[EOS]}$ token to mark the end of the sequence, or $\texttt{[CLS]}$ token for storing an aggregate representation of the sequence for classification (used in [[@devlinBERTPretrainingDeep2019]]; p. 4). 

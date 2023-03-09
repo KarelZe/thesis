@@ -6,6 +6,26 @@ The available data set is split into three disjoint sets. First, the training se
 
 
 ## Ammos 🗒️
+
+As the Even in-sample a perfect classification a perfect classification may be illussinary to . .
+
+We do not achieve a perfect training accuracy which attribute to a low-signal-to-nose-ratio
+
+For the static training scheme we follow Gu et al. (2021) and Chen et al. (2021) and split the data set into three sets. We use data until November 2010 for training and validate our models on data from December 2010 to October 2015, as shown in figure 1a. The remaining data is used for out-of-sample testing until June 2020 for the annual and May 2021 for the monthly data set. This yields a classical 59.67- 20.46-19.86 % split for the annual horizon. While computationally cheap, a static scheme fails to leverage recent information for the prediction from December 2010 onwards. A promising alternative is a rolling scheme, that incorporates recent data through retraining a model on updating sets, as employed by Freyberger et al. (2020), Gu et al. (2020) or Grammig et al. (2020). In a rolling scheme, fixed-size training and validation windows gradually shift forward in time, thereby dropping older observations and incorporating newer ones. The performance is evaluated on then 4 EMPIRICAL STUDY 13 unseen data starting in November 2016. We set the window length to one year for the training and the validation set and refit our models annually, as visualised in figure 1b totalling in up to ten re-trainings, which is a balanced choice between data recency and computational feasibility.
+
+<mark style="background: #ABF7F7A6;">You don't randomly split in time-series datasets because it doesn't respect the temporal order and causes _data-leakage_, e.g. unintentionally inferring the trend of future samples.</mark>
+
+<mark style="background: #BBFABBA6;">In machine learning, train/test split splits the data randomly, as there’s no dependence from one observation to the other. That’s not the case with time series data. Here, you’ll want to use values at the rear of the dataset for testing and everything else for training.</mark>
+
+https://gsarantitis.wordpress.com/2020/04/16/data-shift-in-machine-learning-what-is-it-and-how-to-detect-it/
+https://datascience.stanford.edu/news/splitting-data-randomly-can-ruin-your-model
+https://scikit-learn.org/stable/modules/cross_validation.html#timeseries-cv
+https://arxiv.org/pdf/1905.11744.pdf
+
+one of the fundamental assumptions of mafny statistical analyses  that data is statistically independent. (https://www.influxdata.com/blog/autocorrelation-in-time-series-data/)
+
+Convert between label and class: https://www.jmlr.org/papers/volume11/ojala10a/ojala10a.pdf
+
 **Why?**
 - The split is required to get unbiased performance estimates of our models. It is not required for classical rules, as these rules have no parameters to estimates or hyperparameters to tune.
 - “Typically, machine learning involves a lot of experimentation, though – for example, the tuning of the **internal knobs of a learning algorithm**, the so-called hyperparameters. Running a learning algorithm over a training dataset with different hyperparameter settings will result in different models. Since we are typically interested in selecting the best-performing model from this set, we need to find a way to estimate their respective performances in order to rank them against each other.” ([[@raschkaModelEvaluationModel2020]], p. 4)
@@ -14,6 +34,8 @@ The available data set is split into three disjoint sets. First, the training se
 - Training set is used to fit the model to the data
 - Validation set is there for tuning the hyperparameters. ([[@hastietrevorElementsStatisticalLearning2009]] 222) write "to estimate prediction error for model selection"
 - Test set for unbiased, out-of-sample performance estimates. ([[@hastietrevorElementsStatisticalLearning2009]] 222) write "estimate generalization error of the model"
+
+Ideally, the test set should be kept in a “vault,” and be brought out only at the end of the data analysis. Suppose instead that we use the test-set repeatedly, choosing the model with smallest test-set error. Then the test set error of the final chosen model will underestimate the true test error, sometimes substantially. It is difficult to give a general rule on how to choose the number of observations in each of the three parts, as this depends on the signal-tonoise ratio in the data and the training sample size. A typical split might be 50% for training, and 25% each for validation and testing:
 
 **Our split:**
 - We perform a *static* split into three disjoint sets. (aka holdout method)
@@ -45,7 +67,15 @@ test = df[df.QUOTE_DATETIME.between("2015-11-06 00:00:01", "2017-05-31 23:59:00"
 
 - To verify the samples in the training and validation set are drawn from the same distribution, we perform adversarial validation.  
 
+![[learning-curves-bias-variance.png]]
+
+The new gap between the two learning curves suggests a substantial increase in variance. The low training MSEs corroborate this diagnosis of high variance. The large gap and the low training error also indicates an overfitting problem. Overfitting happens when the model performs well on the training set, but far poorer on the test (or validation) set. One more important observation we can make here is that _adding new training instances_ is very likely to lead to better models.
+
 **How much data is enough?**
+
+The new gap between the two learning curves suggests a substantial increase in variance. The low training MSEs corroborate this diagnosis of high variance. The large gap and the low training error also indicates an overfitting problem. Overfitting happens when the model performs well on the training set, but far poorer on the test (or validation) set. One more important observation we can make here is that _adding new training instances_ is very likely to lead to better models. The validation curve doesn’t plateau at the maximum training set size used. It still has potential to decrease and converge toward the training curve, similar to the convergence we see in the linear regression case. So far, we can conclude tha
+
+
 - more data is better, but what about the shift in data?
 - Plot learning curves to estimate whether performance will increase with the number of samples. Use it to motivate semi-supervised learning.  [Plotting Learning Curves — scikit-learn 1.1.2 documentation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html) and [Tutorial: Learning Curves for Machine Learning in Python for Data Science (dataquest.io)](https://www.dataquest.io/blog/learning-curves-machine-learning/)
 ![[learning-curves-samples.png]]
@@ -71,8 +101,5 @@ test = df[df.QUOTE_DATETIME.between("2015-11-06 00:00:01", "2017-05-31 23:59:00"
 **How can we test for serial correlations?**
 - I think it's ok to argue by example.
 
-**Train-test-split in trade classification:**
-- *validation* Classical rules typically don't require a validation set, as the rules are free of hyperparameters.
-- *test* authors use a true out-of-sample test set to test their hypothesis. April for training and May to June for testing. Also, they test their hypothesis on a second data set. ([[@chakrabartyTradeClassificationAlgorithms2007]]3809)
 
 

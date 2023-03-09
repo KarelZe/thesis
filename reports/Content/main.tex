@@ -248,6 +248,7 @@ The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a perform
 
 The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which can not be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their ordering.
 
+% TODO: Murjajev (quote + quote on nbbo)
 The most basic application is in the \gls{LR} algorithm. For a more complex example consider the hybrid rule consisting of $\operatorname{tsize}(\cdot) \to \operatorname{quote}(\cdot) \to \operatorname{tick}(\cdot)$ in \cref{fig:stacking-algo}. An exemplary trade cannot be classified by the primary trade size rule and is signed by the quote rule, which is the first rule in the stack, able to classify the trade. Other trades can be classifiable by the trade size rule, which rules out the classification of the quote and tick rule. Theoretically, stacked rules can grow to great depth with an arbitrary arrangement. In practice, rules may be ordered greedily and new rules added if there are unclassified trades.
 
 \begin{figure}[ht!]
@@ -362,7 +363,7 @@ Aside from the multi-headed self-attention and feed-forward sublayer, the decode
 \end{landscape}
 The output of the decoder is finally passed through a linear layer with a softmax activation function to unembed the output and retrieve the probabilities of the next \gls{token} \autocite[][5]{vaswaniAttentionAllYou2017}. Since the output sequence is generated autoregressively, the most probable \gls{token} is fed back as input to the decoder to provide context for the following \glspl{token} until the remaining sequence is generated.
 
-For its original application, machine translation, both the encoder and decoder are used. Yet, the modular design allows adapting Transformers to a wider range of use cases, some of which only require the encoder or decoder. \textcite[][16--17]{raffelExploringLimitsTransfer2020} differentiate these modes: encoder-only architecture, which encodes the input to obtain an enriched representation, decoder-only architectures to generate new \glspl{token} and encoder-decoder models for sequence-to-sequence modelling autoregressively. As our focus is on the probabilistic classification of tabular data, the goal is to learn an enriched representation of the input for classifying the label, here $\gls{y}$, rather than generating new samples. As such, encoder-only Transformers suffice. This insights also guides the structure in the next chapters, which is limited to \glspl{embedding} and the inner workings of the encoder.
+For its original application, machine translation, both the encoder and decoder are used. Yet, the modular design allows adapting Transformers to a wider range of use cases, some of which only require the encoder or decoder. \textcite[][16--17]{raffelExploringLimitsTransfer2020} differentiate these modes: encoder-only architecture, which encodes the input to obtain an enriched representation, decoder-only architectures to generate new \glspl{token} and encoder-decoder models for sequence-to-sequence modelling autoregressively. As our focus is on the probabilistic classification of tabular data, the goal is to learn an enriched representation of the input for classifying the label, here $\gls{y}$, rather than generating new samples. As such, encoder-only Transformers suffice. This insight also guides the structure in the next chapters, which is limited to \glspl{embedding} and the inner workings of the encoder.
 
 \subsubsection{Token Embedding}\label{sec:token-embeddings}
 
@@ -371,12 +372,12 @@ For its original application, machine translation, both the encoder and decoder 
 
 In practice, the order of words is important for the overall meaning of a sentence. As such, \textcite[][6]{vaswaniAttentionAllYou2017} propose to inject information on the token's position within the sequence through a \emph{positional encoding}, that is added onto the token embedding. Contrary to sequences, columns in tabular data sets are arranged in an arbitrary order, which weakens the need for positional information. However, unless the embeddings per feature are unique, a positional embedding is also required so that the model can relate the otherwise identical embeddings to specific features and distinguish them \autocites[][3]{huangTabTransformerTabularData2020}[][15]{somepalliSAINTImprovedNeural2021}.
 
-Like token embeddings, positional embeddings can also be learned \autocite[cp.][4174]{devlinBERTPretrainingDeep2019}. Due to better, extrapolation capabilities, \textcite[][6]{vaswaniAttentionAllYou2017}, propose an positional encoding $\boldsymbol{W}_p: \mathbb{N} \rightarrow \mathbb{R}^{d_{e}}$ based on sine and cosine signals to encode the \emph{absolute} position of the token:
+Like token embeddings, positional embeddings can also be learned \autocite[cp.][4174]{devlinBERTPretrainingDeep2019}. Due to better, extrapolation capabilities, \textcite[][6]{vaswaniAttentionAllYou2017}, propose an positional encoding $\gls{W-p}: \mathbb{N} \rightarrow \mathbb{R}^{d_{e}}$ based on sine and cosine signals to encode the \emph{absolute} position of the token:
 
 \begin{equation}
     \begin{aligned}
-        \boldsymbol{W}_p[2 i-1, t] & =\sin \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right), \\
-        \boldsymbol{W}_p[2 i, t]   & =\cos \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right).
+        \gls{W-p}[2 i-1, t] & =\sin \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right), \\
+        \gls{W-p}[2 i, t]   & =\cos \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right).
     \end{aligned}
     \label{eq:sinusodal-encoding}
 \end{equation}
@@ -398,7 +399,7 @@ The reason for encoding with both the sine and cosine is more subtle, as either 
 
 The positional embedding is finally added per element to the token embedding to form a token's initial embedding $\gls{e}$. For the $\gls{t}$-th token of a sequence $\gls{x}$, the embedding becomes:
 \begin{equation}
-    \gls{e}=\boldsymbol{W}_e[:, x[t]]+\boldsymbol{W}_p[:, t].
+    \gls{e}=\gls{W-e}[:, x[t]]+\gls{W-p}[:, t].
     \label{eq:positional-embedding}
 \end{equation}
 
@@ -540,14 +541,18 @@ In the subsequent section, extend all previous models including FT-Transformer f
 \newpage
 \section{Empirical Study (19.5~p)}\label{sec:empirical-study}
 
-\subsection{Environment (0.5~p)}\label{sec:environment}
+In this Section, we demonstrate the effectiveness of gradient boosting and Transformers for trade classification. We benchmark against the \gls{LR}, \gls{EMO}, and \gls{CLNV} algorithm, as well as hybrids involving the trade size rule and depth rule on two datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}.
+
+Experiments were conducted on shared nodes of the bwHPC cluster, with 10 assigned Intel Xeon Gold 6230 cores at \SI{2.1}{\GHz}, an NVIDIA V100 \SI{32}{\giga\byte}, and \SI{92.160}{\giga\byte} random access memory running Red Hat Enterprise Linux release 8.4. For reproducibility, the implementation and experiment tracking are publicly available~\footnote{Code is available at~\url{https://github.com/KarelZe/thesis}. Experiments are tracked at \url{https://wandb.ai/fbv/thesis}.}.
+
+The subsequent section provides details on the dataset.
 
 \subsection{Data and Data Preparation (6 p)}\label{sec:data-and-data-preparation}
 
-The following chapter describes how we construct datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss we infer the trade initiator.
+The following chapter describes how we construct datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we define and infer the trade initiator.
 
 
-\subsubsection{Data Set (0.5~p)}\label{sec:dataset}
+\subsubsection{Data Set}\label{sec:dataset}
 
 \textbf{Data Sources}
  
@@ -589,7 +594,36 @@ While our procedure makes the inference of the true trade initiator partly feasi
     \label{fig:train-test-split}
 \end{figure}
 
-Within the period, we filter out trades, where a true label can be inferred, to avoid duplicates with the supervised training set. For self-training, this is essential, as labelled and unlabelled data is provided to the model simultaneously.
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics{adv-val-gradient-boosting.pdf}
+%     \caption[Adversarial Validation]{Adversarial Validation. Own work.}
+%     \label{fig:adv-validation}
+% \end{figure}
+
+Optimally, samples in the train, validation, and test set come from the same distribution. The presence of the data shift, as observed in \cref{sec:exploratory-data-analysis} within the training set raises concerns, that the assumption holds. We test for the similarity of the training and validation set and identify problematic features using \emph{adversarial validation}. As such, we re-label all trades within the training set with $y=0$ and all trades of the validation set with $y=1$. We then train a classifier on a random subset of the composed data and predict the conformance to the train or validation set for the remaining samples. More specifically a gradient boosting classifier is used for its competitive predictions with default hyperparameters its computational efficiency. The performance is estimated using the \gls{MCC}, which is insensitive to class imbalances. Assuming train and test samples come from the same distribution, the obtained performance estimate is near a random guess, or $\operatorname{MCC} = 0$.
+
+(...)
+
+Overall,  we use \gls{ISE} data from 2 May 2005 to 24 October 2013 to train and data between 25 October 2013 and 5 November 2015 to validate our models. The most recent trades until 31 May 2017 to assess the generalization error. The timespans for the \gls{CBOE} sample are adjusted accordingly. Here, the sets go from 1 January 1974 to 1 January 1974, 1 January 1974 to 1 January 1974, and 1 January 1974 to 1 January 1974, respectively, as visualized in \cref{fig:train-test-split}.
+
+We pre-train a model on unlabelled samples from the last year of the training period, as depicted in \cref{fig:train-test-split}. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades for which true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously. 
+
+
+To study the appropriateness of the size of the training set, we study the learning curves of a classifier. Learning curves visualize the score of the classifier dependent on the size of the training set \autocite[][243]{hastietrevorElementsStatisticalLearning2009}. Moreover, they provide insights into the bias and variance of the estimators. We train a gradient boosting model with default parameters on ten subsets of the training set and evaluate on the validation set. To maintain the temporal ordering, we start training of the \SI{10.00}{\percent} most recent samples and add older observations as we progress. Gradient boosting is well-suited for this analysis for the same reasons given above.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{learning-curves-gradient-boosting.pdf}
+    \caption[Learning Curves]{Learning Curves. Own work.}
+    \label{fig:learning-curves-gradient-boosting}
+\end{figure}
+
+Several observations can be drawn from \cref{fig:learning-curves-gradient-boosting} (left). Adding more training instances will likely improve the accuracy of the training set. The low training error also indicates that the chosen model is sufficiently complex to fit the data, resulting in a low bias. The accuracy for the validation set plateaus at \SI{75.53}{\percent} after \num{9999999} samples, leaving a significant gap between the training and testing accuracy, indicating a high variance. Hence, adding older observations, before 1 January 1974, to the training set, improves the training performance, but little affects validation performance when all samples are assigned an equal weight. Naturally, patterns in older instances of the training set might not be as relevant as more recent ones for classifying trades out-of-sample, which could explain the stalling performance for extended training sets. We incorporate this idea by weighting training samples with decaying weights over time. Results are shown in \cref{fig:learning-curves-gradient-boosting} (right) exemplary for exponential weighting. Exponential weighting improves both overfitting and generalization performance as derived from the annealing of train and test scores and the overall improved performance with accuracies up to \SI{75.76}{\percent}. 
+
+While a smaller subsample of the training set would suffice in both cases, our training set encompasses the entire history to mitigate any sampling bias and we instead weight observations based on their temporal proximity. Overall, the training split minimizes data leakage and sensibly utilizes all available data.
+
+From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we emphasize regularization techniques in the training procedure as we show next. 
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 
@@ -609,6 +643,9 @@ Within the period, we filter out trades, where a true label can be inferred, to 
 
 \subsubsection{Feature Importance
     Measure (2~p)}\label{sec:feature-importance-measure}
+
+\textbf{Random Feature Permutation}
+
 
 \textbf{Attention Maps}
 

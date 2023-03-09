@@ -127,6 +127,7 @@ bookmarksopen
 \newacronym{ISE}{ISE}{International Securities Exchange}
 \newacronym{GBM}{GBM}{gradient boosting machine}
 \newacronym{LR}{LR}{Lee-Ready}
+\newacronym{MCC}{MCC}{Matthews correlation coefficient}
 \newacronym{MLP}{MLP}{multi-layer perceptron}
 \newacronym[first={national best bid and offer}]{NBBO}{NBBO}{national best bid and offer}
 \newacronym{NYSE}{NYSE}{New York Stock Exchange}
@@ -157,8 +158,12 @@ bookmarksopen
 \newglossaryentry{M}{type=symbols,name={\ensuremath{M}},sort=m, description={sequence of spread midpoints}, unit={\ensuremath{\langle m_{1},m_{2},\dots,m_{T}\rangle}}}
 \newglossaryentry{t}{type=symbols,name={\ensuremath{t}},sort=t, description={index of token in sequence},unit={\ensuremath{\in\left[\ell_{\max }\right]}}}
 \newglossaryentry{x}{type=symbols,name={\ensuremath{x}},sort=x, description={primary token sequence}, unit={\ensuremath{\equiv x[1] x[2] \ldots x[\ell] \in V^{\ell}}}}
-\newglossaryentry{y}{type=symbols,name={\ensuremath{y}},sort=y, description={trade initiator / target}, unit={\ensuremath{\in \{-1,1\}}}}
+\newglossaryentry{y}{type=symbols,name={\ensuremath{y}},sort=y, description={trade initiator / target}, unit={\ensuremath{\in \mathcal{Y}}}}
 \newglossaryentry{X}{type=symbols,name={\ensuremath{\boldsymbol{X}}},sort=X, description={encoded primary token sequence }, unit={\ensuremath{\in \mathbb{R}^{d_e \times \ell_x}}}}
+
+\newglossaryentry{W-e}{type=symbols,name={\ensuremath{\boldsymbol{W}_e}},sort=W-e, description={token embedding matrix}, unit={\ensuremath{\in \mathbb{R} d_{\mathrm{e}} \times N_{\mathrm{V}}}}}
+\newglossaryentry{W-p}{type=symbols,name={\ensuremath{\boldsymbol{W}_p}},sort=W-p, description={positional embedding matrix}, unit={\ensuremath{\in \mathbb{R} d_{\mathrm{e}} \times \ell_{\max}}}}
+
 
 \newglossarystyle{dotglos}{%
     \setglossarystyle{list}%
