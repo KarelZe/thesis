@@ -4,8 +4,27 @@
 The available data set is split into three disjoint sets. First, the training set is used to fit the model to the data. Secondly, the validation set is dedicated to tuning the 2We also considered other scaling schemes, including rank-wise, global, and mixed approaches. 3We use different imputation strategies, including removal of missing values, zero fill, linear interpolation, and imputation with the subset mean and median. We find zero-fill to work best. 4 EMPIRICAL STUDY 12 models hyperparameters, such as the ν of a GBM. Conforming to the best practice approach, the accuracy of the return forecasts is assessed on unseen data. As the data set comes in a multi-time-series form, a strict temporal ordering must be maintained when splitting the data so that models can capture the temporal properties of the data and leakage between sets is minimised. We compare two approaches that maintain this property with a static training scheme and a rolling scheme. For the static training scheme we follow Gu et al. (2021) and Chen et al. (2021) and split the data set into three sets. We use data until November 2010 for training and validate our models on data from December 2010 to October 2015, as shown in figure 1a. The remaining data is used for out-of-sample testing until June 2020 for the annual and May 2021 for the monthly data set. This yields a classical 59.67- 20.46-19.86 % split for the annual horizon. While computationally cheap, a static scheme fails to leverage recent information for the prediction from December 2010 onwards. A promising alternative is a rolling scheme, that incorporates recent data through retraining a model on updating sets, as employed by Freyberger et al. (2020), Gu et al. (2020) or Grammig et al. (2020). In a rolling scheme, fixed-size training and validation windows gradually shift forward in time, thereby dropping older observations and incorporating newer ones. The performance is evaluated on then 4 EMPIRICAL STUDY 13 unseen data starting in November 2016. We set the window length to one year for the training and the validation set and refit our models annually, as visualised in figure 1b totalling in up to ten re-trainings, which is a balanced choice between data recency and computational feasibility
 
 
-
 ## Ammos 🗒️
+
+Serial dependence occurs when the value of a datapoint at one time is statistically dependent on another datapoint in another time. However, this attribute of time series data violates one of the fundamental assumptions of many statistical analyses  that data is statistically independent. (https://www.influxdata.com/blog/autocorrelation-in-time-series-data/)
+
+However, the random selection of test observations does not warrant independence from training observations when dependence structures exist in the data, i.e., when observations close to each other tend to have similar characteristics
+
+In many cases, data is time-correlated, which means that the time the data is generated affects its label distribution and thus overestimate the reported results for their classifier.
+
+### Kolmorgov-Smirnov Test
+
+- Seems to be more appropriate than the $t$-test.
+
+https://www.yourdatateacher.com/2022/05/02/are-your-training-and-test-sets-comparable/
+https://stats.stackexchange.com/questions/208517/kolmogorov-smirnov-test-vs-t-test
+```
+dataset = load_diabetes(as_frame=True) X,y = dataset['data'],dataset['target'] X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=0)
+
+feature_name = 'bp' df = pd.DataFrame({ feature_name:np.concatenate((X_train.loc[:,feature_name],X_test.loc[:,feature_name])), 'set':['training']*X_train.shape[0] + ['test']*X_test.shape[0] }) sns.ecdfplot(data=df,x=feature_name,hue='set')
+```
+
+
 
 As the Even in-sample a perfect classification a perfect classification may be illussinary to . .
 
@@ -57,13 +76,9 @@ test = df[df.QUOTE_DATETIME.between("2015-11-06 00:00:01", "2017-05-31 23:59:00"
 - Estimates might be lower bound -> [[@raschkaModelEvaluationModel2020]] refers to this as a pesimistic bias
 - We split apart the test set early on as recommended by [[@lonesHowAvoidMachine2022]] (do not cite) The best thing you can do to prevent these issues is to partition off a subset of your data right at the start of your project, and only use this independent test set once to measure the generality of a single model at the end of the project (see Do save some data to evaluate your final model instance)
 
-- Come back to notation in [[🍪Selection Of Supervised Approaches]]
-
 - “Does this replace the test set (or, analogously, the assessment set)? No. Since the validation data are guiding the training process, they can’t be used for a fair assessment for how well the modeling process is working” ([[@kuhnFeatureEngineeringSelection2020]], p. 53)
 
-- Adress leakage as part of eda. “Exploratory Data Analysis (EDA) can be a powerful tool for identifying leakage. EDA is the good practice of getting more intimate with the raw data, examining it through basic and interpretable visualization or statistical tools. Prejudice free and methodological, this kind of examination can expose leakage as patterns in the data that are surprising.” ([[@kaufmanLeakageDataMining2012]] p. 165)
 
-- “On the very practical side, a good starting point for EDA is to look for any form of unexpected data properties. Common giveaways are found in identifiers, matching (or inconsistent matching) of identifiers (i.e., sample selection biases), surprises in distributions (spikes in densities of continuous values), and finally suspicious order in supposedly random data.” ([[@kaufmanLeakageDataMining2012]], p. 165)
 
 - To verify the samples in the training and validation set are drawn from the same distribution, we perform adversarial validation.  
 
@@ -83,7 +98,6 @@ The new gap between the two learning curves suggests a substantial increase in v
 
 **Why no dynamic training split?**
 - By the same reasoning, we expect a moving window to improve further. Model can learn on more recent data. By keeping the train-test split static it can be seen more like a lower bound. Reason about computational complexity.
-> “3.4.4 | Rolling Origin Forecasting This procedure is specific to time-series data or any data set with a strong temporal component (Hyndman and Athanasopoulos, 2013). If there are seasonal or other chronic trends in the data, random splitting of data between the analysis and assessment sets may disrupt the model’s ability to estimate these patterns. In this scheme, the first analysis set consists of the first M training set points, assuming that the training set is ordered by time or other temporal component. The assessment set would consist of the next N training set samples. The secon esample keeps the data set sizes the same but increments the analysis set to use samples 2 through M + 1 while the assessment contains samples M + 2 to M + N + 1. The splitting scheme proceeds until there is no more data to produce the same data set sizes. Supposing that this results in B splits of the data, the same process is used for modeling and evaluation and, in the end, there are B estimates of performance generated from each of the assessment sets. A simple method for estimating performance is to again use simple averaging of these data. However, it should be understood that, since there is significant overlap in the rolling assessment sets, the B samples themselves constitute a time-series and might also display seasonal or other temporal effects. Figure 3.8 shows this type of resampling where 10 data points are used for analysis and the subsequent two training set samples are used for assessment. There are a number of variations of the procedure: • The analysis sets need not be the same size. They can cumulatively grow as the moving window proceeds along the training set. In other words, the first analysis set would contain M data points, the second would contain M + 1 and so on. This is the approach taken with the Chicago train data modeling and is described in Chapter 4. • The splitting procedure could skip iterations to produce fewer resamples. For example, in the Chicago data, there are daily measurements from 2001 to 2016. Incrementing by one day would produce an excessive value of B. For these data, 13 samples were skipped so that the splitting window moves in two-week blocks instead of by individual day. • If the training data are unevenly sampled, the same procedure can be used buFor example, the window could move over 12-hour periods for the analysis sets and 2-hour periods for the assessment sets. This resampling method differs from the previous ones in at least two ways. The splits are not random and the assessment data set is not the remainder of the training set data once the analysis set was removed.” ([[@kuhnFeatureEngineeringSelection2020]], p. 53)
 
 
 **Why random / cv train-test splits are missleading**?
