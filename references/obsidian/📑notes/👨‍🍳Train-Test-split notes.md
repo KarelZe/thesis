@@ -6,6 +6,12 @@ The available data set is split into three disjoint sets. First, the training se
 
 ## Ammos 🗒️
 
+Serial dependence occurs when the value of a datapoint at one time is statistically dependent on another datapoint in another time. However, this attribute of time series data violates one of the fundamental assumptions of many statistical analyses  that data is statistically independent. (https://www.influxdata.com/blog/autocorrelation-in-time-series-data/)
+
+However, the random selection of test observations does not warrant independence from training observations when dependence structures exist in the data, i.e., when observations close to each other tend to have similar characteristics
+
+In many cases, data is time-correlated, which means that the time the data is generated affects its label distribution and thus overestimate the reported results for their classifier.
+
 ### Kolmorgov-Smirnov Test
 
 - Seems to be more appropriate than the $t$-test.
