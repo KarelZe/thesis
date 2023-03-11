@@ -13,7 +13,7 @@ Testing the empirical accuracy of our approaches requires option trades where th
 
 
 In the literature, researchers use different definitions of trade initiators based presumably on data availability.
-As noted in cref-[[🔢Trade initiator]] there is no common definition for the trade initiator.
+As noted in cref-[[🔢Trade Initiator]] there is no common definition for the trade initiator.
 
 <mark style="background: #D2B3FFA6;">“Our proprietary data provide the bid quote, the ask quote, the transaction price, the trade volume, a trader identity code, and a buy/sell indicator.5 The buy/sell indicator specifies the direction of the reporting party. If the seller re? ported the trade, then the trade would be called a sale regardless of the price at which it occurred. Thus, this indicator tells us the buyer and the seller in the trans? action, but not the trade direction per se. We can determine whether the trade was a buy or a sale by using the trader identity code in conjunctioh with the buy/sell indicator. The trader identity code is a four-letter code for every NASD member.” (Ellis et al., 2000, p. 532)</mark>
 

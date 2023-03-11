@@ -64,3 +64,6 @@ What do you mean by FIRM, CUSTOMER and PROFESSIONAL CUSTOMER trades, and can you
 ## Summary statistics
 ![[summary-statistic.png]]
 (from [[@muravyevOptionsTradingCosts2020]])
+
+
+The INET data indicate whether each trade executes against a sitting buy or sell order in the limit order book.8 Following the chronology of order submission logic proposed by OddersWhite (2000), we designate trades that execute against a sitting buy order (a buy limit order) as seller-initiated and trades that execute against a sitting sell order (a sell limit order) as buyerinitiated. This procedure produces a dataset of short sales and long sales executed on the INET platform with the true trade initiator identified directly from the order data. https://core.ac.uk/download/pdf/145016916.pdf

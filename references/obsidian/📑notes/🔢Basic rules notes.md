@@ -1,5 +1,10 @@
 Tags: #trade-classification 
 
+- “6 Level-1 algorithms use only trade price data; level-2 algorithms use both trade and quote data.” ([[@chakrabartyTradeClassificationAlgorithms2012]], p. 6)
+
+- Differences in market data: https://www.thebalancemoney.com/level-i-or-level-ii-market-data-1031144
+
+
 In absence of the . 
 
 We start by the popular quote rule and tick test in Section ... and continue with two recent alternatives. 
