@@ -93,7 +93,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -151,7 +151,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🔢Trade Initiator notes.md",
+                "file": "📑notes/🔢Basic rules notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -179,7 +179,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🔢Trade Initiator notes.md"
+                "file": "📑notes/🔢Basic rules notes.md"
               }
             }
           },
@@ -210,13 +210,13 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "2d2daef8330abd71",
+  "active": "4dbbcd7fdab8ef48",
   "lastOpenFiles": [
     "📖chapters/🔢Trade Initiator.md",
-    "📑notes/🌏Dataset notes.md",
-    "📑notes/🔢Trade Initiator notes.md",
-    "📖chapters/🔢Basic rules.md",
     "📑notes/🔢Basic rules notes.md",
+    "📑notes/🔢Trade Initiator notes.md",
+    "📑notes/🌏Dataset notes.md",
+    "📖chapters/🔢Basic rules.md",
     "📖chapters/👨‍🍳Tain-Test-split.md",
     "📑notes/👨‍🍳Train-Test-split notes.md",
     "📖chapters/🍔Layer Norm.md",
