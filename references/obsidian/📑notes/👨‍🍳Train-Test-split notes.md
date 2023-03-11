@@ -1,8 +1,12 @@
 
-
-## Option Seminar 🦬
-The available data set is split into three disjoint sets. First, the training set is used to fit the model to the data. Secondly, the validation set is dedicated to tuning the 2We also considered other scaling schemes, including rank-wise, global, and mixed approaches. 3We use different imputation strategies, including removal of missing values, zero fill, linear interpolation, and imputation with the subset mean and median. We find zero-fill to work best. 4 EMPIRICAL STUDY 12 models hyperparameters, such as the ν of a GBM. Conforming to the best practice approach, the accuracy of the return forecasts is assessed on unseen data. As the data set comes in a multi-time-series form, a strict temporal ordering must be maintained when splitting the data so that models can capture the temporal properties of the data and leakage between sets is minimised. We compare two approaches that maintain this property with a static training scheme and a rolling scheme. For the static training scheme we follow Gu et al. (2021) and Chen et al. (2021) and split the data set into three sets. We use data until November 2010 for training and validate our models on data from December 2010 to October 2015, as shown in figure 1a. The remaining data is used for out-of-sample testing until June 2020 for the annual and May 2021 for the monthly data set. This yields a classical 59.67- 20.46-19.86 % split for the annual horizon. While computationally cheap, a static scheme fails to leverage recent information for the prediction from December 2010 onwards. A promising alternative is a rolling scheme, that incorporates recent data through retraining a model on updating sets, as employed by Freyberger et al. (2020), Gu et al. (2020) or Grammig et al. (2020). In a rolling scheme, fixed-size training and validation windows gradually shift forward in time, thereby dropping older observations and incorporating newer ones. The performance is evaluated on then 4 EMPIRICAL STUDY 13 unseen data starting in November 2016. We set the window length to one year for the training and the validation set and refit our models annually, as visualised in figure 1b totalling in up to ten re-trainings, which is a balanced choice between data recency and computational feasibility
-
+## Links🔗
+https://www.yourdatateacher.com/2022/05/02/are-your-training-and-test-sets-comparable/
+https://stats.stackexchange.com/questions/208517/kolmogorov-smirnov-test-vs-t-test
+http://finance.martinsewell.com/stylized-facts/dependence/
+https://gsarantitis.wordpress.com/2020/04/16/data-shift-in-machine-learning-what-is-it-and-how-to-detect-it/
+https://datascience.stanford.edu/news/splitting-data-randomly-can-ruin-your-model
+https://scikit-learn.org/stable/modules/cross_validation.html#timeseries-cv
+https://arxiv.org/pdf/1905.11744.pdf
 
 ## Ammos 🗒️
 
@@ -16,8 +20,6 @@ In many cases, data is time-correlated, which means that the time the data is ge
 
 - Seems to be more appropriate than the $t$-test.
 
-https://www.yourdatateacher.com/2022/05/02/are-your-training-and-test-sets-comparable/
-https://stats.stackexchange.com/questions/208517/kolmogorov-smirnov-test-vs-t-test
 ```
 dataset = load_diabetes(as_frame=True) X,y = dataset['data'],dataset['target'] X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=0)
 
@@ -36,11 +38,6 @@ For the static training scheme we follow Gu et al. (2021) and Chen et al. (2021)
 
 <mark style="background: #BBFABBA6;">In machine learning, train/test split splits the data randomly, as there’s no dependence from one observation to the other. That’s not the case with time series data. Here, you’ll want to use values at the rear of the dataset for testing and everything else for training.</mark>
 
-https://gsarantitis.wordpress.com/2020/04/16/data-shift-in-machine-learning-what-is-it-and-how-to-detect-it/
-https://datascience.stanford.edu/news/splitting-data-randomly-can-ruin-your-model
-https://scikit-learn.org/stable/modules/cross_validation.html#timeseries-cv
-https://arxiv.org/pdf/1905.11744.pdf
-
 one of the fundamental assumptions of mafny statistical analyses  that data is statistically independent. (https://www.influxdata.com/blog/autocorrelation-in-time-series-data/)
 
 Convert between label and class: https://www.jmlr.org/papers/volume11/ojala10a/ojala10a.pdf
@@ -53,19 +50,29 @@ Convert between label and class: https://www.jmlr.org/papers/volume11/ojala10a/o
 - Training set is used to fit the model to the data
 - Validation set is there for tuning the hyperparameters. ([[@hastietrevorElementsStatisticalLearning2009]] 222) write "to estimate prediction error for model selection"
 - Test set for unbiased, out-of-sample performance estimates. ([[@hastietrevorElementsStatisticalLearning2009]] 222) write "estimate generalization error of the model"
+- https://stackoverflow.com/questions/4503325/autocorrelation-of-a-multidimensional-array-in-numpy
+
+```python
+def xcorr(x):
+    l = 2 ** int(np.log2(x.shape[1] * 2 - 1))
+    fftx = fft(x, n = l, axis = 1)
+    ret = ifft(fftx * np.conjugate(fftx), axis = 1)
+    ret = fftshift(ret, axes=1)
+    return ret
+import numpy
+from numpy.fft import fft, ifft
+
+data = numpy.arange(5*4).reshape(5, 4)
+padding = numpy.zeros((5, 3))
+dataPadded = numpy.concatenate((data, padding), axis=1)
+print dataPadded
+```
 
 Ideally, the test set should be kept in a “vault,” and be brought out only at the end of the data analysis. Suppose instead that we use the test-set repeatedly, choosing the model with smallest test-set error. Then the test set error of the final chosen model will underestimate the true test error, sometimes substantially. It is difficult to give a general rule on how to choose the number of observations in each of the three parts, as this depends on the signal-tonoise ratio in the data and the training sample size. A typical split might be 50% for training, and 25% each for validation and testing:
 
 **Our split:**
 - We perform a *static* split into three disjoint sets. (aka holdout method)
 - We use a 60-20-20 split and assign dates to be either in one set to simplify evaluation.  How does the rounding to the next day work? test set should be long enough to allow a meaningful comparison against Grauer
-- dates:
-```python
-train = df[df.QUOTE_DATETIME.between("2005-05-02 00:00:01", "2013-10-24 23:59:00")]
-val = df[df.QUOTE_DATETIME.between("2013-10-25 00:00:01", "2015-11-05 23:59:00")]
-test = df[df.QUOTE_DATETIME.between("2015-11-06 00:00:01", "2017-05-31 23:59:00")]
-```
-
 - Common splitting strategy should be dependent on the training sample size and signal-to-noise ratio in the data ([[@hastietrevorElementsStatisticalLearning2009]]222)
 - A common split is e. g., 50-25-25. ([[@hastietrevorElementsStatisticalLearning2009]]222)
 - Work of [[@grauerOptionTradeClassification2022]] showed that the classification performance deterioriates over time. Thus, most recent data poses the most rigorous test conditions due to the identical data basis. 
