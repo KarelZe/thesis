@@ -24,7 +24,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🏅Results.md",
+                "file": "📖chapters/👨‍🍳Tain-Test-split.md",
                 "mode": "source",
                 "source": false
               }
@@ -151,7 +151,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🏅Results.md",
+                "file": "📖chapters/👨‍🍳Tain-Test-split.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -179,7 +179,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🏅Results.md"
+                "file": "📖chapters/👨‍🍳Tain-Test-split.md"
               }
             }
           },
@@ -212,6 +212,8 @@
   },
   "active": "ccb40ae954243066",
   "lastOpenFiles": [
+    "📥Inbox/@matthewsComparisonPredictedObserved1975.md",
+    "📖chapters/🏅Results.md",
     "📖chapters/🪄Feature Engineering.md",
     "📑notes/🔢Basic rules notes.md",
     "📖chapters/🔢Trade Initiator.md",
@@ -242,8 +244,6 @@
     "📖chapters/🌏Dataset.md",
     "📖chapters/🛌Token Embedding.md",
     "🖼️Media/visualization-token-embedding.png",
-    "📑notes/💤Embeddings for tabular data notes.md",
-    "📑notes/🛌 Token embeddings notes.md",
     "🖼️Media/grocking.png",
     "🖼️Media/Pasted image 20230304083112.png",
     "🖼️Media/summary-statistic.png",
