@@ -1,10 +1,6 @@
 
 
-While there is no universal definition of the trade initiator, the following 
-
-
-
-([[@odders-whiteOccurrenceConsequencesInaccurate2000]] 267)  
+In absence of a universal definition of the trade initiator, the following definitions are frequently found in research. ([[@odders-whiteOccurrenceConsequencesInaccurate2000]] 267) adapts a chronological view based on the order arrival. She defines the trade initiator as the party (buyer or seller) who places their order last, chronologically. This definition requires knowledge about the order submission times. In contrast, ([[@leeInferringInvestorBehavior2000]]94--97) put forth a definition based on the party in demand for immediate execution. (...)  This definition remains ambiguous for trades that result from crossed limit orders, matched market orders, or batched orders ([[@leeInferringInvestorBehavior2000]]94--95). Independent from the order type and submission time, ([[@ellisAccuracyTradeClassification2000]]533) define the trade initiator from the position of the customer. (...)
 
 The third is 
 
