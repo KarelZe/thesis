@@ -210,10 +210,13 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "4dbbcd7fdab8ef48",
+  "active": "ccb40ae954243066",
   "lastOpenFiles": [
-    "📖chapters/🔢Trade Initiator.md",
+    "📥Inbox/@matthewsComparisonPredictedObserved1975.md",
+    "📖chapters/🏅Results.md",
+    "📖chapters/🪄Feature Engineering.md",
     "📑notes/🔢Basic rules notes.md",
+    "📖chapters/🔢Trade Initiator.md",
     "📑notes/🔢Trade Initiator notes.md",
     "📑notes/🌏Dataset notes.md",
     "📖chapters/🔢Basic rules.md",
@@ -241,9 +244,6 @@
     "📖chapters/🌏Dataset.md",
     "📖chapters/🛌Token Embedding.md",
     "🖼️Media/visualization-token-embedding.png",
-    "📑notes/💤Embeddings for tabular data notes.md",
-    "📑notes/🛌 Token embeddings notes.md",
-    "📖chapters/🧭Kernel SHAP.md",
     "🖼️Media/grocking.png",
     "🖼️Media/Pasted image 20230304083112.png",
     "🖼️Media/summary-statistic.png",
