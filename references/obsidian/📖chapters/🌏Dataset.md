@@ -11,22 +11,7 @@ Testing the empirical accuracy of our approaches requires option trades where th
 
 **Trade Initiator**
 
-
-In the literature, researchers use different definitions of trade initiators based presumably on data availability.
-As noted in cref-[[🔢Trade Initiator]] there is no common definition for the trade initiator.
-
-<mark style="background: #D2B3FFA6;">“Our proprietary data provide the bid quote, the ask quote, the transaction price, the trade volume, a trader identity code, and a buy/sell indicator.5 The buy/sell indicator specifies the direction of the reporting party. If the seller re? ported the trade, then the trade would be called a sale regardless of the price at which it occurred. Thus, this indicator tells us the buyer and the seller in the trans? action, but not the trade direction per se. We can determine whether the trade was a buy or a sale by using the trader identity code in conjunctioh with the buy/sell indicator. The trader identity code is a four-letter code for every NASD member.” (Ellis et al., 2000, p. 532)</mark>
-
-<mark style="background: #ABF7F7A6;">“In the literature, researchers use different definitions of trade initiators based presumably on data availability. Odders-White (2000) considers the last arriving order to be the trade initiator. She can make this determination because the TORQ database includes the NYSE audit file, which contains order-entry time for both sides of the trade. Papers such as Lee (1992) and Petersen and Fialkowski (1994) consider the active side to be market orders. Kraus and Stoll (1972) consider the active side to be the side with fewer parties. Finucane (2000) and Lee and Radhakrishna (2000) note many orders cannot be unambiguously defined as buyeror seller-initiated. Finucane (2000) finds that nearly one-fourth of all trades do not occur as the result of the arrival of a market order. In his final analysis, Finucane (2000) examines trades with at least one standard non-tick sensitive buy or sell market order in the trade. Ellis et al. (2000) and Theissen (2000) take the approach of inferring trade direction fromthe side contra to the dealer.” (Peterson and Sirri, 2003, p. 263)</mark>
-
-<mark style="background: #FF5582A6;">ur definition of buyer- and seller-initiated trades is based on the position taken by the Makler. It has the potential advantage of being directly related to many traditional microstructure models which assume the presence of a market maker. It has, on the other hand, the drawback that only transactions involving the Makler as a buyer or a seller can be classified.</mark>
-
-“For the remaining 75.4% of the sample, knowing the identity of the trader and whether he was buying or selling allows us to determine directly whether the trade was buy- or sell-initiated. These are market maker-customer or brokercustomer trades (26.2%) and market maker-broker trades (49.2%). For example, suppose that a trade is recorded as a sell by the market maker and the other party is a customer. This trade only occurs because the customer wants to trade: the market maker is the liquidity provider, and we categorize such a trade as a buyinitiated trade.7” ([Ellis et al., 2000, p. 533](zotero://select/library/items/54BPHWMV))
-
-We base our definition of the trade initiator on the position taken by the customer. This is similar to ([[@ellisAccuracyTradeClassification2000]]533) who classify trades based on the position of the customer (...).
-Similar to Ellis
-
-In absence 
+In cref-[[🔢Trade Initiator]] we discussed three views on the trade initiator. As our data sources do not provide the order entry times or order types for both sides of the trade, we define trade initiator based on the position taken by the customer. As such, we classify trades as buyer-initiated if the trade is due to a customer buy order and as seller-initiated for customer sells. Naturally, we are unable to sign trades between customers. This is similar to ([[@ellisAccuracyTradeClassification2000]]9) and ([[@grauerOptionTradeClassification2022]]8) who share this definition.
 
 **Sample Construction**
 

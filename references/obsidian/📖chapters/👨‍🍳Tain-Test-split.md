@@ -14,11 +14,6 @@ Our train-test-split, however, makes two implicit assumptions, we want to test f
 
 Optimally, samples in the train, validation, and test come from the same distribution. The presence of the data shift, as observed in cref-[[🚏Exploratory Data Analysis]] within the training set raises concerns that the assumption holds. We test for the similarity of the training and validation set and identify problematic features using *adversarial validation*. As such, we re-label all trades within the training set with 0 and all trades of the validation set with 1. We then train a classifier on a random subset of the composed data and predict the conformance to the train or validation set for the remaining samples. More specifically, we use a gradient boosting classifier, which gives competitive predictions with default hyperparameters and is least computationally demanding. As samples in the training set are more frequent than validation samples, performance is estimated using the gls-MCC ([[@matthewsComparisonPredictedObserved1975]]445), which is insensitive to class imbalances. Assuming train and test samples come from the same distribution, the obtained performance estimate is near a random guess.
 
-We achieve a . The feature importance is split across all samples, but 
-
-We test for the similarity of the training and validation set using a 
-Distribution of target is maintained in the subsets.
-
 
 ![[adv-validation-gradient-boosting.png]]
 (describe plot but use different measure)
