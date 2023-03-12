@@ -24,7 +24,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/👨‍🍳Tain-Test-split.md",
+                "file": "📖chapters/🔢Trade Initiator.md",
                 "mode": "source",
                 "source": false
               }
@@ -151,7 +151,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/👨‍🍳Tain-Test-split.md",
+                "file": "📑notes/🔢Basic rules notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -179,7 +179,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/👨‍🍳Tain-Test-split.md"
+                "file": "📑notes/🔢Basic rules notes.md"
               }
             }
           },
