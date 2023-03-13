@@ -9,8 +9,12 @@ from sklearn.utils import check_consistent_length
 
 from typing import Literal
 
+
 def effective_spread(
-    y_pred: npt.NDArray, trade_price: npt.NDArray, fundamental_value: npt.NDArray, mode: Literal["nominal", "relative"]="nominal"
+    y_pred: npt.NDArray,
+    trade_price: npt.NDArray,
+    fundamental_value: npt.NDArray,
+    mode: Literal["nominal", "relative"] = "nominal",
 ) -> np.float64:
     """
     Depending on mode, calculate the nominal effective spread given by:
@@ -36,4 +40,7 @@ def effective_spread(
     if mode == "nominal":
         return np.mean(s)
     else:
-        return np.mean(s / fundamental_value)
+        # nan when div by zero https://stackoverflow.com/a/54364060/5755604
+        ps = np.empty(y_pred.shape)
+        np.divide(s, fundamental_value, out=ps, where=fundamental_value != 0)
+        return np.mean(ps)
