@@ -93,7 +93,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -151,7 +151,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🔢Basic rules notes.md",
+                "file": "📖chapters/🔢Trade Initiator.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -179,7 +179,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🔢Basic rules notes.md"
+                "file": "📖chapters/🔢Trade Initiator.md"
               }
             }
           },
@@ -212,15 +212,17 @@
   },
   "active": "ccb40ae954243066",
   "lastOpenFiles": [
+    "📑notes/🔢Trade Initiator notes.md",
+    "📖chapters/🔢Trade Initiator.md",
+    "📖chapters/🪦graveyard of ideas.md",
+    "📖chapters/🔢Basic rules.md",
+    "📑notes/🔢Basic rules notes.md",
+    "📖chapters/🌏Dataset.md",
+    "📖chapters/👨‍🍳Tain-Test-split.md",
     "📥Inbox/@matthewsComparisonPredictedObserved1975.md",
     "📖chapters/🏅Results.md",
     "📖chapters/🪄Feature Engineering.md",
-    "📑notes/🔢Basic rules notes.md",
-    "📖chapters/🔢Trade Initiator.md",
-    "📑notes/🔢Trade Initiator notes.md",
     "📑notes/🌏Dataset notes.md",
-    "📖chapters/🔢Basic rules.md",
-    "📖chapters/👨‍🍳Tain-Test-split.md",
     "📑notes/👨‍🍳Train-Test-split notes.md",
     "📖chapters/🍔Layer Norm.md",
     "📑notes/🔢Tick test notes.md",
@@ -241,8 +243,6 @@
     "🖼️Media/accuracies.png",
     "🖼️Media/learning-curves-gbm.png",
     "📥Inbox/@ellisAccuracyTradeClassification2000.md",
-    "📖chapters/🌏Dataset.md",
-    "📖chapters/🛌Token Embedding.md",
     "🖼️Media/visualization-token-embedding.png",
     "🖼️Media/grocking.png",
     "🖼️Media/Pasted image 20230304083112.png",
