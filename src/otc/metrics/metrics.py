@@ -38,9 +38,9 @@ def effective_spread(
     check_consistent_length(y_pred, trade_price, fundamental_value)
     s = 2 * (trade_price - fundamental_value) * y_pred
     if mode == "nominal":
-        return np.mean(s)
+        return np.nanmean(s)
     else:
         # nan when div by zero https://stackoverflow.com/a/54364060/5755604
         ps = np.empty(y_pred.shape)
         np.divide(s, fundamental_value, out=ps, where=fundamental_value != 0)
-        return np.mean(ps)
+        return np.nanmean(ps)
