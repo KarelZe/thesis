@@ -17,8 +17,21 @@
               "state": {},
               "pinned": true
             }
+          },
+          {
+            "id": "25f54af7bd337a1c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🧭Evaluation metric.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "90bbdd3c2ee01632",
@@ -126,6 +139,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "📖chapters/🧭Evaluation metric.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -152,7 +166,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "📖chapters/🧭Evaluation metric.md"
+              }
             }
           },
           {
@@ -182,8 +198,10 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f35a250acbe1a2dc",
+  "active": "25f54af7bd337a1c",
   "lastOpenFiles": [
+    "📖chapters/🏅Results.md",
+    "🍬Implementation/😺CatBoost.md",
     "📖chapters/👨‍🍳Tain-Test-split.md",
     "📖chapters/🔢Trade Initiator.md",
     "📖chapters/🔢Trade initiator.md",
@@ -193,7 +211,6 @@
     "📑notes/🔢Basic rules notes.md",
     "📖chapters/🌏Dataset.md",
     "📥Inbox/@matthewsComparisonPredictedObserved1975.md",
-    "📖chapters/🏅Results.md",
     "📖chapters/🪄Feature Engineering.md",
     "📑notes/🌏Dataset notes.md",
     "📑notes/👨‍🍳Train-Test-split notes.md",
@@ -209,7 +226,6 @@
     "📖chapters/🌏Environment.md",
     "📥Inbox/@lopezdepradoAdvancesFinancialMachine2018.md",
     "📥Inbox/@hyndmanForecastingPrinciplesPractice2021.md",
-    "📖chapters/🚏Exploratory Data Analysis.md",
     "🖼️Media/learning-curves-bias-variance.png",
     "🖼️Media/adv-validation-gradient-boosting.png",
     "🖼️Media/learning-curves.png",
