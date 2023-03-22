@@ -6,7 +6,8 @@
 
 We optimize for the accuracy
 
-
+- extension of feature permutation https://arxiv.org/pdf/1801.01489.pdf
+- nice description incuding alogirhtm https://christophm.github.io/interpretable-ml-book/feature-importance.html
 
 
 From [[@raschkaModelEvaluationModel2020]]: 0-1 loss and prediction accuracy. In the following article, we will focus on the prediction accuracy, which is defined as the number of all correct predictions divided by the number of examples in the dataset. We compute the prediction accuracy as the number of correct predictions divided by the number of examples $n$. Or in more formal terms, we define the prediction accuracy ACC as

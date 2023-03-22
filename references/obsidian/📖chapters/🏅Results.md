@@ -27,3 +27,5 @@ Interesting adversarial examples: https://arxiv.org/pdf/1705.07263.pdf
 
 
 Visualization of tables with columns: https://tex.stackexchange.com/questions/174876/formatting-table-with-siunitx-problem-with-parentheses-and-signs
+
+callibrated probas shouldnt be much of a problem, as we optimize for probabilities directly https://www.cs.cornell.edu/~caruana/niculescu.scldbst.crc.rev4.pdf
