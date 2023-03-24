@@ -4,9 +4,22 @@ In the following chapter, we motivate feature engineering, present our feature s
 Classical algorithms infer the initiator of the trade from the *raw* price and quote data. We employ feature engineering to pre-process input data and enhance the convergence and performance of our machine learning models. Gradient-boosted trees and neural networks, though flexible estimators, have limitations in synthesizing new features from existing ones, as demonstrated in empirical work on synthetic data by ([[@heatonEmpiricalAnalysisFeature2016]]5--6). Specifically, ratios, standard deviations, and differences can be difficult for these models to learn and must therefore be engineered beforehand. 
 
 ## Feature set definition
-To establish a common ground, we derive three sets of features from raw data. The feature sets are are to a large extend inspired by inherent features used within classical trade classification rules. Features are derived from quote and price data, except for feature sets 3 and 4, which include additional option characteristics and date features. 
+To establish a common ground, we derive three sets of features from raw data. The feature sets are are largely inspired by inherent features used within classical trade classification rules. Features are derived from quote and price data, except for feature sets 3 and 4, which include additional option characteristics and date features. 
+
+Our first feature set uses price and quote data required by classical algorithms such the (reversed) Lee-and-Ready algorithm. We aid the models by estimating the change in trade price between the previous and successive distinguishable trades. This is similar to the criterion used in the (reverse) tick rule, but in an non-discretized fashion. 
+
+Our second feature set extends the first feature set by the trade size and size of the quotes, required to estimate hybrid rules involving the depth rule and trade size rule.
+
+Arguably, our models have simultaneous access to the previous and successive trade price and quotes for both the exchange and the NBBO, which is an advantage over base rules. As we benchmark against various, stacked hybrid classification rules, the data requirements are comparable. We emphasize this aspect, as previous 
+ 
+
+Also, as data requirements 
+
+Our largest feature set also incorporates option characteristics, including the strike price, the time to maturity, the moneyness, the option type and issue type as well as the underlying and traded volume of the option series. We hypthesize, that by
 
 All feature set, the their definition and origin is documented in Appendix [[🍬appendix#^7c0162]].
+
+Feature set {1} contains the price and time indicators necessary to compute the tick rule. Feature set {2} adds volume and lagged volume to {1}. These basic feature sets are composed of transaction level data included on every trade ticket (and their lags). ——————–Insert Table 4 here——————Feature sets {3} through {6} include {2} and other available TRACE transaction level data, FISD variables, and calculated metrics based on the TRACE data. Specifically, {3} includes the tick rule classifier, {4} incorporates {3} and a variety of running and rolling statistics, and {5} is a subset of {4} in which features unique to the TRACE dataset are removed.
 
 ## Problem of missing values and categoricals
 The required pre-processing is minimal for tree-based learners. As one of few predictive models, trees can be extended to handle $\mathtt{[NaN]}$ values. Either by discarding missing values in the splitting procedure  (e. g.,[[@breimanClassificationRegressionTrees2017]] (p. 150 ff.)) or by incorporating missing values into the splitting criterion (e. g., [[@twalaGoodMethodsCoping2008]]) (p. 951). Recent literature for gradient boosting suggests, that handling missing data inside the algorithm slightly improves the accuracy over fitting trees on imputed data ([[@josseConsistencySupervisedLearning2020]] (p. 24) or [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] (p. 6)). Also, some tree-based learners can handle categorical data without prior pre-processing, as shown in our chapter on ordered boosting ([[🐈Gradient Boosting]]).

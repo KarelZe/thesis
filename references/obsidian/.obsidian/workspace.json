@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/👨‍🍳Pre-Processing.md",
+                "file": "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
                 "mode": "source",
                 "source": false
               }
@@ -182,9 +182,10 @@
   },
   "active": "635d2e242738971d",
   "lastOpenFiles": [
-    "📖chapters/👨‍🍳Pre-Processing.md",
     "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
     "📖chapters/🪄Feature Engineering.md",
+    "📖chapters/🧃Feature Sets.md",
+    "📖chapters/👨‍🍳Pre-Processing.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/💡Training of models (supervised).md",
     "📖chapters/💡Training and tuning.md",
@@ -207,7 +208,6 @@
     "📑notes/🔢Tick test notes.md",
     "📖chapters/🔢Trade Size Rule.md",
     "📑notes/🔢Trade Size Rule Notes.md",
-    "📥Inbox/@easleyOptionVolumeStock1998.md",
     "🖼️Media/learning-curves-bias-variance.png",
     "🖼️Media/adv-validation-gradient-boosting.png",
     "🖼️Media/learning-curves.png",

@@ -592,31 +592,40 @@ In the following chapter, we motivate feature engineering, present our feature s
 
 Classical algorithms infer the initiator of the trade from the \emph{raw} price and quote data. We employ feature engineering to pre-process input data and enhance the convergence and performance of our machine learning models. Gradient-boosted trees and neural networks, though flexible estimators, have limitations in synthesizing new features from existing ones, as demonstrated in empirical work on synthetic data by \textcite[][5--6]{heatonEmpiricalAnalysisFeature2016}. Specifically, ratios, standard deviations, and differences can be difficult for these models to learn and must therefore be engineered beforehand.
 
-Neither feature scaling nor imputation is strictly required for gradient-boosted trees and the selection is guided by the requirements of Transformers. 
+\textbf{Feature Sets}
+
+To establish a common ground, we derive three sets of features from raw data. The feature sets are motivated by features inherent to classical trade classification rules and are consequently derived from quote and price data. Except for a third feature set, which includes additional option characteristics.
+
+All feature set, their definition and origin are documented in \cref{app:feature-sets}.
+
+Our first feature set uses price and quote data required by classical algorithms such the (reversed) Lee-and-Ready algorithm. We aid the models by estimating the change in trade price between the previous and successive distinguishable trades. This is similar to the criterion used in the (reverse) tick rule, but in an non-discretized fashion. 
+
+Arguably, our models have simultaneous access to the previous and successive trade price and quotes for both the exchange and the NBBO, which is an advantage over base rules. As we benchmark against various, stacked hybrid 
+rules, the data requirements are comparable.
+
+% Neither feature scaling nor imputation is strictly required for gradient-boosted trees and the selection is guided by the requirements of Transformers. 
 
 % The  splits of tree-based learners remain unaffected with only minor differences from quantization <mark style="background: #ADCCFFA6;">(see quantization / histogram building in gradient boosting https://neurips.cc/media/neurips-2022/Slides/53370.pdf)</mark>. The log transform comes at the cost of an decreased interpretability (cp. [[@fengLogtransformationItsImplications2014]]).
 
-
-(cp. \cref{app:feature-sets})
 
 \textbf{Numerical Features}
 
 We determine the transformation using the Box-Cox procedure \autocite[][214]{boxAnalysisTransformations2022}, given by:
 
 \begin{equation}
-\tilde{x}= \begin{cases}\frac{x^\lambda-1}{\lambda}, & \lambda \neq 0 \\ \log (x),& \lambda=0\end{cases}.\tag{1}
+    \boldsymbol{X}^{*}\left[:,j\right]= \begin{cases}\frac{1}{\lambda}(\boldsymbol{X}\left[:,j\right]^\lambda-1), & \lambda \neq 0 \\ \log (\boldsymbol{X}\left[:,j\right]),& \lambda=0\end{cases}.
 \label{eq:box-cox-test}
 \end{equation}
 
-Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimizing for the Gaussian likelihood on the training set. As shown in \cref{eq:box-cox-test}, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $x$, we follow common practice by adding a constant of $1$ if needed. Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the Box-Cox test, we apply a common $x^{\prime}=\log(x)$ transform with the effect of compressing large values and expanding smaller ones~\footnote{More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations. Results are not affected. }.
+Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimizing for the Gaussian likelihood on the training set. As shown in \cref{eq:box-cox-test}, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $\boldsymbol{X}\left[:,j\right]$, we follow common practice by adding a constant of $1$ if needed. Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the Box-Cox test, we apply a common $\widehat{\boldsymbol{X}}\left[:,j\right]=\log(\boldsymbol{X}\left[:,j\right])$ transform on all price and size-related features with the effect of compressing large values and expanding smaller ones~\footnote{More specifically, $\widehat{\boldsymbol{X}}\left[:,j\right]= \log(\boldsymbol{X}\left[:,j\right]+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations. Results are not affected. }.
 
 Note that, the use of the Box-Cox transform is different from its originated purpose. In feature engineering the transformation is used in an unsupervised fashion, as the transformation's outcome is not directly used in the model. Also, the transform is applied to all features, rather than the model's residuals \autocite[122]{kuhnFeatureEngineeringSelection2020}.
 
 To further improve convergence of our transformer-based architectures, we normalize the data set using $z$-score normalization given by:
 \begin{equation}
-x^{\prime}=\frac{x-\mu}{\sigma}
+    \hat{\boldsymbol{X}}=\frac{\boldsymbol{X}-\boldsymbol{\mu}}{\boldsymbol{\sigma}}
 \end{equation}
-with mean $ \mu=\frac{1}{N} \sum_{i=1}^N\left(x_i\right)$, and standard deviation $\sigma=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(x_i-\mu\right)^2}$.
+with mean $\boldsymbol{\mu} =\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]\right)$ and standard deviation $\boldsymbol{\sigma}=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]-\boldsymbol{\mu}\right)^2}$.
 Following good measures, all statistics are estimated on the training set only.
 
 Normalization and log transformations have the advantage of preserving the data distribution, which is an desirable property when comparing the feature importances from machine learning models against their classical counterparts in \cref{sec:feature-importance}.
