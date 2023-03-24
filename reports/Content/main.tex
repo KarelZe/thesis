@@ -581,11 +581,28 @@ While our procedure makes the inference of the true trade initiator partly feasi
 
 \subsubsection{Exploratory Data Analysis (2~p)}\label{sec:exploratory-data-analysis}
 
+
+% high-cardinal underlyings.
+
 \subsubsection{Data Pre-Processing (1~p)}\label{sec:data-preprocessing}
 
 \subsubsection{Feature Engineering (1.5~p)}\label{sec:feature-engineering}
 
 (cp. \cref{app:feature-sets})
+
+\textbf{Numerical Features}
+
+Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the box cox test, we apply a common $x^{\prime}=\log(x)$ transform with the effect of compressing large values and expanding smaller ones~\footnote{More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations. Results are not affected. }.
+
+\textbf{Categorical Features}
+
+As for the categorical variables, consisting of the option type, the underlying, and the issue type, different transformations are required. We perform a label encoding by randomly mapping every unique value onto an integer key. As an example, the option type in the set $\{\text{'C'},\text{'P'}\}$ would be randomly mapped onto $\{1,0\}$. This basic transformation defers the handling of categorical data to the model. Also, it minimizes target leakage. Classes not seen during training are mapped to the key of an $\mathtt{[UNK]}$ token, as motivated in \cref{sec:token-embeddings}. 
+
+The option type and issue type are both low-cardinal with two and five unique classes. As discussed in the explanatory data analysis, options are written on a wide range of underlyings, making the underlying a high-cardinal feature with more than \num{9999} distinct classes. The high-cardinality of the feature not just drives the computational demand through a higher parameter count but also affects the model's tendency to overfit, as most classes appear infrequently. Thus, we require each category to appear at least \num{1000} times in the training set. Infrequent categories are removed by mapping to the $\mathtt{[UNK]}$ token. Virtually, this is identical to constraining the vocabulary size $N_V = \num{3333}$.
+
+Disadvantages of label encoding, as raised in \textcite[][12]{hancockSurveyCategoricalData2020}, such as the unequal contributions of larger keys to the loss in neural networks or the artificially implied order, do not apply here, as the conversion is followed by sophisticated treatments within the models (cp. \cref{sec:tabtransformer,sec:fttransformer}). Similarly, ordered boosting inherently supports categorical features (cp. \cref{sec:gradient-boosting-procedure}). 
+
+A comprehensive overview of all feature transformations is given in \cref{app:feature-sets}. The next Section discusses the train-test split.
 
 \subsubsection{Train-Test Split}\label{sec:train-test-split}
 

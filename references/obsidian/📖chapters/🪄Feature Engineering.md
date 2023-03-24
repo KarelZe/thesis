@@ -1,4 +1,7 @@
+Normalization is a method to change the values of each feature in the dataset to a common scale, without distorting differences in the ranges of values or losing information. It is helpful especially for neural networks to increase robustness and training efficacy and to reduce computational cost [28].
+
 In the following chapter, we motivate feature engineering, present our feature sets and discuss strategies for transforming features into a form that accelerates and advances the training of our models.
+
 
 ## Goal of feature engineering
 Classical algorithms ([[🔢Basic rules]] or [[🔢Hybrid rules]]) infer the initiator of the trade from the *raw* price and quote data. We employ feature engineering to pre-process input data and enhance the convergence and performance of our machine learning models. Gradient-boosted trees and neural networks, though flexible estimators, have limitations in synthesizing new features from existing ones, as demonstrated in empirical work on synthetic data by [@heatonEmpiricalAnalysisFeature2016] (p. 5-6). Specifically, ratios, standard deviations, and differences can be difficult for these models to learn and must therefore be engineered beforehand. To ensure fair comparison and improve the transferability of our results, we use simple, non-destructive transformations in our feature engineering. 
@@ -15,8 +18,6 @@ However, neural networks can not inherently handle missing values, as a $\mathtt
 
 ## Solution to missing values and categoricals
 In order to prepare a common datasets for *all* our machine learning models, we need to impute, scale and encode the data. Like in the chapter [[👨‍🍳Pre-Processing]] our feature scaling aims to be minimal intrusive, while facilitating efficient training for all our machine learning models. Following a common track in literature, we train our predictive model on imputed data.  We select an imputation with constants for being a single-pass strategy that minimizes data leakage and allows tree-based learners and neural networks to separate imputed values from observed ones. While imputation with constants is simplistic, it is on-par with more complex approaches (cp. [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] p. 4). We choose a constant of $-1$, thus different from zero, so that the models can easily differentiate imputed from meaningful values and we avoid adversarial performance effects in neural networks from dropping input nodes (cp. [[@yiWhyNotUse2020]] p. 1 and [[@smiejaProcessingMissingData2018]]).[^5] No missing indicators are provided to keep the number of parameters in our models small.
-
-Classical trade signing algorithms, such as the tick test, are also impacted by missing values. In theses cases, we defer to a random classification or a subsequent rule, if rules can not be computed. Details are provided in section [[💡Training of models (supervised)]].
 
 As introduced in the chapters [[🐈Gradient Boosting]] and [[🤖Transformer]] both architectures have found to be robust to missing values. In conjunction with the low degree of missing values (compare chapter [[🚏Exploratory Data Analysis]]), we therefore expect the impact from missing values to be minor. To address concerns, that the imputation or scaling negatively impacts the performance of gradient boosted trees, we perform an ablation study in chapter [[🎋Ablation study]], and retrain our models on the unscaled and unimputed data set.
 
@@ -35,36 +36,8 @@ Here, $\lambda$ is the power parameter and determines the specific power functio
 
 When applying the test in feature engineering, it is important to note two major conceptual differences from the [[@boxAnalysisTransformations2022]] paper as pointed out by [[@kuhnFeatureEngineeringSelection2020]]. Here, the transform is used an unsupervised manner, as the transformation's outcome is not directly used in the model. Also, the transform is applied to all features, rather than the model's residuals.
 
-Our estimates for $\lambda$ are documented in the Appendix [[🍬appendix]]. Based on the results of the box cox test, we apply a common $x^{\prime}=\log(x)$ transform with the effect of compressing large values and expanding smaller ones. More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations[^1]. Due to the monotonous nature of the logarithm (power transform in general; see https://en.wikipedia.org/wiki/Power_transform), the splits of tree-based learners remain unaffected with only minor differences due to quantization <mark style="background: #ADCCFFA6;">(see quantization / histogram building in gradient boosting https://neurips.cc/media/neurips-2022/Slides/53370.pdf)</mark>. The log transform comes at the cost of an decreased interpretability (cp. [[@fengLogtransformationItsImplications2014]]).
+Our estimates for $\lambda$ are documented in the Appendix [[🍬appendix]]. Based on the results of the box cox test, we apply a common $x^{\prime}=\log(x)$ transform with the effect of compressing large values and expanding smaller ones. (footnote More specifically, $x^{\prime}= \log(x+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations[^1].) Due to the monotonous nature of the logarithm (power transform in general; see https://en.wikipedia.org/wiki/Power_transform), the splits of tree-based learners remain unaffected with only minor differences due to quantization <mark style="background: #ADCCFFA6;">(see quantization / histogram building in gradient boosting https://neurips.cc/media/neurips-2022/Slides/53370.pdf)</mark>. The log transform comes at the cost of an decreased interpretability (cp. [[@fengLogtransformationItsImplications2014]]).
 
-Our largest feature set als contains dates and times of the trade. In contrast to other continuous features, the features are inherently cyclic. We exploit this property for hours, days, and months and apply a fourier transform to convert the features into a smooth variable using formula [[#^773161]]:
-
-$$
-\begin{aligned}
-x_{\sin} &= \sin\left(\frac{2\pi x}{\max(x)} \right), \text{and}\\
-c_{\cos} &= \cos\left(\frac{2\pi x}{\max(x)} \right),
-\end{aligned}
-$$
-^773161
-(There is close link to [[🧵Positional Embedding]]) and [[@tancikFourierFeaturesLet2020]] and [[@gorishniyEmbeddingsNumericalFeatures2022]]
-%%
-https://en.wikipedia.org/wiki/Sine_wave
-Its most basic form as a function of time $(t)$ is:
-$$
-y(t)=A \sin (2 \pi f t+\varphi)=A \sin (\omega t+\varphi)
-$$
-where:
-- A, amplitude, the peak deviation of the function from zero.
-- $f$, ordinary frequency, the number of oscillations (cycles) that occur each second of time.
-- $\omega=2 \pi f$, angular frequency, the rate of change of the function argument in units of radians per second.
-- $\varphi$, phase, specifies (in radians) where in its cycle the oscillation is at $t=0$.
-When $\varphi$ is non-zero, the entire waveform appears to be shifted in time by the amount $\varphi / \omega$ seconds. A negative value represents a delay, and a positive value represents an advance.
-%%
-
-where $x$ is the raw input and $x_{\sin}$ and $x_{\cos}$ are the cyclical features. This cyclic continuous encoding, has the effect of preserving temporal proximity, as shown in Figure [[#^278944]]. As visualized for dates, the month's ultimo and the next month's first are close to each other in the individual features and on the unit circle. [^3]
-
-![[positional_encoding.png]]
-(found here similarly: https://www.researchgate.net/figure/A-unit-circle-example-of-frequency-encoding-of-spatial-data-using-the-Fourier-series-a_fig2_313829438) ^278944
 
 To address the problem of convergence of our transformer-based architectures, we normalize the data set using $z$-score normalization given by formula [[#^5d5445]]:
 $$
@@ -79,15 +52,18 @@ $$
 \sigma=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(x_i-\mu\right)^2}.
 $$
 ^5d5445
-Following good measusre, all statistics are estimated on the training set only.
+Following good measures, all statistics are estimated on the training set only.
 
-Normalization has the advantage of preserving the data distribution, as shown by [[@kuhnFeatureEngineeringSelection2020]], which is an important property when comparing[[🏅Feature importance results]]based models against their classical counterparts in chapter [[🏅Feature importance measure]] . [^4]
+Normalization has the advantage of preserving the data distribution, as shown by [[@kuhnFeatureEngineeringSelection2020]], which is an important property when comparing[[🏅Feature importance results]] based models against their classical counterparts in chapter [[🏅Feature importance measure]] . [^4]
 
-As for the categorical variables a transformation is required. We perform a label encoding by randomly mapping every unique value onto an integer key. As an example, the option type in the set $\{\text{'C'},\text{'P'}\}$ would be randomly mapped onto $\{1,0\}$. This basic transformation allows to defer handling of categorical data to the model [[@hancockSurveyCategoricalData2020]] (p. 10). Also, it minimizes target leakage. Classes not seen during are mapped to the key of a $\mathtt{[UNK]}$ token.
+As for the categorical variables a transformation is required. We perform a label encoding by randomly mapping every unique value onto an integer key. As an example, the option type in the set $\{\text{'C'},\text{'P'}\}$ would be randomly mapped onto $\{1,0\}$. This basic transformation allows to defer handling of categorical data to the model ([[@hancockSurveyCategoricalData2020]]10). Also, it minimizes target leakage. Classes not seen during are mapped to the key of an $\mathtt{[UNK]}$ token, as motivated in cref-[[💤Embeddings For Tabular Data]]. 
 
-Known disadvantages of label encoding, as raised in [[@hancockSurveyCategoricalData2020]] (p. 12), such as the unequal contributions of larger keys to the loss in neural networks or the artificially implied order, do not apply here, as the conversion is followed by sophisticated treatments within the models[^2].
+(Graphics left distribution of underlyings / right 10 most frequent underlyings)
+Due to the high cardinality of the root, the 
 
 One aspect that remains open, is the high cardinality of categorical features with as many as (add number of classes of root) classes. We postpone strategies to model-specific treatments in chapter [[💡Training of models (supervised)]]. The chapter also provides further insights on handling categories observed during training.
+
+Known disadvantages of label encoding, as raised in ([[@hancockSurveyCategoricalData2020]]12), such as the unequal contributions of larger keys to the loss in neural networks or the artificially implied order, do not apply here, as the conversion is followed by sophisticated treatments within the models. We refer to cref-[[🤖TabTransformer]] and [[🤖FTTransformer]] for in-depth coverage in Transfomers and cref-[[🐈Gradient Boosting]] for ordered boosting.
 
 A comprehensive overview of all feature transformations is given in Appendix [[🍬appendix#^8e998b]].
 
