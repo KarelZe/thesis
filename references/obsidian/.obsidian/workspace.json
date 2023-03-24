@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🐈Gradient Boosting.md",
+                "file": "📖chapters/👨‍🍳Pre-Processing.md",
                 "mode": "source",
                 "source": false
               }
@@ -182,8 +182,10 @@
   },
   "active": "635d2e242738971d",
   "lastOpenFiles": [
-    "📖chapters/🐈Gradient Boosting.md",
+    "📖chapters/👨‍🍳Pre-Processing.md",
+    "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
     "📖chapters/🪄Feature Engineering.md",
+    "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/💡Training of models (supervised).md",
     "📖chapters/💡Training and tuning.md",
     "📖chapters/🪦graveyard of ideas.md",
@@ -206,8 +208,6 @@
     "📖chapters/🔢Trade Size Rule.md",
     "📑notes/🔢Trade Size Rule Notes.md",
     "📥Inbox/@easleyOptionVolumeStock1998.md",
-    "📥Inbox/@baLayerNormalization2016.md",
-    "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
     "🖼️Media/learning-curves-bias-variance.png",
     "🖼️Media/adv-validation-gradient-boosting.png",
     "🖼️Media/learning-curves.png",
