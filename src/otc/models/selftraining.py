@@ -1,17 +1,13 @@
 # adapted from https://github.com/scikit-learn/scikit-learn/blob/9aaed4987/sklearn/semi_supervised/_self_training.py#L28
 
 import warnings
-from numbers import Integral, Real
 
 import numpy as np
-
-from sklearn.base import MetaEstimatorMixin, clone, BaseEstimator
-from sklearn.utils._param_validation import HasMethods, Interval, StrOptions
-from sklearn.utils.validation import check_is_fitted
-from sklearn.utils.metaestimators import available_if
-from sklearn.utils import safe_mask
-
 from catboost import Pool
+from sklearn.base import BaseEstimator, MetaEstimatorMixin, clone
+from sklearn.utils import safe_mask
+from sklearn.utils.metaestimators import available_if
+from sklearn.utils.validation import check_is_fitted
 
 __all__ = ["SelfTrainingClassifier"]
 
@@ -133,17 +129,6 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
     """
 
     _estimator_type = "classifier"
-
-    _parameter_constraints: dict = {
-        # We don't require `predic_proba` here to allow passing a meta-estimator
-        # that only exposes `predict_proba` after fitting.
-        "base_estimator": [HasMethods(["fit"])],
-        "threshold": [Interval(Real, 0.0, 1.0, closed="left")],
-        "criterion": [StrOptions({"threshold", "k_best"})],
-        "k_best": [Interval(Integral, 1, None, closed="left")],
-        "max_iter": [Interval(Integral, 0, None, closed="left"), None],
-        "verbose": ["verbose"],
-    }
 
     def __init__(
         self,
