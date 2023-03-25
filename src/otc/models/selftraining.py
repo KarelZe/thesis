@@ -209,11 +209,11 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
             train_pool = Pool(
                 data=X[safe_mask(X, has_label)],
                 label=self.transduction_[has_label],
-                weight=weights[weights],
+                weight=weights[has_label],
                 cat_features=cat_features,
             )
 
-            self.base_estimator_.fit(train_pool, eval_set)
+            self.base_estimator_.fit(train_pool, eval_set=eval_set)
 
             # Predict on the unlabeled samples
             prob = self.base_estimator_.predict_proba(X[safe_mask(X, ~has_label)])
