@@ -1,9 +1,0 @@
-{
-	"nodes":[
-		{"id":"006aaffa83f272e7","x":-800,"y":-726,"width":602,"height":383,"type":"file","file":"🖼️Media/transformer-architecture.png"},
-		{"id":"3b5427d1600e0b45","x":-144,"y":-679,"width":400,"height":336,"type":"file","file":"🖼️Media/ft-transformer-architecture.png"},
-		{"id":"6a6e50ac2255e56a","x":-800,"y":-300,"width":349,"height":400,"type":"file","file":"🖼️Media/tabtransformer-architecture.png"},
-		{"id":"0801b719b5b518b5","x":-1148,"y":-734,"width":304,"height":400,"type":"file","file":"🖼️Media/transformer-notation.png"}
-	],
-	"edges":[]
-}
