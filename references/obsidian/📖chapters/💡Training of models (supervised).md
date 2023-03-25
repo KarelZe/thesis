@@ -1,3 +1,5 @@
+Classical trade signing algorithms, such as the tick test, are also impacted by missing values. In theses cases, we defer to a random classification or a subsequent rule, if rules can not be computed. Details are provided in section [[💡Training of models (supervised)]].
+
 
 ## Transformer
 [[🤖Training of the Transformer]]

@@ -1,3 +1,37 @@
+## Feature Engineering
+Our largest feature set als contains dates and times of the trade. In contrast to other continuous features, the features are inherently cyclic. We exploit this property for hours, days, and months and apply a fourier transform to convert the features into a smooth variable using formula [[#^773161]]:
+
+$$
+\begin{aligned}
+x_{\sin} &= \sin\left(\frac{2\pi x}{\max(x)} \right), \text{and}\\
+c_{\cos} &= \cos\left(\frac{2\pi x}{\max(x)} \right),
+\end{aligned}
+$$
+^773161
+(There is close link to [[🧵Positional Embedding]]) and [[@tancikFourierFeaturesLet2020]] and [[@gorishniyEmbeddingsNumericalFeatures2022]]
+%%
+https://en.wikipedia.org/wiki/Sine_wave
+Its most basic form as a function of time $(t)$ is:
+$$
+y(t)=A \sin (2 \pi f t+\varphi)=A \sin (\omega t+\varphi)
+$$
+where:
+- A, amplitude, the peak deviation of the function from zero.
+- $f$, ordinary frequency, the number of oscillations (cycles) that occur each second of time.
+- $\omega=2 \pi f$, angular frequency, the rate of change of the function argument in units of radians per second.
+- $\varphi$, phase, specifies (in radians) where in its cycle the oscillation is at $t=0$.
+When $\varphi$ is non-zero, the entire waveform appears to be shifted in time by the amount $\varphi / \omega$ seconds. A negative value represents a delay, and a positive value represents an advance.
+%%
+
+where $x$ is the raw input and $x_{\sin}$ and $x_{\cos}$ are the cyclical features. This cyclic continuous encoding, has the effect of preserving temporal proximity, as shown in Figure [[#^278944]]. As visualized for dates, the month's ultimo and the next month's first are close to each other in the individual features and on the unit circle. [^3]
+
+![[positional_encoding.png]]
+(found here similarly: https://www.researchgate.net/figure/A-unit-circle-example-of-frequency-encoding-of-spatial-data-using-the-Fourier-series-a_fig2_313829438) ^278944
+
+
+
+
+
 ## Embeddings
 This is similar to the work of ([[@easleyDiscerningInformationTrade2016]] 272), who modify the tick rule and GLSC-BVC algorithm to obtain probability estimates of a buy from individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis.
 

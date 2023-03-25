@@ -4,9 +4,8 @@
     "type": "split",
     "children": [
       {
-        "id": "aeb1f3ebc9e06223",
+        "id": "90bbdd3c2ee01632",
         "type": "tabs",
-        "dimension": 52.60139287177387,
         "children": [
           {
             "id": "f35a250acbe1a2dc",
@@ -17,26 +16,12 @@
               "state": {},
               "pinned": true
             }
-          },
-          {
-            "id": "25f54af7bd337a1c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🧭Evaluation metric.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
-        "id": "90bbdd3c2ee01632",
+        "id": "2e4bb12a56b63b7f",
         "type": "tabs",
-        "dimension": 47.39860712822614,
         "children": [
           {
             "id": "dad26e0868f82374",
@@ -51,37 +36,8 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "4dbbcd7fdab8ef48",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🔢Basic rules notes.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "2d2daef8330abd71",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🔢Trade Initiator notes.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -123,7 +79,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 319.5110321044922
+    "width": 226.5110321044922
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -139,7 +95,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🧭Evaluation metric.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -166,9 +121,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "📖chapters/🧭Evaluation metric.md"
-              }
+              "state": {}
             }
           },
           {
@@ -198,43 +151,43 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "25f54af7bd337a1c",
+  "active": "8399eb31ec07fd72",
   "lastOpenFiles": [
+    "viz-training-schemes.png.md",
+    "orphaned files output.md",
+    "🖼️Media/vison-transformer.png",
+    "🖼️Media/transformer-notation.png",
+    "🖼️Media/transformer-architecture.png",
+    "🖼️Media/summary_statistics.png",
+    "🖼️Media/norm-first-norm-last-big-picture.png",
+    "🖼️Media/notation-pointwise-ffn.png",
+    "🖼️Media/missclassification-trade-rule.png",
+    "🖼️Media/learning-curves-gbm.png",
+    "🖼️Media/layer-norm-first-last.png",
+    "🖼️Media/feature-tokenizer-fttransformer.png",
+    "📖chapters/🪄Data Preprocessing.md",
+    "📖chapters/👨‍🍳Tain-Test-split.md",
+    "📑notes/🪄Data Preprocessing.md",
+    "📖chapters/🪄Feature Engineering.md",
+    "📖chapters/🚏Exploratory Data Analysis.md",
+    "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
+    "📖chapters/🧃Feature Sets.md",
+    "📖chapters/🐈Gradient Boosting.md",
+    "📖chapters/💡Training of models (supervised).md",
+    "📖chapters/💡Training and tuning.md",
+    "📖chapters/🪦graveyard of ideas.md",
+    "❓Questions.md",
+    "📖chapters/🧭Evaluation metric.md",
     "📖chapters/🏅Results.md",
     "🍬Implementation/😺CatBoost.md",
-    "📖chapters/👨‍🍳Tain-Test-split.md",
     "📖chapters/🔢Trade Initiator.md",
     "📖chapters/🔢Trade initiator.md",
     "📑notes/🔢Trade Initiator notes.md",
-    "📖chapters/🪦graveyard of ideas.md",
     "📖chapters/🔢Basic rules.md",
     "📑notes/🔢Basic rules notes.md",
     "📖chapters/🌏Dataset.md",
     "📥Inbox/@matthewsComparisonPredictedObserved1975.md",
-    "📖chapters/🪄Feature Engineering.md",
     "📑notes/🌏Dataset notes.md",
-    "📑notes/👨‍🍳Train-Test-split notes.md",
-    "📖chapters/🍔Layer Norm.md",
-    "📑notes/🔢Tick test notes.md",
-    "📖chapters/🔢Trade Size Rule.md",
-    "📑notes/🔢Trade Size Rule Notes.md",
-    "📥Inbox/@easleyOptionVolumeStock1998.md",
-    "📥Inbox/@baLayerNormalization2016.md",
-    "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
-    "🗿TOC.md",
-    "📥Inbox/@friedmanAdditiveLogisticRegression2000.md",
-    "📖chapters/🌏Environment.md",
-    "📥Inbox/@lopezdepradoAdvancesFinancialMachine2018.md",
-    "📥Inbox/@hyndmanForecastingPrinciplesPractice2021.md",
-    "🖼️Media/learning-curves-bias-variance.png",
-    "🖼️Media/adv-validation-gradient-boosting.png",
-    "🖼️Media/learning-curves.png",
-    "🖼️Media/accuracies.png",
-    "🖼️Media/learning-curves-gbm.png",
-    "🖼️Media/visualization-token-embedding.png",
-    "🖼️Media/grocking.png",
-    "🖼️Media/Pasted image 20230304083112.png",
-    "🖼️Media/summary-statistic.png",
-    "🖼️Media/train-test-split.png"
+    "📑notes/👨‍🍳Train-Test-split notes.md"
   ]
 }

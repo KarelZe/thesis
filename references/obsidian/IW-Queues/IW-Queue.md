@@ -20,7 +20,7 @@ interval: 1
 | [[👪Related Work]]                              |       35 |       |        1 | 1970-01-01 |
 | [[🔢Quote Rule]]                                |     37.5 |       |        1 | 1970-01-01 |
 | [[💡Training and tuning]]                       |       40 |       |        1 | 1970-01-01 |
-| [[👨‍🍳Pre-Processing]]                         |       40 |       |        1 | 1970-01-01 |
+| [[📑notes/🪄Data Preprocessing]]                         |       40 |       |        1 | 1970-01-01 |
 | [[💡Tuning of models (semi-supervised)]]        |       41 |       |        1 | 1970-01-01 |
 | [[🔢LR algorithm notes]]                              |     42.5 |       |        1 | 1970-01-01 |
 | [[pre-training]]                                |       45 |       |        1 | 1970-01-01 |
