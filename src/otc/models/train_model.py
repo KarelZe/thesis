@@ -137,15 +137,10 @@ def main(
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
-    # TODO: Remove again, just for testing
-    rng = np.random.RandomState(42)
-    ix = rng.rand(y_train.shape[0]) < 0.3
-    y_train[ix] = 0
-
     # pretrain training activated
-    has_label = y_train.isin([-1,0,1]).all()
-    if pretrain and not has_label:
-        raise ValueError("Pretraining active, but dataset contains no unlabelled instances or other labels. Use 0 as label for unlabelled instances.")
+    has_label = (y_train != 0).all()
+    if pretrain and has_label:
+        raise ValueError("Pretraining active, but dataset contains no unlabelled instances.")
 
     # no pretraining activated
     has_label = y_train.isin([-1,1]).all()

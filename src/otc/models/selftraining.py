@@ -9,6 +9,8 @@ from sklearn.utils import safe_mask
 from sklearn.utils.metaestimators import available_if
 from sklearn.utils.validation import check_is_fitted
 
+from tqdm import tqdm
+
 __all__ = ["SelfTrainingClassifier"]
 
 # Authors: Oliver Rausch   <rauscho@ethz.ch>
@@ -201,6 +203,8 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
 
         self.n_iter_ = 0
 
+        pbar = tqdm(total=self.max_iter)
+
         while not np.all(has_label) and (
             self.max_iter is None or self.n_iter_ < self.max_iter
         ):
@@ -249,6 +253,7 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
                     f"End of iteration {self.n_iter_},"
                     f" added {selected_full.shape[0]} new labels."
                 )
+            pbar.update(1)
 
         if self.n_iter_ == self.max_iter:
             self.termination_condition_ = "max_iter"
@@ -265,6 +270,9 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         self.base_estimator_.fit(train_pool, eval_set=eval_set)
 
         self.classes_ = self.base_estimator_.classes_
+        
+        pbar.close()
+        
         return self
 
     @available_if(_estimator_has("predict"))
