@@ -10,13 +10,14 @@ import warnings
 from pathlib import Path
 
 import click
+import numpy as np
 import optuna
 import pandas as pd
+import wandb
 import yaml
 from optuna.exceptions import ExperimentalWarning
 from optuna.integration.wandb import WeightsAndBiasesCallback
 
-import wandb
 from otc.config.config import settings
 from otc.features.build_features import (
     features_categorical,
@@ -135,6 +136,11 @@ def main(
     )
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
+
+    # TODO: Remove again, just for testing
+    rng = np.random.RandomState(42)
+    ix = rng.rand(y_train.shape[0]) < 0.3
+    y_train[ix] = 0
 
     # pretrain training activated
     has_label = y_train.isin([-1,0,1]).all()
