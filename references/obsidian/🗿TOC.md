@@ -162,7 +162,7 @@ describe if data set is actually used. Write similarily to
 [[🚏Exploratory Data Analysis]]
 
 ### Data Pre-Processing 🟡
-[[👨‍🍳Pre-Processing]]
+[[📑notes/🪄Data Preprocessing]]
 
 ### Feature Engineering 🟡
 [[🪄Feature Engineering]]

@@ -8,20 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "635d2e242738971d",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🪄Feature Engineering.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
             "id": "f35a250acbe1a2dc",
             "type": "leaf",
             "pinned": true,
@@ -32,18 +18,19 @@
             }
           },
           {
-            "id": "bab479defd2e93ca",
+            "id": "5080fd1ff57dcd7e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
+                "file": "📖chapters/🪄Data Preprocessing.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "2e4bb12a56b63b7f",
@@ -121,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🪄Feature Engineering.md",
+                "file": "📖chapters/🪄Data Preprocessing.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -149,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🪄Feature Engineering.md"
+                "file": "📖chapters/🪄Data Preprocessing.md"
               }
             }
           },
@@ -180,12 +167,15 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "635d2e242738971d",
+  "active": "5080fd1ff57dcd7e",
   "lastOpenFiles": [
-    "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
+    "📖chapters/👨‍🍳Tain-Test-split.md",
+    "📑notes/🪄Data Preprocessing.md",
+    "📖chapters/🪄Data Preprocessing.md",
     "📖chapters/🪄Feature Engineering.md",
+    "📖chapters/🚏Exploratory Data Analysis.md",
+    "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
     "📖chapters/🧃Feature Sets.md",
-    "📖chapters/👨‍🍳Pre-Processing.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/💡Training of models (supervised).md",
     "📖chapters/💡Training and tuning.md",
@@ -194,7 +184,6 @@
     "📖chapters/🧭Evaluation metric.md",
     "📖chapters/🏅Results.md",
     "🍬Implementation/😺CatBoost.md",
-    "📖chapters/👨‍🍳Tain-Test-split.md",
     "📖chapters/🔢Trade Initiator.md",
     "📖chapters/🔢Trade initiator.md",
     "📑notes/🔢Trade Initiator notes.md",
@@ -206,8 +195,6 @@
     "📑notes/👨‍🍳Train-Test-split notes.md",
     "📖chapters/🍔Layer Norm.md",
     "📑notes/🔢Tick test notes.md",
-    "📖chapters/🔢Trade Size Rule.md",
-    "📑notes/🔢Trade Size Rule Notes.md",
     "🖼️Media/learning-curves-bias-variance.png",
     "🖼️Media/adv-validation-gradient-boosting.png",
     "🖼️Media/learning-curves.png",

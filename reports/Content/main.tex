@@ -540,6 +540,7 @@ In the subsequent section, extend all previous models including FT-Transformer f
 
 
 \newpage
+\addtocontents{toc}{\protect\newpage}
 \section{Empirical Study (19.5~p)}\label{sec:empirical-study}
 
 In this Section, we demonstrate the effectiveness of gradient boosting and Transformers for trade classification. We benchmark against the \gls{LR}, \gls{EMO}, and \gls{CLNV} algorithm, as well as hybrids involving the trade size rule and depth rule on two datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}.
@@ -553,7 +554,7 @@ The subsequent section provides details on the dataset.
 The following chapter describes the construction of datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we define and infer the trade initiator.
 The following chapter describes the construction of datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we define and infer the trade initiator.
 
-\subsubsection{Data Set}\label{sec:dataset}
+\subsubsection{Data Collection}\label{sec:data-collection}
 
 \textbf{Data Sources}
 
@@ -584,11 +585,9 @@ While our procedure makes the inference of the true trade initiator partly feasi
 
 % high-cardinal underlyings.
 
-\subsubsection{Data Pre-Processing (1~p)}\label{sec:data-preprocessing}
+\subsubsection{Data Preprocessing}\label{sec:data-preprocessing}
 
 In the following chapter, we motivate feature engineering, present our feature sets and discuss strategies for transforming features into a form that accelerates and advances the training of our models.
-
-\subsubsection{Feature Engineering}\label{sec:feature-engineering}
 
 Classical algorithms infer the initiator of the trade from the \emph{raw} price and quote data. We employ feature engineering to pre-process input data and enhance the convergence and performance of our machine learning models. Gradient-boosted trees and neural networks, though flexible estimators, have limitations in synthesizing new features from existing ones, as demonstrated in empirical work on synthetic data by \textcite[][5--6]{heatonEmpiricalAnalysisFeature2016}. Specifically, ratios, standard deviations, and differences can be difficult for these models to learn and must therefore be engineered beforehand.
 
@@ -619,11 +618,11 @@ We determine the transformation using the Box-Cox procedure \autocite[][214]{box
 
 Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimizing for the Gaussian likelihood on the training set. As shown in \cref{eq:box-cox-test}, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $\boldsymbol{X}\left[:,j\right]$, we follow common practice by adding a constant of $1$ if needed. Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the Box-Cox test, we apply a common $\widehat{\boldsymbol{X}}\left[:,j\right]=\log(\boldsymbol{X}\left[:,j\right])$ transform on all price and size-related features with the effect of compressing large values and expanding smaller ones~\footnote{More specifically, $\widehat{\boldsymbol{X}}\left[:,j\right]= \log(\boldsymbol{X}\left[:,j\right]+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations. Results are not affected. }.
 
-Note that, the use of the Box-Cox transform is different from its originated purpose. In feature engineering the transformation is used in an unsupervised fashion, as the transformation's outcome is not directly used in the model. Also, the transform is applied to all features, rather than the model's residuals \autocite[122]{kuhnFeatureEngineeringSelection2020}.
+Note that, the use of the Box-Cox transform is different from its originated purpose. In feature engineering the transformation is used in an unsupervised fashion, as the transformation's outcome is not directly used in the model. Also, the transform is applied to the features, rather than the model's residuals \autocite[122]{kuhnFeatureEngineeringSelection2020}.
 
 To further improve convergence of our transformer-based architectures, we normalize the data set using $z$-score normalization given by:
 \begin{equation}
-    \hat{\boldsymbol{X}}=\frac{\boldsymbol{X}-\boldsymbol{\mu}}{\boldsymbol{\sigma}}
+    \widehat{\boldsymbol{X}}=\frac{\boldsymbol{X}-\boldsymbol{\mu}}{\boldsymbol{\sigma}}
 \end{equation}
 with mean $\boldsymbol{\mu} =\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]\right)$ and standard deviation $\boldsymbol{\sigma}=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]-\boldsymbol{\mu}\right)^2}$.
 Following good measures, all statistics are estimated on the training set only.
