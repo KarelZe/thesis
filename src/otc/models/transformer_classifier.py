@@ -197,8 +197,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 with torch.cuda.amp.autocast():
                     logits = self.clf(x_cat, x_cont).flatten()
                     intermediate_loss = criterion(logits, targets)
+                    # weight train loss with (decaying) weights
                     train_loss = torch.mean(weights * intermediate_loss)
-                    # train_loss = criterion(logits, targets)
                 # compute accumulated gradients
                 scaler.scale(train_loss).backward()
 
@@ -225,10 +225,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                     # loss calculation.
                     # Criterion contains softmax already.
-                    # Weight sample loss with weight.
+                    # Weight sample loss with (equal) weights
                     intermediate_loss = criterion(logits, targets)
                     val_loss = torch.mean(weights * intermediate_loss)
-                    # val_loss = criterion(logits, targets)
                     loss_in_epoch_val += val_loss.item()
             # loss average over all batches
             train_loss = loss_in_epoch_train / len(train_loader)
