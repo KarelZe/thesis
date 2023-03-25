@@ -11,10 +11,13 @@ from sklearn.utils.validation import check_is_fitted
 from sklearn.utils.metaestimators import available_if
 from sklearn.utils import safe_mask
 
+from catboost import Pool
+
 __all__ = ["SelfTrainingClassifier"]
 
 # Authors: Oliver Rausch   <rauscho@ethz.ch>
 #          Patrice Becker  <beckerp@ethz.ch>
+#          Markus Bilz     <github@markusbilz.com>
 # License: BSD 3 clause
 
 
@@ -158,7 +161,7 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         self.max_iter = max_iter
         self.verbose = verbose
 
-    def fit(self, X, y, eval):
+    def fit(self, pool: Pool, eval_set: Pool, **kwargs):
         """
         Fit self-training classifier using `X`, `y` as training data.
 
@@ -176,13 +179,12 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         self : object
             Fitted estimator.
         """
-        self._validate_params()
 
-        # we need row slicing support for sparce matrices, but costly finiteness check
-        # can be delegated to the base estimator.
-        X, y = self._validate_data(
-            X, y, accept_sparse=["csr", "csc", "lil", "dok"], force_all_finite=False
-        )
+        # get features, labels etc. from train pool
+        X = pool.get_features()
+        y = pool.get_label()
+        weights = np.array(pool.get_weight())
+        cat_features = pool.get_cat_feature_indices()
 
         self.base_estimator_ = clone(self.base_estimator)
 
@@ -209,7 +211,7 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
             )
 
         self.transduction_ = np.copy(y)
-        self.labeled_iter_ = np.full_like(y, -1)
+        self.labeled_iter_ = np.full_like(y, 0)
         self.labeled_iter_[has_label] = 0
 
         self.n_iter_ = 0
@@ -218,9 +220,15 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
             self.max_iter is None or self.n_iter_ < self.max_iter
         ):
             self.n_iter_ += 1
-            self.base_estimator_.fit(
-                X[safe_mask(X, has_label)], self.transduction_[has_label]
+
+            train_pool = Pool(
+                data=X[safe_mask(X, has_label)],
+                label=self.transduction_[has_label],
+                weight=weights[weights],
+                cat_features=cat_features,
             )
+
+            self.base_estimator_.fit(train_pool, eval_set)
 
             # Predict on the unlabeled samples
             prob = self.base_estimator_.predict_proba(X[safe_mask(X, ~has_label)])
@@ -262,9 +270,15 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         if np.all(has_label):
             self.termination_condition_ = "all_labeled"
 
-        self.base_estimator_.fit(
-            X[safe_mask(X, has_label)], self.transduction_[has_label]
+        train_pool = Pool(
+            data=X[safe_mask(X, has_label)],
+            label=self.transduction_[has_label],
+            weight=weights[has_label],
+            cat_features=cat_features,
         )
+
+        self.base_estimator_.fit(train_pool, eval_set=eval_set)
+
         self.classes_ = self.base_estimator_.classes_
         return self
 
