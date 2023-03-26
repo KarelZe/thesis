@@ -1,3 +1,5 @@
+
+
 - What is feature importance? How does it allign with interpretability? Explainability?
 
 - common pitfalls: https://arxiv.org/pdf/2007.04131.pdf
@@ -23,6 +25,7 @@ Shapley values are also expensive to compute, especially if your model is not tr
 
 So there are many reasons not to use SHAP, but an “inferior” (as the reviewer said) interpretation method.
 
+
 -> Guess in my case random feature importance is correct.
 
 
@@ -36,6 +39,11 @@ So there are many reasons not to use SHAP, but an “inferior” (as the reviewe
 
 
 - Discussion with Florian Kalinke: Feature importance Be aware of averages from averages. Symmetric trees. Why something is no problem. feature importance with tree. group features. 
+
+## Random Feature permutation
+
+Again, our definition of empirical MR is very similar to the permutation-based variable importance approach of Breimar (2001), where Breimar uses a single random permutation and we consider all possible pairs. To compare these two approaches more precisely, let $\left\{\pi_1, \ldots, \pi_{n !}\right\}$ be a set of $n$-length vectors, each containing a different permutation of the set $\{1, \ldots, n\}$. The approach of Breimar. (2001) is analogous to computing the loss $\sum_{i=1}^n L\left\{f,\left(\mathbf{y}_{[i]}, \mathbf{X}_{1\left[\pi_{[[i]},\right]}, \mathbf{X}_{2[i,]]}\right)\right\}$ for a randomly chosen permutation vector $\pi_l \in\left\{\pi_1, \ldots, \pi_{n !}\right\}$. Similarly, our calculation in Eq 3.i. is proportional to the sum of losses over all possible ( $n$ !) permutations, excluding the $n$ unique combinations of the rows of $\mathbf{X}_1$ and the rows of $\left[\begin{array}{ll}\mathbf{X}_2 & \mathbf{y}\end{array}\right]$ that appear in the original sample (see Appendix A.i.). Excluding these observations is necessary to preserve the (finite-sample) unbiasedness of $\hat{e}_{\text {switch }}(f)$
+
 
 ## Random Feature permutation
 
@@ -90,5 +98,3 @@ You can check out our release of this method on [GitHub](https://github.com/Bor
 ## Correlations between features
 [1]  Kjersti Aas, Martin Jullum, and Anders Løland. Explaining individual predictions when features are dependent: More accurate approximations to shapley values. Artificial Intelligence, 298:103502, 2021. 
 - [[@aasExplainingIndividualPredictions2021]]
-
-- 
