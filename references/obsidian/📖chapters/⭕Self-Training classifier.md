@@ -1,6 +1,6 @@
 
 
-
+The application of semi-supervised is new. Previous works only used supervised or unsupervised methods, if at all.
 
 
 

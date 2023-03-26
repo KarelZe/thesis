@@ -16,33 +16,8 @@
               "state": {},
               "pinned": true
             }
-          },
-          {
-            "id": "5efb9ad9febdc5e7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/⭕Self-Training classifier.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2767365f2998cd02",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@yarowskyUnsupervisedWordSense1995.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "2e4bb12a56b63b7f",
@@ -120,7 +95,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/⭕Self-Training classifier.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -147,9 +121,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "📖chapters/⭕Self-Training classifier.md"
-              }
+              "state": {}
             }
           },
           {
@@ -179,7 +151,7 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "5efb9ad9febdc5e7",
+  "active": "f35a250acbe1a2dc",
   "lastOpenFiles": [
     "📥Inbox/@yarowskyUnsupervisedWordSense1995.md",
     "📖chapters/⭕Self-Training classifier.md",
