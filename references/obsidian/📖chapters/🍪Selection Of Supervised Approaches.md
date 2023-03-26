@@ -18,6 +18,9 @@
 - Which models does the discussion consider?
 - What models do we try out finally?
 
+- Discuss why probabilities of gradient boosted trees might be missleading [[@arikTabNetAttentiveInterpretable2020]]
+- Problems of tree-based approaches and neural networks in semi-supervised learning. See [[@huangTabTransformerTabularData2020]] or [[@arikTabNetAttentiveInterpretable2020]]and [[@tanhaSemisupervisedSelftrainingDecision2017]]
+
 
 #gbm #transformer #supervised-learning #deep-learning 
 

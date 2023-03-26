@@ -16,8 +16,33 @@
               "state": {},
               "pinned": true
             }
+          },
+          {
+            "id": "5efb9ad9febdc5e7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/⭕Self-Training classifier.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "2767365f2998cd02",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@yarowskyUnsupervisedWordSense1995.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "2e4bb12a56b63b7f",
@@ -95,6 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "📖chapters/⭕Self-Training classifier.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -121,7 +147,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "📖chapters/⭕Self-Training classifier.md"
+              }
             }
           },
           {
@@ -151,8 +179,15 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "8399eb31ec07fd72",
+  "active": "5efb9ad9febdc5e7",
   "lastOpenFiles": [
+    "📥Inbox/@yarowskyUnsupervisedWordSense1995.md",
+    "📖chapters/⭕Self-Training classifier.md",
+    "📥Inbox/@aminiSelfTrainingSurvey2023.md",
+    "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
+    "📥Inbox/@chapelleSemisupervisedLearning2006.md",
+    "🖼️Media/Pasted image 20230326101313.png",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
     "viz-training-schemes.png.md",
     "orphaned files output.md",
     "🖼️Media/vison-transformer.png",
@@ -164,7 +199,6 @@
     "🖼️Media/missclassification-trade-rule.png",
     "🖼️Media/learning-curves-gbm.png",
     "🖼️Media/layer-norm-first-last.png",
-    "🖼️Media/feature-tokenizer-fttransformer.png",
     "📖chapters/🪄Data Preprocessing.md",
     "📖chapters/👨‍🍳Tain-Test-split.md",
     "📑notes/🪄Data Preprocessing.md",
@@ -182,12 +216,6 @@
     "🍬Implementation/😺CatBoost.md",
     "📖chapters/🔢Trade Initiator.md",
     "📖chapters/🔢Trade initiator.md",
-    "📑notes/🔢Trade Initiator notes.md",
-    "📖chapters/🔢Basic rules.md",
-    "📑notes/🔢Basic rules notes.md",
-    "📖chapters/🌏Dataset.md",
-    "📥Inbox/@matthewsComparisonPredictedObserved1975.md",
-    "📑notes/🌏Dataset notes.md",
-    "📑notes/👨‍🍳Train-Test-split notes.md"
+    "📑notes/🔢Trade Initiator notes.md"
   ]
 }
