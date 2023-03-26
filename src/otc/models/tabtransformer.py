@@ -101,10 +101,10 @@ class ColumnEmbedding(nn.Module):
 
         self.shared_embedding = mode
         self.dropout = nn.Dropout(p=dropout)
-      
+
         if type(cat_cardinalities) is tuple:
             cat_cardinalities = list(cat_cardinalities)
-        
+
         # embeddings for every class in every column
         category_offsets = torch.tensor([0] + cat_cardinalities[:-1]).cumsum(0)
         self.register_buffer("category_offsets", category_offsets, persistent=False)

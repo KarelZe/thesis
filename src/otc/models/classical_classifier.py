@@ -73,8 +73,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         ],
         features: list[str] | None = None,
         random_state: float | None = 42,
-        strategy: Literal["random", "const"]= "random",
-
+        strategy: Literal["random", "const"] = "random",
     ):
         """
         Initialize a ClassicalClassifier.
@@ -85,7 +84,9 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             columns. Required to match columns in feature matrix with label.
             Can be `None`, if `pd.DataFrame` is passed. Defaults to None.
             random_state (float | None, optional): random seed. Defaults to 42.
-            strategy (Literal[&quot;random&quot;, &quot;const&quot;], optional): Strategy to fill unclassfied. Randomly with uniform probability or with constant 0. Defaults to &quot;random&quot;.
+            strategy (Literal[&quot;random&quot;, &quot;const&quot;],
+            optional): Strategy to fill unclassfied. Randomly with uniform
+            probability or with constant 0. Defaults to &quot;random&quot;.
         """
         self.layers = layers
         self.random_state = random_state
@@ -356,7 +357,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Classify midspread trades as buy (sell), if the ask size (bid size)\
         exceeds the bid size (ask size).
 
-        Adapted from (Grauer et al., 2022).
+        Adapted from Grauer et al. (2022).
 
         Args:
             subset (Literal[&quot;best&quot;, &quot;ex&quot;]): subset
@@ -514,10 +515,10 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
     def predict_proba(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
         """
-        Predict class probabilities for X. 
-        
+        Predict class probabilities for X.
+
         Probabilities are either 0 or 1 depending on the class.
-        
+
         For strategy 'constant' probabilities are (0.5,0.5) for unclassified classes.
 
         Args:
@@ -541,4 +542,4 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         # overwrite defaults with one-hot encoded classes.
         # For strategy 'constant' probabilities are (0.5,0.5).
         prob[mask] = np.identity(n_classes)[indices]
-        return prob 
+        return prob

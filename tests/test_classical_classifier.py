@@ -76,7 +76,8 @@ class TestClassicalClassifier(ClassifierMixin):
         """
         Test, if strategy 'const' returns correct proabilities.
 
-        A classifier with strategy 'constant' should return class probabilities of (0.5, 0.5), if a trade can not be classified.
+        A classifier with strategy 'constant' should return class probabilities
+        of (0.5, 0.5), if a trade can not be classified.
         """
         fitted_classifier = ClassicalClassifier(
             layers=[("nan", "ex")], strategy="const"
