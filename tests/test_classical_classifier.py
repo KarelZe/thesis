@@ -72,6 +72,17 @@ class TestClassicalClassifier(ClassifierMixin):
         ).fit(self.x_train, self.y_train)
         assert check_is_fitted(fitted_classifier) is None
 
+    def test_strategy_const(self) -> None:
+        """
+        Test, if strategy 'const' returns correct proabilities.
+
+        A classifier with strategy 'constant' should return class probabilities of (0.5, 0.5), if a trade can not be classified.
+        """
+        fitted_classifier = ClassicalClassifier(
+            layers=[("nan", "ex")], strategy="const"
+        ).fit(self.x_train, self.y_train)
+        assert (fitted_classifier.predict_proba(self.x_test) == 0.5).all()
+
     def test_invalid_func(self) -> None:
         """
         Test, if only valid function strings can be passed.
