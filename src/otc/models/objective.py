@@ -177,7 +177,7 @@ class TabTransformerObjective(Objective):
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
-        batch_size = 32768 # see 5.0a-mb-batch-size-finder
+        batch_size = 32768  # see 5.0a-mb-batch-size-finder
 
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
