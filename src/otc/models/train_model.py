@@ -69,8 +69,11 @@ FEATURE_SETS = {
 @click.option(
     "--dataset",
     required=False,
-    default="fbv/thesis/train_val_test:v0",
+    default="fbv/thesis/ise_supervised_preprocessed:v2",
     help="Name of dataset. See W&B Artifacts/Full Name",
+)
+@click.option(
+    "--pretrain/--no-pretrain", default=False, help="Flag to activate pretraining."
 )
 def main(
     trials: int,
@@ -79,6 +82,7 @@ def main(
     model: str,
     name: str,
     dataset: str,
+    pretrain: bool,
 ) -> None:
     """
     Start study.
@@ -90,6 +94,7 @@ def main(
         model (str): name of model.
         name (str): name of study.
         dataset (str): name of data set.
+        pretrain (bool): whether to pretrain model.
     """
     logger = logging.getLogger(__name__)
     warnings.filterwarnings("ignore", category=ExperimentalWarning)
@@ -129,6 +134,21 @@ def main(
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
+    # pretrain training activated
+    has_label = (y_train != 0).all()
+    if pretrain and has_label:
+        raise ValueError(
+            "Pretraining active, but dataset contains no unlabelled instances."
+        )
+
+    # no pretraining activated
+    has_label = y_train.isin([-1, 1]).all()
+    if not pretrain and not has_label:
+        raise ValueError(
+            "Pretraining inactive, but dataset contains unlabelled instances or"
+            "other labels. Use different dataset or activate pretraining."
+        )
+
     x_val = pd.read_parquet(Path(artifact_dir, "val_set_20.parquet"), columns=columns)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
@@ -148,6 +168,7 @@ def main(
         y_val,
         cat_features=cat_features,
         cat_cardinalities=cat_cardinalities,
+        pretrain=pretrain,
     )
 
     # maximize for accuracy
@@ -181,6 +202,7 @@ def main(
             "name": name,
             "dataset": dataset,
             "seed": seed,
+            "pretrain": pretrain,
         }
     )
 

@@ -247,7 +247,7 @@ The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a perform
 
 \subsubsection{Stacked Rule}\label{sec:stacked-rule}
 
-The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which can not be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their ordering.
+The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which cannot be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their ordering.
 
 % TODO: Murjajev (quote + quote on nbbo)
 The most basic application is in the \gls{LR} algorithm. For a more complex example consider the hybrid rule consisting of $\operatorname{tsize}(\cdot) \to \operatorname{quote}(\cdot) \to \operatorname{tick}(\cdot)$ in \cref{fig:stacking-algo}. An exemplary trade cannot be classified by the primary trade size rule and is signed by the quote rule, which is the first rule in the stack, able to classify the trade. Other trades can be classifiable by the trade size rule, which rules out the classification of the quote and tick rule. Theoretically, stacked rules can grow to great depth with an arbitrary arrangement. In practice, rules may be ordered greedily and new rules added if there are unclassified trades.
@@ -261,7 +261,10 @@ The most basic application is in the \gls{LR} algorithm. For a more complex exam
 
 \textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} and \textcite[][18]{grauerOptionTradeClassification2022} continue the move for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and the quotes. Hence, current classification rules may not unleash their full potential. A obvious question is, if classifiers, \emph{learned} on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
 
-The trend towards sophisticated, hybrid rules, combining as many as four base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) ensembles found in machine learning and expresses the need for better classifiers. We provide an overview of state-of-the-art machine learning-based classifiers. We start by framing trade classification as a supervised learning problem.
+The trend towards sophisticated, hybrid rules, combining as many as four base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) ensembles found in machine learning and expresses the need for better classifiers. We provide an overview of state-of-the-art machine learning-based classifiers. We start by framing trade classification as a supervised learning 
+problem.
+
+% In order to evaluate how much prediction models rely on variables, we now introduce notation for random variables, data, classes of prediction models, and loss functions for evaluating predictions.
 
 \newpage
 \addtocontents{toc}{\protect\newpage}
@@ -276,6 +279,7 @@ We introduce some more notation, which we will use throughout. Each data instanc
 
 For our machine learning classifiers, we aim to model $p_{\theta}(y \mid \boldsymbol{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
 
+% TODO: unclassified classs = 0.5 / 0.5
 \begin{equation}
     p(y\mid \boldsymbol{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
     \label{eq:prob-from-point-estimate}
@@ -589,51 +593,48 @@ While our procedure makes the inference of the true trade initiator partly feasi
 
 In the following chapter, we motivate feature engineering, present our feature sets and discuss strategies for transforming features into a form that accelerates and advances the training of our models.
 
-Classical algorithms infer the initiator of the trade from the \emph{raw} price and quote data. We employ feature engineering to pre-process input data and enhance the convergence and performance of our machine learning models. Gradient-boosted trees and neural networks, though flexible estimators, have limitations in synthesizing new features from existing ones, as demonstrated in empirical work on synthetic data by \textcite[][5--6]{heatonEmpiricalAnalysisFeature2016}. Specifically, ratios, standard deviations, and differences can be difficult for these models to learn and must therefore be engineered beforehand.
+Classical algorithms infer the initiator of the trade from the \emph{raw} price and quote data. We employ feature engineering to pre-process input data and enhance the convergence and performance of our machine-learning models. Gradient-boosted trees and neural networks, though flexible estimators have limitations in synthesizing new features from existing ones, as demonstrated in empirical work on synthetic data by \textcite[][5--6]{heatonEmpiricalAnalysisFeature2016}. Specifically, ratios, standard deviations, and differences can be difficult for these models to learn and must therefore be engineered beforehand.
 
 \textbf{Feature Sets}
 
-To establish a common ground, we derive three sets of features from raw data. The feature sets are motivated by features inherent to classical trade classification rules and are consequently derived from quote and price data. Except for a third feature set, which includes additional option characteristics.
+To establish a common ground, we derive three sets of features from raw data. The feature sets are motivated by features inherent to classical trade classification rules and are consequently derived from quote and price data. Except for a third feature set, which includes additional option characteristics. Differentiated feature set improve the transferability of our results.  
 
-All feature set, their definition and origin are documented in \cref{app:feature-sets}.
+All feature sets, their definition and origin are documented in \cref{app:feature-sets}. We aid the models by estimating the change in trade price between the previous and successive distinguishable trades. This is identical to the criterion used in the (reverse) tick rule, but in a non-quantized fashion to enforce a richer decision boundary and to surpass hard cut-off points. Similarly, the proximity of the trade price to the quotes, which is the decisive criterion in the quote rule and hybrids' there-off is added. The feature value ranges from $\left(-\infty,\infty\right)$ and is $-1$ for trades at the bid, 0 for trades at the mid, and 1 for trades at the ask. Quotes and trade prices are also incorporated as-is.
 
-Our first feature set uses price and quote data required by classical algorithms such the (reversed) Lee-and-Ready algorithm. We aid the models by estimating the change in trade price between the previous and successive distinguishable trades. This is similar to the criterion used in the (reverse) tick rule, but in an non-discretized fashion. 
+Our second feature set extends the first feature set by the trade size and size of the quotes, required to estimate hybrid rules involving the depth rule and trade size rule. Both rules are state-of-the-art when paired with hybrid algorithms and are thus both benchmark and source for features. We model the depth rule as the ratio between ask and bid sizes and the trade size rule as the ratio between the size of the trade and the quoted bid and ask sizes ranging between $\left[0,1\right]$. The trade price and midspread required for the depth rule are already encompassed in the first feature set.
 
-Arguably, our models have simultaneous access to the previous and successive trade price and quotes for both the exchange and the NBBO, which is an advantage over base rules. As we benchmark against various, stacked hybrid 
-rules, the data requirements are comparable.
+Our largest feature set also incorporates option characteristics, including the strike price, the time to maturity, the moneyness, the option type and issue type as well as the underlying and traded volume of the option series. By providing the model with option-specific features, we hope to make nuances between the underlying, security types, and option types learnable.
 
-% Neither feature scaling nor imputation is strictly required for gradient-boosted trees and the selection is guided by the requirements of Transformers. 
-
-% The  splits of tree-based learners remain unaffected with only minor differences from quantization <mark style="background: #ADCCFFA6;">(see quantization / histogram building in gradient boosting https://neurips.cc/media/neurips-2022/Slides/53370.pdf)</mark>. The log transform comes at the cost of an decreased interpretability (cp. [[@fengLogtransformationItsImplications2014]]).
-
+Arguably, our models have simultaneous access to the previous and successive trade prices and quotes for both the exchange and the NBBO, which is an advantage over base rules. As we benchmark against various, stacked hybrid rules, the data requirements are comparable. We emphasize this aspect, as it is neglected in previous works \autocites[][485]{blazejewskiLocalNonParametricModel2005}[][48]{ronenMachineLearningTrade2022}[][9]{rosenthalModelingTradeDirection2012}.
 
 \textbf{Numerical Features}
 
-We determine the transformation using the Box-Cox procedure \autocite[][214]{boxAnalysisTransformations2022}, given by:
+Pricing or quote data can often not be fully reconstructed, resulting in missing values across all features. Decision trees and ensembles thereof can inherently handle $\mathtt{[NaN]}$ values by discarding missing values in the splitting procedure \autocite[][150--152]{breimanClassificationRegressionTrees2017} or by incorporating missing values into the splitting criterion \autocite[][951]{twalaGoodMethodsCoping2008}. Transformers require missing values to be imputed beforehand, as a $\mathtt{[NaN]}$ value cannot be propagated through the network. We choose zero imputation for being a single-pass strategy that minimizes data leakage and allows gradient-boosted trees and neural networks to separate imputed values from observed ones. With a low degree of missing values, the impact on the final result is minuscule.
+
+Price and size-related features exhibit positive skewness, as brought up in \cref{sec:exploratory-data-analysis}. Tree-based learners are unaffected by the feature scale, as the splitting process is based on the purity of the split but not on the scale of splitting value (cp. \cref{sec:decision-tree}). To avoid the tails of the distribution dominating the weight updates of neural networks, we apply power transformations, which transform the distribution of features to be Gaussian-like. Apart from quantization effects, gradient-boosted trees are unaffected. We determine the power transformation using the Box-Cox procedure \autocite[][214]{boxAnalysisTransformations2022}, given by:
 
 \begin{equation}
     \boldsymbol{X}^{*}\left[:,j\right]= \begin{cases}\frac{1}{\lambda}(\boldsymbol{X}\left[:,j\right]^\lambda-1), & \lambda \neq 0 \\ \log (\boldsymbol{X}\left[:,j\right]),& \lambda=0\end{cases}.
 \label{eq:box-cox-test}
 \end{equation}
 
-Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimizing for the Gaussian likelihood on the training set. As shown in \cref{eq:box-cox-test}, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $\boldsymbol{X}\left[:,j\right]$, we follow common practice by adding a constant of $1$ if needed. Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the Box-Cox test, we apply a common $\widehat{\boldsymbol{X}}\left[:,j\right]=\log(\boldsymbol{X}\left[:,j\right])$ transform on all price and size-related features with the effect of compressing large values and expanding smaller ones~\footnote{More specifically, $\widehat{\boldsymbol{X}}\left[:,j\right]= \log(\boldsymbol{X}\left[:,j\right]+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations. Results are not affected. }.
+Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimizing for the Gaussian likelihood on the training set. As shown in \cref{eq:box-cox-test}, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $\boldsymbol{X}\left[:,j\right]$, we follow common practice by adding a constant if needed. Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the Box-Cox test, we apply a common $\widehat{\boldsymbol{X}}\left[:,j\right]=\log(\boldsymbol{X}\left[:,j\right])$ transform on all price and size-related features with the effect of compressing large values and expanding smaller ones~\footnote{More specifically, $\widehat{\boldsymbol{X}}\left[:,j\right]= \log(\boldsymbol{X}\left[:,j\right]+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations. Results are not affected. }.
 
-Note that, the use of the Box-Cox transform is different from its originated purpose. In feature engineering the transformation is used in an unsupervised fashion, as the transformation's outcome is not directly used in the model. Also, the transform is applied to the features, rather than the model's residuals \autocite[122]{kuhnFeatureEngineeringSelection2020}.
+Note that, the use of the Box-Cox transform is different from its originated purpose. In feature engineering, the transformation is used in an unsupervised fashion, as the transformation's outcome is not directly used in the model. Also, the transform is applied to the features, rather than the model's residuals \autocite[122]{kuhnFeatureEngineeringSelection2020}.
 
-To further improve convergence of our transformer-based architectures, we normalize the data set using $z$-score normalization given by:
+To further improve the convergence of our transformer-based architectures, we normalize the data set using $z$-score normalization given by:
 \begin{equation}
     \widehat{\boldsymbol{X}}=\frac{\boldsymbol{X}-\boldsymbol{\mu}}{\boldsymbol{\sigma}}
 \end{equation}
-with mean $\boldsymbol{\mu} =\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]\right)$ and standard deviation $\boldsymbol{\sigma}=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]-\boldsymbol{\mu}\right)^2}$.
-Following good measures, all statistics are estimated on the training set only.
+with mean $\boldsymbol{\mu} =\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]\right)$ and standard deviation $\boldsymbol{\sigma}=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]-\boldsymbol{\mu}\right)^2}$. Intuitionally, the zero means prevents bias in the direction of the weight update and scaling to unit variance balances the rate at which parameters are updated \autocite[][8]{lecunEfficientBackProp2012}. Normalization of raw inputs is complementary to batch normalization, which is used in deeper layers of the Transformer stack and single batches. Following good measures, all statistics are estimated on the imputed training set only.
 
-Normalization and log transformations have the advantage of preserving the data distribution, which is an desirable property when comparing the feature importances from machine learning models against their classical counterparts in \cref{sec:feature-importance}.
+Normalization and log transformations have the advantage of preserving the data distribution, which is a desirable property when comparing the feature importances from machine learning models against their classical counterparts in \cref{sec:feature-importance}.
 
 \textbf{Categorical Features}
 
 As for the categorical variables, consisting of the option type, the underlying, and the issue type, different transformations are required. We perform a label encoding by randomly mapping every unique value onto an integer key. As an example, the option type in the set $\{\text{'C'},\text{'P'}\}$ would be randomly mapped onto $\{1,0\}$. This basic transformation defers the handling of categorical data to the model. Also, it minimizes target leakage. Missing classes or classes unseen during training are mapped to the key of an $\mathtt{[UNK]}$ token, as motivated in \cref{sec:token-embeddings}. 
 
-The option type and issue type are both low-cardinal with two and five unique classes. Differently, the underlying is high-cardinal with more than \num{9999} distinct classes, as options are written on a wide range of underlyings. The high-cardinality of the feature not just drives the computational demand through a higher parameter count but also affects the model's tendency to overfit, as most classes appear infrequently. Thus, we require each category to appear at least \num{1000} times in the training set. Infrequent categories are removed by mapping to the $\mathtt{[UNK]}$ token. Virtually, this is identical to constraining the vocabulary size $N_V = \num{3333}$.
+The option type and issue type are both low-cardinal with two and five unique classes. Differently, the underlying is high-cardinal with more than \num{9999} distinct classes, as options are written on a wide range of underlyings. The high cardinality of the feature not just drives the computational demand through a higher parameter count but also affects the model's tendency to overfit, as most classes appear infrequently. Thus, we require each category to appear at least \num{1000} times in the training set. Infrequent categories are removed by mapping to the $\mathtt{[UNK]}$ token. Virtually, this is identical to constraining the vocabulary size $N_V = \num{3333}$.
 
 Disadvantages of label encoding, as raised in \textcite[][12]{hancockSurveyCategoricalData2020}, such as the unequal contributions of larger keys to the loss in neural networks or the artificially implied order, do not apply here, as the conversion is followed by sophisticated treatments within the models (cp. \cref{sec:tabtransformer,sec:fttransformer}). Similarly, ordered boosting inherently supports categorical features (cp. \cref{sec:gradient-boosting-procedure}). 
 
@@ -675,7 +676,7 @@ Several observations can be drawn from \cref{fig:learning-curves-gradient-boosti
 
 While a smaller subsample of the training set would suffice in both cases, our training set encompasses the entire history to mitigate any sampling bias and we instead weight observations based on their temporal proximity. Overall, the training split minimizes data leakage and sensibly utilizes all available data.
 
-From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we emphasize regularization techniques in all our models as we show next.
+From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we employ regularization techniques in all our models as we show next.
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 

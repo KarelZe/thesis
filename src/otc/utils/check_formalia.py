@@ -35,6 +35,8 @@ def check_citation(file_name: str, file_contents: str) -> None:
 
 def check_formulae(file_name: str, file_contents: str) -> None:
     r"""
+    Do the following tests.
+
     Check if formula contains `\times` or `\quad`.
     Consistently use `boldsymbol` (instead of `mathbf`).
     Consistently use `emph` (instead of `textit`).
@@ -67,7 +69,7 @@ def check_acronyms(file_name: str, file_contents: str, acronyms: list) -> None:
     """
     matches = []
     for acronym in acronyms:
-        match = re.findall(f"\s{acronym}\s| {acronym}s", file_contents.lower())
+        match = re.findall(rf"\s{acronym}\s| {acronym}s", file_contents.lower())
         if match:
             matches.extend(match)
 
@@ -201,7 +203,7 @@ def check_formalia(files: dict, vocabulary: list, acronyms: list) -> None:
             ".\\presentation.tex",
             ".\\thesis.tex",
             ".\\Content\\Titlepage_Thesis.tex",
-            ".\Content\main-expose.tex",
+            r".\Content\main-expose.tex",
         ]:
             check_hyphens(file_name, file_contents, vocabulary)
             check_citation(file_name, file_contents)

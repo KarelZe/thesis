@@ -18,12 +18,12 @@
             }
           },
           {
-            "id": "8f591845695e4f26",
+            "id": "e12c4a4ad89409ee",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md",
+                "file": "📖chapters/Data Preprocessing.md",
                 "mode": "source",
                 "source": false
               }
@@ -41,22 +41,42 @@
             "type": "leaf",
             "pinned": true,
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🪦graveyard of ideas.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "pinned": true
             }
           },
           {
-            "id": "6cf2cfd7e4b0c9de",
+            "id": "dde0833f7ece99d5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🧭Kernel SHAP.md",
+                "file": "chapters/🧃Feature Sets.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1ca35db843031f82",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "d1677d2c99757dd7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
                 "mode": "source",
                 "source": false
               }
@@ -121,7 +141,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md",
+                "file": "📖chapters/Data Preprocessing.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -149,7 +169,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md"
+                "file": "📖chapters/🪄Data Preprocessing.md"
               }
             }
           },
@@ -180,20 +200,14 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "8f591845695e4f26",
+  "active": "e12c4a4ad89409ee",
   "lastOpenFiles": [
-    "📑notes/🧭Kernel SHAP.md",
-    "📖chapters/🧭Random Feature Permutation.md",
-    "📥Inbox/@fisherAllModelsAre.md",
-    "📥Inbox/@aasExplainingIndividualPredictions2021.md",
-    "📖chapters/🐈Extension to Gradient Boosting.md",
-    "📥Inbox/@yarowskyUnsupervisedWordSense1995.md",
-    "📖chapters/⭕Self-Training classifier.md",
-    "📥Inbox/@aminiSelfTrainingSurvey2023.md",
-    "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
-    "📥Inbox/@chapelleSemisupervisedLearning2006.md",
-    "🖼️Media/Pasted image 20230326101313.png",
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📖chapters/🧃Feature Sets.md",
+    "📖chapters/🪄Data Preprocessing.md",
+    "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
+    "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
+    "📥Inbox/@perez-lebelBenchmarkingMissingvaluesApproaches2022.md",
+    "📖chapters/🤖Transformer.md",
     "viz-training-schemes.png.md",
     "orphaned files output.md",
     "🖼️Media/vison-transformer.png",
@@ -205,18 +219,24 @@
     "🖼️Media/missclassification-trade-rule.png",
     "🖼️Media/learning-curves-gbm.png",
     "🖼️Media/layer-norm-first-last.png",
-    "📖chapters/🪄Data Preprocessing.md",
+    "️Media/feature-tokenizer-fttransformer.png",
     "📖chapters/👨‍🍳Tain-Test-split.md",
     "📑notes/🪄Data Preprocessing.md",
     "📖chapters/🪄Feature Engineering.md",
     "📖chapters/🚏Exploratory Data Analysis.md",
-    "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
-    "📖chapters/🧃Feature Sets.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/💡Training of models (supervised).md",
     "📖chapters/💡Training and tuning.md",
     "📖chapters/🪦graveyard of ideas.md",
     "❓Questions.md",
-    "📖chapters/🧭Evaluation metric.md"
+    "📖chapters/🧭Evaluation metric.md",
+    "📖chapters/🏅Results.md",
+    "🍬Implementation/😺CatBoost.md",
+    "📖chapters/🔢Trade Initiator.md",
+    "📖chapters/🔢Trade initiator.md",
+    "📑notes/🔢Trade Initiator notes.md",
+    "📖chapters/🔢Basic rules.md",
+    "📑notes/🔢Basic rules notes.md",
+    "📖chapters/🌏Dataset.md"
   ]
 }
