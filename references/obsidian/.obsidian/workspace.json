@@ -16,8 +16,21 @@
               "state": {},
               "pinned": true
             }
+          },
+          {
+            "id": "e12c4a4ad89409ee",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🪄Data Preprocessing.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "2e4bb12a56b63b7f",
@@ -36,8 +49,45 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "dde0833f7ece99d5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🧃Feature Sets.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1ca35db843031f82",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "d1677d2c99757dd7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -95,6 +145,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "📖chapters/🪄Data Preprocessing.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -121,7 +172,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "📖chapters/🪄Data Preprocessing.md"
+              }
             }
           },
           {
@@ -151,8 +204,14 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "8399eb31ec07fd72",
+  "active": "e12c4a4ad89409ee",
   "lastOpenFiles": [
+    "📖chapters/🧃Feature Sets.md",
+    "📖chapters/🪄Data Preprocessing.md",
+    "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
+    "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
+    "📥Inbox/@perez-lebelBenchmarkingMissingvaluesApproaches2022.md",
+    "📖chapters/🤖Transformer.md",
     "viz-training-schemes.png.md",
     "orphaned files output.md",
     "🖼️Media/vison-transformer.png",
@@ -165,13 +224,10 @@
     "🖼️Media/learning-curves-gbm.png",
     "🖼️Media/layer-norm-first-last.png",
     "🖼️Media/feature-tokenizer-fttransformer.png",
-    "📖chapters/🪄Data Preprocessing.md",
     "📖chapters/👨‍🍳Tain-Test-split.md",
     "📑notes/🪄Data Preprocessing.md",
     "📖chapters/🪄Feature Engineering.md",
     "📖chapters/🚏Exploratory Data Analysis.md",
-    "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
-    "📖chapters/🧃Feature Sets.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/💡Training of models (supervised).md",
     "📖chapters/💡Training and tuning.md",
@@ -185,9 +241,6 @@
     "📑notes/🔢Trade Initiator notes.md",
     "📖chapters/🔢Basic rules.md",
     "📑notes/🔢Basic rules notes.md",
-    "📖chapters/🌏Dataset.md",
-    "📥Inbox/@matthewsComparisonPredictedObserved1975.md",
-    "📑notes/🌏Dataset notes.md",
-    "📑notes/👨‍🍳Train-Test-split notes.md"
+    "📖chapters/🌏Dataset.md"
   ]
 }
