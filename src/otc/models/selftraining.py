@@ -1,26 +1,33 @@
-# adapted from https://github.com/scikit-learn/scikit-learn/blob/9aaed4987/sklearn/semi_supervised/_self_training.py#L28
+"""
+Implements self-training classifier with a sklearn-like interface.
+
+Based on sklearn implementation.
+"""
+from __future__ import annotations
 
 import warnings
+from typing import Any, Callable, Literal
 
 import numpy as np
+import numpy.typing as npt
+import pandas as pd
 from catboost import Pool
 from sklearn.base import BaseEstimator, MetaEstimatorMixin, clone
 from sklearn.utils import safe_mask
 from sklearn.utils.metaestimators import available_if
 from sklearn.utils.validation import check_is_fitted
 
-from tqdm import tqdm
 
-__all__ = ["SelfTrainingClassifier"]
+def _estimator_has(attr: str) -> Callable[[Any], bool]:
+    """
+    Check if `self.base_estimator_ `or `self.base_estimator_` has `attr`.
 
-# Authors: Oliver Rausch   <rauscho@ethz.ch>
-#          Patrice Becker  <beckerp@ethz.ch>
-#          Markus Bilz     <github@markusbilz.com>
-# License: BSD 3 clause
+    Args:
+        attr (str): attribute.
 
-
-def _estimator_has(attr):
-    """Check if `self.base_estimator_ `or `self.base_estimator_` has `attr`."""
+    Returns:
+        bool: boolean.
+    """
     return lambda self: (
         hasattr(self.base_estimator_, attr)
         if hasattr(self, "base_estimator_")
@@ -134,13 +141,40 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
 
     def __init__(
         self,
-        base_estimator,
-        threshold=0.75,
-        criterion="threshold",
-        k_best=10,
-        max_iter=10,
-        verbose=False,
+        base_estimator: BaseEstimator,
+        threshold: float = 0.75,
+        criterion: Literal["threshold"] = "threshold",
+        k_best: int = 10,
+        max_iter: int = 10,
+        verbose: bool = False,
     ):
+        """
+        Initialize a SelfTrainingClassifier.
+
+        Args:
+            base_estimator (BaseEstimator): An estimator object implementing
+            fit and predict_proba. Invoking the fit method will fit a clone of
+            the passed estimator, which will be stored in the base_estimator_
+            attribute.
+            threshold (float, optional): The decision threshold for use with
+            criterion='threshold'. Should be in [0, 1). When using the
+            'threshold' criterion, a well calibrated classifier should be used.
+            Defaults to 0.75.
+            criterion (Literal, optional): The selection criterion used to
+            select which labels to add to the training set. If 'threshold',
+            pseudo-labels with prediction probabilities above threshold are
+            added to the dataset. If 'k_best', the k_best pseudo-labels
+            with highest prediction probabilities are added to the dataset.
+            When using the ‘threshold’ criterion, a well calibrated classifier
+            should be used. Defaults to "threshold".
+            k_best (int, optional): The amount of samples to add in each
+            iteration. Only used when criterion='k_best'. Defaults to 10
+            max_iter (int, optional): Maximum number of iterations allowed.
+            Should be greater than or equal to 0. If it is None, the classified
+            will continue to predict labels until no new pseudo-labels are
+            added, or all unlabeled samples have been labeled. Defaults to 10.
+            verbose (bool, optional): Enable verbose output. Defaults to False.
+        """
         self.base_estimator = base_estimator
         self.threshold = threshold
         self.criterion = criterion
@@ -148,25 +182,22 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         self.max_iter = max_iter
         self.verbose = verbose
 
-    def fit(self, pool: Pool, eval_set: Pool, **kwargs):
+    def fit(  # noqa: C901
+        self, pool: Pool, eval_set: Pool, **kwargs: Any
+    ) -> SelfTrainingClassifier:
         """
         Fit self-training classifier using `X`, `y` as training data.
 
-        Parameters
-        ----------
-        X : {array-like, sparse matrix} of shape (n_samples, n_features)
-            Array representing the data.
+        Args:
+            pool (Pool): pool of training data
+            eval_set (Pool): pool of validation data
 
-        y : {array-like, sparse matrix} of shape (n_samples,)
-            Array representing the labels. Unlabeled samples should have the
-            label 0.
+        Raises:
+            ValueError: warning for wrong datatype
 
-        Returns
-        -------
-        self : object
-            Fitted estimator.
+        Returns:
+            SelfTrainingClassifier: self
         """
-
         # get features, labels etc. from train pool
         X = pool.get_features()
         y = pool.get_label()
@@ -203,7 +234,7 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
 
         self.n_iter_ = 0
 
-        pbar = tqdm(total=self.max_iter)
+        # pbar = tqdm(total=self.max_iter)
 
         while not np.all(has_label) and (
             self.max_iter is None or self.n_iter_ < self.max_iter
@@ -253,7 +284,7 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
                     f"End of iteration {self.n_iter_},"
                     f" added {selected_full.shape[0]} new labels."
                 )
-            pbar.update(1)
+            # pbar.update(1)
 
         if self.n_iter_ == self.max_iter:
             self.termination_condition_ = "max_iter"
@@ -270,24 +301,21 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         self.base_estimator_.fit(train_pool, eval_set=eval_set)
 
         self.classes_ = self.base_estimator_.classes_
-        
-        pbar.close()
-        
+
+        # pbar.close()
+
         return self
 
     @available_if(_estimator_has("predict"))
-    def predict(self, X):
-        """Predict the classes of `X`.
+    def predict(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
+        """
+        Perform classification on test vectors `X`.
 
-        Parameters
-        ----------
-        X : {array-like, sparse matrix} of shape (n_samples, n_features)
-            Array representing the data.
+        Args:
+            X (npt.NDArray | pd.DataFrame): feature matrix.
 
-        Returns
-        -------
-        y : ndarray of shape (n_samples,)
-            Array with predicted labels.
+        Returns:
+            npt.NDArray: Predicted traget values for X.
         """
         check_is_fitted(self)
         X = self._validate_data(
@@ -299,18 +327,15 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         return self.base_estimator_.predict(X)
 
     @available_if(_estimator_has("predict_proba"))
-    def predict_proba(self, X):
-        """Predict probability for each possible outcome.
+    def predict_proba(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArra:
+        """
+        Predict class probabilities for X.
 
-        Parameters
-        ----------
-        X : {array-like, sparse matrix} of shape (n_samples, n_features)
-            Array representing the data.
+        Args:
+            X (npt.NDArray | pd.DataFrame): feature matrix
 
-        Returns
-        -------
-        y : ndarray of shape (n_samples, n_features)
-            Array with prediction probabilities.
+        Returns:
+            npt.NDArray: probabilities
         """
         check_is_fitted(self)
         X = self._validate_data(
@@ -320,75 +345,3 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
             reset=False,
         )
         return self.base_estimator_.predict_proba(X)
-
-    @available_if(_estimator_has("decision_function"))
-    def decision_function(self, X):
-        """Call decision function of the `base_estimator`.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix} of shape (n_samples, n_features)
-            Array representing the data.
-
-        Returns
-        -------
-        y : ndarray of shape (n_samples, n_features)
-            Result of the decision function of the `base_estimator`.
-        """
-        check_is_fitted(self)
-        X = self._validate_data(
-            X,
-            accept_sparse=True,
-            force_all_finite=False,
-            reset=False,
-        )
-        return self.base_estimator_.decision_function(X)
-
-    @available_if(_estimator_has("predict_log_proba"))
-    def predict_log_proba(self, X):
-        """Predict log probability for each possible outcome.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix} of shape (n_samples, n_features)
-            Array representing the data.
-
-        Returns
-        -------
-        y : ndarray of shape (n_samples, n_features)
-            Array with log prediction probabilities.
-        """
-        check_is_fitted(self)
-        X = self._validate_data(
-            X,
-            accept_sparse=True,
-            force_all_finite=False,
-            reset=False,
-        )
-        return self.base_estimator_.predict_log_proba(X)
-
-    @available_if(_estimator_has("score"))
-    def score(self, X, y):
-        """Call score on the `base_estimator`.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix} of shape (n_samples, n_features)
-            Array representing the data.
-
-        y : array-like of shape (n_samples,)
-            Array representing the labels.
-
-        Returns
-        -------
-        score : float
-            Result of calling score on the `base_estimator`.
-        """
-        check_is_fitted(self)
-        X = self._validate_data(
-            X,
-            accept_sparse=True,
-            force_all_finite=False,
-            reset=False,
-        )
-        return self.base_estimator_.score(X, y)

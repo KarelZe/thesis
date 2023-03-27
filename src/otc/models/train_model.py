@@ -10,14 +10,13 @@ import warnings
 from pathlib import Path
 
 import click
-import numpy as np
 import optuna
 import pandas as pd
-import wandb
 import yaml
 from optuna.exceptions import ExperimentalWarning
 from optuna.integration.wandb import WeightsAndBiasesCallback
 
+import wandb
 from otc.config.config import settings
 from otc.features.build_features import (
     features_categorical,
@@ -50,14 +49,12 @@ FEATURE_SETS = {
 @click.command()
 @click.option("--trials", default=100, help="No. of trials")
 @click.option("--seed", default=42, required=False, type=int, help="Seed for rng.")
-
 @click.option(
     "--features",
     type=click.Choice(["classical", "ml", "classical-size"], case_sensitive=False),
     default="classical",
     help="Feature set to run study on.",
 )
-
 @click.option(
     "--model",
     type=click.Choice(
@@ -75,9 +72,9 @@ FEATURE_SETS = {
     default="fbv/thesis/ise_supervised_preprocessed:v2",
     help="Name of dataset. See W&B Artifacts/Full Name",
 )
-
-@click.option('--pretrain/--no-pretrain', default=False, help = "Flag to activate pretraining.")
-
+@click.option(
+    "--pretrain/--no-pretrain", default=False, help="Flag to activate pretraining."
+)
 def main(
     trials: int,
     seed: int,
@@ -140,12 +137,17 @@ def main(
     # pretrain training activated
     has_label = (y_train != 0).all()
     if pretrain and has_label:
-        raise ValueError("Pretraining active, but dataset contains no unlabelled instances.")
+        raise ValueError(
+            "Pretraining active, but dataset contains no unlabelled instances."
+        )
 
     # no pretraining activated
-    has_label = y_train.isin([-1,1]).all()
+    has_label = y_train.isin([-1, 1]).all()
     if not pretrain and not has_label:
-        raise ValueError("Pretraining inactive, but dataset contains unlabelled instances or other labels. Use different dataset or activate pretraining.")
+        raise ValueError(
+            "Pretraining inactive, but dataset contains unlabelled instances or"
+            "other labels. Use different dataset or activate pretraining."
+        )
 
     x_val = pd.read_parquet(Path(artifact_dir, "val_set_20.parquet"), columns=columns)
     y_val = x_val["buy_sell"]

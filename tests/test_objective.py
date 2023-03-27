@@ -101,6 +101,7 @@ class TestObjectives:
     def test_gradient_boosting_pretraining_objective(self) -> None:
         """
         Test if gradient boosting objective returns a valid value.
+
         Pretraining is activated.
 
         Value obtained is the accuracy. Should lie in [0,1].
@@ -120,7 +121,7 @@ class TestObjectives:
         # train set with -1, 1, and 0
         self._y_train = np.random.randint(-1, 2, self._y_train.shape[0])
         # val set with 1
-        self._y_val = np.random.randint(1,2, self._y_train.shape[0])
+        self._y_val = np.random.randint(1, 2, self._y_train.shape[0])
 
         study = optuna.create_study(direction="maximize")
         objective = GradientBoostingObjective(
