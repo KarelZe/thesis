@@ -16,8 +16,21 @@
               "state": {},
               "pinned": true
             }
+          },
+          {
+            "id": "e12c4a4ad89409ee",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🪄Data Preprocessing.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "2e4bb12a56b63b7f",
@@ -95,6 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "📖chapters/🪄Data Preprocessing.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -121,7 +135,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "📖chapters/🪄Data Preprocessing.md"
+              }
             }
           },
           {
@@ -151,8 +167,11 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "8399eb31ec07fd72",
+  "active": "e12c4a4ad89409ee",
   "lastOpenFiles": [
+    "📥Inbox/@perez-lebelBenchmarkingMissingvaluesApproaches2022.md",
+    "📖chapters/🪄Data Preprocessing.md",
+    "📖chapters/🤖Transformer.md",
     "viz-training-schemes.png.md",
     "orphaned files output.md",
     "🖼️Media/vison-transformer.png",
@@ -165,7 +184,6 @@
     "🖼️Media/learning-curves-gbm.png",
     "🖼️Media/layer-norm-first-last.png",
     "🖼️Media/feature-tokenizer-fttransformer.png",
-    "📖chapters/🪄Data Preprocessing.md",
     "📖chapters/👨‍🍳Tain-Test-split.md",
     "📑notes/🪄Data Preprocessing.md",
     "📖chapters/🪄Feature Engineering.md",
@@ -186,8 +204,6 @@
     "📖chapters/🔢Basic rules.md",
     "📑notes/🔢Basic rules notes.md",
     "📖chapters/🌏Dataset.md",
-    "📥Inbox/@matthewsComparisonPredictedObserved1975.md",
-    "📑notes/🌏Dataset notes.md",
-    "📑notes/👨‍🍳Train-Test-split notes.md"
+    "📥Inbox/@matthewsComparisonPredictedObserved1975.md"
   ]
 }

@@ -247,7 +247,7 @@ The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a perform
 
 \subsubsection{Stacked Rule}\label{sec:stacked-rule}
 
-The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which can not be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their ordering.
+The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which cannot be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their ordering.
 
 % TODO: Murjajev (quote + quote on nbbo)
 The most basic application is in the \gls{LR} algorithm. For a more complex example consider the hybrid rule consisting of $\operatorname{tsize}(\cdot) \to \operatorname{quote}(\cdot) \to \operatorname{tick}(\cdot)$ in \cref{fig:stacking-algo}. An exemplary trade cannot be classified by the primary trade size rule and is signed by the quote rule, which is the first rule in the stack, able to classify the trade. Other trades can be classifiable by the trade size rule, which rules out the classification of the quote and tick rule. Theoretically, stacked rules can grow to great depth with an arbitrary arrangement. In practice, rules may be ordered greedily and new rules added if there are unclassified trades.
@@ -609,25 +609,28 @@ rules, the data requirements are comparable.
 
 \textbf{Numerical Features}
 
-We determine the transformation using the Box-Cox procedure \autocite[][214]{boxAnalysisTransformations2022}, given by:
+Pricing or quote data cannot be fully reconstructed, resulting in missing values across all features. Decision trees and ensembles thereof can inherently handle $\mathtt{[NaN]}$ values by discarding missing values in the splitting procedure \autocite[][150--152]{breimanClassificationRegressionTrees2017} or by incorporating missing values into the splitting criterion \autocite[][951]{twalaGoodMethodsCoping2008}. Transformers cannot inherently handle missing values, as a $\mathtt{[NaN]}$ value cannot be propagated through the network requiring missing values to be imputed beforehand. We choose zero imputation for being a single-pass strategy that minimizes data leakage and allows gradient-boosted trees and neural networks to separate imputed values from observed ones. Also, as the degree of missing values is low, the impact on the final result is minuscule.
+
+Price and size-related features exhibit a positive skewness, as brought up in \cref{sec:exploratory-data-analysis}. Tree-based learners are unaffected by the feature scale, as the splitting process is based on the purity of the split but not on the scale of splitting value (cp. \cref{sec:decision-tree}). For neural networks, 
+
+We determine the power transformation using the Box-Cox procedure \autocite[][214]{boxAnalysisTransformations2022}, given by:
 
 \begin{equation}
     \boldsymbol{X}^{*}\left[:,j\right]= \begin{cases}\frac{1}{\lambda}(\boldsymbol{X}\left[:,j\right]^\lambda-1), & \lambda \neq 0 \\ \log (\boldsymbol{X}\left[:,j\right]),& \lambda=0\end{cases}.
 \label{eq:box-cox-test}
 \end{equation}
 
-Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimizing for the Gaussian likelihood on the training set. As shown in \cref{eq:box-cox-test}, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $\boldsymbol{X}\left[:,j\right]$, we follow common practice by adding a constant of $1$ if needed. Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the Box-Cox test, we apply a common $\widehat{\boldsymbol{X}}\left[:,j\right]=\log(\boldsymbol{X}\left[:,j\right])$ transform on all price and size-related features with the effect of compressing large values and expanding smaller ones~\footnote{More specifically, $\widehat{\boldsymbol{X}}\left[:,j\right]= \log(\boldsymbol{X}\left[:,j\right]+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations. Results are not affected. }.
+Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimizing for the Gaussian likelihood on the training set. As shown in \cref{eq:box-cox-test}, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $\boldsymbol{X}\left[:,j\right]$, we follow common practice by adding a constant if needed. Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the Box-Cox test, we apply a common $\widehat{\boldsymbol{X}}\left[:,j\right]=\log(\boldsymbol{X}\left[:,j\right])$ transform on all price and size-related features with the effect of compressing large values and expanding smaller ones~\footnote{More specifically, $\widehat{\boldsymbol{X}}\left[:,j\right]= \log(\boldsymbol{X}\left[:,j\right]+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations. Results are not affected. }.
 
-Note that, the use of the Box-Cox transform is different from its originated purpose. In feature engineering the transformation is used in an unsupervised fashion, as the transformation's outcome is not directly used in the model. Also, the transform is applied to the features, rather than the model's residuals \autocite[122]{kuhnFeatureEngineeringSelection2020}.
+Note that, the use of the Box-Cox transform is different from its originated purpose. In feature engineering, the transformation is used in an unsupervised fashion, as the transformation's outcome is not directly used in the model. Also, the transform is applied to the features, rather than the model's residuals \autocite[122]{kuhnFeatureEngineeringSelection2020}.
 
-To further improve convergence of our transformer-based architectures, we normalize the data set using $z$-score normalization given by:
+To further improve the convergence of our transformer-based architectures, we normalize the data set using $z$-score normalization given by:
 \begin{equation}
     \widehat{\boldsymbol{X}}=\frac{\boldsymbol{X}-\boldsymbol{\mu}}{\boldsymbol{\sigma}}
 \end{equation}
-with mean $\boldsymbol{\mu} =\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]\right)$ and standard deviation $\boldsymbol{\sigma}=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]-\boldsymbol{\mu}\right)^2}$.
-Following good measures, all statistics are estimated on the training set only.
+with mean $\boldsymbol{\mu} =\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]\right)$ and standard deviation $\boldsymbol{\sigma}=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]-\boldsymbol{\mu}\right)^2}$. Intuitionally, the zero means prevents bias in the direction of the weight update and scaling to unit variance balances the rate at which parameters are updated \autocite[][8]{lecunEfficientBackProp2012}. Following good measures, all statistics are estimated on the imputed training set only.
 
-Normalization and log transformations have the advantage of preserving the data distribution, which is an desirable property when comparing the feature importances from machine learning models against their classical counterparts in \cref{sec:feature-importance}.
+Normalization and log transformations have the advantage of preserving the data distribution, which is a desirable property when comparing the feature importances from machine learning models against their classical counterparts in \cref{sec:feature-importance}.
 
 \textbf{Categorical Features}
 
@@ -675,7 +678,7 @@ Several observations can be drawn from \cref{fig:learning-curves-gradient-boosti
 
 While a smaller subsample of the training set would suffice in both cases, our training set encompasses the entire history to mitigate any sampling bias and we instead weight observations based on their temporal proximity. Overall, the training split minimizes data leakage and sensibly utilizes all available data.
 
-From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we emphasize regularization techniques in all our models as we show next.
+From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we employ regularization techniques in all our models as we show next.
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 
