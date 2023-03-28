@@ -29,7 +29,7 @@ interval: 1
 | [[👶Introduction]]                              |     47.5 |       |        1 | 1970-01-01 |
 | [[💡Hyperparameter tuning]]                     |       50 |       |        1 | 1970-01-01 |
 | [[🔢Hybrid rules]]                              |     52.5 |       |        1 | 1970-01-01 |
-| [[🏅Feature importance measure]]                |     57.5 |       |        1 | 1970-01-01 |
+| [[🧭Feature Importance Measure]]                |     57.5 |       |        1 | 1970-01-01 |
 | [[🏅Feature importance results]]                |       60 |       |        1 | 1970-01-01 |
 | [[🪄Feature Engineering]]                       |     62.5 |       |        1 | 1970-01-01 |
 | [[🐈Extension to Gradient Boosting]]           |       70 |       |        1 | 1970-01-01 |

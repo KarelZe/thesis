@@ -23,7 +23,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/Data Preprocessing.md",
+                "file": "📖chapters/🧭Random Feature Permutation.md",
                 "mode": "source",
                 "source": false
               }
@@ -47,39 +47,17 @@
             }
           },
           {
-            "id": "dde0833f7ece99d5",
+            "id": "26a56369728dc3b3",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "chapters/🧃Feature Sets.md",
+                "file": "📑notes/🧭Random Feature Permutation.md",
                 "mode": "source",
                 "source": false
-              }
-            }
-          },
-          {
-            "id": "1ca35db843031f82",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d1677d2c99757dd7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
-                "mode": "source",
-                "source": false
-              }
+              },
+              "pinned": true
             }
           }
         ],
@@ -141,7 +119,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/Data Preprocessing.md",
+                "file": "📖chapters/🧭Random Feature Permutation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,7 +147,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🪄Data Preprocessing.md"
+                "file": "📖chapters/🧭Random Feature Permutation.md"
               }
             }
           },
@@ -202,6 +180,12 @@
   },
   "active": "e12c4a4ad89409ee",
   "lastOpenFiles": [
+    "📑notes/🧭Random Feature Permutation.md",
+    "📖chapters/🧭Random Feature Permutation.md",
+    "📖chapters/🧭Feature Importance Measure.md",
+    "📖chapters/🧭Attention map.md",
+    "📖chapters/🏅Feature importance results.md",
+    "📑notes/🧭Attention map notes.md",
     "📖chapters/🧃Feature Sets.md",
     "📖chapters/🪄Data Preprocessing.md",
     "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
@@ -231,12 +215,6 @@
     "❓Questions.md",
     "📖chapters/🧭Evaluation metric.md",
     "📖chapters/🏅Results.md",
-    "🍬Implementation/😺CatBoost.md",
-    "📖chapters/🔢Trade Initiator.md",
-    "📖chapters/🔢Trade initiator.md",
-    "📑notes/🔢Trade Initiator notes.md",
-    "📖chapters/🔢Basic rules.md",
-    "📑notes/🔢Basic rules notes.md",
-    "📖chapters/🌏Dataset.md"
+    "🍬Implementation/😺CatBoost.md"
   ]
 }

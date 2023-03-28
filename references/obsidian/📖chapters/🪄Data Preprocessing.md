@@ -72,7 +72,7 @@ $$
 ^5d5445
 Following good measures, all statistics are estimated on the training set only.
 
-Normalization has the advantage of preserving the data distribution, as shown by [[@kuhnFeatureEngineeringSelection2020]], which is an important property when comparing[[🏅Feature importance results]] based models against their classical counterparts in chapter [[🏅Feature importance measure]] . [^4]
+Normalization has the advantage of preserving the data distribution, as shown by [[@kuhnFeatureEngineeringSelection2020]], which is an important property when comparing[[🏅Feature importance results]] based models against their classical counterparts in chapter [[🧭Feature Importance Measure]] . [^4]
 
 As for the categorical variables a transformation is required. We perform a label encoding by randomly mapping every unique value onto an integer key. As an example, the option type in the set $\{\text{'C'},\text{'P'}\}$ would be randomly mapped onto $\{1,0\}$. This basic transformation allows to defer handling of categorical data to the model ([[@hancockSurveyCategoricalData2020]]10). Also, it minimizes target leakage. Classes not seen during are mapped to the key of an $\mathtt{[UNK]}$ token, as motivated in cref-[[💤Embeddings For Tabular Data]]. 
 

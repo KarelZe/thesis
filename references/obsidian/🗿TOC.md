@@ -183,7 +183,7 @@ describe if data set is actually used. Write similarily to
 
 ## Evaluation
 ### Feature Importance Measure
-[[🏅Feature importance measure]]
+[[🧭Feature Importance Measure]]
 ### Evaluation Metric
 [[🧭Evaluation metric]]
 [[🧭Attention Map]]
