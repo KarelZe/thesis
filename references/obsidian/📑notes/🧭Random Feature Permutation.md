@@ -1,3 +1,11 @@
+### Interpretability vs explainability
+
+Although it is common in the literature to see the terms "interpretability" and "explainability" used interchangeably,[17](https://www.sciencedirect.com/science/article/pii/S0828282X21007030#bib17), [18](https://www.sciencedirect.com/science/article/pii/S0828282X21007030#bib18), [19](https://www.sciencedirect.com/science/article/pii/S0828282X21007030#bib19) they are distinct concepts, and their conflation can cause significant confusion.[20](https://www.sciencedirect.com/science/article/pii/S0828282X21007030#bib20)
+
+Although there is slight variability in the precise definition of the term "interpretable" in the literature,[21](https://www.sciencedirect.com/science/article/pii/S0828282X21007030#bib21), [22](https://www.sciencedirect.com/science/article/pii/S0828282X21007030#bib22), [23](https://www.sciencedirect.com/science/article/pii/S0828282X21007030#bib23), [24](https://www.sciencedirect.com/science/article/pii/S0828282X21007030#bib24) throughout this review we use the term to refer to models in which humans can directly understand how a model operates and the causes of its decisions.[25](https://www.sciencedirect.com/science/article/pii/S0828282X21007030#bib25) Logistic-regression models are interpretable because a human can refer to the weights and odds ratios to understand how the model operates and can refer to coefficients to understand the cause of individual predictions. It should be noted that interpretability is at least somewhat subjective, as it can require expert knowledge of statistics or a domain (such as cardiology) to interpret a model’s decisions effectively.[8](https://www.sciencedirect.com/science/article/pii/S0828282X21007030#bib8)
+
+
+
 
 - Feature Importance of Gradient Boosted Trees
 	- Possibilities to calculate feature importances in GBMs [here.](https://blog.tensorflow.org/2019/03/how-to-train-boosted-trees-models-in-tensorflow.html)

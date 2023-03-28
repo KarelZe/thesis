@@ -119,7 +119,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md",
+                "file": "📑notes/🧭Random Feature Permutation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -147,7 +147,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md"
+                "file": "📑notes/🧭Random Feature Permutation.md"
               }
             }
           },
@@ -178,10 +178,10 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "e12c4a4ad89409ee",
+  "active": "26a56369728dc3b3",
   "lastOpenFiles": [
-    "📑notes/🧭Random Feature Permutation.md",
     "📖chapters/🧭Random Feature Permutation.md",
+    "📑notes/🧭Random Feature Permutation.md",
     "📖chapters/🧭Feature Importance Measure.md",
     "📖chapters/🧭Attention map.md",
     "📖chapters/🏅Feature importance results.md",
