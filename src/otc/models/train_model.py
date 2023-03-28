@@ -6,6 +6,7 @@ Currently classical rules and gradient boosted trees are supported.
 """
 import logging
 import logging.config
+import os
 import warnings
 from pathlib import Path
 
@@ -44,6 +45,8 @@ FEATURE_SETS = {
     "ml": features_ml,
     "classical-size": features_classical_size,
 }
+
+DB_NAME = "thesis-db"
 
 
 @click.command()
@@ -107,7 +110,7 @@ def main(
         name=name,
     )
 
-    # replace missing names with run id
+    # use provided name, otherwise use run id
     if not name:
         name = str(run.id)
 
@@ -171,12 +174,16 @@ def main(
         pretrain=pretrain,
     )
 
+    # create database if not exists
+    os.system(f'mysql -u root -e "CREATE DATABASE IF NOT EXISTS {DB_NAME}"')
+
     # maximize for accuracy
     study = optuna.create_study(
         direction="maximize",
         # pruner=optuna.pruners.MedianPruner(n_warmup_steps=5),
         sampler=optuna.samplers.TPESampler(seed=set_seed(seed)),
         study_name=name,
+        storage=f"mysql://root:root@localhost/{DB_NAME}",
     )
 
     # run garbage collector after each trial. Might impact performance,
