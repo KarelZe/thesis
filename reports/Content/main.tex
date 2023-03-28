@@ -3,7 +3,7 @@
 \footnote{The authors acknowledge support by the state of Baden-Württemberg through \href{https://www.bwhpc.de/}{bwHPC}.}
 \newpage
 
-\section{Related Work (3~p)}\label{sec:related-work}
+\section{Related Work}\label{sec:related-work}
 
 \subsection{Trade Classification in Option Markets}
 \label{sec:trade-classification-in-option-markets}
@@ -698,6 +698,40 @@ From the high bias/low variance, we conclude that the gradient-boosting model wi
     Measure (2~p)}\label{sec:feature-importance-measure}
 
 \textbf{Random Feature Permutation}
+
+\begin{algorithm}
+
+  % input/ouput names
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+
+  % caption
+  % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
+  \caption{$\operatorname{\mathtt{quote}}$ \label{sec:alg:quote-rule}}
+
+  \Input{%
+    $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
+  }
+  \Output{%
+    $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
+  }
+
+  \BlankLine % blank line for spacing
+
+  % start of the pseudocode
+  $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
+
+  \uIf{$t_i > m_i$}{%
+    \Return{$o_i =1$}
+  }
+  \uElseIf{$t_i < m_i$}{%
+    \Return{$o_i =-1$}
+  }
+  \uElse{%
+    \Return
+  }
+\end{algorithm}
+
 
 
 \textbf{Attention Maps}

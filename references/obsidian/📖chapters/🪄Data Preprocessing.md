@@ -1,6 +1,6 @@
 
 **Notes:**
-[[📑notes/🪄Data Preprocessing]]
+[[🪄Data Preprocessing notes]]
 
 **Data Cleaning**
 

@@ -78,6 +78,10 @@ So there are many reasons not to use SHAP, but an “inferior” (as the reviewe
 Again, our definition of empirical MR is very similar to the permutation-based variable importance approach of Breimar (2001), where Breimar uses a single random permutation and we consider all possible pairs. To compare these two approaches more precisely, let $\left\{\pi_1, \ldots, \pi_{n !}\right\}$ be a set of $n$-length vectors, each containing a different permutation of the set $\{1, \ldots, n\}$. The approach of Breimar. (2001) is analogous to computing the loss $\sum_{i=1}^n L\left\{f,\left(\mathbf{y}_{[i]}, \mathbf{X}_{1\left[\pi_{[[i]},\right]}, \mathbf{X}_{2[i,]]}\right)\right\}$ for a randomly chosen permutation vector $\pi_l \in\left\{\pi_1, \ldots, \pi_{n !}\right\}$. Similarly, our calculation in Eq 3.i. is proportional to the sum of losses over all possible ( $n$ !) permutations, excluding the $n$ unique combinations of the rows of $\mathbf{X}_1$ and the rows of $\left[\begin{array}{ll}\mathbf{X}_2 & \mathbf{y}\end{array}\right]$ that appear in the original sample (see Appendix A.i.). Excluding these observations is necessary to preserve the (finite-sample) unbiasedness of $\hat{e}_{\text {switch }}(f)$
 
 
+## High-level description
+https://epub.ub.uni-muenchen.de/2821/1/deck.pdf
+The permutation accuracy importance, that is described in more detail in Section 3, follows the rationale that a random permutation of the values of the predictor variable is supposed to mimic the absence of the variable from the model. The difference in the prediction accuracy before and after permuting the predictor variable, i.e. with and without the help of this predictor variable, is used as an importance measure.
+
 ## Random Feature permutation
 
 8.5.1 Theory
@@ -91,6 +95,19 @@ The permutation feature importance algorithm based on Fisher, Rudin, and Dominic
 - Calculate permutation feature importance as quotient $F I_j=e_{\text {perm }} / e_{\text {orig }}$ or difference $F I_j=e_{\text {perm }}-e_{\text {orig }}$
 3. Sort features by descending $\mathrm{FI}$.
 Fisher, Rudin, and Dominici (2018) suggest in their paper to split the dataset in half and swap the values of feature $j$ of the two halves instead of permuting feature $j$. This is exactly the same as permuting feature j, if you think about it. If you want a more accurate estimate, you can estimate the error of permuting feature $j$ by pairing each instance with the value of feature $j$ of each other instance (except with itself). This gives you a dataset of size $n(n-1)$ to estimate the permutation error, and it takes a large amount of computation time. I can only recommend using the $n(n-1)$-method if you are serious about getting extremely accurate estimates.
+
+## Theory
+https://epub.ub.uni-muenchen.de/2821/1/deck.pdf
+3. The permutation importance
+The rationale of the original random forest permutation importance is the following: By randomly permuting the predictor variable $X_j$, its original association with the response $Y$ is broken. When the permuted variable $X_j$, together with the remaining non-permuted predictor variables, is used to predict the response for the out-of-bag observations, the prediction accuracy (i.e. the number of observations classified correctly) decreases substantially if the original variable $X_j$ was associated with the response. Thus, Breiman (2001a) suggests the difference in prediction accuracy before and after permuting $X_j$, averaged over all trees, as a measure for variable importance, that we formalize as follows: Let $\overline{\mathfrak{B}}^{(t)}$ be the out-of-bag (oob) sample for a tree $t$, with $t \in\{1, \ldots, n t r e e\}$. Then the variable importance of variable $X_j$ in tree $t$ is
+$$
+V I^{(t)}\left(\mathbf{X}_j\right)=\frac{\sum_{i \in \overline{\mathfrak{B}}^{(t)}} I\left(y_i=\hat{y}_i^{(t)}\right)}{\left|\overline{\mathfrak{B}}^{(t)}\right|}-\frac{\sum_{i \in \overline{\mathfrak{B}}^{(t)}} I\left(y_i=\hat{y}_{i, \pi_j}^{(t)}\right)}{\left|\overline{\mathfrak{B}}^{(t)}\right|}
+$$
+6
+Conditional Variable Importance for Random Forests
+where $\hat{y}_i^{(t)}=f^{(t)}\left(\mathbf{x}_i\right)$ is the predicted class for observation $i$ before and $\hat{y}_{i, \pi_j}^{(t)}=f^{(t)}\left(\mathbf{x}_{i, \pi_j}\right)$ is the predicted class for observation $i$ after permuting its value of variable $X_j$, i.e. with $\mathbf{x}_{i, \pi_j}=$ $\left(x_{i, 1}, \ldots, x_{i, j-1}, x_{\pi_j(i), j}, x_{i, j+1}, \ldots, x_{i, p}\right)$. (Note that $V I^{(t)}\left(\mathbf{X}_j\right)=0$ by definition, if variable $X_j$ is not in tree t.) The raw variable importance score for each variable is then computed as the mean importance over all trees: $V I\left(\mathbf{X}_j\right)=\frac{\sum_{t=1}^{\text {the }} V I^{(t)}\left(\mathbf{X}_j\right)}{n \text { tree }}$
+In standard implementations of random forests an additional scaled version of the permutation importance (often called $z$-score), that is achieved by dividing the raw importance by its standard error, is provided. However, since the results of Strobl and Zeileis (2008) indicate that the raw importance $V I\left(\mathbf{X}_j\right)$ has better statistical properties, we will only consider the unscaled version here.
+
 
 ### 8.5.4 Advantages[](https://christophm.github.io/interpretable-ml-book/feature-importance.html#advantages-9)
 https://christophm.github.io/interpretable-ml-book/feature-importance.html
@@ -126,6 +143,11 @@ Here, there are a variety of model-specific gradient-based methods (e.g., DeepLi
 To alleviate this problem, we will introduce a **simple extension of the permutation importance algorithm for the scenarios where correlated features exist**. The new extension works by grouping the correlated features and then calculating the group-level imputation feature importance. The group-level imputation importance is similar to the original imputation importance, except that all the features in the group are permuted together.  
   
 You can check out our release of this method on [GitHub](https://github.com/BorealisAI/group-feature-importance)!
+
+## Correlations
+https://explained.ai/rf-importance/index.html#4
+
+Permute in groups.
 
 
 ## Correlations between features
