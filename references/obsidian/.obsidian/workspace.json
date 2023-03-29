@@ -16,8 +16,21 @@
               "state": {},
               "pinned": true
             }
+          },
+          {
+            "id": "87cf169f3a4b460b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "2e4bb12a56b63b7f",
@@ -91,6 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -117,7 +131,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md"
+              }
             }
           },
           {
@@ -147,8 +163,9 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f35a250acbe1a2dc",
+  "active": "87cf169f3a4b460b",
   "lastOpenFiles": [
+    "🖼️Media/Pasted image 20230328194157.png",
     "📖chapters/🧭Random Feature Permutation.md",
     "📖chapters/🧭Kernel SHAP.md",
     "📖chapters/🏅Feature importance measure.md",
@@ -183,7 +200,6 @@
     "📖chapters/🪄Feature Engineering.md",
     "📖chapters/🚏Exploratory Data Analysis.md",
     "📖chapters/🐈Gradient Boosting.md",
-    "📖chapters/💡Training of models (supervised).md",
-    "📖chapters/💡Training and tuning.md"
+    "📖chapters/💡Training of models (supervised).md"
   ]
 }
