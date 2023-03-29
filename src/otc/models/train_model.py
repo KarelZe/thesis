@@ -69,7 +69,7 @@ FEATURE_SETS = {
 @click.option(
     "--dataset",
     required=False,
-    default="fbv/thesis/train_val_test:v0",
+    default="fbv/thesis/ise_supervised_log_standardized:v0",
     help="Name of dataset. See W&B Artifacts/Full Name",
 )
 def main(
