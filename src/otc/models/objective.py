@@ -24,6 +24,7 @@ from otc.models.activation import ReGLU
 from otc.models.callback import CallbackContainer, PrintCallback, SaveCallback
 from otc.models.classical_classifier import ClassicalClassifier
 from otc.models.fttransformer import FeatureTokenizer, FTTransformer, Transformer
+from otc.models.selftraining import SelfTrainingClassifier
 from otc.models.tabtransformer import TabTransformer
 from otc.models.transformer_classifier import TransformerClassifier
 
@@ -75,6 +76,7 @@ class Objective:
         x_val: pd.DataFrame,
         y_val: pd.Series,
         name: str = "default",
+        pretrain: bool = False,
         **kwargs: Any,
     ):
         """
@@ -86,6 +88,7 @@ class Objective:
             x_val (pd.DataFrame): feature matrix (val)
             y_val (pd.Series): ground truth (val)
             name (str, optional): Name of objective. Defaults to "default".
+            pretrain (bool, optional): Whether to pretrain. Defaults to False.
         """
         self.x_train, self.y_train, self.x_val, self.y_val, = (
             x_train,
@@ -94,6 +97,7 @@ class Objective:
             y_val,
         )
         self.name = name
+        self.pretrain = pretrain
         self._clf: BaseEstimator | CatBoostClassifier
         self._callbacks: CallbackContainer
 
@@ -128,6 +132,7 @@ class TabTransformerObjective(Objective):
         cat_features: list[str] | None,
         cat_cardinalities: list[int] | None,
         name: str = "default",
+        pretrain: bool = False,
     ):
         """
         Initialize objective.
@@ -143,6 +148,7 @@ class TabTransformerObjective(Objective):
             of categorical features.
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
+            pretrain (bool, optional): Whether to pretrain. Defaults to False.
         """
         self._cat_features = [] if not cat_features else cat_features
         self._cat_cardinalities = (
@@ -155,7 +161,7 @@ class TabTransformerObjective(Objective):
         self._callbacks = CallbackContainer([SaveCallback(), PrintCallback()])
         self._clf: BaseEstimator
 
-        super().__init__(x_train, y_train, x_val, y_val, name)
+        super().__init__(x_train, y_train, x_val, y_val, name, pretrain)
 
     def __call__(self, trial: optuna.Trial) -> float:
         """
@@ -177,7 +183,7 @@ class TabTransformerObjective(Objective):
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-1)
         dropout = trial.suggest_float("dropout", 0, 0.5, step=0.1)
         lr = trial.suggest_float("lr", 1e-6, 4e-3, log=False)
-        batch_size = 32768 # see 5.0a-mb-batch-size-finder
+        batch_size = 32768  # see 5.0a-mb-batch-size-finder
 
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
@@ -244,6 +250,7 @@ class FTTransformerObjective(Objective):
         cat_features: list[str] | None,
         cat_cardinalities: list[int] | None,
         name: str = "default",
+        pretrain: bool = False,
     ):
         """
         Initialize objective.
@@ -259,6 +266,7 @@ class FTTransformerObjective(Objective):
             of categorical features.
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
+            pretrain (bool, optional): Whether to pretrain. Defaults to False.
         """
         self._cat_features = [] if not cat_features else cat_features
         self._cat_cardinalities = (
@@ -271,7 +279,7 @@ class FTTransformerObjective(Objective):
         self._clf: BaseEstimator
         self._callbacks = CallbackContainer([SaveCallback(), PrintCallback()])
 
-        super().__init__(x_train, y_train, x_val, y_val, name)
+        super().__init__(x_train, y_train, x_val, y_val, name, pretrain)
 
     def __call__(self, trial: optuna.Trial) -> float:
         """
@@ -380,6 +388,7 @@ class ClassicalObjective(Objective):
         x_val: pd.DataFrame,
         y_val: pd.Series,
         name: str = "default",
+        pretrain: bool = False,
         **kwargs: Any,
     ):
         """
@@ -391,9 +400,10 @@ class ClassicalObjective(Objective):
             x_val (pd.DataFrame): feature matrix (val)
             y_val (pd.Series): ground truth (val)
             name (str, optional): Name of objective. Defaults to "default".
+            pretrain (bool, optional): Whether to pretrain. Defaults to False.
         """
         self._callbacks = CallbackContainer([SaveCallback()])
-        super().__init__(x_train, y_train, x_val, y_val, name)
+        super().__init__(x_train, y_train, x_val, y_val, name, pretrain)
 
     def __call__(self, trial: optuna.Trial) -> float:
         """
@@ -493,6 +503,7 @@ class GradientBoostingObjective(Objective):
         y_val: pd.Series,
         cat_features: list[str] | None = None,
         name: str = "default",
+        pretrain: bool = False,
         **kwargs: Any,
     ):
         """
@@ -506,6 +517,7 @@ class GradientBoostingObjective(Objective):
             cat_features (List[str] | None, optional): List of categorical features.
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
+            pretrain (bool, optional): Whether to pretrain. Defaults to False.
         """
         # decay weight of very old observations in training set. See eda notebook.
         weight = np.geomspace(0.001, 1, num=len(y_train))
@@ -522,6 +534,7 @@ class GradientBoostingObjective(Objective):
         )
         self._val_pool = Pool(data=x_val, label=y_val, cat_features=cat_features)
         self.name = name
+        self.pretrain = pretrain
         self._callbacks = CallbackContainer([SaveCallback()])
 
     def __call__(self, trial: optuna.Trial) -> float:
@@ -565,11 +578,19 @@ class GradientBoostingObjective(Objective):
 
         # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
         self._clf = CatBoostClassifier(**kwargs_cat)  # type: ignore
-        self._clf.fit(
-            self._train_pool,
-            eval_set=self._val_pool,
-            callbacks=None,
-        )
+
+        if self.pretrain:
+            self_train_clf = SelfTrainingClassifier(
+                self._clf, max_iter=5, threshold=0.8
+            )
+            self_train_clf.fit(self._train_pool, eval_set=self._val_pool)
+            # retrieve final estimator from self-training classifier, disregard wrapper
+            self._clf = self_train_clf.base_estimator_
+        else:
+            self._clf.fit(
+                self._train_pool,
+                eval_set=self._val_pool,
+            )
 
         # calculate accuracy
         return self._clf.score(self._val_pool)  # type: ignore

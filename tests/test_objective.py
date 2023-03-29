@@ -79,7 +79,7 @@ class TestObjectives:
         """
         params = {
             "depth": 1,
-            "learning_rate": 0.9,
+            "learning_rate": 0.1,
             "cat_features": None,
             "l2_leaf_reg": 3,
             "random_strength": 1e-08,
@@ -90,6 +90,42 @@ class TestObjectives:
         study = optuna.create_study(direction="maximize")
         objective = GradientBoostingObjective(
             self._x_train, self._y_train, self._x_val, self._y_val
+        )
+
+        study.enqueue_trial(params)
+        study.optimize(objective, n_trials=1)
+
+        # check if accuracy is >= 0 and <=1.0
+        assert 0.0 <= study.best_value <= 1.0
+
+    def test_gradient_boosting_pretraining_objective(self) -> None:
+        """
+        Test if gradient boosting objective returns a valid value.
+
+        Pretraining is activated.
+
+        Value obtained is the accuracy. Should lie in [0,1].
+        Value may not be NaN.
+        """
+        params = {
+            "depth": 1,
+            "learning_rate": 0.1,
+            "cat_features": None,
+            "l2_leaf_reg": 3,
+            "random_strength": 1e-08,
+            "bagging_temperature": 0.1,
+            "grow_policy": "SymmetricTree",
+        }
+
+        # labelled (-1,1) and unlabelled (0) instances
+        # train set with -1, 1, and 0
+        self._y_train = np.random.randint(-1, 2, self._y_train.shape[0])
+        # val set with 1
+        self._y_val = np.random.randint(1, 2, self._y_train.shape[0])
+
+        study = optuna.create_study(direction="maximize")
+        objective = GradientBoostingObjective(
+            self._x_train, self._y_train, self._x_val, self._y_val, pretrain=True
         )
 
         study.enqueue_trial(params)

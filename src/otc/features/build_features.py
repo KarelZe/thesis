@@ -32,7 +32,7 @@ features_option = [
 features_categorical: List[Tuple[str, int]] = [
     ("bin_option_type", 2),
     ("bin_issue_type", 6),
-    ("bin_root", 9107), # + 1 for UNK which may be in val and test set
+    ("bin_root", 9107),  # + 1 for UNK which may be in val and test set
 ]
 
 features_classical = [
