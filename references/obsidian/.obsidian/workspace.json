@@ -18,12 +18,12 @@
             }
           },
           {
-            "id": "e12c4a4ad89409ee",
+            "id": "87cf169f3a4b460b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🪄Data Preprocessing.md",
+                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md",
                 "mode": "source",
                 "source": false
               }
@@ -125,7 +125,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 226.5110321044922
+    "width": 314.0110321044922
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -141,7 +141,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🪄Data Preprocessing.md",
+                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,7 +169,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🪄Data Preprocessing.md"
+                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md"
               }
             }
           },
@@ -200,8 +200,20 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "e12c4a4ad89409ee",
+  "active": "87cf169f3a4b460b",
   "lastOpenFiles": [
+    "🖼️Media/Pasted image 20230328194157.png",
+    "📖chapters/🧭Random Feature Permutation.md",
+    "📖chapters/🧭Kernel SHAP.md",
+    "📖chapters/🏅Feature importance measure.md",
+    "📑notes/🪄Data Preprocessing.md",
+    "📑notes/🧭Random Feature Permutation notes.md",
+    "📥Inbox/@fisherAllModelsAre.md",
+    "📥Inbox/@aasExplainingIndividualPredictions2021.md",
+    "📖chapters/🧭Feature Importance Measure.md",
+    "📖chapters/🧭Attention map.md",
+    "📖chapters/🏅Feature importance results.md",
+    "📑notes/🧭Attention map notes.md",
     "📖chapters/🧃Feature Sets.md",
     "📖chapters/🪄Data Preprocessing.md",
     "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
@@ -219,24 +231,12 @@
     "🖼️Media/missclassification-trade-rule.png",
     "🖼️Media/learning-curves-gbm.png",
     "🖼️Media/layer-norm-first-last.png",
-    "🖼️Media/feature-tokenizer-fttransformer.png",
+    "️Media/feature-tokenizer-fttransformer.png",
     "📖chapters/👨‍🍳Tain-Test-split.md",
-    "📑notes/🪄Data Preprocessing.md",
+    "📑notes/🪄Data Preprocessing notes.md",
     "📖chapters/🪄Feature Engineering.md",
     "📖chapters/🚏Exploratory Data Analysis.md",
     "📖chapters/🐈Gradient Boosting.md",
-    "📖chapters/💡Training of models (supervised).md",
-    "📖chapters/💡Training and tuning.md",
-    "📖chapters/🪦graveyard of ideas.md",
-    "❓Questions.md",
-    "📖chapters/🧭Evaluation metric.md",
-    "📖chapters/🏅Results.md",
-    "🍬Implementation/😺CatBoost.md",
-    "📖chapters/🔢Trade Initiator.md",
-    "📖chapters/🔢Trade initiator.md",
-    "📑notes/🔢Trade Initiator notes.md",
-    "📖chapters/🔢Basic rules.md",
-    "📑notes/🔢Basic rules notes.md",
-    "📖chapters/🌏Dataset.md"
+    "📖chapters/💡Training of models (supervised).md"
   ]
 }

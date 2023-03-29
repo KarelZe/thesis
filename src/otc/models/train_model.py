@@ -69,7 +69,7 @@ FEATURE_SETS = {
 @click.option(
     "--dataset",
     required=False,
-    default="fbv/thesis/ise_supervised_preprocessed:v2",
+    default="fbv/thesis/ise_supervised_log_standardized:v0",
     help="Name of dataset. See W&B Artifacts/Full Name",
 )
 @click.option(

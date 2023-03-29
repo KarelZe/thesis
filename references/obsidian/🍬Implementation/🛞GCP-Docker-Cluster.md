@@ -55,8 +55,17 @@ Now use wget to get the file directly into your bucket (sample using 10GB file o
 wget "https://public.am.files.1drv.com/y4mknFRQq6J1y2ZpJATEx-XFs19E8AsgP43fWyzKkNGOJ_KUIJ-XeVcjArOudVMCMnH_17pw714KTATmf4ZoflJqP8plzoIW79SpLZqZs6ZCeIdXoEVL4-2j47KH7uNDl8cneVZHqcPTQzzR5rMGwfJHYOZEdlnuG2V97xJq7ljKRRA-qsHsMDR9yJbyFzKm5FoifReQ0OvmiNSVedrkudb_FVpp0hpRVCyllKbHDg-vTg" -O data/raw/matched_ise_quotes.csv
 ```
 
-
 ## Hashes of files
+
 ```
 2907e9a03f91a202b17e3a5779e90be9d11f8515  matched_ise_quotes.csv
+f52c6ba9617ea1516b23b863b46078c6  matched_cboe_quotes.csv
+afee3427993806bfb27fdfad9a54521d  livevol_ise_full_sample.csv
+```
+
+## Modules
+```
+compilerfintel/19.1
+devel/python/3.8.6 inteL19.1
+jupyter/base/2023-03-23
 ```
