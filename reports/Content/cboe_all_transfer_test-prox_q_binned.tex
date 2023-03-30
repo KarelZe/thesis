@@ -1,0 +1,20 @@
+\begin{table}
+\centering
+\caption[short-tbd]{long-tbd}
+\label{tab:cboe_all_transfer_test-prox_q_binned}
+\begin{tabular}{llSSSSSS}
+\toprule
+{} & {Location to Quote} & {At Mid} & {Inside} & {At Quotes} & {Outside} & {Unknown} & {All} \\
+\midrule
+\gls{GBM} & \gls{GBM} (Classical, Size) & \bfseries 67.9601 & \bfseries 72.0557 & \bfseries 74.9170 & \bfseries 73.2765 & \bfseries 75.3645 & \bfseries 71.9708 \\
+\cline{1-8}
+\multirow[c]{6}{*}{Classical} & Tick (Ex) & 45.3339 & 49.5117 & 49.2475 & 45.8847 & 49.5020 & 49.0067 \\
+ & Quote (Ex) & 49.9060 & 67.3948 & 38.3613 & 42.7651 & 38.7375 & 62.0489 \\
+ & \gls{LR} (Ex) & 46.9994 & 67.3948 & 38.3613 & 42.7651 & 38.7465 & 61.7487 \\
+ & \gls{EMO} (Ex) & 45.3925 & 50.6681 & 38.3613 & 42.4018 & 37.8098 & 48.6435 \\
+ & \gls{CLNV} (Ex) & 45.3929 & 56.6287 & 38.3613 & 42.4018 & 37.7805 & 53.2490 \\
+ & Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick (Ex) & 59.3773 & 65.0525 & 72.7194 & 72.0256 & 72.7252 & 65.4078 \\
+\cline{1-8}
+\bottomrule
+\end{tabular}
+\end{table}
