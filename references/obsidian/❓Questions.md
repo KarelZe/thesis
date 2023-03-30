@@ -1,4 +1,5 @@
 ## Open
+- How to consistently handle unknowns in "location to quote"?
 - What happens to the trade volumes of professional customers? Filtered out or treated as ordinary customers? -> Filtered out, as professional customers (particularly large customers) are assumed to act like a market maker / provide liquidity not demand liquidity. Incorporate this in paragraph.
 - What is part of the unlabelled dataset? Only customer trades, where volumes don't match or also professional customer trades, broker/deal trades etc.? -> All trades.
 - How is the market maker identified in the raw sources? -> delta between total volume and volumes of customers, brokers etc. So-called market clearing condition.
