@@ -1,0 +1,29 @@
+\begin{table}
+\centering
+\caption[short-tbd]{long-tbd}
+\label{tab:cboe_all_supervised_all-prox_q_binned-eff-spread}
+\begin{tabular}{lllSSSSS}
+\toprule
+{} & {} & {prox_q_binned} & {At Mid} & {Inside} & {At Quotes} & {Outside} & {Unknown} \\
+\midrule
+\multirow[c]{12}{*}{Classical} & \multirow[c]{2}{*}{Tick (Ex)} & Nominal & \bfseries 0.0000 & 0.0149 & 0.0316 & -0.0182 & 0.0442 \\
+ &  & Rel & \bfseries 0.0000 & 2.6257 & -3.4753 & 13.3394 & \bfseries inf \\
+\cline{2-8}
+ & \multirow[c]{2}{*}{Quote (Ex)} & Nominal & \bfseries 0.0000 & 0.1118 & 0.1620 & 0.3585 & 0.1996 \\
+ &  & Rel & \bfseries 0.0000 & \bfseries 11.2036 & \bfseries 25.0869 & \bfseries 21.7347 & \bfseries inf \\
+\cline{2-8}
+ & \multirow[c]{2}{*}{\gls{LR} (Ex)} & Nominal & \bfseries 0.0000 & 0.1118 & 0.1620 & 0.3585 & 0.1996 \\
+ &  & Rel & \bfseries 0.0000 & \bfseries 11.2036 & \bfseries 25.0869 & \bfseries 21.7347 & \bfseries inf \\
+\cline{2-8}
+ & \multirow[c]{2}{*}{\gls{EMO} (Ex)} & Nominal & \bfseries 0.0000 & 0.0264 & 0.1620 & 0.0931 & 0.1281 \\
+ &  & Rel & \bfseries 0.0000 & 3.9091 & \bfseries 25.0869 & 21.6143 & \bfseries inf \\
+\cline{2-8}
+ & \multirow[c]{2}{*}{\gls{CLNV} (Ex)} & Nominal & \bfseries 0.0000 & 0.0740 & 0.1620 & 0.0931 & 0.1281 \\
+ &  & Rel & \bfseries 0.0000 & 7.6146 & \bfseries 25.0869 & 21.6143 & \bfseries inf \\
+\cline{2-8}
+ & \multirow[c]{2}{*}{Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick (Ex)} & Nominal & \bfseries 0.0000 & 0.0688 & 0.0083 & 0.1254 & 0.0548 \\
+ &  & Rel & \bfseries 0.0000 & 6.6494 & 10.6409 & 4.1655 & \bfseries inf \\
+\cline{1-8} \cline{2-8}
+\bottomrule
+\end{tabular}
+\end{table}
