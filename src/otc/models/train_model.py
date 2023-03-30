@@ -6,10 +6,10 @@ Currently classical rules and gradient boosted trees are supported.
 """
 import logging
 import logging.config
+import pickle
+import sys
 import warnings
 from pathlib import Path
-import sys
-import pickle
 
 import click
 import optuna
@@ -71,7 +71,7 @@ FEATURE_SETS = {
 @click.option(
     "--dataset",
     required=False,
-    default="fbv/thesis/ise_supervised_raw:latest",
+    default="fbv/thesis/ise_supervised_none:latest",
     help="Name of dataset. See W&B Artifacts/Full Name",
 )
 def main(
@@ -112,13 +112,13 @@ def main(
         # download saved study
         artifact = run.use_artifact(name)
         artifact_dir = artifact.download()
-        
+
         # fbv/thesis/3pxc4js2.optuna:v1 -> 3px4cjs2.optuna
         name_study = name.split("/")[-1].split(":")[0]
-        saved_study = pickle.load(open(Path(artifact_dir,name_study), "rb"))
+        saved_study = pickle.load(open(Path(artifact_dir, name_study), "rb"))
         print(saved_study)
         sampler = saved_study.sampler
-  
+
     artifact = run.use_artifact(dataset)
     artifact_dir = artifact.download()
 
@@ -136,9 +136,7 @@ def main(
         cat_features, cat_cardinalities = tuple(list(t) for t in zip(*cat_features_sub))
 
     # load data
-    x_train = pd.read_parquet(
-        Path(artifact_dir, "train_set"), columns=columns
-    )
+    x_train = pd.read_parquet(Path(artifact_dir, "train_set"), columns=columns)
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
@@ -164,21 +162,21 @@ def main(
     )
 
     optuna.logging.get_logger("optuna").addHandler(logging.StreamHandler(sys.stdout))
-    
+
     # maximize for accuracy
     # Save to database see here
     # https://optuna.readthedocs.io/en/stable/tutorial/20_recipes/001_rdb.html
-    
+
     # "fbv/thesis/3pxc4js2.optuna:v1" -> "3px4cjs2"
     name_study = name.split("/")[-1].split(".")[0]
-    
+
     study = optuna.create_study(
         direction="maximize",
         # pruner=optuna.pruners.MedianPruner(n_warmup_steps=5),
         sampler=sampler,
         study_name=name,
         storage=f"sqlite:///{name_study}.db",
-        load_if_exists=True
+        load_if_exists=True,
     )
 
     # run garbage collector after each trial. Might impact performance,

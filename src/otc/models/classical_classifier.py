@@ -161,7 +161,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Returns:
             npt.NDArray: result of quote rule. Can be np.NaN.
         """
-        mid = 0.5 * (self.X_[f"ask_{subset}"] + self.X_[f"bid_{subset}"])
+        mid = self._mid(subset)
+
         return np.where(
             self.X_["TRADE_PRICE"] > mid,
             1,
@@ -203,6 +204,26 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         """
         q_r = self._quote(subset)
         return np.where(~np.isnan(q_r), q_r, self._rev_tick("all"))
+
+    def _mid(self, subset: Literal["best", "ex"]) -> npt.NDArray:
+        """
+        Calculate the midpoint of the bid and ask spread.
+
+        Midpoint is calculated as the average of the bid and ask spread if the\
+        spread is positive. Otherwise, np.NaN is returned.
+
+        Args:
+            subset (Literal[&quot;best&quot;, &quot;ex&quot;]): subset i. e.,
+            'ex' or 'best'
+        Returns:
+            npt.NDArray: midpoints. Can be np.NaN.
+        """
+        mid = np.where(
+            self.X_[f"ask_{subset}"] >= self.X_[f"bid_{subset}"],
+            0.5 * (self.X_[f"ask_{subset}"] + self.X_[f"bid_{subset}"]),
+            np.nan,
+        )
+        return mid
 
     def _is_at_ask_xor_bid(self, subset: Literal["best", "ex"]) -> pd.Series:
         """
@@ -365,10 +386,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Returns:
             npt.NDArray: result of depth rule. Can be np.NaN.
         """
-        mid = 0.5 * (self.X_[f"ask_{subset}"] + self.X_[f"bid_{subset}"])
-        at_mid = mid == self.X_["TRADE_PRICE"]
+        at_mid = self._mid(subset) == self.X_["TRADE_PRICE"]
 
-        # TODO: what if ask_size_ex == bid_size_ex? We would always classify as buy.
         return np.where(
             at_mid & (self.X_["ask_size_ex"] > self.X_["bid_size_ex"]),
             1,

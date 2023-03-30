@@ -1,0 +1,20 @@
+\begin{table}
+\centering
+\caption[short-tbd]{long-tbd}
+\label{tab:cboe_all_transfer_test-trade_size_binned}
+\begin{tabular}{llSSSSSS}
+\toprule
+{} & {Trade Size} & {(0,1]} & {(1,3]} & {(3,5]} & {(5,11]} & {>11} & {All} \\
+\midrule
+\gls{GBM} & \gls{GBM} (Classical, Size) & \bfseries 70.8054 & \bfseries 71.3843 & \bfseries 71.9674 & \bfseries 71.5715 & \bfseries 74.4986 & \bfseries 71.9708 \\
+\cline{1-8}
+\multirow[c]{6}{*}{Classical} & Tick (Ex) & 48.8064 & 48.9434 & 48.7319 & 48.8273 & 49.6961 & 49.0067 \\
+ & Quote (Ex) & 58.8404 & 62.0188 & 62.4318 & 62.7826 & 65.3645 & 62.0489 \\
+ & \gls{LR} (Ex) & 58.6265 & 61.7324 & 62.1399 & 62.4497 & 64.9602 & 61.7487 \\
+ & \gls{EMO} (Ex) & 46.8754 & 48.5530 & 48.9890 & 48.7012 & 50.7750 & 48.6435 \\
+ & \gls{CLNV} (Ex) & 50.7303 & 52.8899 & 53.4886 & 53.6218 & 56.4365 & 53.2490 \\
+ & Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick (Ex) & 62.9763 & 63.8597 & 65.1509 & 65.2333 & 70.5897 & 65.4078 \\
+\cline{1-8}
+\bottomrule
+\end{tabular}
+\end{table}
