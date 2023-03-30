@@ -113,6 +113,7 @@ def main(
         artifact = run.use_artifact(name)
         artifact_dir = artifact.download()
 
+        # fbv/thesis/16niwmxc.optuna:v35
         # fbv/thesis/3pxc4js2.optuna:v1 -> 3px4cjs2.optuna
         name_study = name.split("/")[-1].split(":")[0]
         saved_study = pickle.load(open(Path(artifact_dir, name_study), "rb"))
@@ -136,11 +137,11 @@ def main(
         cat_features, cat_cardinalities = tuple(list(t) for t in zip(*cat_features_sub))
 
     # load data
-    x_train = pd.read_parquet(Path(artifact_dir, "train_set"), columns=columns)
+    x_train = pd.read_parquet(Path(artifact_dir, "train_set.parquet"), columns=columns)
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
-    x_val = pd.read_parquet(Path(artifact_dir, "val_set"), columns=columns)
+    x_val = pd.read_parquet(Path(artifact_dir, "val_set.parquet"), columns=columns)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
@@ -174,7 +175,7 @@ def main(
         direction="maximize",
         # pruner=optuna.pruners.MedianPruner(n_warmup_steps=5),
         sampler=sampler,
-        study_name=name,
+        study_name=name_study,
         storage=f"sqlite:///{name_study}.db",
         load_if_exists=True,
     )
