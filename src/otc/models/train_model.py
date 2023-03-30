@@ -64,7 +64,7 @@ FEATURE_SETS = {
         case_sensitive=False,
     ),
     required=True,
-    default="classical",
+    default="classical-size",
     help="Feature set to run study on.",
 )
 @click.option("--name", required=False, type=str, help="Name of study.")
