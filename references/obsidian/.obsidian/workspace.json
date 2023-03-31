@@ -23,7 +23,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md",
+                "file": "📖chapters/🚏Exploratory Data Analysis.md",
                 "mode": "source",
                 "source": false
               }
@@ -141,7 +141,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md",
+                "file": "📖chapters/🚏Exploratory Data Analysis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,7 +169,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md"
+                "file": "📖chapters/🚏Exploratory Data Analysis.md"
               }
             }
           },
@@ -202,6 +202,7 @@
   },
   "active": "87cf169f3a4b460b",
   "lastOpenFiles": [
+    "🍬Implementation/🛞GCP-Docker-Cluster.md",
     "🖼️Media/Pasted image 20230328194157.png",
     "📖chapters/🧭Random Feature Permutation.md",
     "📖chapters/🧭Kernel SHAP.md",
@@ -231,7 +232,6 @@
     "🖼️Media/missclassification-trade-rule.png",
     "🖼️Media/learning-curves-gbm.png",
     "🖼️Media/layer-norm-first-last.png",
-    "️Media/feature-tokenizer-fttransformer.png",
     "📖chapters/👨‍🍳Tain-Test-split.md",
     "📑notes/🪄Data Preprocessing notes.md",
     "📖chapters/🪄Feature Engineering.md",

@@ -1,6 +1,6 @@
 \begin{table}
     \centering
-    \caption{Success Rates Of Classical Rules For Different Subsamples (\gls{CBOE})}
+    \caption[Accuracies Of Classical Rules For Different Subsamples (\gls{CBOE})]{Accuracies Of Classical Rules For Different Subsamples (\gls{CBOE}). The tick $\operatorname{tick}_{\text{ex}}$ and quote rule $\operatorname{quote}_{\text{ex}}$ are estimated on \gls{CBOE} data. The \gls{LR} algorithm, \gls{EMO} rule, and \gls{CLNV} are estimated from $\operatorname{tick}_{\text{all}}$ with trade prices from all US option exchanges and the quote rule on \gls{CBOE} data. The \gls{GSU} method is a combination of $\operatorname{tsize}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}} \to \operatorname{depth}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}} \to \operatorname{depth}_{\text{ex}} \to \operatorname{rtick}_{\text{all}}$, stacking rules on \gls{NBBO} and \gls{CBOE} data. Unclassified trades are assigned randomly. Accuracies reported as percentage.}
     \label{tab:cboe_all_supervised_all-master}
     \begin{tabular}{lSSSSSS}
         \toprule
@@ -44,9 +44,9 @@
         \tabindent (0.7-0.9]     & 48.5070           & 62.4061           & 62.1059           & 49.8903           & 54.0590           & 72.1290            \\
         \tabindent (0.9-1.1]     & 49.0678           & 63.9736           & 63.7066           & 49.7325           & 54.9256           & 71.2515            \\
         \tabindent (1.1-1.3]     & 47.3059           & 56.8971           & 56.7134           & 45.3136           & 49.5945           & 67.0260            \\
-        \tabindent > 1.3 C       & 47.3246           & 54.5756           & 54.3894           & 43.7053           & 47.4477           & 66.0911            \\
+        \tabindent > 1.3       & 47.3246           & 54.5756           & 54.3894           & 43.7053           & 47.4477           & 66.0911            \\
         \cmidrule{1-7}
-        \multicolumn{1}{l}{Location To Quote}                                                                                                             \\
+        \multicolumn{1}{l}{Proximity To Quote}                                                                                                             \\
         \tabindent At Mid        & 45.2316           & 49.9563           & 47.1576           & 45.6961           & 45.6963           & 61.1911            \\
         \tabindent Inside        & 49.5772           & 71.2070           & 71.2070           & 51.3181           & 58.6818           & 69.8550            \\
         \tabindent At Quotes     & 47.8139           & 44.1920           & 44.1920           & 44.1920           & 44.1920           & 76.5975            \\

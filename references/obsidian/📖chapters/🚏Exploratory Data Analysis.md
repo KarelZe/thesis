@@ -1,3 +1,5 @@
+
+- high cardinality of underlyings
 - insert stats from `2.0-mb-data_preprocessing_loading_splitting.ipynb`
 
 - Adress leakage as part of eda. “Exploratory Data Analysis (EDA) can be a powerful tool for identifying leakage. EDA is the good practice of getting more intimate with the raw data, examining it through basic and interpretable visualization or statistical tools. Prejudice free and methodological, this kind of examination can expose leakage as patterns in the data that are surprising.” ([[@kaufmanLeakageDataMining2012]] p. 165)
