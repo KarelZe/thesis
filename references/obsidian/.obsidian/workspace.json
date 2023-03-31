@@ -23,7 +23,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🚏Exploratory Data Analysis.md",
+                "file": "📖chapters/🐈Gradient Boosting.md",
                 "mode": "source",
                 "source": false
               }
@@ -141,7 +141,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🚏Exploratory Data Analysis.md",
+                "file": "📖chapters/🐈Gradient Boosting.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,7 +169,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🚏Exploratory Data Analysis.md"
+                "file": "📖chapters/🐈Gradient Boosting.md"
               }
             }
           },
@@ -202,11 +202,22 @@
   },
   "active": "87cf169f3a4b460b",
   "lastOpenFiles": [
+    "🖼️Media/1680261360742.jpg",
+    "📥Inbox/@grauerOptionTradeClassification2022.md",
+    "📑notes/🪄Data Preprocessing.md",
+    "🖼️Media/1680261360727.jpg",
+    "🖼️Media/1680261360735 3.jpg",
+    "📖chapters/💡Hyperparameter tuning.md",
+    "🖼️Media/1680261360735 2.jpg",
+    "📖chapters/🐈CatBoost.md",
+    "🖼️Media/1680261360735 1.jpg",
+    "📖chapters/⭕Self-Training classifier.md",
+    "🖼️Media/1680261360735.jpg",
+    "📖chapters/🚏Exploratory Data Analysis.md",
     "🖼️Media/Pasted image 20230326101313.png",
     "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
     "📥Inbox/@chapelleSemisupervisedLearning2006.md",
     "📥Inbox/@aminiSelfTrainingSurvey2023.md",
-    "📖chapters/⭕Self-Training classifier.md",
     "📥Inbox/@aasExplainingIndividualPredictions2021.md",
     "📑notes/🧭Random Feature Permutation notes.md",
     "📥Inbox/@fisherAllModelsAre.md",
@@ -217,7 +228,6 @@
     "🖼️Media/Pasted image 20230328194157.png",
     "📖chapters/🧭Kernel SHAP.md",
     "📖chapters/🏅Feature importance measure.md",
-    "📑notes/🪄Data Preprocessing.md",
     "📖chapters/🧭Attention map.md",
     "📖chapters/🏅Feature importance results.md",
     "📑notes/🧭Attention map notes.md",
@@ -225,17 +235,8 @@
     "📖chapters/🪄Data Preprocessing.md",
     "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
     "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
-    "📥Inbox/@perez-lebelBenchmarkingMissingvaluesApproaches2022.md",
-    "📖chapters/🤖Transformer.md",
-    "viz-training-schemes.png.md",
-    "orphaned files output.md",
     "🖼️Media/vison-transformer.png",
     "🖼️Media/transformer-notation.png",
-    "🖼️Media/transformer-architecture.png",
-    "🖼️Media/summary_statistics.png",
-    "🖼️Media/norm-first-norm-last-big-picture.png",
-    "🖼️Media/notation-pointwise-ffn.png",
-    "🖼️Media/missclassification-trade-rule.png",
-    "🖼️Media/learning-curves-gbm.png"
+    "🖼️Media/transformer-architecture.png"
   ]
 }

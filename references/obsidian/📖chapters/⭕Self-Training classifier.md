@@ -16,6 +16,9 @@ The goal of the selection step in Algorithm 1 is to find a set unlabeled example
 - 
 - ![[pseudocode-selftraining.png]]
 
+Explanation of Wrapper method
+![[1680261360735.jpg]]
+
 ## Rough classification
 https://researchcommons.waikato.ac.nz/bitstream/handle/10289/14678/thesis.pdf?sequence=4&isAllowed=y
 ![[Pasted image 20230326101313.png]]
