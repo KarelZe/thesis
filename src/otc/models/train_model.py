@@ -6,6 +6,8 @@ Currently classical rules and gradient boosted trees are supported.
 """
 import logging
 import logging.config
+import pickle
+import sys
 import warnings
 from pathlib import Path
 
@@ -62,14 +64,14 @@ FEATURE_SETS = {
         case_sensitive=False,
     ),
     required=True,
-    default="classical",
+    default="classical-size",
     help="Feature set to run study on.",
 )
 @click.option("--name", required=False, type=str, help="Name of study.")
 @click.option(
     "--dataset",
     required=False,
-    default="fbv/thesis/train_val_test:v0",
+    default="fbv/thesis/ise_supervised_none:latest",
     help="Name of dataset. See W&B Artifacts/Full Name",
 )
 def main(
@@ -102,9 +104,21 @@ def main(
         name=name,
     )
 
-    # replace missing names with run id
     if not name:
+        # replace missing names with run id and create new sampler
         name = str(run.id)
+        sampler = optuna.samplers.TPESampler(seed=set_seed(seed))
+    else:
+        # download saved study
+        artifact = run.use_artifact(name)
+        artifact_dir = artifact.download()
+
+        # fbv/thesis/16niwmxc.optuna:v35
+        # fbv/thesis/3pxc4js2.optuna:v1 -> 3px4cjs2.optuna
+        name_study = name.split("/")[-1].split(":")[0]
+        saved_study = pickle.load(open(Path(artifact_dir, name_study), "rb"))
+        print(saved_study)
+        sampler = saved_study.sampler
 
     artifact = run.use_artifact(dataset)
     artifact_dir = artifact.download()
@@ -123,13 +137,11 @@ def main(
         cat_features, cat_cardinalities = tuple(list(t) for t in zip(*cat_features_sub))
 
     # load data
-    x_train = pd.read_parquet(
-        Path(artifact_dir, "train_set_60.parquet"), columns=columns
-    )
+    x_train = pd.read_parquet(Path(artifact_dir, "train_set.parquet"), columns=columns)
     y_train = x_train["buy_sell"]
     x_train.drop(columns=["buy_sell"], inplace=True)
 
-    x_val = pd.read_parquet(Path(artifact_dir, "val_set_20.parquet"), columns=columns)
+    x_val = pd.read_parquet(Path(artifact_dir, "val_set.parquet"), columns=columns)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
@@ -150,12 +162,22 @@ def main(
         cat_cardinalities=cat_cardinalities,
     )
 
+    optuna.logging.get_logger("optuna").addHandler(logging.StreamHandler(sys.stdout))
+
     # maximize for accuracy
+    # Save to database see here
+    # https://optuna.readthedocs.io/en/stable/tutorial/20_recipes/001_rdb.html
+
+    # "fbv/thesis/3pxc4js2.optuna:v1" -> "3px4cjs2"
+    name_study = name.split("/")[-1].split(".")[0]
+
     study = optuna.create_study(
         direction="maximize",
         # pruner=optuna.pruners.MedianPruner(n_warmup_steps=5),
-        sampler=optuna.samplers.TPESampler(seed=set_seed(seed)),
-        study_name=name,
+        sampler=sampler,
+        study_name=name_study,
+        storage=f"sqlite:///{name_study}.db",
+        load_if_exists=True,
     )
 
     # run garbage collector after each trial. Might impact performance,

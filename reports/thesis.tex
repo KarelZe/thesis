@@ -50,11 +50,14 @@ width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 \usepackage{threeparttable} % footnotes in tables
 \usepackage{multirow,multicol} % With this package it is now possible to combine columns and rows within tables.
 \usepackage{graphicx} % Allows to implement graphics.
-\usepackage[font={sf, small}]{subfig} % Enables graphs consisting of several figures.
-\usepackage[font={sf, small}]{floatrow} % enables to format tables
+% \usepackage[font={sf, small}]{subfig} % Enables graphs consisting of several figures.
+\usepackage[font={small}]{subfig}
+% \usepackage[font={sf, small}]{floatrow} % enables to format tables
+\usepackage[font={small}]{floatrow}
 
 \graphicspath{{./Graphs/}} % Tells LATEX that the images are kept in a folder named images under the directory of the main document.
-\usepackage[hypcap=false,font={sf, small}]{caption} % Provides many ways to customise captions.
+\usepackage[hypcap=false,font={small}]{caption} % Provides many ways to customise captions.
+%\usepackage[hypcap=false,font={sf, small}]{caption} % Provides many ways to customise captions.
 
 \usepackage{siunitx} % Enables the use of SI units e. g., proper handling of percentage
 
@@ -64,12 +67,16 @@ width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 \newrobustcmd{\parl}{(}
 \newrobustcmd{\parr}{)}
 
+\newcommand*{\tabindent}{ \hspace{5mm}} % Indentation for tables
+
 \sisetup{round-mode=places,round-precision=2, group-separator={,},output-decimal-marker={.}, round-pad = false, input-symbols = {( - )}, separate-uncertainty=false,
 group-minimum-digits=4, % 1,000 instead of 1000
 % table-space-text-pre={(},
 % table-align-text-pre=false,
 % table-space-text-post={$^{***}$},
 table-align-text-post=false,
+detect-weight=true,
+detect-inline-weight=math
 } % round to 1 decimal places
 
 \usepackage[super]{nth} % 1st, 2nd etc.
@@ -161,6 +168,7 @@ bookmarksopen
 \newacronym{FFN}{FFN}{feed-forward network}
 \newacronym{ISE}{ISE}{International Securities Exchange}
 \newacronym{GBM}{GBM}{gradient boosting machine}
+\newacronym{GSU}{GSU}{Grauer-Schuster-Uhrig-Homburg}
 \newacronym{LR}{LR}{Lee-Ready}
 \newacronym{MCC}{MCC}{Matthews correlation coefficient}
 \newacronym{MLP}{MLP}{multi-layer perceptron}

@@ -73,6 +73,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         ],
         features: list[str] | None = None,
         random_state: float | None = 42,
+        strategy: Literal["random", "const"] = "random",
     ):
         """
         Initialize a ClassicalClassifier.
@@ -83,10 +84,14 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
             columns. Required to match columns in feature matrix with label.
             Can be `None`, if `pd.DataFrame` is passed. Defaults to None.
             random_state (float | None, optional): random seed. Defaults to 42.
+            strategy (Literal[&quot;random&quot;, &quot;const&quot;],
+            optional): Strategy to fill unclassfied. Randomly with uniform
+            probability or with constant 0. Defaults to &quot;random&quot;.
         """
         self.layers = layers
         self.random_state = random_state
         self.features = features
+        self.strategy = strategy
 
     def _more_tags(self) -> dict[str, bool]:
         """
@@ -156,7 +161,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Returns:
             npt.NDArray: result of quote rule. Can be np.NaN.
         """
-        mid = 0.5 * (self.X_[f"ask_{subset}"] + self.X_[f"bid_{subset}"])
+        mid = self._mid(subset)
+
         return np.where(
             self.X_["TRADE_PRICE"] > mid,
             1,
@@ -198,6 +204,26 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         """
         q_r = self._quote(subset)
         return np.where(~np.isnan(q_r), q_r, self._rev_tick("all"))
+
+    def _mid(self, subset: Literal["best", "ex"]) -> npt.NDArray:
+        """
+        Calculate the midpoint of the bid and ask spread.
+
+        Midpoint is calculated as the average of the bid and ask spread if the\
+        spread is positive. Otherwise, np.NaN is returned.
+
+        Args:
+            subset (Literal[&quot;best&quot;, &quot;ex&quot;]): subset i. e.,
+            'ex' or 'best'
+        Returns:
+            npt.NDArray: midpoints. Can be np.NaN.
+        """
+        mid = np.where(
+            self.X_[f"ask_{subset}"] >= self.X_[f"bid_{subset}"],
+            0.5 * (self.X_[f"ask_{subset}"] + self.X_[f"bid_{subset}"]),
+            np.nan,
+        )
+        return mid
 
     def _is_at_ask_xor_bid(self, subset: Literal["best", "ex"]) -> pd.Series:
         """
@@ -352,7 +378,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Classify midspread trades as buy (sell), if the ask size (bid size)\
         exceeds the bid size (ask size).
 
-        Adapted from (Grauer et al., 2022).
+        Adapted from Grauer et al. (2022).
 
         Args:
             subset (Literal[&quot;best&quot;, &quot;ex&quot;]): subset
@@ -360,10 +386,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Returns:
             npt.NDArray: result of depth rule. Can be np.NaN.
         """
-        mid = 0.5 * (self.X_[f"ask_{subset}"] + self.X_[f"bid_{subset}"])
-        at_mid = mid == self.X_["TRADE_PRICE"]
+        at_mid = self._mid(subset) == self.X_["TRADE_PRICE"]
 
-        # TODO: what if ask_size_ex == bid_size_ex? We would always classify as buy.
         return np.where(
             at_mid & (self.X_["ask_size_ex"] > self.X_["bid_size_ex"]),
             1,
@@ -495,15 +519,14 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
                 np.isnan(pred),
                 func(subset),  # type: ignore
                 pred,
-                # ).astype(self.classes_.dtype)
-                # # fill NaNs randomly with classes e. g., [-1, 1]
-                # mask = np.isnan(pred)
-                # pred[mask] = rs.choice(self.classes_, pred.shape)[mask]
             )
 
-        # fill NaNs randomly with -1 and 1
+        # fill NaNs randomly with -1 and 1 or with constant zero
         mask = np.isnan(pred)
-        pred[mask] = rs.choice(self.classes_, pred.shape)[mask]
+        if self.strategy == "random":
+            pred[mask] = rs.choice(self.classes_, pred.shape)[mask]
+        else:
+            pred[mask] = np.zeros(pred.shape)[mask]
 
         # reset self.X_ to avoid persisting it
         del self.X_
@@ -515,14 +538,27 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
         Probabilities are either 0 or 1 depending on the class.
 
+        For strategy 'constant' probabilities are (0.5,0.5) for unclassified classes.
+
         Args:
             X (npt.NDArray | pd.DataFrame): feature matrix
 
         Returns:
             npt.NDArray: probabilities
         """
+        # assign 0.5 to all classes. Required for strategy 'constant'.
+        prob = np.full((len(X), 2), 0.5)
+
+        # Class can be assumed to be -1 or 1 for strategy 'random'.
+        # Class might be zero though for strategy constant. Mask non-zeros.
+        preds = self.predict(X)
+        mask = np.flatnonzero(preds)
+
         # get index of predicted class and one-hot encode it
-        indices = np.where(self.predict(X)[:, None] == self.classes_[None, :])[1]
+        indices = np.where(preds[mask, None] == self.classes_[None, :])[1]
         n_classes = np.max(self.classes_) + 1
 
-        return np.identity(n_classes)[indices]
+        # overwrite defaults with one-hot encoded classes.
+        # For strategy 'constant' probabilities are (0.5,0.5).
+        prob[mask] = np.identity(n_classes)[indices]
+        return prob
