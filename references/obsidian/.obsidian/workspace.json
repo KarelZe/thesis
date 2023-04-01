@@ -139,7 +139,7 @@
             }
           },
           {
-            "id": "f5cb1e5e6ffbfbfa",
+            "id": "9809af47a095750a",
             "type": "leaf",
             "state": {
               "type": "stat-view",
@@ -147,12 +147,11 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 438.5,
-    "collapsed": true
+    "width": 438.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -169,6 +168,7 @@
   "lastOpenFiles": [
     "📑notes/⭕Self-Training classifier notes.md",
     "📖chapters/⭕Self-Training classifier.md",
+    "📥Inbox/@chapelleSemisupervisedLearning2006.md",
     "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
     "❓Questions.md",
     "📖chapters/🐈Gradient Boosting.md",
@@ -180,7 +180,6 @@
     "🖼️Media/1680261360735 1.jpg",
     "🖼️Media/1680261360727.jpg",
     "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
-    "📥Inbox/@chapelleSemisupervisedLearning2006.md",
     "📥Inbox/@aminiSelfTrainingSurvey2023.md",
     "📖chapters/🐈Extension to Gradient Boosting.md",
     "📥Inbox/@grauerOptionTradeClassification2022.md",

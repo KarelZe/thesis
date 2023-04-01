@@ -2,16 +2,34 @@
 
 
 
-name of study `17malsep`
+Our supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the label can be inferred through matching procedures, which may bias the selection. Unlabelled trades, though, are abundant  and may improve generalization performance of the classifier. Semi-supervised methods leverage partially labelled data by learning an algorithm on unlabelled instances alongside with true labels ([[@chapelleSemisupervisedLearning2006]]6). 
 
-The application of semi-supervised is new in the context of trade classification with a on supervised or unsupervised methods. 
+For semi-supervised approaches to
 
-Our basic idea is to also incorporate unlabelled trades into the training procedure. We hope nlabelled trades can improve generalization performance.
+
+Central hypothesis. The basic assumption in semi-supervised learning, called smoothness, stipulates that two examples in a high density region should have identical class labels [10, 2]. This means that if two points are part of the same group or cluster, their class labels will most likely be the same. If they are separated by a low density zone, on the other hand, their desired labels should be different. Hence, if the examples of the same class form a partition, unlabeled training data might aid in determining the partition boundary more efficiently than if just labeled training examples were utilized. (https://arxiv.org/pdf/2202.12040.pdf)
+
+“However, there is an important prerequisite: that the distribution of examples, which the unlabeled data will help elucidate, be relevant for the classification problem. In a more mathematical formulation, one could say that the knowledge on p(x) that one gains through the unlabeled data has to carry information that is useful in the inference of p(y|x). If this is not the case, semi-supervised learning will not yield an improvement over supervised learning. It might even happen that using the unlabeled data degrades the prediction accuracy by misguiding the inference; this effect is investigated in detail in chapter 4.” ([[@chapelleSemisupervisedLearning2006]], 2006, p. 19)
+
+
+In this survey we focus on self-training algorithms that follow this principle by assigning pseudo-labels to high-confidence unlabeled training examples and include these pseudo-labeled samples in the learning process
+
+The application of semi-supervised methods is novel in trade classification.
+
+Semi-supervised learning makes several 
+
+
+*pseudo labels* / *proxy lbels* Other than true labels 
+
+
+
+In this blog post, I will focus on a particular class of semi-supervised learning algorithms that produce _proxy labels_ on unlabelled data, which are used as targets together with the labelled data. These proxy labels are produced by the model itself or variants of it without any additional supervision; they thus do not reflect the ground truth but might still provide some signal for learning. In a sense, these labels can be considered _noisy_ or _weak_. I will highlight the connection to learning from noisy labels, weak supervision as well as other related topics in the end of this post. (https://www.ruder.io/semi-supervised/)
+
+
+For trade classification the true label are frequently unknown, as the trade initiator is not provided by the exchange or labelling strategies work only on subsets of trades, such as . Unlabelled trades are readily available and of potential 
 
 Basic assumption 
 An increasingly popular pre-training method is self-supervised learning. Self-supervised learning methods pre-train on a dataset without using labels with the hope to build more universal representations that work across a wider variety of tasks and datasets. (komischer Thesis)
-
-“In a more mathematical formulation, one could say that the knowledge on p(x) that one gains through the unlabeled data has to carry information that is useful in the inference of p(y|x). If this is not the case, semi-supervised learning will not yield an improvement over supervised learning. It might even happen that using the unlabeled data degrades the prediction accuracy by misguiding the inference; this effect is investigated in detail in chapter 4.” ([[@chapelleSemisupervisedLearning2006]], 2006, p. 19)
 
 
 
@@ -19,8 +37,11 @@ Self-training, also known as decision-directed or self-taught learning machine, 
 
 “The goal ofsemi-sup ervised classiØcation istouseunlabeleddata toimpro vethegeneralization. The cluster assumption states that thedecision boundary should notcross high densityregions, butinstead lieinlow densityregions.” (Chapelle and Zien, 2005, p. 1)
 
+
 > At each iteration, the self-training selects just a portion of unlabeled data for pseudolabeling, otherwise, all unlabeled examples would be pseudo-labeled after the first iteration, which would actually result in a classifier with performance identical to the
-initial classifier [10]. 
+initial classifier [10]. ([[@chapelleSemisupervisedLearning2006]])
+
+Self-training is a common algorithmic paradigm for leveraging unlabeled data with deep networks. Self-training methods train a model to fit pseudolabels, that is, predictions on unlabeled data made by a previously-learned model (Yarowsky, 1995; Grandvalet & Bengio, 2005; Lee, 2013). Recent work also extends these methods to enforce stability of predictions under input transformations such as adversarial perturbations (Miyato et al., 2018) and data augmentation (Xie et al., 2019). These approaches, known as input consistency regularization, have been successful in semi-supervised learning (Sohn et al., 2020; Xie et al., 2020), unsupervised domain adaptation (French et al., 2017; Shu et al., 2018), and unsupervised learning (Hu et al., 2017; Grill et al., 2020). (https://arxiv.org/pdf/2010.03622.pdf)
 
 This wrapper algorithm starts by learning a supervised classifier on the labeled training set $S$. Then, at each iteration, the current classifier selects a part of the unlabeled data, $X_Q$, and assigns pseudo-labels to them using the classifier's predictions. These pseudo-labeled unlabeled examples are removed from $X_{\mathcal{U}}$ and a new supervised classifier is trained over $S \cup X_Q$, by considering these pseudo-labeled unlabeled data as additional labeled examples. To do so, the classifier $h \in \mathcal{H}$ that is learned at the current iteration is the one that minimizes a regularized empirical loss over $S$ and $X_Q$ :
 $$

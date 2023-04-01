@@ -1,5 +1,14 @@
 
 
+
+
+
+
+
+
+----
+
+
 Previous algorithms require
 
 Self-training classifiers are a wrapper algorithm around a probabilistic classifier. They incorporate own predicted label  
