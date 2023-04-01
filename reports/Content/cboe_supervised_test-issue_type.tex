@@ -1,0 +1,22 @@
+\begin{table}
+\centering
+\caption[short-tbd]{long-tbd}
+\label{tab:cboe_supervised_test-issue_type}
+\begin{tabular}{llSSSS}
+\toprule
+{} & {Security Type} & {Index Option} & {Others} & {Stock Options} & {All} \\
+\midrule
+\multirow[c]{3}{*}{\gls{GBM}} & \gls{GBM} (Classical) & 68.3386 & \bfseries 71.4933 & 69.9793 & 70.3088 \\
+ & \gls{GBM} (Classical, Size) & 72.5208 & \bfseries 75.2518 & 74.6629 & 74.7058 \\
+ & \gls{GBM}(Ml) & 76.5274 & \bfseries 77.3347 & 76.8411 & 76.9611 \\
+\cline{1-6}
+\multirow[c]{6}{*}{Classical} & Tick (Ex) & 48.4873 & 49.1531 & \bfseries 49.2801 & 49.1997 \\
+ & Quote (Ex) & 50.3343 & \bfseries 65.2618 & 59.9524 & 60.8890 \\
+ & \gls{LR} (Ex) & 50.2604 & \bfseries 64.9228 & 59.7295 & 60.6421 \\
+ & \gls{EMO} (Ex) & 39.6998 & \bfseries 50.0911 & 48.0819 & 48.1677 \\
+ & \gls{CLNV} (Ex) & 41.1674 & \bfseries 54.9942 & 52.7551 & 52.7234 \\
+ & Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All) & 67.6811 & \bfseries 68.5642 & 65.5702 & 66.5252 \\
+\cline{1-6}
+\bottomrule
+\end{tabular}
+\end{table}
