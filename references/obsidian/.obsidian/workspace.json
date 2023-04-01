@@ -18,12 +18,12 @@
             }
           },
           {
-            "id": "87cf169f3a4b460b",
+            "id": "e8c0db083f384014",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🚏Exploratory Data Analysis.md",
+                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md",
                 "mode": "source",
                 "source": false
               }
@@ -37,53 +37,14 @@
         "type": "tabs",
         "children": [
           {
-            "id": "dad26e0868f82374",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "empty",
-              "state": {},
-              "pinned": true
-            }
-          },
-          {
             "id": "dde0833f7ece99d5",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🧃Feature Sets.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "1ca35db843031f82",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d1677d2c99757dd7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -141,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🚏Exploratory Data Analysis.md",
+                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -169,12 +130,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🚏Exploratory Data Analysis.md"
+                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md"
               }
             }
           },
           {
-            "id": "f5cb1e5e6ffbfbfa",
+            "id": "9809af47a095750a",
             "type": "leaf",
             "state": {
               "type": "stat-view",
@@ -182,12 +143,11 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 438.5,
-    "collapsed": true
+    "width": 438.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -200,43 +160,43 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "87cf169f3a4b460b",
+  "active": "e8c0db083f384014",
   "lastOpenFiles": [
-    "🍬Implementation/🛞GCP-Docker-Cluster.md",
-    "🖼️Media/Pasted image 20230328194157.png",
-    "📖chapters/🧭Random Feature Permutation.md",
-    "📖chapters/🧭Kernel SHAP.md",
-    "📖chapters/🏅Feature importance measure.md",
+    "📖chapters/🐈Extension to Gradient Boosting.md",
+    "📖chapters/⭕Self-Training classifier.md",
+    "📑notes/⭕Self-Training classifier notes.md",
+    "📥Inbox/@chapelleSemisupervisedLearning2006.md",
+    "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
+    "❓Questions.md",
+    "📖chapters/🐈Gradient Boosting.md",
+    "🖼️Media/Pasted image 20230326101313.png",
+    "🖼️Media/1680261360742.jpg",
+    "🖼️Media/1680261360735.jpg",
+    "🖼️Media/1680261360735 3.jpg",
+    "🖼️Media/1680261360735 2.jpg",
+    "🖼️Media/1680261360735 1.jpg",
+    "🖼️Media/1680261360727.jpg",
+    "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
+    "📥Inbox/@aminiSelfTrainingSurvey2023.md",
+    "📥Inbox/@grauerOptionTradeClassification2022.md",
     "📑notes/🪄Data Preprocessing.md",
+    "📖chapters/💡Hyperparameter tuning.md",
+    "📖chapters/🐈CatBoost.md",
+    "📖chapters/🚏Exploratory Data Analysis.md",
+    "📥Inbox/@aasExplainingIndividualPredictions2021.md",
     "📑notes/🧭Random Feature Permutation notes.md",
     "📥Inbox/@fisherAllModelsAre.md",
-    "📥Inbox/@aasExplainingIndividualPredictions2021.md",
     "📖chapters/🧭Feature Importance Measure.md",
+    "📖chapters/🧭Random Feature Permutation.md",
+    "📑notes/🪄Data Preprocessing notes.md",
+    "🍬Implementation/🛞GCP-Docker-Cluster.md",
+    "🖼️Media/Pasted image 20230328194157.png",
+    "📖chapters/🧭Kernel SHAP.md",
+    "📖chapters/🏅Feature importance measure.md",
     "📖chapters/🧭Attention map.md",
     "📖chapters/🏅Feature importance results.md",
     "📑notes/🧭Attention map notes.md",
-    "📖chapters/🧃Feature Sets.md",
-    "📖chapters/🪄Data Preprocessing.md",
-    "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
-    "📥Inbox/@kuhnFeatureEngineeringSelection2020.md",
-    "📥Inbox/@perez-lebelBenchmarkingMissingvaluesApproaches2022.md",
-    "📖chapters/🤖Transformer.md",
-    "viz-training-schemes.png.md",
-    "orphaned files output.md",
     "🖼️Media/vison-transformer.png",
-    "🖼️Media/transformer-notation.png",
-    "🖼️Media/transformer-architecture.png",
-    "🖼️Media/summary_statistics.png",
-    "🖼️Media/norm-first-norm-last-big-picture.png",
-    "🖼️Media/notation-pointwise-ffn.png",
-    "🖼️Media/missclassification-trade-rule.png",
-    "🖼️Media/learning-curves-gbm.png",
-    "🖼️Media/layer-norm-first-last.png",
-    "📖chapters/👨‍🍳Tain-Test-split.md",
-    "📑notes/🪄Data Preprocessing notes.md",
-    "📖chapters/🪄Feature Engineering.md",
-    "📖chapters/🚏Exploratory Data Analysis.md",
-    "📖chapters/🐈Gradient Boosting.md",
-    "📖chapters/💡Training of models (supervised).md"
+    "🖼️Media/transformer-notation.png"
   ]
 }
