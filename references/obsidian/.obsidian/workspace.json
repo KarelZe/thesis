@@ -23,7 +23,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md",
+                "file": "📖chapters/⭕Self-Training classifier.md",
                 "mode": "source",
                 "source": false
               }
@@ -102,7 +102,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md",
+                "file": "📖chapters/⭕Self-Training classifier.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +130,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🍬Implementation/🛞GCP-Docker-Cluster.md"
+                "file": "📖chapters/⭕Self-Training classifier.md"
               }
             }
           },
@@ -163,21 +163,22 @@
   "active": "e8c0db083f384014",
   "lastOpenFiles": [
     "📖chapters/🐈Extension to Gradient Boosting.md",
-    "📖chapters/⭕Self-Training classifier.md",
     "📑notes/⭕Self-Training classifier notes.md",
+    "📖chapters/⭕Self-Training classifier.md",
+    "🍬Implementation/🛞GCP-Docker-Cluster.md",
+    "🖼️Media/1680261360727.jpg",
+    "📥Inbox/@aminiSelfTrainingSurvey2023.md",
+    "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
     "📥Inbox/@chapelleSemisupervisedLearning2006.md",
-    "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
-    "❓Questions.md",
-    "📖chapters/🐈Gradient Boosting.md",
     "🖼️Media/Pasted image 20230326101313.png",
     "🖼️Media/1680261360742.jpg",
     "🖼️Media/1680261360735.jpg",
     "🖼️Media/1680261360735 3.jpg",
     "🖼️Media/1680261360735 2.jpg",
     "🖼️Media/1680261360735 1.jpg",
-    "🖼️Media/1680261360727.jpg",
-    "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
-    "📥Inbox/@aminiSelfTrainingSurvey2023.md",
+    "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
+    "❓Questions.md",
+    "📖chapters/🐈Gradient Boosting.md",
     "📥Inbox/@grauerOptionTradeClassification2022.md",
     "📑notes/🪄Data Preprocessing.md",
     "📖chapters/💡Hyperparameter tuning.md",
@@ -189,13 +190,11 @@
     "📖chapters/🧭Feature Importance Measure.md",
     "📖chapters/🧭Random Feature Permutation.md",
     "📑notes/🪄Data Preprocessing notes.md",
-    "🍬Implementation/🛞GCP-Docker-Cluster.md",
     "🖼️Media/Pasted image 20230328194157.png",
     "📖chapters/🧭Kernel SHAP.md",
     "📖chapters/🏅Feature importance measure.md",
     "📖chapters/🧭Attention map.md",
     "📖chapters/🏅Feature importance results.md",
-    "📑notes/🧭Attention map notes.md",
     "🖼️Media/vison-transformer.png",
     "🖼️Media/transformer-notation.png"
   ]
