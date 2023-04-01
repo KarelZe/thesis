@@ -238,7 +238,9 @@ class SaveCallback(Callback):
         s_artifact.add_reference(uri_db, name=file_db)
 
         self._run.log_artifact(s_artifact)  # type: ignore
-        logger.info("%sSaved '%s' and '%s'.%s", Colors.OKGREEN, file_study, file_db, Colors.ENDC)
+        logger.info(
+            "%sSaved '%s' and '%s'.%s", Colors.OKGREEN, file_study, file_db, Colors.ENDC
+        )
 
 
 class PrintCallback(Callback):
