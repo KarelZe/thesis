@@ -94,7 +94,7 @@ def main(
         seed (int): seed for rng.
         features (str): name of feature set.
         model (str): name of model.
-        name (str): name of study.
+        id (str): id of study.
         dataset (str): name of data set.
         pretrain (bool): whether to pretrain model.
     """
@@ -107,8 +107,7 @@ def main(
     run = wandb.init(  # type: ignore
         project=settings.WANDB_PROJECT,
         entity=settings.WANDB_ENTITY,
-        name=id,
-        resume="must" if not id else None,
+        name=id
     )
 
     if not id:
@@ -117,10 +116,10 @@ def main(
         sampler = optuna.samplers.TPESampler(seed=set_seed(seed))
     else:
         # download saved study
-        artifact_study = run.use_artifact(id)
+        artifact_study = run.use_artifact(id+".optuna:latest")
         artifact_dir = artifact_study.download()
 
-        saved_study = pickle.load(open(Path(artifact_dir, id + ".optuna"), "rb"))
+        saved_study = pickle.load(open(Path(artifact_dir, id+".optuna"), "rb"))
         sampler = saved_study.sampler
 
     # select right feature set
