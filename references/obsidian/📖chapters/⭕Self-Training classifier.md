@@ -11,6 +11,11 @@ Central hypothesis. The basic assumption in semi-supervised learning, called smo
 
 “However, there is an important prerequisite: that the distribution of examples, which the unlabeled data will help elucidate, be relevant for the classification problem. In a more mathematical formulation, one could say that the knowledge on p(x) that one gains through the unlabeled data has to carry information that is useful in the inference of p(y|x). If this is not the case, semi-supervised learning will not yield an improvement over supervised learning. It might even happen that using the unlabeled data degrades the prediction accuracy by misguiding the inference; this effect is investigated in detail in chapter 4.” ([[@chapelleSemisupervisedLearning2006]], 2006, p. 19)
 
+Basic assumption
+
+Notation
+
+
 
 In this survey we focus on self-training algorithms that follow this principle by assigning pseudo-labels to high-confidence unlabeled training examples and include these pseudo-labeled samples in the learning process
 
