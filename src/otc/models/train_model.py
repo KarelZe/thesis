@@ -67,20 +67,24 @@ FEATURE_SETS = {
     default="classical-size",
     help="Feature set to run study on.",
 )
-@click.option("--name", required=False, type=str, help="Name of study.")
+@click.option("--id", required=False, type=str, help="Id of run / name of study.")
 @click.option(
     "--dataset",
     required=False,
     default="fbv/thesis/ise_supervised_none:latest",
     help="Name of dataset. See W&B Artifacts/Full Name",
 )
+@click.option(
+    "--pretrain/--no-pretrain", default=False, help="Flag to activate pretraining."
+)
 def main(
     trials: int,
     seed: int,
     features: str,
     model: str,
-    name: str,
+    id: str,
     dataset: str,
+    pretrain: bool,
 ) -> None:
     """
     Start study.
@@ -92,38 +96,32 @@ def main(
         model (str): name of model.
         name (str): name of study.
         dataset (str): name of data set.
+        pretrain (bool): whether to pretrain model.
     """
     logger = logging.getLogger(__name__)
     warnings.filterwarnings("ignore", category=ExperimentalWarning)
 
     logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
 
+    # TODO:
     run = wandb.init(  # type: ignore
         project=settings.WANDB_PROJECT,
         entity=settings.WANDB_ENTITY,
-        name=name,
+        name=id,
+        resume="must" if not id else None,
     )
 
-    if not name:
+    if not id:
         # replace missing names with run id and create new sampler
-        name = str(run.id)
+        id = str(run.id)
         sampler = optuna.samplers.TPESampler(seed=set_seed(seed))
     else:
         # download saved study
-        artifact = run.use_artifact(name)
-        artifact_dir = artifact.download()
+        artifact_study = run.use_artifact(id)
+        artifact_dir = artifact_study.download()
 
-        # fbv/thesis/16niwmxc.optuna:v35
-        # fbv/thesis/3pxc4js2.optuna:v1 -> 3px4cjs2.optuna
-        name_study = name.split("/")[-1].split(":")[0]
-        saved_study = pickle.load(open(Path(artifact_dir, name_study), "rb"))
-        print(saved_study)
+        saved_study = pickle.load(open(Path(artifact_dir, id + ".optuna"), "rb"))
         sampler = saved_study.sampler
-
-    artifact = run.use_artifact(dataset)
-    artifact_dir = artifact.download()
-
-    logger.info("Start loading artifacts locally. 🐢")
 
     # select right feature set
     columns = ["buy_sell"]
@@ -136,14 +134,61 @@ def main(
     if cat_features_sub:
         cat_features, cat_cardinalities = tuple(list(t) for t in zip(*cat_features_sub))
 
-    # load data
-    x_train = pd.read_parquet(Path(artifact_dir, "train_set.parquet"), columns=columns)
-    y_train = x_train["buy_sell"]
-    x_train.drop(columns=["buy_sell"], inplace=True)
+    logger.info("Start loading artifacts locally. 🐢")
 
-    x_val = pd.read_parquet(Path(artifact_dir, "val_set.parquet"), columns=columns)
+    # supervised data
+    artifact_labelled = run.use_artifact(dataset)
+    artifact_dir_labelled = artifact_labelled.download()
+
+    if pretrain:
+        # unlabelled data
+        unlabelled_dataset = dataset.replace("supervised", "unsupervised")
+        artifact_unlabelled = run.use_artifact(unlabelled_dataset)
+        artifact_dir_unlabelled = artifact_unlabelled.download()
+
+        x_train_unlabelled = pd.read_parquet(
+            Path(artifact_dir_unlabelled, "train_set.parquet"), columns=columns
+        )
+        y_train_unlabelled = x_train_unlabelled["buy_sell"]
+        x_train_unlabelled.drop(columns=["buy_sell"], inplace=True)
+
+        # labelled data
+        x_train_labelled = pd.read_parquet(
+            Path(artifact_dir_labelled, "train_set.parquet"), columns=columns
+        )
+        y_train_labelled = x_train_labelled["buy_sell"]
+        x_train_labelled.drop(columns=["buy_sell"], inplace=True)
+
+        x_train = pd.concat([x_train_labelled, x_train_unlabelled])
+        y_train = pd.concat([y_train_labelled, y_train_unlabelled])
+    else:
+        x_train = pd.read_parquet(
+            Path(artifact_dir_labelled, "train_set.parquet"), columns=columns
+        )
+        y_train = x_train["buy_sell"]
+        x_train.drop(columns=["buy_sell"], inplace=True)
+
+    # load validation data
+    x_val = pd.read_parquet(
+        Path(artifact_dir_labelled, "val_set.parquet"), columns=columns
+    )
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
+
+    # pretrain training activated
+    has_label = (y_train != 0).all()
+    if pretrain and has_label:
+        raise ValueError(
+            "Pretraining active, but dataset contains no unlabelled instances."
+        )
+
+    # no pretraining activated
+    has_label = y_train.isin([-1, 1]).all()
+    if not pretrain and not has_label:
+        raise ValueError(
+            "Pretraining inactive, but dataset contains unlabelled instances or"
+            "other labels. Use different dataset or activate pretraining."
+        )
 
     wand_cb = WeightsAndBiasesCallback(
         metric_name="accuracy",
@@ -160,28 +205,20 @@ def main(
         y_val,
         cat_features=cat_features,
         cat_cardinalities=cat_cardinalities,
+        pretrain=pretrain,
     )
 
     optuna.logging.get_logger("optuna").addHandler(logging.StreamHandler(sys.stdout))
 
-    # maximize for accuracy
-    # Save to database see here
-    # https://optuna.readthedocs.io/en/stable/tutorial/20_recipes/001_rdb.html
-
-    # "fbv/thesis/3pxc4js2.optuna:v1" -> "3px4cjs2"
-    name_study = name.split("/")[-1].split(".")[0]
-
+    # create study.
     study = optuna.create_study(
-        direction="maximize",
-        # pruner=optuna.pruners.MedianPruner(n_warmup_steps=5),
         sampler=sampler,
-        study_name=name_study,
-        storage=f"sqlite:///{name_study}.db",
+        study_name=id,  # match id of run and study
+        storage=f"sqlite:///{id}.db",
         load_if_exists=True,
+        direction="maximize",  # maximize for accuracy
     )
 
-    # run garbage collector after each trial. Might impact performance,
-    # but can mitigate out-of-memory errors.
     # Save models in `objective_callback`.
     study.optimize(
         objective,
@@ -200,9 +237,10 @@ def main(
             "best_trial": study.best_trial.number,
             "features": features,
             "trials": trials,
-            "name": name,
+            "name": id,
             "dataset": dataset,
             "seed": seed,
+            "pretrain": pretrain,
         }
     )
 

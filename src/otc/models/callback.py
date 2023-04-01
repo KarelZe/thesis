@@ -220,8 +220,23 @@ class SaveCallback(Callback):
         with fs.open(uri_study, "wb") as f:
             pickle.dump(study, f, protocol=4)  # type: ignore
 
+        # save sqlite db of study to gcs
+        file_db = study.study_name + ".db"
+        uri_db = (
+            "gs://"
+            + Path(
+                settings.GCS_BUCKET,
+                settings.MODEL_DIR_REMOTE,
+                file_db,
+            ).as_posix()
+        )
+        loc_db = Path(os.getcwd(), file_db).as_posix()
+        fs.put(loc_db, uri_db)
+
         s_artifact = wandb.Artifact(name=file_study, type="study")  # type: ignore
         s_artifact.add_reference(uri_study, name=file_study)
+        s_artifact.add_reference(uri_db, name=file_db)
+
         self._run.log_artifact(s_artifact)  # type: ignore
         logger.info("%sSaved '%s'.%s", Colors.OKGREEN, file_study, Colors.ENDC)
 
