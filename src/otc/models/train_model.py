@@ -105,9 +105,7 @@ def main(
 
     # TODO:
     run = wandb.init(  # type: ignore
-        project=settings.WANDB_PROJECT,
-        entity=settings.WANDB_ENTITY,
-        name=id
+        project=settings.WANDB_PROJECT, entity=settings.WANDB_ENTITY, name=id
     )
 
     if not id:
@@ -116,10 +114,10 @@ def main(
         sampler = optuna.samplers.TPESampler(seed=set_seed(seed))
     else:
         # download saved study
-        artifact_study = run.use_artifact(id+".optuna:latest")
+        artifact_study = run.use_artifact(id + ".optuna:latest")
         artifact_dir = artifact_study.download()
 
-        saved_study = pickle.load(open(Path(artifact_dir, id+".optuna"), "rb"))
+        saved_study = pickle.load(open(Path(artifact_dir, id + ".optuna"), "rb"))
         sampler = saved_study.sampler
 
     # select right feature set
