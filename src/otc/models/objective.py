@@ -581,7 +581,7 @@ class GradientBoostingObjective(Objective):
 
         if self.pretrain:
             self_train_clf = SelfTrainingClassifier(
-                self._clf, max_iter=5, threshold=0.9
+                self._clf, max_iter=2, threshold=0.9
             )
             self_train_clf.fit(self._train_pool, eval_set=self._val_pool)
             # retrieve final estimator from self-training classifier, disregard wrapper
