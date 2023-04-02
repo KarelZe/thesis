@@ -1,22 +1,22 @@
 \begin{table}
-\centering
-\caption[short-tbd]{long-tbd}
-\label{tab:cboe_supervised_test-prox_q_binned}
-\begin{tabular}{llSSSSSS}
-\toprule
-{} & {Proximity to Quote} & {At Mid} & {Inside} & {At Quotes} & {Outside} & {Unknown} & {All} \\
-\midrule
-\multirow[c]{3}{*}{\gls{GBM}} & \gls{GBM} (Classical) & 62.3214 & 70.6913 & 73.8921 & 72.9167 & \bfseries 79.2163 & 70.3088 \\
- & \gls{GBM} (Classical, Size) & 67.9478 & 73.9312 & \bfseries 83.7852 & 74.3827 & 79.4913 & 74.7058 \\
- & \gls{GBM}(Ml) & 70.5029 & 75.8742 & \bfseries 87.7185 & 70.9877 & 80.0527 & 76.9834 \\
-\cline{1-8}
-\multirow[c]{6}{*}{Classical} & Tick (Ex) & 45.7794 & 49.7791 & 48.4792 & \bfseries 59.2593 & 48.9230 & 49.1997 \\
- & Quote (Ex) & 49.8294 & 66.9426 & 35.6695 & \bfseries 79.7840 & 58.8336 & 60.8890 \\
- & \gls{LR} (Ex) & 47.3655 & 66.9426 & 35.6556 & \bfseries 79.7840 & 59.9679 & 60.6421 \\
- & \gls{EMO} (Ex) & 45.9937 & 50.7250 & 35.6695 & \bfseries 62.9630 & 51.3978 & 48.1677 \\
- & \gls{CLNV} (Ex) & 45.9940 & 56.7215 & 35.6556 & \bfseries 62.9630 & 51.3978 & 52.7234 \\
- & Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All) & 60.2355 & 65.8283 & 74.7658 & 70.2160 & \bfseries 79.5600 & 66.5252 \\
-\cline{1-8}
-\bottomrule
-\end{tabular}
+	\centering
+	\caption[short-tbd]{long-tbd}
+	\label{tab:cboe_supervised_test-prox_q_binned}
+	\begin{tabular}{llSSSSSS}
+		\toprule
+		{}                            & {Proximity to Quote}                                                                                         & {At Mid} & {Inside} & {At Quotes}       & {Outside}         & {Unknown}         & {All}   \\
+		\midrule
+		\multirow[c]{3}{*}{\gls{GBM}} & \gls{GBM} (Classical)                                                                                        & 62.3214  & 70.6913  & 73.8921           & 72.9167           & \bfseries 79.2163 & 70.3088 \\
+		                              & \gls{GBM} (Classical, Size)                                                                                  & 67.9478  & 73.9312  & \bfseries 83.7852 & 74.3827           & 79.4913           & 74.7058 \\
+		                              & \gls{GBM}(Ml)                                                                                                & 70.5029  & 75.8742  & \bfseries 87.7185 & 70.9877           & 80.0527           & 76.9834 \\
+		\cline{1-8}
+		\multirow[c]{6}{*}{Classical} & Tick (Ex)                                                                                                    & 45.7794  & 49.7791  & 48.4792           & \bfseries 59.2593 & 48.9230           & 49.1997 \\
+		                              & Quote (Ex)                                                                                                   & 49.8294  & 66.9426  & 35.6695           & \bfseries 79.7840 & 58.8336           & 60.8890 \\
+		                              & \gls{LR} (Ex)                                                                                                & 47.3655  & 66.9426  & 35.6556           & \bfseries 79.7840 & 59.9679           & 60.6421 \\
+		                              & \gls{EMO} (Ex)                                                                                               & 45.9937  & 50.7250  & 35.6695           & \bfseries 62.9630 & 51.3978           & 48.1677 \\
+		                              & \gls{CLNV} (Ex)                                                                                              & 45.9940  & 56.7215  & 35.6556           & \bfseries 62.9630 & 51.3978           & 52.7234 \\
+		                              & Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All) & 60.2355  & 65.8283  & 74.7658           & 70.2160           & \bfseries 79.5600 & 66.5252 \\
+		\cline{1-8}
+		\bottomrule
+	\end{tabular}
 \end{table}
