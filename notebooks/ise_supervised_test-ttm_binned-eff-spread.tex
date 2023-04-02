@@ -1,0 +1,38 @@
+\begin{table}
+\centering
+\caption[short-tbd]{long-tbd}
+\label{tab:ise_supervised_test-ttm_binned-eff-spread}
+\begin{tabular}{lllSSSSSS}
+\toprule
+{} & {} & {ttm_binned} & {<= 1} & {(1-2]} & {(2-3]} & {(3-6]} & {(6-12]} & {> 12} \\
+\midrule
+\multirow[c]{6}{*}{\gls{GBM}} & \multirow[c]{2}{*}{\gls{GBM} (Classical)} & Nominal & 0.0620 & 0.0714 & 0.0803 & 0.0985 & 0.1087 & \bfseries 0.1797 \\
+ &  & Rel & \bfseries 11.4024 & 5.5808 & 4.6583 & 4.4836 & 3.8660 & 3.5627 \\
+\cline{2-9}
+ & \multirow[c]{2}{*}{\gls{GBM} (Classical, Size)} & Nominal & 0.0335 & 0.0442 & 0.0499 & 0.0623 & 0.0666 & \bfseries 0.1056 \\
+ &  & Rel & \bfseries 8.8498 & 4.1273 & 3.1737 & 2.9108 & 2.4660 & 2.0213 \\
+\cline{2-9}
+ & \multirow[c]{2}{*}{\gls{GBM}(Ml)} & Nominal & 0.0264 & 0.0428 & 0.0478 & 0.0636 & 0.0707 & \bfseries 0.0960 \\
+ &  & Rel & \bfseries 8.1756 & 4.0400 & 3.0591 & 2.9033 & 2.5352 & 1.8682 \\
+\cline{1-9} \cline{2-9}
+\multirow[c]{12}{*}{Classical} & \multirow[c]{2}{*}{Tick (Ex)} & Nominal & 0.0171 & 0.0095 & 0.0118 & 0.0144 & 0.0128 & \bfseries 0.0181 \\
+ &  & Rel & \bfseries 1.3493 & 0.6955 & 0.5605 & 0.4599 & 0.4462 & 0.1861 \\
+\cline{2-9}
+ & \multirow[c]{2}{*}{Quote (Ex)} & Nominal & 0.1473 & 0.1436 & 0.1611 & 0.1986 & 0.2259 & \bfseries 0.3250 \\
+ &  & Rel & \bfseries 19.8944 & 9.7522 & 8.2917 & 8.9276 & 7.8432 & 6.8297 \\
+\cline{2-9}
+ & \multirow[c]{2}{*}{\gls{LR} (Ex)} & Nominal & 0.1473 & 0.1436 & 0.1611 & 0.1986 & 0.2259 & \bfseries 0.3250 \\
+ &  & Rel & \bfseries 19.8944 & 9.7522 & 8.2917 & 8.9276 & 7.8432 & 6.8297 \\
+\cline{2-9}
+ & \multirow[c]{2}{*}{\gls{EMO} (Ex)} & Nominal & 0.0394 & 0.0400 & 0.0478 & 0.0630 & 0.0721 & \bfseries 0.1114 \\
+ &  & Rel & \bfseries 10.6707 & 4.4973 & 3.9437 & 3.8497 & 3.4111 & 2.9110 \\
+\cline{2-9}
+ & \multirow[c]{2}{*}{\gls{CLNV} (Ex)} & Nominal & 0.1057 & 0.0998 & 0.1131 & 0.1423 & 0.1620 & \bfseries 0.2212 \\
+ &  & Rel & \bfseries 16.3938 & 7.7191 & 6.6903 & 7.1745 & 6.3045 & 5.3472 \\
+\cline{2-9}
+ & \multirow[c]{2}{*}{Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All)} & Nominal & 0.0082 & 0.0105 & 0.0120 & 0.0176 & 0.0152 & \bfseries 0.0374 \\
+ &  & Rel & \bfseries 5.3156 & 1.8898 & 1.0586 & 0.5734 & 0.3119 & 0.0639 \\
+\cline{1-9} \cline{2-9}
+\bottomrule
+\end{tabular}
+\end{table}

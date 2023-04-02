@@ -1,0 +1,22 @@
+\begin{table}
+\centering
+\caption[short-tbd]{long-tbd}
+\label{tab:ise_supervised_test-option_type}
+\begin{tabular}{llSSS}
+\toprule
+{} & {Option Type} & {C} & {P} & {All} \\
+\midrule
+\multirow[c]{3}{*}{\gls{GBM}} & \gls{GBM} (Classical) & 62.8896 & \bfseries 64.5450 & 63.6624 \\
+ & \gls{GBM} (Classical, Size) & 71.8953 & \bfseries 72.8926 & 72.3608 \\
+ & \gls{GBM}(Ml) & 73.6247 & \bfseries 74.5937 & 74.0771 \\
+\cline{1-5}
+\multirow[c]{6}{*}{Classical} & Tick (Ex) & \bfseries 50.3680 & 50.1138 & 50.2493 \\
+ & Quote (Ex) & 56.3429 & \bfseries 57.7346 & 56.9925 \\
+ & \gls{LR} (Ex) & 56.4185 & \bfseries 57.7991 & 57.0630 \\
+ & \gls{EMO} (Ex) & 53.5006 & \bfseries 54.1180 & 53.7889 \\
+ & \gls{CLNV} (Ex) & 54.3376 & \bfseries 55.2267 & 54.7527 \\
+ & Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All) & 66.8520 & \bfseries 67.2666 & 67.0455 \\
+\cline{1-5}
+\bottomrule
+\end{tabular}
+\end{table}

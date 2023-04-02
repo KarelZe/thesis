@@ -1,0 +1,22 @@
+\begin{table}
+\centering
+\caption[short-tbd]{long-tbd}
+\label{tab:cboe_supervised_test-ttm_binned}
+\begin{tabular}{llSSSSSSS}
+\toprule
+{} & {Time to Maturity} & {<= 1} & {(1-2]} & {(2-3]} & {(3-6]} & {(6-12]} & {> 12} & {All} \\
+\midrule
+\multirow[c]{3}{*}{\gls{GBM}} & \gls{GBM} (Classical) & 70.5555 & \bfseries 71.6004 & 71.0997 & 70.2712 & 69.3037 & 64.1257 & 70.3088 \\
+ & \gls{GBM} (Classical, Size) & 74.2880 & 75.4934 & 75.8997 & \bfseries 76.2073 & 74.8262 & 72.2535 & 74.7058 \\
+ & \gls{GBM}(Ml) & 76.5104 & 77.9171 & 78.0306 & \bfseries 78.2892 & 77.4386 & 75.0459 & 76.9834 \\
+\cline{1-9}
+\multirow[c]{6}{*}{Classical} & Tick (Ex) & 49.1144 & \bfseries 49.7128 & 49.3312 & 49.0135 & 49.3643 & 48.9156 & 49.1997 \\
+ & Quote (Ex) & \bfseries 61.7771 & 61.4221 & 61.0728 & 60.1047 & 59.1282 & 52.5100 & 60.8890 \\
+ & \gls{LR} (Ex) & \bfseries 61.4639 & 61.2619 & 60.8659 & 59.9098 & 59.0230 & 52.4734 & 60.6421 \\
+ & \gls{EMO} (Ex) & \bfseries 48.9571 & 48.6926 & 47.2695 & 46.6169 & 46.6459 & 44.1406 & 48.1677 \\
+ & \gls{CLNV} (Ex) & \bfseries 53.4149 & 53.2747 & 52.3461 & 51.7623 & 51.4685 & 47.2838 & 52.7234 \\
+ & Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All) & 66.6218 & 67.0007 & \bfseries 67.5858 & 67.5665 & 66.5639 & 59.9332 & 66.5252 \\
+\cline{1-9}
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,38 @@
+\begin{table}
+\centering
+\caption[short-tbd]{long-tbd}
+\label{tab:cboe_supervised_test-prox_q_binned-eff-spread}
+\begin{tabular}{lllSSSSS}
+\toprule
+{} & {} & {prox_q_binned} & {At Mid} & {Inside} & {At Quotes} & {Outside} & {Unknown} \\
+\midrule
+\multirow[c]{6}{*}{\gls{GBM}} & \multirow[c]{2}{*}{\gls{GBM} (Classical)} & Nominal & 0.0000 & \bfseries 0.0592 & -0.1070 & -0.0897 & -0.0366 \\
+ &  & Rel & 0.0000 & 6.5565 & 8.1148 & -4.6724 & \bfseries inf \\
+\cline{2-8}
+ & \multirow[c]{2}{*}{\gls{GBM} (Classical, Size)} & Nominal & 0.0000 & \bfseries 0.0437 & -0.1116 & -0.1519 & -0.0335 \\
+ &  & Rel & 0.0000 & 5.8860 & 2.0338 & -10.7541 & \bfseries inf \\
+\cline{2-8}
+ & \multirow[c]{2}{*}{\gls{GBM}(Ml)} & Nominal & 0.0000 & \bfseries 0.0415 & -0.1156 & -0.2813 & -0.0330 \\
+ &  & Rel & 0.0000 & 5.8383 & -0.0508 & -11.6086 & \bfseries inf \\
+\cline{1-8} \cline{2-8}
+\multirow[c]{12}{*}{Classical} & \multirow[c]{2}{*}{Tick (Ex)} & Nominal & 0.0000 & 0.0136 & 0.0368 & -0.0621 & \bfseries 0.0620 \\
+ &  & Rel & 0.0000 & 3.1457 & -5.3753 & 20.5600 & \bfseries inf \\
+\cline{2-8}
+ & \multirow[c]{2}{*}{Quote (Ex)} & Nominal & 0.0000 & 0.1201 & 0.2144 & \bfseries 0.6194 & 0.3228 \\
+ &  & Rel & 0.0000 & 13.1555 & 36.7524 & 34.1009 & \bfseries inf \\
+\cline{2-8}
+ & \multirow[c]{2}{*}{\gls{LR} (Ex)} & Nominal & 0.0000 & 0.1201 & 0.2144 & \bfseries 0.6194 & 0.3228 \\
+ &  & Rel & 0.0000 & 13.1555 & 36.7524 & 34.1009 & \bfseries inf \\
+\cline{2-8}
+ & \multirow[c]{2}{*}{\gls{EMO} (Ex)} & Nominal & 0.0000 & 0.0199 & \bfseries 0.2144 & 0.1220 & 0.1617 \\
+ &  & Rel & 0.0000 & 4.1183 & 36.7524 & 33.9407 & \bfseries inf \\
+\cline{2-8}
+ & \multirow[c]{2}{*}{\gls{CLNV} (Ex)} & Nominal & 0.0000 & 0.0822 & \bfseries 0.2144 & 0.1220 & 0.1617 \\
+ &  & Rel & 0.0000 & 8.9931 & 36.7524 & 33.9407 & \bfseries inf \\
+\cline{2-8}
+ & \multirow[c]{2}{*}{Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All)} & Nominal & 0.0000 & 0.0548 & -0.0431 & \bfseries 0.1827 & 0.0265 \\
+ &  & Rel & 0.0000 & 6.5175 & 8.5054 & -6.2217 & \bfseries inf \\
+\cline{1-8} \cline{2-8}
+\bottomrule
+\end{tabular}
+\end{table}
