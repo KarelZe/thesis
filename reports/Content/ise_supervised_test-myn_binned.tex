@@ -1,0 +1,27 @@
+\begin{table}
+\centering
+\caption[short-tbd]{long-tbd}
+\label{tab:ise_supervised_test-myn_binned}
+\begin{tabular}{llSSSSS}
+\toprule
+{} & {Moneyness} & {<= 0.7 C} & {(0.7-0.9]} & {(0.9-1.1]} & {(1.1-1.3]} & {> 1.3} \\
+\midrule
+\multirow[c]{8}{*}{\gls{GBM}} & \gls{GBM} (Classical) & 65.5518 & \bfseries 67.6364 & 64.0633 & 54.2040 & 52.5730 \\
+ & \gls{GBM}(Classical-Retraining) & 68.8898 & \bfseries 70.1027 & 66.4734 & 58.7761 & 58.7689 \\
+ & \gls{GBM}(Classical-Size-Retraining) & 74.1417 & \bfseries 75.7919 & 74.3095 & 69.2162 & 66.7739 \\
+ & \gls{GBM} (Classical, Size) & 71.8431 & \bfseries 74.2902 & 72.9901 & 66.2925 & 63.0077 \\
+ & \gls{GBM}(Ml) & 72.4388 & \bfseries 75.3571 & 74.4145 & 70.2689 & 70.5508 \\
+ & \gls{GBM}(Ml-Retraining) & 76.0714 & \bfseries 77.2539 & 76.2120 & 73.4163 & 74.4140 \\
+ & \gls{GBM}(Semi-Classical) & 65.2273 & \bfseries 67.3737 & 63.8257 & 54.1523 & 52.4750 \\
+ & \gls{GBM}(Semi-Classical-Retraining) & 68.8955 & \bfseries 70.1064 & 66.4851 & 58.8731 & 58.7193 \\
+\cline{1-7}
+\multirow[c]{6}{*}{Classical} & Tick (Ex) & 49.5740 & \bfseries 50.6778 & 50.1920 & 50.1031 & 50.0445 \\
+ & Quote (Ex) & 60.3459 & \bfseries 60.3667 & 57.0815 & 49.9298 & 48.7344 \\
+ & \gls{LR} (Ex) & 60.4204 & \bfseries 60.5723 & 57.1143 & 49.9971 & 48.8234 \\
+ & \gls{EMO} (Ex) & \bfseries 58.2441 & 57.5657 & 53.1433 & 49.8706 & 50.0532 \\
+ & \gls{CLNV} (Ex) & \bfseries 58.9796 & 58.6124 & 54.3342 & 49.6716 & 48.7729 \\
+ & Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All) & 63.9937 & 67.6425 & \bfseries 67.9893 & 61.6326 & 59.9549 \\
+\cline{1-7}
+\bottomrule
+\end{tabular}
+\end{table}
