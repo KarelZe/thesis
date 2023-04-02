@@ -1,0 +1,27 @@
+\begin{table}
+\centering
+\caption[short-tbd]{long-tbd}
+\label{tab:ise_supervised_test-year_binned}
+\begin{tabular}{llSSS}
+\toprule
+{} & {Year} & {2015} & {2016} & {2017} \\
+\midrule
+\multirow[c]{8}{*}{\gls{GBM}} & \gls{GBM} (Classical) & 60.3968 & 63.7379 & \bfseries 64.5870 \\
+ & \gls{GBM}(Classical-Retraining) & 63.5114 & 66.2225 & \bfseries 67.7964 \\
+ & \gls{GBM}(Classical-Size-Retraining) & 71.3354 & 74.1200 & \bfseries 74.4362 \\
+ & \gls{GBM} (Classical, Size) & 69.0281 & 72.5610 & \bfseries 73.0187 \\
+ & \gls{GBM}(Ml) & 71.4237 & 74.2352 & \bfseries 74.6037 \\
+ & \gls{GBM}(Ml-Retraining) & 74.3696 & 76.2579 & \bfseries 76.4228 \\
+ & \gls{GBM}(Semi-Classical) & 60.2714 & 63.5491 & \bfseries 64.2355 \\
+ & \gls{GBM}(Semi-Classical-Retraining) & 63.6083 & 66.2340 & \bfseries 67.7894 \\
+\cline{1-5}
+\multirow[c]{6}{*}{Classical} & Tick (Ex) & \bfseries 50.3700 & 50.1943 & 50.3365 \\
+ & Quote (Ex) & 54.8741 & \bfseries 57.5723 & 56.3600 \\
+ & \gls{LR} (Ex) & 54.8874 & \bfseries 57.6377 & 56.4614 \\
+ & \gls{EMO} (Ex) & 52.8309 & \bfseries 54.2704 & 52.9934 \\
+ & \gls{CLNV} (Ex) & 53.3095 & \bfseries 55.2230 & 54.1467 \\
+ & Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All) & 63.2934 & 66.9680 & \bfseries 68.4894 \\
+\cline{1-5}
+\bottomrule
+\end{tabular}
+\end{table}

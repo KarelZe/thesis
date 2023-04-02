@@ -1,0 +1,27 @@
+\begin{table}
+\centering
+\caption[short-tbd]{long-tbd}
+\label{tab:ise_supervised_test-option_type}
+\begin{tabular}{llSS}
+\toprule
+{} & {Option Type} & {C} & {P} \\
+\midrule
+\multirow[c]{8}{*}{\gls{GBM}} & \gls{GBM} (Classical) & 62.8896 & \bfseries 64.5450 \\
+ & \gls{GBM}(Classical-Retraining) & 65.7818 & \bfseries 67.1127 \\
+ & \gls{GBM}(Classical-Size-Retraining) & 73.5771 & \bfseries 74.3760 \\
+ & \gls{GBM} (Classical, Size) & 71.8953 & \bfseries 72.8926 \\
+ & \gls{GBM}(Ml) & 73.6247 & \bfseries 74.5937 \\
+ & \gls{GBM}(Ml-Retraining) & 75.7390 & \bfseries 76.5747 \\
+ & \gls{GBM}(Semi-Classical) & 62.6722 & \bfseries 64.3062 \\
+ & \gls{GBM}(Semi-Classical-Retraining) & 65.8103 & \bfseries 67.1108 \\
+\cline{1-4}
+\multirow[c]{6}{*}{Classical} & Tick (Ex) & \bfseries 50.3680 & 50.1138 \\
+ & Quote (Ex) & 56.3429 & \bfseries 57.7346 \\
+ & \gls{LR} (Ex) & 56.4185 & \bfseries 57.7991 \\
+ & \gls{EMO} (Ex) & 53.5006 & \bfseries 54.1180 \\
+ & \gls{CLNV} (Ex) & 54.3376 & \bfseries 55.2267 \\
+ & Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All) & 66.8520 & \bfseries 67.2666 \\
+\cline{1-4}
+\bottomrule
+\end{tabular}
+\end{table}
