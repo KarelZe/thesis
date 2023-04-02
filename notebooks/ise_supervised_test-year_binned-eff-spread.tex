@@ -1,0 +1,38 @@
+\begin{table}
+	\centering
+	\caption[short-tbd]{long-tbd}
+	\label{tab:ise_supervised_test-year_binned-eff-spread}
+	\begin{tabular}{lllSSS}
+		\toprule
+		{}                             & {}                                                                                                                               & {year_binned} & {2015}           & {2016}           & {2017}            \\
+		\midrule
+		\multirow[c]{6}{*}{\gls{GBM}}  & \multirow[c]{2}{*}{\gls{GBM} (Classical)}                                                                                        & Nominal       & \bfseries 0.0766 & 0.0734           & 0.0751            \\
+		                               &                                                                                                                                  & Rel           & 7.9518           & \bfseries 9.3200 & 9.2904            \\
+		\cline{2-6}
+		                               & \multirow[c]{2}{*}{\gls{GBM} (Classical, Size)}                                                                                  & Nominal       & \bfseries 0.0491 & 0.0433           & 0.0383            \\
+		                               &                                                                                                                                  & Rel           & 6.1768           & 7.0088           & \bfseries 7.1937  \\
+		\cline{2-6}
+		                               & \multirow[c]{2}{*}{\gls{GBM}(Ml)}                                                                                                & Nominal       & \bfseries 0.0401 & 0.0390           & 0.0327            \\
+		                               &                                                                                                                                  & Rel           & 5.6993           & 6.5826           & \bfseries 6.6250  \\
+		\cline{1-6} \cline{2-6}
+		\multirow[c]{12}{*}{Classical} & \multirow[c]{2}{*}{Tick (Ex)}                                                                                                    & Nominal       & 0.0112           & 0.0152           & \bfseries 0.0181  \\
+		                               &                                                                                                                                  & Rel           & 1.2802           & 0.8955           & \bfseries 1.4508  \\
+		\cline{2-6}
+		                               & \multirow[c]{2}{*}{Quote (Ex)}                                                                                                   & Nominal       & 0.1473           & 0.1571           & \bfseries 0.1832  \\
+		                               &                                                                                                                                  & Rel           & 13.7341          & 15.7279          & \bfseries 18.1528 \\
+		\cline{2-6}
+		                               & \multirow[c]{2}{*}{\gls{LR} (Ex)}                                                                                                & Nominal       & 0.1473           & 0.1571           & \bfseries 0.1832  \\
+		                               &                                                                                                                                  & Rel           & 13.7341          & 15.7279          & \bfseries 18.1528 \\
+		\cline{2-6}
+		                               & \multirow[c]{2}{*}{\gls{EMO} (Ex)}                                                                                               & Nominal       & 0.0379           & 0.0450           & \bfseries 0.0530  \\
+		                               &                                                                                                                                  & Rel           & 7.0596           & \bfseries 8.6245 & 8.4988            \\
+		\cline{2-6}
+		                               & \multirow[c]{2}{*}{\gls{CLNV} (Ex)}                                                                                              & Nominal       & 0.0936           & 0.1104           & \bfseries 0.1375  \\
+		                               &                                                                                                                                  & Rel           & 10.8861          & 12.9586          & \bfseries 14.8422 \\
+		\cline{2-6}
+		                               & \multirow[c]{2}{*}{Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All)} & Nominal       & \bfseries 0.0206 & 0.0148           & -0.0010           \\
+		                               &                                                                                                                                  & Rel           & 3.6957           & \bfseries 3.9299 & 3.8564            \\
+		\cline{1-6} \cline{2-6}
+		\bottomrule
+	\end{tabular}
+\end{table}
