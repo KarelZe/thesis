@@ -88,13 +88,13 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         self.verbose = verbose
 
     def fit(  # noqa: C901
-        self, pool: Pool, eval_set: Pool, **kwargs: Any
+        self, train_set: dict, eval_set: Pool, **kwargs: Any
     ) -> SelfTrainingClassifier:
         """
         Fit self-training classifier using `X`, `y` as training data.
 
         Args:
-            pool (Pool): pool of training data
+            train_set (dict) dict with training data
             eval_set (Pool): pool of validation data
 
         Raises:
@@ -104,10 +104,10 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
             SelfTrainingClassifier: self
         """
         # get features, labels etc. from train pool
-        X = pool.get_features()
-        y = pool.get_label()
-        weights = np.array(pool.get_weight())
-        cat_features = pool.get_cat_feature_indices()
+        X = train_set["data"]
+        y = train_set["label"].values
+        weight = train_set["weight"]
+        cat_features = train_set["cat_features"]
 
         self.base_estimator_ = clone(self.base_estimator)
 
@@ -149,7 +149,7 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
             train_pool = Pool(
                 data=X[safe_mask(X, has_label)],
                 label=self.transduction_[has_label],
-                weight=weights[has_label],
+                weight=weight[has_label],
                 cat_features=cat_features,
             )
 
@@ -199,7 +199,7 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         train_pool = Pool(
             data=X[safe_mask(X, has_label)],
             label=self.transduction_[has_label],
-            weight=weights[has_label],
+            weight=weight[has_label],
             cat_features=cat_features,
         )
 

@@ -524,14 +524,24 @@ class GradientBoostingObjective(Objective):
         # keep ordering of data
         timestamp = np.linspace(0, 1, len(y_train))
 
-        # save to pool for faster memory access
-        self._train_pool = Pool(
-            data=x_train,
-            label=y_train,
-            cat_features=cat_features,
-            weight=weight,
-            timestamp=timestamp,
-        )
+        # pass as dict as samples need to be separated in self-training classifier
+        if pretrain:
+            self._train_pool = {
+                "data": x_train,
+                "label": y_train,
+                "cat_features": cat_features,
+                "weight": weight,
+                "timestamp": timestamp,
+            }
+        else:
+            # save to pool for faster memory access
+            self._train_pool = Pool(
+                data=x_train,
+                label=y_train,
+                cat_features=cat_features,
+                weight=weight,
+                timestamp=timestamp,
+            )
         self._val_pool = Pool(data=x_val, label=y_val, cat_features=cat_features)
         self.name = name
         self.pretrain = pretrain
