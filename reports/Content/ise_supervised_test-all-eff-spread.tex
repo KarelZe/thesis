@@ -1,0 +1,53 @@
+\begin{table}
+\centering
+\caption[short-tbd]{long-tbd}
+\label{tab:ise_supervised_test-all-eff-spread}
+\begin{tabular}{lllS}
+\toprule
+{} & {} & {all} & {All} \\
+\midrule
+\multirow[c]{16}{*}{\gls{GBM}} & \multirow[c]{2}{*}{\gls{GBM} (Classical)} & Nominal & \bfseries 0.0741 \\
+ &  & Rel & \bfseries 9.1859 \\
+\cline{2-4}
+ & \multirow[c]{2}{*}{\gls{GBM}(Classical-Retraining)} & Nominal & \bfseries 0.0346 \\
+ &  & Rel & \bfseries 6.5696 \\
+\cline{2-4}
+ & \multirow[c]{2}{*}{\gls{GBM}(Classical-Size-Retraining)} & Nominal & \bfseries 0.0262 \\
+ &  & Rel & \bfseries 5.6064 \\
+\cline{2-4}
+ & \multirow[c]{2}{*}{\gls{GBM} (Classical, Size)} & Nominal & \bfseries 0.0425 \\
+ &  & Rel & \bfseries 6.9828 \\
+\cline{2-4}
+ & \multirow[c]{2}{*}{\gls{GBM}(Ml)} & Nominal & \bfseries 0.0374 \\
+ &  & Rel & \bfseries 6.5128 \\
+\cline{2-4}
+ & \multirow[c]{2}{*}{\gls{GBM}(Ml-Retraining)} & Nominal & \bfseries 0.0212 \\
+ &  & Rel & \bfseries 5.0774 \\
+\cline{2-4}
+ & \multirow[c]{2}{*}{\gls{GBM}(Semi-Classical)} & Nominal & \bfseries 0.0761 \\
+ &  & Rel & \bfseries 9.3082 \\
+\cline{2-4}
+ & \multirow[c]{2}{*}{\gls{GBM}(Semi-Classical-Retraining)} & Nominal & \bfseries 0.0343 \\
+ &  & Rel & \bfseries 6.5530 \\
+\cline{1-4} \cline{2-4}
+\multirow[c]{12}{*}{Classical} & \multirow[c]{2}{*}{Tick (Ex)} & Nominal & \bfseries 0.0156 \\
+ &  & Rel & \bfseries 1.0828 \\
+\cline{2-4}
+ & \multirow[c]{2}{*}{Quote (Ex)} & Nominal & \bfseries 0.1633 \\
+ &  & Rel & \bfseries 16.2074 \\
+\cline{2-4}
+ & \multirow[c]{2}{*}{\gls{LR} (Ex)} & Nominal & \bfseries 0.1633 \\
+ &  & Rel & \bfseries 16.2074 \\
+\cline{2-4}
+ & \multirow[c]{2}{*}{\gls{EMO} (Ex)} & Nominal & \bfseries 0.0465 \\
+ &  & Rel & \bfseries 8.4460 \\
+\cline{2-4}
+ & \multirow[c]{2}{*}{\gls{CLNV} (Ex)} & Nominal & \bfseries 0.1162 \\
+ &  & Rel & \bfseries 13.2828 \\
+\cline{2-4}
+ & \multirow[c]{2}{*}{Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All)} & Nominal & \bfseries 0.0110 \\
+ &  & Rel & \bfseries 3.8882 \\
+\cline{1-4} \cline{2-4}
+\bottomrule
+\end{tabular}
+\end{table}
