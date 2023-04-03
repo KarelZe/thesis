@@ -1,0 +1,22 @@
+\begin{table}
+	\centering
+	\caption[short-tbd]{long-tbd}
+	\label{tab:ise_supervised_test-ttm_binned}
+	\begin{tabular}{llSSSSSSS}
+		\toprule
+		{}                            & {Time to Maturity}                                                                                           & {<= 1}            & {(1-2]}           & {(2-3]} & {(3-6]}           & {(6-12]} & {> 12}  & {All}   \\
+		\midrule
+		\multirow[c]{3}{*}{\gls{GBM}} & \gls{GBM} (Classical)                                                                                        & 64.4561           & \bfseries 64.5965 & 62.9799 & 61.8032           & 61.8499  & 55.1481 & 63.6624 \\
+		                              & \gls{GBM} (Classical, Size)                                                                                  & 72.7706           & \bfseries 72.8854 & 71.7978 & 71.3024           & 71.2226  & 68.6021 & 72.3608 \\
+		                              & \gls{GBM}(Ml)                                                                                                & \bfseries 74.5608 & 73.8654           & 72.9470 & 72.7196           & 73.0931  & 72.0390 & 74.0771 \\
+		\cline{1-9}
+		\multirow[c]{6}{*}{Classical} & Tick (Ex)                                                                                                    & 50.1370           & 50.1918           & 50.4597 & \bfseries 50.8325 & 50.6273  & 50.2944 & 50.2493 \\
+		                              & Quote (Ex)                                                                                                   & 57.3036           & \bfseries 57.7208 & 57.0996 & 55.9853           & 56.4132  & 52.6670 & 56.9925 \\
+		                              & \gls{LR} (Ex)                                                                                                & 57.3650           & \bfseries 57.7616 & 57.1776 & 56.1122           & 56.4756  & 52.8508 & 57.0630 \\
+		                              & \gls{EMO} (Ex)                                                                                               & \bfseries 54.4159 & 53.5329           & 52.8920 & 52.0323           & 51.9527  & 51.1966 & 53.7889 \\
+		                              & \gls{CLNV} (Ex)                                                                                              & \bfseries 55.2211 & 54.7717           & 54.1362 & 53.3687           & 53.5783  & 52.0835 & 54.7527 \\
+		                              & Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All) & 66.9676           & \bfseries 67.9143 & 67.6820 & 67.2675           & 67.2690  & 64.5949 & 67.0455 \\
+		\cline{1-9}
+		\bottomrule
+	\end{tabular}
+\end{table}

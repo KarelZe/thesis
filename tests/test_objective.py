@@ -119,7 +119,7 @@ class TestObjectives:
 
         # labelled (-1,1) and unlabelled (0) instances
         # train set with -1, 1, and 0
-        self._y_train = np.random.randint(-1, 2, self._y_train.shape[0])
+        self._y_train = pd.Series(np.random.randint(-1, 2, self._y_train.shape[0]))
         # val set with 1
         self._y_val = np.random.randint(1, 2, self._y_train.shape[0])
 
