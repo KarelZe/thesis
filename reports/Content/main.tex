@@ -537,8 +537,13 @@ In the subsequent section, extend all previous models including FT-Transformer f
 
 \subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches-1}
 
+Our supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the label can be inferred through matching procedures, which may bias the selection. Unlabelled trades, though, are abundant and may improve generalization performance of the classifier. Ideally, both labelled and unlabelled instances are used in training. Semi-supervised methods leverage both labelled and unlabelled data by learning an algorithm on unlabelled instances alongside with true labels \autocite[][6]{chapelleSemisupervisedLearning2006}.
+The application of semi-supervised methods is novel in trade classification.
+
+
 \subsection{Extensions to Gradient Boosted
     Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
+
 
 \subsection{Extensions to Transformers (2~p)}\label{sec:extensions-to-transformer}
 
@@ -680,6 +685,7 @@ From the high bias/low variance, we conclude that the gradient-boosting model wi
 \subsubsection{Training of Supervised
     Models (4~p)}\label{sec:training-of-supervised-models}
 
+
 \textcite[][12]{huangTabTransformerTabularData2020} recommend an overall ratio of $\tfrac{7}{8}$ feature-specific embeddings versus $\tfrac{1}{8}$ shared embeddings.
 
 \subsubsection{Training of Semi-Supervised
@@ -762,6 +768,21 @@ In absence of ground truth for the true feature attribution, we resort to attent
 The next chapter discusses different metrics to assess the prediction quality of our models.
 
 \subsubsection{Evaluation Metric (1~p)}\label{sec:evaluation-metric}
+
+The quality of the classifier is better, the higher the share of trades is where the predicted trade initiator equals the true trade initiator. We assess the quality of our model’s prediction in terms of \emph{accuracy}. Formally, accuracy can be stated as:
+
+\begin{equation}
+\operatorname{Accuracy} = 1 - \mathcal{L}_{0-1}(\boldsymbol{y}, \hat{\boldsymbol{y}})
+\end{equation}
+
+where $\mathcal{L}_{0-1}(\cdot)$ is the zero-one loss given by:
+\begin{equation}
+\mathcal{L}_{0-1}(\boldsymbol{y}, \hat{\boldsymbol{y}}) = \frac{1}{N}\sum_{i=1}^{N}\mathbb{I}\left(\boldsymbol{y}_{i}\neq \hat{\boldsymbol{y}}_{i}\right).
+\end{equation}
+
+Intuitively, from the zero-one loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized zero-one loss.
+
+Our dataset is balanced and buyer-initiated trades are predicted as sellers --~\textit{false positives}~-- and buyer-initiated trades are predicted as seller-initiated --~\textit{false negatives}~-- have similar associated costs, which makes the accuracy a reasoned choice as a performance metric. As the zero-one loss and in consequence, the accuracy is not differentiable, we cannot use it in optimization, but use it as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test set.
 
 \newpage
 \section{Results}\label{sec:results}

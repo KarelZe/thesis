@@ -10,3 +10,4 @@ https://github.com/catboost/catboost/blob/master/catboost/tutorials/model_analys
 ## Recursive feature elimination
 - model.select_features()
 - draw plot with plot=True
+![[1680261360735 1.jpg]]

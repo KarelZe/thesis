@@ -6,6 +6,7 @@
       {
         "id": "90bbdd3c2ee01632",
         "type": "tabs",
+        "dimension": 59.910358565737056,
         "children": [
           {
             "id": "f35a250acbe1a2dc",
@@ -23,7 +24,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/⭕Self-Training classifier.md",
+                "file": "📖chapters/🧭Evaluation metric.md",
                 "mode": "source",
                 "source": false
               }
@@ -35,6 +36,7 @@
       {
         "id": "2e4bb12a56b63b7f",
         "type": "tabs",
+        "dimension": 40.089641434262944,
         "children": [
           {
             "id": "dde0833f7ece99d5",
@@ -102,7 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/⭕Self-Training classifier.md",
+                "file": "📖chapters/🧭Evaluation metric.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +132,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/⭕Self-Training classifier.md"
+                "file": "📖chapters/🧭Evaluation metric.md"
               }
             }
           },
@@ -162,20 +164,21 @@
   },
   "active": "e8c0db083f384014",
   "lastOpenFiles": [
-    "📖chapters/🐈Extension to Gradient Boosting.md",
-    "📑notes/⭕Self-Training classifier notes.md",
-    "📖chapters/⭕Self-Training classifier.md",
-    "🍬Implementation/🛞GCP-Docker-Cluster.md",
-    "🖼️Media/1680261360727.jpg",
-    "📥Inbox/@aminiSelfTrainingSurvey2023.md",
-    "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
-    "📥Inbox/@chapelleSemisupervisedLearning2006.md",
-    "🖼️Media/Pasted image 20230326101313.png",
-    "🖼️Media/1680261360742.jpg",
-    "🖼️Media/1680261360735.jpg",
-    "🖼️Media/1680261360735 3.jpg",
+    "📑notes/🧭Evaluation metric notes.md",
     "🖼️Media/1680261360735 2.jpg",
     "🖼️Media/1680261360735 1.jpg",
+    "🖼️Media/1680261360735 3.jpg",
+    "🖼️Media/1680261360727.jpg",
+    "🖼️Media/1680261360735.jpg",
+    "🖼️Media/1680261360742.jpg",
+    "🖼️Media/Pasted image 20230326101313.png",
+    "📥Inbox/@chapelleSemisupervisedLearning2006.md",
+    "📖chapters/⭕Self-Training classifier.md",
+    "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
+    "📥Inbox/@aminiSelfTrainingSurvey2023.md",
+    "📑notes/⭕Self-Training classifier notes.md",
+    "📖chapters/🐈Extension to Gradient Boosting.md",
+    "🍬Implementation/🛞GCP-Docker-Cluster.md",
     "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
     "❓Questions.md",
     "📖chapters/🐈Gradient Boosting.md",
