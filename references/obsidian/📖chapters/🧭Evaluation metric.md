@@ -1,24 +1,14 @@
-- Discuss what metrics are reasonable e. g., why is it reasonable to use the accuracy here? Dataset is likely balanced with a 50-50 distribution, metrics like accuracy are fine for this use case.
-- Define the metrics.
-- Accuracy, ROC-curve, area under the curve. Think about statistical Tests e. g., $\chi^2$-Test
-- Introduce concept of a confusion matrix. Are all errors equally problematic?
 
+The quality of the classifier is better, the higher the share of trades is where the predicted trade initiator equals the true trade initiator. We assess the quality our model’s prediction in terms of *accuracy*. Formally, accuracy can be stated as:
+$$
+\operatorname{Accuracy} = 1 - \mathcal{L}_{0-1}(\boldsymbol{y}, \hat{\boldsymbol{y}})
+$$
+where $\mathcal{L}_{0-1}(\cdot)$ is the zero-one loss given by:
+$$
+ \mathcal{L}_{0-1}(\boldsymbol{y}, \hat{\boldsymbol{y}}) = \frac{1}{N}\sum_{i=1}^{N}\mathbb{I}\left(\boldsymbol{y}_{i}\neq \hat{\boldsymbol{y}}_{i}\right).
+$$Intuitively, from the  zero-one loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of  one and normalize by the number of samples $N$, which gives use the normalized zero-one loss.
 
-We optimize for the accuracy
+Our dataset is balanced and buyer-initiated trades predicted as seller, hence --*false positives* -- and buyer-initiated trades predicted as seller -- *false negatives* -- have similar associated costs, which makes the accuracy a reasoned choice as a performance metric. As the zero-one loss and in consequence the accuracy is not differentiable, we cannot use it in optimization, but use it as as a early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy on the test set.
 
-- extension of feature permutation https://arxiv.org/pdf/1801.01489.pdf
-- nice description incuding alogirhtm https://christophm.github.io/interpretable-ml-book/feature-importance.html
-
-
-From [[@raschkaModelEvaluationModel2020]]: 0-1 loss and prediction accuracy. In the following article, we will focus on the prediction accuracy, which is defined as the number of all correct predictions divided by the number of examples in the dataset. We compute the prediction accuracy as the number of correct predictions divided by the number of examples $n$. Or in more formal terms, we define the prediction accuracy ACC as
-$$
-\mathrm{ACC}=1-\mathrm{ERR},
-$$
-where the prediction error, ERR, is computed as the expected value of the $0-1$ loss over $n$ examples in a dataset $S$ :
-$$
-\operatorname{ERR}_S=\frac{1}{n} \sum_{i=1}^n L\left(\hat{y}_i, y_i\right) .
-$$
-The $0-1$ loss $L(\cdot)$ is defined as
-$$
-L\left(\hat{y_i}, y_i\right)= \begin{cases}0 & \text { if } \hat{y}_i=y_i \\ 1 & \text { if } \hat{y}_i \neq y_i\end{cases}
-$$
+**Notes:**
+[[🧭Evaluation metric notes]]
