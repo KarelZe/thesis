@@ -103,7 +103,7 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         Returns:
             SelfTrainingClassifier: self
         """
-        # get features, labels etc. from train pool
+        # get features, labels etc from trian set
         X = train_set["data"]
         y = train_set["label"].values
         weight = train_set["weight"]
