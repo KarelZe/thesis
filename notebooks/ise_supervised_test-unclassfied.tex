@@ -1,0 +1,26 @@
+\begin{table}
+	\centering
+	\caption[{key}-unclassified-short]{ise_supervised_test-unclassified-long}
+	\label{tab:ise_supervised_test-unclassfied}
+	\begin{tabular}{llS}
+		\toprule
+		{}                            & {}                                                                                                           & {Unclassified}   \\
+		\midrule
+		\multirow[c]{6}{*}{Classical} & Tick (Ex)                                                                                                    & \bfseries 0.1248 \\
+		                              & Quote (Ex)                                                                                                   & 0.0602           \\
+		                              & \gls{EMO} (Ex)                                                                                               & 0.0231           \\
+		                              & \gls{CLNV} (Ex)                                                                                              & 0.0194           \\
+		                              & \gls{LR} (Ex)                                                                                                & 0.0016           \\
+		                              & Trade Size (Ex) $\to$ Quote (Best) $\to$ Depth (Best) $\to$ Quote (Ex) $\to$ Depth (Ex) $\to$ Rev. Tick(All) & 0.0000           \\
+		\cline{1-3}
+		\multirow[c]{7}{*}{\gls{GBM}} & \gls{GBM} (Classical)                                                                                        & 0.0000           \\
+		                              & \gls{GBM}(Classical-Retraining)                                                                              & 0.0000           \\
+		                              & \gls{GBM}(Classical-Size-Retraining)                                                                         & 0.0000           \\
+		                              & \gls{GBM} (Classical, Size)                                                                                  & 0.0000           \\
+		                              & \gls{GBM}(Ml)                                                                                                & 0.0000           \\
+		                              & \gls{GBM}(Ml-Retraining)                                                                                     & 0.0000           \\
+		                              & \gls{GBM}(Semi-Classical)                                                                                    & 0.0000           \\
+		\cline{1-3}
+		\bottomrule
+	\end{tabular}
+\end{table}
