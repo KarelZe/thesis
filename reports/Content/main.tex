@@ -269,13 +269,16 @@ problem.
 \newpage
 \addtocontents{toc}{\protect\newpage}
 \section{Supervised Approaches (12~p)}\label{sec:supervised-approaches}
+
+% TODO: central assumption of supervised learning (smoothness assumption) (p. 5 chapelle)
+
 \subsection{Problem Framing}\label{sec:problem-framing}
 
 All presented trade classification rules from \cref{sec:rule-based-approaches}  perform \emph{discrete classification} and assign a class to the trade. Naturally, a more powerful insight is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives additional insights into the confidence of the prediction.
 
 Thus, we frame trade signing as a \emph{probabilistic} classification problem. This is similar to the work of \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis. To this end, a probabilistic view enables a richer evaluation, but constraints our selection to (semi-)supervised probabilistic classifiers. To maintain comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
 
-We introduce some more notation, which we will use throughout. Each data instance consists of a feature vector and the target. The former is given by $\boldsymbol{x} \in \mathbb{R}^m$ and described by a random variable $X$. Features in $\boldsymbol{x}$ may be numerical, e.g., the previous trade price or categorical e.g., the option type. Like before, the target or trade initiator is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $p^*(X, Y)$. The training set with $N$ i.i.d. samples drawn from $p^*$ is denoted by $\mathcal{D}_N=\left\{\left(\boldsymbol{x}_i, y_i\right)\right\}_{i=1}^N$.
+We introduce some more notation, which we will use throughout. Each data instance consists of a feature vector and the target. The former is given by $\boldsymbol{x} \in \mathbb{R}^m$ and described by a random variable $X$. Features in $\boldsymbol{x}$ may be numerical, e.g., the previous trade price or categorical e.g., the option type. Like before, the target or trade initiator is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $p^*(X, Y)$. The training set with $N$ i.i.d. samples drawn from $p^*$ is denoted by $\mathcal{D}_N=\left\{\left(\boldsymbol{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a $(n \times m)$-dimensional feature matrix $\boldsymbol{X}=\left[\boldsymbol{x}_1,\cdots, \boldsymbol{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\boldsymbol{y}=\left[y_1,\cdots, y_N \right]^{\top}$.
 
 For our machine learning classifiers, we aim to model $p_{\theta}(y \mid \boldsymbol{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
 
@@ -296,6 +299,8 @@ and 1, no insight is gained into the confidence of the prediction. Yet, it does 
 
 \subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches}
 
+
+
 \subsection{Gradient Boosted Trees (2~p)}\label{sec:gradient-boosted-trees}
 
 \subsubsection{Decision Tree}\label{sec:decision-tree}
@@ -305,9 +310,9 @@ Decision trees can be used in classification and regression. Counterintuitive to
 A decision tree splits the feature space into several disjoint regions $R$ through a sequence of recursive splits. For a binary decision tree, a single split leads to two new sub-regions, whose shape is determined by the features considered for splitting and the preceding splits. Trees are grown in depth until a minimum threshold for the number of samples within a node or some other stopping criterion applies \autocite[][42]{breimanClassificationRegressionTrees2017}.
 A region corresponds to a terminal node in the tree. For each terminal node of the tree or unsplit region, the predicted response value is constant for the entire region and shared by all its samples \autocite[][229]{breimanClassificationRegressionTrees2017}.
 
-For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $x$ the tree can be modelled as:
+For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $\boldsymbol{x}$ the tree can be modelled as:
 \begin{equation}
-    f(x)=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(x \in R_{m}\right),
+    h(\boldsymbol{x})=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(\boldsymbol{x} \in R_{m}\right),
     \label{eq:decision-tree}
 \end{equation}
 
@@ -535,11 +540,17 @@ In the subsequent section, extend all previous models including FT-Transformer f
 \newpage
 \section{Semi-Supervised Approaches (8~p)}\label{sec:semi-supervised-approaches}
 
+Our supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the initiator can be inferred through matching procedures, which may bias the selection. Unlabelled trades, though, are abundant and can help improve generalization performance of the classifier. 
+
+Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside with true labels \autocite[][6]{chapelleSemisupervisedLearning2006}. This property renders them appealing for trade classification.
+
+Semi-supervised learning is centred around the \textit{assumption of smoothness}, which states that if two samples $\boldsymbol{x}_{1}$ and $\boldsymbol{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if datapoints are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
+
+The semi-supervised setting requires to extend our notation from \cref{sec:problem-framing}, by dividing the dataset into labelled and unlabelled instances. Henceforth, $\boldsymbol{X}_{l} = \left[\boldsymbol{x}_{1},\ldots, \boldsymbol{x}_{l}\right]^{\top}$ is used for instances, where labels $\boldsymbol{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$ are known and $\boldsymbol{X}_{u} = \left[\boldsymbol{x}_{l+1},\ldots, \boldsymbol{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by datetime.
+
+Our coverage of semi-supervised approaches includes \emph{self-training} for gradient-boosting and \emph{pre-training} of Transformers, which we derive from a subsequent discussion.
+
 \subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches-1}
-
-Our supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the label can be inferred through matching procedures, which may bias the selection. Unlabelled trades, though, are abundant and may improve generalization performance of the classifier. Ideally, both labelled and unlabelled instances are used in training. Semi-supervised methods leverage both labelled and unlabelled data by learning an algorithm on unlabelled instances alongside with true labels \autocite[][6]{chapelleSemisupervisedLearning2006}.
-The application of semi-supervised methods is novel in trade classification.
-
 
 \subsection{Extensions to Gradient Boosted
     Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
@@ -775,14 +786,14 @@ The quality of the classifier is better, the higher the share of trades is where
 \operatorname{Accuracy} = 1 - \mathcal{L}_{0-1}(\boldsymbol{y}, \hat{\boldsymbol{y}})
 \end{equation}
 
-where $\mathcal{L}_{0-1}(\cdot)$ is the zero-one loss given by:
+where $\mathcal{L}_{0-1}(\cdot)$ is the 0-1-loss given by:
 \begin{equation}
 \mathcal{L}_{0-1}(\boldsymbol{y}, \hat{\boldsymbol{y}}) = \frac{1}{N}\sum_{i=1}^{N}\mathbb{I}\left(\boldsymbol{y}_{i}\neq \hat{\boldsymbol{y}}_{i}\right).
 \end{equation}
 
-Intuitively, from the zero-one loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized zero-one loss.
+Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss.
 
-Our dataset is balanced and buyer-initiated trades are predicted as sellers --~\textit{false positives}~-- and buyer-initiated trades are predicted as seller-initiated --~\textit{false negatives}~-- have similar associated costs, which makes the accuracy a reasoned choice as a performance metric. As the zero-one loss and in consequence, the accuracy is not differentiable, we cannot use it in optimization, but use it as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test set.
+Our dataset is balanced and buyer-initiated trades are predicted as sellers --~\textit{false positives}~-- and buyer-initiated trades are predicted as seller-initiated --~\textit{false negatives}~-- have similar associated costs, which makes the accuracy a reasoned choice as a performance metric. As the 0-1-loss and in consequence, the accuracy is not differentiable, we cannot use it in optimization, but use it as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test set.
 
 \newpage
 \section{Results}\label{sec:results}
