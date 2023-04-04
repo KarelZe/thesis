@@ -1,8 +1,20 @@
 
 
+The application of semi-supervised methods is novel in trade classification.
+
+
+----
+
+Central hypothesis. The basic assumption in semi-supervised learning, called smoothness, stipulates that two examples in a high density region should have identical class labels [10, 2]. This means that if two points are part of the same group or cluster, their class labels will most likely be the same. If they are separated by a low density zone, on the other hand, their desired labels should be different. Hence, if the examples of the same class form a partition, unlabeled training data might aid in determining the partition boundary more efficiently than if just labeled training examples were utilized
 
 
 
+In semi-supervised learning there is a small set of labeled data and a large pool of unlabeled data. Data points are divided into the points Xl = (x1,x2...,xl), for which labels Yl = {?1,-1} are provided, and the points Xu = (xlþ1,xlþ2; ...; xlþu), the labels of which are not known. We assume that labeled and unlabeled data are drawn independently from the same data distribution. In this paper we consider datasets for which nl nu, where nl and nu are the number of labeled data and unlabeled data respectively. 3.2 The self-training algorithm The self-training algorithm wraps around a base classifier and uses its own predictions through the training process [48]. A base learner is first trained on a small number of labeled examples, the initial training set. The classifier is then used to predict labels for unlabeled examples (prediction step) based on the classification confidence. Next, a subset S of the unlabeled examples, together with their predicted labels, is selected to train a new classifier (selection step). Typically, S consists of a few unlabeled examples with high-confidence predictions. The classifier is then re-trained on the new set of labeled examples, and the procedure is repeated (re-training step) until it reaches a stopping condition. As a base learner, we employ the decision tree classifier in self-training. The most wellknown algorithm for building decision trees is the C4.5 algorithm [32], an extension of Quinlan’s earlier ID3 algorithm. Decision trees are one of the most widely used classification methods, see [5, 10, 16]. They are fast and effective in many domains. They work well with little or no tweaking of parameters which has made them a popular tool for many domains [31]. This has motivated us to find a semi-supervised method for learning decision trees. Algorithm 1 presents the main structure of the self-training algorithm. (From https://link.springer.com/content/pdf/10.1007/s13042-015-0328-7.pdf?pdf=button)
+
+
+
+
+Self-training. Our work is based on self-training (e.g., [71, 96, 68, 67]). Self-training first uses labeled data to train a good teacher model, then use the teacher model to label unlabeled data and finally use the labeled data and unlabeled data to jointly train a student model. In typical self-training with the teacher-student framework, noise injection to the student is not used by default, or the role of noise is not fully understood or justified. The main difference between our work and prior works is that we identify the importance of noise, and aggressively inject noise to make the student better. (https://arxiv.org/pdf/1911.04252.pdf)
 
 
 
@@ -84,6 +96,9 @@ The main downside of self-training is that the model is unable to correct its ow
 
 
 ## Self-Learning, self-training, etc.
+
+Self-training is a commonly used technique for semi-supervised learning. In selftraining a classifier is first trained with the small amount of labeled data. The classifier is then used to classify the unlabeled data. Typically the most confident unlabeled points, together with their predicted labels, are added to the training set. The classifier is re-trained and the procedure repeated. Note the classifier uses its own predictions to teach itself. The procedure is also called self-teaching or bootstrapping (not to be confused with the statistical procedure with the same name). The generative model and EM approach of section 2 can be viewed as a special case of ‘soft’ self-training. One can imagine that a classification mistake can reinforce itself. Some algorithms try to avoid this by ‘unlearn’ unlabeled points if the prediction confidence drops below a threshold. Self-training has been applied to several natural language processing tasks. Yarowsky (1995) uses self-training for word sense disambiguation, e.g. deciding whether the word ‘plant’ means a living organism or a factory in a give context. Riloff et al. (2003) uses it to identify subjective nouns. Maeireizo et al. (2004) classify dialogues as ‘emotional’ or ‘non-emotional’ with a procedure involving two classifiers.Self-training has also been applied to parsing and machine translation. Rosenberg et al. (2005) apply self-training to object detection systems from images, and show the semi-supervised technique compares favorably with a stateof-the-art detector. Self-training is a wrapper algorithm, and is hard to analyze in general. However, for specific base learners, there has been some analyzer’s on convergence. See e.g. (Haffari & Sarkar, 2007; Culp & Michailidis, 2007).
+
 
 “Probably the earliest idea about using unlabeled data in classification is selflearning, which is also known as self-training, self-labeling, or decision-directed self-learning learning. This is a wrapper-algorithm that repeatedly uses a supervised learning method. It starts by training on the labeled data only. In each step a part of the unlabeled points is labeled according to the current decision function; then the supervised method is retrained using its own predictions as additional labeled points. This idea has appeared in the literature already for some time (e.g., Scudder (1965); Fralick (1967); Agrawala (1970)). 
 

@@ -1,8 +1,22 @@
+Our supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or for subsets of trades where the initiator can be inferred from matching procedures, which may bias the selection. Unlabelled trades, though, are abundant and can help to improve generalization performance of the classifier.
+
+Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside with true labels ([[@chapelleSemisupervisedLearning2006]]6) ([[@zhuSemiSupervisedLearningLiterature]]6). They are centred around the assumption of *smoothness*, which states that if two samples $\boldsymbol{x}_{1}$ and $\boldsymbol{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if datapoints are separated by a low-density region, their labels may be different ([[@chapelleSemisupervisedLearning2006]] 5). 
+
+Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
+
+The semi-supervised setting requires to extend our notation from cref-problem framing, as we have to divide the dataset into labelled and unlabelled instances. Henceforth, $\boldsymbol{X}_{l} = \left[\boldsymbol{x}_{1},\ldots, \boldsymbol{x}_{l}\right]$  is used for instances, where the label $\boldsymbol{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$  is known and $\boldsymbol{X}_{u} = \left[\boldsymbol{x}_{l+1},\ldots, \boldsymbol{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by the trade time.
+
+Our coverage of semi-supervised methods includes *self-training classifiers* for gradient-boosting and *pre-training* of Transformers. We start with the  the self-training paradigm.
+
+---- 
 
 
 
+in the core assumption of semi-supervised learning
 
-Our supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the label can be inferred through matching procedures, which may bias the selection. Unlabelled trades, though, are abundant  and may improve generalization performance of the classifier. Semi-supervised methods leverage partially labelled data by learning an algorithm on unlabelled instances alongside with true labels ([[@chapelleSemisupervisedLearning2006]]6). 
+from learning on unlabelled trades, the assumptions 
+
+One of the most prominent approaches of semi-supervised learning, is self-training, which 
 
 For semi-supervised approaches to
 
