@@ -1,5 +1,10 @@
 ## Open
-- How to consistently handle unknowns in "location to quote"?
+- Discuss questions from email.
+- Discuss latest, improved results for CBOE / semi-supervised models.
+- Discuss strategies to select the benchmarks e. g., on validation set / intuition / your paper.
+- Any tips what I should differently in the remaining two months?
+
+## Closed
 - What happens to the trade volumes of professional customers? Filtered out or treated as ordinary customers? -> Filtered out, as professional customers (particularly large customers) are assumed to act like a market maker / provide liquidity not demand liquidity. Incorporate this in paragraph.
 - What is part of the unlabelled dataset? Only customer trades, where volumes don't match or also professional customer trades, broker/deal trades etc.? -> All trades.
 - How is the market maker identified in the raw sources? -> delta between total volume and volumes of customers, brokers etc. So-called market clearing condition.
@@ -11,8 +16,6 @@
 - When do I obtain the remaining data? Note, there are practically only 6 weeks left. -> Beginning next week.
 - Ask about the scope of related work. Currently, trade classification in option markets (i) and trade classification with machine learning (ii).  -> LGTM, also avoids that the work gets out-of-hand.
 - My work currently has 67 pages. Volume might get out of hand. -> ok, as long as it is not repetitive.
-
-## Closed
 - Ask about self-plagiarism e.g., in chapter decision tree, as formulation and sources are similar to previous seminar. -> It's ok, as long as entire chapter isn't the same.
 - EDA for unlabelled trades to investigate bias that can not be observed through summary statistics -> good idea.
 - Ask for CBOE and unlabelled data. This poses a major risk as I'm not sure about performance/training times etc. -> received some data but requires some rework.
