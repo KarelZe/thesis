@@ -310,9 +310,9 @@ Decision trees can be used in classification and regression. Counterintuitive to
 A decision tree splits the feature space into several disjoint regions $R$ through a sequence of recursive splits. For a binary decision tree, a single split leads to two new sub-regions, whose shape is determined by the features considered for splitting and the preceding splits. Trees are grown in depth until a minimum threshold for the number of samples within a node or some other stopping criterion applies \autocite[][42]{breimanClassificationRegressionTrees2017}.
 A region corresponds to a terminal node in the tree. For each terminal node of the tree or unsplit region, the predicted response value is constant for the entire region and shared by all its samples \autocite[][229]{breimanClassificationRegressionTrees2017}.
 
-For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $x$ the tree can be modelled as:
+For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $\boldsymbol{x}$ the tree can be modelled as:
 \begin{equation}
-    f(x)=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(x \in R_{m}\right),
+    h(\boldsymbol{x})=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(\boldsymbol{x} \in R_{m}\right),
     \label{eq:decision-tree}
 \end{equation}
 
@@ -544,9 +544,9 @@ Our supervised approaches depend on the availability of the trade initiator as t
 
 Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside with true labels \autocite[][6]{chapelleSemisupervisedLearning2006}. This property renders them appealing for trade classification.
 
-Semi-supervised learning are centered around the \textit{assumption of smoothness}, which states that if two samples $\boldsymbol{x}_{1}$ and $\boldsymbol{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if datapoints are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
+Semi-supervised learning is centred around the \textit{assumption of smoothness}, which states that if two samples $\boldsymbol{x}_{1}$ and $\boldsymbol{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if datapoints are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
 
-The semi-supervised setting requires to extend our notation from \cref{sec:problem-framing}, by dividing the dataset into labelled and unlabelled instances. Henceforth, $\boldsymbol{X}_{l} = \left[\boldsymbol{x}_{1},\ldots, \boldsymbol{x}_{l}\right]^{\top}$ is used for instances, where labels $\boldsymbol{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$  are known and $\boldsymbol{X}_{u} = \left[\boldsymbol{x}_{l+1},\ldots, \boldsymbol{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by datetime.
+The semi-supervised setting requires to extend our notation from \cref{sec:problem-framing}, by dividing the dataset into labelled and unlabelled instances. Henceforth, $\boldsymbol{X}_{l} = \left[\boldsymbol{x}_{1},\ldots, \boldsymbol{x}_{l}\right]^{\top}$ is used for instances, where labels $\boldsymbol{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$ are known and $\boldsymbol{X}_{u} = \left[\boldsymbol{x}_{l+1},\ldots, \boldsymbol{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by datetime.
 
 Our coverage of semi-supervised approaches includes \emph{self-training} for gradient-boosting and \emph{pre-training} of Transformers, which we derive from a subsequent discussion.
 
@@ -786,14 +786,14 @@ The quality of the classifier is better, the higher the share of trades is where
 \operatorname{Accuracy} = 1 - \mathcal{L}_{0-1}(\boldsymbol{y}, \hat{\boldsymbol{y}})
 \end{equation}
 
-where $\mathcal{L}_{0-1}(\cdot)$ is the zero-one loss given by:
+where $\mathcal{L}_{0-1}(\cdot)$ is the 0-1-loss given by:
 \begin{equation}
 \mathcal{L}_{0-1}(\boldsymbol{y}, \hat{\boldsymbol{y}}) = \frac{1}{N}\sum_{i=1}^{N}\mathbb{I}\left(\boldsymbol{y}_{i}\neq \hat{\boldsymbol{y}}_{i}\right).
 \end{equation}
 
-Intuitively, from the zero-one loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized zero-one loss.
+Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss.
 
-Our dataset is balanced and buyer-initiated trades are predicted as sellers --~\textit{false positives}~-- and buyer-initiated trades are predicted as seller-initiated --~\textit{false negatives}~-- have similar associated costs, which makes the accuracy a reasoned choice as a performance metric. As the zero-one loss and in consequence, the accuracy is not differentiable, we cannot use it in optimization, but use it as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test set.
+Our dataset is balanced and buyer-initiated trades are predicted as sellers --~\textit{false positives}~-- and buyer-initiated trades are predicted as seller-initiated --~\textit{false negatives}~-- have similar associated costs, which makes the accuracy a reasoned choice as a performance metric. As the 0-1-loss and in consequence, the accuracy is not differentiable, we cannot use it in optimization, but use it as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test set.
 
 \newpage
 \section{Results}\label{sec:results}
