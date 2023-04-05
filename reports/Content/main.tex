@@ -778,22 +778,20 @@ In absence of ground truth for the true feature attribution, we resort to attent
 
 The next chapter discusses different metrics to assess the prediction quality of our models.
 
-\subsubsection{Evaluation Metric (1~p)}\label{sec:evaluation-metric}
+\subsubsection{Evaluation Metric}\label{sec:evaluation-metric}
 
-The quality of the classifier is better, the higher the share of trades is where the predicted trade initiator equals the true trade initiator. We assess the quality of our model’s prediction in terms of \emph{accuracy}. Formally, accuracy can be stated as:
-
+Our goal is to maximize the number of trades, where the predicted trade initiator matches the true trade initiator. We assess the quality of our model’s prediction in terms of \emph{accuracy}, which can be stated as:
 \begin{equation}
-\operatorname{Accuracy} = 1 - \mathcal{L}_{0-1}(\mathbf{y}, \hat{\mathbf{y}})
+\operatorname{accuracy} \colon \mathbb{R}^{N} \times \mathbb{R}^{N} \to  \left[0, 1\right], \quad \operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{l}_{0-1}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
+\end{equation}
+where $\operatorname{l}_{0-1}(\cdot)$ is the 0-1-loss given by:
+\begin{equation}
+    \operatorname{l}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad \operatorname{l}_{0-1}(y, \widehat{y}) = \mathbb{I}\left(y\neq \widehat{y}\right).
 \end{equation}
 
-where $\mathcal{L}_{0-1}(\cdot)$ is the 0-1-loss given by:
-\begin{equation}
-\mathcal{L}_{0-1}(\mathbf{y}, \hat{\mathbf{y}}) = \frac{1}{N}\sum_{i=1}^{N}\mathbb{I}\left(\mathbf{y}_{i}\neq \hat{\mathbf{y}}_{i}\right).
-\end{equation}
+Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss. Notably, the loss is the same for false positives and negatives.
 
-Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss.
-
-Our dataset is balanced and buyer-initiated trades are predicted as sellers --~\textit{false positives}~-- and buyer-initiated trades are predicted as seller-initiated --~\textit{false negatives}~-- have similar associated costs, which makes the accuracy a reasoned choice as a performance metric. As the 0-1-loss and in consequence, the accuracy is not differentiable, we cannot use it in optimization, but use it as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test set.
+Our datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vice versa have similar associated costs, which makes accuracy an ideal choice as a performance metric. As the 0-1-loss and in consequence, the accuracy is not differentiable, it cannot be used in optimization, but as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test sets.
 
 \newpage
 \section{Results}\label{sec:results}
