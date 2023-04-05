@@ -278,19 +278,19 @@ All presented trade classification rules from \cref{sec:rule-based-approaches}  
 
 Thus, we frame trade signing as a \emph{probabilistic} classification problem. This is similar to the work of \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis. To this end, a probabilistic view enables a richer evaluation, but constraints our selection to (semi-)supervised probabilistic classifiers. To maintain comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
 
-We introduce some more notation, which we will use throughout. Each data instance consists of a feature vector and the target. The former is given by $\boldsymbol{x} \in \mathbb{R}^m$ and described by a random variable $X$. Features in $\boldsymbol{x}$ may be numerical, e.g., the previous trade price or categorical e.g., the option type. Like before, the target or trade initiator is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $p^*(X, Y)$. The training set with $N$ i.i.d. samples drawn from $p^*$ is denoted by $\mathcal{D}_N=\left\{\left(\boldsymbol{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a $(n \times m)$-dimensional feature matrix $\boldsymbol{X}=\left[\boldsymbol{x}_1,\cdots, \boldsymbol{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\boldsymbol{y}=\left[y_1,\cdots, y_N \right]^{\top}$.
+We introduce some more notation, which we will use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^m$ and described by a random variable $X$. Features in $\mathbf{x}$ may be numerical, e.g., the previous trade price or categorical e.g., the option type. Like before, the target or trade initiator is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $p^*(X, Y)$. The training set with $N$ i.i.d. samples drawn from $p^*$ is denoted by $\mathcal{D}_N=\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a $(n \times m)$-dimensional feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\cdots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\cdots, y_N \right]^{\top}$.
 
-For our machine learning classifiers, we aim to model $p_{\theta}(y \mid \boldsymbol{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
+For our machine learning classifiers, we aim to model $p_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
 
 % TODO: unclassified classs = 0.5 / 0.5
 \begin{equation}
-    p(y\mid \boldsymbol{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
+    p(y\mid \mathbf{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
     \label{eq:prob-from-point-estimate}
 \end{equation}
 
 Consequently, if a trade is predicted as a sell, i.e. $\hat{y} = -1$,  we assign a probability of one for being a sell and a zero probability for being a buy and vice versa. Given the estimated class probabilities, we retrieve the most probable class in $\mathcal{Y}$ as:
 \begin{equation}
-    \hat{y}=\arg\max_{y \in \mathcal{Y}} p(y \mid \boldsymbol{x}).
+    \hat{y}=\arg\max_{y \in \mathcal{Y}} p(y \mid \mathbf{x}).
     \label{eq:class-from-prob}
 \end{equation}
 \cref{eq:prob-from-point-estimate} and \cref{eq:class-from-prob} allow us to switch between a discrete and probabilistic formulation for trade classification rules. Since the class probability estimates are either 0
@@ -310,9 +310,9 @@ Decision trees can be used in classification and regression. Counterintuitive to
 A decision tree splits the feature space into several disjoint regions $R$ through a sequence of recursive splits. For a binary decision tree, a single split leads to two new sub-regions, whose shape is determined by the features considered for splitting and the preceding splits. Trees are grown in depth until a minimum threshold for the number of samples within a node or some other stopping criterion applies \autocite[][42]{breimanClassificationRegressionTrees2017}.
 A region corresponds to a terminal node in the tree. For each terminal node of the tree or unsplit region, the predicted response value is constant for the entire region and shared by all its samples \autocite[][229]{breimanClassificationRegressionTrees2017}.
 
-For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $\boldsymbol{x}$ the tree can be modelled as:
+For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $\mathbf{x}$ the tree can be modelled as:
 \begin{equation}
-    h(\boldsymbol{x})=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(\boldsymbol{x} \in R_{m}\right),
+    h(\mathbf{x})=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(\mathbf{x} \in R_{m}\right),
     \label{eq:decision-tree}
 \end{equation}
 
@@ -423,10 +423,10 @@ The attention mechanism enables tokens to attend to other inputs in the immediat
 
 The network consists of a linear transformation, followed by a non-linear activation function and a second linear layer. For the $l$-th layer, the \gls{MLP} is given by
 \begin{equation}
-    \gls{X} = \gls{X}+\boldsymbol{W}_{\mathrm{mlp} 2}^l \operatorname{ReLU}\left(\boldsymbol{W}_{\mathrm{mlp} 1}^l \gls{X}+\boldsymbol{b}_{\mathrm{mlp} 1}^l 1^{\top}\right)+\boldsymbol{b}_{\mathrm{mlp} 2}^l 1^{\top},
+    \gls{X} = \gls{X}+\mathbf{W}_{\mathrm{mlp} 2}^l \operatorname{ReLU}\left(\mathbf{W}_{\mathrm{mlp} 1}^l \gls{X}+\mathbf{b}_{\mathrm{mlp} 1}^l 1^{\top}\right)+\mathbf{b}_{\mathrm{mlp} 2}^l 1^{\top},
 \end{equation}
 
-with $\boldsymbol{W}_{\text {mlp } 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times d_{e}}, \boldsymbol{b}_{\mathrm{mlp} 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}}}, \boldsymbol{W}_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}} \times d_{\mathrm{mlp}}$ and $\boldsymbol{b}_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}}$ being learnable parameters identical for all \glspl{embedding} in the layer. The network is applied to each embedding separately and identically.
+with $\mathbf{W}_{\text {mlp } 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times d_{e}}, \mathbf{b}_{\mathrm{mlp} 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}}}, \mathbf{W}_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}} \times d_{\mathrm{mlp}}$ and $\mathbf{b}_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}}$ being learnable parameters identical for all \glspl{embedding} in the layer. The network is applied to each embedding separately and identically.
 
 \textcite[][9]{vaswaniAttentionAllYou2017} set the hidden dimension to be two to eight magnitudes of the embedding dimension. The large capacity strengthens the model's ability to retain information but also contributes significantly to the high computational requirements and memory footprint of Transformers \autocites[][5]{tayEfficientTransformersSurvey2022}[][1]{kitaevReformerEfficientTransformer2020}. Both linear transformations are separated by a \gls{ReLU} \gls{activation-function} \autocite[][318]{glorotDeepSparseRectifier2011} to introduce non-linearities to the network.
 
@@ -440,9 +440,9 @@ As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connecti
 
 \textcite[][3]{vaswaniAttentionAllYou2017} extensively draw on layer normalization \autocite[][4]{baLayerNormalization2016} after the multi-headed attention and feed-forward sublayers. It is used for normalizing the activations of the sublayer and to stabilize and accelerate the training of the network \autocite[][2]{baLayerNormalization2016}. For the Transformer, the normalization statistics are calculated separately for every instance, which guarantees scalability across different batch sizes. For a vector $\gls{e}\in \mathbb{R}^{d_e}$ the normalized output is given by
 \begin{equation}
-    \widehat{\gls{e}}=\frac{\gls{e}-m}{\sqrt{v}} \odot \boldsymbol{\gamma}+\boldsymbol{\beta},
+    \widehat{\gls{e}}=\frac{\gls{e}-m}{\sqrt{v}} \odot \mathbf{\gamma}+\mathbf{\beta},
 \end{equation}
-calculated from the statistics $m = \sum_{i=1}^{d_{e}} \gls{e}\left[i\right] / d_{e}$ and $v = \sum_{i=1}^{d_{e}}(\gls{e}\left[i\right]-m)^2 / d_{e}$. Typically, the scale $\boldsymbol{\gamma}$ and bias $\boldsymbol{\beta}$ are set to preserve a zero mean and unit variance.
+calculated from the statistics $m = \sum_{i=1}^{d_{e}} \gls{e}\left[i\right] / d_{e}$ and $v = \sum_{i=1}^{d_{e}}(\gls{e}\left[i\right]-m)^2 / d_{e}$. Typically, the scale $\mathbf{\gamma}$ and bias $\mathbf{\beta}$ are set to preserve a zero mean and unit variance.
 
 Until now it remains unclear, how the layer normalization intertwines with the sublayers and the residual connections. Transformers are distinguished by the order in which layer normalization is added into the pre-norm and post-norm Transformer.
 \begin{figure}[ht]
@@ -495,33 +495,33 @@ Many of the concepts in \cref{sec:transformer-networks} can be adapted to the ta
 
 The TabTransformer of \textcite[][4]{huangTabTransformerTabularData2020} adapts the classical Transformer to the tabular domain to increase performance as well as robustness to noise and missing data over conventional deep learning approaches. Inputs are processed in two ways. In a post-norm encoder, the embeddings of categorical features are contextualized, while numerical inputs are processed as scalars. The former are normalized using layer norm, concatenated with the contextual embeddings, and passed through a \gls{MLP}. More specifically, \textcite[][4--12]{huangTabTransformerTabularData2020} use a \gls{FFN} with two hidden layers, whilst other architectures are possible. For strictly numerical inputs, the model collapses to a \gls{MLP} with layer normalization. The joint architecture is depicted in \cref{fig:tabtransformer}.
 
-Categorical must be embedded first, to be accessible in the encoder. The embedding approach of \textcite[][3]{huangTabTransformerTabularData2020} is dichotomous and extends our observations from \cref{sec:token-embeddings}. It consists of a \emph{feature-specific embedding} and a \emph{shared embedding}. The \emph{feature-specific embedding}, uniquely identifies each category. Embeddings are queried with an integer key $c_j \in C_j \cong\left[N_{\mathrm{C_j}}\right]$ from the embedding matrix $\boldsymbol{W}_j \in \mathbb{R}^{d_e \times N_{C_j}}$ of the respective categorical column $j$~\footnote{The split between separate embedding matrices is only \emph{logically}. Additional embeddings may be created, which affects the dimensionality of the embedding metric. Similar to special tokens in the vocabulary, like the $\texttt{[UNK]}$ token for handing out-of-vocabulary items, a category can be reserved for unseen categories. \textcite[][10]{huangTabTransformerTabularData2020} use a separate embedding for missing categories.}. Similar to \cref{sec:token-embeddings}, a previous label encoding must be employed, that maps each category to its unique integer key.
+Categorical must be embedded first, to be accessible in the encoder. The embedding approach of \textcite[][3]{huangTabTransformerTabularData2020} is dichotomous and extends our observations from \cref{sec:token-embeddings}. It consists of a \emph{feature-specific embedding} and a \emph{shared embedding}. The \emph{feature-specific embedding}, uniquely identifies each category. Embeddings are queried with an integer key $c_j \in C_j \cong\left[N_{\mathrm{C_j}}\right]$ from the embedding matrix $\mathbf{W}_j \in \mathbb{R}^{d_e \times N_{C_j}}$ of the respective categorical column $j$~\footnote{The split between separate embedding matrices is only \emph{logically}. Additional embeddings may be created, which affects the dimensionality of the embedding metric. Similar to special tokens in the vocabulary, like the $\texttt{[UNK]}$ token for handing out-of-vocabulary items, a category can be reserved for unseen categories. \textcite[][10]{huangTabTransformerTabularData2020} use a separate embedding for missing categories.}. Similar to \cref{sec:token-embeddings}, a previous label encoding must be employed, that maps each category to its unique integer key.
 
-Besides feature-specific embedding, a \emph{shared embedding} is learned. This embedding is equal for all categories of one feature and is combined with the feature-specific embeddings to enable the model to distinguish classes in one column from those in other columns \autocite[][10]{huangTabTransformerTabularData2020}. It may be added or concatenated. For the variant that adds the shared embedding element-wisely, the embedding matrix $\boldsymbol{W}_S$ is of dimension $\mathbb{R}^{d_e \times m}$. Overall, the joint embedding of $x_j$ is given by:
+Besides feature-specific embedding, a \emph{shared embedding} is learned. This embedding is equal for all categories of one feature and is combined with the feature-specific embeddings to enable the model to distinguish classes in one column from those in other columns \autocite[][10]{huangTabTransformerTabularData2020}. It may be added or concatenated. For the variant that adds the shared embedding element-wisely, the embedding matrix $\mathbf{W}_S$ is of dimension $\mathbb{R}^{d_e \times m}$. Overall, the joint embedding of $x_j$ is given by:
 
 \begin{subequations}
     \begin{align}
-        \gls{e}_j = \boldsymbol{W}_j[:c_j] + \boldsymbol{W}_S[:j]\label{eq:tabtransformer-embedding-elementwise} \\
-        \intertext{Alternatively, categorical embeddings can also be concatenated from the feature-specific and shared embeddings. In order to maintain the overall embedding dimension of $d_{e}$, the dimensionality of the feature-specific embedding must be reduced to $d_{e} - \gamma$ and the remaining dimensionality $\gamma$ is attributed to the shared embedding. With the embedding matrices $\boldsymbol{W}_j \in \mathbb{R}^{d_{e} -\gamma \times N_{C_j}}$ and $\boldsymbol{W}_S \in \mathbb{R}^{\gamma \times m}$ , the embedding is now given by:}
-        \gls{e}_j = \left[\boldsymbol{W}_j[:c_j], \boldsymbol{W}_S[:j]\right]^T.\label{eq:tabtransformer-embedding-concat}
+        \gls{e}_j = \mathbf{W}_j[:c_j] + \mathbf{W}_S[:j]\label{eq:tabtransformer-embedding-elementwise} \\
+        \intertext{Alternatively, categorical embeddings can also be concatenated from the feature-specific and shared embeddings. In order to maintain the overall embedding dimension of $d_{e}$, the dimensionality of the feature-specific embedding must be reduced to $d_{e} - \gamma$ and the remaining dimensionality $\gamma$ is attributed to the shared embedding. With the embedding matrices $\mathbf{W}_j \in \mathbb{R}^{d_{e} -\gamma \times N_{C_j}}$ and $\mathbf{W}_S \in \mathbb{R}^{\gamma \times m}$ , the embedding is now given by:}
+        \gls{e}_j = \left[\mathbf{W}_j[:c_j], \mathbf{W}_S[:j]\right]^T.\label{eq:tabtransformer-embedding-concat}
     \end{align}
 \end{subequations}
 
 Both approaches from \cref{eq:tabtransformer-embedding-elementwise,eq:tabtransformer-embedding-concat}, achieve similar performance experiments of \textcite[][11]{huangTabTransformerTabularData2020}. No additional positional embedding is required, as embeddings are unique per feature.
 
-Analogous to \cref{sec:architectural-overview}, the embedding of each row, or $\boldsymbol{X} = [\gls{e}_1, \cdots, \gls{e}_m]$, is subsequently passed through several Transformer layers, ultimately resulting in contextualized embeddings. At the end of the encoder, the contextual embeddings are flattened and concatenated with the numerical features into a ($d_{e}\times m + c$)-dimensional vector, which is input to a \gls{MLP} \autocite[][3]{huangTabTransformerTabularData2020}. Like before, a linear layer and a softmax activation are used to retrieve the class probabilities of $y$.
+Analogous to \cref{sec:architectural-overview}, the embedding of each row, or $\mathbf{X} = [\gls{e}_1, \cdots, \gls{e}_m]$, is subsequently passed through several Transformer layers, ultimately resulting in contextualized embeddings. At the end of the encoder, the contextual embeddings are flattened and concatenated with the numerical features into a ($d_{e}\times m + c$)-dimensional vector, which is input to a \gls{MLP} \autocite[][3]{huangTabTransformerTabularData2020}. Like before, a linear layer and a softmax activation are used to retrieve the class probabilities of $y$.
 
 However, embedding and contextualizing of only the categorical inputs remains imperfect, as no numerical data is considered in the attention mechanism, and correlations between categorical and numerical features are broken due to the processing in different subnetworks \autocite[][2]{somepalliSAINTImprovedNeural2021}. Also, the robustness to noise is hardly improved for numerical inputs. In a small experimental setup, \textcite[][8]{somepalliSAINTImprovedNeural2021} address this concern for the TabTransformer by also embedding numerical inputs, which leads to a lift in \gls{AUC} by \SI{2.34}{\percent} merely through numerical embedding. Their observation integrates with a wider strand of literature that suggests that models can profit from numerical embeddings, as we derived in \cref{sec:token-embeddings}. To expand on this idea, we introduce the FT-Transformer next.
 
 \subsubsection{FT-Transformer}\label{sec:fttransformer}
 
-TabTransformer is limited by the ability to process only categorical embeddings in the Transformer unit. \textcite[][5]{gorishniyRevisitingDeepLearning2021} propose with FT-Transformer a competing architecture, that pairs an embedding unit for both numerical and categorical inputs, dubbed the feature tokenizer, with a Transformer. The complete architecture is depicted in \cref{fig:fttransformer}. Notably, the Transformer units use a pre-norm setup for easier optimization, whereby the very first normalization layer in the encoder is removed due to a propitious performance \textcite[][17]{gorishniyRevisitingDeepLearning2021}. The upstream feature tokenizer transforms all features of $\boldsymbol{x}$ to their embeddings. If the $j$-th feature, $x_j$, is numerical, it is projected to its embedding $\gls{e}_j \in \mathbb{R}^{d_e}$ by element-wise multiplication with a learned vector $\boldsymbol{W}_j \in \mathbb{R}^{d_{e}}$. Moreover, a feature-dependent bias term $\boldsymbol{b}_j \in \mathbb{R}$ is added, as noted in \cref{eq:numerical-embeddings-ft}.
+TabTransformer is limited by the ability to process only categorical embeddings in the Transformer unit. \textcite[][5]{gorishniyRevisitingDeepLearning2021} propose with FT-Transformer a competing architecture, that pairs an embedding unit for both numerical and categorical inputs, dubbed the feature tokenizer, with a Transformer. The complete architecture is depicted in \cref{fig:fttransformer}. Notably, the Transformer units use a pre-norm setup for easier optimization, whereby the very first normalization layer in the encoder is removed due to a propitious performance \textcite[][17]{gorishniyRevisitingDeepLearning2021}. The upstream feature tokenizer transforms all features of $\mathbf{x}$ to their embeddings. If the $j$-th feature, $x_j$, is numerical, it is projected to its embedding $\gls{e}_j \in \mathbb{R}^{d_e}$ by element-wise multiplication with a learned vector $\mathbf{W}_j \in \mathbb{R}^{d_{e}}$. Moreover, a feature-dependent bias term $\mathbf{b}_j \in \mathbb{R}$ is added, as noted in \cref{eq:numerical-embeddings-ft}.
 
 \begin{subequations}
     \begin{align}
-        \gls{e}_j= \boldsymbol{W}_j x_j +\boldsymbol{b}_j\label{eq:numerical-embeddings-ft} \\
-        \intertext{For categorical inputs, the embedding is implemented as a lookup table, analogous to \cref{sec:token-embeddings}. The specific embeddings $\gls{e}_j$ are queried with a unique integer key $c_j \in C_j \cong\left[N_{\mathrm{C_j}}\right]$ from the learned embedding matrix $\boldsymbol{W}_j \in \mathbb{R}^{d_e \times N_{C_j}}$. Finally, a feature-specific bias term $\boldsymbol{b}_j$ is added as shown in \cref{eq:categorical-embeddings-ft}.}
-        \gls{e}_{j}=\boldsymbol{W}_j[:c_j] +\boldsymbol{b}_j
+        \gls{e}_j= \mathbf{W}_j x_j +\mathbf{b}_j\label{eq:numerical-embeddings-ft} \\
+        \intertext{For categorical inputs, the embedding is implemented as a lookup table, analogous to \cref{sec:token-embeddings}. The specific embeddings $\gls{e}_j$ are queried with a unique integer key $c_j \in C_j \cong\left[N_{\mathrm{C_j}}\right]$ from the learned embedding matrix $\mathbf{W}_j \in \mathbb{R}^{d_e \times N_{C_j}}$. Finally, a feature-specific bias term $\mathbf{b}_j$ is added as shown in \cref{eq:categorical-embeddings-ft}.}
+        \gls{e}_{j}=\mathbf{W}_j[:c_j] +\mathbf{b}_j
         \label{eq:categorical-embeddings-ft}
     \end{align}
 \end{subequations}
@@ -544,9 +544,9 @@ Our supervised approaches depend on the availability of the trade initiator as t
 
 Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside with true labels \autocite[][6]{chapelleSemisupervisedLearning2006}. This property renders them appealing for trade classification.
 
-Semi-supervised learning is centred around the \textit{assumption of smoothness}, which states that if two samples $\boldsymbol{x}_{1}$ and $\boldsymbol{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if datapoints are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
+Semi-supervised learning is centred around the \textit{assumption of smoothness}, which states that if two samples $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if datapoints are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
 
-The semi-supervised setting requires to extend our notation from \cref{sec:problem-framing}, by dividing the dataset into labelled and unlabelled instances. Henceforth, $\boldsymbol{X}_{l} = \left[\boldsymbol{x}_{1},\ldots, \boldsymbol{x}_{l}\right]^{\top}$ is used for instances, where labels $\boldsymbol{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$ are known and $\boldsymbol{X}_{u} = \left[\boldsymbol{x}_{l+1},\ldots, \boldsymbol{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by datetime.
+The semi-supervised setting requires to extend our notation from \cref{sec:problem-framing}, by dividing the dataset into labelled and unlabelled instances. Henceforth, $\mathbf{X}_{l} = \left[\mathbf{x}_{1},\ldots, \mathbf{x}_{l}\right]^{\top}$ is used for instances, where labels $\mathbf{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$ are known and $\mathbf{X}_{u} = \left[\mathbf{x}_{l+1},\ldots, \mathbf{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by datetime.
 
 Our coverage of semi-supervised approaches includes \emph{self-training} for gradient-boosting and \emph{pre-training} of Transformers, which we derive from a subsequent discussion.
 
@@ -627,19 +627,19 @@ Pricing or quote data can often not be fully reconstructed, resulting in missing
 Price and size-related features exhibit positive skewness, as brought up in \cref{sec:exploratory-data-analysis}. Tree-based learners are unaffected by the feature scale, as the splitting process is based on the purity of the split but not on the scale of splitting value (cp. \cref{sec:decision-tree}). To avoid the tails of the distribution dominating the weight updates of neural networks, we apply power transformations, which transform the distribution of features to be Gaussian-like. Apart from quantization effects, gradient-boosted trees are unaffected. We determine the power transformation using the Box-Cox procedure \autocite[][214]{boxAnalysisTransformations2022}, given by:
 
 \begin{equation}
-    \boldsymbol{X}^{*}\left[:,j\right]= \begin{cases}\frac{1}{\lambda}(\boldsymbol{X}\left[:,j\right]^\lambda-1), & \lambda \neq 0 \\ \log (\boldsymbol{X}\left[:,j\right]),& \lambda=0\end{cases}.
+    \mathbf{X}^{*}\left[:,j\right]= \begin{cases}\frac{1}{\lambda}(\mathbf{X}\left[:,j\right]^\lambda-1), & \lambda \neq 0 \\ \log (\mathbf{X}\left[:,j\right]),& \lambda=0\end{cases}.
 \label{eq:box-cox-test}
 \end{equation}
 
-Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimizing for the Gaussian likelihood on the training set. As shown in \cref{eq:box-cox-test}, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $\boldsymbol{X}\left[:,j\right]$, we follow common practice by adding a constant if needed. Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the Box-Cox test, we apply a common $\widehat{\boldsymbol{X}}\left[:,j\right]=\log(\boldsymbol{X}\left[:,j\right])$ transform on all price and size-related features with the effect of compressing large values and expanding smaller ones~\footnote{More specifically, $\widehat{\boldsymbol{X}}\left[:,j\right]= \log(\boldsymbol{X}\left[:,j\right]+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations. Results are not affected. }.
+Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimizing for the Gaussian likelihood on the training set. As shown in \cref{eq:box-cox-test}, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $\mathbf{X}\left[:,j\right]$, we follow common practice by adding a constant if needed. Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the Box-Cox test, we apply a common $\widehat{\mathbf{X}}\left[:,j\right]=\log(\mathbf{X}\left[:,j\right])$ transform on all price and size-related features with the effect of compressing large values and expanding smaller ones~\footnote{More specifically, $\widehat{\mathbf{X}}\left[:,j\right]= \log(\mathbf{X}\left[:,j\right]+1)$ is used to prevent taking the logarithm of zero and improving numerical stability in floating point calculations. Results are not affected. }.
 
 Note that, the use of the Box-Cox transform is different from its originated purpose. In feature engineering, the transformation is used in an unsupervised fashion, as the transformation's outcome is not directly used in the model. Also, the transform is applied to the features, rather than the model's residuals \autocite[122]{kuhnFeatureEngineeringSelection2020}.
 
 To further improve the convergence of our transformer-based architectures, we normalize the data set using $z$-score normalization given by:
 \begin{equation}
-    \widehat{\boldsymbol{X}}=\frac{\boldsymbol{X}-\boldsymbol{\mu}}{\boldsymbol{\sigma}}
+    \widehat{\mathbf{X}}=\frac{\mathbf{X}-\mathbf{\mu}}{\mathbf{\sigma}}
 \end{equation}
-with mean $\boldsymbol{\mu} =\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]\right)$ and standard deviation $\boldsymbol{\sigma}=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(\boldsymbol{X}\left[i,:\right]-\boldsymbol{\mu}\right)^2}$. Intuitionally, the zero means prevents bias in the direction of the weight update and scaling to unit variance balances the rate at which parameters are updated \autocite[][8]{lecunEfficientBackProp2012}. Normalization of raw inputs is complementary to batch normalization, which is used in deeper layers of the Transformer stack and single batches. Following good standards, all statistics are estimated on the imputed training set only. The unlabelled \gls{ISE} training set and the \gls{CBOE} test set share the statistics of the \gls{ISE} labelled training set. 
+with mean $\mathbf{\mu} =\frac{1}{N} \sum_{i=1}^N\left(\mathbf{X}\left[i,:\right]\right)$ and standard deviation $\mathbf{\sigma}=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(\mathbf{X}\left[i,:\right]-\mathbf{\mu}\right)^2}$. Intuitionally, the zero means prevents bias in the direction of the weight update and scaling to unit variance balances the rate at which parameters are updated \autocite[][8]{lecunEfficientBackProp2012}. Normalization of raw inputs is complementary to batch normalization, which is used in deeper layers of the Transformer stack and single batches. Following good standards, all statistics are estimated on the imputed training set only. The unlabelled \gls{ISE} training set and the \gls{CBOE} test set share the statistics of the \gls{ISE} labelled training set. 
 
 Normalization and log transformations have the advantage of preserving the data distribution, which is a desirable property when comparing the feature importances from machine learning models against their classical counterparts in \cref{sec:feature-importance}.
 
@@ -749,30 +749,30 @@ In addition to random feature permutation, Transformer-based models offer \emph{
     \label{fig:attention-maps}
 \end{figure}
 
-In the tabular domain, various approaches have been investigated in the literature to obtain attention from multiple attention heads and transformer blocks. \textcite[][18]{somepalliSAINTImprovedNeural2021} and \textcite[][11]{borisovDeepNeuralNetworks2022} gather attention maps from the first attention layer only, and \textcite[][11]{borisovDeepNeuralNetworks2022} obtain feature attributions by taking the diagonal of the attention matrix $\boldsymbol{A}$ or through column-wise summation. In contrast, \textcite[][10]{gorishniyRevisitingDeepLearning2021} leverage all attention matrices by averaging over multiple transformer blocks, attention heads, and samples to obtain global feature attributions. Given \cref{sec:architectural-overview,sec:attention}, where we emphasized the unique role of attention heads and lower sublayers, both approaches may be myopic, as attention heads may contribute unequally to the result, or as later attention layers are neglected altogether.
+In the tabular domain, various approaches have been investigated in the literature to obtain attention from multiple attention heads and transformer blocks. \textcite[][18]{somepalliSAINTImprovedNeural2021} and \textcite[][11]{borisovDeepNeuralNetworks2022} gather attention maps from the first attention layer only, and \textcite[][11]{borisovDeepNeuralNetworks2022} obtain feature attributions by taking the diagonal of the attention matrix $\mathbf{A}$ or through column-wise summation. In contrast, \textcite[][10]{gorishniyRevisitingDeepLearning2021} leverage all attention matrices by averaging over multiple transformer blocks, attention heads, and samples to obtain global feature attributions. Given \cref{sec:architectural-overview,sec:attention}, where we emphasized the unique role of attention heads and lower sublayers, both approaches may be myopic, as attention heads may contribute unequally to the result, or as later attention layers are neglected altogether.
 
 While not explored systematically in the tabular domain yet, the rollout attention method of \textcite[][3]{abnarQuantifyingAttentionFlow2020} combines raw attention from multiple layers through recursive matrix multiplication with the weight matrices from attention layers below, as shown in this Equation~\footnote{Notation from adapted from \textcite[][786]{cheferTransformerInterpretabilityAttention2021}.}:
 \begin{equation}
     \begin{aligned}
-        \hat{\boldsymbol{A}}^{(l)} & =\boldsymbol{I}+\mathbb{E}_h \boldsymbol{A}^{(l)}                                                  \\
-        \operatorname { rollout }  & =\hat{\boldsymbol{A}}^{(1)} \cdot \hat{\boldsymbol{A}}^{(2)} \ldots\cdot\hat{\boldsymbol{A}}^{(L)}
+        \hat{\mathbf{A}}^{(l)} & =\mathbf{I}+\mathbb{E}_h \mathbf{A}^{(l)}                                                  \\
+        \operatorname { rollout }  & =\hat{\mathbf{A}}^{(1)} \cdot \hat{\mathbf{A}}^{(2)} \ldots\cdot\hat{\mathbf{A}}^{(L)}
     \end{aligned}
     \label{eq:attention-map-rollout}
 \end{equation}
 
-In each layer the raw attention scores $\boldsymbol{A}^{(l)}$ are averaged over $h$ heads, denoted by $\mathbb{E}_h$. The identity matrix $\boldsymbol{I}$ is added to account for the residual connections (\cref{sec:residual-connections-layer-norm}). While rollout attention considers all attention layers in the calculation of feature attributions, it does not consider a signal and attributes equal weights to all attention heads \autocite[][786]{cheferTransformerInterpretabilityAttention2021}.
+In each layer the raw attention scores $\mathbf{A}^{(l)}$ are averaged over $h$ heads, denoted by $\mathbb{E}_h$. The identity matrix $\mathbf{I}$ is added to account for the residual connections (\cref{sec:residual-connections-layer-norm}). While rollout attention considers all attention layers in the calculation of feature attributions, it does not consider a signal and attributes equal weights to all attention heads \autocite[][786]{cheferTransformerInterpretabilityAttention2021}.
 
 In an attempt to explain the decision-making process of multi-modal Transformers, including self-attention-based Transformers, \textcite[][3]{cheferTransformerInterpretabilityAttention2021} incorporate gradients to weight the head's contribution when averaging over the heads of a layer, as shown in \cref{eq:attention-map-weighted}. Like before, all attention layers are considered.
 
 \begin{equation}
     \begin{aligned}
-        \bar{\boldsymbol{A}}^{(l)} & =I+ \mathbb{E}_h\left(\left(\nabla \boldsymbol{A}^{(l)} \odot \boldsymbol{A}^{(l)}\right)^{+}\right) \\
-        \operatorname {w\_rollout} & =\bar{\boldsymbol{A}}^{(1)} \cdot \bar{\boldsymbol{A}}^{(2)} \ldots \cdot \bar{\boldsymbol{A}}^{(L)}
+        \bar{\mathbf{A}}^{(l)} & =I+ \mathbb{E}_h\left(\left(\nabla \mathbf{A}^{(l)} \odot \mathbf{A}^{(l)}\right)^{+}\right) \\
+        \operatorname {w\_rollout} & =\bar{\mathbf{A}}^{(1)} \cdot \bar{\mathbf{A}}^{(2)} \ldots \cdot \bar{\mathbf{A}}^{(L)}
     \end{aligned}
     \label{eq:attention-map-weighted}
 \end{equation}
 
-In this approach, the element-wise product between the gradient of the attention map $\nabla \boldsymbol{A}^{(l)}=\frac{\partial y_t}{\partial \boldsymbol{A}}$ for the model's target class $t$ and the attention map $\boldsymbol{A}^{(l)}$ is calculated to weight the attention head's importance. As previously suggested in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. Like all other presented approaches \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and is therefore computationally efficient.
+In this approach, the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(l)}=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(l)}$ is calculated to weight the attention head's importance. As previously suggested in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. Like all other presented approaches \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and is therefore computationally efficient.
 
 In absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all transformer blocks. Due to the limitation that TabTransformer (cp. \cref{sec:tabtransformer}) only performs self-attention on categorical features, no feature attributions for numerical features are calculated. The level of agreement between attributions from attention maps and kernel \gls{SHAP} is quantified by calculating Spearman's rank correlation between them.
 
@@ -783,12 +783,12 @@ The next chapter discusses different metrics to assess the prediction quality of
 The quality of the classifier is better, the higher the share of trades is where the predicted trade initiator equals the true trade initiator. We assess the quality of our model’s prediction in terms of \emph{accuracy}. Formally, accuracy can be stated as:
 
 \begin{equation}
-\operatorname{Accuracy} = 1 - \mathcal{L}_{0-1}(\boldsymbol{y}, \hat{\boldsymbol{y}})
+\operatorname{Accuracy} = 1 - \mathcal{L}_{0-1}(\mathbf{y}, \hat{\mathbf{y}})
 \end{equation}
 
 where $\mathcal{L}_{0-1}(\cdot)$ is the 0-1-loss given by:
 \begin{equation}
-\mathcal{L}_{0-1}(\boldsymbol{y}, \hat{\boldsymbol{y}}) = \frac{1}{N}\sum_{i=1}^{N}\mathbb{I}\left(\boldsymbol{y}_{i}\neq \hat{\boldsymbol{y}}_{i}\right).
+\mathcal{L}_{0-1}(\mathbf{y}, \hat{\mathbf{y}}) = \frac{1}{N}\sum_{i=1}^{N}\mathbb{I}\left(\mathbf{y}_{i}\neq \hat{\mathbf{y}}_{i}\right).
 \end{equation}
 
 Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss.
