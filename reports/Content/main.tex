@@ -800,18 +800,25 @@ Our datasets are approximately balanced and buyer-initiated trades predicted as 
 \newpage
 \section{Results}\label{sec:results}
 
-\gls{GSU} method
+% \gls{GSU} method
+\textbf{Benchmarks}
+
+\textit{classical:} $\operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}}$
+
+\textit{classical-size:} $\operatorname{tsize}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}} \to \operatorname{depth}_{\text{nbbo}} \to \operatorname{depth}_{\text{ex}} \to \operatorname{rtick}_{\text{all}}$
+
+\textit{ml:} $\operatorname{tsize}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}} \to \operatorname{depth}_{\text{nbbo}} \to \operatorname{depth}_{\text{ex}} \to \operatorname{rtick}_{\text{all}}$
 
 % % slightly edited table
-\newpage
-\input{Content/cboe_supervised_test-diff.tex}
+% \newpage
+% \input{Content/cboe_supervised_test-diff.tex}
 
-\newpage
-\input{Content/ise_supervised_test-diff.tex}
+% \newpage
+% \input{Content/ise_supervised_test-diff.tex}
 
-\newpage
+% \newpage
 
-\input{Content/cboe_all_supervised_all-master.tex}
+% \input{Content/cboe_all_supervised_all-master.tex}
 
 \subsection{Results of Supervised
     Models (2~p)}\label{sec:results-of-supervised-models}
