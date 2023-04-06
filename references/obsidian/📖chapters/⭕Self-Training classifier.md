@@ -1,8 +1,39 @@
+### Semi-supervised Methods
+
+Our supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or for subsets of trades where the initiator can be inferred from matching procedures, which may bias the selection. Unlabelled trades, though, are abundant and can help to improve generalization performance of the classifier.
+
+Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside with true labels ([[@chapelleSemisupervisedLearning2006]]6) ([[@zhuSemiSupervisedLearningLiterature]]6). They are centred around the assumption of *smoothness*, which states that if two samples $\boldsymbol{x}_{1}$ and $\boldsymbol{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if datapoints are separated by a low-density region, their labels may be different ([[@chapelleSemisupervisedLearning2006]] 5). 
+
+Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
+
+The semi-supervised setting requires to extend our notation from cref-problem framing, as we have to divide the dataset into labelled and unlabelled instances. Henceforth, $\boldsymbol{X}_{l} = \left[\boldsymbol{x}_{1},\ldots, \boldsymbol{x}_{l}\right]$  is used for instances, where the label $\boldsymbol{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$  is known and $\boldsymbol{X}_{u} = \left[\boldsymbol{x}_{l+1},\ldots, \boldsymbol{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by the trade time.
+
+Our coverage of semi-supervised methods includes *self-training classifiers* for gradient-boosting and *pre-training* of Transformers. We start with the  the self-training paradigm.
+
+### Self-Training
+
+Due to being a wrapper algorithm, self-training classifiers are difficult to analyze with 
+
+proposed by [[@yarowskyUnsupervisedWordSense1995]]. We adhere to a notation from [[@aminiSelfTrainingSurvey2023]].
+
+
+
+Self-training is a wrapper algorithm, that trains a supervised classifier on labelled instances 
+
+---- 
+
+One of the most prominent approaches of semi-supervised learning, is self-training, which 
+
+This wrapper algorithm starts by learning a supervised classifier on the labeled training set $S$. Then, at each iteration, the current classifier selects a part of the unlabeled data, $X_Q$, and assigns pseudo-labels to them using the classifier's predictions. These pseudo-labeled unlabeled examples are removed from $X_{\mathcal{U}}$ and a new supervised classifier is trained over $S \cup X_Q$, by considering these pseudo-labeled unlabeled data as additional labeled examples. To do so, the classifier $h \in \mathcal{H}$ that is learned at the current iteration is the one that minimizes a regularized empirical loss over $S$ and $X_Q$ :
+$$
+\frac{1}{l} \sum_{(\boldsymbol{x}, y) \in S} \mathcal{L}(h(\boldsymbol{x}), y)+\frac{\gamma}{\left|X_Q\right|} \sum_{(\mathbf{x}, \tilde{y}) \in X_\alpha} \mathcal{L}(h(\mathbf{x}), \hat{y})+\lambda\|h\|^2
+$$
+where $\ell: \mathcal{Y} \times \mathcal{Y} \rightarrow[0,1]$ is an instantaneous loss most often chosen to be the crossentropy loss, $\gamma$ is a hyperparameter for controlling the impact of pseudo-labeled data in learning, and $\lambda$ is the regularization hyperparameter. This process of pseudo-labeling and learning a new classifier continues until the unlabeled set $X_{\mathcal{U}}$ is empty or there is no more unlabeled data to pseudo-label. The pseudo-code of the self-training algorithm is shown in Algorithm 1.
 
 
 
 
-Our supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the label can be inferred through matching procedures, which may bias the selection. Unlabelled trades, though, are abundant  and may improve generalization performance of the classifier. Semi-supervised methods leverage partially labelled data by learning an algorithm on unlabelled instances alongside with true labels ([[@chapelleSemisupervisedLearning2006]]6). 
+from learning on unlabelled trades, the assumptions 
 
 For semi-supervised approaches to
 
