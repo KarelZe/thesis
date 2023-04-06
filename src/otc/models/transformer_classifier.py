@@ -209,6 +209,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 # compute accumulated gradients
                 scaler.scale(train_loss).backward()
 
+                nn.utils.clip_grad_norm_(self.clf_compiled.parameters(), 5)
                 # perform parameter update based on current gradients
                 scaler.step(optimizer)
                 scaler.update()
