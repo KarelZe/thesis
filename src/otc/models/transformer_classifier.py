@@ -20,6 +20,9 @@ from otc.data.dataloader import TabDataLoader
 from otc.data.dataset import TabDataset
 from otc.optim.early_stopping import EarlyStopping
 
+# # https://github.com/pytorch/pytorch/issues/93470
+# from torch._inductor import config
+# config.compile_threads = 1
 
 class TransformerClassifier(BaseEstimator, ClassifierMixin):
     """
@@ -161,6 +164,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         self.clf = self.module(**self.module_params)
 
+        # enable anomaly detection
+        # torch.autograd.set_detect_anomaly(True)
+        
         # use multiple gpus, if available
         self.clf = nn.DataParallel(self.clf).to(self.dl_params["device"])
 
@@ -174,7 +180,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         )
 
         # compile model
-        self.clf = torch.compile(self.clf)
+        self.clf_compiled = torch.compile(self.clf)
 
         # see https://stackoverflow.com/a/53628783/5755604
         # no sigmoid required; numerically more stable
@@ -189,7 +195,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             # perform training
             loss_in_epoch_train = 0
 
-            self.clf.train()
+            self.clf_compiled.train()
 
             for x_cat, x_cont, _, targets in train_loader:
 
@@ -198,7 +204,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                 # compute the model output and train loss
                 with torch.cuda.amp.autocast():
-                    logits = self.clf(x_cat, x_cont).flatten()
+                    logits = self.clf_compiled(x_cat, x_cont).flatten()
                     train_loss = criterion(logits, targets)
                 # compute accumulated gradients
                 scaler.scale(train_loss).backward()
@@ -210,14 +216,14 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 # add the mini-batch training loss to epoch loss
                 loss_in_epoch_train += train_loss
 
-            self.clf.eval()
+            self.clf_compiled.eval()
 
             loss_in_epoch_val = 0.0
             correct = 0
 
             with torch.no_grad():
                 for x_cat, x_cont, _, targets in val_loader:
-                    logits = self.clf(x_cat, x_cont)
+                    logits = self.clf_compiled(x_cat, x_cont)
                     logits = logits.flatten()
 
                     # get probabilities and round to nearest integer
@@ -233,7 +239,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             val_loss = loss_in_epoch_val / len(val_loader)
             # correct samples / no samples
             val_accuracy = correct / len(X_val)
-
+            print(f"val accuracy: {val_accuracy}")
+            
             self.callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
 
             # return early if val accuracy doesn't improve. Minus to minimize.
@@ -277,13 +284,13 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         test_loader = self.array_to_dataloader(X, y)
 
-        self.clf.eval()
+        self.clf_compiled.eval()
 
         # calculate probability and counter-probability
         probabilites = []
         with torch.no_grad():
             for x_cat, x_cont, _, _ in test_loader:
-                logits = self.clf(x_cat, x_cont)
+                logits = self.clf_compiled(x_cat, x_cont)
                 logits = logits.flatten()
                 probability = torch.sigmoid(logits)
                 probabilites.append(probability.detach().cpu().numpy())
