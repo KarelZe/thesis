@@ -195,3 +195,22 @@ We address these issues.
 - Discuss the problem of obtainining good probability estimates from a boosted decision tree. See e. g., [[@caruanaObtainingCalibratedProbabilities]] or [[@friedmanAdditiveLogisticRegression2000]] (Note paper is commenting about boosting, gradient boosting has not been published at the time)
 - Observations in [[@tanhaSemisupervisedSelftrainingDecision2017]] on poor probability estimates are equally applicable.
 - Compare my explanation against https://catboost.ai/news/catboost-enables-fast-gradient-boosting-on-decision-trees-using-gpus
+
+
+## Some inspiration
+![[Pasted image 20230405170411.png]]
+![[Pasted image 20230405170430.png]]
+
+
+![[Pasted image 20230405172011.png]]
+![[Pasted image 20230405171940.png]]
+
+![[Pasted image 20230405171919.png]]
+![[Pasted image 20230405171902.png]]
+
+Our introduction assumes that all input is numerical, which is true for the mehrheit of our dataset.
+
+
+$$
+    \operatorname{l}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad \operatorname{l}_{0-1}(y, \widehat{y}) = \mathbb{I}\left(y_{i}\neq \widehat{y}_{i}\right).
+$$

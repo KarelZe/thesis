@@ -67,3 +67,12 @@ What do you mean by FIRM, CUSTOMER and PROFESSIONAL CUSTOMER trades, and can you
 
 
 The INET data indicate whether each trade executes against a sitting buy or sell order in the limit order book.8 Following the chronology of order submission logic proposed by OddersWhite (2000), we designate trades that execute against a sitting buy order (a buy limit order) as seller-initiated and trades that execute against a sitting sell order (a sell limit order) as buyerinitiated. This procedure produces a dataset of short sales and long sales executed on the INET platform with the true trade initiator identified directly from the order data. https://core.ac.uk/download/pdf/145016916.pdf
+
+
+## Definition of trade initator
+
+“We acquire the data from two different sources. Data for computing net option demand were obtained directly from the Chicago Board Options Exchange (CBOE). These data consist of a daily record of closing short and long open interest on all SPX and equity options for public customers and firm proprietary traders.” (Gârleanu et al., 2009, p. 16)
+
+“The entire option market is comprised of public customers, firm proprietary traders, and market makers. Hence, our data cover all non-market-maker option open interest” (Gârleanu et al., 2009, p. 16)
+
+“Firm proprietary traders sometimes are end users of options and sometimes are liquidity suppliers. Consequently, we compute net end-user demand for an option in two different ways. First, we assume that firm proprietary traders are end users and compute the net demand for an option as the sum of the public customer and firm proprietary trader long open interest minus the sum of the public customer and firm proprietary trader short open interest. We refer to net demand computed in this way as non-market-maker net demand. Second, we assume that the firm proprietary traders are liquidity suppliers and compute the net demand for an option as the public customer long open interest minus the public customer short open interest. We refer to net demand computed in this second way as public customer net demand. The results are similar for non-market-maker net demand and public customer net demand” (Gârleanu et al., 2009, p. 16)

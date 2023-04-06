@@ -246,7 +246,7 @@ Like the previous two algorithms, the \cgls{CLNV} method of \textcite[][3809]{ch
 
 The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\cgls{EMO} rule) against the quote rule (\cgls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \cgls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
 
-\subsubsection{Stacked Rule}\label{sec:stacked-rule}
+\subsubsection{Grauer-Schuster-Uhrig-Homburg method}\label{sec:stacked-rule}
 
 The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which cannot be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their ordering.
 
@@ -306,7 +306,7 @@ and 1, no insight is gained into the confidence of the prediction. Yet, it does 
 
 \subsubsection{Decision Tree}\label{sec:decision-tree}
 
-Decision trees can be used in classification and regression. Counterintuitive to our initial problem framing of trade classification as a probabilistic classification task in \cref{sec:problem-framing}, the focus is on regression trees only, as it is the prevailing prediction model used within the gradient boosting algorithm \autocite[][9]{friedmanAdditiveLogisticRegression2000}. The ensemble method later adapts to classification.
+Decision trees can be used in classification and regression. Counter-intuitive to our initial problem framing of trade classification as a probabilistic classification task, the focus is solely on regression trees, as it is the prevailing prediction model used in the gradient boosting algorithm to obtain continuous class probabilities \autocite[][9]{friedmanAdditiveLogisticRegression2000}.
 
 A decision tree splits the feature space into several disjoint regions $R$ through a sequence of recursive splits. For a binary decision tree, a single split leads to two new sub-regions, whose shape is determined by the features considered for splitting and the preceding splits. Trees are grown in depth until a minimum threshold for the number of samples within a node or some other stopping criterion applies \autocite[][42]{breimanClassificationRegressionTrees2017}.
 A region corresponds to a terminal node in the tree. For each terminal node of the tree or unsplit region, the predicted response value is constant for the entire region and shared by all its samples \autocite[][229]{breimanClassificationRegressionTrees2017}.
@@ -340,7 +340,7 @@ The procedure is repeated on the so-created child nodes. Note that, splits are p
 
 Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample has its region, the tree would achieve a perfect fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence \emph{variance}, size complexity pruning procedures are employed. Likewise, if the decision tree is too simplistic, a high bias contributes to the model's overall expected error. Both extremes are to be avoided.
 
-Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredictors1996} and \emph{boosting} \autocite[][197--227]{schapireStrengthWeakLearnability1990}, decrease the expected error of the decision tree by combining multiple trees in a single model. Both approaches differ in the error term being minimized, which is reflected in the training procedure and the complexity of the ensemble members. More specifically, bagging aims at decreasing the variance, whereas boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we derive \gls{GBM}, a variant of boosting introduced by \textcite[][9]{friedmanGreedyFunctionApproximation2001} and apply it to probabilistic classification.
+Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredictors1996} and \emph{boosting} \autocite[][197--227]{schapireStrengthWeakLearnability1990}, decrease the expected error of the decision tree by combining multiple trees in a single model. Both approaches differ in the error term being minimized, which is reflected in the training procedure and the complexity of the ensemble members. More specifically, bagging aims at decreasing the variance, whereas boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we derive \gls{GBM}, a variant of boosting introduced by \textcite[][9]{friedmanGreedyFunctionApproximation2001} and apply it to classification.
 
 \subsubsection{Gradient Boosting
     Procedure (1.5 p)}\label{sec:gradient-boosting-procedure}
@@ -555,7 +555,10 @@ Our coverage of semi-supervised approaches includes \emph{self-training} for gra
 
 \subsection{Extensions to Gradient Boosted
     Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
+Self-training is a model-agnostic wrapper algorithm around a probabilistic classifier, that uses its own predictions as pseudo labels for unlabelled instances \autocite[][190]{yarowskyUnsupervisedWordSense1995}.
 
+The classifier is initially fitted on labelled datapoints. The classifier is then used to assign labels, so-called pseudo labels, to unlabelled instances. A subset of unlabelled instances with high-confidence predictions is selected, removed from the unlabelled dataset and added to labelled data. A new classifier is then retrained on labelled and pseudo-labelled instances \autocite[][190--192]{yarowskyUnsupervisedWordSense1995}. The process is repeated for several iterations until a stopping criterion applies, such as the number of iterations being maxed out or no unlabelled instances are left for labelling.
+    
 
 \subsection{Extensions to Transformers (2~p)}\label{sec:extensions-to-transformer}
 
@@ -597,7 +600,7 @@ To infer the true label, we exploit that, if there were only customer buy or sel
 
 For the \gls{ISE} trades, our matched sample spans from 2 May 2005 to 31 May 2017 and includes \num{49203747} trades. The period covers the full history of \gls{ISE} open/close data up to the last date the dataset was available to us. Our matched \gls{CBOE} sample consists of \num{37155412} trades between 1 January 2011 and 31 October 2017. The sample period is governed by a paradigm shift in the construction of the \gls{CBOE} open/close dataset and the most recent trade in our LiveVol subscription.
 
-Following our initial rationale for using semi-supervised methods, we reserve unlabelled trades between 24 October 2012 and 24 October 2013 at the \gls{ISE} for pre- and self-traing. We provide further details in \cref{sec:train-test-split}. Since Livevol doesn't distinguish by trader types, this dataset includes both customer and non-customer trades.
+Following our initial rationale for using semi-supervised methods, we reserve unlabelled trades between 24 October 2012 and 24 October 2013 at the \gls{ISE} for pre- and self-training. We provide further details in \cref{sec:train-test-split}. Since Livevol doesn't distinguish by trader types, this dataset includes both customer and non-customer trades.
 
 While our procedure makes the inference of the true trade initiator partly feasible, concerns regarding a selection bias due to the excessive filtering have to be raised. We address these concerns as part of our exploratory data analysis in \cref{sec:exploratory-data-analysis}, in which we compare unmerged and merged sub-samples.
 
@@ -659,7 +662,7 @@ Prior classical works assess the performance of classical rules in-sample \autoc
 
 Trades in the dataset are ordered by time of execution, and nearby trades exhibit auto-correlation. Exemplary, subsequent trades on the same option series may share a similar trade price and quotes. This imposes constraints on the train-test split, which must ensure that minimal information leaks into the test set through serially-correlated features, leading to an otherwise overestimated model performance~\footnote{We emphasize this aspect, as previous research of \textcite[][14]{ronenMachineLearningTrade2022} is expectedly affected from this issue leading to exaggerated results.}. The violation of statistical independence, out rules methods like the $k$-fold cross-validation or random train-test splits, both of which assume samples to be i.i.d. \autocite[][103--105]{lopezdepradoAdvancesFinancialMachine2018}. Differently, our work statically splits into subsets by time, which maintains the temporal ordering and eschews data leakage. Albeit this limits the model's ability to leverage recent information for prediction beyond the training set's cut-off point. We do not explore dynamic training schemes, as they are practically intractable considering the number of model combinations and computational requirements of Transformers and gradient-boosted trees. In absence of an update mechanism, our results can be interpreted as a lower bound.
 
-Applying the time-based split, we attribute the first \SI{60.0}{\percent} of our dataset for training and the next \SI{20.0}{\percent} each for validation and testing. Samples of one day are assigned to either one set to avoid train-test contamination and maintains the temporal ordering. Data within the training set may be shuffled to accelerate training.
+Applying the time-based split, we attribute the first \SI{60.0}{\percent} of our dataset for training and the next \SI{20.0}{\percent} each for validation and testing. Samples of one day are assigned to either one set to avoid train-test contamination and maintain the temporal ordering. Data within the training set may be shuffled to accelerate training.
 
 \begin{figure}[ht]
     \centering
@@ -670,7 +673,7 @@ Applying the time-based split, we attribute the first \SI{60.0}{\percent} of our
 
 Overall,  we use \gls{ISE} data from 2 May 2005 to 24 October 2013 to train and data between 25 October 2013 and 5 November 2015 to validate our models. The most recent trades until 31 May 2017 to assess the generalization error. The timespans for the \gls{CBOE} sample are adjusted accordingly. We use the \gls{CBOE} sample past the 5 November 2015 as a second test set, as visualized in \cref{fig:train-test-split}. The start data ensures that leakage is minimized. Models are pre-trained on unlabelled samples from the last year of the training period. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades for which true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously.
 
-Our train-test-split makes two implicit assumptions, we want to test for. First, the size of the resulting training set is large enough, for the model to capture regularities in the data. Second, all subsets are drawn from the same distribution. So, fitting the classifier on the training set and optimizing on the validation set can provide good estimates for the test set. The analysis is conducted on the training and validation set to avoid information leaking from the test set.
+Our train-test-split makes two implicit assumptions, we want to test for. First, the size of the resulting training set is large enough, for the model to capture regularities in the data. Second, all subsets are drawn from the same distribution. So, fitting the classifier on the training set and optimizing for the validation set can provide good estimates for the test set. The analysis is conducted on the training and validation set to avoid information leaking from the test set.
 
 Optimally, samples in the train, validation, and test set come from the same distribution. The presence of the data shift within the training set (cp. \cref{sec:exploratory-data-analysis}) raises concerns, that the assumption holds. We test for the similarity of the training and validation set and identify problematic features using \emph{adversarial validation}. As such, we re-label all training samples with $y=0$ and all trades of the validation set with $y=1$. We then train a classifier on a random subset of the composed data and predict the conformance to the train or validation set for the remaining samples. More specifically a gradient-boosting classifier is used for its competitive predictions with default hyperparameters and its computational efficiency. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which is insensitive to class imbalances~\footnote{Classes are imbalanced, due to the training set being two times larger than the validation set.}. Assuming train and validation samples come from the same distribution, the obtained performance estimate is near a random guess, or $\operatorname{MCC} = 0$.
 
@@ -704,31 +707,32 @@ From the high bias/low variance, we conclude that the gradient-boosting model wi
 
 
 \subsubsection{Hyperparameter Tuning (2~p)}\label{sec:hyperparameter-tuning}
-\begin{figure}[ht]
-    \centering
-    \includegraphics{30sl6vqf-hyperparam-search-space.pdf}
-    \caption{Hyperparameter Search Space on \gls{CBOE} Validation Set (Classical)}
-    \label{fig:cboe-hyperparam-classical}
-\end{figure}
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics{30sl6vqf-hyperparam-search-space.pdf}
+%     \caption{Hyperparameter Search Space on \gls{CBOE} Validation Set (Classical)}
+%     \label{fig:cboe-hyperparam-classical}
+% \end{figure}
 
-\newpage
+% \newpage
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics{2w28suql-hyperparam-search-space.pdf}
-    \caption{Hyperparameter Search Space on \gls{CBOE} Validation Set (Classical Size)}
-    \label{fig:cboe-hyperparam-classical-size}
-\end{figure}
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics{2w28suql-hyperparam-search-space.pdf}
+%     \caption{Hyperparameter Search Space on \gls{CBOE} Validation Set (Classical Size)}
+%     \label{fig:cboe-hyperparam-classical-size}
+% \end{figure}
 
 
-\newpage
+% \newpage
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics{2qzvvdbw-hyperparam-search-space.pdf}
-    \caption{Hyperparameter Search Space on \gls{CBOE} Validation Set (ML)}
-    \label{fig:cboe-hyperparam-ml}
-\end{figure}
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics{2qzvvdbw-hyperparam-search-space.pdf}
+%     \caption{Hyperparameter Search Space on \gls{CBOE} Validation Set (ML)}
+%     \label{fig:cboe-hyperparam-ml}
+% \end{figure}
+
 \subsection{Evaluation (3~p)}\label{sec:evaluation}
 
 \subsubsection{Feature Importance
