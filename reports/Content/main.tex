@@ -246,7 +246,7 @@ Like the previous two algorithms, the \cgls{CLNV} method of \textcite[][3809]{ch
 
 The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\cgls{EMO} rule) against the quote rule (\cgls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \cgls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
 
-\subsubsection{Grauer-Schuster-Uhrig-Homburg method}\label{sec:stacked-rule}
+\subsubsection{Grauer-Schuster-Uhrig-Homburg Method}\label{sec:stacked-rule}
 
 The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which cannot be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their ordering.
 
@@ -460,7 +460,7 @@ Until now it remains unclear, how the layer normalization intertwines with the s
                 \input{./Graphs/pre-norm.pdf_tex}}
     }
     \hfill\null
-    \caption[Pre-norm residual unit and post-norm residual unit]{Examples of pre-norm residual unit and post-norm residual unit. Own work inspired by \textcite[][2]{wangLearningDeepTransformer2019}.}
+    \caption[Pre-Norm Residual Unit and Post-Norm Residual Unit]{Pre-Norm Residual Unit and Post-Norm Residual Unit. Own work inspired by \textcite[][2]{wangLearningDeepTransformer2019}.}
     \label{fig:norm-residual}
 \end{figure}
 
@@ -786,11 +786,13 @@ The next chapter discusses different metrics to assess the prediction quality of
 
 Our goal is to maximize the number of trades, where the predicted trade initiator matches the true trade initiator. We assess the quality of our model’s prediction in terms of \emph{accuracy}, which can be stated as:
 \begin{equation}
-\operatorname{accuracy} \colon \mathbb{R}^{N} \times \mathbb{R}^{N} \to  \left[0, 1\right], \quad \operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{l}_{0-1}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
+% \operatorname{accuracy} \colon \mathbb{R}^{N} \times \mathbb{R}^{N} \to  \left[0, 1\right], \quad 
+\operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{l}_{0-1}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
 \end{equation}
 where $\operatorname{l}_{0-1}(\cdot)$ is the 0-1-loss given by:
 \begin{equation}
-    \operatorname{l}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad \operatorname{l}_{0-1}(y, \widehat{y}) = \mathbb{I}\left(y\neq \widehat{y}\right).
+    % \operatorname{l}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad 
+    \operatorname{l}_{0-1}(y, \widehat{y}) = \mathbb{I}\left(y\neq \widehat{y}\right).
 \end{equation}
 
 Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss. Notably, the loss is the same for false positives and negatives.
@@ -868,7 +870,7 @@ The actual and the estimated effective spreads, as well as the quoted spread, ar
 \begin{table}[H]
     \centering
     \input{Content/effective-spread.tex}
-    \caption[Estimated Effective Spread]{Estimated Effective Spread}
+    \caption{Estimated Effective Spread on \gls{ISE} Dataset}
     \label{tab:effective-spread}
 \end{table}
 
