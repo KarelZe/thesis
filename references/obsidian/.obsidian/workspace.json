@@ -169,22 +169,22 @@
   },
   "active": "e8c0db083f384014",
   "lastOpenFiles": [
-    "📑notes/⭕Self-Training classifier notes.md",
-    "📑notes/🌏Dataset notes.md",
-    "📑notes/🔢Trade Initiator notes.md",
-    "📑notes/🐈Gradient Boosting notes.md",
+    "🖼️Media/performance-degradations.png",
     "🖼️Media/Pasted image 20230405172011.png",
     "🖼️Media/Pasted image 20230405171940.png",
     "🖼️Media/Pasted image 20230405171919.png",
     "🖼️Media/Pasted image 20230405171902.png",
     "🖼️Media/Pasted image 20230405170430.png",
     "🖼️Media/Pasted image 20230405170411.png",
+    "📥Inbox/@chenDebiasedSelfTrainingSemiSupervised2022.md",
+    "📑notes/⭕Self-Training classifier notes.md",
+    "📑notes/🌏Dataset notes.md",
+    "📑notes/🔢Trade Initiator notes.md",
+    "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/🏅Results.md",
-    "🖼️Media/performance-degradations.png",
     "📑notes/🧭Evaluation metric notes.md",
     "📖chapters/⭕Self-Training classifier.md",
-    "📥Inbox/@chenDebiasedSelfTrainingSemiSupervised2022.md",
     "❓Questions.md",
     "📥Inbox/@chapelleSemisupervisedLearning2006.md",
     "🖼️Media/Pasted image 20230326101313.png",
@@ -203,7 +203,6 @@
     "📖chapters/🚏Exploratory Data Analysis.md",
     "📥Inbox/@aasExplainingIndividualPredictions2021.md",
     "📑notes/🧭Random Feature Permutation notes.md",
-    "📥Inbox/@fisherAllModelsAre.md",
-    "📖chapters/🧭Feature Importance Measure.md"
+    "📥Inbox/@fisherAllModelsAre.md"
   ]
 }

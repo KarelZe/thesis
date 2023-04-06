@@ -795,7 +795,7 @@ where $\operatorname{l}_{0-1}(\cdot)$ is the 0-1-loss given by:
 
 Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss. Notably, the loss is the same for false positives and negatives.
 
-Our datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vice versa have similar associated costs, which makes accuracy an ideal choice as a performance metric. As the 0-1-loss and in consequence, the accuracy is not differentiable, it cannot be used in optimization, but as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test sets.
+Our datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vice versa have similar associated costs, which makes accuracy an ideal choice as a performance metric~\footnote{\SI{48.5973}{\percent} of the \gls{ISE} test set and \SI{46.1278}{\percent} of the \gls{CBOE} test set are buy trades.}. As the 0-1-loss and in consequence, the accuracy is not differentiable, it cannot be used in optimization, but as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test sets.
 
 \newpage
 \section{Results}\label{sec:results}
