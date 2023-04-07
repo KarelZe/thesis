@@ -50,9 +50,38 @@ f_{m}(x)=f_{m-1}(x)+\nu \sum_{j=1}^{J_{m}} \gamma_{j m} \mathbb{I}\left(x \in R_
 $$
 After $M$ iterations we obtain the final estimate calculated as: $\hat{f}(x)=f_{M}(x)$. To avoid overfitting the residuals, only proportional steps towards the negative gradient are taken. The contribution of each tree is controlled by the learning rate $\nu \in \left(0, 1\right]$. 
 
+
+By our problem framing, the focus is on *binary classification*. Other than in the regression case, the target is no longer continuous ( $\mathcal{Y}\in \mathbb{R}$), but rather discrete ($\mathcal{Y}\in \{-1,1\}$). Instead of modelling the class-conditional probabilities directly, we model the conditional *log odds*, which can be interpreted as the probability of observing class $1$ or buyer-initiated trade.  The model now models:
+$$
+f(x) = \ln\left(\frac{P(Y=1 \mid X=x)}{1-P(Y=1\mid X=x)}\right)
+$$
+
+<mark style="background: #FFB86CA6;">If $p$ is a probability, then $p /(1-p)$ is the corresponding odds; the logit of the probability is the logarithm of the odds, i.e.:
+$$
+\operatorname{logit}(p)=\ln \left(\frac{p}{1-p}\right)=\ln (p)-\ln (1-p)=-\ln \left(\frac{1}{p}-1\right)=2 \operatorname{atanh}(2 p-1)
+$$
+(Wikipedia) https://en.wikipedia.org/wiki/Logit</mark> -> odds of success = probability of an even happening divided by prbability of an event not happening. 
+
+We can still recover the conditional probabilities $p(y \mid x)$ for a trade to be buyer- or seller-initiated with the Sigmoid transform, given by:
+$$
+p(y \mid x)=\sigma(f(x))=\frac{1}{1 + \exp(-y f(x))}.
+$$
+Like before, we require a differentiable loss function. A common replacement for the previous square loss, is the the log-loss (binary cross-entropy loss. -> seems to be equivalent for binary case https://stackoverflow.com/questions/50913508/what-is-the-difference-between-cross-entropy-and-log-loss-error).  $\operatorname{logistic} \operatorname{loss} l(y, f(x))=\log (1+\exp (-y f(x)))$
+
+
+
+
+When a [function’s](https://www.statisticshowto.com/types-of-functions/) variable represents a probability, p (as in the function above), it’s called the **logit function** .
+
+
+Die Umkehrfunktion des Logits ist die logistische Funktion (manchmal auch Expit oder Sigmoid genannt):
+$$
+F_{\text {logistisch }}:=\operatorname{logit}^{-1}(s)=\frac{\exp (s)}{1+\exp (s)}=\frac{1}{1+\exp (-s)} .
+$$
+
 ## Literature
 
-**Data set:** Formally, we aim to model a target variable $Y \in \mathbb{Y}$ given some feature vector $X \in \mathbb{X}$ based on training data $\left\{\left(x_i, y_i\right)\right\}_{i=1}^n$ that has been sampled according to the joint distribution of $X$ and $Y$. (Add to section [[🍪Selection Of Supervised Approaches]]) We focus on models in the form of a single-valued scoring function $f: \mathbb{X} \rightarrow \mathbb{R}$. For instance, in regression problems $(\mathbb{Y}=\mathbb{R}), f$ typically models the conditional expectation of the target, i.e., $f(x) \approx E(Y \mid X=x)$, whereas in binary classification problems $(\mathbb{Y}=\{-1,1\}), f$ typically models the conditional $\log$ odds, i.e., $f(x) \approx \ln P(Y=1 \mid X=$ $x) / P(Y=-1 \mid X=x)$ and the conditional probabilities $p(y \mid x)$ are recovered by the sigmoid transform
+**Data set:** Formally, we aim to model a target variable $Y \in \mathbb{Y}$ given some feature vector $X \in \mathbb{X}$ based on training data $\left\{\left(x_i, y_i\right)\right\}_{i=1}^n$ that has been sampled according to the joint distribution of $X$ and $Y$. (Add to section [[🍪Selection Of Supervised Approaches]]) We focus on models in the form of a single-valued scoring function $f: \mathbb{X} \rightarrow \mathbb{R}$. For instance, in regression problems $(\mathbb{Y}=\mathbb{R}), f$ typically models the conditional expectation of the target, i.e., $f(x) \approx E(Y \mid X=x)$, whereas in binary classification problems $(\mathbb{Y}=\{-1,1\}), f$ typically models the conditional $\log$ odds, i.e., $f(x) \approx \ln P(Y=1 \mid X=x) / P(Y=-1 \mid X=x)$ and the conditional probabilities $p(y \mid x)$ are recovered by the sigmoid transform
 $$
 p(y \mid x)=\sigma(f(x))=(1+\exp (-y f(x)))^{-1} .
 $$

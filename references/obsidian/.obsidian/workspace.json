@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/⭕Self-Training classifier.md",
+                "file": "📑notes/🐈Gradient Boosting notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/⭕Self-Training classifier.md",
+                "file": "📑notes/🐈Gradient Boosting notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/⭕Self-Training classifier.md"
+                "file": "📑notes/🐈Gradient Boosting notes.md"
               }
             }
           },
@@ -169,6 +169,9 @@
   },
   "active": "e8c0db083f384014",
   "lastOpenFiles": [
+    "📖chapters/🐈Gradient Boosting.md",
+    "📖chapters/🐈CatBoost.md",
+    "📖chapters/⭕Self-Training classifier.md",
     "🖼️Media/performance-degradations.png",
     "🖼️Media/Pasted image 20230405172011.png",
     "🖼️Media/Pasted image 20230405171940.png",
@@ -181,10 +184,8 @@
     "📑notes/🌏Dataset notes.md",
     "📑notes/🔢Trade Initiator notes.md",
     "📑notes/🐈Gradient Boosting notes.md",
-    "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/🏅Results.md",
     "📑notes/🧭Evaluation metric notes.md",
-    "📖chapters/⭕Self-Training classifier.md",
     "❓Questions.md",
     "📥Inbox/@chapelleSemisupervisedLearning2006.md",
     "🖼️Media/Pasted image 20230326101313.png",
@@ -199,7 +200,6 @@
     "📥Inbox/@grauerOptionTradeClassification2022.md",
     "📑notes/🪄Data Preprocessing.md",
     "📖chapters/💡Hyperparameter tuning.md",
-    "📖chapters/🐈CatBoost.md",
     "📖chapters/🚏Exploratory Data Analysis.md",
     "📥Inbox/@aasExplainingIndividualPredictions2021.md",
     "📑notes/🧭Random Feature Permutation notes.md",
