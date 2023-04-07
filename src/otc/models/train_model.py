@@ -161,14 +161,14 @@ def main(
     else:
         x_train = pd.read_parquet(
             Path(artifact_dir_labelled, "train_set.parquet"), columns=columns
-        ) #.sample(frac=0.1)
+        ).sample(frac=0.1)
         y_train = x_train["buy_sell"]
         x_train.drop(columns=["buy_sell"], inplace=True)
 
     # load validation data
     x_val = pd.read_parquet(
         Path(artifact_dir_labelled, "val_set.parquet"), columns=columns
-    )# .sample(frac=0.1)
+    ).sample(frac=0.1)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 

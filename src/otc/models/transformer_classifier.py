@@ -178,10 +178,13 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             lr=self.optim_params["lr"],
             weight_decay=self.optim_params["weight_decay"],
         )
-
+        
+        # decrease lr, if it plateaued for 5 steps
+        scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', patience=5, factor=0.1, verbose=True)
+        
         # compile model
         self.clf_compiled = torch.compile(self.clf)
-
+  
         # see https://stackoverflow.com/a/53628783/5755604
         # no sigmoid required; numerically more stable
         # do not reduce, calculate mean after multiplication with weight
@@ -206,11 +209,12 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 with torch.cuda.amp.autocast():
                     logits = self.clf_compiled(x_cat, x_cont).flatten()
                     train_loss = criterion(logits, targets)
-                # compute accumulated gradients
-                scaler.scale(train_loss).backward()
 
+                # https://pytorch.org/docs/stable/amp.html
+                # https://discuss.huggingface.co/t/why-is-grad-norm-clipping-done-during-training-by-default/1866
+                scaler.scale(train_loss).backward()
+                scaler.unscale_(optimizer)
                 nn.utils.clip_grad_norm_(self.clf_compiled.parameters(), 5)
-                # perform parameter update based on current gradients
                 scaler.step(optimizer)
                 scaler.update()
 
@@ -241,6 +245,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             # correct samples / no samples
             val_accuracy = correct / len(X_val)
             print(f"val accuracy: {val_accuracy}")
+            
+            # update lr if needed
+            scheduler.step(val_loss)
             
             self.callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
 
