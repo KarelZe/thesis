@@ -571,7 +571,7 @@ In this Section, we demonstrate the effectiveness of gradient boosting and Trans
 
 Experiments were conducted on shared nodes of the bwHPC cluster, with 10 assigned Intel Xeon Gold 6230 cores at \SI{2.1}{\GHz}, an NVIDIA V100 \SI{32}{\giga\byte}, and \SI{92.160}{\giga\byte} random access memory running Red Hat Enterprise Linux release 8.4. For reproducibility, the implementation and experiment tracking are publicly available~\footnote{Code is available at~\url{https://github.com/KarelZe/thesis}. Experiments are tracked at \url{https://wandb.ai/fbv/thesis}.}.
 
-The subsequent section provides details on the dataset.
+The subsequent section provides details on the datasets.
 
 \subsection{Data and Data Preparation (6 p)}\label{sec:data-and-data-preparation}
 
@@ -712,6 +712,7 @@ All of our machine learning models feature a set of tunable hyperparameters. The
 
 \textbf{Gradient Boosting}
 
+(insert here)
 % \begin{figure}[ht]
 %     \centering
 %     \includegraphics{30sl6vqf-hyperparam-search-space.pdf}
@@ -729,6 +730,7 @@ All of our machine learning models feature a set of tunable hyperparameters. The
 % \end{figure}
 \textbf{FT-Transformer}
 
+(insert here)
 % \newpage
 
 % \begin{figure}[ht]
@@ -740,32 +742,32 @@ All of our machine learning models feature a set of tunable hyperparameters. The
 
 \textbf{Classical Rules}
 
-Akin to selecting the machine learning classifiers, we determine our classical baselines on the \gls{ISE} validation set. This guarantees challenging baselines, while maintaining consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the \gls{CBOE} sample. Solely for reference, we also report accuracies of the tick rule, quote rule, and \gls{LR} algorithm, due to their widespread adoption in literature.
+Akin to selecting the machine learning classifiers, we determine our classical baselines on the \gls{ISE} validation set. This guarantees challenging baselines while maintaining consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the \gls{CBOE} sample. Solely for reference, we also report accuracies of the tick rule, quote rule, and \gls{LR} algorithm, due to their widespread adoption in literature.
 
 (insert table here)
 
-Table-x reports the accuracies of common trade classification rules over the entire validation set and broken down by the trade price's location relative to the quotes. The tick test applied to trade prices at the trading venue, performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving tick rule over all exchanges ($\operatorname{tick}_{\text{all}}$). From all classical rules, a double-combination of the quote rule ($\operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}}$), where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE}, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly studied in literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
+Table-x reports the accuracies of common trade classification rules over the complete \gls{ISE} validation set and broken down by the trade price's location relative to the quotes. The tick test applied to trade prices at the trading venue performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving the tick rule over all exchanges ($\operatorname{tick}_{\text{all}}$). From all classical rules, a double-combination of the quote rule ($\operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}}$), where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE}, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly used in the literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
 
-By extension, we also estimate rules combinations involving overrides from the tradesize rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}} \to \operatorname{depth}_{\text{nbbo}} \to \operatorname{depth}_{\text{ex}} \to \operatorname{rtick}_{\text{all}}$ achieves the highest validation accuracy. For brevity, we refer to this specific combination as the \gls{GSU} method. Much of the performance gains is owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to extended use of the quoted sizes and trade sizes, it becomes our benchmark for feature set two.  
+By extension, we also estimate rule combinations involving overrides from the trade size rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}} \to \operatorname{depth}_{\text{nbbo}} \to \operatorname{depth}_{\text{ex}} \to \operatorname{rtick}_{\text{all}}$ achieves the highest validation accuracy. For brevity, we refer to this specific combination as the \gls{GSU} method. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for feature set two.  
 
-In absence of other suitable baselines, we repeatedly compare against \gls{GSU} method as a baseline, even if it doesn't involve option-specific features.
+In absence of other suitable baselines, we repeatedly compare against \gls{GSU} method as a baseline for the third feature set, even if it doesn't involve option-specific features.
 
 % TODO: How do validation accuracies of ml approaches and classical rules compare?
 
 \subsection{Evaluation}\label{sec:evaluation}
 
-Subsequent sub-chapters discuss measure to retrieve feature importance estimates from the estimators and defines metrics used in evaluation.
+Subsequent sub-chapters discuss measures to retrieve feature importance estimates from the estimators and metrics for evaluation.
 
 \subsubsection{Feature Importance
     Measure (2~p)}\label{sec:feature-importance-measure}
 
 \textbf{Random Feature Permutation}
 
-
 \textbf{Attention Maps}
 
-In addition to random feature permutation, Transformer-based models offer \emph{some} interpretability through their attention mechanism~\footnote{One has to distinguish interpretability through \emph{explainability} from \emph{transparency} \autocite[][4--5]{liptonMythosModelInterpretability2017}. In recent research a major controversy embarked around the question, of whether attention offers explanations to model predictions \autocites[cp.][150]{bastingsElephantInterpretabilityRoom2020}[][5--7]{jainAttentionNotExplanation2019}[][9]{wiegreffeAttentionNotNot2019}. The debate sparked around opposing definitions of explainability and the consistency of attention scores with other, established feature-importance measures. Our focus is less on post-hoc explainability of the model, but rather on transparency. Consistent with \textcite[][8]{wiegreffeAttentionNotNot2019} we view attention scores as a vehicle to model transparency.
-}. Recall from our discussion on attention (cp. \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features that the model is paying attention to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in \cref{fig:attention-maps}.
+In addition to random feature permutation, Transformer-based models offer \emph{some} interpretability through their attention mechanism. One has to distinguish interpretability through \emph{explainability} from \emph{transparency} \autocite[][4--5]{liptonMythosModelInterpretability2017}. In recent research a major controversy embarked around the question, of whether attention offers explanations to model predictions \autocites[cp.][150]{bastingsElephantInterpretabilityRoom2020}[][5--7]{jainAttentionNotExplanation2019}[][9]{wiegreffeAttentionNotNot2019}. The debate sparked around opposing definitions of explainability and the consistency of attention scores with other, established feature-importance measures. Our focus is less on post-hoc explainability of the model, but rather on transparency. Consistent with \textcite[][8]{wiegreffeAttentionNotNot2019} we view attention scores as a vehicle to model transparency.
+
+Recall from our discussion on attention (cp. \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features that the model is paying attention to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in \cref{fig:attention-maps}.
 
 \begin{figure}[ht]
     \centering
@@ -839,8 +841,14 @@ Our datasets are approximately balanced and buyer-initiated trades predicted as 
 \subsection{Results of Supervised
     Models (2~p)}\label{sec:results-of-supervised-models}
 
+\textbf{Gradient Boosting}
+
 \subsection{Results of Semi-Supervised
     Models (2~p)}\label{sec:results-of-semi-supervised-models}
+
+
+\textbf{Self-Training with Gradient-Boosting}
+
 
 \subsection{Robustness of Results (3~p)}\label{sec:robustness-checks}
 
@@ -850,7 +858,6 @@ Our datasets are approximately balanced and buyer-initiated trades predicted as 
 
 \newpage
 \section{Application in Transaction Cost Estimation}\label{sec:application}
-\subsection{Simulation Setup}\label{sec:simulation-setup}
 
 % TODO: Make explanation more detailled? See e. g., https://s3.eu-central-1.amazonaws.com/up.raindrop.io/raindrop/files/526/059/341/MAS_Thesis_Mate_Nemes_final_Jan13.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAZWICFKR63DOESPJN%2F20230227%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20230227T054628Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJHMEUCIGh8t4%2BwrZPS53a0v4pmuMrfdSK0byfd6kOZymIodKHYAiEAmLEgZaZOGQnHox0E%2FKUKmzaSoLDsg%2FDOp3wOwqivzasq%2BAMIUxAAGgw2NjYyNjEzNDU0MDUiDER%2BrooXF33LN6%2FviirVA7XUNhcQEGET%2BR%2FFF2TxkIwpnMbB3sUSVe%2B37iVeKehJPZI4PlXs%2BvOrAyydlqpoERgBIRSbjH3otqvC8sSikw%2FOX5bg9RIQNWV988GpA4FiEwUYkck9d46o9X3GZ2ZHHHis7h5ADmBMsEUpRx5P3DkLXxOig7a6tb5%2BNDNExpPcTKaJOLL1CeM4g6dg9czBkZ1mHC6SCpTjQRBym0jndXXAFRpxrnLOG7lRzC1til7wdX9yVe7m8YgAixkTtrN0oZ81%2BunfpqVTs9dQ%2FeaaDkGwUMpdh8PKoG3V8aIKBclaaix%2BXCwkHA%2Fcq%2BbHRY7HDm4eAiZ1leUxvJfX1rx6GR8uP978qrSs3nZvep5aTi3CjeLX1fna%2FX2sE3VZr4xT8cy9vkq%2FpvQIPJ%2BhnYi1v%2BAq6y7g4RjTJmHHEm0nPTvuV0Lk1%2BSIFzYEsh1my8BKHKrr0WEHWYVcPsBNaP37a6fxzxwqJLSEMtEM7Zb%2BDNewrYEdavtiVSQGLob9LfFF3Bobc%2BhCs8xrunkNbJfMsCVBnDGPKFDRKHznBuuZu6SqXaj8bvxu1Q0YMxkImt%2Bi72zRGqUSSSLlKC9MCbbGlBt5b%2FkfCQrzFbL6PHiuZes10hwNoz4wwJTwnwY6pQGavPb2vsjGrOUbaRKmC9iQY5uvJZpHfQMgXMoTWVx58m6eU%2FotzkeDnwSVmZDIA4yu4%2B%2BKoScCFTXEDkULo8NJBITW0kX1zMG7U0sOdC%2B7TfT8VK7%2FsqDC7MjrNCCDvUxcpmCcddA2eR%2BKEn114AG9ZhNewTdGfIu4zV2w%2Bpa1lwalqqQkM5E9zKeI9mENGGtVMEcptjXJcl30O2%2BnkFkuJAxaGa8%3D&X-Amz-Signature=4f206295f4f0b090df3d32382188400b305c79ab9a45a18bbbc79e7824236dc7&X-Amz-SignedHeaders=host
 % TODO: read: Glosten, L. and Harris, L. (1988). Estimating the components of the bid/ask spread.Journal of financial Economics, 21(1):123–142.
@@ -859,6 +866,8 @@ Our datasets are approximately balanced and buyer-initiated trades predicted as 
 % TODO: read: Roll, R. (2012). A simple implicit measure of the effective bid-ask spread in an efficient market. The Journal of Finance, 39(4):1127–1139.
 % TODO: read: Petrella, G. (2006). Option bid-ask spread and scalping risk: Evidence from a covered warrants market. Journal of Futures Markets, 26(9):843–867.
 % TODO: read: Pinder, S. (2003). An empirical examination of the impact of market microstructure changes on the determinants of option bid–ask spreads. International Review of Financial Analysis, 12(5):563–577.
+
+\textbf{Context}
 
 Albeit the classification accuracy is a reasonable measure for comparing classifiers, one cannot immediately infer how changes in accuracy e.~g., an improvement by \SI{1}{\percent}, affect the application domains. In an attempt to make our results tangible, we apply all algorithms to estimate trading cost, a problem we previously identified to be reliant on correct trade classification (cp. \cref{sec:introduction}) and a common testing ground for trade classification rules \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][569]{finucaneDirectTestMethods2000}[][271--278]{petersonEvaluationBiasesExecution2003}[][896--897]{savickasInferringDirectionOption2003}.
 
@@ -870,14 +879,14 @@ One of the most widely adopted measures for trading costs is the effective sprea
 
 Like before, $i$ indexes the security and $t$ denotes the trade. Here, $D_{i,t}$ is the trade direction, which is either $1$ for customer buy orders and $-1$ for customer sell orders. If the trade initiator is known, we set $D_{i,t} = y_{i,t}$ and $D_{i,t}=\hat{y}_{it}$, if inferred from a rule or classifier. As the fundamental value $V_{i,t}$ is unobserved at the time of the trade, we follow a common track in research and use the midpoint of the prevailing quotes as an observable proxy \footnote{An alternative treatment for options is discussed in \textcite[][4975--4976]{muravyevOptionsTradingCosts2020}. Our focus is on the midspread, as it is the most common proxy for the value.}. This is also a natural choice, assuming that, on average, the spread is symmetrical and centred around the true fundamental value \autocite[][1018]{leeMarketIntegrationPrice1993}. We multiply the so-obtained half-spread by $2$ to obtain the effective spread, which represents the cost for a round trip trade involving a buy and sell ex commissions.
 
-Readily apparent from \cref{eq:effective-spread}, poor estimates for the predicted trade direction, lead to an under or over-estimated effective spread, and hence to a skewed trade cost estimate. By comparing the true effective spread from the estimated, we can derive the economic significance. For convenience, we also calculate the \emph{relative effective spread} as
+Apparent from \cref{eq:effective-spread}, poor estimates for the predicted trade direction, lead to an under or over-estimated effective spread, and hence to a skewed trade cost estimate. By comparing the true effective spread from the estimated, we can derive the economic significance. For convenience, we also calculate the \emph{relative effective spread} as
 \begin{equation}
     {PS}_{i,t} = S_{i,t} / V_{i,t}.
 \end{equation}
 % TODO check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does chakrabarty 2007?
 The subsequent section estimates both the nominal and relative effective spread for our test sets.
 
-\subsection{Simulation Results}\label{sec:simulation-results}
+\textbf{Results}
 
 The actual and the estimated effective spreads, as well as the quoted spread, are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimated the effective spreads on a subset of rules for option trades at the \gls{CBOE}, which can be compared against.
 
