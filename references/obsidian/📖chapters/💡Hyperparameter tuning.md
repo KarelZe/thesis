@@ -1,3 +1,23 @@
+All of our machine learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of ([[@grinsztajnWhyTreebasedModels2022]] 5), emphasize the need for tuning routines, as the test performance of the FT-Transformer and gradient-boosted trees largely fluctuates with the hyperparameter configuration.  As such, we employ an exhaustive hyperparameter search, to find suitable hyperparameter configuration for all our models. 
+
+
+
+We define a hyperparameter search space and run a Bayesian optimization 
+
+We run a Bayesian search and optimize for the accuracy, which is also our decisive metric for evaluation ([[🧭Evaluation metric]]), on the validation set. 
+We compute at maximum 50 trials. To compensate for varying computational costs between both machine learning models, we set an additional time budget of 12 hours.
+
+Our search space is reported in Table-X. It is based on the recommendations in [[@prokhorenkovaCatBoostUnbiasedBoosting2018]] and [[@gorishniyRevisitingDeepLearning2021]] with minor deviations . As we were experiencing exploding gradients in preliminary tests due to too high learning rates, we adjust the intervals for the learning rate downward. 
+
+We grow symmetric trees, which acts as a regularizer.
+
+
+Figure-X visualizes the hyperparameter search space. It serves two purposes,
+
+
+Tuning. For every dataset, we carefully tune each model’s hyperparameters. The best hyperparameters are the ones that perform best on the validation set, so the test set is never used for tuning. For most algorithms, we use the Optuna library (Akiba et al., 2019) to run Bayesian optimization (the Tree-Structured Parzen Estimator algorithm), which is reported to be superior to random search (Turner et al., 2021). For the rest, we iterate over predefined sets of configurations recommended by corresponding papers. We provide parameter spaces and grids in supplementary. We set the budget for Optuna-based tuning in terms of iterations and provide additional analysis on setting the budget in terms of time in supplementary
+
+
 - Visualize results https://github.com/LeoGrin/tabular-benchmark
 ![[comparsion-of-results.png]]
 
