@@ -298,7 +298,7 @@ class FTTransformerObjective(Objective):
         ffn_dropout = trial.suggest_float("ffn_dropout", 0, 0.5)
 
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-3, log=True)
-        lr = trial.suggest_float("lr", 1e-5, 3e-4, log=True) # slightly lower 1e-5 instead of 3e-5
+        lr = trial.suggest_float("lr", 3e-6, 3e-4, log=True) # slightly lower 3e-6 instead of 3e-5
         batch_size = 16192 #2048  # see 5.0a-mb-batch-size-finder
         
         use_cuda = torch.cuda.is_available()

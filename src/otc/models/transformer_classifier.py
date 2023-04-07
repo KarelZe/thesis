@@ -191,7 +191,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         criterion = nn.BCEWithLogitsLoss(reduction="mean")
 
         # keep track of val loss and do early stopping
-        early_stopping = EarlyStopping(patience=15)
+        early_stopping = EarlyStopping(patience=10)
 
         for epoch in range(self.epochs):
 
