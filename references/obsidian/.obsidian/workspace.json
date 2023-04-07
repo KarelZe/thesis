@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🐈Gradient Boosting notes.md",
+                "file": "📖chapters/🏅Results.md",
                 "mode": "source",
                 "source": false
               }
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🐈Gradient Boosting notes.md",
+                "file": "📖chapters/🏅Results.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🐈Gradient Boosting notes.md"
+                "file": "📖chapters/🏅Results.md"
               }
             }
           },
@@ -169,6 +169,7 @@
   },
   "active": "e8c0db083f384014",
   "lastOpenFiles": [
+    "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/🐈CatBoost.md",
     "📖chapters/⭕Self-Training classifier.md",
@@ -183,7 +184,6 @@
     "📑notes/⭕Self-Training classifier notes.md",
     "📑notes/🌏Dataset notes.md",
     "📑notes/🔢Trade Initiator notes.md",
-    "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/🏅Results.md",
     "📑notes/🧭Evaluation metric notes.md",
     "❓Questions.md",
