@@ -1,19 +1,31 @@
-\begin{tabular}{lllllllllllll}
-    \toprule
-                     & Nominal & Relative & $p$-value \\ \midrule
-    Effective Spread &         &          & -         \\
-    Quoted Spread    &         &          & -         \\ \midrule
-    Tick Test        &         &          &           \\
-    Rev. Tick Test   &         &          &           \\
-    Quote Rule       &         &          &           \\
-    \gls{LR}         &         &          &           \\
-    Rev. \gls{LR}    &         &          &           \\
-    \gls{EMO}        &         &          &           \\
-    Rev. \gls{EMO}   &         &          &           \\
-    \gls{CLNV}       &         &          &           \\
-    Rev. \gls{CLNV}  &         &          &           \\
-    \gls{GSU} method &         &          &           \\ \midrule
-    \gls{GBM}        &         &          &           \\ \midrule
-    TabTransformer   &         &          &           \\
-    FT-Transformer   &         &          &           \\ \bottomrule
-\end{tabular}
+\begin{threeparttable}
+    \begin{tabular}{lSSSS}
+        {}                    & \multicolumn{2}{l}{\textbf{Panel A:} \gls{ISE} Dataset} & \multicolumn{2}{l}{\textbf{Panel B:} \gls{CBOE} Dataset}                                 \\
+        \toprule
+        {}                    & {Eff. Spread}                                           & {Eff. Spread}                                            & {Eff. Spread} & {Eff. Spread} \\
+        {}                    & {(in \$)}                                               & {(in \%)}                                                & {(in \$)}     & {(in \%)}     \\ \midrule
+        Tick Test             &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        Quote Rule            &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        \gls{LR} Algorithm    &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        \gls{EMO} Rule        &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        \gls{CLNV} Method     &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        \gls{GSU} Method      &                                                         & \tnote{*}                                                &               & \tnote{*}     \\ \midrule
+        \gls{GBM} (FS1)       &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        \gls{GBM} (FS2)       &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        \gls{GBM} (FS3)       &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        FT-Transformer (FS1)  &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        FT-Transformer (FS2)  &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        FT-Transformer (FS3)  &                                                         & \tnote{*}                                                &               & \tnote{*}     \\ \midrule
+        \gls{GBM} (FS1)       &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        \gls{GBM} (FS2)       &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        \gls{GBM} (FS3)       &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        FT-Transformer (FS1)  &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        FT-Transformer (FS2)  &                                                         & \tnote{*}                                                &               & \tnote{*}     \\
+        FT-Transformer (FS3)  &                                                         & \tnote{*}                                                &               & \tnote{*}     \\ \midrule
+        True Effective Spread &                                                         & \tnote{*}                                                &               & \tnote{*}     \\ \bottomrule
+        %Quoted Spread                      &                          &                                     \\ \midrule
+    \end{tabular}
+    \begin{tablenotes}\footnotesize
+        \item[*] $p \leq 0.01$.
+    \end{tablenotes}
+\end{threeparttable}

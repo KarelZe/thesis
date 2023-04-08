@@ -545,7 +545,7 @@ Our supervised approaches depend on the availability of the trade initiator as t
 
 Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside with true labels \autocite[][6]{chapelleSemisupervisedLearning2006}. This property renders them appealing for trade classification.
 
-Semi-supervised learning is centred around the \textit{assumption of smoothness}, which states that if two samples $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if datapoints are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
+Semi-supervised learning is centred around the \emph{assumption of smoothness}, which states that if two samples $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if datapoints are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
 
 The semi-supervised setting requires to extend our notation from \cref{sec:problem-framing}, by dividing the dataset into labelled and unlabelled instances. Henceforth, $\mathbf{X}_{l} = \left[\mathbf{x}_{1},\ldots, \mathbf{x}_{l}\right]^{\top}$ is used for instances, where labels $\mathbf{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$ are known and $\mathbf{X}_{u} = \left[\mathbf{x}_{l+1},\ldots, \mathbf{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by time.
 
@@ -638,13 +638,15 @@ Here, $\lambda$ is the power parameter and determines the specific power functio
 
 Note that, the use of the Box-Cox transform is different from its originated purpose. In feature engineering, the transformation is used in an unsupervised fashion, as the transformation's outcome is not directly used in the model. Also, the transform is applied to the features, rather than the model's residuals \autocite[122]{kuhnFeatureEngineeringSelection2020}.
 
-To further improve the convergence of our transformer-based architectures, we normalize the data set using $z$-score normalization given by:
-\begin{equation}
-    \widehat{\mathbf{X}}=\frac{\mathbf{X}-\mathbf{\mu}}{\mathbf{\sigma}}
-\end{equation}
-with mean $\mathbf{\mu} =\frac{1}{N} \sum_{i=1}^N\left(\mathbf{X}\left[i,:\right]\right)$ and standard deviation $\mathbf{\sigma}=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(\mathbf{X}\left[i,:\right]-\mathbf{\mu}\right)^2}$. Intuitionally, the zero means prevents bias in the direction of the weight update and scaling to unit variance balances the rate at which parameters are updated \autocite[][8]{lecunEfficientBackProp2012}. Normalization of raw inputs is complementary to batch normalization, which is used in deeper layers of the Transformer stack and single batches. Following good standards, all statistics are estimated on the imputed training set only. The unlabelled \gls{ISE} training set and the \gls{CBOE} test set share the statistics of the \gls{ISE} labelled training set. 
+To further improve the convergence of our transformer-based architectures, we normalize all numerical features using $z$-score normalization to obtain zero mean and unit variance.
+% given by:
+% \begin{equation}
+%     \widehat{\mathbf{X}}=\frac{\mathbf{X}-\mathbf{\mu}}{\mathbf{\sigma}}
+% \end{equation}
+% with mean $\mathbf{\mu} =\frac{1}{N} \sum_{i=1}^N\left(\mathbf{X}\left[i,:\right]\right)$ and standard deviation $\mathbf{\sigma}=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(\mathbf{X}\left[i,:\right]-\mathbf{\mu}\right)^2}$. 
+Intuitionally, the zero means prevents bias in the direction of the weight update and scaling to unit variance balances the rate at which parameters are updated \autocite[][8]{lecunEfficientBackProp2012}. Normalization of raw inputs is complementary to batch normalization, which is used in deeper layers of the Transformer stack and single batches. Following good standards, all statistics are estimated on the imputed training set only. The unlabelled \gls{ISE} training set and the \gls{CBOE} test set share the statistics of the \gls{ISE} labelled training set. 
 
-Normalization and log transformations have the advantage of preserving the data distribution, which is a desirable property when comparing the feature importances from machine learning models against their classical counterparts in \cref{sec:feature-importance}.
+Normalization and log transformations have the advantage of preserving the data distribution, which is a desirable property when comparing the feature importances from machine learning models against their classical counterpart in \cref{sec:feature-importance}.
 
 \textbf{Categorical Features}
 
@@ -815,7 +817,7 @@ Our goal is to maximize the number of trades, where the predicted trade initiato
 where $\operatorname{l}_{0-1}(\cdot)$ is the 0-1-loss given by:
 \begin{equation}
     % \operatorname{l}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad 
-    \operatorname{l}_{0-1}(y, \widehat{y}) = \mathbb{I}\left(y\neq \widehat{y}\right).
+    \operatorname{l}_{0-1}(y, \hat{y}) = \mathbb{I}\left(y\neq \hat{y}\right).
 \end{equation}
 
 Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss. Notably, the loss is the same for false positives and negatives.
@@ -859,15 +861,7 @@ Our datasets are approximately balanced and buyer-initiated trades predicted as 
 \newpage
 \section{Application in Transaction Cost Estimation}\label{sec:application}
 
-% TODO: Make explanation more detailled? See e. g., https://s3.eu-central-1.amazonaws.com/up.raindrop.io/raindrop/files/526/059/341/MAS_Thesis_Mate_Nemes_final_Jan13.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAZWICFKR63DOESPJN%2F20230227%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20230227T054628Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJHMEUCIGh8t4%2BwrZPS53a0v4pmuMrfdSK0byfd6kOZymIodKHYAiEAmLEgZaZOGQnHox0E%2FKUKmzaSoLDsg%2FDOp3wOwqivzasq%2BAMIUxAAGgw2NjYyNjEzNDU0MDUiDER%2BrooXF33LN6%2FviirVA7XUNhcQEGET%2BR%2FFF2TxkIwpnMbB3sUSVe%2B37iVeKehJPZI4PlXs%2BvOrAyydlqpoERgBIRSbjH3otqvC8sSikw%2FOX5bg9RIQNWV988GpA4FiEwUYkck9d46o9X3GZ2ZHHHis7h5ADmBMsEUpRx5P3DkLXxOig7a6tb5%2BNDNExpPcTKaJOLL1CeM4g6dg9czBkZ1mHC6SCpTjQRBym0jndXXAFRpxrnLOG7lRzC1til7wdX9yVe7m8YgAixkTtrN0oZ81%2BunfpqVTs9dQ%2FeaaDkGwUMpdh8PKoG3V8aIKBclaaix%2BXCwkHA%2Fcq%2BbHRY7HDm4eAiZ1leUxvJfX1rx6GR8uP978qrSs3nZvep5aTi3CjeLX1fna%2FX2sE3VZr4xT8cy9vkq%2FpvQIPJ%2BhnYi1v%2BAq6y7g4RjTJmHHEm0nPTvuV0Lk1%2BSIFzYEsh1my8BKHKrr0WEHWYVcPsBNaP37a6fxzxwqJLSEMtEM7Zb%2BDNewrYEdavtiVSQGLob9LfFF3Bobc%2BhCs8xrunkNbJfMsCVBnDGPKFDRKHznBuuZu6SqXaj8bvxu1Q0YMxkImt%2Bi72zRGqUSSSLlKC9MCbbGlBt5b%2FkfCQrzFbL6PHiuZes10hwNoz4wwJTwnwY6pQGavPb2vsjGrOUbaRKmC9iQY5uvJZpHfQMgXMoTWVx58m6eU%2FotzkeDnwSVmZDIA4yu4%2B%2BKoScCFTXEDkULo8NJBITW0kX1zMG7U0sOdC%2B7TfT8VK7%2FsqDC7MjrNCCDvUxcpmCcddA2eR%2BKEn114AG9ZhNewTdGfIu4zV2w%2Bpa1lwalqqQkM5E9zKeI9mENGGtVMEcptjXJcl30O2%2BnkFkuJAxaGa8%3D&X-Amz-Signature=4f206295f4f0b090df3d32382188400b305c79ab9a45a18bbbc79e7824236dc7&X-Amz-SignedHeaders=host
-% TODO: read: Glosten, L. and Harris, L. (1988). Estimating the components of the bid/ask spread.Journal of financial Economics, 21(1):123–142.
-% TODO: read: Ho, T. and Stoll, H. (1981). Optimal dealer pricing under transactions and return uncertainty. Journal of Financial economics, 9(1):47–73.
-% TODO: read: Huang, R. and Stoll, H. (1997). The components of the bid-ask spread: a general approach. Review of Financial Studies, 10(4):995–1034.
-% TODO: read: Roll, R. (2012). A simple implicit measure of the effective bid-ask spread in an efficient market. The Journal of Finance, 39(4):1127–1139.
-% TODO: read: Petrella, G. (2006). Option bid-ask spread and scalping risk: Evidence from a covered warrants market. Journal of Futures Markets, 26(9):843–867.
-% TODO: read: Pinder, S. (2003). An empirical examination of the impact of market microstructure changes on the determinants of option bid–ask spreads. International Review of Financial Analysis, 12(5):563–577.
-
-\textbf{Context}
+\textbf{Setting}
 
 Albeit the classification accuracy is a reasonable measure for comparing classifiers, one cannot immediately infer how changes in accuracy e.~g., an improvement by \SI{1}{\percent}, affect the application domains. In an attempt to make our results tangible, we apply all algorithms to estimate trading cost, a problem we previously identified to be reliant on correct trade classification (cp. \cref{sec:introduction}) and a common testing ground for trade classification rules \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][569]{finucaneDirectTestMethods2000}[][271--278]{petersonEvaluationBiasesExecution2003}[][896--897]{savickasInferringDirectionOption2003}.
 
@@ -877,14 +871,14 @@ One of the most widely adopted measures for trading costs is the effective sprea
     \label{eq:effective-spread}
 \end{equation}
 
-Like before, $i$ indexes the security and $t$ denotes the trade. Here, $D_{i,t}$ is the trade direction, which is either $1$ for customer buy orders and $-1$ for customer sell orders. If the trade initiator is known, we set $D_{i,t} = y_{i,t}$ and $D_{i,t}=\hat{y}_{it}$, if inferred from a rule or classifier. As the fundamental value $V_{i,t}$ is unobserved at the time of the trade, we follow a common track in research and use the midpoint of the prevailing quotes as an observable proxy \footnote{An alternative treatment for options is discussed in \textcite[][4975--4976]{muravyevOptionsTradingCosts2020}. Our focus is on the midspread, as it is the most common proxy for the value.}. This is also a natural choice, assuming that, on average, the spread is symmetrical and centred around the true fundamental value \autocite[][1018]{leeMarketIntegrationPrice1993}. We multiply the so-obtained half-spread by $2$ to obtain the effective spread, which represents the cost for a round trip trade involving a buy and sell ex commissions.
+Like before, $i$ indexes the security and $t$ the point in time. Here, $D_{i,t}$ is the trade direction, which is either $1$ for customer buy orders and $-1$ for sell orders. If the trade initiator is known, we set $D_{i,t} = y_{i,t}$ and $D_{i,t}=\hat{y}_{it}$, if inferred from a rule or classifier. As the fundamental value $V_{i,t}$ is unobserved at the time of the trade, we follow a common track in research and use the midpoint of the prevailing quotes as an observable proxy \footnote{An alternative treatment for options is discussed in \textcite[][4975--4976]{muravyevOptionsTradingCosts2020}. Our focus is on the midspread, as it is the most common proxy for the value.}. This is also a natural choice, under the assumption that, on average, the spread is symmetric and centred around the true fundamental value \autocite[][1018]{leeMarketIntegrationPrice1993}. We multiply the so-obtained half-spread by $\times 2$ to obtain the effective spread, which represents the cost for a round trip trade involving a buy and sell ex commissions.
 
-Apparent from \cref{eq:effective-spread}, poor estimates for the predicted trade direction, lead to an under or over-estimated effective spread, and hence to a skewed trade cost estimate. By comparing the true effective spread from the estimated, we can derive the economic significance. For convenience, we also calculate the \emph{relative effective spread} as
+Apparent from \cref{eq:effective-spread}, poor estimates for the predicted trade direction, lead to an under or over-estimated effective spread, and hence to a skewed trade cost estimate. Only for trades at the midspread, the predicted trade direction is irrelevant, since the effective spread is zero. By comparing the true effective spread from the estimated, we can derive the economic significance. For convenience, we also calculate the \emph{relative effective spread} as
 \begin{equation}
     {PS}_{i,t} = S_{i,t} / V_{i,t}.
 \end{equation}
-% TODO check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does chakrabarty 2007?
-The subsequent section estimates both the nominal and relative effective spread for our test sets.
+% FIXME: check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does chakrabarty 2007 p. 3819?
+The subsequent section estimates both the nominal and relative effective spread for our test sets, as well as the quoted spread.
 
 \textbf{Results}
 
@@ -893,11 +887,11 @@ The actual and the estimated effective spreads, as well as the quoted spread, ar
 \begin{table}[H]
     \centering
     \input{Content/effective-spread.tex}
-    \caption{Estimated Effective Spread on \gls{ISE} Dataset}
+    \caption{Application of Trade Classification Algorithms To Estimate Effective Spreads}
     \label{tab:effective-spread}
 \end{table}
 
-A $t$-test is used to test if the estimated, effective spread is significantly different from the mean true effective spread / significantly greater than zero at $p=0.01$ \autocite[cp.][570]{finucaneDirectTestMethods2000}. Alternatively compare correlations $\rho$ and medians using the Wilcoxon test with the null hypothesis of the equal medians with $p=0.01$ \autocite[cp.][12]{theissenTestAccuracyLee2000}.
+Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal. The null hypothesis of equal medians is rejected for $p \leq 0.01$. 
 
 \newpage
 \section{Discussion (3~p)}\label{sec:discussion}
