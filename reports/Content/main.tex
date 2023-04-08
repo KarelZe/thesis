@@ -767,9 +767,14 @@ All of our machine-learning models feature a set of tunable hyperparameters. The
 
 Akin to selecting the machine learning classifiers, we determine our classical baselines on the \gls{ISE} validation set. This prevents overfitting the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the \gls{CBOE} sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and \gls{LR} algorithm, due to their widespread adoption in literature.
 
-(insert table here)
+\begin{table}[H]
+    \centering
+    \input{Content/hyperparam-classical-ise_classical_supervised_val.tex}
+    \caption{Accuracies of Classical Trade Classification Rule on \gls{ISE} Validation Set}
+    \label{tab:ise-classical-hyperparam-classical-size}
+\end{table}
 
-Table-x reports the accuracies of common trade classification rules over the complete \gls{ISE} validation set and broken down by the trade price's location relative to the quotes~\footnote{As a sanity check, we also performed a Bayesian search on classical rules, stacking up to five base rules. The best solution was inferior to the reported combinations.}. The tick test applied to trade prices at the trading venue performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving the tick rule over all exchanges ($\operatorname{tick}_{\text{all}}$). From all classical rules, a double-combination of the quote rule ($\operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}}$), where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE}, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly used in the literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
+\cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set~\footnote{As a sanity check, we also performed a Bayesian search on classical rules, stacking up to five base rules. The best solution was inferior to the reported combinations.}. The tick test applied to trade prices at the trading venue performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving the tick rule over all exchanges ($\operatorname{tick}_{\text{all}}$). From all classical rules, a double-combination of the quote rule ($\operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}}$), where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE}, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly used in the literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
 
 By extension, we also estimate rule combinations involving overrides from the trade size rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}} \to \operatorname{depth}_{\text{nbbo}} \to \operatorname{depth}_{\text{ex}} \to \operatorname{rtick}_{\text{all}}$ achieves the highest validation accuracy. For brevity, we refer to this specific combination as the \gls{GSU} method. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for feature set two.  
 
@@ -880,7 +885,7 @@ Our datasets are approximately balanced and buyer-initiated trades predicted as 
 
 \subsection{Feature Importance (3~p)}\label{sec:feature-importance}
 
-\subsection{Ablation Study of Models (2~p)}\label{sec:ablation-study}
+% \subsection{Ablation Study of Models (2~p)}\label{sec:ablation-study}
 
 \newpage
 \section{Application in Transaction Cost Estimation}\label{sec:application}
