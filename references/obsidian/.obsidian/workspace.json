@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md",
+                "file": "📑notes/🧭Evaluation metric notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -120,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md",
+                "file": "📑notes/🧭Evaluation metric notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -148,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md"
+                "file": "📑notes/🧭Evaluation metric notes.md"
               }
             }
           },
@@ -181,12 +181,13 @@
   },
   "active": "e8c0db083f384014",
   "lastOpenFiles": [
+    "📖chapters/🧭Evaluation metric.md",
+    "📖chapters/💡Hyperparameter tuning.md",
     "📖chapters/🍕Application study.md",
     "📑notes/🍕Application study notes.md",
     "🖼️Media/presentation-of-effective-spread.png",
     "📖chapters/🏅Results.md",
     "🖼️Media/Pasted image 20230407182457.png",
-    "📖chapters/💡Hyperparameter tuning.md",
     "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/🐈CatBoost.md",
@@ -209,7 +210,6 @@
     "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
     "📥Inbox/@aminiSelfTrainingSurvey2023.md",
     "📖chapters/🐈Extension to Gradient Boosting.md",
-    "📖chapters/🧭Evaluation metric.md",
     "🍬Implementation/🛞GCP-Docker-Cluster.md",
     "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
     "📥Inbox/@grauerOptionTradeClassification2022.md",
