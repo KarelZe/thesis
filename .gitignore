@@ -430,10 +430,6 @@ thesis.pdf
 #venv
 .venv/
 
-# powerpoint
-*.ppt
-*.pptx
-
 # venvs
 thesis/
 venv/

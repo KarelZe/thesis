@@ -31,7 +31,7 @@ source thesis/bin/activate
 python -m pip install .
 
 # run training script
-python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/ise_supervised_preprocessed:v2 --features=classical-size --pretrain
+python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/ise_supervised_log_standardized:latest --features=classical-size --pretrain
 2022-11-18 10:25:50,920 - __main__ - INFO - Connecting to weights & biases. Downloading artifacts. 📦
 2022-11-18 10:25:56,180 - __main__ - INFO - Start loading artifacts locally. 🐢
 2022-11-18 10:26:07,562 - __main__ - INFO - Start with study. 🦄
@@ -78,13 +78,6 @@ nano slurm-21614924.out
 ```
 
 ## Development
-
-### Build and run docker image 🐳
-The code is designed to run inside a docker container. See the [`Dockerfile`](https://github.com/KarelZe/thesis/blob/main/Dockerfile).
-```shell
-docker build -t thesis-dev .
-docker run --env-file .env thesis-dev
-```
 
 ### Set up git pre-commit hooks 🐙
 Pre-commit hooks are pre-checks to avoid committing error-prone code. The tests are defined in the [`.pre-commit-config.yaml`](https://github.com/KarelZe/thesis/blob/main/.pre-commit-config.yaml). Install them using:
