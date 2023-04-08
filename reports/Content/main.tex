@@ -796,7 +796,7 @@ In an attempt to explain the decision-making process of multi-modal Transformers
 \begin{equation}
     \begin{aligned}
         \bar{\mathbf{A}}^{(l)} & =I+ \mathbb{E}_h\left(\left(\nabla \mathbf{A}^{(l)} \odot \mathbf{A}^{(l)}\right)^{+}\right) \\
-        \operatorname {w\_rollout} & =\bar{\mathbf{A}}^{(1)} \cdot \bar{\mathbf{A}}^{(2)} \ldots \cdot \bar{\mathbf{A}}^{(L)}
+        \operatorname {wrollout} & =\bar{\mathbf{A}}^{(1)} \cdot \bar{\mathbf{A}}^{(2)} \ldots \cdot \bar{\mathbf{A}}^{(L)}
     \end{aligned}
     \label{eq:attention-map-weighted}
 \end{equation}
@@ -845,12 +845,15 @@ Our datasets are approximately balanced and buyer-initiated trades predicted as 
 
 \textbf{Gradient Boosting}
 
+\textbf{FT-Transformer}
+
 \subsection{Results of Semi-Supervised
     Models (2~p)}\label{sec:results-of-semi-supervised-models}
 
 
 \textbf{Self-Training with Gradient-Boosting}
 
+\textbf{FT-Transformer}
 
 \subsection{Robustness of Results (3~p)}\label{sec:robustness-checks}
 
@@ -861,7 +864,9 @@ Our datasets are approximately balanced and buyer-initiated trades predicted as 
 \newpage
 \section{Application in Transaction Cost Estimation}\label{sec:application}
 
-\textbf{Setting}
+\textbf{Preliminaries}
+
+% TODO: Add why it is important. See Stoll, Huang, Roll (zettelkasten)
 
 Albeit the classification accuracy is a reasonable measure for comparing classifiers, one cannot immediately infer how changes in accuracy e.~g., an improvement by \SI{1}{\percent}, affect the application domains. In an attempt to make our results tangible, we apply all algorithms to estimate trading cost, a problem we previously identified to be reliant on correct trade classification (cp. \cref{sec:introduction}) and a common testing ground for trade classification rules \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][569]{finucaneDirectTestMethods2000}[][271--278]{petersonEvaluationBiasesExecution2003}[][896--897]{savickasInferringDirectionOption2003}.
 
@@ -892,6 +897,9 @@ The actual and the estimated effective spreads, as well as the quoted spread, ar
 \end{table}
 
 Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal. The null hypothesis of equal medians is rejected for $p \leq 0.01$. 
+
+
+% TODO: Discuss results. See Zettelkasten.
 
 \newpage
 \section{Discussion (3~p)}\label{sec:discussion}
