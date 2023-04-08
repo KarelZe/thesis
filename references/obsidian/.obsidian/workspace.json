@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🧭Evaluation metric notes.md",
+                "file": "📖chapters/💡Hyperparameter tuning.md",
                 "mode": "source",
                 "source": false
               }
@@ -55,14 +55,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/⭕Self-Training classifier notes.md",
+                "file": "📖chapters/🧭Kernel SHAP.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -120,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🧭Evaluation metric notes.md",
+                "file": "📖chapters/🧭Kernel SHAP.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -148,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🧭Evaluation metric notes.md"
+                "file": "📖chapters/🧭Kernel SHAP.md"
               }
             }
           },
@@ -179,8 +179,15 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "e8c0db083f384014",
+  "active": "f1b1177b53121d1e",
   "lastOpenFiles": [
+    "📖chapters/🧭Attention map.md",
+    "📑notes/🧭Evaluation metric notes.md",
+    "📖chapters/🧭Kernel SHAP.md",
+    "📑notes/⭕Self-Training classifier notes.md",
+    "📖chapters/💡Hyperparameter tuning.md",
+    "🖼️Media/Pasted image 20230408170132.png",
+    "🖼️Media/Pasted image 20230408165957.png",
     "🖼️Media/presentation-of-effective-spread.png",
     "🖼️Media/performance-degradations.png",
     "🖼️Media/Pasted image 20230407182457.png",
@@ -189,10 +196,8 @@
     "🖼️Media/Pasted image 20230405171919.png",
     "🖼️Media/Pasted image 20230405171902.png",
     "🖼️Media/Pasted image 20230405170430.png",
-    "🖼️Media/Pasted image 20230405170411.png",
     "📥Inbox/@chenDebiasedSelfTrainingSemiSupervised2022.md",
     "📖chapters/🧭Evaluation metric.md",
-    "📖chapters/💡Hyperparameter tuning.md",
     "📖chapters/🍕Application study.md",
     "📑notes/🍕Application study notes.md",
     "📖chapters/🏅Results.md",
@@ -200,13 +205,10 @@
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/🐈CatBoost.md",
     "📖chapters/⭕Self-Training classifier.md",
-    "📑notes/⭕Self-Training classifier notes.md",
     "📑notes/🌏Dataset notes.md",
     "📑notes/🔢Trade Initiator notes.md",
-    "📑notes/🧭Evaluation metric notes.md",
     "❓Questions.md",
     "📥Inbox/@chapelleSemisupervisedLearning2006.md",
-    "🖼️Media/Pasted image 20230326101313.png",
     "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
     "📥Inbox/@aminiSelfTrainingSurvey2023.md",
     "📖chapters/🐈Extension to Gradient Boosting.md",
@@ -214,7 +216,6 @@
     "📥Inbox/@aitkenIntradayAnalysisProbability1995.md",
     "📥Inbox/@grauerOptionTradeClassification2022.md",
     "📑notes/🪄Data Preprocessing.md",
-    "📖chapters/🚏Exploratory Data Analysis.md",
-    "📥Inbox/@aasExplainingIndividualPredictions2021.md"
+    "📖chapters/🚏Exploratory Data Analysis.md"
   ]
 }

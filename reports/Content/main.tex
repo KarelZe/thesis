@@ -1,3 +1,4 @@
+
 \section{Introduction (2~p)}\label{sec:introduction}
 
 \footnote{The authors acknowledge support by the state of Baden-Württemberg through \href{https://www.bwhpc.de/}{bwHPC}.}
@@ -701,8 +702,7 @@ From the high bias/low variance, we conclude that the gradient-boosting model wi
 \subsubsection{Training of Supervised
     Models (4~p)}\label{sec:training-of-supervised-models}
 
-
-\textcite[][12]{huangTabTransformerTabularData2020} recommend an overall ratio of $\tfrac{7}{8}$ feature-specific embeddings versus $\tfrac{1}{8}$ shared embeddings.
+% \textcite[][12]{huangTabTransformerTabularData2020} recommend an overall ratio of $\tfrac{7}{8}$ feature-specific embeddings versus $\tfrac{1}{8}$ shared embeddings.
 
 \subsubsection{Training of Semi-Supervised
     Models (4~p)}\label{sec:training-of-semi-supervised-models}
@@ -847,7 +847,7 @@ where $\operatorname{l}_{0-1}(\cdot)$ is the 0-1-loss given by:
 
 Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss. Notably, the loss is the same for false positives and negatives.
 
-Our datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vice versa have similar associated costs, which makes accuracy an ideal choice as a performance metric~\footnote{The \gls{ISE} test set consists of \SI{48.5973}{\percent} of buy trades and \SI{46.1278}{\percent} of the \gls{CBOE} test set are buy trades.}. As the 0-1-loss and in consequence, the accuracy is not differentiable, it cannot be used in optimization, but as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test sets.
+Both datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vice versa have similar associated costs, which makes accuracy an ideal choice as a performance metric~\footnote{The \gls{ISE} test set consists of \SI{48.5973}{\percent} of buy trades and \SI{46.1278}{\percent} of the \gls{CBOE} test set are buy trades.}. As the 0-1-loss and in consequence, the accuracy is not differentiable, it cannot be used in optimization, but as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test sets.
 
 \newpage
 \section{Results}\label{sec:results}

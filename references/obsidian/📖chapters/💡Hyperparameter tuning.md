@@ -3,10 +3,51 @@ All of our machine learning models feature a set of tunable hyperparameters. The
 
 We perform a novel Bayesian search built  on top of the tree parzen algorithm to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function ([[@shahriariTakingHumanOut2016]]). Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in fewer trials.
 
-Our search space is reported in Table-X, which we laid out based on the recommendations in ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]] 999) and ([[@gorishniyRevisitingDeepLearning2021]]999) with minor deviations. As we were experiencing exploding gradients in preliminary tests for the FT-Transformer due to too high learning rates, we downward adjust the intervals for the learning rate. Lower learning rates result in smaller weight updates which prevents overshooting in local loss minima, but also requires more training epochs. For gradient-boosting we raise the border count to $256$, which increases the number of possible split candidates per feature through a finer quantization.
+Our search space is reported in Table-X, which we laid out based on the recommendations in ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]] 999) and ([[@gorishniyRevisitingDeepLearning2021]]999) with minor deviations. For gradient-boosting we raise the border count to $256$, which increases the number of possible split candidates per feature through a finer quantization.
 
+
+Implementation. We fix and do not tune the following hyperparameters: • early-stopping-rounds = 50 • od-pval = 0.001 • iterations = 2000 In Table 17, we provide hyperparameter space used for Optuna-driven tuning (Akiba et al., 2019). We set the task_type parameter to “GPU” (the tuning was unacceptably slow on CPU). Evaluation. We set the task_type parameter to “CPU”, since for the used version of the CatBoost library it is crucial for performance in terms of target metrics.
+
+As we were experiencing exploding gradients in preliminary tests for the FT-Transformer due to too high learning rates, we downward adjust the intervals for the learning rate. Lower learning rates result in smaller weight updates which prevents overshooting in local loss minima, but also requires more training epochs. 
+
+
+
+```python
+        # kaggle book + https://catboost.ai/en/docs/concepts/parameter-tuning
+        # friedman paper
+learning_rate = trial.suggest_float("learning_rate", 0.001, 0.125, log=True)
+        depth = trial.suggest_int("depth", 1, 12)
+        l2_leaf_reg = trial.suggest_int("l2_leaf_reg", 2, 30)
+        random_strength = trial.suggest_float("random_strength", 1e-9, 10.0, log=True)
+        bagging_temperature = trial.suggest_float("bagging_temperature", 0.0, 1.0)
+
+        kwargs_cat = {
+            "iterations": 2000,
+            "learning_rate": learning_rate,
+            "depth": depth,
+            "l2_leaf_reg": l2_leaf_reg,
+            "random_strength": random_strength,
+            "bagging_temperature": bagging_temperature,
+            "grow_policy": "Lossguide",
+            "border_count": 254,
+            "logging_level": "Silent",
+            "task_type": task_type,
+            "devices": devices,
+            "random_seed": set_seed(),
+            "eval_metric": "Accuracy",
+            "early_stopping_rounds": 100,
+
+        }
+```
+
+
+
+
+![[Pasted image 20230408165957.png]]
 
 We report the 
+
+Implementation. We fix and do not tune the following hyperparameters: • early-stopping-rounds = 50 • od-pval = 0.001 • iterations = 2000 In Table 17, we provide hyperparameter space used for Optuna-driven tuning (Akiba et al., 2019). We set the task_type parameter to “GPU” (the tuning was unacceptably slow on CPU). Evaluation. We set the task_type parameter to “CPU”, since for the used version of the CatBoost library it is crucial for performance in terms of target metrics.
 
 
 
