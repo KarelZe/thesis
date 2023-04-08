@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🍕Application study.md",
+                "file": "📖chapters/💡Hyperparameter tuning.md",
                 "mode": "source",
                 "source": false
               }
@@ -91,7 +91,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "effective spread",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": true,
                 "collapseAll": false,
@@ -100,8 +100,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -121,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🍕Application study.md",
+                "file": "📖chapters/💡Hyperparameter tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -149,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🍕Application study.md"
+                "file": "📖chapters/💡Hyperparameter tuning.md"
               }
             }
           },
@@ -182,9 +181,9 @@
   },
   "active": "e8c0db083f384014",
   "lastOpenFiles": [
+    "📖chapters/🍕Application study.md",
     "📑notes/🍕Application study notes.md",
     "🖼️Media/presentation-of-effective-spread.png",
-    "📖chapters/🍕Application study.md",
     "📖chapters/🏅Results.md",
     "🖼️Media/Pasted image 20230407182457.png",
     "📖chapters/💡Hyperparameter tuning.md",

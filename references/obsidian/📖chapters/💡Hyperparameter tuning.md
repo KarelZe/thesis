@@ -1,13 +1,20 @@
 All of our machine learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of ([[@grinsztajnWhyTreebasedModels2022]] 5), emphasize the need for tuning routines, as the test performance of the FT-Transformer and gradient-boosted trees largely fluctuates with the hyperparameter configuration.  As such, we employ an exhaustive hyperparameter search, to find suitable hyperparameter configuration for all our models. 
 
 
+We perform a novel Bayesian search built  on top of the tree parzen algorithm to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function ([[@shahriariTakingHumanOut2016]]). Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in fewer trials.
+
+Our search space is reported in Table-X, which we laid out based on the recommendations in ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]] 999) and ([[@gorishniyRevisitingDeepLearning2021]]999) with minor deviations. As we were experiencing exploding gradients in preliminary tests for the FT-Transformer due to too high learning rates, we downward adjust the intervals for the learning rate. Lower learning rates result in smaller weight updates which prevents overshooting in local loss minima, but also requires more training epochs. For gradient-boosting we raise the border count to $256$, which increases the number of possible split candidates per feature through a finer quantization.
+
+
+We report the 
+
+
+
 
 We define a hyperparameter search space and run a Bayesian optimization 
 
 We run a Bayesian search and optimize for the accuracy, which is also our decisive metric for evaluation ([[🧭Evaluation metric]]), on the validation set. 
 We compute at maximum 50 trials. To compensate for varying computational costs between both machine learning models, we set an additional time budget of 12 hours.
-
-Our search space is reported in Table-X. It is based on the recommendations in [[@prokhorenkovaCatBoostUnbiasedBoosting2018]] and [[@gorishniyRevisitingDeepLearning2021]] with minor deviations . As we were experiencing exploding gradients in preliminary tests due to too high learning rates, we adjust the intervals for the learning rate downward. 
 
 We grow symmetric trees, which acts as a regularizer.
 
