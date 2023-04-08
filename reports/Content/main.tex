@@ -697,6 +697,10 @@ From the high bias/low variance, we conclude that the gradient-boosting model wi
 \subsubsection{Feature Importance
     Measure (2~p)}\label{sec:feature-importance-measure}
 
+Classical trade classification algorithms, as a rule-based approach, are transparent and thus provide some degree of interpretability.    
+
+The machine-learning classifiers, studied in this work can be deemed a black box model. Due to the sheer size of the network or ensemble, both classifiers are no longer transparent, necessitating post-hoc techniques for interpretability. We require a model-agnostic approach, which suffices for a cross-comparison between all classifiers. Our goal is to identify features that are important for the \emph{correct prediction} in the model. This is fundamentally different from methods, such as LIME or SHAP, which attribute \emph{any} prediction to the input features.
+
 \textbf{Random Feature Permutation}
 
 \begin{algorithm}
@@ -731,8 +735,6 @@ From the high bias/low variance, we conclude that the gradient-boosting model wi
     \Return
   }
 \end{algorithm}
-
-
 
 \textbf{Attention Maps}
 
