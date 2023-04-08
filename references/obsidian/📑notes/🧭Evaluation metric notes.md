@@ -1,5 +1,5 @@
 
----
+
 This loss function returns the error rate on this data set $D$. For every example that the classifier misclassifies (i.e. gets wrong) a loss of 1 is suffered, whereas correctly classified samples lead to 0 loss.
 
 Prediction:

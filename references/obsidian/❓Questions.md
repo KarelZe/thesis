@@ -1,8 +1,8 @@
 ## Open
-- Discuss questions from email.
-- Discuss latest, improved results for CBOE / semi-supervised models.
-- Discuss strategies to select the benchmarks e. g., on validation set / intuition / your paper.
-- Any tips what I should differently in the remaining two months?
+- Discuss questions from email. -> unsure about previous trade price. Didn't do data pre-processing so can't tell about order.
+- Discuss latest, improved results for CBOE / semi-supervised models. -> Should do model transfer on CBOE data. We discussed leakage. Think about what my conclusion should be.
+- Discuss strategies to select the benchmarks e. g., on validation set / intuition / your paper. -> Decide on my own.
+- Any tips what I should differently in the remaining two months? -> It's ok.
 
 ## Closed
 - What happens to the trade volumes of professional customers? Filtered out or treated as ordinary customers? -> Filtered out, as professional customers (particularly large customers) are assumed to act like a market maker / provide liquidity not demand liquidity. Incorporate this in paragraph.

@@ -7,6 +7,9 @@ S_{i,t} = 2 (P_{i,t} - V_{i,t}) D_{i,t}.
 $$
 Like before, $i$ indexes the security and $t$ denotes the trade. Here, $D_{i,t}$ is the trade direction, which is either $1$ for customer buy orders and $-1$ for customer sell orders. If the trade initiator is known, we set $D_{i,t} = y_{i,t}$ and $D_{i,t}=\hat{y}_{it}$, if inferred from a rule or classifier. As the fundamental value $V_{i,t}$ is unobserved at the time of the trade, we follow a common track in research and use the midpoint of the prevailing quotes as an observable proxy. footnote-(For an alternative treatment for options (cp.[[@muravyevOptionsTradingCosts2020]]4975--4976). Our focus is on the midspread, as it is the most common proxy for the value.) This is also a natural choice, assuming that, on average, the spread is symmetrical and centred around the true fundamental value ([[@leeMarketIntegrationPrice1993]]1018). ~~~([[@hagstromerBiasEffectiveBidask2021]]317) reasons that the appeal of using the midpoint lies in the high data availability, simplicity, and applicability in an online setting.~~ We multiply the so-obtained half-spread by $2$ to obtain the effective spread, which represents the cost for a round trip trade involving a buy and sell ex commissions.
 
+10 The accuracy of trade direction estimation is not important for estimating effective spreads when trades are executed at quote midpoints at which points effective spreads are zero. (found in [[@chakrabartyTradeClassificationAlgorithms2007]])
+
+
 Readily apparent from (cref-eq), poor estimates for the predicted trade direction, lead to an under or over-estimated effective spread, and hence to a skewed trade cost estimate. By comparing the true effective spread from the estimated, we can derive the economical significance. For convenience, we also calculate the *relative effective spread* as 
 $$
 {PS}_{i,t} = S_{i,t} / V_{i,t}.
@@ -16,9 +19,35 @@ The subsequent section estimates both the nominal and relative effective spread 
 ## Results
 The actual and the estimated effective spreads, as well as the quoted spread, are shown in the (cref tab) aggregated by mean.  ([[@savickasInferringDirectionOption2003]] 896--897) previously estimated the effective spreads on a subset of rules for option trades at the gls-CBOE, which can be compared against.
 
-A $t$-test is used to test if the estimated, effective spread is significantly different from the mean true effective spread / significantly greater than zero at $p=0.01$ (cp.[[@finucaneDirectTestMethods2000]]570). Similarily in [[@chakrabartyTradeClassificationAlgorithms2007]]. Alternatively compare correlations $\rho$ and medians using the Wilcoxon test with null hypothesis of the equal medians with $p=0.01$ (cp.[[@theissenTestAccuracyLee2000]]12).
+Following ([[@theissenTestAccuracyLee2000]] 12) a Wilcoxon-test is used, to test if the medians of the estimated, effective spread and the true effective spread are equal. The null hypothesis of equal medians is rejected for $p\leq0.01$. Alternatively, formulate with confidence level of 1 %.
 
+**Other literature:**
+Similarily in [[@chakrabartyTradeClassificationAlgorithms2007]]. Alternatively compare correlations $\rho$ and medians using the Wilcoxon test with null hypothesis of the equal medians with $p=0.01$ (cp.[[@theissenTestAccuracyLee2000]]12).
+
+However, the requirements e. g., independence of samples are much higher for the $t$-test. Thus, I chose the Wilcoxon test instead. See e. g., [here.](https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/unterschiede/zentral/wilkoxon.html#:~:text=Stichproben%20verschieden%20sind.-,Der%20Wilcoxon%2DTest%20wird%20verwendet%2C%20wenn%20die%20Voraussetzungen%20f%C3%BCr%20einen,anderen%20Stichprobe%20sich%20gegenseitig%20beeinflussen.)
+
+The null hypothesis is that the location of medians in two independent samples are same.
 (🔥What can we see? How do the results compare?)
+
+“We repeated this analysis with our dataset from the Frankfurt Stock Exchange. The results are presented in columns 2 and 3 of Table 5. The bias is even more dramatic. The traditional spread estimate is, on average, about twice as large as the “true” spread.8 A Wilcoxon test rejects the null hypothesis of equal medians (p < 0.01). Despite the large differences, the correlation between the two spread estimates is very high (ρ= 0.96). The magnitude of the relative bias (i.e., the traditional spread estimate divided by the “true” spread) is strongly negatively related to the classification accuracy. The correlation is –0.84.” ([[@theissenTestAccuracyLee2000]], p. 12)
+
+"Table 6 Panel A shows that our algorithm provides the best estimate of effective spread. We conduct a t-test for difference in means to assess whether the effective spread of each algorithm is statistically significantly different from actual effective spread. Results indicate that the effective spread provided by our algorithm is a statistically significant unbiased estimate of the actual effective spread while the LR (EMO) rule provides upwardly (downwardly) biased estimates. Table 6 Panel B shows that the other algorithms provide biased estimates while our alternative algorithm provides statistically insignificant difference from the actual price impact. The results show that errors in trade side classification can result in substantial biased price impacts. The underestimations of price impacts are 5.26%, 29.47%, and 44.21% for the LR, EMO, and tick rule, respectively." ([[@chakrabartyTradeClassificationAlgorithms2007]] 3820)
+
+---
+% TODO: Make explanation more detailled? See e. g., https://s3.eu-central-1.amazonaws.com/up.raindrop.io/raindrop/files/526/059/341/MAS_Thesis_Mate_Nemes_final_Jan13.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAZWICFKR63DOESPJN%2F20230227%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20230227T054628Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJHMEUCIGh8t4%2BwrZPS53a0v4pmuMrfdSK0byfd6kOZymIodKHYAiEAmLEgZaZOGQnHox0E%2FKUKmzaSoLDsg%2FDOp3wOwqivzasq%2BAMIUxAAGgw2NjYyNjEzNDU0MDUiDER%2BrooXF33LN6%2FviirVA7XUNhcQEGET%2BR%2FFF2TxkIwpnMbB3sUSVe%2B37iVeKehJPZI4PlXs%2BvOrAyydlqpoERgBIRSbjH3otqvC8sSikw%2FOX5bg9RIQNWV988GpA4FiEwUYkck9d46o9X3GZ2ZHHHis7h5ADmBMsEUpRx5P3DkLXxOig7a6tb5%2BNDNExpPcTKaJOLL1CeM4g6dg9czBkZ1mHC6SCpTjQRBym0jndXXAFRpxrnLOG7lRzC1til7wdX9yVe7m8YgAixkTtrN0oZ81%2BunfpqVTs9dQ%2FeaaDkGwUMpdh8PKoG3V8aIKBclaaix%2BXCwkHA%2Fcq%2BbHRY7HDm4eAiZ1leUxvJfX1rx6GR8uP978qrSs3nZvep5aTi3CjeLX1fna%2FX2sE3VZr4xT8cy9vkq%2FpvQIPJ%2BhnYi1v%2BAq6y7g4RjTJmHHEm0nPTvuV0Lk1%2BSIFzYEsh1my8BKHKrr0WEHWYVcPsBNaP37a6fxzxwqJLSEMtEM7Zb%2BDNewrYEdavtiVSQGLob9LfFF3Bobc%2BhCs8xrunkNbJfMsCVBnDGPKFDRKHznBuuZu6SqXaj8bvxu1Q0YMxkImt%2Bi72zRGqUSSSLlKC9MCbbGlBt5b%2FkfCQrzFbL6PHiuZes10hwNoz4wwJTwnwY6pQGavPb2vsjGrOUbaRKmC9iQY5uvJZpHfQMgXMoTWVx58m6eU%2FotzkeDnwSVmZDIA4yu4%2B%2BKoScCFTXEDkULo8NJBITW0kX1zMG7U0sOdC%2B7TfT8VK7%2FsqDC7MjrNCCDvUxcpmCcddA2eR%2BKEn114AG9ZhNewTdGfIu4zV2w%2Bpa1lwalqqQkM5E9zKeI9mENGGtVMEcptjXJcl30O2%2BnkFkuJAxaGa8%3D&X-Amz-Signature=4f206295f4f0b090df3d32382188400b305c79ab9a45a18bbbc79e7824236dc7&X-Amz-SignedHeaders=host
+
+% TODO: read: Glosten, L. and Harris, L. (1988). Estimating the components of the bid/ask spread.Journal of financial Economics, 21(1):123–142.
+
+% TODO: read: Ho, T. and Stoll, H. (1981). Optimal dealer pricing under transactions and return uncertainty. Journal of Financial economics, 9(1):47–73.
+
+% TODO: read: Huang, R. and Stoll, H. (1997). The components of the bid-ask spread: a general approach. Review of Financial Studies, 10(4):995–1034.
+
+% TODO: read: Roll, R. (2012). A simple implicit measure of the effective bid-ask spread in an efficient market. The Journal of Finance, 39(4):1127–1139.
+
+% TODO: read: Petrella, G. (2006). Option bid-ask spread and scalping risk: Evidence from a covered warrants market. Journal of Futures Markets, 26(9):843–867.
+
+% TODO: read: Pinder, S. (2003). An empirical examination of the impact of market microstructure changes on the determinants of option bid–ask spreads. International Review of Financial Analysis, 12(5):563–577.
+
 
 **Notes:**
 [[🍕Application study notes]]

@@ -1,51 +1,42 @@
-\begin{table}
-\centering
-\caption[short-hyperparam-classical-ise_classical_supervised_val]{long-hyperparam-classical-ise_classical_supervised_val}
-\label{tab:hyperparam-classical-ise_classical_supervised_val}
-\begin{tabular}{lS}
-\toprule
-{} & {1} \\
-{0} & {} \\
-\midrule
-trade_size(ex)->quote(best)->quote(ex)->depth(best)->depth(ex)->rev_tick(all) & 0.688359 \\
-trade_size(ex)->quote(best)->quote(ex) & 0.683255 \\
-trade_size(ex)->rev_lr(best) & 0.681468 \\
-quote(best)->quote(ex) & 0.586736 \\
-rev_lr(best)->rev_lr(ex) & 0.586463 \\
-rev_lr(best) & 0.586426 \\
-lr(best)->lr(ex) & 0.585902 \\
-lr(best) & 0.585895 \\
-quote(best) & 0.585451 \\
-quote(ex)->quote(best) & 0.578577 \\
-rev_lr(ex)->rev_lr(best) & 0.576739 \\
-rev_lr(ex) & 0.576446 \\
-lr(ex)->lr(best) & 0.575586 \\
-lr(ex) & 0.575541 \\
-quote(ex) & 0.575112 \\
-rev_clnv(best)->rev_clnv(ex) & 0.565991 \\
-rev_clnv(best) & 0.565935 \\
-clnv(best)->clnv(ex) & 0.563454 \\
-clnv(best) & 0.563415 \\
-rev_clnv(ex)->rev_clnv(best) & 0.554454 \\
-rev_clnv(ex) & 0.553904 \\
-clnv(ex)->clnv(best) & 0.552497 \\
-clnv(ex) & 0.552333 \\
-rev_emo(best)->rev_emo(ex) & 0.548279 \\
-rev_emo(best) & 0.548209 \\
-emo(best)->emo(ex) & 0.548162 \\
-emo(best) & 0.548136 \\
-tick(all) & 0.545442 \\
-tick(all)->tick(ex) & 0.545350 \\
-rev_tick(all) & 0.544050 \\
-rev_tick(all)->rev_tick(ex) & 0.543967 \\
-emo(ex)->emo(best) & 0.537296 \\
-emo(ex) & 0.537163 \\
-rev_emo(ex)->rev_emo(best) & 0.537000 \\
-rev_emo(ex) & 0.536375 \\
-tick(ex)->tick(all) & 0.509756 \\
-rev_tick(ex)->rev_tick(all) & 0.509436 \\
-tick(ex) & 0.505518 \\
-rev_tick(ex) & 0.503026 \\
-\bottomrule
+\begin{tabular}{p{6cm}S}
+    {Trade Classification Rule}                                                                                                                                                                                                      & {Accuracy} \\ \toprule
+    $\operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}}$                                                                                                                                                        & 58.6736    \\
+%    $\operatorname{rlr}_{\text{nbbo}} \to \operatorname{rlr}_{\text{ex}}$                                                                                                                                                            & 58.6463    \\
+    $\operatorname{rlr}_{\text{nbbo}}$                                                                                                                                                                                               & 58.6426    \\
+%    $\operatorname{lr}_{\text{nbbo}} \to \operatorname{lr}_{\text{ex}}$                                                                                                                                                              & 58.5902    \\
+    $\operatorname{lr}_{\text{nbbo}}$                                                                                                                                                                                                & 58.5895    \\
+    $\operatorname{quote}_{\text{nbbo}}$                                                                                                                                                                                             & 58.5451    \\
+%     $\operatorname{quote}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}}$                                                                                                                                                        & 57.8577    \\
+%     $\operatorname{rlr}_{\text{ex}} \to \operatorname{rlr}_{\text{nbbo}}$                                                                                                                                                            & 57.6739    \\
+    $\operatorname{rlr}_{\text{ex}}$                                                                                                                                                                                                 & 57.6446    \\
+%     $\operatorname{lr}_{\text{ex}} \to \operatorname{lr}_{\text{nbbo}}$                                                                                                                                                              & 57.5586    \\
+    $\operatorname{lr}_{\text{ex}}$                                                                                                                                                                                                  & 57.5541    \\
+    $\operatorname{quote}_{\text{ex}}$                                                                                                                                                                                               & 57.5112    \\
+%     $\operatorname{rclnv}_{\text{nbbo}} \to \operatorname{rclnv}_{\text{ex}}$                                                                                                                                                        & 56.5991    \\
+    $\operatorname{rclnv}_{\text{nbbo}}$                                                                                                                                                                                             & 56.5935    \\
+%    $\operatorname{clnv}_{\text{nbbo}} \to \operatorname{clnv}_{\text{ex}}$                                                                                                                                                          & 56.3454    \\
+    $\operatorname{clnv}_{\text{nbbo}}$                                                                                                                                                                                              & 56.3415    \\
+%     $\operatorname{rclnv}_{\text{ex}} \to \operatorname{rclnv}_{\text{nbbo}}$                                                                                                                                                        & 55.4454    \\
+    $\operatorname{rclnv}_{\text{ex}}$                                                                                                                                                                                               & 55.3904    \\
+%     $\operatorname{clnv}_{\text{ex}} \to \operatorname{clnv}_{\text{nbbo}}$                                                                                                                                                          & 55.2497    \\
+    $\operatorname{clnv}_{\text{ex}}$                                                                                                                                                                                                & 55.2333    \\
+%     $\operatorname{remo}_{\text{nbbo}} \to \operatorname{remo}_{\text{ex}}$                                                                                                                                                          & 54.8279    \\
+    $\operatorname{remo}_{\text{nbbo}}$                                                                                                                                                                                              & 54.8209    \\
+%     $\operatorname{emo}_{\text{nbbo}} \to \operatorname{emo}_{\text{ex}}$                                                                                                                                                            & 54.8162    \\
+    $\operatorname{emo}_{\text{nbbo}}$                                                                                                                                                                                               & 54.8136    \\
+    $\operatorname{tick}_{\text{all}}$                                                                                                                                                                                               & 54.5442    \\
+%     $\operatorname{tick}_{\text{all}} \to \operatorname{tick}_{\text{ex}}$                                                                                                                                                           & 54.5350    \\
+    $\operatorname{rtick}_{\text{all}}$                                                                                                                                                                                              & 54.4050    \\
+%     $\operatorname{rtick}_{\text{all}} \to \operatorname{rtick}_{\text{ex}}$                                                                                                                                                         & 54.3967    \\
+%    $\operatorname{emo}_{\text{ex}} \to \operatorname{emo}_{\text{nbbo}}$                                                                                                                                                            & 53.7296    \\
+    $\operatorname{emo}_{\text{ex}}$                                                                                                                                                                                                 & 53.7163    \\
+%    $\operatorname{remo}_{\text{ex}} \to \operatorname{remo}_{\text{nbbo}}$                                                                                                                                                          & 53.7000    \\
+    $\operatorname{remo}_{\text{ex}}$                                                                                                                                                                                                & 53.6375    \\
+%    $\operatorname{tick}_{\text{ex}} \to \operatorname{tick}_{\text{all}}$                                                                                                                                                           & 50.9756    \\
+%    $\operatorname{rtick}_{\text{ex}} \to \operatorname{rtick}_{\text{all}}$                                                                                                                                                         & 50.9436    \\
+    $\operatorname{tick}_{\text{ex}}$                                                                                                                                                                                                & 50.5518    \\
+    $\operatorname{rtick}_{\text{ex}}$                                                                                                                                                                                               & 50.3026    \\ \midrule
+    $\operatorname{tsize}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}} \to \operatorname{depth}_{\text{nbbo}} \to \operatorname{depth}_{\text{ex}} \to \operatorname{rtick}_{\text{all}}$ & 68.8359    \\
+    $\operatorname{tsize}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}}$                                                                                                                   & 68.3255    \\ \bottomrule
+%    $\operatorname{tsize}_{\text{ex}} \to \operatorname{rlr}_{\text{nbbo}}$                                                                                                                                                          & 68.1468    \\\bottomrule
 \end{tabular}
-\end{table}
