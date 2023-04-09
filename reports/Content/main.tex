@@ -706,38 +706,41 @@ The machine-learning classifiers, studied in this work can be deemed a black box
 
 \textbf{Random Feature Permutation}
 
-\begin{algorithm}
 
-  % input/ouput names
-  \SetKwInOut{Input}{Input}
-  \SetKwInOut{Output}{Output}
+\textbf{Partial Dependence Plots}
 
-  % caption
-  % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
-  \caption{$\operatorname{\mathtt{quote}}$ \label{sec:alg:quote-rule}}
+% \begin{algorithm}
 
-  \Input{%
-    $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
-  }
-  \Output{%
-    $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
-  }
+%   % input/ouput names
+%   \SetKwInOut{Input}{Input}
+%   \SetKwInOut{Output}{Output}
 
-  \BlankLine % blank line for spacing
+%   % caption
+%   % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
+%   \caption{$\operatorname{\mathtt{quote}}$ \label{sec:alg:quote-rule}}
 
-  % start of the pseudocode
-  $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
+%   \Input{%
+%     $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
+%   }
+%   \Output{%
+%     $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
+%   }
 
-  \uIf{$t_i > m_i$}{%
-    \Return{$o_i =1$}
-  }
-  \uElseIf{$t_i < m_i$}{%
-    \Return{$o_i =-1$}
-  }
-  \uElse{%
-    \Return
-  }
-\end{algorithm}
+%   \BlankLine % blank line for spacing
+
+%   % start of the pseudocode
+%   $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
+
+%   \uIf{$t_i > m_i$}{%
+%     \Return{$o_i =1$}
+%   }
+%   \uElseIf{$t_i < m_i$}{%
+%     \Return{$o_i =-1$}
+%   }
+%   \uElse{%
+%     \Return
+%   }
+% \end{algorithm}
 
 \textbf{Attention Maps}
 

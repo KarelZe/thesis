@@ -153,4 +153,92 @@ Permute in groups.
 ## Correlations between features
 [1]  Kjersti Aas, Martin Jullum, and Anders Løland. Explaining individual predictions when features are dependent: More accurate approximations to shapley values. Artificial Intelligence, 298:103502, 2021. 
 - [[@aasExplainingIndividualPredictions2021]]
-- 
+-
+
+
+In its original definition, the MDA measure is applied to ensemble of trees using bootstrapping which consists in training each tree of the ensemble on a 11 different subset of the sample set. The importance of a feature xj is measured by its mean decrease of accuracy based on the out-of-bag (OOB) error when this feature is removed. The removal of a feature is simulated by permuting its value[22] and its impact is measured on all OOB samples. (https://matheo.uliege.be/bitstream/2268.2/13302/6/WeydersPFMasterThesis.pdf)
+
+RF can determine the importance of a feature to STLF by calculating the PI value of each feature. When calculating the importance value of feature $F^j$ based on the $i$ th tree, OOBError $r_i$ is first calculated based on Equation (3). Then, the values of feature $F^j$ in the $\mathrm{OOB}$ dataset are randomly rearranged and those of the other features are unchanged, thereby forming a new $O O B$ dataset $O O B_i^{\prime}$. With the new $O O B_i{ }^{\prime}$ set, $O O B$ Error $_i{ }^{\prime}$ can also be calculated using Equation (3). The PI value of feature $F^j$ based on the $i$ th tree can be obtained by subtracting $O O B$ Error $_i$ from $O O B E r r r_i^{\prime}$.
+$$
+P I_i\left(F^j\right)=O O B E r r o r_i^{\prime}-O O B E r r o r_i
+$$
+The calculation process is repeated for each tree. The final PI value of feature $F i$ can be obtained by averaging the PI values of each tree:
+$$
+P I\left(F^j\right)=\frac{1}{c} \sum_{i=1}^c P I_i\left(F^j\right),
+$$
+
+
+(We know that the original permutation importance overestimates the importance of correlated predictor variables. Part of this artefact may be due to the preference of correlated predictor variables in early splits as illustrated in Section 2.2. However, we also have to take into account the permutation scheme that is employed in the computation of the permutation importance.) (Conditional variable importance for random forests Carolin Strobl*1, Anne-Laure Boulesteix2, Thomas Kneib1, Thomas Augustin1 and Achim Zeileis3)
+
+(problems at the moment [33]), it shall remain untouched here.
+2.3 The permutation importance
+The rationale of the original random forest permutation importance is the following: By randomly permuting the predictor variable $X_j$, its original association with the response $Y$ is broken. When the permuted variable $X_{j^{\prime}} \quad$ where $\hat{\gamma}_i^{(t)}=f^{(t)}\left(\mathrm{x}_i\right)$ is the predicted class for observation together with the remaining non-permuted predictor var- $\quad i$ before and $\hat{y}_{i, \pi_j}^{(t)}=f^{(t)}\left(\mathrm{x}_{i, \pi_j}\right)$ is the predicted class for iables, is used to predict the response for the out-of-bag observations, the prediction accuracy (i.e. the number of observations classified correctly) decreases substantially if with $\mathrm{x}_{i, \pi_j}=\left(x_{i, 1}, \ldots, x_{i, j-1,1} x_{\pi_j(i), j}, x_{i, j+1}, \ldots, x_{i, p}\right)$. (Note that the original variable $X_j$ was associated with the response. $V I(t)\left(\mathbf{X}_j\right)=0$ by definition, if variable $X_j$ is not in tree $t$.) The Thus, Breiman [1] suggests the difference in prediction raw variable importance score for each variable is then accuracy before and after permuting $X_j$, averaged over all computed as the mean importance over all trees: trees, as a measure for variable importance, that we formalize as follows: Let $\overline{\mathcal{B}}^{(t)}$ be the out-of-bag (oob) sam$V I\left(\mathrm{x}_j\right)=\frac{\sum_{t=1}^{n \text { tree } V I}(t)\left(\mathrm{x}_j\right)}{\text { ntree }}$ ple for a tree $t$, with $t \in\{1, \ldots$, ntree $\}$. Then the variable
+In standard implementations of random forests an addiimportance of variable $X_j$ in tree $t$ is tional scaled version of the permutation importance (often called $z$-score), that is achieved by dividing the raw importance by its standard error, is provided. However,) (Conditional variable importance for random forests Carolin Strobl*1, Anne-Laure Boulesteix2, Thomas Kneib1, Thomas Augustin1 and Achim Zeileis3)
+
+
+**Correlations:**
+Even though Archer and Kimes [20] show in their extensive simulation study that the Gini importance can identify influential predictor variables out of sets of correlated covariates in many settings, the preliminary results of the simulation study of Nicodemus and Shugart [21] indicate that the ability of the permutation importance to detect influential predictor variables in sets of correlated covariates is less reliable than that of alternative machine learning methods and highly depends on the number of previously selected splitting variables mtry. These studies, as well as our simulation results, indicate that random forests show a preference for correlated predictor variables, that is also carried forward to any significance test or variable selection scheme constructed from the importance measures. (Conditional variable importance for random forests Carolin Strobl*1, Anne-Laure Boulesteix2, Thomas Kneib1, Thomas Augustin1 and Achim Zeileis)
+
+(In other words, for the permutation feature importance of a correlated feature, we consider how much the model performance decreases when we exchange the feature with values we would never observe in reality. Check if the features are strongly correlated and be careful about the interpretation of the feature importance if they are. However, pairwise correlations might not be sufficient to reveal the problem.
+
+Another tricky thing: **Adding a correlated feature can decrease the importance of the associated feature** by splitting the importance between both features. Let me give you an example of what I mean by “splitting” feature importance https://christophm.github.io/interpretable-ml-book/feature-importance.html) 
+
+Siyu Zhou
+siz25@pitt.edu Variable Importance These methods are designed to provide a score for each feature based on how much difference its values in the training data and examining the corre-
+sponding drop in predictive accuracy when these new data are used in a model built with the original training data. that correspond to tracing out the prediction given to any one example as the $j$ th feature is changed. PDPs are then Given a training set consisting of a matrix of feature values exactly the average of the corresponding ICE plots, but the $X$ with rows $\boldsymbol{x}_i$ giving each observation and corresponding latter allows an investigation in how the effect of feature response vector $y$, let $X^{\pi, j}$ be a matrix achieved by ran- $j$ may change for different combinations of the remaining domly permuting the $j$ th column of $X$. Using $L\left(y_i, f\left(x_i\right)\right.$ ) inputs. When $N$ is very large, a random selection of ICE as the loss for predicting $y_i$ from $f\left(x_i\right)$, the importance of plots can be presented as examples. Goldstein et al. (2015) the $j$ th feature can be defined as: also described how these ICE plots can potentially be used to detect the kind of extrapolation we discuss in detail in $\mathrm{VI}_j^\pi=\sum_{i=1}^N L\left(y_i, f\left(x_i^{\pi, j}\right)\right)-L\left(y_i, f\left(\boldsymbol{x}_i\right)\right)$ this paper.
+(Unrestricted permutation forces extrapolation: variable importance requires at least one more model, or there is no free variable importance)
+
+**Partial dependence Plots:**
+
+Partial Dependence Plots (PDPs) Friedman (2001) suggested examining the effect of feature j by plotting the average prediction as the feature is changed. Specifically, letting Xx,j be the matrix of feature values where the jth entry of every row has been replaced with value x, we define the partial dependence function PDj(x) = 1 N N i=1 f (xx,j i ) as the average prediction made with the jth feature replaced with the value x. Since these are univariate functions (multivariate versions can be defined naturally), they can be readily displayed and interpreted. (Unrestricted permutation forces extrapolation: variable importance requires at least one more model, or there is no free variable importance https://link.springer.com/article/10.1007/s11222-021-10057-z)
+
+## 8.1 Partial Dependence Plot (PDP)[](https://christophm.github.io/interpretable-ml-book/pdp.html#pdp)
+
+The partial dependence plot (short PDP or PD plot) shows the marginal effect one or two features have on the predicted outcome of a machine learning model (J. H. Friedman 2001[30](https://christophm.github.io/interpretable-ml-book/pdp.html#fn30)). A partial dependence plot can show whether the relationship between the target and a feature is linear, monotonic or more complex. For example, when applied to a linear regression model, partial dependence plots always show a linear relationship.
+
+The partial dependence function for regression is defined as:
+
+^fS(xS)=EXC[^f(xS,XC)]=∫^f(xS,XC)dP(XC)�^�(��)=���[�^(��,��)]=∫�^(��,��)��(��)
+
+The xS�� are the features for which the partial dependence function should be plotted and XC�� are the other features used in the machine learning model ^f�^, which are here treated as random variables. Usually, there are only one or two features in the set S. The feature(s) in S are those for which we want to know the effect on the prediction. The feature vectors xS�� and xC�� combined make up the total feature space x. Partial dependence works by marginalizing the machine learning model output over the distribution of the features in set C, so that the function shows the relationship between the features in set S we are interested in and the predicted outcome. By marginalizing over the other features, we get a function that depends only on features in S, interactions with other features included.
+
+The partial function ^fS�^� is estimated by calculating averages in the training data, also known as Monte Carlo method:
+
+^fS(xS)=1nn∑i=1^f(xS,x(i)C)�^�(��)=1�∑�=1��^(��,��(�))The partial function tells us for given value(s) of features S what the average marginal effect on the prediction is. In this formula, x(i)C��(�) are actual feature values from the dataset for the features in which we are not interested, and n is the number of instances in the dataset. An assumption of the PDP is that the features in C are not correlated with the features in S. If this assumption is violated, the averages calculated for the partial dependence plot will include data points that are very unlikely or even impossible (see disadvantages).
+
+For classification where the machine learning model outputs probabilities, the partial dependence plot displays the probability for a certain class given different values for feature(s) in S. An easy way to deal with multiple classes is to draw one line or plot per class.
+
+The partial dependence plot is a global method: The method considers all instances and gives a statement about the global relationship of a feature with the predicted outcome.
+
+**Categorical features**
+
+So far, we have only considered numerical features. For categorical features, the partial dependence is very easy to calculate. For each of the categories, we get a PDP estimate by forcing all data instances to have the same category. For example, if we look at the bike rental dataset and are interested in the partial dependence plot for the season, we get four numbers, one for each season. To compute the value for “summer”, we replace the season of all data instances with “summer” and average the predictions.
+
+### 8.1.1 PDP-based Feature Importance[](https://christophm.github.io/interpretable-ml-book/pdp.html#pdp-based-feature-importance)
+
+Greenwell et al. (2018) [31](https://christophm.github.io/interpretable-ml-book/pdp.html#fn31) proposed a simple partial dependence-based feature importance measure. The basic motivation is that a flat PDP indicates that the feature is not important, and the more the PDP varies, the more important the feature is. For numerical features, importance is defined as the deviation of each unique feature value from the average curve:
+
+I(xS)= ⎷1K−1K∑k=1(^fS(x(k)S)−1KK∑k=1^fS(x(k)S))2�(��)=1�−1∑�=1�(�^�(��(�))−1�∑�=1��^�(��(�)))2
+
+Note that here the x(k)S��(�) are the K unique values of feature the XS��. For categorical features we have:
+
+I(xS)=(maxk(^fS(x(k)S))−mink(^fS(x(k)S)))/4�(��)=(����(�^�(��(�)))−����(�^�(��(�))))/4
+
+This is the range of the PDP values for the unique categories divided by four. This strange way of calculating the deviation is called the range rule. It helps to get a rough estimate for the deviation when you only know the range. And the denominator four comes from the standard normal distribution: In the normal distribution, 95% of the data are minus two and plus two standard deviations around the mean. So the range divided by four gives a rough estimate that probably underestimates the actual variance.
+
+This PDP-based feature importance should be interpreted with care. It captures only the main effect of the feature and ignores possible feature interactions. A feature could be very important based on other methods such as [permutation feature importance](https://christophm.github.io/interpretable-ml-book/feature-importance.html#feature-importance), but the PDP could be flat as the feature affects the prediction mainly through interactions with other features. Another drawback of this measure is that it is defined over the unique values. A unique feature value with just one instance is given the same weight in the importance computation as a value with many instances (https://christophm.github.io/interpretable-ml-book/pdp.html)
+
+**True to the model / to the data**
+In this paper, we analyzed two approaches to explain models using the Shapley value solution concept for cooperative games. In order to compare these approaches we focus on explaining linear models and present a novel methodology for explaining linear models with correlated features. We analyze two different settings where either the interventional Shapley values or the observational Shapley values are preferable. In the first setting, we consider a model trained on loans data that might be used to determine which applicants obtain loans. Because applicants in this setting are ultimately interested in why the model makes a prediction, we call this case ”true to the model” and show that interventional Shapley values serve to modify the model’s prediction more effectively. In the second setting we consider a model trained on biological data that aims to understand an underlying causal relationship. Because this setting is focused on scientific discovery, we call this case ”true to the data” and show that for a sparse model (Lasso regularized) observational Shapley values discover more of the true features. We also find that modeling decisions can achieve some of the same effects, by demonstrating that the interventional Shapley values recover more of the true features when applied to a model that itself spreads credit among correlated features than when applied to a sparse model. ([[@chenTrueModelTrue2020]])
+
+
+(Many model-agnostic machine learning (ML) interpretation methods (see Molnar (2019); Guidotti et al. (2018) for an overview) are based on making predictions on perturbed input features, such as permutations of features. The partial dependence plot (PDP) (Friedman et al., 1991) visualizes how changing a feature affects the prediction on average. The permutation feature importance (PFI) (Breiman, 2001; Fisher et al., 2019) quantifies the importance of a feature as the reduction in model performance after permuting a feature. PDP and PFI change feature values without conditioning on the remaining features https://arxiv.org/pdf/2006.04628.pdf)
+
+
+
+**Notation:**
+(https://arxiv.org/pdf/2006.04628.pdf)
+We consider ML prediction functions ˆf : Rp 7→ R, where ˆf(x) is a model prediction and x ∈ Rp is a p-dimensional feature vector. We use xj ∈ Rn to refer to an observed feature (vector) and Xj to refer to the j-th feature as a random variable. With x−j we refer to the complementary feature space x{1,...,p}\{j} ∈ Rn×(p−1) and with X−j to the corresponding random variables. We refer to the value of the j-th feature from the i-th instance as x (i) j and to the tuples D = { x (i) , y(i)  } n i=1 as data. The Permutation Feature Importance (PFI) is defined as the increase in loss when feature Xj is permuted: P F Ij = E[L(Y, ˆf(X˜ j , X−j ))] − E[L(Y, ˆf(Xj , X−j ))] (1) If the random variable X˜ j has the same marginal distribution as Xj (e.g., permutation), the estimate yields the marginal PFI. If X˜ j follows the conditional distribution X˜ j ∼ Xj |X−j , we speak of the conditional PFI. The PFI is estimated with the following formula: P F I [j = 1 n Xn i=1 1 M X M m=1 L˜m(i) − L (i) ) ! (2 Importance and Effects with Dependent Features 5 where L (i) = L(y (i) , ˆf(x (i) )) is the loss for the i-th observation and L˜(i) = L(y (i) , ˆf(˜x (i) j , x (i) −j )) is the loss where x (i) j was replaced by the m-th sample x˜ m(i) j . The latter refers to the i-th feature value obtained by a sample of xj . The sample can be repeated M-times for a more stable estimation of L˜(i) . Numerous variations of this formulation exist. Breiman (2001) proposed the PFI for random forests, which is computed from the out-of-bag samples of individual trees. Subsequently, Fisher et al. (2019) introduced a model-agnostic PFI version. The marginal Partial Dependence Plot (PDP) (Friedman et al., 1991) describes the average effect of the j-th feature on the prediction. P DPj (x) = E[ ˆf(x, X−j )], (3) If the expectation is conditional on Xj , E[ ˆf(x, X−j )|Xj = x], we speak of the conditional PDP. The marginal PDP evaluated at feature value x is estimated using Monte Carlo integration: P DP \j (x) = 1 n Xn i=1 ˆf(x, x (i) −j ) (4) 3 Related Work
+
+**Permutation in conditional groups:**
+https://arxiv.org/pdf/2006.04628.pdf
