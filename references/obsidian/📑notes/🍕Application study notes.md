@@ -81,6 +81,7 @@ The true transaction cost is necessarily unobservable in real data. In many econ
 
 “The overall success rates of the LR, EMO, and tick rules are 74.42%, 75.80%, and 75.40%, respectively. Our Table 6 Application of trade classification algorithms: Effective spreads (May/June sample) Effective spread (in $) Mean differences t-Statistics % Effective spread Mean differences t-Statistics Panel A: Effective spreads ACTUAL 0.0343 0.0021 LR 0.0527 0.0184*** 21.45 0.0032 0.0011*** 27.92 EMO 0.0330 0.0014*** 7.74 0.0020 0.0001*** 26.4 TICK 0.0238 0.0105*** 11.87 0.0014 0.0006*** 10.1 Our alternative 0.0344 0.0001 0.49 0.0021 0.0000 0.37 Price impacts (in $) Mean differences t-Statistics Panel B: Price impacts ACTUAL 0.0095 LR 0.0090 0.0005*** 6.43 EMO 0.0067 0.0029*** 15.29 TICK 0.0053 0.0042*** 21.64 Our alternative 0.0091 0.0004 1.49 In this table we use the buy and sell directions proposed by each algorithm to compute the effective spreads and price impact of trade. We compare these measures to effective spreads and price impacts using the actual buy and sell directions. Mean differences are the effective spread of each algorithm minus the actual effective spread. t-statistics for mean differences are also provided for comparison. The effective spread is computed both in $ and percentage terms. *** 1% significance level. ([[@chakrabartyTradeClassificationAlgorithms2007]], p. 3820)
 
+![[presentation-of-effective-spread.png]]
 
 **Different take on effective spread, price impact**
 
