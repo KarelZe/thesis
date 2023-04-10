@@ -32,7 +32,7 @@ interval: 1
 | [[🧭Feature Importance Measure]]                |     57.5 |       |        1 | 1970-01-01 |
 | [[🏅Feature importance results]]                |       60 |       |        1 | 1970-01-01 |
 | [[🪄Feature Engineering]]                       |     62.5 |       |        1 | 1970-01-01 |
-| [[🐈Extension to Gradient Boosting]]           |       70 |       |        1 | 1970-01-01 |
+| [[⭕Self-Training classifier]]           |       70 |       |        1 | 1970-01-01 |
 | [[🚏Exploratory Data Analysis]]                 |     72.5 |       |        1 | 1970-01-01 |
 | [[🧭Evaluation metric]]                         |       75 |       |        1 | 1970-01-01 |
 | [[🌏Environment]]                               |     77.5 |       |        1 | 1970-01-01 |

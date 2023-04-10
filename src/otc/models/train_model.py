@@ -6,6 +6,8 @@ Currently classical rules and gradient boosted trees are supported.
 """
 import logging
 import logging.config
+import pickle
+import sys
 import warnings
 from pathlib import Path
 
@@ -62,14 +64,14 @@ FEATURE_SETS = {
         case_sensitive=False,
     ),
     required=True,
-    default="classical",
+    default="classical-size",
     help="Feature set to run study on.",
 )
-@click.option("--name", required=False, type=str, help="Name of study.")
+@click.option("--id", required=False, type=str, help="Id of run / name of study.")
 @click.option(
     "--dataset",
     required=False,
-    default="fbv/thesis/ise_supervised_preprocessed:v2",
+    default="fbv/thesis/ise_supervised_none:latest",
     help="Name of dataset. See W&B Artifacts/Full Name",
 )
 @click.option(
@@ -80,7 +82,7 @@ def main(
     seed: int,
     features: str,
     model: str,
-    name: str,
+    id: str,
     dataset: str,
     pretrain: bool,
 ) -> None:
@@ -92,7 +94,7 @@ def main(
         seed (int): seed for rng.
         features (str): name of feature set.
         model (str): name of model.
-        name (str): name of study.
+        id (str): id of study.
         dataset (str): name of data set.
         pretrain (bool): whether to pretrain model.
     """
@@ -101,20 +103,22 @@ def main(
 
     logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
 
+    # TODO:
     run = wandb.init(  # type: ignore
-        project=settings.WANDB_PROJECT,
-        entity=settings.WANDB_ENTITY,
-        name=name,
+        project=settings.WANDB_PROJECT, entity=settings.WANDB_ENTITY, name=id
     )
 
-    # replace missing names with run id
-    if not name:
-        name = str(run.id)
+    if not id:
+        # replace missing names with run id and create new sampler
+        id = str(run.id)
+        sampler = optuna.samplers.TPESampler(seed=set_seed(seed))
+    else:
+        # download saved study
+        artifact_study = run.use_artifact(id + ".optuna:latest")
+        artifact_dir = artifact_study.download()
 
-    artifact = run.use_artifact(dataset)
-    artifact_dir = artifact.download()
-
-    logger.info("Start loading artifacts locally. 🐢")
+        saved_study = pickle.load(open(Path(artifact_dir, id + ".optuna"), "rb"))
+        sampler = saved_study.sampler
 
     # select right feature set
     columns = ["buy_sell"]
@@ -127,12 +131,46 @@ def main(
     if cat_features_sub:
         cat_features, cat_cardinalities = tuple(list(t) for t in zip(*cat_features_sub))
 
-    # load data
-    x_train = pd.read_parquet(
-        Path(artifact_dir, "train_set_60.parquet"), columns=columns
+    logger.info("Start loading artifacts locally. 🐢")
+
+    # supervised data
+    artifact_labelled = run.use_artifact(dataset)
+    artifact_dir_labelled = artifact_labelled.download()
+
+    if pretrain:
+        # unlabelled data
+        unlabelled_dataset = dataset.replace("supervised", "unsupervised")
+        artifact_unlabelled = run.use_artifact(unlabelled_dataset)
+        artifact_dir_unlabelled = artifact_unlabelled.download()
+
+        x_train_unlabelled = pd.read_parquet(
+            Path(artifact_dir_unlabelled, "train_set.parquet"), columns=columns
+        )
+        y_train_unlabelled = x_train_unlabelled["buy_sell"]
+        x_train_unlabelled.drop(columns=["buy_sell"], inplace=True)
+
+        # labelled data
+        x_train_labelled = pd.read_parquet(
+            Path(artifact_dir_labelled, "train_set.parquet"), columns=columns
+        )
+        y_train_labelled = x_train_labelled["buy_sell"]
+        x_train_labelled.drop(columns=["buy_sell"], inplace=True)
+
+        x_train = pd.concat([x_train_labelled, x_train_unlabelled])
+        y_train = pd.concat([y_train_labelled, y_train_unlabelled])
+    else:
+        x_train = pd.read_parquet(
+            Path(artifact_dir_labelled, "train_set.parquet"), columns=columns
+        )
+        y_train = x_train["buy_sell"]
+        x_train.drop(columns=["buy_sell"], inplace=True)
+
+    # load validation data
+    x_val = pd.read_parquet(
+        Path(artifact_dir_labelled, "val_set.parquet"), columns=columns
     )
-    y_train = x_train["buy_sell"]
-    x_train.drop(columns=["buy_sell"], inplace=True)
+    y_val = x_val["buy_sell"]
+    x_val.drop(columns=["buy_sell"], inplace=True)
 
     # pretrain training activated
     has_label = (y_train != 0).all()
@@ -148,10 +186,6 @@ def main(
             "Pretraining inactive, but dataset contains unlabelled instances or"
             "other labels. Use different dataset or activate pretraining."
         )
-
-    x_val = pd.read_parquet(Path(artifact_dir, "val_set_20.parquet"), columns=columns)
-    y_val = x_val["buy_sell"]
-    x_val.drop(columns=["buy_sell"], inplace=True)
 
     wand_cb = WeightsAndBiasesCallback(
         metric_name="accuracy",
@@ -171,16 +205,17 @@ def main(
         pretrain=pretrain,
     )
 
-    # maximize for accuracy
+    optuna.logging.get_logger("optuna").addHandler(logging.StreamHandler(sys.stdout))
+
+    # create study.
     study = optuna.create_study(
-        direction="maximize",
-        # pruner=optuna.pruners.MedianPruner(n_warmup_steps=5),
-        sampler=optuna.samplers.TPESampler(seed=set_seed(seed)),
-        study_name=name,
+        sampler=sampler,
+        study_name=id,  # match id of run and study
+        storage=f"sqlite:///{id}.db",
+        load_if_exists=True,
+        direction="maximize",  # maximize for accuracy
     )
 
-    # run garbage collector after each trial. Might impact performance,
-    # but can mitigate out-of-memory errors.
     # Save models in `objective_callback`.
     study.optimize(
         objective,
@@ -199,7 +234,7 @@ def main(
             "best_trial": study.best_trial.number,
             "features": features,
             "trials": trials,
-            "name": name,
+            "name": id,
             "dataset": dataset,
             "seed": seed,
             "pretrain": pretrain,

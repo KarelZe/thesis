@@ -230,6 +230,9 @@
   },
   "active": "90a609f9388c2ed1",
   "lastOpenFiles": [
+    "📖chapters/⭕Self-Training classifier.md",
+    "📑notes/🧭Evaluation metric notes.md",
+    "📑notes/⭕Self-Training classifier notes.md",
     "Ammo Trade Initiator.md",
     "📖chapters/🔢Trade initiator.md",
     "📑notes/🌏Dataset notes.md",
@@ -262,9 +265,6 @@
     "🖼️Media/Pasted image 20230326101313.png",
     "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
     "📥Inbox/@chapelleSemisupervisedLearning2006.md",
-    "📥Inbox/@aminiSelfTrainingSurvey2023.md",
-    "📖chapters/🧭Kernel SHAP.md",
-    "📖chapters/🏅Feature importance measure.md",
-    "📖chapters/⭕Self-Training classifier.md"
+    "📥Inbox/@aminiSelfTrainingSurvey2023.md"
   ]
 }

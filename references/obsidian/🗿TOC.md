@@ -136,7 +136,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 ^c77130
 [[🍪Selection Of Semisupervised Approaches]]
 ## Extensions to Gradient Boosted Trees
-[[🐈Extension to Gradient Boosting]]
+[[⭕Self-Training classifier]]
 
 ## Extensions to TabTransformer 
 

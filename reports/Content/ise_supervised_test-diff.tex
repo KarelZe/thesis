@@ -1,0 +1,51 @@
+\begin{table}
+    \centering
+    \caption{Comparison of Classical Rules and Machine Learning on \gls{ISE} data}
+    \label{tab:diff-ise_supervised_test}
+    \begin{tabular}{lSSSSSS}
+        \toprule
+        {}                       & \multicolumn{2}{r}{gbm (classical)} & \multicolumn{2}{r}{gbm (classical-size)} & \multicolumn{2}{r}{gbm (ml)}                                                 \\
+        {}                       & {Accuracy}                               & {Change}                                     & {Accuracy}                        & {Change}            & {Accuracy}     & {Change}            \\
+        \midrule
+        \multicolumn{1}{l}{Option Type}                                                                                                                                                          \\
+        \tabindent C             & 62.889592                           & +6.55                           & 71.895259                    & +5.04  & 73.624730 & +6.77  \\
+        \tabindent P             & 64.544991                           & +6.81                           & 72.892594                    & +5.63  & 74.593715 & +7.33  \\
+        \tabindent all           & 63.662370                           & +6.67                           & 72.360838                    & +5.32  & 74.077074 & +7.03  \\
+        \cmidrule{1-7}
+        \multicolumn{1}{l}{Security Type}                                                                                                                                                        \\
+        \tabindent Index option  & 56.308184                           & +2.58                           & 57.640799                    & -0.88 & 58.100126 & -0.42 \\
+        \tabindent Others        & 68.405530                           & +6.01                           & 76.385942                    & +6.51  & 77.551217 & +7.67  \\
+        \tabindent Stock options & 61.866828                           & +7.00                            & 70.962294                    & +4.93  & 72.919301 & +6.89  \\
+        \cmidrule{1-7}
+        \multicolumn{1}{l}{Trade Size}                                                                                                                                                           \\
+        \tabindent (0,1]         & 61.886324                           & +6.6                            & 72.589837                    & +4.01  & 74.242395 & +5.66  \\
+        \tabindent(1,3]          & 62.455088                           & +7.15                           & 73.006333                    & +4.35  & 74.813673 & +6.16  \\
+        \tabindent (3,5]         & 62.683294                           & +6.95                           & 72.766890                    & +3.94  & 74.557255 & +5.73  \\
+        \tabindent (5,11]        & 65.941513                           & +6.07                           & 71.771961                    & +8.57  & 73.383853 & +10.18 \\
+        \tabindent >11           & 67.305363                           & +6.59                           & 71.307368                    & +6.88  & 73.084679 & +8.66  \\
+        \cmidrule{1-7}
+        \multicolumn{1}{l}{Year}                                                                                                                                                                 \\
+        \tabindent 2015          & 60.396806                           & +5.52                           & 69.028053                    & +5.73  & 71.423694 & +8.13  \\
+        \tabindent 2016          & 63.737864                           & +6.17                           & 72.560975                    & +5.59  & 74.235176 & +7.27  \\
+        \tabindent 2017          & 64.587031                           & +8.23                           & 73.018742                    & +4.53  & 74.603733 & +6.11  \\
+        \cmidrule{1-7}
+        \multicolumn{1}{l}{Time to Maturity}                                                                                                                                                     \\
+        \tabindent <= 1          & 64.456091                           & +7.15                           & 72.770627                    & +5.8   & 74.560803 & +7.59  \\
+        \tabindent (1-2]         & 64.596545                           & +6.88                           & 72.885430                    & +4.97  & 73.865438 & +5.95  \\
+        \tabindent (2-3]         & 62.979868                           & +5.88                           & 71.797757                    & +4.12  & 72.946987 & +5.26  \\
+        \tabindent (3-6]         & 61.803170                           & +5.82                           & 71.302394                    & +4.03  & 72.719581 & +5.45  \\
+        \tabindent (6-12]        & 61.849926                           & +5.44                           & 71.222635                    & +3.95  & 73.093080 & +5.82  \\
+        \tabindent > 12          & 55.148148                           & +2.48                           & 68.602077                    & +4.01  & 72.039005 & +7.44  \\
+        \cmidrule{1-7}
+        \multicolumn{1}{l}{Moneyness}                                                                                                                                                            \\
+        \tabindent <= 0.7        & 65.551797                           & +5.21                           & 71.843131                    & +7.85  & 72.438812 & +8.45  \\
+        \tabindent (0.7-0.9]     & 67.636359                           & +7.27                           & 74.290189                    & +6.65  & 75.357081 & +7.71  \\
+        \tabindent (0.9-1.1]     & 64.063302                           & +6.98                           & 72.990099                    & +5.0   & 74.414466 & +6.43  \\
+        \tabindent (1.1-1.3]     & 54.203956                           & +4.27                           & 66.292506                    & +4.66  & 70.268926 & +8.64  \\
+        \tabindent > 1.3         & 52.572955                           & +3.84                           & 63.007743                    & +3.05  & 70.550826 & +10.60  \\
+        \cmidrule{1-7}
+        \multicolumn{1}{l}{All Trades}                                                                                                                                                           \\
+        \tabindent all           & 63.662370                           & +6.67                           & 72.360838                    & +5.32  & 74.077074 & +7.03  \\
+        \bottomrule
+    \end{tabular}
+\end{table}

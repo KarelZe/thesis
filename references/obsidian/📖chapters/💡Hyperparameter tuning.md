@@ -1,3 +1,30 @@
+All of our machine learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of ([[@grinsztajnWhyTreebasedModels2022]] 5), emphasize the need for tuning routines, as the test performance of the FT-Transformer and gradient-boosted trees largely fluctuates with the hyperparameter configuration.  As such, we employ an exhaustive hyperparameter search, to find suitable hyperparameter configuration for all our models. 
+
+
+We perform a novel Bayesian search built  on top of the tree parzen algorithm to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function ([[@shahriariTakingHumanOut2016]]). Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in fewer trials.
+
+Our search space is reported in Table-X, which we laid out based on the recommendations in ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]] 999) and ([[@gorishniyRevisitingDeepLearning2021]]999) with minor deviations. As we were experiencing exploding gradients in preliminary tests for the FT-Transformer due to too high learning rates, we downward adjust the intervals for the learning rate. Lower learning rates result in smaller weight updates which prevents overshooting in local loss minima, but also requires more training epochs. For gradient-boosting we raise the border count to $256$, which increases the number of possible split candidates per feature through a finer quantization.
+
+
+We report the 
+
+
+
+
+We define a hyperparameter search space and run a Bayesian optimization 
+
+We run a Bayesian search and optimize for the accuracy, which is also our decisive metric for evaluation ([[🧭Evaluation metric]]), on the validation set. 
+We compute at maximum 50 trials. To compensate for varying computational costs between both machine learning models, we set an additional time budget of 12 hours.
+
+We grow symmetric trees, which acts as a regularizer.
+
+
+Figure-X visualizes the hyperparameter search space. It serves two purposes,
+
+
+Tuning. For every dataset, we carefully tune each model’s hyperparameters. The best hyperparameters are the ones that perform best on the validation set, so the test set is never used for tuning. For most algorithms, we use the Optuna library (Akiba et al., 2019) to run Bayesian optimization (the Tree-Structured Parzen Estimator algorithm), which is reported to be superior to random search (Turner et al., 2021). For the rest, we iterate over predefined sets of configurations recommended by corresponding papers. We provide parameter spaces and grids in supplementary. We set the budget for Optuna-based tuning in terms of iterations and provide additional analysis on setting the budget in terms of time in supplementary
+
+
 - Visualize results https://github.com/LeoGrin/tabular-benchmark
 ![[comparsion-of-results.png]]
 
@@ -37,3 +64,5 @@ Show differences from different initializations using a violin plot. (suggested 
 - Framing hyperparameter search as an optimization problem. https://www.h4pz.co/blog/2020/10/3/optuna-and-wandb
 - perform ablation study (https://en.wikipedia.org/wiki/Ablation_(artificial_intelligence)) when making important changes to the architecture. This has been done in [[@gorishniyRevisitingDeepLearning2021]].
 - For implementation of permutation importance see https://www.rasgoml.com/feature-engineering-tutorials/how-to-generate-feature-importance-plots-using-catboost
+
+![[1680261360735 2.jpg]]
