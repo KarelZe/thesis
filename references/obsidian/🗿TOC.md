@@ -162,7 +162,7 @@ describe if data set is actually used. Write similarily to
 [[🚏Exploratory Data Analysis]]
 
 ### Data Pre-Processing 🟡
-[[📑notes/🪄Data Preprocessing]]
+[[🪄Data Preprocessing notes]]
 
 ### Feature Engineering 🟡
 [[🪄Feature Engineering]]
@@ -183,7 +183,7 @@ describe if data set is actually used. Write similarily to
 
 ## Evaluation
 ### Feature Importance Measure
-[[🏅Feature importance measure]]
+[[🧭Feature Importance Measure]]
 ### Evaluation Metric
 [[🧭Evaluation metric]]
 [[🧭Attention Map]]
