@@ -11,7 +11,7 @@ Testing the empirical accuracy of our approaches requires option trades where th
 
 **Trade Initiator**
 
-In cref-[[🔢Trade Initiator]] we discussed three views on the trade initiator. As our data sources do not provide the order entry times or order types for both sides of the trade, we define trade initiator based on the position taken by the customer. As such, we classify trades as buyer-initiated if the trade is due to a customer buy order and as seller-initiated for customer sells. Naturally, we are unable to sign trades between customers. This is similar to ([[@ellisAccuracyTradeClassification2000]]9) and ([[@grauerOptionTradeClassification2022]]8) who share this definition.
+In cref-[[🔢Trade Initiator]] we discussed three views on the trade initiator. As our data sources do not provide the order entry times or order types for both sides of the trade, we define trade initiator based on the position relative to the market maker, who caters the liquidity demand. More specifically, we classify customer trades as buyer-initiated if the trade is due to a customer buy order and as seller-initiated for customer sells. As previous literature, e. g., ([[@garleanuDemandBasedOptionPricing2009]]4276) suggests that trader types, such as proprietary traders, may be more similar in their role to a market maker by supplying liquidity. As such, we restrict our analysis to trades between customers and market makers for which the picture is unambiguous. The definition is shared with ([[@grauerOptionTradeClassification2022]]8).
 
 **Sample Construction**
 
