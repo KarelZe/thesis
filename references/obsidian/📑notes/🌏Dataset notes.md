@@ -67,3 +67,14 @@ What do you mean by FIRM, CUSTOMER and PROFESSIONAL CUSTOMER trades, and can you
 
 
 The INET data indicate whether each trade executes against a sitting buy or sell order in the limit order book.8 Following the chronology of order submission logic proposed by OddersWhite (2000), we designate trades that execute against a sitting buy order (a buy limit order) as seller-initiated and trades that execute against a sitting sell order (a sell limit order) as buyerinitiated. This procedure produces a dataset of short sales and long sales executed on the INET platform with the true trade initiator identified directly from the order data. https://core.ac.uk/download/pdf/145016916.pdf
+
+## Trade Initiator
+Stützende Literatur zur Einschränkung unseres Samples auf Customer Trades ist u.a. das Paper von Garleanu, Pedersen, und Poteshman (2009) zu Demand-based option pricing: „We actually believe that proprietary traders are more similar to market-makers, and, indeed, their positions are more correlated with market-maker positions (the time-series correlation is 0.44). Consistent with this fact, our results are indeed stronger when we reclassify proprietary traders as market-makers (i.e., assume that end-users are the public customers)“ (Seite 4276).
+
+“Firm proprietary traders sometimes are end users of options and sometimes are liquidity suppliers. Consequently, we compute net end-user demand for an option in two different ways. First, we assume that firm proprietary traders are end users and compute the net demand for an option as the sum of the public customer and firm proprietary trader long open interest minus the sum of the public customer and firm proprietary trader short open interest. We refer to net demand computed in this way as non-market-maker net demand. Second, we assume that the firm proprietary traders are liquidity suppliers and compute the net demand for an option as the public customer long open interest minus the public customer short open interest. We refer to net demand computed in this second way as public customer net demand. The results are similar for non-market-maker net demand and public customer net demand” (Gârleanu et al., 2009, p. 16)
+This is similar to ([[@ellisAccuracyTradeClassification2000]]9) and 
+
+
+## Filters
+% variables). To purge the data of potential errors, we delete trades or quotes for which: 1. The trade price is zero or missing. 2. The quote is missing, negative, or unusually small relative to surrounding quotes.9 3. The bid (ask) quote changes from the previous bid (ask) by more than $10. 4. The quoted bid-ask spread is negative. 5. The proportional quoted bid-ask spread or effective bid-ask spread is in the upper 0.5 percentile of its distribution by stock and time interval. 6. The quoted bid or ask size is negative. 7. The trade or quote price is outside regular trading hours. These filters eliminate approximately 3% of all recorded prices. ()
+
