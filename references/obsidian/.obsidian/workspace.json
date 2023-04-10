@@ -6,8 +6,19 @@
       {
         "id": "90bbdd3c2ee01632",
         "type": "tabs",
-        "dimension": 55.495818399044204,
         "children": [
+          {
+            "id": "59e3e8f5eca14e18",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/⭕Self-Training classifier.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
           {
             "id": "1aced2650206f338",
             "type": "leaf",
@@ -15,30 +26,6 @@
               "type": "markdown",
               "state": {
                 "file": "📖chapters/🌏Dataset.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "90a609f9388c2ed1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🔢Trade initiator.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7d7502aa72bb837c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🍕Application study.md",
                 "mode": "source",
                 "source": false
               }
@@ -56,31 +43,19 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
-        "id": "2e4bb12a56b63b7f",
+        "id": "b1256ace5677e3f8",
         "type": "tabs",
-        "dimension": 44.504181600955796,
         "children": [
           {
-            "id": "f35a250acbe1a2dc",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "graph",
-              "state": {},
-              "pinned": true
-            }
-          },
-          {
-            "id": "013fdc2605449815",
+            "id": "2307803e6381e44f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🌏Dataset notes.md",
+                "file": "📑notes/⭕Self-Training classifier notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -144,7 +119,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🔢Trade initiator.md",
+                "file": "📖chapters/⭕Self-Training classifier.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -172,7 +147,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🔢Trade initiator.md"
+                "file": "📖chapters/⭕Self-Training classifier.md"
               }
             }
           },
@@ -203,8 +178,11 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "90a609f9388c2ed1",
+  "active": "59e3e8f5eca14e18",
   "lastOpenFiles": [
+    "📑notes/⭕Self-Training classifier notes.md",
+    "📖chapters/🌏Dataset.md",
+    "📖chapters/🔢Trade initiator.md",
     "📥Inbox/@sarkarMarketSidednessInsights2023.md",
     "📥Inbox/@kavajeczPackagingLiquidityBlind2005.md",
     "📥Inbox/@fisherAllModelsAre.md",
@@ -235,10 +213,7 @@
     "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
     "📖chapters/⭕Self-Training classifier.md",
     "📑notes/🧭Evaluation metric notes.md",
-    "📑notes/⭕Self-Training classifier notes.md",
-    "📖chapters/🔢Trade initiator.md",
     "📑notes/🌏Dataset notes.md",
-    "📖chapters/🌏Dataset.md",
     "📖chapters/👶Introduction.md",
     "📖chapters/🧃Feature Sets.md"
   ]

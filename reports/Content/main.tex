@@ -50,7 +50,7 @@ In absence of a universal definition of the trade initiator, the following views
 
 Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is denoted as $\hat{y}$.
 
-The following section introduces basic rules for trade classification. We start with the classical quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
+The following section introduces basic rules for trade classification. We start with the ubiquitous quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
 \subsection{Basic Rules}\label{sec:basic-rules}
 
@@ -328,7 +328,7 @@ where $\mathbb{I}$ is the indicator function for region conformance and $c_m$the
 
 So far, it remains open how the best split can be found. The best split is where the deviation between the prediction and the true response variable diminishes. Over the entire tree, this error can be captured in the \gls{SSE} given by:
 \begin{equation}
-    \operatorname{l}_{SSE}(\widehat{\boldsymbol{y}},\boldsymbol{y})=\frac{1}{N} \sum_{m \in M} \sum_{\boldsymbol{x}_{i} \in R_m}\left(y_{i}-c_{m}\right)^{2},
+    \operatorname{l}_{SSE}(\widehat{\mathbb{y}},\mathbb{y})=\frac{1}{N} \sum_{m \in M} \sum_{\mathbb{x}_{i} \in R_m}\left(y_{i}-c_{m}\right)^{2},
 \end{equation}
 
 which is subsequently minimized \textcite[][231]{breimanClassificationRegressionTrees2017}. As documented in \textcite[][326]{hastietrevorElementsStatisticalLearning2009} we start with the entire dataset and scan through all combinations of features and possible split values. For a split by the feature $j$ at the value $s$, the child nodes are given by a pair of half-planes:
@@ -339,7 +339,7 @@ which is subsequently minimized \textcite[][231]{breimanClassificationRegression
 
 Thereby, the feature $j$ and value $s$ are selected in a way, that the combined error in the child nodes is minimized:
 \begin{equation}
-    \min _{j, s}\left[\min _{c_1} \sum_{\boldsymbol{x}_i \in R_1(j, s)}\left(y_i-c_1\right)^2+\min _{c_2} \sum_{\boldsymbol{x}_i \in R_2(j, s)}\left(y_i-c_2\right)^2\right].
+    \min _{j, s}\left[\min _{c_1} \sum_{\mathbb{x}_i \in R_1(j, s)}\left(y_i-c_1\right)^2+\min _{c_2} \sum_{\mathbb{x}_i \in R_2(j, s)}\left(y_i-c_2\right)^2\right].
 \end{equation}
 
 The procedure is repeated on the so-created child nodes. Note that, splits are performed greedily to keep computations tractable. This entails, that only the reduction in \gls{SSE} of the current node is considered, and not the improvement from any subsequent splits in the child nodes. Computational costs may still be high, when there are many split candidates, due to a large feature count or possible split values. Common approximations are splits on quantized features or random feature subsets.
@@ -552,20 +552,43 @@ Our supervised approaches depend on the availability of the trade initiator as t
 
 Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside with true labels \autocite[][6]{chapelleSemisupervisedLearning2006}. This property renders them appealing for trade classification.
 
-Semi-supervised learning is centred around the \emph{assumption of smoothness}, which states that if two samples $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if datapoints are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
+Semi-supervised learning is centred around the \emph{assumption of smoothness}, which states that if two samples $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if data points are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
 
-The semi-supervised setting requires to extend our notation from \cref{sec:problem-framing}, by dividing the dataset into labelled and unlabelled instances. Henceforth, $\mathbf{X}_{l} = \left[\mathbf{x}_{1},\ldots, \mathbf{x}_{l}\right]^{\top}$ is used for instances, where labels $\mathbf{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$ are known and $\mathbf{X}_{u} = \left[\mathbf{x}_{l+1},\ldots, \mathbf{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by time.
+The semi-supervised setting requires extending our notation from \cref{sec:problem-framing}, by dividing the dataset into labelled and unlabelled instances. Henceforth, $\mathbf{X}_{l} = \left[\mathbf{x}_{1},\ldots, \mathbf{x}_{l}\right]^{\top}$ is used for instances, where labels $\mathbf{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$ are known and $\mathbf{X}_{u} = \left[\mathbf{x}_{l+1},\ldots, \mathbf{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by time.
 
 Our coverage of semi-supervised approaches includes \emph{self-training} for gradient-boosting and \emph{pre-training} of Transformers, which we derive from a subsequent discussion.
 
 \subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches-1}
 
-\subsection{Extensions to Gradient Boosted
-    Trees (2~p)}\label{sec:extensions-to-gradient-boosted-trees}
-Self-training is a model-agnostic wrapper algorithm around a probabilistic classifier, that uses its own predictions as pseudo labels for unlabelled instances \autocite[][190]{yarowskyUnsupervisedWordSense1995}.
+\subsection{Gradient Boosted Trees With Self-Training}\label{sec:extensions-to-gradient-boosted-trees}
 
-The classifier is initially fitted on labelled datapoints. The classifier is then used to assign labels, so-called pseudo labels, to unlabelled instances. A subset of unlabelled instances with high-confidence predictions is selected, removed from the unlabelled dataset and added to labelled data. A new classifier is then retrained on labelled and pseudo-labelled instances \autocite[][190--192]{yarowskyUnsupervisedWordSense1995}. The process is repeated for several iterations until a stopping criterion applies, such as the number of iterations being maxed out or no unlabelled instances are left for labelling.
-    
+Self-training is a wrapper algorithm around a probabilistic classifier, that incorporates its predictions of unlabelled instances as pseudo labels \autocite[][190]{yarowskyUnsupervisedWordSense1995}.
+
+Initially, a base classifier, e.g., gradient-boosting, is fitted on the labelled data points in a supervised manner. The classifier then assigns labels, so-called pseudo labels, to unlabelled instances. A subset of unlabelled instances with high-confidence predictions is selected, removed from the unlabelled dataset and added to labelled data dataset. A new classifier is then retrained on the labelled and pseudo-labelled instances \autocite[][190--192]{yarowskyUnsupervisedWordSense1995}. The process is repeated for several iterations until an abortion criterion applies, such as the maximum number of iterations is exhausted or when no unlabelled instances are left to label. The complete algorithm is described in \cref{algo:self-training}.
+
+\begin{algorithm}
+  % input/ouput names
+  \SetKwInOut{Input}{Input}
+  \SetKwInOut{Output}{Output}
+  tbd
+  % caption + label
+  \caption{Self-Training Algorithm}
+  \label{algo:self-training}
+\end{algorithm}
+
+Recall from our discussion on gradient-boosted trees in \cref{sec:gradient-boosting-procedure} that we optimized for the cross-entropy loss on the training set. When coupled with self-training in each training iteration the classifier $h$ now jointly minimizes the loss over the labelled instances $S$ and the remaining, unlabelled samples $X_{\not{U}}$:
+$$
+\frac{1}{m} \sum_{(\mathbf{x}, y) \in S} L(h(\mathbf{x}), y)+\frac{\gamma}{\left|X_{\not{U}}\right|} \sum_{(\mathbf{x}, \tilde{y}) \in X_{\not{U}}} L(h(\mathbf{x}), \tilde{y})+\lambda\|h\|^2,
+$$
+where $\gamma$ is a hyperparameter to control the impact of the pseudo-labelled data, $\tilde{y}$ is the pseudo-labelled instance, and $\lambda$ weights the regularization term \autocite[][4]{aminiSelfTrainingSurvey2023}.
+
+In every iteration, only unlabelled instances are added to the training set, for which the predicted class probability exceeds a confidence threshold, denoted by $\tau$. This approach has implications, as highlighted by \textcite[][2]{chenDebiasedSelfTrainingSemiSupervised2022}. The threshold $\tau$ becomes an important hyperparameter in controlling that no noisy labels are added to the training set, but a restriction to highly-confidence samples may lead to a \emph{data bias} and over-confidence in the prediction. Self-training is prone to a \emph{confirmation bias}, as confident but wrong pseudo labels are erroneously incorporated into the training set, which in effect leads to a propagation of errors in the subsequent training rounds. 
+
+At the same time, self-training puts a high emphasis on the correctness of the probability estimates in the base classifier. This is problematic for decision trees, known to produce poor probability estimates, as probabilities are derived from the class frequency in the leaf node containing few samples \autocite[][357--358]{tanhaSemisupervisedSelftrainingDecision2017}. However, as gradient-boosting, directly optimizes for the cross-entropy loss, the problem found for its ensemble member no longer occurs. 
+
+Independent of the base classifier, self-training increases computational cost, as training is repeated over several iterations on a growing training set \autocite[][9]{zophRethinkingPretrainingSelftraining2020}. 
+
+Despite these limitations, the potentially improved decision boundary outweights the concerns. To the best of our knowledge, the application of self-training is novel in the context of trade classification.
 
 \subsection{Extensions to Transformers (2~p)}\label{sec:extensions-to-transformer}
 
@@ -811,7 +834,7 @@ The machine-learning classifiers, studied in this work can be deemed a black box
 %   \SetKwInOut{Output}{Output}
 
 %   % caption
-%   % TODO: set input and output: e. g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
+%   % TODO: set input and output: e.g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
 %   \caption{$\operatorname{\mathtt{quote}}$ \label{sec:alg:quote-rule}}
 
 %   \Input{%

@@ -140,6 +140,46 @@ citecolor=darkblue,
 urlcolor=black,
 bookmarksopen
 }
+
+
+
+% --------------------------------- Algorithm ---------------------------------
+% load before cref https://tex.stackexchange.com/a/393202/169093
+\usepackage[linesnumbered, ruled]{algorithm2e}
+
+% change algorithm font size
+\SetAlFnt{\normalsize}
+
+% change algorithm caption style
+\newcommand{\xAlCapSty}[1]{\small\sffamily\bfseries#1}
+\SetAlCapSty{xAlCapSty}
+
+\SetAlCapSkip{1em}
+\SetKwInput{KwParam}{Parameters}
+\SetKwInput{KwHyper}{Hyperparameters}
+
+% comment style (algorithms)
+\newcommand{\xCommentSty}[1]{\ttfamily\textcolor{blue}{#1}}
+\SetCommentSty{xCommentSty}
+
+% change line number style
+\newcommand\mynlfont[1]{\sffamily\textcolor{gray}{#1}}
+\SetNlSty{mynlfont}{}{}
+
+ % add the line numbers
+\LinesNumbered
+
+% comments right justified
+\SetSideCommentRight
+
+% don't print semicolon
+\DontPrintSemicolon
+
+% ruled algorithm
+\RestyleAlgo{algoruled}
+
+
+
 \usepackage[capitalise, noabbrev]{cleveref} % Enables the use of \cref{} to refer to figures, etc. with Fig.
 \creflabelformat{equation}{#2#1#3} % omit round brackets
 % https://tex.stackexchange.com/a/121055/169093
@@ -287,40 +327,6 @@ bookmarksopen
 \newglossaryentry{token}{name={token},plural={tokens},description={Item in a vocabulary. For textual data, tokens can be an individual character, sub-word, a word. 
 For tabular data, a token corresponds to a column in the data set.}}
 \newglossaryentry{exploding-gradient}{name={exploding gradient},plural={exploding gradients},description={Exploding gradients is a problem encountered in training deep neural networks with backpropagation. Error gradients can accumulate, and result in very large parameter updates and unstable training of the network. The opposite is the vanishing gradient problem, whereby gradients become successively smaller during backpropagation, resulting in no or small parameter updates of the network. In both cases, the network does not converge.}}
-
-% --------------------------------- Algorithm ---------------------------------
-\usepackage[linesnumbered, ruled]{algorithm2e}
-
-% change algorithm font size
-\SetAlFnt{\normalsize}
-
-% change algorithm caption style
-\newcommand{\xAlCapSty}[1]{\small\sffamily\bfseries#1}
-\SetAlCapSty{xAlCapSty}
-
-\SetAlCapSkip{1em}
-\SetKwInput{KwParam}{Parameters}
-\SetKwInput{KwHyper}{Hyperparameters}
-
-% comment style (algorithms)
-\newcommand{\xCommentSty}[1]{\ttfamily\textcolor{blue}{#1}}
-\SetCommentSty{xCommentSty}
-
-% change line number style
-\newcommand\mynlfont[1]{\scriptsize\sffamily\textcolor{gray}{#1}}
-\SetNlSty{mynlfont}{}{}
-
- % add the line numbers
-\LinesNumbered
-
-% comments right justified
-\SetSideCommentRight
-
-% don't print semicolon
-\DontPrintSemicolon
-
-% ruled algorithm
-\RestyleAlgo{algoruled}
 
 % ----------------------------------- Start of document -----------------------------------
 \begin{document}
