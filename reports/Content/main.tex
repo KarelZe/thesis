@@ -39,9 +39,16 @@ We begin with a short discussion on different definitions of the initiator and t
 \subsection{Trade Initiator}
 \label{sec:trade-initiator}
 
-In absence of a universal definition of the trade initiator, the following views prevailing in research. \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000} adapts a chronological view based on the order arrival. She defines the initiator of the trade as the party (buyer or seller) who places their order last, chronologically. This definition requires knowledge about the order submission times. In contrast, \textcite[][94--97]{leeInferringInvestorBehavior2000} propagate a definition based on the party in demand for immediate execution. (...) This definition remains ambiguous for trades that result from crossed limit orders, matched market orders, or batched orders \autocite[][94--95]{leeInferringInvestorBehavior2000}. Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties. (...)
+In absence of a universal definition of the trade initiator, the following views are prevailing in research.
 
-In all cases, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, whereby $y=-1$ indicates a seller-initiated and $y=1$ a buyer-initiated trade. We use $\hat{y}$ for the predicted trade initiator.
+\emph{Chronological definition:} \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000} adapts a chronological view based on the order arrival. She defines the initiator of the trade as the party (buyer or seller) who places their order last, chronologically. This definition requires knowledge about the order submission times. 
+
+\emph{Immediacy definition:} In contrast, \textcite[][94--97]{leeInferringInvestorBehavior2000}  equate the trade initiator with the party in demand for immediate execution. Thus, traders placing market orders, immediately executable at whatever price, or executable limit orders, are considered the trade initiator. By contrast, the party placing non-executable limit orders, which may not even result in a trade, is not. This definition remains ambiguous for trades resulting from crossed limit orders, matched market orders, or batched orders  \autocite[][94--95]{leeInferringInvestorBehavior2000}.
+% FIXME: introduce of notion of demanding / taking away liquidity and providing liquidity
+
+\emph{Positional definition:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand. 
+
+Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is denoted as $\hat{y}$.
 
 The following section introduces basic rules for trade classification. We start with the classical quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
@@ -117,7 +124,7 @@ In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe hi
 
 As \cref{sec:quote-rule} unveils, the tick rule yields significantly lower success rates than the quote rule. For midspread trades, that otherwise cannot be classified by the advantageous quote rule, \textcite[][14]{grauerOptionTradeClassification2022} propose the depth rule.
 
-The depth rule infers the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity at one trade side, trades are classified as a buy (sell) for a larger ask (bid) size \autocite[][14]{grauerOptionTradeClassification2022}.
+The depth rule gauges the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity at one trade side, trades are classified as a buy (sell) for a larger ask (bid) size \autocite[][14]{grauerOptionTradeClassification2022}.
 
 Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t}$ of the bid, and $\gls{P-tilde}_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} = \gls{M}_{i,t} \land \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \right\}$. The depth rule is now defined as:
 \begin{equation}
