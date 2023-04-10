@@ -11,8 +11,12 @@
             "id": "f825b6203f6d8412",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/💡Hyperparameter tuning.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -57,7 +61,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 367.5
+    "width": 477.5110321044922
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -73,6 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "📖chapters/💡Hyperparameter tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,7 +104,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "📖chapters/💡Hyperparameter tuning.md"
+              }
             }
           }
         ],
@@ -122,6 +129,9 @@
   },
   "active": "f825b6203f6d8412",
   "lastOpenFiles": [
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+    "📖chapters/💡Hyperparameter tuning.md",
     "TOC.md",
     "❓ Questions.md",
     "Expose.md",
