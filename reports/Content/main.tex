@@ -328,7 +328,7 @@ where $\mathbb{I}$ is the indicator function for region conformance and $c_m$the
 
 So far, it remains open how the best split can be found. The best split is where the deviation between the prediction and the true response variable diminishes. Over the entire tree, this error can be captured in the \gls{SSE} given by:
 \begin{equation}
-    \operatorname{l}_{SSE}(\widehat{\mathbb{y}},\mathbb{y})=\frac{1}{N} \sum_{m \in M} \sum_{\mathbb{x}_{i} \in R_m}\left(y_{i}-c_{m}\right)^{2},
+    \operatorname{l}_{SSE}(\widehat{\mathbf{y}},\mathbf{y})=\frac{1}{N} \sum_{m \in M} \sum_{\mathbf{x}_{i} \in R_m}\left(y_{i}-c_{m}\right)^{2},
 \end{equation}
 
 which is subsequently minimized \textcite[][231]{breimanClassificationRegressionTrees2017}. As documented in \textcite[][326]{hastietrevorElementsStatisticalLearning2009} we start with the entire dataset and scan through all combinations of features and possible split values. For a split by the feature $j$ at the value $s$, the child nodes are given by a pair of half-planes:
@@ -339,7 +339,7 @@ which is subsequently minimized \textcite[][231]{breimanClassificationRegression
 
 Thereby, the feature $j$ and value $s$ are selected in a way, that the combined error in the child nodes is minimized:
 \begin{equation}
-    \min _{j, s}\left[\min _{c_1} \sum_{\mathbb{x}_i \in R_1(j, s)}\left(y_i-c_1\right)^2+\min _{c_2} \sum_{\mathbb{x}_i \in R_2(j, s)}\left(y_i-c_2\right)^2\right].
+    \min _{j, s}\left[\min _{c_1} \sum_{\mathbf{x}_i \in R_1(j, s)}\left(y_i-c_1\right)^2+\min _{c_2} \sum_{\mathbf{x}_i \in R_2(j, s)}\left(y_i-c_2\right)^2\right].
 \end{equation}
 
 The procedure is repeated on the so-created child nodes. Note that, splits are performed greedily to keep computations tractable. This entails, that only the reduction in \gls{SSE} of the current node is considered, and not the improvement from any subsequent splits in the child nodes. Computational costs may still be high, when there are many split candidates, due to a large feature count or possible split values. Common approximations are splits on quantized features or random feature subsets.
@@ -907,12 +907,12 @@ The next chapter discusses different metrics to assess the prediction quality of
 Our goal is to maximize the number of trades, where the predicted trade initiator matches the true trade initiator. We assess the quality of our model’s prediction in terms of \emph{accuracy}, which can be stated as:
 \begin{equation}
 % \operatorname{accuracy} \colon \mathbb{R}^{N} \times \mathbb{R}^{N} \to  \left[0, 1\right], \quad 
-\operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{l}_{0-1}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
+\operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{L}_{0-1}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
 \end{equation}
-where $\operatorname{l}_{0-1}(\cdot)$ is the 0-1-loss given by:
+where $\operatorname{L}_{0-1}(\cdot)$ is the 0-1-loss given by:
 \begin{equation}
     % \operatorname{l}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad 
-    \operatorname{l}_{0-1}(y, \hat{y}) = \mathbb{I}\left(y\neq \hat{y}\right).
+    \operatorname{L}_{0-1}(y, \hat{y}) = \mathbb{I}\left(y\neq \hat{y}\right).
 \end{equation}
 
 Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss. Notably, the loss is the same for false positives and negatives.
