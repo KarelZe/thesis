@@ -10,6 +10,8 @@
 
 Classical trade classification algorithms, as a rule-based approach, are transparent and thus provide some degree of interpretability. (What is transparency? -> [[@liptonMythosModelInterpretability2017]]). However, for deep stacked stacked combinations involving a large feature count, such as the one of ([[@grauerOptionTradeClassification2022]] ), interactions between base rules become more complex, and the effect of single feature on the final prediction more challenging to interpret. 
 
+> 📑“Here, we adopt the definition of Biran and Cotton [19], as the level that an observer can understand the cause of a decision.” (Baptista et al., 2022, p. 2)
+
 **Need for  interpetability**
 > 📑In addition to pre-model and in-model interpretability, there is <mark style="background: #FFB8EBA6;">post-model interpretability</mark> [23]. Post-model techniques analyze the model after its creation (post-hoc); they are devised as independent methods that can interpret the final decisions. There approaches can be model-specific or model-agnostic [8]. Post-hoc model-specific interpretability consists of methods specifically designed for a given machine learning algorithm. In contrast, post-hoc model-agnostic interpretability is agnostic to the analyzed machine learning model.
 
@@ -24,9 +26,7 @@ Classical trade classification algorithms, as a rule-based approach, are transpa
 > Y. Rong, T. Leemann, V. Borisov, G. Kasneci, and E. Kasneci, “A consistent and efficient evaluation strategy for feature attribution methods,” in International Conference on Machine Learning. PMLR, 2022.
 
 **audit vs insight / true to the model - true to the data**
-> 📑 https://mindfulmodeler.substack.com/p/shap-is-not-all-you-need
-Given the simulation setup where none of the features has a relation to the target, one could say that PFI results are correct and SHAP is wrong. But this answer is too simplistic. The choice of interpretation method really depends on what you use the importance values for. What is the question that you want to answer? Because Shapley values are “correct” in the sense that they do what they are supposed to do: Attribute the prediction to the features. And in this case, changing the “important” features truly changes the model prediction. So if your goal tends towards understanding how the model “behaves”, SHAP might be the right choice. But if you want to find out how relevant a feature was for the CORRECT prediction, SHAP is not a good option. Here PFI is the better choice since it links importance to model performance. For SHAP, it’s not so easy to answer how the Shapley values are supposed to be interpreted. Shapley values are also expensive to compute, especially if your model is not tree-based. So there are many reasons not to use SHAP, but an “inferior” (as the reviewer said) interpretation method.
--> Guess in my case random feature importance is correct.
+> 📑 Given the simulation setup where none of the features has a relation to the target, one could say that PFI results are correct and SHAP is wrong. But this answer is too simplistic. The choice of interpretation method really depends on what you use the importance values for. What is the question that you want to answer? Because Shapley values are “correct” in the sense that they do what they are supposed to do: Attribute the prediction to the features. And in this case, changing the “important” features truly changes the model prediction. So if your goal tends towards understanding how the model “behaves”, SHAP might be the right choice. But if you want to find out how relevant a feature was for the CORRECT prediction, SHAP is not a good option. Here PFI is the better choice since it links importance to model performance. For SHAP, it’s not so easy to answer how the Shapley values are supposed to be interpreted. Shapley values are also expensive to compute, especially if your model is not tree-based. So there are many reasons not to use SHAP, but an “inferior” (as the reviewer said) interpretation method. -> Guess in my case random feature importance is correct. (https://mindfulmodeler.substack.com/p/shap-is-not-all-you-need)
 
 > 📑In a way, it boils down to the question of [audit versus insight](https://mindfulmodeler.substack.com/p/audit-or-insight-know-your-interpretation): SHAP importance is more about auditing how the model behaves. As in the simulated example, it’s useful to see how model predictions are affected by features X4, X6, and so on. For that SHAP importance is meaningful. But if your goal was to study the underlying data, then it’s completely misleading. Here PFI gives you a better idea of what’s really going on. Also, both importance plots work on different scales: SHAP may be interpreted on the scale of the prediction because SHAP importance is the average absolute change in prediction that was attributed to a feature. PFI is the average increase in loss when the feature information is destroyed (aka feature is permuted). Therefore PFI importance is on the scale of the loss.
 
@@ -37,6 +37,12 @@ The machine-learning classifiers, studied in this work can be deemed a black box
 > 📑“The model size (number of parameters) can provide a first intuition of the interpretability of the models. Therefore, we provide a size comparison of deep learning models in Fig. 5. Admittedly, explanations can be provided in very different forms, which may each have their own use-cases. Hence, we can only compare explanations that have a common form. In this work, we chose feature attributions as the explanation format because they are the prevalent form of post-hoc explainability for the models considered in this work.” ([[@borisovDeepNeuralNetworks2022]], p. 13)
 
 > 📑 Many model-agnostic machine learning (ML) interpretation methods (see Molnar (2019); Guidotti et al. (2018) for an overview) are based on making predictions on perturbed input features, such as permutations of features. The partial dependence plot (PDP) (Friedman et al., 1991) visualizes how changing a feature affects the prediction on average. The permutation feature importance (PFI) (Breiman, 2001; Fisher et al., 2019) quantifies the importance of a feature as the reduction in model performance after permuting a feature. PDP and PFI change feature values without conditioning on the remaining features (https://arxiv.org/pdf/2006.04628.pdf)
+
+> Permutation methods are some of the oldest, most popular, and computationally convenient means of understanding complex learning algorithms. In this paper, we will focus primarily on three commonly used techniques: [[@hookerUnrestrictedPermutationForces2021]]
+
+“Post-hoc interpretability presents a distinct approach to extracting information from learned models. While posthoc interpretations often do not elucidate precisely how a model works, they may nonetheless confer useful information for practitioners and end users of machine learning.” ([[@liptonMythosModelInterpretability2017]] 4).
+
+It connotes some sense of understanding the mechanism by which the model works. ([[@liptonMythosModelInterpretability2017]] 5).
 
 A class of approaches, suitable for studying the data (better model-agnostic techniques) are based on random feature permutation. We study permutation feature importance / partial feature importance in detail.
 
@@ -84,22 +90,7 @@ $$
 > 📑“Substitution effects can lead us to discard important features that happen to be redundant. This is not generally a problem in the context of prediction, but it could lead us to wrong conclusions when we are trying to understand, improve, or simplify a model. For this reason, the following single feature importance method can be a good complement to MDI and MDA. 8.4.1 Single Feature Importance Single feature importance (SFI) is a cross-section predictive-importance (out-ofsample) method. It computes the OOS performance score of each feature in isolation. A few considerations: 1. This method can be applied to any classifier, not only tree-based classifiers. 2. SFI is not limited to accuracy as the sole performance score. 3. Unlike MDI and MDA, no substitution effects take place, since only one feature is taken into consideration at a time. 4. Like MDA, it can conclude that all features are unimportant, because performance is evaluated via OOS CV” The main limitation of SFI is that a classifier with two features can perform better than the bagging of two single-feature classifiers. For example, (1) feature B may be useful only in combination with feature A; or (2) feature B may be useful in explaining the splits from feature A, even if feature B alone is inaccurate. In other words, joint effects and hierarchical importance are lost in SFI. One alternative would be to compute the OOS performance score from subsets of features, but that calculation will become intractable as more features are considered. Snippet 8.4 demonstrates one possible implementation of the SFI method. A discussion of the function cvScore can be found in Chapter 7.” ([[@lopezdepradoAdvancesFinancialMachine2018]], p. 118)
 
 
-We group dependent features and estimate the feature importance on a group-level. Arranging all features in a tree-like hierarchy gives us the freedom to derive feature importances at different levels, enabling cross-comparisons between classical rules and machine learning based classifiers, as grouping of raw and derived features makes the implementation of classical rules transparent. (footnote: Consider the implementation of the tick rule. Here, the implementation could use the feature price lag (ex) or calculate the price change from the trade price and price lag (ex). If not grouped, feature importances would be attributed to either the derived feature or raw features causing difficulties in comparison with machine learning classifiers, which have access to all three features simultaneously. Grouping all three features resolves this issue at the cost of interpretability.). Other than the classical permutation importance from cref-algorithm, all features sharing the same parent node are permuted together. We define the following dependency structure:
-
-```mermaid
-
-graph TB 
-A((1))-->B((2))
-A-->C((3))
-A-->D((4))
-B-->E((5)) 
-B-->F((6))
-B-->G((7))
-C-->H((8))
-D-->I((9))
-D-->J((10))
-```
-Groupings are created to be mutually exclusive and based on the dependency structure of classical trade classification algorithms. The computational demand is comparable to classical feature permutation, as grouping results in fewer permutations, but the analysis may be repeated on several sub-levels. Following ([[@breimanRandomForests2001]]) we report our so-created results in cref-[[🏅Results]] on test data. To this end, we want to emphasize, that our approach is different from ([[@ronenMachineLearningTrade2022]]52) as we do not estimate the improvement from adding new features, but keep the feature sets fixed-sized and permute them.
+We group dependent features and estimate the feature importance on a group-level. Similar idea https://www.borealisai.com/research-blogs/feature-importance-and-explainability/ or  https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance_multicollinear.html.
 
 
 ## Partial dependence plots
@@ -143,3 +134,54 @@ This is the range of the PDP values for the unique categories divided by four. T
 
 
 This PDP-based feature importance should be interpreted with care. It captures only the main effect of the feature and ignores possible feature interactions. A feature could be very important based on other methods such as [permutation feature importance](https://christophm.github.io/interpretable-ml-book/feature-importance.html#feature-importance), but the PDP could be flat as the feature affects the prediction mainly through interactions with other features. Another drawback of this measure is that it is defined over the unique values. A unique feature value with just one instance is given the same weight in the importance computation as a value with many instances (https://christophm.github.io/interpretable-ml-book/pdp.html)
+
+## Word salad 🥗
+As the 
+
+One such 
+
+This leaves us 
+
+
+Consequently, we derive feature importances using random feature permutation, which is model-agnostic and computationally efficient.
+
+Random feature permutation only yields global 
+
+
+Our goal is to understand the contribution of a feature to the correct prediction, rather than attributing the prediction to specific features. 
+
+Our setting is unique. 
+
+As we defined derived features, such as the proximity to the quotes, features can not assumed to be independent. 
+
+Substitution effects
+
+However, feature independence is 
+
+The features used by the model may also be different. The quote
+
+Also machine learning classifiers have simultaneous access to 
+Also feature importances, may be diluted over several features, known as as features may encode the same information redundantly
+
+Also, features. Classical 
+
+As such, we adapt random feature importance to our setting 
+
+Random feature permutation was originally proposed in 
+
+
+Random feature permutation is model-agnostic and can be used with different error estimates. For consistency the change in accuracy is used in our work.
+
+The change can be estimated, as the absolute or relative difference.
+
+Random feature permutation as proposed by b
+
+Permuting features also
+
+The complete algorithm is given in:
+
+Two major drawbacks of random feature permutation, are 
+
+One major drawback of random feature permutation is, that it doesn't help with local interpretability. Correlations are artificially broken
+
+unrealistic permutations
