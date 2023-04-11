@@ -6,38 +6,15 @@
       {
         "id": "90bbdd3c2ee01632",
         "type": "tabs",
+        "dimension": 55.495818399044204,
         "children": [
           {
-            "id": "59e3e8f5eca14e18",
+            "id": "65039196d3829d86",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/⭕Self-Training classifier.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "1aced2650206f338",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🌏Dataset.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "498bfad1cbdf3066",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🧃Feature Sets.md",
+                "file": "📖chapters/🧭Random Feature Permutation.md",
                 "mode": "source",
                 "source": false
               }
@@ -46,22 +23,34 @@
         ]
       },
       {
-        "id": "b1256ace5677e3f8",
+        "id": "2e4bb12a56b63b7f",
         "type": "tabs",
+        "dimension": 44.504181600955796,
         "children": [
           {
-            "id": "2307803e6381e44f",
+            "id": "f35a250acbe1a2dc",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "graph",
+              "state": {},
+              "pinned": true
+            }
+          },
+          {
+            "id": "90a609f9388c2ed1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/⭕Self-Training classifier notes.md",
+                "file": "📑notes/🧭Random Feature Permutation notes.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -119,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/⭕Self-Training classifier.md",
+                "file": "📖chapters/🧭Random Feature Permutation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -147,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/⭕Self-Training classifier.md"
+                "file": "📖chapters/🧭Random Feature Permutation.md"
               }
             }
           },
@@ -178,43 +167,43 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "59e3e8f5eca14e18",
+  "active": "65039196d3829d86",
   "lastOpenFiles": [
-    "📑notes/⭕Self-Training classifier notes.md",
-    "📖chapters/🌏Dataset.md",
-    "📖chapters/🔢Trade initiator.md",
-    "📥Inbox/@sarkarMarketSidednessInsights2023.md",
-    "📥Inbox/@kavajeczPackagingLiquidityBlind2005.md",
-    "📥Inbox/@fisherAllModelsAre.md",
-    "📥Inbox/@chenTrueModelTrue2020.md",
-    "📥Inbox/@barredoarrietaExplainableArtificialIntelligence2020.md",
-    "📥Inbox/@aasExplainingIndividualPredictions2021.md",
-    "📖chapters/🧭Random Feature Permutation.md",
-    "📖chapters/🧭Feature Importance Measure.md",
-    "📑notes/🪄Data Preprocessing notes.md",
     "📑notes/🧭Random Feature Permutation notes.md",
-    "Ammo Trade Initiator.md",
-    "📖chapters/🧭Kernel SHAP.md",
-    "📖chapters/🏅Feature importance measure.md",
-    "📑notes/🪄Data Preprocessing.md",
-    "🖼️Media/Pasted image 20230326101313.png",
-    "🖼️Media/Pasted image 20230405171902.png",
-    "🖼️Media/Pasted image 20230405170411.png",
-    "🖼️Media/Pasted image 20230407182457.png",
-    "🖼️Media/Pasted image 20230405171919.png",
-    "🖼️Media/Pasted image 20230405171940.png",
-    "🖼️Media/Pasted image 20230405170430.png",
-    "🖼️Media/performance-degradations.png",
-    "🖼️Media/Pasted image 20230405172011.png",
-    "🖼️Media/presentation-of-effective-spread.png",
-    "📥Inbox/@chenDebiasedSelfTrainingSemiSupervised2022.md",
-    "📥Inbox/@aminiSelfTrainingSurvey2023.md",
-    "📥Inbox/@chapelleSemisupervisedLearning2006.md",
-    "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
+    "📖chapters/🧭Random Feature Permutation.md",
+    "📖chapters/🔢Trade initiator.md",
     "📖chapters/⭕Self-Training classifier.md",
     "📑notes/🧭Evaluation metric notes.md",
+    "📑notes/⭕Self-Training classifier notes.md",
+    "Ammo Trade Initiator.md",
     "📑notes/🌏Dataset notes.md",
+    "📖chapters/🌏Dataset.md",
+    "📥Inbox/@chenTrueModelTrue2020.md",
     "📖chapters/👶Introduction.md",
-    "📖chapters/🧃Feature Sets.md"
+    "📖chapters/🧃Feature Sets.md",
+    "📥Inbox/@kavajeczPackagingLiquidityBlind2005.md",
+    "📑notes/🍕Application study notes.md",
+    "📥Inbox/@sarkarMarketSidednessInsights2023.md",
+    "📖chapters/🍕Application study.md",
+    "📥Inbox/@fisherAllModelsAre.md",
+    "📥Inbox/@barredoarrietaExplainableArtificialIntelligence2020.md",
+    "📥Inbox/@aasExplainingIndividualPredictions2021.md",
+    "📖chapters/🧭Feature Importance Measure.md",
+    "📖chapters/🐈Extension to Gradient Boosting.md",
+    "📑notes/🪄Data Preprocessing notes.md",
+    "🖼️Media/presentation-of-effective-spread.png",
+    "🖼️Media/performance-degradations.png",
+    "🖼️Media/Pasted image 20230407182457.png",
+    "🖼️Media/Pasted image 20230405172011.png",
+    "🖼️Media/Pasted image 20230405171940.png",
+    "🖼️Media/Pasted image 20230405171919.png",
+    "🖼️Media/Pasted image 20230405171902.png",
+    "🖼️Media/Pasted image 20230405170430.png",
+    "🖼️Media/Pasted image 20230405170411.png",
+    "📥Inbox/@chenDebiasedSelfTrainingSemiSupervised2022.md",
+    "🖼️Media/Pasted image 20230326101313.png",
+    "📥Inbox/@zophRethinkingPretrainingSelftraining2020.md",
+    "📥Inbox/@chapelleSemisupervisedLearning2006.md",
+    "📥Inbox/@aminiSelfTrainingSurvey2023.md"
   ]
 }
