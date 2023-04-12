@@ -228,7 +228,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 # add the mini-batch training loss to epoch loss
                 loss_in_epoch_train += train_loss
 
-                print(f"[{epoch}-{train_batch}] val loss: {train_loss}")
+                print(f"[{epoch}-{train_batch}] train loss: {train_loss}")
                 train_batch += 1
 
             self.clf_compiled.eval()
