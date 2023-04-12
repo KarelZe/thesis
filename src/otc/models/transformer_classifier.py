@@ -190,7 +190,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         criterion = nn.BCEWithLogitsLoss(reduction="mean")
 
         # keep track of val loss and do early stopping
-        early_stopping = EarlyStopping(patience=10)
+        early_stopping = EarlyStopping(patience=50)
 
         for epoch in range(self.epochs):
 
@@ -229,6 +229,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 print(f"[{epoch}-{train_batch}] train loss: {train_loss}")
                 train_batch += 1
 
+            
+            # https://discuss.pytorch.org/t/output-evaluation-loss-after-every-n-batches-instead-of-epochs-with-pytorch/116619/2
             self.clf_compiled.eval()
 
             loss_in_epoch_val = 0.0
@@ -242,15 +244,21 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                     # get probabilities and round to nearest integer
                     preds = torch.sigmoid(logits).round()
-                    correct += (preds == targets).sum().item()
-
-                    # loss calculation.
-                    # Criterion contains softmax already.
+                    
+                    # loss calculation. Criterion contains softmax already.
                     val_loss = criterion(logits, targets)
-                    loss_in_epoch_val += val_loss
+                    loss_in_epoch_val = np.nansum([loss_in_epoch_val, val_loss])
+                    
+                    # return early if val accuracy doesn't improve. Minus to minimize.
+                    val_accuracy = (preds == targets).sum().item() / len(targets)
+                    early_stopping(-val_accuracy)
+                    if early_stopping.early_stop:
+                        break
 
-                    print(f"[{epoch}-{val_batch}] val loss: {val_loss}")
+                    print(f"[{epoch:04d}-{val_batch:04d}] val accuracy: {val_accuracy}")
+                    print(f"[{epoch:04d}-{val_batch:04d}] val loss: {val_loss}")
                     val_batch += 1
+                    
             # loss average over all batches
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
@@ -260,10 +268,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             self.callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
 
-            # return early if val accuracy doesn't improve. Minus to minimize.
-            early_stopping(-val_accuracy)
-            if early_stopping.early_stop:
-                break
+
 
         # is fitted flag
         self.is_fitted_ = True

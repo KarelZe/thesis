@@ -96,8 +96,8 @@ class TabDataset(Dataset):
         self.x_cont = torch.tensor(x[:, self._cont_idx]).float()
 
         # remove extrem outliers / cause for exploding gradients
-        min = self.x_cont.quantile(q=0.025, dim=1, keepdim=True)
-        max = self.x_cont.quantile(q=0.975, dim=1, keepdim=True)
+        min = self.x_cont.quantile(q=0.01, dim=1, keepdim=True)
+        max = self.x_cont.quantile(q=0.99, dim=1, keepdim=True)
         self.x_cont = self.x_cont.clamp(min=min, max=max)
 
         # set weights, no gradient calculation
