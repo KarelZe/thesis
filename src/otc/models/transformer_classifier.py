@@ -178,7 +178,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         )
 
         max_steps = self.epochs * len(train_loader)
-        warmup_steps = int(0.05 * max_steps)  # 5% of max steps
+        warmup_steps = int(0.05 * max_steps) + 1  # 5% of max steps
         scheduler = CosineWarmupScheduler(
             optimizer=optimizer, warmup=warmup_steps, max_iters=max_steps
         )
