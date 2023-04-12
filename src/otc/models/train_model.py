@@ -220,7 +220,7 @@ def main(
     study.optimize(
         objective,
         n_trials=trials,
-        timeout=60 * 60 * 24,  # 24 hours
+        # timeout=60 * 60 * 24,  # 24 hours
         gc_after_trial=True,
         callbacks=[wand_cb, objective.objective_callback],
         show_progress_bar=True,
