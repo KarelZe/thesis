@@ -299,7 +299,12 @@ class FTTransformerObjective(Objective):
 
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-3, log=True)
         lr = trial.suggest_float("lr", 3e-5, 3e-4, log=True)
-        batch_size = 2048  # see 5.0a-mb-batch-size-finder
+
+        # see 5.0a-mb-batch-size-finder
+        if not self._cat_features:
+            batch_size = 16192
+        else:
+            batch_size = 2048
 
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")

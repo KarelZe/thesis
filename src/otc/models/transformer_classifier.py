@@ -19,6 +19,7 @@ from torch import nn, optim
 from otc.data.dataloader import TabDataLoader
 from otc.data.dataset import TabDataset
 from otc.optim.early_stopping import EarlyStopping
+from otc.optim.scheduler import CosineWarmupScheduler
 
 
 class TransformerClassifier(BaseEstimator, ClassifierMixin):
@@ -32,7 +33,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         _type_: classifier
     """
 
-    epochs = 128
+    epochs = 50
 
     def __init__(
         self,
@@ -153,13 +154,14 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         self.classes_ = np.array([-1, 1])
 
-        # decay weight of very old observations in training set. See eda notebook.
-        weight = np.geomspace(0.001, 1, num=len(y))
-        train_loader = self.array_to_dataloader(X, y, weight)
+        train_loader = self.array_to_dataloader(X, y)
         # no weight for validation set / every sample with weight = 1
         val_loader = self.array_to_dataloader(X_val, y_val)
 
         self.clf = self.module(**self.module_params)
+
+        # enable anomaly detection
+        # torch.autograd.set_detect_anomaly(True)
 
         # use multiple gpus, if available
         self.clf = nn.DataParallel(self.clf).to(self.dl_params["device"])
@@ -173,50 +175,69 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             weight_decay=self.optim_params["weight_decay"],
         )
 
+        max_steps = self.epochs * len(train_loader)
+        warmup_steps = int(0.05 * max_steps) + 1  # 5% of max steps
+        scheduler = CosineWarmupScheduler(
+            optimizer=optimizer, warmup=warmup_steps, max_iters=max_steps
+        )
+
+        # compile model
+        self.clf_compiled = torch.compile(self.clf)
+
         # see https://stackoverflow.com/a/53628783/5755604
         # no sigmoid required; numerically more stable
         # do not reduce, calculate mean after multiplication with weight
-        criterion = nn.BCEWithLogitsLoss(reduction="none")
+        criterion = nn.BCEWithLogitsLoss(reduction="mean")
 
         # keep track of val loss and do early stopping
-        early_stopping = EarlyStopping(patience=15)
+        early_stopping = EarlyStopping(patience=10)
 
         for epoch in range(self.epochs):
 
             # perform training
             loss_in_epoch_train = 0
+            train_batch = 0
 
-            self.clf.train()
+            self.clf_compiled.train()
 
-            for x_cat, x_cont, weights, targets in train_loader:
+            for x_cat, x_cont, _, targets in train_loader:
 
                 # reset the gradients back to zero
                 optimizer.zero_grad()
 
                 # compute the model output and train loss
                 with torch.cuda.amp.autocast():
-                    logits = self.clf(x_cat, x_cont).flatten()
-                    intermediate_loss = criterion(logits, targets)
-                    # weight train loss with (decaying) weights
-                    train_loss = torch.mean(weights * intermediate_loss)
-                # compute accumulated gradients
-                scaler.scale(train_loss).backward()
+                    logits = self.clf_compiled(x_cat, x_cont).flatten()
+                    train_loss = criterion(logits, targets)
 
-                # perform parameter update based on current gradients
+                # https://pytorch.org/docs/stable/amp.html
+                # https://discuss.huggingface.co/t/why-is-grad-norm-clipping-done-during-training-by-default/1866
+                scaler.scale(train_loss).backward()
+                scaler.unscale_(optimizer)
+                nn.utils.clip_grad_norm_(
+                    self.clf_compiled.parameters(), 5, error_if_nonfinite=False
+                )
                 scaler.step(optimizer)
                 scaler.update()
 
-                # add the mini-batch training loss to epoch loss
-                loss_in_epoch_train += train_loss.item()
+                # apply lr scheduler per step
+                scheduler.step()
 
-            self.clf.eval()
+                # add the mini-batch training loss to epoch loss
+                loss_in_epoch_train += train_loss
+
+                print(f"[{epoch}-{train_batch}] train loss: {train_loss}")
+                train_batch += 1
+
+            self.clf_compiled.eval()
 
             loss_in_epoch_val = 0.0
             correct = 0
 
+            val_batch = 0
             with torch.no_grad():
-                for x_cat, x_cont, weights, targets in val_loader:
-                    logits = self.clf(x_cat, x_cont)
+                for x_cat, x_cont, _, targets in val_loader:
+                    logits = self.clf_compiled(x_cat, x_cont)
                     logits = logits.flatten()
 
                     # get probabilities and round to nearest integer
@@ -225,15 +246,17 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                     # loss calculation.
                     # Criterion contains softmax already.
-                    # Weight sample loss with (equal) weights
-                    intermediate_loss = criterion(logits, targets)
-                    val_loss = torch.mean(weights * intermediate_loss)
-                    loss_in_epoch_val += val_loss.item()
+                    val_loss = criterion(logits, targets)
+                    loss_in_epoch_val += val_loss
+
+                    print(f"[{epoch}-{val_batch}] val loss: {val_loss}")
+                    val_batch += 1
             # loss average over all batches
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
             # correct samples / no samples
             val_accuracy = correct / len(X_val)
+            print(f"val accuracy: {val_accuracy}")
 
             self.callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
 
@@ -278,13 +301,13 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         test_loader = self.array_to_dataloader(X, y)
 
-        self.clf.eval()
+        self.clf_compiled.eval()
 
         # calculate probability and counter-probability
         probabilites = []
         with torch.no_grad():
             for x_cat, x_cont, _, _ in test_loader:
-                logits = self.clf(x_cat, x_cont)
+                logits = self.clf_compiled(x_cat, x_cont)
                 logits = logits.flatten()
                 probability = torch.sigmoid(logits)
                 probabilites.append(probability.detach().cpu().numpy())
