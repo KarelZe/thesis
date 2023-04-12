@@ -19,10 +19,8 @@ from torch import nn, optim
 from otc.data.dataloader import TabDataLoader
 from otc.data.dataset import TabDataset
 from otc.optim.early_stopping import EarlyStopping
+from otc.optim.scheduler import CosineWarmupScheduler
 
-# # https://github.com/pytorch/pytorch/issues/93470
-# from torch._inductor import config
-# config.compile_threads = 1
 
 class TransformerClassifier(BaseEstimator, ClassifierMixin):
     """
@@ -166,7 +164,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         # enable anomaly detection
         # torch.autograd.set_detect_anomaly(True)
-        
+
         # use multiple gpus, if available
         self.clf = nn.DataParallel(self.clf).to(self.dl_params["device"])
 
@@ -178,13 +176,16 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             lr=self.optim_params["lr"],
             weight_decay=self.optim_params["weight_decay"],
         )
-        
-        # decrease lr, if it plateaued for 5 steps
-        scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', patience=5, factor=0.1, verbose=True)
-        
+
+        max_steps = self.epochs * len(train_loader)
+        warmup_steps = int(0.05 * max_steps)  # 5% of max steps
+        scheduler = CosineWarmupScheduler(
+            optimizer=optimizer, warmup=warmup_steps, max_iters=max_steps
+        )
+
         # compile model
         self.clf_compiled = torch.compile(self.clf)
-  
+
         # see https://stackoverflow.com/a/53628783/5755604
         # no sigmoid required; numerically more stable
         # do not reduce, calculate mean after multiplication with weight
@@ -197,6 +198,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             # perform training
             loss_in_epoch_train = 0
+            train_batch = 0
 
             self.clf_compiled.train()
 
@@ -214,18 +216,27 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 # https://discuss.huggingface.co/t/why-is-grad-norm-clipping-done-during-training-by-default/1866
                 scaler.scale(train_loss).backward()
                 scaler.unscale_(optimizer)
-                nn.utils.clip_grad_norm_(self.clf_compiled.parameters(), 5)
+                nn.utils.clip_grad_norm_(
+                    self.clf_compiled.parameters(), 5, error_if_nonfinite=True
+                )
                 scaler.step(optimizer)
                 scaler.update()
 
+                # apply lr scheduler per step
+                scheduler.step()
+
                 # add the mini-batch training loss to epoch loss
                 loss_in_epoch_train += train_loss
+
+                print(f"[{epoch}-{train_batch}] val loss: {train_loss}")
+                train_batch += 1
 
             self.clf_compiled.eval()
 
             loss_in_epoch_val = 0.0
             correct = 0
 
+            val_batch = 0
             with torch.no_grad():
                 for x_cat, x_cont, _, targets in val_loader:
                     logits = self.clf_compiled(x_cat, x_cont)
@@ -239,16 +250,16 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                     # Criterion contains softmax already.
                     val_loss = criterion(logits, targets)
                     loss_in_epoch_val += val_loss
+
+                    print(f"[{epoch}-{val_batch}] val loss: {val_loss}")
+                    val_batch += 1
             # loss average over all batches
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
             # correct samples / no samples
             val_accuracy = correct / len(X_val)
             print(f"val accuracy: {val_accuracy}")
-            
-            # update lr if needed
-            scheduler.step(val_loss)
-            
+
             self.callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
 
             # return early if val accuracy doesn't improve. Minus to minimize.

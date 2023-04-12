@@ -292,15 +292,20 @@ class FTTransformerObjective(Objective):
             float: accuracy of trial on validation set.
         """
         # https://arxiv.org/pdf/2106.11959v2.pdf page 18  (B)
-        n_blocks: int = trial.suggest_int("n_blocks", 1, 4) # bit smaller
-        d_token: int = trial.suggest_int("d_token", 64, 256, step=8) # bit smaller
+        n_blocks: int = trial.suggest_int("n_blocks", 1, 6)
+        d_token: int = trial.suggest_int("d_token", 64, 512, step=8)
         attention_dropout = trial.suggest_float("attention_dropout", 0, 0.5)
         ffn_dropout = trial.suggest_float("ffn_dropout", 0, 0.5)
 
         weight_decay: float = trial.suggest_float("weight_decay", 1e-6, 1e-3, log=True)
-        lr = trial.suggest_float("lr", 3e-6, 3e-4, log=True) # slightly lower 3e-6 instead of 3e-5
-        batch_size = 16192 #2048  # see 5.0a-mb-batch-size-finder
-        
+        lr = trial.suggest_float("lr", 3e-5, 3e-4, log=True)
+
+        # see 5.0a-mb-batch-size-finder
+        if not self._cat_features:
+            batch_size = 16192
+        else:
+            batch_size = 2048
+
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
         no_devices = torch.cuda.device_count()
