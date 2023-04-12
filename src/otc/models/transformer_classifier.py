@@ -33,7 +33,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         _type_: classifier
     """
 
-    epochs = 50
+    epochs = 10
 
     def __init__(
         self,
@@ -196,7 +196,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             # perform training
             loss_in_epoch_train = 0
-            train_batch = 0
 
             for batch_idx_train, (x_cat, x_cont, _, targets) in enumerate(train_loader):
 
@@ -210,7 +209,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 with torch.cuda.amp.autocast():
                     logits = self.clf_compiled(x_cat, x_cont).flatten()
                     train_loss = criterion(logits, targets)
-                    loss_in_epoch_train = np.nansum([loss_in_epoch_train, train_loss])
+                
+                loss_in_epoch_train = np.nansum([loss_in_epoch_train, train_loss.detach().numpy()])
 
                 # https://pytorch.org/docs/stable/amp.html
                 # https://discuss.huggingface.co/t/why-is-grad-norm-clipping-done-during-training-by-default/1866
@@ -245,7 +245,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                             # loss calculation. Criterion contains softmax already.
                             val_loss = criterion(logits, targets)
-                            loss_in_epoch_val = np.nansum([loss_in_epoch_val, val_loss])
+                            loss_in_epoch_val = np.nansum([loss_in_epoch_val, val_loss.detach().numpy()])
 
                             # get probabilities and round to nearest integer
                             preds = torch.sigmoid(logits).round()
