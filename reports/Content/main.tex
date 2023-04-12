@@ -813,14 +813,35 @@ In absence of other suitable baselines, we repeatedly compare against \gls{GSU} 
 
 \subsection{Evaluation}\label{sec:evaluation}
 
-Subsequent sub-chapters discuss measures to retrieve feature importance estimates from the estimators and metrics for evaluation.
+Subsequent sub-chapters discusses metrics for evaluation and measures to retrieve feature importance estimates from the estimators.
+
+\subsubsection{Evaluation Metric}\label{sec:evaluation-metric}
+
+Our goal is to maximize the number of trades, where the predicted trade initiator matches the true trade initiator. We assess the quality of our model’s prediction in terms of \emph{accuracy}, which can be stated as:
+\begin{equation}
+% \operatorname{accuracy} \colon \mathbb{R}^{N} \times \mathbb{R}^{N} \to  \left[0, 1\right], \quad 
+\operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{L}_{0-1}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
+\end{equation}
+where $\operatorname{L}_{0-1}(\cdot)$ is the 0-1-loss given by:
+\begin{equation}
+    % \operatorname{l}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad 
+    \operatorname{L}_{0-1}(y, \hat{y}) = \mathbb{I}\left(y\neq \hat{y}\right).
+\end{equation}
+
+Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss. Notably, the loss is the same for false positives and negatives.
+
+Our datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vice versa have similar associated costs, which makes accuracy an ideal choice as a performance metric~\footnote{The \gls{ISE} test set consists of \SI{48.5973}{\percent} of buy trades and \SI{46.1278}{\percent} of the \gls{CBOE} test set are buy trades.}. As the 0-1-loss and in consequence, the accuracy is not differentiable, it cannot be used in optimization, but as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test sets.
 
 \subsubsection{Feature Importance
     Measure (2~p)}\label{sec:feature-importance-measure}
 
-Classical trade classification algorithms, as a rule-based approach, are transparent and thus provide some degree of interpretability.    
+    Naturally, one would like to obtain insights into how the models arrived at the prediction and identify features relevant for the prediction. Both aspects can be subsumed under the term \emph{interpretability}. Following, \textcite[][4]{liptonMythosModelInterpretability2017} interpretability can be reached through model transparency or post-hoc interpretability methods. Transparent models provide interpretability through a transparent mechanism in the model, whereas post-hoc methods extract information from the already learned model \autocite[][4--5]{liptonMythosModelInterpretability2017}.
 
-The machine-learning classifiers, studied in this work can be deemed a black box model. Due to the sheer size of the network or ensemble, both classifiers are no longer transparent, necessitating post-hoc techniques for interpretability. We require a model-agnostic approach, which suffices for a cross-comparison between all classifiers. Our goal is to identify features that are important for the \emph{correct prediction} in the model. This is fundamentally different from methods, such as LIME or SHAP, which attribute \emph{any} prediction to the input features.
+    Classical trade classification algorithms, as a rule-based classifier, are transparent with an easily understandable decision process, and thus provide interpretability \autocite[][91]{barredoarrietaExplainableArtificialIntelligence2020}. Interpretability, however decreases for deep stacked combinations involving a large feature count, when interactions between base rules become more complex and the effect of single feature on the final prediction more challenging to interpret.
+    
+    The machine-learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through a \emph{model-agnostic, post-hoc interpretability techniques}. Thereby, our goal is to identify features that are important for the \emph{correct prediction}. This is fundamentally different from methods like standard \gls{SHAP}, that attribute \emph{any} prediction to the input features \autocite[][??]{chenTrueModelTrue2020}.
+    
+    Many model-agnostic methods are based on the randomly permuting features values. In this work, we specifically consider the variants \emph{permutation feature importance} \autocite[][23--24]{breimanRandomForests2001} and partial-dependence plots \autocite[][26--28]{friedmanGreedyFunctionApproximation2001}. Both serve a complementary purpose. Permutation feature importance derives the feature importance from the change in predictive accuracy before and after permuting a feature randomly, whereas partial dependence plots visualize the average change in prediction, if feature values are altered. These are widely adopted and computationally efficient.
 
 \textbf{Random Feature Permutation}
 
@@ -864,7 +885,7 @@ The machine-learning classifiers, studied in this work can be deemed a black box
 
 In addition to random feature permutation, Transformer-based models offer \emph{some} interpretability through their attention mechanism. One has to distinguish interpretability through \emph{explainability} from \emph{transparency} \autocite[][4--5]{liptonMythosModelInterpretability2017}. In recent research a major controversy embarked around the question, of whether attention offers explanations to model predictions \autocites[cp.][150]{bastingsElephantInterpretabilityRoom2020}[][5--7]{jainAttentionNotExplanation2019}[][9]{wiegreffeAttentionNotNot2019}. The debate sparked around opposing definitions of explainability and the consistency of attention scores with other, established feature-importance measures. Our focus is less on post-hoc explainability of the model, but rather on transparency. Consistent with \textcite[][8]{wiegreffeAttentionNotNot2019} we view attention scores as a vehicle to model transparency.
 
-Recall from our discussion on attention (cp. \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features that the model is paying attention to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in \cref{fig:attention-maps}.
+Recall from our discussion on attention (cp. \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features to which the model is paying attention to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in \cref{fig:attention-maps}.
 
 \begin{figure}[ht]
     \centering
@@ -899,25 +920,6 @@ In an attempt to explain the decision-making process of multi-modal Transformers
 In this approach, the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(l)}=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(l)}$ is calculated to weight the attention head's importance. As previously suggested in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. Like all other presented approaches \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and is therefore computationally efficient.
 
 In absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all transformer blocks. Due to the limitation that TabTransformer (cp. \cref{sec:tabtransformer}) only performs self-attention on categorical features, no feature attributions for numerical features are calculated. The level of agreement between attributions from attention maps and random feature permutation by calculating Spearman's rank correlation between them.
-
-The next chapter discusses different metrics to assess the prediction quality of our models.
-
-\subsubsection{Evaluation Metric}\label{sec:evaluation-metric}
-
-Our goal is to maximize the number of trades, where the predicted trade initiator matches the true trade initiator. We assess the quality of our model’s prediction in terms of \emph{accuracy}, which can be stated as:
-\begin{equation}
-% \operatorname{accuracy} \colon \mathbb{R}^{N} \times \mathbb{R}^{N} \to  \left[0, 1\right], \quad 
-\operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{L}_{0-1}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
-\end{equation}
-where $\operatorname{L}_{0-1}(\cdot)$ is the 0-1-loss given by:
-\begin{equation}
-    % \operatorname{l}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad 
-    \operatorname{L}_{0-1}(y, \hat{y}) = \mathbb{I}\left(y\neq \hat{y}\right).
-\end{equation}
-
-Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss. Notably, the loss is the same for false positives and negatives.
-
-Our datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vice versa have similar associated costs, which makes accuracy an ideal choice as a performance metric~\footnote{The \gls{ISE} test set consists of \SI{48.5973}{\percent} of buy trades and \SI{46.1278}{\percent} of the \gls{CBOE} test set are buy trades.}. As the 0-1-loss and in consequence, the accuracy is not differentiable, it cannot be used in optimization, but as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test sets.
 
 \newpage
 \section{Results}\label{sec:results}
