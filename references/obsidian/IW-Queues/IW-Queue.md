@@ -20,7 +20,7 @@ interval: 1
 | [[👪Related Work]]                              |       35 |       |        1 | 1970-01-01 |
 | [[🔢Quote Rule]]                                |     37.5 |       |        1 | 1970-01-01 |
 | [[💡Training and tuning]]                       |       40 |       |        1 | 1970-01-01 |
-| [[📑notes/🪄Data Preprocessing]]                         |       40 |       |        1 | 1970-01-01 |
+| [[🪄Data Preprocessing notes]]                         |       40 |       |        1 | 1970-01-01 |
 | [[💡Tuning of models (semi-supervised)]]        |       41 |       |        1 | 1970-01-01 |
 | [[🔢LR algorithm notes]]                              |     42.5 |       |        1 | 1970-01-01 |
 | [[pre-training]]                                |       45 |       |        1 | 1970-01-01 |
@@ -29,7 +29,7 @@ interval: 1
 | [[👶Introduction]]                              |     47.5 |       |        1 | 1970-01-01 |
 | [[💡Hyperparameter tuning]]                     |       50 |       |        1 | 1970-01-01 |
 | [[🔢Hybrid rules]]                              |     52.5 |       |        1 | 1970-01-01 |
-| [[🏅Feature importance measure]]                |     57.5 |       |        1 | 1970-01-01 |
+| [[🧭Feature Importance Measure]]                |     57.5 |       |        1 | 1970-01-01 |
 | [[🏅Feature importance results]]                |       60 |       |        1 | 1970-01-01 |
 | [[🪄Feature Engineering]]                       |     62.5 |       |        1 | 1970-01-01 |
 | [[⭕Self-Training classifier]]           |       70 |       |        1 | 1970-01-01 |

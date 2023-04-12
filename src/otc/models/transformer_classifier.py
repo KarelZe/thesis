@@ -196,8 +196,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             # perform training
             loss_in_epoch_train = 0
+            train_batch = 0
 
-            for batch_idx_train, x_cat, x_cont, _, targets in enumerate(train_loader):
+            for batch_idx_train, (x_cat, x_cont, _, targets) in enumerate(train_loader):
 
                 # enable train mode
                 self.clf_compiled.train()
@@ -236,7 +237,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                     correct = 0
 
                     with torch.no_grad():
-                        for batch_idx_val, x_cat, x_cont, _, targets in enumerate(
+                        for batch_idx_val, (x_cat, x_cont, _, targets) in enumerate(
                             val_loader
                         ):
                             logits = self.clf_compiled(x_cat, x_cont)
