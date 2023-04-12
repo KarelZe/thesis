@@ -196,13 +196,12 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             # perform training
             loss_in_epoch_train = 0
-            train_batch = 0
 
-            for batch_idx_train, (x_cat, x_cont, _, targets) in enumerate(train_loader):
-                
+            for batch_idx_train, x_cat, x_cont, _, targets in enumerate(train_loader):
+
                 # enable train mode
                 self.clf_compiled.train()
-                
+
                 # reset the gradients back to zero
                 optimizer.zero_grad()
 
@@ -211,7 +210,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                     logits = self.clf_compiled(x_cat, x_cont).flatten()
                     train_loss = criterion(logits, targets)
                     loss_in_epoch_train = np.nansum([loss_in_epoch_train, train_loss])
-                    
+
                 # https://pytorch.org/docs/stable/amp.html
                 # https://discuss.huggingface.co/t/why-is-grad-norm-clipping-done-during-training-by-default/1866
                 scaler.scale(train_loss).backward()
@@ -223,13 +222,13 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 scaler.step(optimizer)
                 scaler.update()
                 scheduler.step()
-                
+
                 print(f"[{epoch}-{batch_idx_train}] train loss: {train_loss}")
 
                 # https://discuss.pytorch.org/t/output-evaluation-loss-after-every-n-batches-instead-of-epochs-with-pytorch/116619/2
                 # as the number of batches is so large, evaluate every n batches
-                if batch_idx_train % 128 == batch_idx_train -1:
-                    
+                if batch_idx_train % 128 == 0:
+
                     # enable eval mode
                     self.clf_compiled.eval()
 
@@ -237,30 +236,32 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                     correct = 0
 
                     with torch.no_grad():
-                        for batch_idx_val, (x_cat, x_cont, _, targets) in enumerate(val_loader):
+                        for batch_idx_val, x_cat, x_cont, _, targets in enumerate(
+                            val_loader
+                        ):
                             logits = self.clf_compiled(x_cat, x_cont)
                             logits = logits.flatten()
 
                             # loss calculation. Criterion contains softmax already.
                             val_loss = criterion(logits, targets)
                             loss_in_epoch_val = np.nansum([loss_in_epoch_val, val_loss])
-                            
+
                             # get probabilities and round to nearest integer
                             preds = torch.sigmoid(logits).round()
-                            
+
                             # return early if val accuracy doesn't improve. Minus to minimize.
                             correct += (preds == targets).sum().item()
-                            
+
                             # print loss @ step
                             print(f"[{epoch}-{batch_idx_val}] val loss: {val_loss}")
-                         
+
                         val_accuracy = correct / len(X_val)
-                        print(f"[{epoch}] val accuracy: {val_accuracy}") 
-                        
+                        print(f"[{epoch}] val accuracy: {val_accuracy}")
+
                         early_stopping(-val_accuracy)
                         if early_stopping.early_stop:
                             break
-                    
+
             # loss average over all batches
             train_loss = loss_in_epoch_train / len(train_loader)
             val_loss = loss_in_epoch_val / len(val_loader)
