@@ -154,9 +154,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         self.classes_ = np.array([-1, 1])
 
-        # decay weight of very old observations in training set. See eda notebook.
-        weight = np.geomspace(0.001, 1, num=len(y))
-        train_loader = self.array_to_dataloader(X, y, weight)
+        train_loader = self.array_to_dataloader(X, y)
         # no weight for validation set / every sample with weight = 1
         val_loader = self.array_to_dataloader(X_val, y_val)
 
@@ -217,7 +215,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 scaler.scale(train_loss).backward()
                 scaler.unscale_(optimizer)
                 nn.utils.clip_grad_norm_(
-                    self.clf_compiled.parameters(), 5, error_if_nonfinite=True
+                    self.clf_compiled.parameters(), 5, error_if_nonfinite=False
                 )
                 scaler.step(optimizer)
                 scaler.update()
@@ -228,7 +226,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 # add the mini-batch training loss to epoch loss
                 loss_in_epoch_train += train_loss
 
-                print(f"[{epoch}-{train_batch}] val loss: {train_loss}")
+                print(f"[{epoch}-{train_batch}] train loss: {train_loss}")
                 train_batch += 1
 
             self.clf_compiled.eval()
