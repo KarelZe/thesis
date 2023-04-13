@@ -4,11 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "ebbaa03ed35b4c8f",
+        "id": "90bbdd3c2ee01632",
         "type": "tabs",
+        "dimension": 70.56659308314937,
         "children": [
           {
-            "id": "f825b6203f6d8412",
+            "id": "65039196d3829d86",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -20,6 +21,36 @@
             }
           }
         ]
+      },
+      {
+        "id": "2e4bb12a56b63b7f",
+        "type": "tabs",
+        "dimension": 29.433406916850625,
+        "children": [
+          {
+            "id": "f35a250acbe1a2dc",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "graph",
+              "state": {},
+              "pinned": true
+            }
+          },
+          {
+            "id": "8724938e968e7ed8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/💡Hyperparameter tuning notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -48,9 +79,9 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "steuerrech",
+                "query": "",
                 "matchingCase": false,
-                "explainSearch": false,
+                "explainSearch": true,
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
@@ -61,7 +92,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 477.5110321044922
+    "width": 314.0110321044922
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -81,7 +112,7 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
-                "showSearch": true,
+                "showSearch": false,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": false
@@ -94,7 +125,7 @@
             "state": {
               "type": "tag",
               "state": {
-                "sortOrder": "frequency",
+                "sortOrder": "alphabetical",
                 "useHierarchy": false
               }
             }
@@ -108,13 +139,22 @@
                 "file": "📖chapters/💡Hyperparameter tuning.md"
               }
             }
+          },
+          {
+            "id": "9809af47a095750a",
+            "type": "leaf",
+            "state": {
+              "type": "stat-view",
+              "state": {}
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 396.5
+    "width": 293.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -127,20 +167,43 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f825b6203f6d8412",
+  "active": "65039196d3829d86",
   "lastOpenFiles": [
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
-    "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+    "🖼️Media/sample-validation-curve.png",
     "📖chapters/💡Hyperparameter tuning.md",
-    "TOC.md",
-    "❓ Questions.md",
-    "Expose.md",
-    "🧞‍♀️Mastermind Group.md",
-    "Semi-supervised Learning/semi-supervised-learning.md",
-    "Semi-supervised Learning/@zhuSemiSupervisedLearningLiterature.md",
-    "[.md",
-    "🍬Implementation/@banachewiczKaggleBookData2022.md",
-    "📥Inbox/@savickasInferringDirectionOption2003.md",
-    "🔗Classical rules/@grauerOptionTradeClassification2022.md"
+    "📖chapters/🥮Ablation Study.md",
+    "📑notes/💡Hyperparameter tuning notes.md",
+    "📖chapters/🧭Random Feature Permutation.md",
+    "🖼️Media/Pasted image 20230408165957.png",
+    "📖chapters/👶Introduction.md",
+    "📖chapters/💡Training and tuning.md",
+    "📥Inbox/@ronenMachineLearningTrade2022.md",
+    "📖chapters/💡Tuning of models (semi-supervised).md",
+    "📖chapters/💡Training of models (supervised).md",
+    "🖼️Media/Pasted image 20230408170132.png",
+    "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
+    "📑notes/🧭Random Feature Permutation notes.md",
+    "📖chapters/🧭Feature Importance Measure.md",
+    "📑notes/🍪Selection of supervised approaches notes.md",
+    "📥Inbox/@hookerUnrestrictedPermutationForces2021.md",
+    "📥Inbox/@stroblConditionalVariableImportance2008.md",
+    "📖chapters/🔢Trade initiator.md",
+    "📖chapters/⭕Self-Training classifier.md",
+    "📑notes/🧭Evaluation metric notes.md",
+    "📑notes/⭕Self-Training classifier notes.md",
+    "Ammo Trade Initiator.md",
+    "📑notes/🌏Dataset notes.md",
+    "📖chapters/🌏Dataset.md",
+    "📥Inbox/@chenTrueModelTrue2020.md",
+    "📖chapters/🧃Feature Sets.md",
+    "📥Inbox/@kavajeczPackagingLiquidityBlind2005.md",
+    "🖼️Media/presentation-of-effective-spread.png",
+    "🖼️Media/performance-degradations.png",
+    "🖼️Media/Pasted image 20230407182457.png",
+    "🖼️Media/Pasted image 20230405172011.png",
+    "🖼️Media/Pasted image 20230405171940.png",
+    "🖼️Media/Pasted image 20230405171919.png",
+    "🖼️Media/Pasted image 20230405171902.png",
+    "🖼️Media/Pasted image 20230405170430.png"
   ]
 }
