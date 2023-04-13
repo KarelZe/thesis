@@ -24,7 +24,7 @@ In a way, it boils down to the question of [audit versus insight](https://mindf
 The machine-learning classifiers, studied in this work can be deemed a black box model. Due to the sheer size of the network or ensemble, both classifiers are no longer transparent, necessitating post-hoc techniques for interpretability. We require a model-agnostic approach, which suffice for a cross-comparison between all classifiers. Our goal is to identify features that are important for the *correct prediction* in the model. This is fundamentally different from methods, such as LIME or SHAP, which attribute *any* prediction to the input features. 
 
 
-
+For implementation of permutation importance see https://www.rasgoml.com/feature-engineering-tutorials/how-to-generate-feature-importance-plots-using-catboost
 
 
 

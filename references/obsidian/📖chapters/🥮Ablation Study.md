@@ -2,6 +2,7 @@
 
 (https://arxiv.org/pdf/2201.02177.pdf)
 
+perform ablation study (https://en.wikipedia.org/wiki/Ablation_(artificial_intelligence)) when making important changes to the architecture. This has been done in [[@gorishniyRevisitingDeepLearning2021]].
 
 - [[@melisStateArtEvaluation2017]] investigate hyperparam tuning by plotting validation losses against the hyperparams. 
 - ![[validation-loss-vs-hyperparam.png]]

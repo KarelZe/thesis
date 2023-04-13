@@ -23,3 +23,26 @@
 
 - Visualize results https://github.com/LeoGrin/tabular-benchmark
 ![[comparsion-of-results.png]]
+
+**Tree Parzen Estimator**
+From: https://neptune.ai/blog/optuna-guide-how-to-monitor-hyper-parameter-optimization-runs
+
+By default, Optuna uses a technique called Tree-Parzen estimator to select the set of hyper-parameters to be tried next, based on the history of experiments. Consider a simple case where the history consists of 100 trials tabulated as follows:
+
+We divide the rows of this table into 2 parts, one with loss<0.03 (good results table), and the rest (not so good results table). After we plot the function of these two distributions with X-axis as parameter values and Y-axis as the loss, we get plots like these (over-simplified for the sake of explanation):
+
+![Optuna guide plot](https://i0.wp.com/neptune.ai/wp-content/uploads/2022/10/Optuna-guide-plot-1-1.png?resize=448%2C348&ssl=1)
+
+The above plot was constructed using the good results (with loss < 0.03). We call it _g(x)_, where x is the parameter value. The plot below represents the not so good results. We call it _l(x)._ 
+
+![Optuna guide plot 1](https://i0.wp.com/neptune.ai/wp-content/uploads/2022/10/Optuna-guide-plot-2-1.png?resize=462%2C336&ssl=1)
+
+For a new experiment, a new value for this hyper-parameter is picked using:
+
+![](https://latex.codecogs.com/gif.latex?%5CLARGE%20x*%20%3D%20argmin%20x%20%28l%28x%29/g%28x%29%29 "This is the rendered form of the equation. You can not edit this directly. Right click will give you the option to save the image, and in most browsers you can drag the image onto your desktop or another program.")
+
+**Alternative visualization**
+![[optuna-as-boxplot.png]]
+
+**Optuna + wandb**
+https://www.h4pz.co/blog/2020/10/3/optuna-and-wandb

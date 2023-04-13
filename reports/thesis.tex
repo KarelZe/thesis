@@ -71,7 +71,7 @@ width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 
 \newcommand*{\tabindent}{ \hspace{2mm}} % Indentation for tables
 
-\sisetup{round-mode=places,round-precision=2, group-separator={,},output-decimal-marker={.}, round-pad = true, input-symbols = {(-)}, % separate-uncertainty=false,
+\sisetup{round-mode=places,round-precision=2, group-separator={,},output-decimal-marker={.}, round-pad = false, input-symbols = {(-)}, % separate-uncertainty=false,
 group-minimum-digits=4, % 1,000 instead of 1000
 % table-space-text-pre={(},
 % table-align-text-pre=false,
@@ -80,7 +80,7 @@ table-align-text-post=false,
 detect-weight=true,
 detect-inline-weight=math,
 retain-explicit-plus=true,
-% round-integer-to-decimal=true,
+% round-integer-to-decimal=false,
 round-precision=2,
 table-format = 1.2, 
 } % round to 2 decimal places
