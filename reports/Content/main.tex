@@ -745,19 +745,19 @@ All of our machine-learning models feature a set of tunable hyperparameters. The
 
 We perform a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function \autocite[][2]{shahriariTakingHumanOut2016}. Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in more promising trials.
 
-While different algorithmic implementations exist for Bayesian optimization, we choose the optuna library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters. We maximize the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $50$ trials per combination of the model and feature set. The best combination of each is tested out-of-sample in \cref{sec:results}.
+While different algorithmic implementations exist for Bayesian optimization, we choose the optuna library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters. We maximize the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $50$ trials per combination of the model and feature set. To compensate for varying computational costs between the classifiers, we set an additional time budget of 12 hours. The best combination of each is tested out-of-sample in \cref{sec:results}.
 
 \textbf{Hyperparameter Space}
 
-Our search space is reported in Table-X, which we laid out based on the recommendations in \textcites[][20]{prokhorenkovaCatBoostUnbiasedBoosting2018}[][18]{gorishniyRevisitingDeepLearning2021}[][4]{rubachevRevisitingPretrainingObjectives2022} with minor, reasoned deviations. For gradient-boosting we raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\lambda$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive $100$ steps.
+Our search space is reported in Table-X, which we laid out based on the recommendations in \textcites[][20]{prokhorenkovaCatBoostUnbiasedBoosting2018}[][18]{gorishniyRevisitingDeepLearning2021}[][4]{rubachevRevisitingPretrainingObjectives2022} with minor, reasoned deviations. 
 
 (table)
 
-The hyperparameter search for the FT-Transformer is identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (space (b)). From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we employ early stopping and halt training after $15$ consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
+For gradient-boosting we raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\lambda$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive $100$ steps.
+
+The hyperparameter search for the FT-Transformer is identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (space (b)). From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we implement early stopping and halt training after $15$ consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
 
 \textbf{Solutions For Gradient Boosting}
-
-(insert here)
 
 % # models = [
 % #     ("classical", "17malsep_CatBoostClassifier_default.cbm:v7"),
@@ -766,7 +766,6 @@ The hyperparameter search for the FT-Transformer is identical to \textcite[][18]
 % #     ("semi-classical", "3dtuffae_CatBoostClassifier_default.cbm:v7"),
 % #     ("semi-classical-size", "2vnqg1sj_CatBoostClassifier_default.cbm:v8"),
 % # ]
-\emph{Classical}
 
 \begin{figure}[ht]
     \centering
@@ -774,10 +773,10 @@ The hyperparameter search for the FT-Transformer is identical to \textcite[][18]
     \caption{Hyperparameter Search Space of \gls{GBM} on \gls{ISE} Validation Set (Classical)}
     \label{fig:ise-gbm-hyperparam-classical}
 \end{figure}
+% https://wandb.ai/fbv/thesis/runs/17malsep?workspace=user-karelze
+\cref{fig:ise-gbm-hyperparam-classical} visualizes the hyperparameter search space of the \gls{GBM} on the \gls{ISE} dataset with classical features. We can derive several observations from it. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.42}{\percent} and \SI{64.35}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
 
 \newpage
-
-\emph{Classical Size}
 
 \begin{figure}[ht]
     \centering
@@ -785,20 +784,22 @@ The hyperparameter search for the FT-Transformer is identical to \textcite[][18]
     \caption{Hyperparameter Search Space of \gls{GBM} on \gls{ISE} Validation Set (Classical Size)}
     \label{fig:ise-gbm-hyperparam-classical-size}
 \end{figure}
-\textbf{Solutions For FT-Transformer}
-
-(insert here)
+% https://wandb.ai/fbv/thesis/runs/3laathab?workspace=user-karelze
+In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \gls{GBM} trained on classical-size features. The loss surface is smooth with large connected regions. As the best solution achieving \SI{75.04}{\percent} accuracy lies within a splayed region of dense sampling, it is a good choice for further analysis. Consistent with the loss surface of \cref{fig:ise-gbm-hyperparam-classical}, the trees are grown to the maximum depth and a high learning rate, indicating the need for complex ensemble members highly corrective to previous predictions. Part of this could be due to the low signal-to-noise ratio in financial data.
 
 \newpage
-
-\emph{Classical Size}
-
 \begin{figure}[ht]
     \centering
     \includegraphics{2a9iqsn0-hyperparam-search-space.pdf}
     \caption{Hyperparameter Search Space of \gls{GBM} on \gls{ISE} Validation Set (ML)}
     \label{fig:ise-gbm-hyperparam-ml}
 \end{figure}
+% https://wandb.ai/fbv/thesis/runs/2a9iqsn0?workspace=user-karelze
+The loss surface of the \gls{GBM} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.98}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not \emph{per-se} improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles.
+
+\textbf{Solutions For FT-Transformer}
+
+(insert here)
 
 \newpage
 
@@ -819,7 +820,8 @@ By extension, we also estimate rule combinations involving overrides from the tr
 
 In absence of other baselines, we repeatedly compare against \gls{GSU} method as a baseline for the third feature set, even if it doesn't involve option-specific features.
 
-% TODO: How do validation accuracies of ml approaches and classical rules compare?
+In the direct comparison between the validation accuracies of classical rules and our classifiers, the validation accuracies of classical rules considerably underperform the learned classifier. \cref{sec:results} discusses if the results hold for the test sets. But before we do so, we present the metrics used
+for evaluation.
 
 \subsection{Evaluation}\label{sec:evaluation}
 
