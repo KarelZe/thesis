@@ -328,7 +328,7 @@ where $\mathbb{I}$ is the indicator function for region conformance and $c_m$the
 
 So far, it remains open how the best split can be found. The best split is where the deviation between the prediction and the true response variable diminishes. Over the entire tree, this error can be captured in the \gls{SSE} given by:
 \begin{equation}
-    \operatorname{l}_{SSE}(\widehat{\mathbf{y}},\mathbf{y})=\frac{1}{N} \sum_{m \in M} \sum_{\mathbf{x}_{i} \in R_m}\left(y_{i}-c_{m}\right)^{2},
+    \operatorname{L}_{SSE}(\widehat{\mathbf{y}},\mathbf{y})=\frac{1}{N} \sum_{m \in M} \sum_{\mathbf{x}_{i} \in R_m}\left(y_{i}-c_{m}\right)^{2},
 \end{equation}
 
 which is subsequently minimized \textcite[][231]{breimanClassificationRegressionTrees2017}. As documented in \textcite[][326]{hastietrevorElementsStatisticalLearning2009} we start with the entire dataset and scan through all combinations of features and possible split values. For a split by the feature $j$ at the value $s$, the child nodes are given by a pair of half-planes:
@@ -341,9 +341,6 @@ Thereby, the feature $j$ and value $s$ are selected in a way, that the combined 
 \begin{equation}
     \min _{j, s}\left[\min _{c_1} \sum_{\mathbf{x}_i \in R_1(j, s)}\left(y_i-c_1\right)^2+\min _{c_2} \sum_{\mathbf{x}_i \in R_2(j, s)}\left(y_i-c_2\right)^2\right].
 \end{equation}
-
-The procedure is repeated on the so-created child nodes. Note that, splits are performed greedily to keep computations tractable. This entails, that only the reduction in \gls{SSE} of the current node is considered, and not the improvement from any subsequent splits in the child nodes. Computational costs may still be high, when there are many split candidates, due to a large feature count or possible split values. Common approximations are splits on quantized features or random feature subsets.
-% TODO add citations where quantization is used. See ke (gradient boosting paper)
 
 Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample has its region, the tree would achieve a perfect fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence \emph{variance}, size complexity pruning procedures are employed. Likewise, if the decision tree is too simplistic, a high bias contributes to the model's overall expected error. Both extremes are to be avoided.
 

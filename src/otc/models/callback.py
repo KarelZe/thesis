@@ -197,7 +197,7 @@ class SaveCallback(Callback):
 
                 # https://stackoverflow.com/a/72511896/5755604
                 with fs.open(uri_model, "wb") as f:
-                    torch.save(model, f)
+                    torch.save(model.clf, f)
 
                 m_artifact = wandb.Artifact(name=file_model, type="model")  # type: ignore # noqa: E501
             else:
