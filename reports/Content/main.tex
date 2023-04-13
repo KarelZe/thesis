@@ -264,7 +264,7 @@ The most basic application is in the \gls{LR} algorithm. For a more complex exam
 \begin{figure}[ht!]
     \centering
     \input{./Graphs/stacking-algo.pdf_tex}
-    \caption[Visualization Of A Stacked Rule]{Visualization of a stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured shapes indicate the domain of the base rules in a modified scale. The trade is not classifiable by the trade size rule, as indicated by the arrows outside the rule's domain. The quote rule is applied, as it is the first rule to classify the trade entirely. Own drawing.}
+    \caption[Stacked Trade Classification Rules]{Stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured shapes indicate the domain of the base rules in a modified scale. The trade is not classifiable by the trade size rule, as indicated by the arrows outside the rule's domain. The quote rule is applied, as it is the first rule to classify the trade entirely. Own drawing.}
     \label{fig:stacking-algo}
 \end{figure}
 
@@ -406,7 +406,7 @@ with $0<i \leq \gls{d}_{e} / 2$, the maximum sequence length $\gls{ellmax}$, whi
 \begin{figure}[ht]
     \centering
     \includegraphics{positional-encoding.pdf}
-    \caption[Positional Encoding]{Positional encoding. The encoding is added onto the token embeddings to add positional information. The heatmap visualizes the uniquely identifying pattern created from sine and cosine signals at increasing frequencies across the embedding dimension. Own work.}
+    \caption[Positional Encoding of Transformer]{Positional encoding. The encoding is added onto the token embeddings to add positional information. The heatmap visualizes the uniquely identifying pattern created from sine and cosine signals at increasing frequencies across the embedding dimension. Own work.}
     \label{fig:positional-embedding}
 \end{figure}
 
@@ -468,7 +468,7 @@ Until now it remains unclear, how the layer normalization intertwines with the s
                 \input{./Graphs/pre-norm.pdf_tex}}
     }
     \hfill\null
-    \caption[Pre-Norm Residual Unit and Post-Norm Residual Unit]{Pre-Norm Residual Unit and Post-Norm Residual Unit. Own work inspired by \textcite[][2]{wangLearningDeepTransformer2019}.}
+    \caption[Variants of Layer Norm in Transformer]{Pre-Norm Residual Unit and Post-Norm Residual Unit. Own work inspired by \textcite[][2]{wangLearningDeepTransformer2019}.}
     \label{fig:norm-residual}
 \end{figure}
 
@@ -494,7 +494,7 @@ Many of the concepts in \cref{sec:transformer-networks} can be adapted to the ta
                 \input{./Graphs/fttransformer.pdf_tex}}
     }
     \hfill\null
-    \caption[Comparison Between Tabular Transformer.]{Comparison between the TabTransformer and the FT-Transformer. The TabTransformer features a post-norm Transformer to process categorical features. The FT-Transformer uses a pre-norm arrangement and operates on continuous and categorical embeddings. Own work inspired by \textcites[][2]{huangTabTransformerTabularData2020}[][4--5]{gorishniyRevisitingDeepLearning2021}.}
+    \caption[Overview Over the FT-Transformer Architecture]{Overview Over the Architecture of FT-Transformer. The TabTransformer features a post-norm Transformer to process categorical features. The FT-Transformer uses a pre-norm arrangement and operates on continuous and categorical embeddings. Own work inspired by \textcites[][2]{huangTabTransformerTabularData2020}[][4--5]{gorishniyRevisitingDeepLearning2021}.}
     \label{fig:tabular-transformer}
 \end{figure}
 
@@ -539,7 +539,7 @@ Our coverage of semi-supervised approaches includes \emph{self-training} for gra
 
 Self-training is a wrapper algorithm around a probabilistic classifier, that incorporates its predictions of unlabelled instances as pseudo labels \autocite[][190]{yarowskyUnsupervisedWordSense1995}.
 
-Initially, a base classifier, e.g., gradient-boosting, is fitted on the labelled data points in a supervised manner. The classifier then assigns labels, so-called pseudo labels, to unlabelled instances. A subset of unlabelled instances with high-confidence predictions is selected, removed from the unlabelled dataset and added to labelled data dataset. A new classifier is then retrained on the labelled and pseudo-labelled instances \autocite[][190--192]{yarowskyUnsupervisedWordSense1995}. The process is repeated for several iterations until an abortion criterion applies, such as the maximum number of iterations is exhausted or when no unlabelled instances are left to label. 
+Initially, a base classifier, e.g., gradient-boosting, is fitted on the labelled data points in a supervised manner. The classifier then assigns labels, so-called pseudo labels, to unlabelled instances. A subset of unlabelled instances with high-confidence predictions is selected, removed from the unlabelled dataset and added to labelled data dataset. A new classifier is then retrained on the labelled and pseudo-labelled instances \autocite[][190--192]{yarowskyUnsupervisedWordSense1995}. The process is repeated for several iterations until an abortion criterion applies, such as the maximum number of iterations is exhausted or when no unlabelled instances are left to label.
 
 % Add if really needed 
 % The complete algorithm is described in \cref{algo:self-training}.
@@ -675,36 +675,36 @@ Applying the time-based split, we attribute the first \SI{60}{\percent} of our d
 \begin{figure}[ht]
     \centering
     \includegraphics{train-test-split.pdf}
-    \caption[Training Schemes]{Training scheme on \gls{ISE} and \gls{CBOE} sample. The train and validation set are split by time. Shaded area \mysquare{viz-gray} indicates the duration for which the dataset is available. Own work.}
+    \caption[Training scheme on \glsentryshort{ISE} and \glsentryshort{CBOE} Sample]{Training scheme on \gls{ISE} and \gls{CBOE} sample. The train and validation set are split by time. Shaded area \mysquare{viz-gray} indicates the duration for which the dataset is available. Own work.}
     \label{fig:train-test-split}
 \end{figure}
 
-Overall,  we use \gls{ISE} data from 2 May 2005 to 24 October 2013 to train and data between 25 October 2013 and 5 November 2015 to validate our models. The most recent trades until 31 May 2017 to assess the generalization error. 
+Overall,  we use \gls{ISE} data from 2 May 2005 to 24 October 2013 to train and data between 25 October 2013 and 5 November 2015 to validate our models. The most recent trades until 31 May 2017 to assess the generalization error.
 
 Models are pre-trained on unlabelled samples from the last year of the training period. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades for which true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously.
 
-We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visualized in \cref{fig:train-test-split}. The start date ensures that leakage from the \gls{ISE} set is minimized~\footnote{The datasets contain features, such as the \gls{NBBO}, that are identical for both sets, assuming trades were executed at both exchanges simultaneously. Utilizing the full \gls{CBOE} sample could result in exaggerated performance estimates the corresponding \gls{ISE} trade is used in training.}. 
+We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visualized in \cref{fig:train-test-split}. The start date ensures that leakage from the \gls{ISE} set is minimized~\footnote{The datasets contain features, such as the \gls{NBBO}, that are identical for both sets, assuming trades were executed at both exchanges simultaneously. Utilizing the full \gls{CBOE} sample could result in exaggerated performance estimates the corresponding \gls{ISE} trade is used in training.}.
 
-Our train-test-split makes two implicit assumptions, we want to test for. First, the size of the resulting training set is large enough, for the model to capture regularities in the data. Second, all subsets are drawn from the same distribution. So, fitting the classifier on the training set and optimizing for the validation set can provide good estimates for the test set. The analysis is conducted on the training and validation set to avoid information leaking from the test set.
+% Our train-test-split makes two implicit assumptions, we want to test for. First, the size of the resulting training set is large enough, for the model to capture regularities in the data. Second, all subsets are drawn from the same distribution. So, fitting the classifier on the training set and optimizing for the validation set can provide good estimates for the test set. The analysis is conducted on the training and validation set to avoid information leaking from the test set.
 
-Optimally, samples in the train, validation, and test set come from the same distribution. The presence of the data shift within the training set (cp. \cref{sec:exploratory-data-analysis}) raises concerns, that the assumption holds. We test for the similarity of the training and validation set and identify problematic features using \emph{adversarial validation}. As such, we re-label all training samples with $y=0$ and all trades of the validation set with $y=1$. We then train a classifier on a random subset of the composed data and predict the conformance to the train or validation set for the remaining samples. More specifically a gradient-boosting classifier is used for its competitive predictions with default hyperparameters and its computational efficiency. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which is insensitive to class imbalances~\footnote{Classes are imbalanced, due to the training set being two times larger than the validation set.}. Assuming train and validation samples come from the same distribution, the obtained performance estimate is near a random guess, or $\operatorname{MCC} = 0$.
+% Optimally, samples in the train, validation, and test set come from the same distribution. The presence of the data shift within the training set (cp. \cref{sec:exploratory-data-analysis}) raises concerns, that the assumption holds. We test for the similarity of the training and validation set and identify problematic features using \emph{adversarial validation}. As such, we re-label all training samples with $y=0$ and all trades of the validation set with $y=1$. We then train a classifier on a random subset of the composed data and predict the conformance to the train or validation set for the remaining samples. More specifically a gradient-boosting classifier is used for its competitive predictions with default hyperparameters and its computational efficiency. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which is insensitive to class imbalances~\footnote{Classes are imbalanced, due to the training set being two times larger than the validation set.}. Assuming train and validation samples come from the same distribution, the obtained performance estimate is near a random guess, or $\operatorname{MCC} = 0$.
 
-We achieve a \gls{MCC} of \num{0.3789492800772903} for the \gls{ISE} sample with FS~2. Considering the \gls{MCC} ranges between $\left[-1, 1\right]$, the results suggest that both sets are approximately similar with minor differences. Inferring from the feature importance, estimated through random feature permutation (cp. \cref{sec:feature-importance}), both sets are most distinguishable by the proximity of the trade price to the quotes or the \gls{NBBO}. A full-scale analysis is given in \cref{app:feature-importances-adv-validation}. As we cannot suppress or transform these features for comparability, the train-test split is appropriate.
+% We achieve a \gls{MCC} of \num{0.3789492800772903} for the \gls{ISE} sample with FS~2. Considering the \gls{MCC} ranges between $\left[-1, 1\right]$, the results suggest that both sets are approximately similar with minor differences. Inferring from the feature importance, estimated through random feature permutation (cp. \cref{sec:feature-importance}), both sets are most distinguishable by the proximity of the trade price to the quotes or the \gls{NBBO}. A full-scale analysis is given in \cref{app:feature-importances-adv-validation}. As we cannot suppress or transform these features for comparability, the train-test split is appropriate.
 
-To study the appropriateness of the size of the training set, we study the learning curves of a classifier. Learning curves visualize the score of the classifier dependent on the size of the training set \autocite[][243]{hastietrevorElementsStatisticalLearning2009}. Moreover, they provide insights into the bias and variance of the estimators. We train a gradient boosting model with default parameters on ten subsets of the training set and evaluate the validation set. To maintain the temporal ordering, we start training on the \SI{10.00}{\percent} most recent samples and add older observations as we progress. Gradient boosting is well-suited for this analysis for the same reasons given above.
+% To study the appropriateness of the size of the training set, we study the learning curves of a classifier. Learning curves visualize the score of the classifier dependent on the size of the training set \autocite[][243]{hastietrevorElementsStatisticalLearning2009}. Moreover, they provide insights into the bias and variance of the estimators. We train a gradient boosting model with default parameters on ten subsets of the training set and evaluate the validation set. To maintain the temporal ordering, we start training on the \SI{10.00}{\percent} most recent samples and add older observations as we progress. Gradient boosting is well-suited for this analysis for the same reasons given above.
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics{learning-curves-gradient-boosting.pdf}
-    \caption[Learning Curves of a Gradient-Boosted Tree on the \Gls{ISE} Sample]{Learning curves of a gradient-boosting classifier with default hyperparameters trained on the \gls{ISE} sample with FS~2. The training set is separated into ten equal-sized subsets. Starting with the most recent samples, new subsets are gradually added to study the effects of larger training sizes on accuracy. Peak accuracy \mycircle{viz-red} on the validation set is reached at \num{11804128} training samples when samples are uniformly or exponentially weighted in the cross-entropy loss. Weighting improves overfitting and absolute performance. Own work.}
-    \label{fig:learning-curves-gradient-boosting}
-\end{figure}
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics{learning-curves-gradient-boosting.pdf}
+%     \caption[Learning Curves of a Gradient-Boosted Tree on the \Gls{ISE} Sample]{Learning curves of a gradient-boosting classifier with default hyperparameters trained on the \gls{ISE} sample with FS~2. The training set is separated into ten equal-sized subsets. Starting with the most recent samples, new subsets are gradually added to study the effects of larger training sizes on accuracy. Peak accuracy \mycircle{viz-red} on the validation set is reached at \num{11804128} training samples when samples are uniformly or exponentially weighted in the cross-entropy loss. Weighting improves overfitting and absolute performance. Own work.}
+%     \label{fig:learning-curves-gradient-boosting}
+% \end{figure}
 
-Several observations can be drawn from \cref{fig:learning-curves-gradient-boosting}a. Adding more training instances will likely improve the accuracy of the training set. The low training error also indicates that the chosen model is sufficiently complex to fit the data, resulting in a low bias. The accuracy for the validation set plateaus at \SI{75.53}{\percent} after \num{11804128} samples, leaving a significant gap between the training and testing accuracy, indicating a high variance. Hence, adding older observations, before 1 January 1974, to the training set, improves the training performance, but little affects validation performance when all samples are assigned an equal weight. Naturally, patterns in older instances of the training set might not be as relevant as more recent ones for classifying trades out-of-sample, which could explain the stalling performance for extended training sets. We incorporate this idea by weighting training samples with decaying weights over time. Results are shown in \cref{fig:learning-curves-gradient-boosting}b exemplary for exponential weighting. A weighting scheme improves both overfitting and generalization performance as derived from the annealing of train and test scores and the overall improved performance with accuracies up to \SI{75.76}{\percent}.
+% Several observations can be drawn from \cref{fig:learning-curves-gradient-boosting}a. Adding more training instances will likely improve the accuracy of the training set. The low training error also indicates that the chosen model is sufficiently complex to fit the data, resulting in a low bias. The accuracy for the validation set plateaus at \SI{75.53}{\percent} after \num{11804128} samples, leaving a significant gap between the training and testing accuracy, indicating a high variance. Hence, adding older observations, before 1 January 1974, to the training set, improves the training performance, but little affects validation performance when all samples are assigned an equal weight. Naturally, patterns in older instances of the training set might not be as relevant as more recent ones for classifying trades out-of-sample, which could explain the stalling performance for extended training sets. We incorporate this idea by weighting training samples with decaying weights over time. Results are shown in \cref{fig:learning-curves-gradient-boosting}b exemplary for exponential weighting. A weighting scheme improves both overfitting and generalization performance as derived from the annealing of train and test scores and the overall improved performance with accuracies up to \SI{75.76}{\percent}.
 
-While a smaller subsample of the training set would suffice in both cases, our training set encompasses the entire history to mitigate any sampling bias and we instead weight observations based on their temporal proximity. Overall, the training split minimizes data leakage and sensibly utilizes all available data.
+% While a smaller subsample of the training set would suffice in both cases, our training set encompasses the entire history to mitigate any sampling bias and we instead weight observations based on their temporal proximity. Overall, the training split minimizes data leakage and sensibly utilizes all available data.
 
-From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we employ regularization techniques in all our models as we show next.
+% From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we employ regularization techniques in all our models as we show next.
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 
@@ -733,15 +733,15 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
     \centering
     \caption{Hyperparameter Space of Gradient Boosting}
     \label{tab:hyperparameter-space}
-    \begin{tabular}{@{}llSSS@{}}
+    \begin{tabular}{llSSS}
         \toprule
-        Parameter                    & Distribution                            & {\gls{GBM} 1}           & {\gls{GBM} 2}               & {\gls{GBM} 3}            \\ \midrule
+        Parameter                    & Distribution                              & {\gls{GBM} 1}           & {\gls{GBM} 2}               & {\gls{GBM} 3}            \\ \midrule
         Depth                        & $\operatorname{UniformInt}[1,12]$         & 9                       & 10                          & 8                        \\
         Learning rate $\lambda$      & $\operatorname{LogUniform}[0.001, 0.125]$ & 0.061147194180849546    & 0.12484853560495288         & 0.12484853839455994      \\
         $\ell_2$ Leaf Regularization & $\operatorname{UniformInt}[2, 30]$        & 16                      & 29                          & 17                       \\
         Random Strength              & $\operatorname{LogUniform}[1{e-}9, 10.0]$ & 0.000010476785242010688 & 0.0000000033898444462040114 & 0.0000013615032724416282 \\
         Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$        & 0.6538673528316611      & 0.4734183814715093          & 0.4515562770665896       \\ \midrule
-        Accuracy in \%               &                                         & 64.20927249609458       & 75.03173105450845           & 76.98607312092097        \\ \bottomrule
+        Accuracy in \%               &                                           & 64.20927249609458       & 75.03173105450845           & 76.98607312092097        \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -758,34 +758,26 @@ The hyperparameter search for the FT-Transformer is identical to \textcite[][18]
 % #     ("semi-classical", "3dtuffae_CatBoostClassifier_default.cbm:v7"),
 % #     ("semi-classical-size", "2vnqg1sj_CatBoostClassifier_default.cbm:v8"),
 % # ]
+\begin{figure}[!b]
+    \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[ width=0.7\linewidth]{17malsep-hyperparam-search-space.pdf}}
+    \vfill
+    \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[ width=0.7\linewidth]{3laathab-hyperparam-search-space.pdf}}
+\end{figure} 
+
+\clearpage  % added
 
 \begin{figure}[ht]
-    \centering
-    \includegraphics{17malsep-hyperparam-search-space.pdf}
-    \caption{Hyperparameter Search Space of \gls{GBM} on \gls{ISE} Validation Set (Classical)}
-    \label{fig:ise-gbm-hyperparam-classical}
+        \addtocounter{figure}{-1}  % added
+    \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 3\label{fig:ise-gbm-hyperparam-ml}]{\includegraphics[ width=0.7\linewidth]{2a9iqsn0-hyperparam-search-space.pdf}}
+    \caption[]{Hyperparameter Search Space of \gls{GBM} on \gls{ISE} Validation Set}
+    \label{fig:ise-gbm-hyperparam}
 \end{figure}
 % https://wandb.ai/fbv/thesis/runs/17malsep?workspace=user-karelze
 \cref{fig:ise-gbm-hyperparam-classical} visualizes the hyperparameter search space of the \gls{GBM} on the \gls{ISE} dataset with classical features. We can derive several observations from it. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.42}{\percent} and \SI{64.35}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
 
-\newpage
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics{3laathab-hyperparam-search-space.pdf}
-    \caption{Hyperparameter Search Space of \gls{GBM} on \gls{ISE} Validation Set (Classical Size)}
-    \label{fig:ise-gbm-hyperparam-classical-size}
-\end{figure}
 % https://wandb.ai/fbv/thesis/runs/3laathab?workspace=user-karelze
 In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \gls{GBM} trained on classical-size features. The loss surface is smooth with large connected regions. As the best solution achieving \SI{75.04}{\percent} accuracy lies within a splayed region of dense sampling, it is a good choice for further analysis. Consistent with the loss surface of \cref{fig:ise-gbm-hyperparam-classical}, the trees are grown to the maximum depth and a high learning rate, indicating the need for complex ensemble members highly corrective to previous predictions. Part of this could be due to the low signal-to-noise ratio in financial data.
 
-\newpage
-\begin{figure}[ht]
-    \centering
-    \includegraphics{2a9iqsn0-hyperparam-search-space.pdf}
-    \caption{Hyperparameter Search Space of \gls{GBM} on \gls{ISE} Validation Set (ML)}
-    \label{fig:ise-gbm-hyperparam-ml}
-\end{figure}
 % https://wandb.ai/fbv/thesis/runs/2a9iqsn0?workspace=user-karelze
 The loss surface of the \gls{GBM} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.98}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not \emph{per-se} improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles.
 
@@ -801,7 +793,7 @@ Akin to selecting the machine learning classifiers, we determine our classical b
 
 \begin{table}[H]
     \centering
-    \caption{Accuracies of Classical Trade Classification Rule on \gls{ISE} Validation Set}
+    \caption[Accuracies of Classical Trade Classification Rule on \glsentryshort{ISE} Validation Set]{Accuracies of Classical Trade Classification Rule on \gls{ISE} Validation Set}
     \label{tab:ise-classical-hyperparam-classical-size}
     \input{Content/hyperparam-classical-ise_classical_supervised_val.tex}
 \end{table}
@@ -991,7 +983,7 @@ The actual and the estimated effective spreads, as well as the quoted spread, ar
 \begin{table}[H]
     \centering
     \input{Content/effective-spread.tex}
-    \caption{Application of Trade Classification Algorithms To Estimate Effective Spreads}
+    \caption{Effective Spreads Estimates of Trade Classification Rules and Classifiers}
     \label{tab:effective-spread}
 \end{table}
 
