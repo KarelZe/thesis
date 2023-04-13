@@ -739,12 +739,23 @@ From the high bias/low variance, we conclude that the gradient-boosting model wi
 
 \subsubsection{Hyperparameter Tuning (2~p)}\label{sec:hyperparameter-tuning}
 
-All of our machine-learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[][5]{grinsztajnWhyTreebasedModels2022}, emphasize the need for tuning routines, as the test performance of the FT-Transformer and gradient-boosted trees largely fluctuates with the hyperparameter configuration. As such, we employ an exhaustive hyperparameter search, to find suitable hyperparameter combinations for all our models.
+All of our machine-learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[][5]{grinsztajnWhyTreebasedModels2022}, emphasize the need for tuning routines, as the test performance of the FT-Transformer and gradient-boosted trees largely fluctuates with the hyperparameter configuration.  For a fair comparison, we employ an exhaustive hyperparameter search, to find a suitable hyperparameter configuration for each of our models.
 
 \textbf{Bayesian Search}
 
+We perform a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function \autocite[][2]{shahriariTakingHumanOut2016}. Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in more promising trials.
 
-\textbf{Gradient Boosting}
+While different algorithmic implementations exist for Bayesian optimization, we choose the optuna library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters. We maximize the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $50$ trials per combination of the model and feature set. The best combination of each is tested out-of-sample in \cref{sec:results}.
+
+\textbf{Hyperparameter Space}
+
+Our search space is reported in Table-X, which we laid out based on the recommendations in \textcites[][20]{prokhorenkovaCatBoostUnbiasedBoosting2018}[][18]{gorishniyRevisitingDeepLearning2021}[][4]{rubachevRevisitingPretrainingObjectives2022} with minor, reasoned deviations. For gradient-boosting we raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\lambda$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive $100$ steps.
+
+(table)
+
+The hyperparameter search for the FT-Transformer is identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (space (b)). From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we employ early stopping and halt training after $15$ consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
+
+\textbf{Solutions For Gradient Boosting}
 
 (insert here)
 
@@ -774,7 +785,7 @@ All of our machine-learning models feature a set of tunable hyperparameters. The
     \caption{Hyperparameter Search Space of \gls{GBM} on \gls{ISE} Validation Set (Classical Size)}
     \label{fig:ise-gbm-hyperparam-classical-size}
 \end{figure}
-\textbf{FT-Transformer}
+\textbf{Solutions For FT-Transformer}
 
 (insert here)
 
@@ -791,7 +802,7 @@ All of our machine-learning models feature a set of tunable hyperparameters. The
 
 \newpage
 
-\textbf{Classical Rules}
+\textbf{Solutions For Classical Rules}
 
 Akin to selecting the machine learning classifiers, we determine our classical baselines on the \gls{ISE} validation set. This prevents overfitting the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the \gls{CBOE} sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and \gls{LR} algorithm, due to their widespread adoption in literature.
 
@@ -804,9 +815,9 @@ Akin to selecting the machine learning classifiers, we determine our classical b
 
 \cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set~\footnote{As a sanity check, we also performed a Bayesian search on classical rules, stacking up to five base rules. The best solution was inferior to the reported combinations.}. The tick test applied to trade prices at the trading venue performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving the tick rule over all exchanges ($\operatorname{tick}_{\text{all}}$). From all classical rules, a double-combination of the quote rule ($\operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}}$), where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE}, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly used in the literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
 
-By extension, we also estimate rule combinations involving overrides from the trade size rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}} \to \operatorname{depth}_{\text{nbbo}} \to \operatorname{depth}_{\text{ex}} \to \operatorname{rtick}_{\text{all}}$ achieves the highest validation accuracy. For brevity, we refer to this specific combination as the \gls{GSU} method. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for feature set two.  
+By extension, we also estimate rule combinations involving overrides from the trade size rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}} \to \operatorname{depth}_{\text{nbbo}} \to \operatorname{depth}_{\text{ex}} \to \operatorname{rtick}_{\text{all}}$ achieves the highest validation accuracy. For brevity, we refer to this specific combination as the \gls{GSU} method. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for the second feature set. 
 
-In absence of other suitable baselines, we repeatedly compare against \gls{GSU} method as a baseline for the third feature set, even if it doesn't involve option-specific features.
+In absence of other baselines, we repeatedly compare against \gls{GSU} method as a baseline for the third feature set, even if it doesn't involve option-specific features.
 
 % TODO: How do validation accuracies of ml approaches and classical rules compare?
 
@@ -906,12 +917,12 @@ The next chapter discusses different metrics to assess the prediction quality of
 Our goal is to maximize the number of trades, where the predicted trade initiator matches the true trade initiator. We assess the quality of our model’s prediction in terms of \emph{accuracy}, which can be stated as:
 \begin{equation}
 % \operatorname{accuracy} \colon \mathbb{R}^{N} \times \mathbb{R}^{N} \to  \left[0, 1\right], \quad 
-\operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{l}_{0-1}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
+\operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{L}_{0-1}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
 \end{equation}
-where $\operatorname{l}_{0-1}(\cdot)$ is the 0-1-loss given by:
+where $\operatorname{L}_{0-1}(\cdot)$ is the 0-1-loss given by:
 \begin{equation}
     % \operatorname{l}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad 
-    \operatorname{l}_{0-1}(y, \hat{y}) = \mathbb{I}\left(y\neq \hat{y}\right).
+    \operatorname{L}_{0-1}(y, \hat{y}) = \mathbb{I}\left(y\neq \hat{y}\right).
 \end{equation}
 
 Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss. Notably, the loss is the same for false positives and negatives.
