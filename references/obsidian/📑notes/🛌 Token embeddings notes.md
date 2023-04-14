@@ -1,5 +1,6 @@
 
 
+To this end, embeddings are non-exclusive to Transformer-based architectures, and can be used in other deep learning-based approaches, and even classical machine learning models, like [[🐈Gradient Boosting]]. Covering these combinations is outside the scope of this work. We refer the reader to [[@gorishniyEmbeddingsNumericalFeatures2022]] for an in-depth comparison. Next, our focus is on two concrete examples of Transformers for tabular data.
 
 
 ## Short and concise notion of embeddings

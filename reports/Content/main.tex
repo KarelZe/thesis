@@ -386,7 +386,7 @@ For its original application, machine translation, both the encoder and decoder 
 
 \subsubsection{Token Embedding}\label{sec:token-embeddings}
 
-As explained previously, Transformers operate on sequences of numeric vector representations, the \emph{token embeddings}, rather than on raw strings.  The classical Transformer was trained on \emph{word embeddings} for the translation. Nevertheless, token embeddings are generic and arbitrary inputs can be embedded and processed by the Transformer. In the spirit of \textcite[][5]{vaswaniAttentionAllYou2017}, we first explore word embeddings for textual data, before adapting embeddings to the tabular domain.
+As explained previously, Transformers operate on sequences of numeric vector representations, the \emph{token embeddings}, rather than on raw strings.  The classical Transformer was trained on \emph{word embeddings}. Nevertheless, token embeddings are generic and arbitrary inputs can be embedded and processed by the Transformer. In the spirit of \textcite[][5]{vaswaniAttentionAllYou2017}, we first explore word embeddings for textual data, before adapting embeddings to the tabular domain.
 
 \textbf{Embeddings For Textual Data}
 
@@ -412,7 +412,13 @@ Concluding the example from above with artificial embeddings of $d_e=3$:
 \end{equation}
 are likely to be close in space with cosine-similarity of $\approx 1$ due to their high semantic similarity.
 
+As this work is concerned with trade classification on tabular datasets, the aforementioned concepts must be evolved. Differently from textual data, where all tokens come from the same vocabulary and a homogeneous embedding procedure suffices, tabular data is flexible with regard to the columns, their data type, and their semantics. While features maintain a shared meaning across rows, no universal semantics can be assumed across columns. For instance, every sample in a trade data set may contain the previous trade price, yet the meaning of the trade price is different from other columns, urging the need for heterogeneous embeddings. Also, columns may be categorical or continuous.
+
 \textbf{Embeddings For Continuous Data}
+
+Transformer networks can handle numerical features, such as the trade price, by mapping the scalar value to a high-dimensional embedding vector and process sequences thereof \autocite[][1]{gorishniyEmbeddingsNumericalFeatures2022}. In the simplest case, a learned linear projection is utilized to obtain the embedding. Linear embeddings of numerical features were previously explored in \textcites[][1]{kossenSelfAttentionDatapointsGoing2021}[][1]{somepalliSAINTImprovedNeural2021}[][1]{gorishniyRevisitingDeepLearning2021}. More sophisticated approaches rely on parametric embeddings, like the \emph{piece-wise linear encoding} or the \emph{periodic encoding} of \textcite[][10]{gorishniyEmbeddingsNumericalFeatures2022}. Both enforce a non-linearity. The authors show that these can alleviate the model's performance but at an non-neglectable computational cost.
+
+More generally, the works of \textcites[][1]{gorishniyEmbeddingsNumericalFeatures2022}[][1]{somepalliSAINTImprovedNeural2021} suggest, that numerical embedding can significantly improve performance and robustness to missing values or noise. Their work however provide no theoretical explanation. \textcite[][8--9]{grinsztajnWhyTreebasedModels2022} fill this void and attribute the increased robustness to the broken rotational invariance.
 
 \textbf{Embeddings For Categorical Data}
 
