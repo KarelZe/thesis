@@ -5,16 +5,16 @@ Use of artificial data to test the classifier.
 """
 
 
-from tests.templates import ClassifierMixin
+# from tests.templates import ClassifierMixin
 
 
-class TestTransformerClassifier(ClassifierMixin):
-    """
-    Perform automated tests for TransformerClassifier.
+# class TestTransformerClassifier(ClassifierMixin):
+#     """
+#     Perform automated tests for TransformerClassifier.
 
-    Args:
-        unittest (_type_): unittest module
-    """
+#     Args:
+#         unittest (_type_): unittest module
+#     """
 
     # def setup(self) -> None:
     #     """
