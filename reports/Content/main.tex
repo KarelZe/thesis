@@ -685,26 +685,9 @@ Models are pre-trained on unlabelled samples from the last year of the training 
 
 We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visualized in \cref{fig:train-test-split}. The start date ensures that leakage from the \gls{ISE} set is minimized~\footnote{The datasets contain features, such as the \gls{NBBO}, that are identical for both sets, assuming trades were executed at both exchanges simultaneously. Utilizing the full \gls{CBOE} sample could result in exaggerated performance estimates the corresponding \gls{ISE} trade is used in training.}.
 
-% Our train-test-split makes two implicit assumptions, we want to test for. First, the size of the resulting training set is large enough, for the model to capture regularities in the data. Second, all subsets are drawn from the same distribution. So, fitting the classifier on the training set and optimizing for the validation set can provide good estimates for the test set. The analysis is conducted on the training and validation set to avoid information leaking from the test set.
+Our train-test-split assumes that all subsets are drawn from the same distribution, so fitting a classifier on the training set and optimizing for the validation set provides good estimates for the test set. To validate this assumption, we use adversarial validation. Specifically, we re-label all training samples with $y=-1$ and all trades of the validation set with $y=1$, train a classifier on a random subset of the composed data set and predict class conformance. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which ranges between $\left[-1, 1\right]$ and is insensitive to class imbalances~\footnote{Classes are imbalanced, due to the training set being three times the size of the validation set.}. Assuming train and validation samples are sampled from the same distribution, the performance estimate is near a random guess, or $\operatorname{MCC} = 0$, Depending on the feature sets, the \gls{MCC} ranges between \SI{0.00}{\percent} and \SI{99.999}{\percent} suggesting training and validation sets are approximately similar.
 
-% Optimally, samples in the train, validation, and test set come from the same distribution. The presence of the data shift within the training set (cp. \cref{sec:exploratory-data-analysis}) raises concerns, that the assumption holds. We test for the similarity of the training and validation set and identify problematic features using \emph{adversarial validation}. As such, we re-label all training samples with $y=0$ and all trades of the validation set with $y=1$. We then train a classifier on a random subset of the composed data and predict the conformance to the train or validation set for the remaining samples. More specifically a gradient-boosting classifier is used for its competitive predictions with default hyperparameters and its computational efficiency. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which is insensitive to class imbalances~\footnote{Classes are imbalanced, due to the training set being two times larger than the validation set.}. Assuming train and validation samples come from the same distribution, the obtained performance estimate is near a random guess, or $\operatorname{MCC} = 0$.
-
-% We achieve a \gls{MCC} of \num{0.3789492800772903} for the \gls{ISE} sample with FS~2. Considering the \gls{MCC} ranges between $\left[-1, 1\right]$, the results suggest that both sets are approximately similar with minor differences. Inferring from the feature importance, estimated through random feature permutation (cp. \cref{sec:feature-importance}), both sets are most distinguishable by the proximity of the trade price to the quotes or the \gls{NBBO}. A full-scale analysis is given in \cref{app:feature-importances-adv-validation}. As we cannot suppress or transform these features for comparability, the train-test split is appropriate.
-
-% To study the appropriateness of the size of the training set, we study the learning curves of a classifier. Learning curves visualize the score of the classifier dependent on the size of the training set \autocite[][243]{hastietrevorElementsStatisticalLearning2009}. Moreover, they provide insights into the bias and variance of the estimators. We train a gradient boosting model with default parameters on ten subsets of the training set and evaluate the validation set. To maintain the temporal ordering, we start training on the \SI{10.00}{\percent} most recent samples and add older observations as we progress. Gradient boosting is well-suited for this analysis for the same reasons given above.
-
-% \begin{figure}[ht]
-%     \centering
-%     \includegraphics{learning-curves-gradient-boosting.pdf}
-%     \caption[Learning Curves of a Gradient-Boosted Tree on the \Gls{ISE} Sample]{Learning curves of a gradient-boosting classifier with default hyperparameters trained on the \gls{ISE} sample with FS~2. The training set is separated into ten equal-sized subsets. Starting with the most recent samples, new subsets are gradually added to study the effects of larger training sizes on accuracy. Peak accuracy \mycircle{viz-red} on the validation set is reached at \num{11804128} training samples when samples are uniformly or exponentially weighted in the cross-entropy loss. Weighting improves overfitting and absolute performance. Own work.}
-%     \label{fig:learning-curves-gradient-boosting}
-% \end{figure}
-
-% Several observations can be drawn from \cref{fig:learning-curves-gradient-boosting}a. Adding more training instances will likely improve the accuracy of the training set. The low training error also indicates that the chosen model is sufficiently complex to fit the data, resulting in a low bias. The accuracy for the validation set plateaus at \SI{75.53}{\percent} after \num{11804128} samples, leaving a significant gap between the training and testing accuracy, indicating a high variance. Hence, adding older observations, before 1 January 1974, to the training set, improves the training performance, but little affects validation performance when all samples are assigned an equal weight. Naturally, patterns in older instances of the training set might not be as relevant as more recent ones for classifying trades out-of-sample, which could explain the stalling performance for extended training sets. We incorporate this idea by weighting training samples with decaying weights over time. Results are shown in \cref{fig:learning-curves-gradient-boosting}b exemplary for exponential weighting. A weighting scheme improves both overfitting and generalization performance as derived from the annealing of train and test scores and the overall improved performance with accuracies up to \SI{75.76}{\percent}.
-
-% While a smaller subsample of the training set would suffice in both cases, our training set encompasses the entire history to mitigate any sampling bias and we instead weight observations based on their temporal proximity. Overall, the training split minimizes data leakage and sensibly utilizes all available data.
-
-% From the high bias/low variance, we conclude that the gradient-boosting model with default parameters severely overfits the data. To address the overfitting, we employ regularization techniques in all our models as we show next.
+The next section discusses techniques used in training the classifiers.
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 
@@ -751,13 +734,6 @@ The hyperparameter search for the FT-Transformer is identical to \textcite[][18]
 
 \textbf{Solutions For Gradient Boosting}
 
-% # models = [
-% #     ("classical", "17malsep_CatBoostClassifier_default.cbm:v7"),
-% #     ("classical-size", "3laathab_CatBoostClassifier_default.cbm:v7"),
-% #     ("ml", "2a9iqsn0_CatBoostClassifier_default.cbm:v4"),
-% #     ("semi-classical", "3dtuffae_CatBoostClassifier_default.cbm:v7"),
-% #     ("semi-classical-size", "2vnqg1sj_CatBoostClassifier_default.cbm:v8"),
-% # ]
 \begin{figure}[!b]
     \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[ width=0.7\linewidth]{17malsep-hyperparam-search-space.pdf}}
     \vfill
@@ -780,6 +756,9 @@ In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \gls{
 
 % https://wandb.ai/fbv/thesis/runs/2a9iqsn0?workspace=user-karelze
 The loss surface of the \gls{GBM} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.98}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not \emph{per-se} improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles.
+
+% #     ("semi-classical", "3dtuffae_CatBoostClassifier_default.cbm:v7"),
+% #     ("semi-classical-size", "2vnqg1sj_CatBoostClassifier_default.cbm:v8"),
 
 \textbf{Solutions For FT-Transformer}
 
@@ -820,39 +799,6 @@ The machine-learning classifiers, studied in this work can be deemed a black box
 
 
 \textbf{Partial Dependence Plots}
-
-% \begin{algorithm}
-
-%   % input/ouput names
-%   \SetKwInOut{Input}{Input}
-%   \SetKwInOut{Output}{Output}
-
-%   % caption
-%   % TODO: set input and output: e.g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
-%   \caption{$\operatorname{\mathtt{quote}}$ \label{sec:alg:quote-rule}}
-
-%   \Input{%
-%     $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
-%   }
-%   \Output{%
-%     $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
-%   }
-
-%   \BlankLine % blank line for spacing
-
-%   % start of the pseudocode
-%   $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
-
-%   \uIf{$t_i > m_i$}{%
-%     \Return{$o_i =1$}
-%   }
-%   \uElseIf{$t_i < m_i$}{%
-%     \Return{$o_i =-1$}
-%   }
-%   \uElse{%
-%     \Return
-%   }
-% \end{algorithm}
 
 \textbf{Attention Maps}
 
