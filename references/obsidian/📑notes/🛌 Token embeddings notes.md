@@ -1,7 +1,9 @@
+Recall from the chapter [[🍪Selection Of Supervised Approaches]] that categorical data is data, that is divided into groups. In the context of trade classification, the option type is categorical and takes values $\{\text{'C'},\text{'P'}\}$ for calls and puts. Similar to a token, a category, e. g., $\text{'P'}$ in the previous example, must be represented as a multi-dimensional vector to be handled by the Transformer. Even when processed in other types of neural networks, categories need to be converted to real-valued inputs first, in order to optimize parameters with gradient descent.
 
 
 To this end, embeddings are non-exclusive to Transformer-based architectures, and can be used in other deep learning-based approaches, and even classical machine learning models, like [[🐈Gradient Boosting]]. Covering these combinations is outside the scope of this work. We refer the reader to [[@gorishniyEmbeddingsNumericalFeatures2022]] for an in-depth comparison. Next, our focus is on two concrete examples of Transformers for tabular data.
 
+A classical strategy is to apply one-hot-encoding to categorical features, whereby each category is mapped to a sparse vector, which can then be processed by a neural network. While this approach is conceptually simple and frequently employed in neural network architectures, it has several drawbacks like resulting in sparse vectors, where the cardinality of feature directly affects the one-hot vector. 
 
 ## Short and concise notion of embeddings
 
