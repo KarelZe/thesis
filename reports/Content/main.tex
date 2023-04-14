@@ -386,6 +386,39 @@ For its original application, machine translation, both the encoder and decoder 
 
 \subsubsection{Token Embedding}\label{sec:token-embeddings}
 
+As explained previously, Transformers operate on sequences of numeric vector representations, the \emph{token embeddings}, rather than on raw strings.  The classical Transformer was trained on \emph{word embeddings} for the translation. Nevertheless, token embeddings are generic and arbitrary inputs can be embedded and processed by the Transformer. In the spirit of \textcite[][5]{vaswaniAttentionAllYou2017}, we first explore word embeddings for textual data, before adapting embeddings to the tabular domain.
+
+\textbf{Embeddings For Textual Data}
+
+To obtain token embeddings from the raw input sequences i.e., a sentence, the sequence is first split into constituent vocabulary elements, the \emph{tokens}. All known tokens are stored in a vocabulary. The vocabulary $V$ consists of $N_{V}=|V|$ elements and maps tokens onto their unique integer keys, referred to as \emph{token-ids} \autocite[][3]{phuongFormalAlgorithmsTransformers2022}. Apart from tokens in the training corpus, the vocabulary may include special tokens, like the $\mathtt{[UNK]}$ token to handle out-of-vocabulary items or $\mathtt{[CLS]}$ token for storing an aggregate representation of the sequence for classification \autocite[cp.][4]{devlinBERTPretrainingDeep2019}.
+
+For ease of explanation, we equate tokens with words. Consider the following example with a small vocabulary of $V=[1, N_v]$ and a mapping between token and token-id of $\text{queen}\mapsto 1$; $\text{king}\mapsto 2$. For the sample sequence »Kings and Queens«, the sequence of token-ids $x$ would be $[2, 1]$, after applying tokenizing by words and common pre-processing like lower-casing, and the removal of the stop word »and«~\footnote{There is a subtle difference between tokens and words. A token can be words including punctuation marks. But words can also be split into multiple tokens, known as sub-words \autocite[][3]{bojanowskiEnrichingWordVectors2017}. To decrease the size of the vocabulary, words may be reduced to their stems, lower-cased, and stop words be removed.}.
+
+The conversion to token ids, however, loses the semantics, as token ids may be assigned arbitrarily or ordering by semantics not be feasible. This limitation can be overcome by embeddings, as pioneered by \textcite[][1139]{bengioNeuralProbabilisticLanguage}, which map each token-id into a high-dimensional space. By representing words as a vector, semantic and syntactic relationships between tokens can be encoded. As such, similar words share a similar embedding vector \autocite[][1139]{bengioNeuralProbabilisticLanguage}. Also, word embeddings are semantically meaningful and can capture linguistic regularities, like gender through offsets between vectors \autocite[][748--749]{mikolovLinguisticRegularitiesContinuous2013}.
+
+The embedding layer from \cref{fig:transformer-architecture-overview} is ultimately a lookup table to retrieve the embedding vector $\gls{e} \in \mathbb{R}^{d_{e}}$  from a learned, embedding matrix $\gls{W-e} \in \mathbb{R}^{d_{e} \times N_{V}}$ with the token-id $v \in V \cong\left[N_{V}\right]$ as shown:
+\begin{equation}
+    \gls{e}=\gls{W-e}\left[:, v\right].
+\end{equation}
+
+The weights of $\gls{W-e}$ are initialized randomly and updated using gradient descent to obtain the learned embeddings. The dimension of the embedding $d_e$, affects the expressiveness of the network and is thus an important tuneable hyperparameter of the model.
+
+Concluding the example from above with artificial embeddings of $d_e=3$:
+\begin{equation}
+\begin{aligned}
+    \gls{e}_{\text{king}}&=\gls{W-e}\left[:,2\right] = [0.01, 0.20, 0.134]^{\top}\\
+    \gls{e}_{\text{queen}}&=\gls{W-e}\left[:,1\right] = [0.07, 0.157, 0.139]^{\top}\\
+\end{aligned}
+\end{equation}
+are likely to be close in space with cosine-similarity of $\approx 1$ due to their high semantic similarity.
+
+\textbf{Embeddings For Continuous Data}
+
+\textbf{Embeddings For Categorical Data}
+
+\textbf{Limitations}
+
+Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position \autocite[][72]{tunstallNaturalLanguageProcessing2022}. To preserve the ordering, positional information must be induced to the model (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualized in the self-attention mechanism (cp. \cref{sec:attention}).
 
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
 
@@ -395,8 +428,8 @@ Like token embeddings, positional embeddings can also be learned \autocite[cp.][
 
 \begin{equation}
     \begin{aligned}
-        \gls{W-p}[2 i-1, t] & =\sin \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right), \\
-        \gls{W-p}[2 i, t]   & =\cos \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right).
+        \gls{W-p}\left[2 i-1, t\right] & =\sin \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right), \\
+        \gls{W-p}\left[2 i, t\right]   & =\cos \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right).
     \end{aligned}
     \label{eq:sinusodal-encoding}
 \end{equation}

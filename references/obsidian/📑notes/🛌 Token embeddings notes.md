@@ -1,4 +1,30 @@
 
+
+
+
+## Short and concise notion of embeddings
+
+Let SN = {wi} N i=1 be a sequence of N input tokens with wi being the i th element. The corresponding word embedding of SN is denoted as EN = {xi} N i=1, where xi ∈ R d is the d-dimensional word embedding vector of token wi without position information. The self-attention first incorporates position information to the word embeddings and transforms them into queries, keys, and value representations. qm = fq(xm, m) kn = fk(xn, n) vn = fv(xn, n), (1) where qm, kn and vn incorporate the mth and n th positions through fq, fk and fv, respectively. The query and key values are then used to compute the attention weights, while the output is computed as the weighted sum over the value 2 RoFormer representation. am,n = exp( q | m√ kn d ) PN j=1 exp( q | √mkj d ) om = X N n=1 am,nvn (2) The existing approaches of transformer-based position encoding mainly focus on choosing a suitable function to form Equation (1).
+(from [[@suRoFormerEnhancedTransformer2022]])
+
+## Embeddings and Grokking
+
+4 DISCUSSION We have seen that in the datasets we studied, small algorithmic binary operation tables, effects such as double descent or late generalization, and improvements to generalization from interventions like weight decay can be striking. This suggests that these datasets could be a good place to investigate aspects of generalization. For example, we plan to test whether various proposed measures of minima flatness correlate with generalization in our setting. We have also seen that visualizing the embedding spaces of these neural networks can show natural kinds of structure, for example in problems of modular arithmetic the topology of the embeddings tends to be circles or cylinders. We also see that the network tends to idiosyncratically organize the embeddings by various residues. Whilst the properties of these mathematical objects are familiar to us, we speculate that such visualizations could one day be a useful way to gain intuitions about novel mathematical objects. 
+
+3.4 QUALITATIVE VISUALIZATION OF EMBEDDINGS In order to gain some insight into networks that generalize, we visualized the matrix of the output layer for the case of modular addition and S5. In Figure 3 we show t-SNE plots of the row vectors. For some networks we find clear reflections of the structure of the underlying mathematical objects in the plots. For example the circular topology of modular addition is shown with a ‘number line’ formed by adding 8 to each element. The structure is more apparent in networks that were optimized with weight decay. https://arxiv.org/pdf/2201.02177.pdf
+
+![[visualization-token-embedding.png]]
+(from [[@powerGrokkingGeneralizationOverfitting2022]])
+
+
+## Visualization
+
+![[Pasted image 20230414105714.png]]
+found in https://www.nature.com/articles/s42256-022-00532-1
+
+![[visualization-of-word-embeddings.png]]
+
+
 ## Difference equivariant / invariant:
 (see https://datascience.stackexchange.com/a/99892/142202)
 ![[equivariance-invariance.png]]

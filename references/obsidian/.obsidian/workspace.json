@@ -6,6 +6,7 @@
       {
         "id": "2e4bb12a56b63b7f",
         "type": "tabs",
+        "dimension": 52.92194523906824,
         "children": [
           {
             "id": "f35a250acbe1a2dc",
@@ -15,6 +16,50 @@
               "type": "graph",
               "state": {},
               "pinned": true
+            }
+          },
+          {
+            "id": "7b7207966e8ef9b9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🛌Token Embedding.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "1115158df741865e",
+        "type": "tabs",
+        "dimension": 47.07805476093176,
+        "children": [
+          {
+            "id": "a02ebe1d9f68b11d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🛌 Token embeddings notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1c203d4aa60a5c05",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/💤Embeddings For Tabular Data.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -75,6 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "📖chapters/🛌Token Embedding.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,7 +147,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "📖chapters/🛌Token Embedding.md"
+              }
             }
           },
           {
@@ -131,8 +179,19 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f35a250acbe1a2dc",
+  "active": "7b7207966e8ef9b9",
   "lastOpenFiles": [
+    "📑notes/🛌 Token embeddings notes.md",
+    "📖chapters/🛌Token Embedding.md",
+    "📥Inbox/@phuongFormalAlgorithmsTransformers2022.md",
+    "📖chapters/💤Embeddings For Tabular Data.md",
+    "📖chapters/⭕Self-Training classifier.md",
+    "🖼️Media/visualization-of-word-embeddings.png",
+    "🖼️Media/Pasted image 20230414105714.png",
+    "📑notes/🧵Positional encoding notes.md",
+    "📥Inbox/@powerGrokkingGeneralizationOverfitting2022.md",
+    "📥Inbox/@suRoFormerEnhancedTransformer2022.md",
+    "🖼️Media/rope-embeddings.png",
     "📖chapters/💡Hyperparameter tuning.md",
     "📑notes/💡Hyperparameter tuning notes.md",
     "🖼️Media/sample-validation-curve.png",
@@ -152,21 +211,11 @@
     "📥Inbox/@hookerUnrestrictedPermutationForces2021.md",
     "📥Inbox/@stroblConditionalVariableImportance2008.md",
     "📖chapters/🔢Trade initiator.md",
-    "📖chapters/⭕Self-Training classifier.md",
     "📑notes/🧭Evaluation metric notes.md",
     "📑notes/⭕Self-Training classifier notes.md",
-    "Ammo Trade Initiator.md",
-    "📑notes/🌏Dataset notes.md",
-    "📖chapters/🌏Dataset.md",
-    "📥Inbox/@chenTrueModelTrue2020.md",
-    "📖chapters/🧃Feature Sets.md",
-    "📥Inbox/@kavajeczPackagingLiquidityBlind2005.md",
     "🖼️Media/presentation-of-effective-spread.png",
     "🖼️Media/performance-degradations.png",
     "🖼️Media/Pasted image 20230407182457.png",
-    "🖼️Media/Pasted image 20230405172011.png",
-    "🖼️Media/Pasted image 20230405171940.png",
-    "🖼️Media/Pasted image 20230405171919.png",
-    "🖼️Media/Pasted image 20230405171902.png"
+    "🖼️Media/Pasted image 20230405172011.png"
   ]
 }
