@@ -4,13 +4,14 @@
     "type": "split",
     "children": [
       {
-        "id": "90bbdd3c2ee01632",
+        "id": "2e4bb12a56b63b7f",
         "type": "tabs",
         "dimension": 70.56659308314937,
         "children": [
           {
             "id": "65039196d3829d86",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
@@ -20,10 +21,11 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
-        "id": "b1256ace5677e3f8",
+        "id": "1115158df741865e",
         "type": "tabs",
         "dimension": 29.433406916850625,
         "children": [
