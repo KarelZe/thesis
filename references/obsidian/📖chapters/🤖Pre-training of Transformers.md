@@ -1,4 +1,5 @@
 
+**Why pretraining?**
 Whilst Transformers could be combined with Self-Training, a more common approach is to pre-train Transformers on unlabelled data, and then finetune the Transformer on the remaining labelled data.
 In several instances, pre-training has shown to improve improve performance
 
@@ -7,18 +8,16 @@ Pre-training accelerates convergence and improves model performance through a be
 
 “Pretraining provides substantial gains over well-tuned supervised baselines in the fully supervised setup.” (Rubachev et al., 2022, p. 2)
 
-We base our selection on ([[@rubachevRevisitingPretrainingObjectives2022]]), who convincingly benchmark several pre-training objectives for tabular data. Among the best-performing approaches is the *masked language modelling* objective proposed by ([[@devlinBERTPretrainingDeep2019]] 4174). 
 
-Originally, proposed for pre-training a language model, masked language modelling  (gls-mlm) randomly masks sunitx-percentage of the tokens, i. e., word, in the input sequence and replaces them with a $\mathtt{[MASK]}$ token. The $\mathtt{[MASK]}$ token, is a specialized token within the vocabulary and acts as a placeholder (cp. [[💤Embeddings For Tabular Data]]). The model then learns to predict the now masked token through the tokens in the context by optimizing for the cross-entropy loss ([[@devlinBERTPretrainingDeep2019]] 4174).  
+**How does it work**
+We base our selection on ([[@rubachevRevisitingPretrainingObjectives2022]]), who convincingly benchmark several pre-training objectives for tabular data. Among the best-performing approaches is the gls-*masked language modelling* objective proposed by ([[@devlinBERTPretrainingDeep2019]] 4174). 
 
-A caveat of *mlm* is, that the mask token only appears during pre-training, but not in fine-tuning. 
+Originally, proposed for pre-training a language model, masked language modelling  (gls-mlm) randomly masks 15 sunitx-percentage of the tokens, i. e., word, in the input sequence and replaces them with a $\mathtt{[MASK]}$ token. The $\mathtt{[MASK]}$ token, is a specialized token within the vocabulary  (cp. [[💤Embeddings For Tabular Data]]). The model learns to predict the masked token through the tokens in the bidirectional context. Like, before the cross-entropy loss is used to predict the most probable token ([[@devlinBERTPretrainingDeep2019]] 4174). 
 
-Applied to trade classification, the
+A caveat of *mlm* is, that the mask token only appears during pre-training, but not in fine-tuning, causing a mismatch between pre-training and fine-tuning. (Devlin offer some alternatives)
 
+Applied to trade classification on tabular datasets, masked language modelling transfers to randomly masking elements in $\mathbf{x}_{i}$. The prediction task is trivial for derived features, like the proximity to the quotes.  
 
-The model learns to reconstruct the masked token. 
-
-As the mask token only appears during pre-training but not during fine
 
 or the language domain, BERT introduces 4 different pretext tasks (e.g. predicting future words from previous words) to learn representations of the language data [6]
 
