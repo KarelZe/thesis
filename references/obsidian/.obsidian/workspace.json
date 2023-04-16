@@ -4,30 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "2e4bb12a56b63b7f",
+        "id": "5f20a3d8d35d78f4",
         "type": "tabs",
         "children": [
           {
-            "id": "65039196d3829d86",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "81beebcc5801c2ca",
+            "id": "7e91432f1a4dae66",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/🧭Random Feature Permutation notes.md",
+                "file": "📖chapters/🤖Pre-training of Transformers.md",
                 "mode": "source",
                 "source": false
               }
@@ -91,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/Random Feature Permutation.md",
+                "file": "📖chapters/🤖Pre-training of Transformers.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -119,7 +105,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md"
+                "file": "📖chapters/🤖Pre-training of Transformers.md"
               }
             }
           },
@@ -150,7 +136,7 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "65039196d3829d86",
+  "active": "7e91432f1a4dae66",
   "lastOpenFiles": [
     "📑notes/🧭Random Feature Permutation notes.md",
     "📖chapters/🧭Random Feature Permutation.md",
