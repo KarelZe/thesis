@@ -392,14 +392,14 @@ To obtain token embeddings from the raw input sequences i.e., a sentence, the se
 
 For ease of explanation, we equate tokens with words. Consider the following example with a small vocabulary of $V=[1, N_v]$ and a mapping between token and token-id of $\text{queen}\mapsto 1$; $\text{king}\mapsto 2$. For the sample sequence »Kings and Queens«, the sequence of token-ids $x$ would be $[2, 1]$, after applying tokenizing by words and common pre-processing like lower-casing, and the removal of the stop word »and«~\footnote{There is a subtle difference between tokens and words. A token can be words including punctuation marks. But words can also be split into multiple tokens, known as sub-words \autocite[][3]{bojanowskiEnrichingWordVectors2017}. To decrease the size of the vocabulary, words may be reduced to their stems, lower-cased, and stop words be removed.}.
 
-The conversion to token ids, however, loses the semantics, as token ids may be assigned arbitrarily or ordering by semantics not be feasible. This limitation can be overcome by embeddings, as pioneered by \textcite[][1139]{bengioNeuralProbabilisticLanguage}, which map each token-id into a high-dimensional space. By representing words as a vector, semantic and syntactic relationships between tokens can be encoded. As such, similar words share a similar embedding vector \autocite[][1139]{bengioNeuralProbabilisticLanguage}. Also, word embeddings are semantically meaningful and can capture linguistic regularities, like gender through offsets between vectors \autocite[][748--749]{mikolovLinguisticRegularitiesContinuous2013}.
+The conversion to token ids, however, loses the semantics, as token ids may be assigned arbitrarily or ordering by semantics not be feasible. This limitation can be overcome by embeddings, as pioneered by \textcite[][1139]{bengioNeuralProbabilisticLanguage}, which map each token-id into a high-dimensional space. By representing words as a vector, semantic and syntactic relationships between tokens can be encoded. As such, similar words share a similar embedding vector \autocite[][1139]{bengioNeuralProbabilisticLanguage}. Moreover, word embeddings are semantically meaningful and can capture linguistic regularities, like gender through offsets between vectors \autocite[][748--749]{mikolovLinguisticRegularitiesContinuous2013}.
 
 The embedding layer from \cref{fig:transformer-architecture-overview} is ultimately a lookup table to retrieve the embedding vector $\gls{e} \in \mathbb{R}^{d_{e}}$  from a learned, embedding matrix $\gls{W-e} \in \mathbb{R}^{d_{e} \times N_{V}}$ with the token-id $v \in V \cong\left[N_{V}\right]$ as shown:
 \begin{equation}
     \gls{e}=\gls{W-e}\left[:, v\right].
 \end{equation}
 
-The weights of $\gls{W-e}$ are initialized randomly and updated using gradient descent to obtain the learned embeddings. The dimension of the embedding $d_e$, affects the expressiveness of the network and is thus an important tuneable hyperparameter of the model.
+The weights of $\gls{W-e}$ are initialised randomly and updated using gradient descent to obtain the learned embeddings. The dimension of the embedding $d_e$, affects the expressiveness of the network and is thus an important tuneable hyperparameter of the model.
 
 Concluding the example from above with artificial embeddings of $d_e=3$:
 \begin{equation}
@@ -410,7 +410,7 @@ Concluding the example from above with artificial embeddings of $d_e=3$:
 \end{equation}
 are likely to be close in space with cosine-similarity of $\approx 1$ due to their high semantic similarity.
 
-As this work is concerned with trade classification on tabular datasets, the aforementioned concepts must be evolved. Differently from textual data, where all tokens come from the same vocabulary and a homogeneous embedding procedure suffices, tabular data is flexible concerning the columns, their data type, and their semantics. While features maintain a shared meaning across rows, no universal semantics can be assumed across columns. For instance, every sample in a trade data set may contain the previous trade price, yet the meaning of the trade price is different from other columns, urging the need for heterogeneous embeddings. Also, columns may be categorical or continuous.
+As this work is concerned with trade classification on tabular datasets, the aforementioned concepts must be evolved. Differently from textual data, where all tokens come from the same vocabulary and a homogeneous embedding procedure suffices, tabular data is flexible concerning the columns, their data type, and their semantics. While features maintain a shared meaning across rows, no universal semantics can be assumed between columns. For instance, every sample in a trade data set may contain the previous trade price, yet the meaning of the trade price is different from other columns, urging the need for heterogeneous embeddings. Additionally, columns may be categorical or continuous.
 
 \textbf{Embeddings For Continuous Data}
 
@@ -420,7 +420,7 @@ More generally, the works of \textcites[][1]{gorishniyEmbeddingsNumericalFeature
 
 \textbf{Embeddings For Categorical Data}
 
-Datasets often comprise not only continuous features but also categorical features such as the underlying. In the context of tabular Transformers, learned categorical embeddings are widely used, which are similar to word embeddings \autocites[][1]{wangTransTabLearningTransferable}[][1]{gorishniyRevisitingDeepLearning2021}[][1]{huangTabTransformerTabularData2020}[][1]{somepalliSAINTImprovedNeural2021}. Similar to the word embedding, each category is mapped to an embedding vector using a learned, embedding matrix. Due to the heterogeneous nature of tabular data, embeddings may not be shared between features.
+Datasets often comprise not only continuous features but also categorical features like the underlying. In the context of tabular Transformers, learned categorical embeddings are widely used, which are similar to word embeddings \autocites[][1]{wangTransTabLearningTransferable}[][1]{gorishniyRevisitingDeepLearning2021}[][1]{huangTabTransformerTabularData2020}[][1]{somepalliSAINTImprovedNeural2021}. Similar to the word embedding, each category is mapped to an embedding vector using a learned, embedding matrix. Due to the heterogeneous nature of tabular data, embeddings may not be shared between features.
 
 These categorical embeddings can potentially capture the intrinsic properties of categorical variables by arranging similar items closer in the embedding space.  For instance, consider the underlyings $\mathtt{GOOGL}$ (Alphabet Inc.), $\mathtt{MSFT}$ (Microsoft Inc.), and $\mathtt{K}$ (Kellogg Company). Due to the overlapping field of operations, one would anticipate greater similarity between Alphabet and Google. A visualization is given in \cref{fig:categorical-embeddings}.
 
@@ -431,12 +431,12 @@ These categorical embeddings can potentially capture the intrinsic properties of
     \label{fig:categorical-embeddings}
 \end{figure}
 
-Despite these advantages, high-cardinal features present a challenge for embeddings since they are typically learned from a few samples, which can lead to overfitting. Handling high-dimensional categorical data remains an open research problem, as noted by \autocite[][2]{borisovDeepNeuralNetworks2022}.
+Despite these advantages, high-cardinal features present a challenge for embeddings since they are typically learned from a few samples, which can lead to overfitting. Handling high-dimensional categorical data remains an open research problem, as noted by \textcite[][2]{borisovDeepNeuralNetworks2022}.
 \textbf{Limitations}
 
-One limitation of all learned embeddings is, that they contribute to the parameter count of the model through the embedding matrix or increased layer capacity of subsequent layers. The dimension of the embedding $d_{e}$ affects the expressiveness and complexity of the network and is an important hyperparameter.
+One limitation of all learned embeddings is that they contribute to the parameter count of the model through the embedding matrix or increased layer capacity of subsequent layers. The dimension of the embedding $d_{e}$ affects the expressiveness and complexity of the network and is an important hyperparameter.
 
-Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position \autocite[][72]{tunstallNaturalLanguageProcessing2022}. To preserve the ordering, positional information must be induced to the model (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualized in the self-attention mechanism (cp. \cref{sec:attention}).
+Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position \autocite[][72]{tunstallNaturalLanguageProcessing2022}. Positional information must be induced to the model to preserve the ordering (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualized in the self-attention mechanism (cp. \cref{sec:attention}).
 
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
 
@@ -490,13 +490,13 @@ with $\mathbf{W}_{\text {mlp } 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times d_{e
 
 \textcite[][9]{vaswaniAttentionAllYou2017} set the hidden dimension to be two to eight magnitudes of the embedding dimension. The large capacity strengthens the model's ability to retain information but also contributes significantly to the high computational requirements and memory footprint of Transformers \autocites[][5]{tayEfficientTransformersSurvey2022}[][1]{kitaevReformerEfficientTransformer2020}. Both linear transformations are separated by a \gls{ReLU} \gls{activation-function} \autocite[][318]{glorotDeepSparseRectifier2011} to introduce non-linearities to the network.
 
-Like the attention layer, the position-wise \gls{FFN} is surrounded by residual connections, followed by layer normalization (cp. \cref{sec:residual-connections-layer-norm}). Both are vital for the training process and convergence of the overall network, as we show. Optionally, dropout \autocite[][1930]{srivastavaDropoutSimpleWay} is added to prevent the model from \gls{overfitting}.
+Like the attention layer, the position-wise \gls{FFN} is surrounded by residual connections, followed by layer normalization (cp. \cref{sec:residual-connections-layer-norm}). Both are vital for the training process and convergence of the overall network. Optionally, dropout \autocite[][1930]{srivastavaDropoutSimpleWay} is added to prevent the model from \gls{overfitting}.
 
 \subsubsection{Residual Connections and Layer Normalization}\label{sec:residual-connections-layer-norm}
 
 Recall from earlier chapters, that the encoder stacks multiple Transformer blocks, each of which consists of several sublayers, resulting in a deep network. While depth is inevitable to learn hierarchical representations, the training of such a network is complicated. As neural networks are commonly trained using backpropagation, which relies on the gradient of the error to be propagated through the network starting at the last layer, vanishing or \glspl{exploding-gradient} pose a major difficulty in training deep neural nets \autocite[][1]{heDeepResidualLearning2015}. Without countermeasures, stacking multiple layers in the encoder and decoder of the Transformers impedes the gradient information to flow efficiently through the network and hampers the training behaviour \autocite[][1811]{wangLearningDeepTransformer2019}.
 
-As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connections around each sublayer, whereby the output of the sublayer is added element-wisely to its input. Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sublayer and thereby reach deeper layers within the stack. Also, vanishing or \glspl{exploding-gradient} are mitigated, as gradients can bypass the sublayer, eventually contributing towards an easier optimization \autocite[][3591]{liuRethinkingSkipConnection2020}. Residual connections moreover help to preserve the positional embeddings (cp. \cref{sec:positional-encoding}), as the layer's inputs are maintained in the identity mapping. Another technique to improve the training behaviour is layer normalization.
+As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connections around each sublayer, whereby the output of the sublayer is added element-wisely to its input. Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sublayer and thereby reach deeper layers within the stack. Vanishing or \glspl{exploding-gradient} are also mitigated, as gradients can bypass the sublayer, eventually contributing towards an easier optimization \autocite[][3591]{liuRethinkingSkipConnection2020}. Residual connections moreover help to preserve the positional embeddings (cp. \cref{sec:positional-encoding}), as the layer's inputs are maintained in the identity mapping. Another technique to improve the training behaviour is layer normalization.
 
 \textcite[][3]{vaswaniAttentionAllYou2017} extensively draw on layer normalization \autocite[][4]{baLayerNormalization2016} after the multi-headed attention and feed-forward sublayers. It is used for normalizing the activations of the sublayer and to stabilize and accelerate the training of the network \autocite[][2]{baLayerNormalization2016}. For the Transformer, the normalization statistics are calculated separately for every instance, which guarantees scalability across different batch sizes. For a vector $\gls{e}\in \mathbb{R}^{d_e}$ the normalized output is given by
 \begin{equation}
@@ -525,7 +525,7 @@ Until now it remains unclear, how the layer normalization intertwines with the s
 
 Post-norm Transformers add layer normalization to the sublayer \emph{after} adding the input from the residual connections. The arrangement is depicted in \cref{fig:post-norm-residual}. In contrast for the pre-norm Transformer, the normalization is applied \emph{before} the self-attention and feed-forward sublayers and inside the residual connections. Pre-norm requires one additional normalization layer to pass only well-conditioned outputs from the Transformer block to the successive layers \autocite[][5]{xiongLayerNormalizationTransformer2020}. The setup is depicted in \cref{fig:pre-norm-residual}.
 
-\textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalization, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of this wide-spread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. Also, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in vanishing gradients, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in the subsequent Section and \cref{sec:training-and-tuning}.
+\textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalization, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of this wide-spread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. In addition, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in vanishing gradients, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in our discussion on the FT-Transformer.
 
 \subsection{FT-Transformer}\label{sec:fttransformer}
 
@@ -598,18 +598,6 @@ Our coverage of semi-supervised approaches includes \emph{self-training} for gra
 Self-training is a wrapper algorithm around a probabilistic classifier, that incorporates its predictions of unlabelled instances as pseudo labels \autocite[][190]{yarowskyUnsupervisedWordSense1995}.
 
 Initially, a base classifier, e.g., gradient-boosting, is fitted on the labelled data points in a supervised manner. The classifier then assigns labels, so-called pseudo labels, to unlabelled instances. A subset of unlabelled instances with high-confidence predictions is selected, removed from the unlabelled dataset and added to labelled data dataset. A new classifier is then retrained on the labelled and pseudo-labelled instances \autocite[][190--192]{yarowskyUnsupervisedWordSense1995}. The process is repeated for several iterations until an abortion criterion applies, such as the maximum number of iterations is exhausted or when no unlabelled instances are left to label.
-
-% Add if really needed 
-% The complete algorithm is described in \cref{algo:self-training}.
-% \begin{algorithm}
-%     % input/ouput names
-%     \SetKwInOut{Input}{Input}
-%     \SetKwInOut{Output}{Output}
-%     tbd
-%     % caption + label
-%     \caption{Self-Training Algorithm}
-%     \label{algo:self-training}
-% \end{algorithm}
 
 Recall from our discussion on gradient-boosted trees in \cref{sec:gradient-boosting-procedure} that we optimized for the cross-entropy loss on the training set. When coupled with self-training in each training iteration the classifier $h$ now jointly minimizes the loss over the labelled instances $S$ and the remaining, unlabelled samples $X_{\not{U}}$:
 $$
@@ -955,18 +943,6 @@ Both datasets are approximately balanced and buyer-initiated trades predicted as
 \newpage
 \section{Results}\label{sec:results}
 
-
-
-% % slightly edited table
-% \newpage
-% \input{Content/cboe_supervised_test-diff.tex}
-
-% \newpage
-% \input{Content/ise_supervised_test-diff.tex}
-
-% \newpage
-
-% \input{Content/cboe_all_supervised_all-master.tex}
 
 \subsection{Results of Supervised
     Models (2~p)}\label{sec:results-of-supervised-models}
