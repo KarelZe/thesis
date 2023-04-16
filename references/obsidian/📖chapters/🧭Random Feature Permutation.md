@@ -10,14 +10,13 @@ Many model-agnostic methods are based on the randomly permuting features values.
 ### Permutation feature importance
 
 Permutation feature importance derives the importance from the mean decrease in accuracy before and after permuting a feature randomly. Expectedly, permuting features breaks the association with the target. Thus, the permutation of important features leads to a sharp decrease in accuracy, whereas unimportant features leave the accuracy unaffected. 
-
-The importance measure was originally proposed ([[@breimanRandomForests2001]]23--24) for random forests, and has later been extended by ([[@fisherAllModelsAre]]) into a model-agnostic feature importance measure. 
+The importance measure was originally proposed ([[@breimanRandomForests2001]]23--24) for random forests, and has later been extended by ([[@fisherAllModelsAre]]??) into a model-agnostic feature importance measure. 
 
 Given our feature matrix $\mathbf{X}$, we can define a second permuted version, $\mathbf{X}^{\pi,j}$, where the $j$-th feature is randomly permuted by $\pi$. Using $L(y_i, h(\mathbf{x}_i))$ for predicting $y_i$ from $h(\mathbf{x}_{i})$, the importance of $j$-th feature is given by:
 $$
 \operatorname{VI}^{\pi}_{j} = \sum_{i=1}^{N} L(y_{i}, h(\mathbf{x}_{i}^{\pi,j})) - L(y_{i}, h(\mathbf{x}_{i})),
 $$
-which is the increase in loss, i.e., accuracy before and after permutation ([[@hookerUnrestrictedPermutationForces2021]]82). While ([[@breimanRandomForests2001]]23--24) uses a single permutation, ([[@fisherAllModelsAre]]??) consider multiple, random permutations. By definition, random feature importance only yields global feature importances, as the change in accuracy is averaged from all $N$ samples. (averaged????)
+which is the increase in loss, i.e., accuracy, before and after permutation ([[@hookerUnrestrictedPermutationForces2021]]82). While ([[@breimanRandomForests2001]]23--24) uses a single permutation, ([[@fisherAllModelsAre]]??) consider multiple, random permutations. By definition, random feature importance only yields global feature importances, as the measure is aggregated from all $N$ samples.
 
 ### Extending permutation feature importance ✅
 Random feature permutation has the desirable properties of being easy to interpret, computationally efficient and model-agnostic. Like other feature importance measures, including SHAP or LIME, it assumes independence between features ([[@aasExplainingIndividualPredictions2021]]2). 
@@ -46,30 +45,13 @@ Groupings are created to be mutually exclusive and based on the dependency struc
 To this end, we want to emphasize, that our approach is different from ([[@ronenMachineLearningTrade2022]]52) as we do not estimate the improvement from adding new features, but keep the feature sets fixed-sized and permute them.
 
 ### Partial dependence plots
-Related to the concept of random feature permutation are partial dependence plots by ([[@friedmanGreedyFunctionApproximation2001]] 26--28). These visualize the dependency between a single (or multiple) feature and the predicted target as the feature value is adjusted. 
-
-Following ([[@hookerUnrestrictedPermutationForces2021]]81), we newly define a feature matrix $\mathbf{X}^{x,j}$ from the feature matrix $\mathbf{X}$, where the value of the $j$-th feature is replaced by the value $x$. The partial dependence function for the $j$-th feature is now given by:
+Related to the concept of random feature permutation are partial dependence plots by ([[@friedmanGreedyFunctionApproximation2001]] 26--28) visualize the dependency between a single (or multiple) feature and the effect on the traget value as the feature value is adjusted / after marginalizing out all other features. Let $\mathbf{X}^{x,j}$ be a matrix, where the $j$-th feature value is replaced by $x$ and all other features are unaltered, partial feature dependence function:
 $$
-\operatorname{PD}_{j}(x) = \frac{1}{N} \sum_{i=1}^{N} f(\mathbf{x}^{x,j}_{i}).
+\operatorname{PD}_{j}(x) = \frac{1}{N} \sum_{i=1}^{N} f(\mathbf{x}^{x,j}_{i}),
 $$
-$PD_{j}(x)$ now gi . Repeating 
+now gives the marginal average over all other features ([[@hookerUnrestrictedPermutationForces2021]]81). By iterating over a grid of (observed) $x$, we obtain the partial dependence plot for the feature.
 
+Like random feature permutation, partial dependence plots are a global feature importance measure, unable to capture dependencies between features and visualization is constrained to two dimensions or features at once ([[@hastietrevorElementsStatisticalLearning2009]] p. 388). Despite these limitation, partial dependence plots to help us verify the assumed relationships in classical rules, such as the the linear relationship in the tick rule, with the learned relationships in our classifier.
 
-Like random feature permutation, partial dependence plots are a global feature importance measure, unable to capture dependencies between features. Naturally, visualization is constrained to two dimensions or features at once. Despite these limitation, partial dependence plots to help us verify the assumed relationships in classical rules, such as the the linear relationship in the tick rule, with the learned relationships in our classifier.
-
-> 📑The marginal Partial Dependence Plot (PDP) (Friedman et al., 2001) describes the average effect of the j-th feature on the prediction. P DPj (x) = E[ ˆf(x, X−j )], (3) If the expectation is conditional on Xj , E[ ˆf(x, X−j )|Xj = x], we speak of the conditional PDP. The marginal PDP evaluated at feature value x is estimated using Monte Carlo integration: P DP \j (x) = 1 n Xn i=1 ˆf(x, x (i) −j ) (4)  (https://arxiv.org/pdf/2006.04628.pdf) 
-
-> 📑 Partial Dependence Plots (PDPs) Friedman (2001) suggested examining the effect of feature j by plotting the average prediction as the feature is changed. Specifically, letting Xx,j be the matrix of feature values where the jth entry of every row has been replaced with value x, we define the partial dependence function PDj(x) = 1 N N i=1 f (xx,j i ) as the average prediction made with the jth feature replaced with the value x. Since these are univariate functions (multivariate versions can be defined naturally), they can be readily displayed and interpreted. ([[@hookerUnrestrictedPermutationForces2021]])
-
-> 📑Partial dependence works by marginalizing the machine learning model output over the distribution of the features in set C, so that the function shows the relationship between the features in set S we are interested in and the predicted outcome. By marginalizing over the other features, we get a function that depends only on features in S, interactions with other features included. (Molnar)
-
-> 📑The partial function ^fS�^� is estimated by calculating averages in the training data, also known as Monte Carlo method:
-For classification where the machine learning model outputs probabilities, the partial dependence plot displays the probability for a certain class given different values for feature(s) in S. An easy way to deal with multiple classes is to draw one line or plot per class. (Molnar)
-
-> 📑 The partial dependence plot (short PDP or PD plot) shows the marginal effect one or two features have on the predicted outcome of a machine learning model (J. H. Friedman 2001[30](https://christophm.github.io/interpretable-ml-book/pdp.html#fn30)). A partial dependence plot can show whether the relationship between the target and a feature is linear, monotonic or more complex. For example, when applied to a linear regression model, partial dependence plots always show a linear relationship.
-
-> 📑 “s, especially when f (x) is dominated by low-order interactions (10.40). Consider the subvector XS of ℓ < p of the input predictor variables XT = (X1, X2, . . . , Xp), indexed by S ⊂ {1, 2, . . . , p}. Let C be the complement set, with S ∪ C = {1, 2, . . . , p}. A general function f (X) will in principle depend on all of the input variables: f (X) = f (XS , XC). One way to define the average or partial dependence of f (X) on XS is fS (XS ) = EXC f (XS , XC). (10.47) This is a marginal average of f , and can serve as a useful description of the effect of the chosen subset on f (X) when, for example, the variables in XS do not have strong interactions with those in XC. Partial dependence functions can be used to interpret the results of any “black box” learning method. They can be estimated by ̄ fS (XS ) = 1 N N ∑ i=1 f (XS , xiC), (10.48) where {x1C, x2C, . . . , xNC} are the values of XC occurring in the training data. This requires a pass over the data for each set of joint values of XS for which ̄ fS (XS ) is to be evaluated. This can be computationally intensive, 1lattice in R” ([[@hastietrevorElementsStatisticalLearning2009]] p. 388)
-
-“The partial dependence function (Friedman, 1991) of a model ˆ f describes the expected effect of a feature after marginalizing out the effects of all other features. Partial dependence of a feature set XS, S ⊆ {1, . . . , p} (usually |S| = 1) is defined as: P DS = EXC [ ˆ f (x, XC )], (1) where XC are the remaining features so that S ∪C = {1, . . . , p} and S ∩C = ∅. The PD is estimated using Monte Carlo integration: ̂ P DS(x) = 1 n2 n2 ∑ i=1 ˆ f (x, x(i) C ) (2) For simplicity, we write P D instead of P DS, and ̂ P D instead of ̂ P DS when we refer to an arbitrary PD. The PD plot consists of a line connecting the points {(x(g), ̂ P DS(x(g))}gG=1, with G grid points that are usually equidistant or quantiles of PXS . See Figure 6 for an example of a PD plot.” ([[@molnarRelatingPartialDependence2021]], p. 5)
 
 Following a common track in literature, we report feature importance estimates on the test data. 

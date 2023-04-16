@@ -6,7 +6,6 @@
       {
         "id": "2e4bb12a56b63b7f",
         "type": "tabs",
-        "dimension": 63.58806702084184,
         "children": [
           {
             "id": "65039196d3829d86",
@@ -21,26 +20,9 @@
               },
               "pinned": true
             }
-          }
-        ]
-      },
-      {
-        "id": "1115158df741865e",
-        "type": "tabs",
-        "dimension": 36.41193297915815,
-        "children": [
-          {
-            "id": "f35a250acbe1a2dc",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "graph",
-              "state": {},
-              "pinned": true
-            }
           },
           {
-            "id": "29cf235c1a6590d1",
+            "id": "81beebcc5801c2ca",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -51,8 +33,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
