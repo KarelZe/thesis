@@ -32,25 +32,26 @@ In summary, machine learning has been applied successfully in the context of tra
 \newpage
 \section{Rule-Based Approaches}\label{sec:rule-based-approaches}
 
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. 
 
 We begin with a short discussion on different definitions of the initiator and then present rule-based approaches for trade classification.
 
 \subsection{Trade Initiator}
 \label{sec:trade-initiator}
 
-In absence of a universal definition of the trade initiator, the following views are prevailing in research.
+The following definitions for the trade initiator are frequently found in research.
 
 \emph{Chronological definition:} \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000} adapts a chronological view based on the order arrival. She defines the initiator of the trade as the party (buyer or seller) who places their order last, chronologically. This definition requires knowledge about the order submission times. 
 
-\emph{Immediacy definition:} In contrast, \textcite[][94--97]{leeInferringInvestorBehavior2000}  equate the trade initiator with the party in demand for immediate execution. Thus, traders placing market orders, immediately executable at whatever price, or executable limit orders, are considered the trade initiator. By contrast, the party placing non-executable limit orders, which may not even result in a trade, is not. This definition remains ambiguous for trades resulting from crossed limit orders, matched market orders, or batched orders  \autocite[][94--95]{leeInferringInvestorBehavior2000}.
+\emph{Immediacy definition:} In contrast, \textcite[][94--97]{leeInferringInvestorBehavior2000}  equate the trade initiator with the party in demand for immediate execution. Thus, traders placing market orders, immediately executable at whatever price, or executable limit orders, are considered the trade initiator. By contrast, the party placing non-executable limit orders, which may not even result in a trade, is the non-initiator. This definition remains ambiguous for trades resulting from crossed limit orders, matched market orders, or batched orders  \autocite[][94--95]{leeInferringInvestorBehavior2000}.
 % FIXME: introduce of notion of demanding / taking away liquidity and providing liquidity
 
-\emph{Positional definition:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand. 
+\emph{Positional definition:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite to the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand. 
 
+The appropriate definition differs by data availability and application context.
 Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is denoted as $\hat{y}$.
 
-The following section introduces basic rules for trade classification. We start with the ubiquitous quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
+As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}. The following section introduces basic rules for trade classification. We start with the ubiquitous quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
 \subsection{Basic Rules}\label{sec:basic-rules}
 
@@ -356,7 +357,7 @@ The subsequent chapters provide an introduction to classifiers based on the Tran
 
 \subsubsection{Architectural Overview}\label{sec:architectural-overview}
 
-The Transformer is a neural network architecture of \textcite[][6002--6006]{vaswaniAttentionAllYou2017} proposed for sequence-to-sequence modelling. Its original application is in machine translation, whereby sentences in the source language are translated into sentences in the target language. More precisely, the sentence is first decomposed into individual \glspl{token} and mapped into a sequence of \glspl{embedding}, which are rich vector representations of the raw input. The Transformer then processes the \glspl{embedding} to generate the output sequence.
+The Transformer is a neural network architecture by \textcite[][6002--6006]{vaswaniAttentionAllYou2017} proposed for sequence-to-sequence modelling. Its original application is in machine translation, whereby sentences in the source language are translated into sentences in the target language. More precisely, the sentence is first decomposed into individual \glspl{token} and mapped into a sequence of \glspl{embedding}, which are rich vector representations of the raw input. The Transformer then processes the \glspl{embedding} to generate the output sequence.
 
 As the network operates on \glspl{embedding}, rather than words, the architecture is not constrained to process textual data. It has been successfully adapted to other representations including image data \autocites[][2--5]{parmarImageTransformer2018}[][3]{dosovitskiyImageWorth16x162021} and tabular data \autocite[cp.][18932]{gorishniyRevisitingDeepLearning2021}. The latter is important for our work, as derived in \cref{sec:selection-of-approaches}.
 
@@ -364,7 +365,7 @@ Following the architecture for machine translation of \textcite[][3]{sutskeverSe
 
 The encoder consists of $\gls{L}=6$ stacked Transformer blocks \autocite[][6]{vaswaniAttentionAllYou2017}. Each block itself is composed of two sublayers: a multi-head self-attention layer, followed by a position-wise, \gls{feed-forward-network}. Both components serve a distinct purpose in the Transformer. The self-attention mechanism encodes the context in which the input appears onto the \glspl{embedding}, whereas the \gls{feed-forward-network} serves as a long-term memory persisting information outside the immediate context. In the multi-head self-attention mechanism of the encoder, inputs can learn from any \gls{token} of the input sequence, even if the \gls{token} appears causally before the other input. Each of the sublayers is surrounded by skip connections \autocite[][2]{heDeepResidualLearning2015} and followed by layer normalization \autocite[][4]{baLayerNormalization2016} to facilitate and stabilize training. Stacking multiple Transformer blocks allows the model to learn hierarchical features from the inputs and targets. Applied to language processing, the first layers in the stack extract coarse-grained syntactic features, and subsequent layers learn fine-grained semantic features \autocites[][3651]{jawaharWhatDoesBERT2019}[][4596]{tenneyBERTRediscoversClassical2019}. For tabular data, this translates to frequent feature combinations or infrequent feature interactions.
 
-Aside from the multi-headed self-attention and feed-forward sublayer, the decoder contains a third sublayer for multi-headed self-attention on the output of the encoder, known as cross-attention. Also, the multi-headed self-attention mechanism in the decoder differs from the one in the encoder. Specifically, future parts of the output sequence are causally masked to prevent the model from learning on subsequent \glspl{token} during training, which enforces the autoregressive properties of the model \autocites[][3]{vaswaniAttentionAllYou2017}[][15]{narangTransformerModificationsTransfer2021}.
+Aside from the multi-headed self-attention and feed-forward sublayer, the decoder contains a third sublayer for multi-headed self-attention on the output of the encoder, known as cross-attention. Moreover, the multi-headed self-attention mechanism in the decoder differs from the one in the encoder. Specifically, future parts of the output sequence are causally masked to prevent the model from learning on subsequent \glspl{token} during training, which enforces the autoregressive properties of the model \autocites[][3]{vaswaniAttentionAllYou2017}[][15]{narangTransformerModificationsTransfer2021}.
 
 \begin{landscape}
     \begin{figure}[ht]
@@ -551,7 +552,7 @@ Semi-supervised methods leverage partially-labelled data by learning an algorith
 
 Semi-supervised learning is centred around the \emph{assumption of smoothness}, which states that if two samples $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if data points are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
 
-The semi-supervised setting requires extending our notation from \cref{sec:problem-framing}, by dividing the dataset into labelled and unlabelled instances. Henceforth, $\mathbf{X}_{l} = \left[\mathbf{x}_{1},\ldots, \mathbf{x}_{l}\right]^{\top}$ is used for instances, where labels $\mathbf{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$ are known and $\mathbf{X}_{u} = \left[\mathbf{x}_{l+1},\ldots, \mathbf{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by time.
+The semi-supervised setting requires extending our notation from \cref{sec:problem-framing}, by distinguishing between labelled and unlabelled instances. Henceforth, $\mathbf{X}_{l} = \left[\mathbf{x}_{1},\ldots, \mathbf{x}_{l}\right]^{\top}$ is used for instances, where labels $\mathbf{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$ are known and $\mathbf{X}_{u} = \left[\mathbf{x}_{l+1},\ldots, \mathbf{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by time.
 
 Our coverage of semi-supervised approaches includes \emph{self-training} for gradient-boosting and \emph{pre-training} of Transformers, which we derive from a subsequent discussion.
 
@@ -842,41 +843,22 @@ Our datasets are approximately balanced and buyer-initiated trades predicted as 
 
 \textbf{Random Feature Permutation}
 
+Random feature permutation has the desirable properties of being easy to interpret, computationally efficient and model-agnostic. Like other feature importance measures, including \gls{SHAP}, it assumes independence between features \autocite[][2]{aasExplainingIndividualPredictions2021}.
+
+As defined above, every feature is permuted independently from other features which artificially breaks correlations between features and creates unrealistic feature combinations. Consider, for example, the apparent correlation between the ask, bid price and trade price. Permuting only the ask could result in strongly negative or extremely large spreads since the bid remains unchanged. In effect, the presence of correlated features leads to an overestimate of the importance of correlated features \autocite[][3]{stroblConditionalVariableImportance2008}.
+
+Vice versa, can the presence of correlated features decrease the importance of the associated feature, as the feature importance now distributed across the features, thereby underestimating the true importance of the features. This effects all features, where information is encoded redundantly, such as the bid-ask ratio. 
+
+% (footnote-for an extended discussion of substitution effects on feature importance in the financial domain see \textcite[][114--118]{lopezdepradoAdvancesFinancialMachine2018}.
+
+To alleviate the bias from dependent, we group dependent features and estimate the feature importance on the group-level. Arranging all features in a tree-like hierarchy gives us the freedom to derive feature importances at different levels, enabling cross-comparisons between classical rules and machine learning based classifiers, as grouping of raw and derived features makes the implementation of classical rules transparent. 
+
+% (footnote: Consider the implementation of the tick rule. Here, the implementation could use the feature price lag (ex) or calculate the price change from the trade price and price lag (ex). If not grouped, feature importances would be attributed to either the derived feature or raw features causing difficulties in comparison with machine learning classifiers, which have access to all three features simultaneously. Grouping all three features resolves this issue at the cost of interpretability.). 
+
+Other than the classical random feature permutation, all features sharing the same parent node are permuted together. We define the following dependency structure:
+(tbd)
 
 \textbf{Partial Dependence Plots}
-
-% \begin{algorithm}
-
-%   % input/ouput names
-%   \SetKwInOut{Input}{Input}
-%   \SetKwInOut{Output}{Output}
-
-%   % caption
-%   % TODO: set input and output: e.g., $\hat{e} \leftarrow$ layer_norm $(e \mid \gamma, \beta)$
-%   \caption{$\operatorname{\mathtt{quote}}$ \label{sec:alg:quote-rule}}
-
-%   \Input{%
-%     $t_i$ trade price at $i$, $a_i$ ask price at $i$, and $b_i$ bid price at $i$.
-%   }
-%   \Output{%
-%     $o_i \in\{-1,1\}$ trade initiator for $i$-th trade.
-%   }
-
-%   \BlankLine % blank line for spacing
-
-%   % start of the pseudocode
-%   $m_i \leftarrow \frac{1}{2}(a_i + b_i)$ \tcc*{mid spread at $i$}
-
-%   \uIf{$t_i > m_i$}{%
-%     \Return{$o_i =1$}
-%   }
-%   \uElseIf{$t_i < m_i$}{%
-%     \Return{$o_i =-1$}
-%   }
-%   \uElse{%
-%     \Return
-%   }
-% \end{algorithm}
 
 \textbf{Attention Maps}
 
