@@ -33,25 +33,26 @@ In summary, machine learning has been applied successfully in the context of tra
 \newpage
 \section{Rule-Based Approaches}\label{sec:rule-based-approaches}
 
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}.
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. 
 
 We begin with a short discussion on different definitions of the initiator and then present rule-based approaches for trade classification.
 
 \subsection{Trade Initiator}
 \label{sec:trade-initiator}
 
-In absence of a universal definition of the trade initiator, the following views are prevailing in research.
+The following definitions for the trade initiator are frequently found in research.
 
 \emph{Chronological definition:} \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000} adapts a chronological view based on the order arrival. She defines the initiator of the trade as the party (buyer or seller) who places their order last, chronologically. This definition requires knowledge about the order submission times.
 
-\emph{Immediacy definition:} In contrast, \textcite[][94--97]{leeInferringInvestorBehavior2000}  equate the trade initiator with the party in demand for immediate execution. Thus, traders placing market orders, immediately executable at whatever price, or executable limit orders, are considered the trade initiator. By contrast, the party placing non-executable limit orders, which may not even result in a trade, is not. This definition remains ambiguous for trades resulting from crossed limit orders, matched market orders, or batched orders  \autocite[][94--95]{leeInferringInvestorBehavior2000}.
+\emph{Immediacy definition:} In contrast, \textcite[][94--97]{leeInferringInvestorBehavior2000}  equate the trade initiator with the party in demand for immediate execution. Thus, traders placing market orders, immediately executable at whatever price, or executable limit orders, are considered the trade initiator. By contrast, the party placing non-executable limit orders, which may not even result in a trade, is the non-initiator. This definition remains ambiguous for trades resulting from crossed limit orders, matched market orders, or batched orders  \autocite[][94--95]{leeInferringInvestorBehavior2000}.
 % FIXME: introduce of notion of demanding / taking away liquidity and providing liquidity
 
-\emph{Positional definition:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand.
+\emph{Positional definition:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite to the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand. 
 
+The appropriate definition differs by data availability and application context.
 Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is denoted as $\hat{y}$.
 
-The following section introduces basic rules for trade classification. We start with the ubiquitous quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
+As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}. The following section introduces basic rules for trade classification. We start with the ubiquitous quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \cgls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
 \subsection{Basic Rules}\label{sec:basic-rules}
 
@@ -343,9 +344,6 @@ Thereby, the feature $j$ and value $s$ are selected in a way, that the combined 
     \min _{j, s}\left[\min _{c_1} \sum_{\mathbf{x}_i \in R_1(j, s)}\left(y_i-c_1\right)^2+\min _{c_2} \sum_{\mathbf{x}_i \in R_2(j, s)}\left(y_i-c_2\right)^2\right].
 \end{equation}
 
-The procedure is repeated on the so-created child nodes. Note that, splits are performed greedily to keep computations tractable. This entails, that only the reduction in \gls{SSE} of the current node is considered, and not the improvement from any subsequent splits in the child nodes. Computational costs may still be high, when there are many split candidates, due to a large feature count or possible split values. Common approximations are splits on quantized features or random feature subsets.
-% TODO add citations where quantization is used. See ke (gradient boosting paper)
-
 Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample has its region, the tree would achieve a perfect fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence \emph{variance}, size complexity pruning procedures are employed. Likewise, if the decision tree is too simplistic, a high bias contributes to the model's overall expected error. Both extremes are to be avoided.
 
 Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredictors1996} and \emph{boosting} \autocite[][197--227]{schapireStrengthWeakLearnability1990}, decrease the expected error of the decision tree by combining multiple trees in a single model. Both approaches differ in the error term being minimized, which is reflected in the training procedure and the complexity of the ensemble members. More specifically, bagging aims at decreasing the variance, whereas boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we derive \gls{GBM}, a variant of boosting introduced by \textcite[][9]{friedmanGreedyFunctionApproximation2001} and apply it to classification.
@@ -360,7 +358,7 @@ The subsequent chapters provide an introduction to classifiers based on the Tran
 
 \subsubsection{Architectural Overview}\label{sec:architectural-overview}
 
-The Transformer is a neural network architecture of \textcite[][6002--6006]{vaswaniAttentionAllYou2017} proposed for sequence-to-sequence modelling. Its original application is in machine translation, whereby sentences in the source language are translated into sentences in the target language. More precisely, the sentence is first decomposed into individual \glspl{token} and mapped into a sequence of \glspl{embedding}, which are rich vector representations of the raw input. The Transformer then processes the \glspl{embedding} to generate the output sequence.
+The Transformer is a neural network architecture by \textcite[][6002--6006]{vaswaniAttentionAllYou2017} proposed for sequence-to-sequence modelling. Its original application is in machine translation, whereby sentences in the source language are translated into sentences in the target language. More precisely, the sentence is first decomposed into individual \glspl{token} and mapped into a sequence of \glspl{embedding}, which are rich vector representations of the raw input. The Transformer then processes the \glspl{embedding} to generate the output sequence.
 
 As the network operates on \glspl{embedding}, rather than words, the architecture is not constrained to process textual data. It has been successfully adapted to other representations including image data \autocites[][2--5]{parmarImageTransformer2018}[][3]{dosovitskiyImageWorth16x162021} and tabular data \autocite[cp.][18932]{gorishniyRevisitingDeepLearning2021}. The latter is important for our work, as derived in \cref{sec:selection-of-approaches}.
 
@@ -368,7 +366,7 @@ Following the architecture for machine translation of \textcite[][3]{sutskeverSe
 
 The encoder consists of $\gls{L}=6$ stacked Transformer blocks \autocite[][6]{vaswaniAttentionAllYou2017}. Each block itself is composed of two sublayers: a multi-head self-attention layer, followed by a position-wise, \gls{feed-forward-network}. Both components serve a distinct purpose in the Transformer. The self-attention mechanism encodes the context in which the input appears onto the \glspl{embedding}, whereas the \gls{feed-forward-network} serves as a long-term memory persisting information outside the immediate context. In the multi-head self-attention mechanism of the encoder, inputs can learn from any \gls{token} of the input sequence, even if the \gls{token} appears causally before the other input. Each of the sublayers is surrounded by skip connections \autocite[][2]{heDeepResidualLearning2015} and followed by layer normalization \autocite[][4]{baLayerNormalization2016} to facilitate and stabilize training. Stacking multiple Transformer blocks allows the model to learn hierarchical features from the inputs and targets. Applied to language processing, the first layers in the stack extract coarse-grained syntactic features, and subsequent layers learn fine-grained semantic features \autocites[][3651]{jawaharWhatDoesBERT2019}[][4596]{tenneyBERTRediscoversClassical2019}. For tabular data, this translates to frequent feature combinations or infrequent feature interactions.
 
-Aside from the multi-headed self-attention and feed-forward sublayer, the decoder contains a third sublayer for multi-headed self-attention on the output of the encoder, known as cross-attention. Also, the multi-headed self-attention mechanism in the decoder differs from the one in the encoder. Specifically, future parts of the output sequence are causally masked to prevent the model from learning on subsequent \glspl{token} during training, which enforces the autoregressive properties of the model \autocites[][3]{vaswaniAttentionAllYou2017}[][15]{narangTransformerModificationsTransfer2021}.
+Aside from the multi-headed self-attention and feed-forward sublayer, the decoder contains a third sublayer for multi-headed self-attention on the output of the encoder, known as cross-attention. Moreover, the multi-headed self-attention mechanism in the decoder differs from the one in the encoder. Specifically, future parts of the output sequence are causally masked to prevent the model from learning on subsequent \glspl{token} during training, which enforces the autoregressive properties of the model \autocites[][3]{vaswaniAttentionAllYou2017}[][15]{narangTransformerModificationsTransfer2021}.
 
 \begin{landscape}
     \begin{figure}[ht]
@@ -394,14 +392,14 @@ To obtain token embeddings from the raw input sequences i.e., a sentence, the se
 
 For ease of explanation, we equate tokens with words. Consider the following example with a small vocabulary of $V=[1, N_v]$ and a mapping between token and token-id of $\text{queen}\mapsto 1$; $\text{king}\mapsto 2$. For the sample sequence »Kings and Queens«, the sequence of token-ids $x$ would be $[2, 1]$, after applying tokenizing by words and common pre-processing like lower-casing, and the removal of the stop word »and«~\footnote{There is a subtle difference between tokens and words. A token can be words including punctuation marks. But words can also be split into multiple tokens, known as sub-words \autocite[][3]{bojanowskiEnrichingWordVectors2017}. To decrease the size of the vocabulary, words may be reduced to their stems, lower-cased, and stop words be removed.}.
 
-The conversion to token ids, however, loses the semantics, as token ids may be assigned arbitrarily or ordering by semantics not be feasible. This limitation can be overcome by embeddings, as pioneered by \textcite[][1139]{bengioNeuralProbabilisticLanguage}, which map each token-id into a high-dimensional space. By representing words as a vector, semantic and syntactic relationships between tokens can be encoded. As such, similar words share a similar embedding vector \autocite[][1139]{bengioNeuralProbabilisticLanguage}. Also, word embeddings are semantically meaningful and can capture linguistic regularities, like gender through offsets between vectors \autocite[][748--749]{mikolovLinguisticRegularitiesContinuous2013}.
+The conversion to token ids, however, loses the semantics, as token ids may be assigned arbitrarily or ordering by semantics not be feasible. This limitation can be overcome by embeddings, as pioneered by \textcite[][1139]{bengioNeuralProbabilisticLanguage}, which map each token-id into a high-dimensional space. By representing words as a vector, semantic and syntactic relationships between tokens can be encoded. As such, similar words share a similar embedding vector \autocite[][1139]{bengioNeuralProbabilisticLanguage}. Moreover, word embeddings are semantically meaningful and can capture linguistic regularities, like gender through offsets between vectors \autocite[][748--749]{mikolovLinguisticRegularitiesContinuous2013}.
 
 The embedding layer from \cref{fig:transformer-architecture-overview} is ultimately a lookup table to retrieve the embedding vector $\gls{e} \in \mathbb{R}^{d_{e}}$  from a learned, embedding matrix $\gls{W-e} \in \mathbb{R}^{d_{e} \times N_{V}}$ with the token-id $v \in V \cong\left[N_{V}\right]$ as shown:
 \begin{equation}
     \gls{e}=\gls{W-e}\left[:, v\right].
 \end{equation}
 
-The weights of $\gls{W-e}$ are initialized randomly and updated using gradient descent to obtain the learned embeddings. The dimension of the embedding $d_e$, affects the expressiveness of the network and is thus an important tuneable hyperparameter of the model.
+The weights of $\gls{W-e}$ are initialised randomly and updated using gradient descent to obtain the learned embeddings. The dimension of the embedding $d_e$, affects the expressiveness of the network and is thus an important tuneable hyperparameter of the model.
 
 Concluding the example from above with artificial embeddings of $d_e=3$:
 \begin{equation}
@@ -412,7 +410,7 @@ Concluding the example from above with artificial embeddings of $d_e=3$:
 \end{equation}
 are likely to be close in space with cosine-similarity of $\approx 1$ due to their high semantic similarity.
 
-As this work is concerned with trade classification on tabular datasets, the aforementioned concepts must be evolved. Differently from textual data, where all tokens come from the same vocabulary and a homogeneous embedding procedure suffices, tabular data is flexible concerning the columns, their data type, and their semantics. While features maintain a shared meaning across rows, no universal semantics can be assumed across columns. For instance, every sample in a trade data set may contain the previous trade price, yet the meaning of the trade price is different from other columns, urging the need for heterogeneous embeddings. Also, columns may be categorical or continuous.
+As this work is concerned with trade classification on tabular datasets, the aforementioned concepts must be evolved. Differently from textual data, where all tokens come from the same vocabulary and a homogeneous embedding procedure suffices, tabular data is flexible concerning the columns, their data type, and their semantics. While features maintain a shared meaning across rows, no universal semantics can be assumed between columns. For instance, every sample in a trade data set may contain the previous trade price, yet the meaning of the trade price is different from other columns, urging the need for heterogeneous embeddings. Additionally, columns may be categorical or continuous.
 
 \textbf{Embeddings For Continuous Data}
 
@@ -422,7 +420,7 @@ More generally, the works of \textcites[][1]{gorishniyEmbeddingsNumericalFeature
 
 \textbf{Embeddings For Categorical Data}
 
-Datasets often comprise not only continuous features but also categorical features such as the underlying. In the context of tabular Transformers, learned categorical embeddings are widely used, which are similar to word embeddings \autocites[][1]{wangTransTabLearningTransferable}[][1]{gorishniyRevisitingDeepLearning2021}[][1]{huangTabTransformerTabularData2020}[][1]{somepalliSAINTImprovedNeural2021}. Similar to the word embedding, each category is mapped to an embedding vector using a learned, embedding matrix. Due to the heterogeneous nature of tabular data, embeddings may not be shared between features.
+Datasets often comprise not only continuous features but also categorical features like the underlying. In the context of tabular Transformers, learned categorical embeddings are widely used, which are similar to word embeddings \autocites[][1]{wangTransTabLearningTransferable}[][1]{gorishniyRevisitingDeepLearning2021}[][1]{huangTabTransformerTabularData2020}[][1]{somepalliSAINTImprovedNeural2021}. Similar to the word embedding, each category is mapped to an embedding vector using a learned, embedding matrix. Due to the heterogeneous nature of tabular data, embeddings may not be shared between features.
 
 These categorical embeddings can potentially capture the intrinsic properties of categorical variables by arranging similar items closer in the embedding space.  For instance, consider the underlyings $\mathtt{GOOGL}$ (Alphabet Inc.), $\mathtt{MSFT}$ (Microsoft Inc.), and $\mathtt{K}$ (Kellogg Company). Due to the overlapping field of operations, one would anticipate greater similarity between Alphabet and Google. A visualization is given in \cref{fig:categorical-embeddings}.
 
@@ -433,12 +431,12 @@ These categorical embeddings can potentially capture the intrinsic properties of
     \label{fig:categorical-embeddings}
 \end{figure}
 
-Despite these advantages, high-cardinal features present a challenge for embeddings since they are typically learned from a few samples, which can lead to overfitting. Handling high-dimensional categorical data remains an open research problem, as noted by \autocite[][2]{borisovDeepNeuralNetworks2022}.
+Despite these advantages, high-cardinal features present a challenge for embeddings since they are typically learned from a few samples, which can lead to overfitting. Handling high-dimensional categorical data remains an open research problem, as noted by \textcite[][2]{borisovDeepNeuralNetworks2022}.
 \textbf{Limitations}
 
-One limitation of all learned embeddings is, that they contribute to the parameter count of the model through the embedding matrix or increased layer capacity of subsequent layers. The dimension of the embedding $d_{e}$ affects the expressiveness and complexity of the network and is an important hyperparameter.
+One limitation of all learned embeddings is that they contribute to the parameter count of the model through the embedding matrix or increased layer capacity of subsequent layers. The dimension of the embedding $d_{e}$ affects the expressiveness and complexity of the network and is an important hyperparameter.
 
-Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position \autocite[][72]{tunstallNaturalLanguageProcessing2022}. To preserve the ordering, positional information must be induced to the model (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualized in the self-attention mechanism (cp. \cref{sec:attention}).
+Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position \autocite[][72]{tunstallNaturalLanguageProcessing2022}. Positional information must be induced to the model to preserve the ordering (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualized in the self-attention mechanism (cp. \cref{sec:attention}).
 
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
 
@@ -492,13 +490,13 @@ with $\mathbf{W}_{\text {mlp } 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times d_{e
 
 \textcite[][9]{vaswaniAttentionAllYou2017} set the hidden dimension to be two to eight magnitudes of the embedding dimension. The large capacity strengthens the model's ability to retain information but also contributes significantly to the high computational requirements and memory footprint of Transformers \autocites[][5]{tayEfficientTransformersSurvey2022}[][1]{kitaevReformerEfficientTransformer2020}. Both linear transformations are separated by a \gls{ReLU} \gls{activation-function} \autocite[][318]{glorotDeepSparseRectifier2011} to introduce non-linearities to the network.
 
-Like the attention layer, the position-wise \gls{FFN} is surrounded by residual connections, followed by layer normalization (cp. \cref{sec:residual-connections-layer-norm}). Both are vital for the training process and convergence of the overall network, as we show. Optionally, dropout \autocite[][1930]{srivastavaDropoutSimpleWay} is added to prevent the model from \gls{overfitting}.
+Like the attention layer, the position-wise \gls{FFN} is surrounded by residual connections, followed by layer normalization (cp. \cref{sec:residual-connections-layer-norm}). Both are vital for the training process and convergence of the overall network. Optionally, dropout \autocite[][1930]{srivastavaDropoutSimpleWay} is added to prevent the model from \gls{overfitting}.
 
 \subsubsection{Residual Connections and Layer Normalization}\label{sec:residual-connections-layer-norm}
 
 Recall from earlier chapters, that the encoder stacks multiple Transformer blocks, each of which consists of several sublayers, resulting in a deep network. While depth is inevitable to learn hierarchical representations, the training of such a network is complicated. As neural networks are commonly trained using backpropagation, which relies on the gradient of the error to be propagated through the network starting at the last layer, vanishing or \glspl{exploding-gradient} pose a major difficulty in training deep neural nets \autocite[][1]{heDeepResidualLearning2015}. Without countermeasures, stacking multiple layers in the encoder and decoder of the Transformers impedes the gradient information to flow efficiently through the network and hampers the training behaviour \autocite[][1811]{wangLearningDeepTransformer2019}.
 
-As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connections around each sublayer, whereby the output of the sublayer is added element-wisely to its input. Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sublayer and thereby reach deeper layers within the stack. Also, vanishing or \glspl{exploding-gradient} are mitigated, as gradients can bypass the sublayer, eventually contributing towards an easier optimization \autocite[][3591]{liuRethinkingSkipConnection2020}. Residual connections moreover help to preserve the positional embeddings (cp. \cref{sec:positional-encoding}), as the layer's inputs are maintained in the identity mapping. Another technique to improve the training behaviour is layer normalization.
+As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connections around each sublayer, whereby the output of the sublayer is added element-wisely to its input. Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sublayer and thereby reach deeper layers within the stack. Vanishing or \glspl{exploding-gradient} are also mitigated, as gradients can bypass the sublayer, eventually contributing towards an easier optimization \autocite[][3591]{liuRethinkingSkipConnection2020}. Residual connections moreover help to preserve the positional embeddings (cp. \cref{sec:positional-encoding}), as the layer's inputs are maintained in the identity mapping. Another technique to improve the training behaviour is layer normalization.
 
 \textcite[][3]{vaswaniAttentionAllYou2017} extensively draw on layer normalization \autocite[][4]{baLayerNormalization2016} after the multi-headed attention and feed-forward sublayers. It is used for normalizing the activations of the sublayer and to stabilize and accelerate the training of the network \autocite[][2]{baLayerNormalization2016}. For the Transformer, the normalization statistics are calculated separately for every instance, which guarantees scalability across different batch sizes. For a vector $\gls{e}\in \mathbb{R}^{d_e}$ the normalized output is given by
 \begin{equation}
@@ -527,7 +525,7 @@ Until now it remains unclear, how the layer normalization intertwines with the s
 
 Post-norm Transformers add layer normalization to the sublayer \emph{after} adding the input from the residual connections. The arrangement is depicted in \cref{fig:post-norm-residual}. In contrast for the pre-norm Transformer, the normalization is applied \emph{before} the self-attention and feed-forward sublayers and inside the residual connections. Pre-norm requires one additional normalization layer to pass only well-conditioned outputs from the Transformer block to the successive layers \autocite[][5]{xiongLayerNormalizationTransformer2020}. The setup is depicted in \cref{fig:pre-norm-residual}.
 
-\textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalization, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of this wide-spread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. Also, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in vanishing gradients, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in the subsequent Section and \cref{sec:training-and-tuning}.
+\textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalization, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of this wide-spread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. In addition, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in vanishing gradients, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in our discussion on the FT-Transformer.
 
 \subsection{FT-Transformer}\label{sec:fttransformer}
 
@@ -600,18 +598,6 @@ Our coverage of semi-supervised approaches includes \emph{self-training} for gra
 Self-training is a wrapper algorithm around a probabilistic classifier, that incorporates its predictions of unlabelled instances as pseudo labels \autocite[][190]{yarowskyUnsupervisedWordSense1995}.
 
 Initially, a base classifier, e.g., gradient-boosting, is fitted on the labelled data points in a supervised manner. The classifier then assigns labels, so-called pseudo labels, to unlabelled instances. A subset of unlabelled instances with high-confidence predictions is selected, removed from the unlabelled dataset and added to labelled data dataset. A new classifier is then retrained on the labelled and pseudo-labelled instances \autocite[][190--192]{yarowskyUnsupervisedWordSense1995}. The process is repeated for several iterations until an abortion criterion applies, such as the maximum number of iterations is exhausted or when no unlabelled instances are left to label.
-
-% Add if really needed 
-% The complete algorithm is described in \cref{algo:self-training}.
-% \begin{algorithm}
-%     % input/ouput names
-%     \SetKwInOut{Input}{Input}
-%     \SetKwInOut{Output}{Output}
-%     tbd
-%     % caption + label
-%     \caption{Self-Training Algorithm}
-%     \label{algo:self-training}
-% \end{algorithm}
 
 Recall from our discussion on gradient-boosted trees in \cref{sec:gradient-boosting-procedure} that we optimized for the cross-entropy loss on the training set. When coupled with self-training in each training iteration the classifier $h$ now jointly minimizes the loss over the labelled instances $S$ and the remaining, unlabelled samples $X_{\not{U}}$:
 $$
@@ -846,17 +832,52 @@ for evaluation.
 
 \subsection{Evaluation}\label{sec:evaluation}
 
-Subsequent sub-chapters discuss measures to retrieve feature importance estimates from the estimators and metrics for evaluation.
+Subsequent sub-chapters discusses metrics for evaluation and measures to retrieve feature importance estimates from the estimators.
+
+\subsubsection{Evaluation Metric}\label{sec:evaluation-metric}
+
+Our goal is to maximize the number of trades, where the predicted trade initiator matches the true trade initiator. We assess the quality of our model’s prediction in terms of \emph{accuracy}, which can be stated as:
+\begin{equation}
+% \operatorname{accuracy} \colon \mathbb{R}^{N} \times \mathbb{R}^{N} \to  \left[0, 1\right], \quad 
+\operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{L}_{0-1}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
+\end{equation}
+where $\operatorname{L}_{0-1}(\cdot)$ is the 0-1-loss given by:
+\begin{equation}
+    % \operatorname{l}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad 
+    \operatorname{L}_{0-1}(y, \hat{y}) = \mathbb{I}\left(y\neq \hat{y}\right).
+\end{equation}
+
+Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss. Notably, the loss is the same for false positives and negatives.
+
+Our datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vice versa have similar associated costs, which makes accuracy an ideal choice as a performance metric~\footnote{The \gls{ISE} test set consists of \SI{48.5973}{\percent} of buy trades and \SI{46.1278}{\percent} of the \gls{CBOE} test set are buy trades.}. As the 0-1-loss and in consequence, the accuracy is not differentiable, it cannot be used in optimization, but as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test sets.
 
 \subsubsection{Feature Importance
     Measure (2~p)}\label{sec:feature-importance-measure}
 
-Classical trade classification algorithms, as a rule-based approach, are transparent and thus provide some degree of interpretability.
+    Naturally, one would like to obtain insights into how the models arrived at the prediction and identify features relevant for the prediction. Both aspects can be subsumed under the term \emph{interpretability}. Following, \textcite[][4]{liptonMythosModelInterpretability2017} interpretability can be reached through model transparency or post-hoc interpretability methods. Transparent models provide interpretability through a transparent mechanism in the model, whereas post-hoc methods extract information from the already learned model \autocite[][4--5]{liptonMythosModelInterpretability2017}.
 
-The machine-learning classifiers, studied in this work can be deemed a black box model. Due to the sheer size of the network or ensemble, both classifiers are no longer transparent, necessitating post-hoc techniques for interpretability. We require a model-agnostic approach, which suffices for a cross-comparison between all classifiers. Our goal is to identify features that are important for the \emph{correct prediction} in the model. This is fundamentally different from methods, such as LIME or SHAP, which attribute \emph{any} prediction to the input features.
+    Classical trade classification algorithms, as a rule-based classifier, are transparent with an easily understandable decision process, and thus provide interpretability \autocite[][91]{barredoarrietaExplainableArtificialIntelligence2020}. Interpretability, however decreases for deep stacked combinations involving a large feature count, when interactions between base rules become more complex and the effect of single feature on the final prediction more challenging to interpret.
+    
+    The machine-learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through a \emph{model-agnostic, post-hoc interpretability techniques}. Thereby, our goal is to identify features that are important for the \emph{correct prediction}. This is fundamentally different from methods like standard \gls{SHAP}, that attribute \emph{any} prediction to the input features \autocite[][??]{chenTrueModelTrue2020}.
+    
+    Many model-agnostic methods are based on the randomly permuting features values. In this work, we specifically consider the variants \emph{permutation feature importance} \autocite[][23--24]{breimanRandomForests2001} and partial-dependence plots \autocite[][26--28]{friedmanGreedyFunctionApproximation2001}. Both serve a complementary purpose. Permutation feature importance derives the feature importance from the change in predictive accuracy before and after permuting a feature randomly, whereas partial dependence plots visualize the average change in prediction, if feature values are altered. These are widely adopted and computationally efficient.
 
 \textbf{Random Feature Permutation}
 
+Random feature permutation has the desirable properties of being easy to interpret, computationally efficient and model-agnostic. Like other feature importance measures, including \gls{SHAP}, it assumes independence between features \autocite[][2]{aasExplainingIndividualPredictions2021}.
+
+As defined above, every feature is permuted independently from other features which artificially breaks correlations between features and creates unrealistic feature combinations. Consider, for example, the apparent correlation between the ask, bid price and trade price. Permuting only the ask could result in strongly negative or extremely large spreads since the bid remains unchanged. In effect, the presence of correlated features leads to an overestimate of the importance of correlated features \autocite[][3]{stroblConditionalVariableImportance2008}.
+
+Vice versa, can the presence of correlated features decrease the importance of the associated feature, as the feature importance now distributed across the features, thereby underestimating the true importance of the features. This effects all features, where information is encoded redundantly, such as the bid-ask ratio. 
+
+% (footnote-for an extended discussion of substitution effects on feature importance in the financial domain see \textcite[][114--118]{lopezdepradoAdvancesFinancialMachine2018}.
+
+To alleviate the bias from dependent, we group dependent features and estimate the feature importance on the group-level. Arranging all features in a tree-like hierarchy gives us the freedom to derive feature importances at different levels, enabling cross-comparisons between classical rules and machine learning based classifiers, as grouping of raw and derived features makes the implementation of classical rules transparent. 
+
+% (footnote: Consider the implementation of the tick rule. Here, the implementation could use the feature price lag (ex) or calculate the price change from the trade price and price lag (ex). If not grouped, feature importances would be attributed to either the derived feature or raw features causing difficulties in comparison with machine learning classifiers, which have access to all three features simultaneously. Grouping all three features resolves this issue at the cost of interpretability.). 
+
+Other than the classical random feature permutation, all features sharing the same parent node are permuted together. We define the following dependency structure:
+(tbd)
 
 \textbf{Partial Dependence Plots}
 
@@ -864,7 +885,7 @@ The machine-learning classifiers, studied in this work can be deemed a black box
 
 In addition to random feature permutation, Transformer-based models offer \emph{some} interpretability through their attention mechanism. One has to distinguish interpretability through \emph{explainability} from \emph{transparency} \autocite[][4--5]{liptonMythosModelInterpretability2017}. In recent research a major controversy embarked around the question, of whether attention offers explanations to model predictions \autocites[cp.][150]{bastingsElephantInterpretabilityRoom2020}[][5--7]{jainAttentionNotExplanation2019}[][9]{wiegreffeAttentionNotNot2019}. The debate sparked around opposing definitions of explainability and the consistency of attention scores with other, established feature-importance measures. Our focus is less on post-hoc explainability of the model, but rather on transparency. Consistent with \textcite[][8]{wiegreffeAttentionNotNot2019} we view attention scores as a vehicle to model transparency.
 
-Recall from our discussion on attention (cp. \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features that the model is paying attention to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in \cref{fig:attention-maps}.
+Recall from our discussion on attention (cp. \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features to which the model is paying attention to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in \cref{fig:attention-maps}.
 
 \begin{figure}[ht]
     \centering
@@ -922,18 +943,6 @@ Both datasets are approximately balanced and buyer-initiated trades predicted as
 \newpage
 \section{Results}\label{sec:results}
 
-
-
-% % slightly edited table
-% \newpage
-% \input{Content/cboe_supervised_test-diff.tex}
-
-% \newpage
-% \input{Content/ise_supervised_test-diff.tex}
-
-% \newpage
-
-% \input{Content/cboe_all_supervised_all-master.tex}
 
 \subsection{Results of Supervised
     Models (2~p)}\label{sec:results-of-supervised-models}

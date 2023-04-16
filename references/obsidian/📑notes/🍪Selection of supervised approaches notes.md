@@ -90,6 +90,8 @@ Among numerous classifiers, some are hard classifiers while some are soft ones. 
 
 hard decision boundary / boolean decision.
 
+An accuracy-interpretability trade-off [42]istrue for almost all machine learning methods. For example, deep learning networks, an advanced form of machine learning, typically combine the activities of several hundred or even thousands of neurons. Despite each neural unit’s relative simplicity, the network’s structure can be so intricate that it may not be fully understood, even by its designer.
+
 
 
 
