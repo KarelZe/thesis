@@ -432,6 +432,7 @@ These categorical embeddings can potentially capture the intrinsic properties of
 \end{figure}
 
 Despite these advantages, high-cardinal features present a challenge for embeddings since they are typically learned from a few samples, which can lead to overfitting. Handling high-dimensional categorical data remains an open research problem, as noted by \textcite[][2]{borisovDeepNeuralNetworks2022}.
+
 \textbf{Limitations}
 
 One limitation of all learned embeddings is that they contribute to the parameter count of the model through the embedding matrix or increased layer capacity of subsequent layers. The dimension of the embedding $d_{e}$ affects the expressiveness and complexity of the network and is an important hyperparameter.
@@ -731,9 +732,7 @@ Models are pre-trained on unlabelled samples from the last year of the training 
 
 We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visualized in \cref{fig:train-test-split}. The start date ensures that leakage from the \gls{ISE} set is minimized~\footnote{The datasets contain features, such as the \gls{NBBO}, that are identical for both sets, assuming trades were executed at both exchanges simultaneously. Utilizing the full \gls{CBOE} sample could result in exaggerated performance estimates the corresponding \gls{ISE} trade is used in training.}.
 
-Our train-test-split assumes that all subsets are drawn from the same distribution, so fitting a classifier on the training set and optimizing for the validation set provides good estimates for the test set. To validate this assumption, we use adversarial validation. Specifically, we re-label all training samples with $y=-1$ and all trades of the validation set with $y=1$, train a classifier on a random subset of the composed data set and predict class conformance. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which ranges between $\left[-1, 1\right]$ and is insensitive to class imbalances~\footnote{Classes are imbalanced, due to the training set being three times the size of the validation set.}. Assuming train and validation samples are sampled from the same distribution, the performance estimate is near a random guess, or $\operatorname{MCC} = 0$, Depending on the feature sets, the \gls{MCC} ranges between \SI{0.00}{\percent} and \SI{99.999}{\percent} suggesting training and validation sets are approximately similar.
-
-The next section discusses techniques used in training the classifiers.
+Our train-test-split assumes that all subsets are drawn from the same distribution, so fitting a classifier on the training set and optimizing for the validation set provides good estimates for the test set. To validate this assumption, we use adversarial validation. Specifically, we re-label all training samples with $y=-1$ and all trades of the validation set with $y=1$, train a classifier on a random subset of the composed data set and predict class conformance. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which ranges between $\left[-1, 1\right]$ and is insensitive to class imbalances~\footnote{Classes are imbalanced, due to the training set being three times the size of the validation set.}. Assuming train and validation samples are sampled from the same distribution, the performance estimate is near a random guess, or $\operatorname{MCC} = 0$, Depending on the feature sets, the \gls{MCC} ranges between \SI{0.00}{\percent} and \SI{99.999}{\percent} suggesting training and validation sets are approximately similar. The next section discusses techniques used in training the classifiers.
 
 \subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
 
@@ -786,10 +785,10 @@ The hyperparameter search for the FT-Transformer is identical to \textcite[][18]
     \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[ width=0.7\linewidth]{3laathab-hyperparam-search-space.pdf}}
 \end{figure} 
 
-\clearpage  % added
+\clearpage
 
 \begin{figure}[ht]
-        \addtocounter{figure}{-1}  % added
+        \addtocounter{figure}{-1} 
     \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 3\label{fig:ise-gbm-hyperparam-ml}]{\includegraphics[ width=0.7\linewidth]{2a9iqsn0-hyperparam-search-space.pdf}}
     \caption[]{Hyperparameter Search Space of \gls{GBM} on \gls{ISE} Validation Set}
     \label{fig:ise-gbm-hyperparam}
@@ -852,15 +851,15 @@ Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for e
 Our datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vice versa have similar associated costs, which makes accuracy an ideal choice as a performance metric~\footnote{The \gls{ISE} test set consists of \SI{48.5973}{\percent} of buy trades and \SI{46.1278}{\percent} of the \gls{CBOE} test set are buy trades.}. As the 0-1-loss and in consequence, the accuracy is not differentiable, it cannot be used in optimization, but as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test sets.
 
 \subsubsection{Feature Importance
-    Measure (2~p)}\label{sec:feature-importance-measure}
+    Measure}\label{sec:feature-importance-measure}
 
     Naturally, one would like to obtain insights into how the models arrived at the prediction and identify features relevant for the prediction. Both aspects can be subsumed under the term \emph{interpretability}. Following, \textcite[][4]{liptonMythosModelInterpretability2017} interpretability can be reached through model transparency or post-hoc interpretability methods. Transparent models provide interpretability through a transparent mechanism in the model, whereas post-hoc methods extract information from the already learned model \autocite[][4--5]{liptonMythosModelInterpretability2017}.
 
-    Classical trade classification algorithms, as a rule-based classifier, are transparent with an easily understandable decision process, and thus provide interpretability \autocite[][91]{barredoarrietaExplainableArtificialIntelligence2020}. Interpretability, however decreases for deep stacked combinations involving a large feature count, when interactions between base rules become more complex and the effect of single feature on the final prediction more challenging to interpret.
+    Classical trade classification algorithms, as a rule-based classifier, are transparent with an easily understandable decision process and thus provide interpretability \autocite[][91]{barredoarrietaExplainableArtificialIntelligence2020}. Interpretability, however, decreases for deep, stacked combinations involving a large feature count, when interactions between base rules become more complex and the effect of a single feature on the final prediction more challenging to interpret.
     
-    The machine-learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through a \emph{model-agnostic, post-hoc interpretability techniques}. Thereby, our goal is to identify features that are important for the \emph{correct prediction}. This is fundamentally different from methods like standard \gls{SHAP}, that attribute \emph{any} prediction to the input features \autocite[][??]{chenTrueModelTrue2020}.
+    The machine-learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through a \emph{model-agnostic, post-hoc interpretability techniques}. Thereby, our goal is to identify features that are important for the \emph{correct prediction}. This is fundamentally different from methods like standard \gls{SHAP}, that attribute \emph{any} prediction to the input features \autocite[][??]{chenTrueModelTrue2020}.
     
-    Many model-agnostic methods are based on the randomly permuting features values. In this work, we specifically consider the variants \emph{permutation feature importance} \autocite[][23--24]{breimanRandomForests2001} and partial-dependence plots \autocite[][26--28]{friedmanGreedyFunctionApproximation2001}. Both serve a complementary purpose. Permutation feature importance derives the feature importance from the change in predictive accuracy before and after permuting a feature randomly, whereas partial dependence plots visualize the average change in prediction, if feature values are altered. These are widely adopted and computationally efficient.
+    Many model-agnostic methods are based on the randomly permuting feature values. In this work, we specifically consider the variants \emph{permutation feature importance} \autocite[][23--24]{breimanRandomForests2001} and partial-dependence plots \autocite[][26--28]{friedmanGreedyFunctionApproximation2001}. Both serve a complementary purpose. Permutation feature importance derives the feature importance from the change in predictive accuracy before and after permuting a feature randomly, whereas partial dependence plots visualize the average change in prediction, if feature values are altered. These are widely adopted and computationally efficient.
 
 \textbf{Random Feature Permutation}
 
@@ -879,7 +878,7 @@ which is the increase in loss, i.e., accuracy, before and after permutation \tex
 
 As defined above, every feature is permuted independently from other features which artificially breaks correlations between features and creates unrealistic feature combinations. Consider, for example, the apparent correlation between the ask, bid price and trade price. Permuting only the ask could result in strongly negative or extremely large spreads since the bid remains unchanged. In effect, the presence of correlated features leads to an overestimate of the importance of correlated features \autocite[][3]{stroblConditionalVariableImportance2008}.
 
-Vice versa, can the presence of correlated features decrease the importance of the associated feature, as the feature importance now distributed across the features, thereby underestimating the true importance of the features. This affects all features, where information is encoded redundantly, such as the bid-ask ratio. 
+Vice versa, can the presence of correlated features decrease the importance of the associated feature, as the feature importance is now distributed across the features, thereby underestimating the true importance of the features. This affects all features, where information is encoded redundantly, such as the bid-ask ratio. 
 
 % (footnote-for an extended discussion of substitution effects on feature importance in the financial domain see \textcite[][114--118]{lopezdepradoAdvancesFinancialMachine2018}.
 
@@ -892,13 +891,13 @@ Other than the classical random feature permutation, all features sharing the sa
 
 \textbf{Partial Dependence Plots}
 
-Related to the concept of random feature permutation are partial dependence plots by \textcite[][26--28]{friedmanGreedyFunctionApproximation2001} visualize the dependency between a single (or multiple) feature and the effect on the traget value as the feature value is adjusted / after marginalizing out all other features. Let $\mathbf{X}^{x,j}$ be a matrix, where the $j$-th feature value is replaced by $x$ and all other features are unaltered, partial feature dependence function:
+Related to the concept of random feature permutation are partial dependence plots by \textcite[][26--28]{friedmanGreedyFunctionApproximation2001} visualize the dependency between a single (or multiple) feature and the effect on the target value as the feature value is adjusted / after marginalizing out all other features. Let $\mathbf{X}^{x,j}$ be a matrix, where the $j$-th feature value is replaced by $x$ and all other features are unaltered, partial feature dependence function:
 \begin{equation}
 \operatorname{PD}_{j}(x) = \frac{1}{N} \sum_{i=1}^{N} h(\mathbf{x}^{x,j}_{i}),
 \end{equation}
 now gives the marginal average over all other features \autocite[][81]{hookerUnrestrictedPermutationForces2021}. By iterating over a grid of (observed) $x$, we obtain the partial dependence plot for the feature.
 
-Like random feature permutation, partial dependence plots are a global feature importance measure, unable to capture dependencies between features and visualization is constrained to two dimensions or features at once \autocite[][p. 388]{hastietrevorElementsStatisticalLearning2009}. Despite these limitation, partial dependence plots to help us verify the assumed relationships in classical rules, such as the the linear relationship in the tick rule, with the learned relationships in our classifier.
+Like random feature permutation, partial dependence plots are a global feature importance measure, unable to capture dependencies between features and visualization is constrained to two dimensions or features at once \autocite[][p. 388]{hastietrevorElementsStatisticalLearning2009}. Despite these limitations partial dependence plots help us verify the assumed relationships in classical rules, such as the linear relationship in the tick rule, with the learned relationships in our classifier.
 
 
 \textbf{Attention Maps}
