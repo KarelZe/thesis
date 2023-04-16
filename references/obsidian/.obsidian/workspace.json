@@ -6,7 +6,6 @@
       {
         "id": "2e4bb12a56b63b7f",
         "type": "tabs",
-        "dimension": 70.56659308314937,
         "children": [
           {
             "id": "65039196d3829d86",
@@ -23,33 +22,15 @@
             }
           },
           {
-            "id": "29cf235c1a6590d1",
+            "id": "81beebcc5801c2ca",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🤖Pre-training of Transformers.md",
+                "file": "notes/🧭Random Feature Permutation notes.md",
                 "mode": "source",
                 "source": false
               }
-            }
-          }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "1115158df741865e",
-        "type": "tabs",
-        "dimension": 29.433406916850625,
-        "children": [
-          {
-            "id": "f35a250acbe1a2dc",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "graph",
-              "state": {},
-              "pinned": true
             }
           }
         ]
@@ -110,7 +91,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🤖Pre-training of Transformers.md",
+                "file": "📖chapters/Random Feature Permutation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -138,7 +119,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🤖Pre-training of Transformers.md"
+                "file": "📖chapters/🧭Random Feature Permutation.md"
               }
             }
           },
@@ -169,22 +150,14 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "29cf235c1a6590d1",
+  "active": "65039196d3829d86",
   "lastOpenFiles": [
-    "🖼️Media/Pasted image 20230415084057.png",
-    "📥Inbox/@stroblConditionalVariableImportance2008.md",
-    "📥Inbox/@hookerUnrestrictedPermutationForces2021.md",
-    "🖼️Media/Pasted image 20230408170132.png",
-    "🖼️Media/Pasted image 20230414105714.png",
-    "🖼️Media/rope-embeddings.png",
-    "🖼️Media/visualization-of-word-embeddings.png",
-    "📥Inbox/@powerGrokkingGeneralizationOverfitting2022.md",
-    "📥Inbox/@suRoFormerEnhancedTransformer2022.md",
-    "📑notes/💡Hyperparameter tuning notes.md",
-    "🖼️Media/sample-validation-curve.png",
-    "📖chapters/🅰️Attention.md",
-    "📖chapters/🧭Random Feature Permutation.md",
     "📑notes/🧭Random Feature Permutation notes.md",
+    "📖chapters/🧭Random Feature Permutation.md",
+    "📥Inbox/@fisherAllModelsAre.md",
+    "📖chapters/🤖Pre-training of Transformers.md",
+    "🖼️Media/Pasted image 20230415084057.png",
+    "📖chapters/🅰️Attention.md",
     "📖chapters/🧭Feature Importance Measure.md",
     "📑notes/🍪Selection of supervised approaches notes.md",
     "📖chapters/🔢Trade initiator.md",
@@ -201,10 +174,17 @@
     "📑notes/🍕Application study notes.md",
     "📥Inbox/@sarkarMarketSidednessInsights2023.md",
     "📥Inbox/@kavajeczPackagingLiquidityBlind2005.md",
-    "📥Inbox/@fisherAllModelsAre.md",
+    "📥Inbox/@chenTrueModelTrue2020.md",
+    "📥Inbox/@barredoarrietaExplainableArtificialIntelligence2020.md",
+    "📥Inbox/@aasExplainingIndividualPredictions2021.md",
     "🖼️Media/presentation-of-effective-spread.png",
     "🖼️Media/performance-degradations.png",
     "🖼️Media/Pasted image 20230407182457.png",
-    "🖼️Media/Pasted image 20230405172011.png"
+    "🖼️Media/Pasted image 20230405172011.png",
+    "🖼️Media/Pasted image 20230405171940.png",
+    "🖼️Media/Pasted image 20230405171919.png",
+    "🖼️Media/Pasted image 20230405171902.png",
+    "🖼️Media/Pasted image 20230405170430.png",
+    "🖼️Media/Pasted image 20230405170411.png"
   ]
 }
