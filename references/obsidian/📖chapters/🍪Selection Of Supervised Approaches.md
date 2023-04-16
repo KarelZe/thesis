@@ -142,3 +142,6 @@ Authors discuss an ideal Bayesian trade classification approach. Authors view th
 
 
 In the case of decision trees, where Pr(_y_|**x**) is the proportion of training samples with label y in the leaf where **x** ends up, these distortions come about because learning algorithms such as [C4.5](https://en.wikipedia.org/wiki/C4.5 "C4.5") or [CART](https://en.wikipedia.org/wiki/Predictive_analytics#Classification_and_regression_trees "Predictive analytics") explicitly aim to produce homogeneous leaves (giving probabilities close to zero or one, and thus high [bias](https://en.wikipedia.org/wiki/Bias_of_an_estimator "Bias of an estimator")) while using few samples to estimate the relevant proportion (high [variance](https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff "Bias–variance tradeoff")).[[4]](https://en.wikipedia.org/wiki/Probabilistic_classification#cite_note-4)
+
+
+“Our contributions are as follow: 1. We create a new benchmark for tabular data, with a precise methodology for choosing and preprocessing a large number of representative datasets. We share these datasets through OpenML [Vanschoren et al., 2014], which makes them easy to use. 2. We extensively compare deep learning models and tree-based models on generic tabular datasets in multiple settings, accounting for the cost of choosing hyperparameters.” (Grinsztajn et al., 2022, p. 2)

@@ -27,7 +27,7 @@ from tests.templates import NeuralNetTestsMixin
 class TestFTTransformer(NeuralNetTestsMixin):
     """
     Perform tests specified in `NeuralNetTestsMixin` for\
-    `TabTransformer` model.
+    `FTTransformer` model.
 
     Args:
         TestCase (test case): test class
