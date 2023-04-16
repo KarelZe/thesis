@@ -47,11 +47,11 @@ def check_formulae(file_name: str, file_contents: str) -> None:
         file_name (str): file name
         file_contents (str): contents of file
     """
-    matches = re.findall(r"\\dot\s|×|\\mathbf|\\mathrm|\\textit", file_contents)
+    matches = re.findall(r"\\dot\s|×|\\boldsymbol|\\mathrm|\\textit", file_contents)
     if matches:
         msg = typer.style(
             f"{file_name}: {matches} (prefer \\times over \\cdot; prefer"
-            f"\\boldsymbol over \\mathbf; prefer \\emph over \\textit; prefer"
+            f"\\mathbf over \\boldsymbol; prefer \\emph over \\textit; prefer"
             f"\\tfrac over \\frac, avoid \\mathrm)",
             fg=typer.colors.YELLOW,
         )
