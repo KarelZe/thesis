@@ -3,6 +3,14 @@ Our goal is to extend Transformers and gradient-boosted trees for the semi-super
 In our quest to perform a fair comparison between the supervised and semi-supervised variants, we aim to make the extensions minimally intrusive.
 
 ## Self-Training
+
+[[@dalche-bucSemisupervisedMarginBoost2001]]
+*SSMBoost* requires semi-supervised base learners, which 
+ASSEMBLE 
+
+See [[@vanengelenSurveySemisupervisedLearning2020]] for different approaches.
+For the existing semi-supervised boosting methods [Bennett et al., 2002; Chen and Wang, 2007; d’Alche-Buc ´ et al., 2002; Mallapragada et al., 2009; Saffari et al., 2008; Zheng et al., 2009],A Direct Boosting Approach for Semi-Supervised Classification ([[@zhaiDirectBoostingApproach]]).
+
 Both approaches, however, require changes to the boosting procedure or the base learner. An alternative is to combine gls-gbm with self-training. Self-training is a wrapper algorithm around a supervised classifier, that incorporates its most-confident predictions of unlabelled instances into the training procedure ([[@yarowskyUnsupervisedWordSense1995]]190). Being a model-agnostic wrapper, it does not change the classifier and maximum comparability with the standard gradient-boosting is given. Furthermore, its prevalent usage in literature makes it a compelling option for the application in semi-supervised trade classification.
 
 ## Pre-Training + Transformer

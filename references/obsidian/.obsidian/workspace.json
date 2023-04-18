@@ -20,24 +20,6 @@
             }
           }
         ]
-      },
-      {
-        "id": "665085f4ea2b3e78",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "8f6dc4e4cb9be4e0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🍪Selection of semisupervised Approaches notes.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ]
       }
     ],
     "direction": "vertical"
@@ -158,6 +140,7 @@
   "lastOpenFiles": [
     "📑notes/🍪Selection of semisupervised Approaches notes.md",
     "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+    "📥Inbox/@dalche-bucSemisupervisedMarginBoost2001.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📖chapters/🤖Pre-training of Transformers.md",
     "📥Inbox/@erhanWhyDoesUnsupervised.md",
@@ -183,7 +166,6 @@
     "Ammo Trade Initiator.md",
     "📑notes/🌏Dataset notes.md",
     "📖chapters/🌏Dataset.md",
-    "📥Inbox/@chenTrueModelTrue2020.md",
     "🖼️Media/presentation-of-effective-spread.png",
     "🖼️Media/performance-degradations.png",
     "🖼️Media/Pasted image 20230407182457.png",
