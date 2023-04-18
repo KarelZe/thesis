@@ -11,45 +11,46 @@
 
 While classical trade classification algorithms are extensively tested in the stock markets (e.g., \textcite[][3806--3821]{chakrabartyTradeClassificationAlgorithms2012}; \textcite[][259--286]{odders-whiteOccurrenceConsequencesInaccurate2000}), few works have examined trade classification in option markets.
 
-\textcite[882--883]{savickasInferringDirectionOption2003} were the first to compare the tick rule, quote rule, the Lee and Ready algorithm and the \gls{EMO} rule for options traded at the \gls{CBOE}. The data set spans a period from July 3, 1995 -- December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule (\SI{78.98}{\percent}) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
+\textcite[882--883]{savickasInferringDirectionOption2003} were the first to compare the tick rule, quote rule, the \gls{LR} algorithm and the \gls{EMO} rule for options traded at the \gls{CBOE}. The data set spans a period from July 3, 1995 -- December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule (\SI{78.98}{\percent}) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
 
-The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}. The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the \gls{CBOE} and \gls{ISE} classical rules like the popular Lee and Ready algorithm only achieve accuracies of \SI{62.03}{\percent} or \SI{62.53}{\percent} and are thus significantly smaller than in the stock market. In line with the research of \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The \emph{depth rule} is an alternative to the tick rule for classifying midspread trades in the Lee and Ready algorithm and \gls{EMO} rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the \emph{trade size rule}, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing primary rules by more than \SI{10}{\percent}, at the cost of data efficiency.
+The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}. The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale data sets spanning a period from 2005 - 2017. Consistently for options traded at the \gls{CBOE} and \gls{ISE} classical rules like the popular \gls{LR}  algorithm only achieve accuracies of \SI{62.03}{\percent} or \SI{62.53}{\percent} and are thus significantly smaller than in the stock market. In line with the research of \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The depth rule is an alternative to the tick rule for classifying midspread trades in the \gls{LR}  algorithm and \gls{EMO} rule. It assigns the aggressor of the trade based on the depth at the bid or ask. Together with the trade size rule, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing previous rules by more than \SI{10}{\percent}, at the cost of data efficiency.
 
 The work of \textcite[1--39]{grauerOptionTradeClassification2022} is relevant for two reasons. First, the data set is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
 
 \subsection{Trade Classification Using Machine Learning}
 \label{sec:trade-classification-using-machine-learning}
 
-\textcite[5]{rosenthalModelingTradeDirection2012} bridges the gap between classical trade classification and machine learning by fitting a logistic regression model on lagged and unlagged predictors inherent to the tick rule, quote rule, and \gls{EMO} algorithm, as well as a sector-specific and a time-specific term. Instead of using the rule's discretized outcome as a feature, he models the rules through so-called information strength functions \textcite[481--482]{rosenthalModelingTradeDirection2012}. The proximity to the quotes, central to the \gls{EMO} algorithm, is thus modelled by a proximity function. Likewise, the information strength of the quote and tick rule is estimated as the log return between the trade price and the midpoint or the previous trade price. However, it only improves the accuracy of the \gls{EMO} algorithm by a marginal \SI{2}{\percent} for \gls{NASDAQ} stocks and \SI{1.1}{\percent} for \gls{NYSE} stocks \autocite[15]{rosenthalModelingTradeDirection2012}. Our work aims to improve the model by exploring non-linear estimators and minimizing data modelling assumptions.
+\textcite[5]{rosenthalModelingTradeDirection2012} bridges the gap between classical trade classification and machine learning by fitting a logistic regression model on lagged and unlagged predictors inherent to the tick rule, quote rule, and \gls{EMO} algorithm, as well as a sector-specific and a time-specific term. Instead of using the rule's discretized outcome as a feature, he models the rules through so-called information strength functions \textcite[6--7]{rosenthalModelingTradeDirection2012}. The proximity to the quotes, central to the \gls{EMO} algorithm, is thus modelled by a proximity function. Likewise, the information strength of the quote and tick rule is estimated as the log return between the trade price and the midpoint or the previous trade price. However, it only improves the accuracy of the \gls{EMO} algorithm by a marginal \SI{2.0}{\percent} for \gls{NASDAQ} stocks and \SI{1.1}{\percent} for \gls{NYSE} stocks \autocite[15]{rosenthalModelingTradeDirection2012}. Our work aims to improve the model by exploring non-linear estimators and minimizing data modelling assumptions.
 
-The work of \textcite[483]{blazejewskiLocalNonParametricModel2005} compares a $k$-nearest neighbour classifier against logistic regression, as well as simple heuristics like the majority vote over past trades for signing trades at the Australian stock exchange. Their results indicate that the parametric $k$-nearest neighbour classifier improves upon a linear logistic regression in terms of classification accuracy, even when trained on fewer features. The work is unique from the remaining works about feature set definition. Notably, \textcite[3]{blazejewskiLocalNonParametricModel2005} use no quote or trade prices, but rather the order book volumes, trade sizes, and past trade signs for classification. No accuracies for classical trade signing rules are reported, which impedes a comparison across different works. In line with their results, we focus on non-linear models in the form of gradient boosting and Transformers. Additionally, our paper addresses the mentioned shortcomings by benchmarking against state-of-the-art trade classification rules. We share the idea of using the trade size, as well as the bid and ask sizes for classification for some of our feature sets, but greedily predict using non-historic features.
+The work of \textcite[483]{blazejewskiLocalNonParametricModel2005} compares a $k$-nearest neighbour classifier against logistic regression, as well as simple heuristics like the majority vote over past trades for signing trades at the Australian stock exchange. Their results indicate that the parametric $k$-nearest neighbour classifier improves upon a linear logistic regression in terms of classification accuracy, even when trained on fewer features. The work is unique from the remaining works about the feature set definition. Notably, \textcite[483]{blazejewskiLocalNonParametricModel2005} use no quote or trade prices, but rather the order book volumes, trade sizes, and past trade signs for classification. No accuracies for classical trade signing rules are reported, which impedes a comparison across different works. In line with their results, we focus on non-linear models in the form of gradient boosting and Transformers. Additionally, our paper addresses the mentioned shortcomings by benchmarking against state-of-the-art trade classification rules. We share the idea of using the trade size, as well as the bid and ask sizes for classification for some of our feature sets, but greedily predict using non-historic features.
 
-Closest to our work is a publication by \textcite[1--58]{ronenMachineLearningTrade2022}. Therein, the authors compare a selection of machine learning algorithms against classical trade signing rules in the bond and stock market. Their comparison is the first to consider logistic regression, a random forest, as well as \glspl{feed-forward-network}. Over a wide range of feature sets the tree-based ensemble consistently outperforms by out-of-sample accuracy the tick rule and Lee and Ready algorithm, as well as all remaining machine learning models. For the \gls{TRACE} and ITCH data set, their best variant of the random forest outperforms the tick rule by \SI{8.3}{\percent} and \SI{3.3}{\percent}, respectively \autocite[57]{ronenMachineLearningTrade2022}. Whilst the superiority of random forests is consistent for the bond and equity market, fitted classifiers do not transfer across markets, as accuracies diminish in a transfer setting.
+Closest to our work is a publication by \textcite[1--58]{ronenMachineLearningTrade2022}. Therein, the authors compare a selection of machine learning algorithms against classical trade signing rules in the bond and stock market. Their comparison is the first to consider logistic regression, a random forest, as well as \glspl{feed-forward-network}. Over a wide range of feature sets the tree-based ensemble consistently outperforms by out-of-sample accuracy the tick rule and \gls{LR} algorithm, as well as all remaining machine learning models. For the \gls{TRACE} and ITCH data set, their best variant of the random forest outperforms the tick rule by \SI{8.3}{\percent} and \SI{3.3}{\percent}, respectively \autocite[57]{ronenMachineLearningTrade2022}. Whilst the superiority of random forests is consistent for the bond and equity market, fitted classifiers do not transfer across markets, as accuracies diminish in a transfer setting.
 
-The results convincingly demonstrate the potential of machine learning, i.e., of tree-based ensembles, for trade classification. Yet, the comparability of the results is limited by the classifier's reliance on additional features beyond quote and price data. Albeit, \textcite[4]{ronenMachineLearningTrade2022} consider a wide range of approaches, their selection leaves the latest advancements in artificial neural networks and ensemble learning aside and is mainly guided by computational constraints. Even if the focus is on standard techniques, the unclear research agenda concerning model selection, tuning, and testing hampers the transferability of their results to the yet unstudied option market.
+The results convincingly demonstrate the potential of machine learning, i.e., of tree-based ensembles, for trade classification. Yet, the comparability of the results is limited by the classifier's reliance on additional features beyond quote and price data. Albeit, \textcite[13--14]{ronenMachineLearningTrade2022} consider a wide range of approaches, their selection leaves the latest advancements in artificial neural networks and ensemble learning aside and is mainly guided by computational constraints. Even if the focus is on standard techniques, the unclear research agenda concerning model selection, tuning, and testing hampers the transferability of their results to the yet unstudied option market.
 
 In summary, machine learning has been applied successfully in the context of trade classification. No previous work performs, machine learning-based classification in the options markets.
 
 \newpage
 \section{Rule-Based Approaches}\label{sec:rule-based-approaches}
 
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it's also vital to determine the party that initiated the transaction. 
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction. 
 
-We begin with a short discussion on different definitions of the initiator and then present rule-based approaches for trade classification.
+In the following sections, we provide a concise overview of different trade initiator definitions and present rule-based methods for trade classification.
 
 \subsection{Trade Initiator}
 \label{sec:trade-initiator}
 
-The following definitions for the trade initiator are frequently found in research.
+Various definitions for the trade initiator have been proposed in prior 
+research. Among these, the:
 
-\emph{Chronological definition:} \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000} adapts a chronological view based on the order arrival. She defines the initiator of the trade as the party (buyer or seller) who places their order last, chronologically. This definition requires knowledge about the order submission times.
+\emph{Chronological view:} \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000} adapts a chronological view based on the order arrival. She defines the initiator of the trade as the party (buyer or seller) who places their order last, chronologically. This definition requires knowledge about the order submission times.
 
-\emph{Immediacy definition:} In contrast, \textcite[][94--97]{leeInferringInvestorBehavior2000}  equate the trade initiator with the party in demand for immediate execution. Thus, traders placing market orders, immediately executable at whatever price, or executable limit orders, are considered the trade initiator. By contrast, the party placing non-executable limit orders, which may not even result in a trade, is the non-initiator. This definition remains ambiguous for trades resulting from crossed limit orders, matched market orders, or batched orders  \autocite[][94--95]{leeInferringInvestorBehavior2000}.
+\emph{Immediacy view:} In contrast, \textcite[][94--97]{leeInferringInvestorBehavior2000}  equate the trade initiator with the party in demand for immediate execution. Thus, traders placing market orders, immediately executable at whatever price, or executable limit orders, are considered the trade initiator. By contrast, the party placing non-executable limit orders, which may not even result in a trade, is the non-initiator. This definition remains ambiguous for trades resulting from crossed limit orders, matched market orders, or batched orders  \autocite[][94--95]{leeInferringInvestorBehavior2000}.
 % FIXME: introduce of notion of demanding / taking away liquidity and providing liquidity
 
-\emph{Positional definition:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite to the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand. 
+\emph{Positional view:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite to the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand. 
 
-The appropriate definition differs by data availability and application context.
+The appropriate view differs by data availability and application context.
 Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is denoted as $\hat{y}$.
 
 As the trade initiator is commonly not provided with the option data sets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}. The following section introduces basic rules for trade classification. We start with the ubiquitous quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \gls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
@@ -81,7 +82,7 @@ The quote rule requires both price and quote data, which affects the data effici
 \subsubsection{Tick Test}\label{sec:tick-test}
 
 % TODO: his method uses the previous trade to gauge whether the current trade is at a higher price (and presumably a buy) or at a lower price (and presumably a sell).
-A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price \autocite[][271]{easleyDiscerningInformationTrade2016}. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test is defined as:
+A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test is defined as:
 
 \begin{equation}
     \operatorname{tick}\colon \mathbb{N}^2 \to \mathcal{Y},\quad
@@ -269,7 +270,7 @@ The most basic application is in the \gls{LR} algorithm. For a more complex exam
     \label{fig:stacking-algo}
 \end{figure}
 
-\textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} and \textcite[][18]{grauerOptionTradeClassification2022} continue the move for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and the quotes. Hence, current classification rules may not unleash their full potential. A obvious question is, if classifiers, \emph{learned} on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
+\textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} and \textcite[][18]{grauerOptionTradeClassification2022} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and the quotes. Hence, current classification rules may not unleash their full potential. A obvious question is, if classifiers, \emph{learned} on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
 
 The trend towards sophisticated, hybrid rules, combining as many as five base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to (stacked) ensembles found in machine learning and expresses the need for better classifiers. We provide an overview of state-of-the-art machine learning-based classifiers. We start by framing trade classification as a supervised learning
 problem.
@@ -278,32 +279,32 @@ problem.
 
 \newpage
 \addtocontents{toc}{\protect\newpage}
-\section{Supervised Approaches (12~p)}\label{sec:supervised-approaches}
+\section{Supervised Approaches}\label{sec:supervised-approaches}
 
 % TODO: central assumption of supervised learning (smoothness assumption) (p. 5 chapelle)
 
-\subsection{Problem Framing}\label{sec:problem-framing}
+\subsection{Framing as a Supervised Learning Problem}\label{sec:problem-framing}
 
 All presented trade classification rules from \cref{sec:rule-based-approaches}  perform \emph{discrete classification} and assign a class to the trade. Naturally, a more powerful insight is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives additional insights into the confidence of the prediction.
 
-Thus, we frame trade signing as a \emph{probabilistic} classification problem. This is similar to the work of \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis. To this end, a probabilistic view enables a richer evaluation, but constraints our selection to (semi-)supervised probabilistic classifiers. To maintain comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
+Thus, we frame trade signing as a supervised, probabilistic classification problem. This is similar to the work of \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis. To this end, a probabilistic view enables a richer evaluation, but constraints our selection to probabilistic classifiers. To maintain comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
 
 We introduce some more notation, which we will use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^m$ and described by a random variable $X$. Features in $\mathbf{x}$ may be numerical, e.g., the previous trade price or categorical e.g., the option type. Like before, the target or trade initiator is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $p^*(X, Y)$. The training set with $N$ i.i.d. samples drawn from $p^*$ is denoted by $\mathcal{D}_N=\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a $(n \times m)$-dimensional feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\cdots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\cdots, y_N \right]^{\top}$.
 
 For our machine learning classifiers, we aim to model $p_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
 
-% TODO: unclassified classs = 0.5 / 0.5
 \begin{equation}
     p(y\mid \mathbf{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
     \label{eq:prob-from-point-estimate}
 \end{equation}
 
+% TODO: It's actually a one-hot vector with the "probabilities
 Consequently, if a trade is predicted as a sell, i.e. $\hat{y} = -1$,  we assign a probability of one for being a sell and a zero probability for being a buy and vice versa. Given the estimated class probabilities, we retrieve the most probable class in $\mathcal{Y}$ as:
 \begin{equation}
     \hat{y}=\arg\max_{y \in \mathcal{Y}} p(y \mid \mathbf{x}).
     \label{eq:class-from-prob}
 \end{equation}
-\cref{eq:prob-from-point-estimate} and \cref{eq:class-from-prob} allow us to switch between a discrete and probabilistic formulation for trade classification rules. Since the class probability estimates are either 0
+\cref{eq:prob-from-point-estimate} and \cref{eq:class-from-prob} allow to alternate between a discrete and probabilistic formulation for trade classification rules. Since the class probability estimates are either 0
 and 1, no insight is gained into the confidence of the prediction. Yet, it does provide a consistent way to compare classical rules and probabilistic classifiers in machine learning. In the following section, we briefly discuss the selection of state-of-the-art classifiers that we consider for our empirical study.
 
 
@@ -534,21 +535,12 @@ Post-norm Transformers add layer normalization to the sublayer \emph{after} addi
 Many of the concepts in \cref{sec:transformer-networks} can be adapted to the tabular domain and only minor architectural changes are necessary. We cover two state-of-the-art adaptations: the FT-Transformer of \textcite[][4]{gorishniyRevisitingDeepLearning2021} that extend the classical Transformer.
 
 \begin{figure}[ht]
-    \hfill
-    \subfloat[Architecture of the TabTransformer.\label{fig:tabtransformer}]{
-        {\renewcommand\normalsize{\scriptsize}
-                \normalsize
-                \input{./Graphs/tabtransformer.pdf_tex}}
-    }
-    \hfill
-    \subfloat[Architecture of the FT-Transformer.\label{fig:fttransformer}]{
-        {\renewcommand\normalsize{\scriptsize}
+    \centering
+    {\renewcommand\normalsize{\scriptsize}
                 \normalsize
                 \input{./Graphs/fttransformer.pdf_tex}}
-    }
-    \hfill\null
-    \caption[Overview Over the FT-Transformer Architecture]{Overview Over the Architecture of FT-Transformer. The TabTransformer features a post-norm Transformer to process categorical features. The FT-Transformer uses a pre-norm arrangement and operates on continuous and categorical embeddings. Own work inspired by \textcites[][2]{huangTabTransformerTabularData2020}[][4--5]{gorishniyRevisitingDeepLearning2021}.}
-    \label{fig:tabular-transformer}
+    \caption[Overview Over the FT-Transformer Architecture]{Overview Over the Architecture of FT-Transformer. The FT-Transformer uses a pre-norm arrangement and operates on continuous and categorical embeddings. Own work inspired by \textcite[][4--5]{gorishniyRevisitingDeepLearning2021}.}
+    \label{fig:fttransformer}
 \end{figure}
 
 TabTransformer is limited by the ability to process only categorical embeddings in the Transformer unit. \textcite[][5]{gorishniyRevisitingDeepLearning2021} propose with FT-Transformer a competing architecture, that pairs an embedding unit for both numerical and categorical inputs, dubbed the feature tokenizer, with a Transformer. The complete architecture is depicted in \cref{fig:fttransformer}. Notably, the Transformer units use a pre-norm setup for easier optimization, whereby the very first normalization layer in the encoder is removed due to a propitious performance \textcite[][17]{gorishniyRevisitingDeepLearning2021}. The upstream feature tokenizer transforms all features of $\mathbf{x}$ to their embeddings. If the $j$-th feature, $x_j$, is numerical, it is projected to its embedding $\gls{e}_j \in \mathbb{R}^{d_e}$ by element-wise multiplication with a learned vector $\mathbf{W}_j \in \mathbb{R}^{d_{e}}$. Moreover, a feature-dependent bias term $\mathbf{b}_j \in \mathbb{R}$ is added, as noted in \cref{eq:numerical-embeddings-ft}.
@@ -574,13 +566,14 @@ Recall from our discussion on self-attention (cp. \cref{sec:attention}), that ea
 In the subsequent section, extend all previous models including FT-Transformer for learning on partially labelled data.
 
 \newpage
-\section{Semi-Supervised Approaches (8~p)}\label{sec:semi-supervised-approaches}
+\section{Semi-Supervised Approaches}\label{sec:semi-supervised-approaches}
+\subsection{Framing as a Semi-Supervised Learning Problem}\label{sec:problem-framing-2}
 
 Our supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the initiator can be inferred through matching procedures, which may bias the selection. Unlabelled trades, though, are abundant and can help improve the generalization performance of the classifier.
 
 Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside with true labels \autocite[][6]{chapelleSemisupervisedLearning2006}. This property renders them appealing for trade classification.
 
-Semi-supervised learning is centred around the \emph{assumption of smoothness}, which states that if two samples $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if data points are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
+Semi-supervised learning is centred around the \emph{assumption of smoothness}, which states that if two samples $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if data points are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. 
 
 \begin{figure}[h]
     \centering
@@ -589,11 +582,13 @@ Semi-supervised learning is centred around the \emph{assumption of smoothness}, 
     \label{fig:supervised-semi-supervised}
 \end{figure}
 
+Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
+
 The semi-supervised setting requires extending our notation from \cref{sec:problem-framing}, by dividing the dataset into labelled and unlabelled instances. Henceforth, $\mathbf{X}_{l} = \left[\mathbf{x}_{1},\ldots, \mathbf{x}_{l}\right]^{\top}$ is used for instances, where labels $\mathbf{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$ are known and $\mathbf{X}_{u} = \left[\mathbf{x}_{l+1},\ldots, \mathbf{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by time.
 
 Our coverage of semi-supervised approaches includes \emph{self-training} for gradient-boosting and \emph{pre-training} of Transformers, which we derive from a subsequent discussion.
 
-\subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches-1}
+\subsection{Selection of Approaches}\label{sec:selection-of-approaches-1}
 
 \textbf{Transformer}
 
