@@ -13,59 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🤖Pre-training of Transformers.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "eb980595993ad7a1",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "🖼️Media/SCARF.png"
-              }
-            }
-          },
-          {
-            "id": "8ae90371c8ad0f2b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@levinTransferLearningDeep2022.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7dbf4831658a5b4b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📥Inbox/@clarkELECTRAPretrainingText2020.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ]
-      },
-      {
-        "id": "f8381e91b21a02cb",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "6ff62bd583f035e7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🍪Selection of semisupervised Approaches notes.md",
+                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md",
                 "mode": "source",
                 "source": false
               }
@@ -129,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🤖Pre-training of Transformers.md",
+                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -157,7 +105,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🤖Pre-training of Transformers.md"
+                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md"
               }
             }
           },
@@ -190,10 +138,15 @@
   },
   "active": "7e91432f1a4dae66",
   "lastOpenFiles": [
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📑notes/🍪Selection of semisupervised Approaches notes.md",
-    "📑notes/🍪Selection of supervised approaches notes.md",
-    "📑notes/🤖Pretraining notes.md",
+    "📖chapters/🍪Selection Of Semisupervised Approaches.md",
     "📖chapters/🤖Pre-training of Transformers.md",
+    "📥Inbox/@erhanWhyDoesUnsupervised.md",
+    "📑notes/🤖Pretraining notes.md",
+    "📖chapters/🚏Exploratory Data Analysis.md",
+    "📥Inbox/@zhaiDirectBoostingApproach.md",
+    "📑notes/🍪Selection of supervised approaches notes.md",
     "📥Inbox/@bahriSCARFSelfSupervisedContrastive2022.md",
     "🖼️Media/SCARF.png",
     "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
@@ -213,11 +166,6 @@
     "📑notes/🌏Dataset notes.md",
     "📖chapters/🌏Dataset.md",
     "📥Inbox/@chenTrueModelTrue2020.md",
-    "📖chapters/👶Introduction.md",
-    "📖chapters/🧃Feature Sets.md",
-    "📥Inbox/@kavajeczPackagingLiquidityBlind2005.md",
-    "📑notes/🍕Application study notes.md",
-    "📥Inbox/@sarkarMarketSidednessInsights2023.md",
     "🖼️Media/presentation-of-effective-spread.png",
     "🖼️Media/performance-degradations.png",
     "🖼️Media/Pasted image 20230407182457.png",
