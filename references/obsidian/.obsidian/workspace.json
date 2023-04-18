@@ -20,6 +20,16 @@
             }
           },
           {
+            "id": "eb980595993ad7a1",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "🖼️Media/SCARF.png"
+              }
+            }
+          },
+          {
             "id": "8ae90371c8ad0f2b",
             "type": "leaf",
             "state": {
@@ -55,7 +65,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🤖Pretraining notes.md",
+                "file": "📑notes/🍪Selection of semisupervised Approaches notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -180,8 +190,13 @@
   },
   "active": "7e91432f1a4dae66",
   "lastOpenFiles": [
+    "📑notes/🍪Selection of semisupervised Approaches notes.md",
+    "📑notes/🍪Selection of supervised approaches notes.md",
     "📑notes/🤖Pretraining notes.md",
     "📖chapters/🤖Pre-training of Transformers.md",
+    "📥Inbox/@bahriSCARFSelfSupervisedContrastive2022.md",
+    "🖼️Media/SCARF.png",
+    "📥Inbox/@rubachevRevisitingPretrainingObjectives2022.md",
     "📥Inbox/@levinTransferLearningDeep2022.md",
     "📥Inbox/@clarkELECTRAPretrainingText2020.md",
     "📑notes/🧭Random Feature Permutation notes.md",
@@ -190,7 +205,6 @@
     "🖼️Media/Pasted image 20230415084057.png",
     "📖chapters/🅰️Attention.md",
     "📖chapters/🧭Feature Importance Measure.md",
-    "📑notes/🍪Selection of supervised approaches notes.md",
     "📖chapters/🔢Trade initiator.md",
     "📖chapters/⭕Self-Training classifier.md",
     "📑notes/🧭Evaluation metric notes.md",
@@ -204,9 +218,6 @@
     "📥Inbox/@kavajeczPackagingLiquidityBlind2005.md",
     "📑notes/🍕Application study notes.md",
     "📥Inbox/@sarkarMarketSidednessInsights2023.md",
-    "📥Inbox/@kavajeczPackagingLiquidityBlind2005.md",
-    "📥Inbox/@chenTrueModelTrue2020.md",
-    "📥Inbox/@barredoarrietaExplainableArtificialIntelligence2020.md",
     "🖼️Media/presentation-of-effective-spread.png",
     "🖼️Media/performance-degradations.png",
     "🖼️Media/Pasted image 20230407182457.png",
@@ -214,7 +225,6 @@
     "🖼️Media/Pasted image 20230405171940.png",
     "🖼️Media/Pasted image 20230405171919.png",
     "🖼️Media/Pasted image 20230405171902.png",
-    "🖼️Media/Pasted image 20230405170430.png",
-    "🖼️Media/Pasted image 20230405170411.png"
+    "🖼️Media/Pasted image 20230405170430.png"
   ]
 }
