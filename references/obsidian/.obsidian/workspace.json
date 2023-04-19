@@ -4,16 +4,46 @@
     "type": "split",
     "children": [
       {
-        "id": "5f20a3d8d35d78f4",
+        "id": "823748a15842da62",
         "type": "tabs",
         "children": [
           {
-            "id": "7e91432f1a4dae66",
+            "id": "9abf6e0d770f2ad3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+                "file": "📖chapters/🅰️Attention.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "5849e3ba8647a578",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🅰️attention notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "e36216721f42744e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c0a9fd601e61d90b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🅰️attention notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +107,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+                "file": "📖chapters/🅰️Attention.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md"
+                "file": "📖chapters/🅰️Attention.md"
               }
             }
           },
@@ -136,10 +166,21 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "7e91432f1a4dae66",
+  "active": "9abf6e0d770f2ad3",
   "lastOpenFiles": [
-    "📑notes/🍪Selection of semisupervised Approaches notes.md",
+    "📑notes/🅰️attention notes.md",
+    "📖chapters/🅰️Attention.md",
+    "📥Inbox/@dosovitskiyImageWorth16x162021.md",
+    "📑notes/🤖Transformer notes.md",
+    "🖼️Media/Pasted image 20230419123045.png",
+    "🖼️Media/Pasted image 20230419114118.png",
+    "🖼️Media/Pasted image 20230419114045.png",
+    "🖼️Media/Pasted image 20230419112529.png",
+    "🖼️Media/Pasted image 20230419110505.png",
+    "🖼️Media/Pasted image 20230419110346.png",
+    "📖chapters/🧭Attention map.md",
     "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+    "📑notes/🍪Selection of semisupervised Approaches notes.md",
     "📥Inbox/@dalche-bucSemisupervisedMarginBoost2001.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📖chapters/🤖Pre-training of Transformers.md",
@@ -157,22 +198,11 @@
     "📖chapters/🧭Random Feature Permutation.md",
     "📥Inbox/@fisherAllModelsAre.md",
     "🖼️Media/Pasted image 20230415084057.png",
-    "📖chapters/🅰️Attention.md",
     "📖chapters/🧭Feature Importance Measure.md",
     "📖chapters/🔢Trade initiator.md",
     "📖chapters/⭕Self-Training classifier.md",
     "📑notes/🧭Evaluation metric notes.md",
-    "📑notes/⭕Self-Training classifier notes.md",
-    "Ammo Trade Initiator.md",
-    "📑notes/🌏Dataset notes.md",
-    "📖chapters/🌏Dataset.md",
     "🖼️Media/presentation-of-effective-spread.png",
-    "🖼️Media/performance-degradations.png",
-    "🖼️Media/Pasted image 20230407182457.png",
-    "🖼️Media/Pasted image 20230405172011.png",
-    "🖼️Media/Pasted image 20230405171940.png",
-    "🖼️Media/Pasted image 20230405171919.png",
-    "🖼️Media/Pasted image 20230405171902.png",
-    "🖼️Media/Pasted image 20230405170430.png"
+    "🖼️Media/performance-degradations.png"
   ]
 }
