@@ -1,10 +1,39 @@
 Recall from our discussion on token embeddings, that embeddings are not yet context-sensitive. The Transformer relies on an *attention mechanism* to let tokens gather information from other tokens within the sequence and thereby encode the context onto the embeddings.
 
-Attention can be thought of as a mapping between a query and a set of key-value pairs to an output. In general, the current token is first projected onto a query vector, and all tokens in the context are mapped to key and value vectors. Similar to a soft dictionary lookup, the goal is to retrieve the values from tokens in the context for which the keys are similar to the query and return an aggregate estimate of the values weighted by the similarity of the keys and the query. Naturally, if a token in the context is important for predicting the queried token, indicated by a high similarity, the value of the context token has a large contribution to the output. The output can be considered a contextualized version of the query. ([[@phuongFormalAlgorithmsTransformers2022]]5) and ([[@vaswaniAttentionAllYou2017]]3)
+**Attention**
+Attention can be thought of as a mapping between a query and a set of key-value pairs to an output. In general, the current token is first projected onto a query vector, and all tokens in the context are mapped to key and value vectors. Similar to a soft dictionary lookup, the goal is to retrieve the values from tokens in the context for which the keys are similar to the query and return an aggregate estimate of the values weighted by the similarity of the keys and the query. Naturally, if a token in the context is important for predicting the queried token, indicated by a high similarity, the value of the context token has a large contribution to the output. ~~The output is a contextualized version of the query. ~~([[@phuongFormalAlgorithmsTransformers2022]]5) and ([[@vaswaniAttentionAllYou2017]]3)
 
-Attention first appeared in ([[@bahdanauNeuralMachineTranslation2016]]4) and was popularized by ([[@vaswaniAttentionAllYou2017]]4). The latter introduced an attention mechanism known as *scaled dot-product attention*, which we cover now in detail.
+Attention first appeared in ([[@bahdanauNeuralMachineTranslation2016]]4) and was popularized by ([[@vaswaniAttentionAllYou2017]]4). The latter introduced an attention mechanism known as *scaled dot-product attention*, which we cover in detail.
+
+**Scaled Dot-Product Attention**
+Analogous to before, *scaled dot-product attention* estimates the similarity between queries and keys, now as the dot product. The resulting attention scores are divided by $\sqrt{d_{\text{attn}}}$, and normalized using a softmax function to obtain the attention weights. A multiplication of the attention weights with the values yields the outputs. 
+
+For computational efficiency, attention is performed simultaneously over multiple queries. Thus, the authors group queries, keys, and values in matrices. In matrix notation outputs are estimated as:
+$$
+\tilde{\mathbf{V}} = \mathbf{V} \operatorname{softmax}\left(\frac{1}{\sqrt{d_{\text{attn}}}}\mathbf{K}^{T} \mathbf{Q}\right)
+$$
 
 
+The scaling factor is int
+Softmax
+
+Instead of considering a single query, key, and value at a time, the authors perform attention on matrices, where multiple queries, keys, and values into matrices. 
+
+and divides by some scaling factor. The so-obtained normalize the so obtained attention weights using the softmax function and multiply with the values to obtain the output.
+
+
+Here, d
+
+Like 
+
+row-wise
+
+Scaled dot-product attention, requires queries, keys, and, and values. 
+
+Typically, 
+
+
+The similarity between the queries, and the 
 
 ([[@vaswaniAttentionAllYou2017]]4) introduce a 
 
@@ -12,9 +41,6 @@ The attention weights are estimated as the dot product between Q and K.
 
 
 “The attention matrix A = QK> is chiefly responsible for learning alignment scores between tokens in the sequence. In this formulation, the dot product between each element/token in the query (Q) and key (K) is taken. This drives the self-alignment process in self-attention whereby tokens learn to gather from each other.” (Tay et al., 2022, p. 4)
-
-
-
 
 The attention mechanism 
 

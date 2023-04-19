@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🅰️Attention.md",
+                "file": "📖chapters/🔢Stacked rules.md",
                 "mode": "source",
                 "source": false
               }
@@ -107,7 +107,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🅰️Attention.md",
+                "file": "📖chapters/🔢Stacked rules.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -135,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🅰️Attention.md"
+                "file": "📖chapters/🔢Stacked rules.md"
               }
             }
           },
@@ -168,8 +168,8 @@
   },
   "active": "9abf6e0d770f2ad3",
   "lastOpenFiles": [
-    "📑notes/🅰️attention notes.md",
     "📖chapters/🅰️Attention.md",
+    "📑notes/🅰️attention notes.md",
     "📥Inbox/@dosovitskiyImageWorth16x162021.md",
     "📑notes/🤖Transformer notes.md",
     "🖼️Media/Pasted image 20230419123045.png",

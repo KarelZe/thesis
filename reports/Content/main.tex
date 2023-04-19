@@ -57,7 +57,7 @@ As the trade initiator is commonly not provided with the option data sets, it mu
 
 \subsection{Basic Rules}\label{sec:basic-rules}
 
-This chapter presents foundational classification rules, that may be used for trade classification independently or integrated into a hybrid algorithm.
+This chapter presents basic classification rules, that may be used for trade classification independently or integrated into a hybrid algorithm.
 
 \subsubsection{Quote Rule}\label{sec:quote-rule}
 
@@ -256,7 +256,7 @@ Like the previous two algorithms, the \gls{CLNV} method of \textcite[][3809]{cha
 
 The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \gls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
 
-\subsubsection{Grauer-Schuster-Uhrig-Homburg Method}\label{sec:stacked-rule}
+\subsubsection{Stacked Rule}\label{sec:stacked-rule}
 
 The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which cannot be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their ordering.
 
@@ -369,6 +369,7 @@ The encoder consists of $\gls{L}=6$ stacked Transformer blocks \autocite[][6]{va
 
 Aside from the multi-headed self-attention and feed-forward sublayer, the decoder contains a third sublayer for multi-headed self-attention on the output of the encoder, known as cross-attention. Moreover, the multi-headed self-attention mechanism in the decoder differs from the one in the encoder. Specifically, future parts of the output sequence are causally masked to prevent the model from learning on subsequent \glspl{token} during training, which enforces the autoregressive properties of the model \autocites[][3]{vaswaniAttentionAllYou2017}[][15]{narangTransformerModificationsTransfer2021}.
 
+%TODO: Graphics contains a typo: W_q in cross attention comes from output sequence. Also fonts are wrong. They should be mathbf. rename to cross-attention?
 \begin{landscape}
     \begin{figure}[ht]
         \centering
@@ -424,20 +425,10 @@ More generally, the works of \textcites[][1]{gorishniyEmbeddingsNumericalFeature
 Datasets often comprise not only continuous features but also categorical features like the underlying. In the context of tabular Transformers, learned categorical embeddings are widely used, which are similar to word embeddings \autocites[][1]{wangTransTabLearningTransferable}[][1]{gorishniyRevisitingDeepLearning2021}[][1]{huangTabTransformerTabularData2020}[][1]{somepalliSAINTImprovedNeural2021}. Similar to the word embedding, each category is mapped to an embedding vector using a learned, embedding matrix. Due to the heterogeneous nature of tabular data, embeddings may not be shared between features.
 
 These categorical embeddings can potentially capture the intrinsic properties of categorical variables by arranging similar items closer in the embedding space.  For instance, consider the underlyings $\mathtt{GOOGL}$ (Alphabet Inc.), $\mathtt{MSFT}$ (Microsoft Inc.), and $\mathtt{K}$ (Kellogg Company). Due to the overlapping field of operations, one would anticipate greater similarity between Alphabet and Google.
-% A visualization is given in \cref{fig:categorical-embeddings}.
-
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics[width=0.8\linewidth]{addition_unembedding_tsne_cropped.png}
-%     \caption[Categorical Embedddings of Transformer]{Categorical Embedddings of Transformer. Own work.}
-%     \label{fig:categorical-embeddings}
-% \end{figure}
-
-\textbf{Limitations}
 
 Despite these advantages, high-cardinal features present a challenge for embeddings since they are typically learned from a few samples, which can lead to overfitting. Handling high-dimensional categorical data remains an open research problem, as noted by \textcite[][2]{borisovDeepNeuralNetworks2022}.
 
-One limitation of all learned embeddings is that they contribute to the parameter count of the model through the embedding matrix or increased layer capacity of subsequent layers. The dimension of the embedding $d_{e}$ affects the expressiveness and complexity of the network and is an important hyperparameter.
+\textbf{Link to Positional Encoding and Attention}
 
 Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position \autocite[][72]{tunstallNaturalLanguageProcessing2022}. Positional information must be induced to the model to preserve the ordering (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualized in the self-attention mechanism (cp. \cref{sec:attention}).
 
@@ -472,13 +463,15 @@ The reason for encoding with both the sine and cosine is more subtle, as either 
 
 The positional embedding is finally added per element to the token embedding to form a \gls{token}'s initial embedding $\gls{e}$. For the $\gls{t}$-th \gls{token} of a sequence $\gls{x}$, the embedding becomes:
 \begin{equation}
-    \gls{e}=\gls{W-e}[:, x[t]]+\gls{W-p}[:, t].
+    \gls{e}=\gls{W-e}\left[:, x[t]\right]+\gls{W-p}\left[:, t\right].
     \label{eq:positional-embedding}
 \end{equation}
 
 Intuitionally, adding the positional encoding leads to a rotation of the \gls{token} embedding in the embedding space. As the positional embedding is different for every location within the sequence, otherwise identical \glspl{token}, now have a unique embedding.
 
 \subsubsection{Attention}\label{sec:attention}
+
+Recall from our discussion on token embeddings, that embeddings are not yet context-sensitive. The Transformer relies on an attention mechanism to let tokens gather information from other tokens within the sequence and thereby encode the context onto the embeddings.
 
 \subsubsection{Position-wise Feed-Forward Networks}\label{sec:position-wise-ffn}
 
@@ -530,9 +523,9 @@ Post-norm Transformers add layer normalization to the sublayer \emph{after} addi
 
 \textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalization, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of this wide-spread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. In addition, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in vanishing gradients, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in our discussion on the FT-Transformer.
 
-\subsection{FT-Transformer}\label{sec:fttransformer}
+\subsubsection{FT-Transformer}\label{sec:fttransformer}
 
-Many of the concepts in \cref{sec:transformer-networks} can be adapted to the tabular domain and only minor architectural changes are necessary. We cover two state-of-the-art adaptations: the FT-Transformer of \textcite[][4]{gorishniyRevisitingDeepLearning2021} that extend the classical Transformer.
+Many of the previous concepts can be adapted to the tabular domain with minor architectural changes. We cover FT-Transformer as a state-of-the-art adaption.
 
 \begin{figure}[ht]
     \centering
@@ -543,7 +536,7 @@ Many of the concepts in \cref{sec:transformer-networks} can be adapted to the ta
     \label{fig:fttransformer}
 \end{figure}
 
-TabTransformer is limited by the ability to process only categorical embeddings in the Transformer unit. \textcite[][5]{gorishniyRevisitingDeepLearning2021} propose with FT-Transformer a competing architecture, that pairs an embedding unit for both numerical and categorical inputs, dubbed the feature tokenizer, with a Transformer. The complete architecture is depicted in \cref{fig:fttransformer}. Notably, the Transformer units use a pre-norm setup for easier optimization, whereby the very first normalization layer in the encoder is removed due to a propitious performance \textcite[][17]{gorishniyRevisitingDeepLearning2021}. The upstream feature tokenizer transforms all features of $\mathbf{x}$ to their embeddings. If the $j$-th feature, $x_j$, is numerical, it is projected to its embedding $\gls{e}_j \in \mathbb{R}^{d_e}$ by element-wise multiplication with a learned vector $\mathbf{W}_j \in \mathbb{R}^{d_{e}}$. Moreover, a feature-dependent bias term $\mathbf{b}_j \in \mathbb{R}$ is added, as noted in \cref{eq:numerical-embeddings-ft}.
+\textcite[][5]{gorishniyRevisitingDeepLearning2021} propose with FT-Transformer aa embedding unit, that pairs an embedding unit for both numerical and categorical inputs, dubbed the feature tokenizer, with a Transformer. The complete architecture is depicted in \cref{fig:fttransformer}. Notably, the Transformer units use a pre-norm setup for easier optimization, whereby the very first normalization layer in the encoder is removed due to a propitious performance \textcite[][17]{gorishniyRevisitingDeepLearning2021}. The upstream feature tokenizer transforms all features of $\mathbf{x}$ to their embeddings. If the $j$-th feature, $x_j$, is numerical, it is projected to its embedding $\gls{e}_j \in \mathbb{R}^{d_e}$ by element-wise multiplication with a learned vector $\mathbf{W}_j \in \mathbb{R}^{d_{e}}$. Moreover, a feature-dependent bias term $\mathbf{b}_j \in \mathbb{R}$ is added, as noted in \cref{eq:numerical-embeddings-ft}.
 
 \begin{subequations}
     \begin{align}
