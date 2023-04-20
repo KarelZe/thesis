@@ -1,4 +1,7 @@
 
+Over
+
+
 ## Previous attempt
 One approach that aims to reduce the bias, is *gradient boosting*, which was popularized by [[@friedmanGreedyFunctionApproximation2001]]. *Gradient Boosting* is different from the afore-mentioned approach, as it sequentially adds the approximations of several over-simplified models (so-called *weak-lerners*) to an ensemble estimate. Shallow trees are commonly used as weak learners [[@friedmanGreedyFunctionApproximation2001]]. Due to the sequential ensemble building, the construction of the tree is only dependent on the trees previously built. 
 
@@ -51,22 +54,7 @@ $$
 After $M$ iterations we obtain the final estimate calculated as: $\hat{f}(x)=f_{M}(x)$. To avoid overfitting the residuals, only proportional steps towards the negative gradient are taken. The contribution of each tree is controlled by the learning rate $\nu \in \left(0, 1\right]$. 
 
 
-By our problem framing, the focus is on *binary classification*. Other than in the regression case, the target is no longer continuous ( $\mathcal{Y}\in \mathbb{R}$), but rather discrete ($\mathcal{Y}\in \{-1,1\}$). Instead of modelling the class-conditional probabilities directly, we model the conditional *log odds*, which can be interpreted as the probability of observing class $1$ or buyer-initiated trade.  The model now models:
-$$
-f(x) = \ln\left(\frac{P(Y=1 \mid X=x)}{1-P(Y=1\mid X=x)}\right)
-$$
 
-<mark style="background: #FFB86CA6;">If $p$ is a probability, then $p /(1-p)$ is the corresponding odds; the logit of the probability is the logarithm of the odds, i.e.:
-$$
-\operatorname{logit}(p)=\ln \left(\frac{p}{1-p}\right)=\ln (p)-\ln (1-p)=-\ln \left(\frac{1}{p}-1\right)=2 \operatorname{atanh}(2 p-1)
-$$
-(Wikipedia) https://en.wikipedia.org/wiki/Logit</mark> -> odds of success = probability of an even happening divided by prbability of an event not happening. 
-
-We can still recover the conditional probabilities $p(y \mid x)$ for a trade to be buyer- or seller-initiated with the Sigmoid transform, given by:
-$$
-p(y \mid x)=\sigma(f(x))=\frac{1}{1 + \exp(-y f(x))}.
-$$
-Like before, we require a differentiable loss function. A common replacement for the previous square loss, is the the log-loss (binary cross-entropy loss. -> seems to be equivalent for binary case https://stackoverflow.com/questions/50913508/what-is-the-difference-between-cross-entropy-and-log-loss-error).  $\operatorname{logistic} \operatorname{loss} l(y, f(x))=\log (1+\exp (-y f(x)))$
 
 
 

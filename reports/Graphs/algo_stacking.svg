@@ -28,8 +28,8 @@
      inkscape:document-units="mm"
      showgrid="true"
      inkscape:zoom="5.6568542"
-     inkscape:cx="110.13188"
-     inkscape:cy="4.065864"
+     inkscape:cx="138.32777"
+     inkscape:cy="159.62936"
      inkscape:window-width="2560"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -294,7 +294,7 @@
          sodipodi:role="line"
          id="tspan2424"
          x="141.93452"
-         y="138.14735">\small\textsf{trade size rule}\normalsize</tspan></text>
+         y="138.14735">\small trade size rule\normalsize</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.15997px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.204093;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -304,7 +304,7 @@
          sodipodi:role="line"
          id="tspan2424-3"
          x="154.90468"
-         y="130.56963">\small\textsf{quote rule}</tspan></text>
+         y="130.56963">\small quote rule</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.15997px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.204093;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -314,7 +314,7 @@
          sodipodi:role="line"
          id="tspan2424-3-5"
          x="167.05952"
-         y="123.57368">\small\textsf{tick test}</tspan></text>
+         y="123.57368">\small tick test</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:40.3197px;font-family:Impact;-inkscape-font-specification:Impact;fill:#ffe9bd;fill-opacity:1;stroke:#000000;stroke-width:0.204093;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
