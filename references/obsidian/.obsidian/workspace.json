@@ -25,13 +25,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🅰️attention notes.md",
+                "file": "📖chapters/🅰️Attention.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "e36216721f42744e",
@@ -107,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🔢Stacked rules.md",
+                "file": "📖chapters/🅰️Attention.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -135,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🔢Stacked rules.md"
+                "file": "📖chapters/🅰️Attention.md"
               }
             }
           },
@@ -166,15 +167,16 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "9abf6e0d770f2ad3",
+  "active": "5849e3ba8647a578",
   "lastOpenFiles": [
+    "🖼️Media/Pasted image 20230419114045.png",
     "📖chapters/🅰️Attention.md",
+    "🖼️Media/Pasted image 20230419114118.png",
+    "🖼️Media/Pasted image 20230419123045.png",
     "📑notes/🅰️attention notes.md",
+    "📖chapters/🔢Stacked rules.md",
     "📥Inbox/@dosovitskiyImageWorth16x162021.md",
     "📑notes/🤖Transformer notes.md",
-    "🖼️Media/Pasted image 20230419123045.png",
-    "🖼️Media/Pasted image 20230419114118.png",
-    "🖼️Media/Pasted image 20230419114045.png",
     "🖼️Media/Pasted image 20230419112529.png",
     "🖼️Media/Pasted image 20230419110505.png",
     "🖼️Media/Pasted image 20230419110346.png",
@@ -200,8 +202,6 @@
     "🖼️Media/Pasted image 20230415084057.png",
     "📖chapters/🧭Feature Importance Measure.md",
     "📖chapters/🔢Trade initiator.md",
-    "📖chapters/⭕Self-Training classifier.md",
-    "📑notes/🧭Evaluation metric notes.md",
     "🖼️Media/presentation-of-effective-spread.png",
     "🖼️Media/performance-degradations.png"
   ]
