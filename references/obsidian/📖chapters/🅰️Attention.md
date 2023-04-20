@@ -1,13 +1,5 @@
 Recall from our discussion on token embeddings, that embeddings are not yet context-sensitive. The Transformer relies on an *attention mechanism* to let tokens gather information from other tokens within the sequence and thereby encode the context onto the embeddings.
 
-a third sublayer for multi-headed self-attention on the output of the en-
-coder, known as cross-attention. Moreover, the multi-headed self-attention mecha-
-nism in the decoder differs from the one in the encoder. Specifically, future parts
-4 SUPERVISED APPROACHES 21
-of the output sequence are causally masked to prevent the model from learning on
-subsequent tokens during training, which enforces the autoregressive properties of
-the model (Vaswani et al., 2017, p. 3; Narang et al., 2021, p. 15).
-
 **Attention**
 Attention can be thought of as a mapping between a query and a set of key-value pairs to an output. In general, the current token is first projected onto a query vector, and all tokens in the context are mapped to key and value vectors. Similar to a soft dictionary lookup, the goal is to retrieve the values from tokens in the context for which the keys are similar to the query and return an aggregate estimate of the values weighted by the similarity of the keys and the query. Naturally, if a token in the context is important for predicting the queried token, indicated by a high similarity, the value of the context token has a large contribution to the output.  ([[@phuongFormalAlgorithmsTransformers2022]]5) and ([[@vaswaniAttentionAllYou2017]]3)
 
@@ -28,7 +20,7 @@ where $\mathbf{X} \in \mathbb{R}^{d_X\times \ell_X}$ and $\mathbf{Z} \in \mathbb
 **Multi-Head Attention**
 Rather than relying on a single attention function, ([[@vaswaniAttentionAllYou2017]]4--5) introduce multiple *attention heads*, which perform attention in parallel on $H$ *different* linear projections of the queries, keys, and values. The *multi-head attention* enables the model to learn richer representations of the input, as attention heads operate independently, they can pick up unique patterns or focus on different positions in the sequence at once. Multi-head attention is visualized in cref-fig (centre).
 
-Exemplary for machine translation, ([[@voitaAnalyzingMultiHeadSelfAttention2019]]5795) show, that heads serve indeed distinct purposes like learning positional or syntactic relations between tokens. For tabular data this could transfer to dependencies between features. In practice, Transformers may not leverage all attention heads and some heads could even be pruned without impacting the performance (cp. [[@michelAreSixteenHeads2019]]9) ([[@voitaAnalyzingMultiHeadSelfAttention2019]]5805).
+Exemplary for machine translation, ([[@voitaAnalyzingMultiHeadSelfAttention2019]]5795) show, that heads serve indeed distinct purposes like learning positional or syntactic relations between tokens. For tabular data this could transfer to dependencies between features. In practice, Transformers may not leverage all attention heads and some heads could even be pruned without impacting the performance ([[@michelAreSixteenHeads2019]]9) ([[@voitaAnalyzingMultiHeadSelfAttention2019]]5805).
 
 Multi-head attention can be computed as:
 $$

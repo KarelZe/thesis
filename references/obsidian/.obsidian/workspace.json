@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🅰️Attention.md",
+                "file": "📑notes/🅰️attention notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🅰️Attention.md",
+                "file": "📑notes/🅰️attention notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🅰️Attention.md"
+                "file": "📑notes/🅰️attention notes.md"
               }
             }
           },
@@ -169,6 +169,7 @@
   },
   "active": "b9b458c989f69cf9",
   "lastOpenFiles": [
+    "📖chapters/🅰️Attention.md",
     "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/🐈Gradient Boosting.md",
     "🖼️Media/Pasted image 20230420143656.png",
@@ -179,7 +180,6 @@
     "📖chapters/🐈CatBoost.md",
     "📖chapters/🔢Stacked rules.md",
     "1680261360742.jpg.md",
-    "📖chapters/🅰️Attention.md",
     "🖼️Media/Pasted image 20230419110505.png",
     "🖼️Media/Pasted image 20230419110346.png",
     "🖼️Media/Pasted image 20230419114045.png",
