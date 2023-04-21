@@ -3,7 +3,7 @@
 [[🪄Data Preprocessing notes]]
 
 **Data Cleaning**
-
+![[Pasted image 20230421141051.png]]
 
 
 In the following chapter, we motivate feature engineering, present our feature sets and discuss strategies for transforming features into a form that accelerates and advances the training of our models.

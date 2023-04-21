@@ -621,6 +621,7 @@ Pre-training accelerates convergence and improves model performance through a be
 
 With a multitude of methods, tested on different datasets and neural architectures, a fair comparison between pre-training methods is complicated. However, \textcite[][2-3]{rubachevRevisitingPretrainingObjectives2022} provide useful guidance for selecting objectives. Among the pre-training objectives that they benchmark, the \gls{MLM} objective proposed by \textcite[][4174]{devlinBERTPretrainingDeep2019} was found to be one of the best-performing approaches. The \gls{MLM} objective is easy to optimise and requires no modifications to the model architecture, which are important properties when comparing the supervised and semi-supervised variants. This makes \gls{MLM} a compelling choice for pre-training on unlabelled data.
 
+%TODO: Caruana caruanaObtainingCalibratedProbabilities -> ok for trees, but we do not optimize probabilities but the logits!
 \subsection{Gradient Boosted Trees With Self-Training}\label{sec:extensions-to-gradient-boosted-trees}
 
 Self-training is a wrapper algorithm around a probabilistic classifier, that incorporates its predictions of unlabelled instances as pseudo labels \autocite[][190]{yarowskyUnsupervisedWordSense1995}.
@@ -865,12 +866,12 @@ Subsequent sub-chapters discusses metrics for evaluation and measures to retriev
 Our goal is to maximize the number of trades, where the predicted trade initiator matches the true trade initiator. We assess the quality of our model’s prediction in terms of \emph{accuracy}, which can be stated as:
 \begin{equation}
 % \operatorname{accuracy} \colon \mathbb{R}^{N} \times \mathbb{R}^{N} \to  \left[0, 1\right], \quad 
-\operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{L}_{0-1}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
+\operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{L}_{\mathrm{0-1}}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
 \end{equation}
-where $\operatorname{L}_{0-1}(\cdot)$ is the 0-1-loss given by:
+where $\operatorname{L}_{\mathrm{0-1}}(\cdot)$ is the 0-1-loss given by:
 \begin{equation}
-    % \operatorname{l}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad 
-    \operatorname{L}_{0-1}(y, \hat{y}) = \mathbb{I}\left(y\neq \hat{y}\right).
+    % \operatorname{L}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad 
+    \operatorname{L}_{\mathrm{0-1}}(y, \hat{y}) = \mathbb{I}\left(y\neq \hat{y}\right).
 \end{equation}
 
 Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss. Notably, the loss is the same for false positives and negatives.
