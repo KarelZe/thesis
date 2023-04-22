@@ -370,7 +370,14 @@ Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredicto
         F(\mathbf{x}) = \frac{1}{2} \log \left[\frac{\operatorname{Pr}(y=1\mid \mathbf{x})}{\operatorname{Pr}(y=-1\mid \mathbf{x})}\right]
     \label{eq:logits-gbm}
     \end{equation}
-    $F(\mathbf{x})$ is the model's prediction in terms of conditional \emph{log-odds}. The cross-entropy loss is a reasonable choice as a loss function, as it is suitable for binary classification, convex, and twice differentiable, a property we exploit later. It is visualized in cref-fig.
+    $F(\mathbf{x})$ is the model's prediction in terms of conditional \emph{log-odds}. The cross-entropy loss, as visualized in \cref{fig:cross-entropy-loss}, is a reasonable choice as a loss function, as it is suitable for binary classification, convex, and twice differentiable, a property we exploit later.
+    \begin{figure}[ht]
+        \centering
+        \includegraphics{cross-entropy-loss.pdf}
+        \caption[Cross-Entropy Loss]{Cross-entropy loss. Own work.}
+        \label{fig:cross-entropy-loss}
+    \end{figure} 
+    
     % TODO: ![[cross-entropy-loss.png]]
     % (y = loss, Margin y-f(x), x=0 log 2)
     
@@ -402,9 +409,9 @@ Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredicto
     An improved estimate for $\mathbf{x}$ is calculated from the previous estimate by adding the new regression tree to the ensemble. The latter moves the prediction towards the greatest descent and thus improves the overall prediction. The updated model is given by:
     
     \begin{equation}
-    F_{m}(\mathbf{x})=F_{m-1}(\mathbf{x})+\nu \sum_{j=1}^{J_{m}} \gamma_{j m} \mathbb{I}\left(\mathbf{x} \in R_{j m}\right).
+    F_{m}(\mathbf{x})=F_{m-1}(\mathbf{x})+\eta \sum_{j=1}^{J_{m}} \gamma_{j m} \mathbb{I}\left(\mathbf{x} \in R_{j m}\right).
     \end{equation}
-    After $M$ iterations we obtain the final estimate calculated as $F_m(\mathbf{x})$. To avoid \gls{overfitting} the residuals, only proportional steps towards the negative gradient are taken, which is controlled by the learning rate $\nu \in \left(0, 1\right]$ \autocite[][13]{friedmanGreedyFunctionApproximation2001}. The learning rate $\nu$ and the size of the ensemble $M$ are deeply intertwined and thus require to be tuned together \autocite[][13]{friedmanGreedyFunctionApproximation2001}.
+    After $M$ iterations we obtain the final estimate calculated as $F_m(\mathbf{x})$. To avoid \gls{overfitting} the residuals, only proportional steps towards the negative gradient are taken, which is controlled by the learning rate $\eta \in \left(0, 1\right]$ \autocite[][13]{friedmanGreedyFunctionApproximation2001}. The learning rate $\eta$ and the size of the ensemble $M$ are deeply intertwined and thus require to be tuned together \autocite[][13]{friedmanGreedyFunctionApproximation2001}.
     
     Gradient boosting is still prone to \gls{overfitting}. One solution is to employ \emph{early stopping}, whereby the ensemble is only grown in size, as long as adding more weak learners leads to a decrease in loss on the validation set \autocite[][384]{hastietrevorElementsStatisticalLearning2009}. Another approach is to limit the amount of data seen during training by fitting trees on random subset of samples, as proposed in \textcite[][3]{friedmanStochasticGradientBoosting2002}, or on a subset of features, as popularized by \textcite[][3]{chenXGBoostScalableTree2016}. \textcite[][6]{prokhorenkovaCatBoostUnbiasedBoosting2018} grow oblivious trees, which use the same splitting criterion for all nodes of one level in a tree. The rationale is, that these arguably simple trees, and achieve an imperfect fit, which regularises the model. Finally, the loss function can be extended for a $\ell_2$ regularization term and penalize the model for complexity, as applied in \textcite[][2]{chenXGBoostScalableTree2016}.
     
@@ -660,7 +667,7 @@ Semi-supervised learning is centred around the \emph{assumption of smoothness}, 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\linewidth]{decision-boundary-semi-supervised.png}
+    \includegraphics[width=0.8\linewidth]{decision-boundary-semi-supervised.pdf}
     \caption[Decision Boundary of a Supervised and Semi-Supervised Classifier]{Decision Boundary of a Supervised and Semi-Supervised Classifier. Own work.}
     \label{fig:supervised-semi-supervised}
 \end{figure}
@@ -855,7 +862,7 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
         \toprule
         Parameter                    & Distribution                              & {\gls{GBM} 1}           & {\gls{GBM} 2}               & {\gls{GBM} 3}            \\ \midrule
         Depth                        & $\operatorname{UniformInt}[1,12]$         & 9                       & 10                          & 8                        \\
-        Learning rate $\lambda$      & $\operatorname{LogUniform}[0.001, 0.125]$ & 0.061147194180849546    & 0.12484853560495288         & 0.12484853839455994      \\
+        Learning rate $\eta$      & $\operatorname{LogUniform}[0.001, 0.125]$ & 0.061147194180849546    & 0.12484853560495288         & 0.12484853839455994      \\
         $\ell_2$ Leaf Regularization & $\operatorname{UniformInt}[2, 30]$        & 16                      & 29                          & 17                       \\
         Random Strength              & $\operatorname{LogUniform}[1{e-}9, 10.0]$ & 0.000010476785242010688 & 0.0000000033898444462040114 & 0.0000013615032724416282 \\
         Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$        & 0.6538673528316611      & 0.4734183814715093          & 0.4515562770665896       \\ \midrule
@@ -863,7 +870,7 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
     \end{tabular}
 \end{table}
 
-For gradient-boosting we raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\lambda$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive $100$ steps.
+For gradient-boosting we raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive $100$ steps.
 
 The hyperparameter search for the FT-Transformer is identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)). From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we implement early stopping and halt training after $15$ consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
 
