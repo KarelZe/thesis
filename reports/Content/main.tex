@@ -289,51 +289,50 @@ problem.
 
 All presented trade classification rules from \cref{sec:rule-based-approaches}  perform \emph{discrete classification} and assign a class to the trade. Naturally, a more powerful insight is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives additional insights into the confidence of the prediction.
 
-Thus, we frame trade signing as a supervised, probabilistic classification problem. This is similar to the work of \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis. To this end, a probabilistic view enables a richer evaluation, but constraints our selection to probabilistic classifiers. To maintain comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
+Thus, we frame trade signing as a supervised, probabilistic classification task. This is similar to \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis. A probabilistic view enables a richer evaluation, but constraints our selection to probabilistic classifiers. For comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
 
-We introduce some more notation, which we will use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times m}$ and described by a random variable $X$. Features in $\mathbf{x}$ may be numerical, e.g., the previous trade price or categorical e.g., the option type. Like before, the target or trade initiator is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $p^*(X, Y)$. The training set with $N$ i.i.d. samples drawn from $p^*$ is denoted by $\mathcal{D}_N=\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a $(n \times m)$-dimensional feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
+We introduce more notation, which we use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times M}$ and described by a random variable $X$. Any of the $M$ features in $\mathbf{x}$ may be numerical, e.g., the trade price or categorical e.g., the option type. Like before, the target is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $\Pr(X, Y)$. The training set with $N$ i.i.d. samples drawn is denoted by $\mathcal{D}_N=\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
 
-For our machine learning classifiers, we aim to model $p_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
+For our machine learning classifiers, we aim to model $\Pr_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
 
 \begin{equation}
-    p(y\mid \mathbf{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
+    \widehat{\operatorname{Pr}}(y\mid \mathbf{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
     \label{eq:prob-from-point-estimate}
 \end{equation}
 
 % TODO: It's actually a one-hot vector with the "probabilities
-Consequently, if a trade is predicted as a sell, i.e. $\hat{y} = -1$, we assign a probability of one for being a sell and a zero probability for being a buy and vice versa. Given the estimated class probabilities, we retrieve the most probable class in $\mathcal{Y}$ as:
+Consequently, if a trade is predicted as a sell, hence $\hat{y} = -1$, we assign a probability of one for being a sell and a zero probability for being a buy and vice versa. Given the estimated class probabilities, we retrieve the most probable class in $\mathcal{Y}$ as:
 \begin{equation}
-    \hat{y}=\arg\max_{y \in \mathcal{Y}} p(y \mid \mathbf{x}).
+    \hat{y}=\arg\max_{y \in \mathcal{Y}} \widehat{\operatorname{Pr}}(y \mid \mathbf{x}).
     \label{eq:class-from-prob}
 \end{equation}
 \cref{eq:prob-from-point-estimate} and \cref{eq:class-from-prob} allow to alternate between a discrete and probabilistic formulation for trade classification rules. Since the class probability estimates are either 0
-and 1, no insight is gained into the confidence of the prediction. Nonetheless, this approach provides a consistent way to compare classical rules and probabilistic classifiers in machine learning. In the following section, we briefly discuss the selection of state-of-the-art classifiers that we consider for our empirical study.
-
+and 1, no insight into the confidence of the prediction is gained. Nonetheless, this approach enables a seamless comparison of classical rules and probabilistic classifiers in machine learning. Next, we discusses state-of-the-art classifiers suitable for trade classification.
 
 \subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches}
 
-\textbf{TODO:} Add short discussion here, that derives why gradient-boosting and Transformers should be used.
+\textbf{TODO:} Add a short discussion here, that derives why gradient-boosting and Transformers should be used.
 
 \subsection{Gradient Boosted Trees}\label{sec:gradient-boosted-trees}
 
 \subsubsection{Decision Tree}\label{sec:decision-tree}
 
-Decision trees can be used in classification and regression. Counter-intuitive to our initial problem framing of trade classification as a probabilistic classification task, the focus is solely on regression trees, as it is the prevailing prediction model used in the gradient boosting algorithm to obtain continuous class probabilities \autocite[][9]{friedmanAdditiveLogisticRegression2000}.
+Decision trees can be used in classification and regression. Despite solving a classification task, our focus is solely on regression trees, as it is the prevailing prediction model used in the gradient boosting algorithm \autocite[][9]{friedmanAdditiveLogisticRegression2000}. For this section, assume $y \in \mathbb{R}$.
 
 A decision tree splits the feature space into several disjoint regions $R$ through a sequence of recursive splits. For a binary decision tree, a single split leads to two new sub-regions, whose shape is determined by the features considered for splitting and the preceding splits. Trees are grown in depth until a minimum threshold for the number of samples within a node or some other stopping criterion applies \autocite[][42]{breimanClassificationRegressionTrees2017}.
 A region corresponds to a terminal node in the tree. For each terminal node of the tree or unsplit region, the predicted response value is constant for the entire region and shared by all its samples \autocite[][229]{breimanClassificationRegressionTrees2017}.
 
 For a tree with $M$ regions $R_1, R_2,\ldots, R_M$, and some numerical input $\mathbf{x}$ the tree can be modelled as:
 \begin{equation}
-    h(\mathbf{x})=\sum_{m=1}^{M} c_{m} \mathbb{I}\left(\mathbf{x} \in R_{m}\right),
+    h(\mathbf{x})=\sum_{m=1}^{M} \gamma_{m} \mathbb{I}\left(\mathbf{x} \in R_{m}\right),
     \label{eq:decision-tree}
 \end{equation}
 
-where $\mathbb{I}$ is the indicator function for region conformance and $c_m$the region's constant \autocite[][326]{hastietrevorElementsStatisticalLearning2009}. In the regression case, $c_m$ is the mean of all target variables $y_i$ in the specific region. Since all samples of a region share a common response value, the tree estimates resemble a histogram that approximates the true regression surface.
+where $\mathbb{I}$ is the indicator function for region conformance and $\gamma_m$the region's constant \autocite[][326]{hastietrevorElementsStatisticalLearning2009}. In the regression case, $c_m$ is the mean of all target variables $y_i$ in the specific region. Since all samples of a region share a common response value, the tree estimates resemble a histogram that approximates the true regression surface.
 
-So far, it remains open how the best split can be found. The best split is where the deviation between the prediction and the true response variable diminishes. Over the entire tree, this error can be captured in the \gls{SSE} given by:
+So far, it remains open how the best split can be found. The best split is where the deviation between the prediction and the true response variable diminishes. For a single region, this error can be captured in the \gls{SSE} given by:
 \begin{equation}
-    \operatorname{L}_{SSE}(\widehat{\mathbf{y}},\mathbf{y})=\frac{1}{N} \sum_{m \in M} \sum_{\mathbf{x}_{i} \in R_m}\left(y_{i}-c_{m}\right)^{2},
+    \operatorname{L}_{SSE} =\sum_{\mathbf{x}_{i} \in R_m}\left(y_{i}-\gamma_{m}\right)^{2},
 \end{equation}
 
 which is subsequently minimised \textcite[][231]{breimanClassificationRegressionTrees2017}. As documented in \textcite[][326]{hastietrevorElementsStatisticalLearning2009} we start with the entire dataset and scan through all combinations of features and possible split values. For a split by the feature $j$ at the value $s$, the child nodes are given by a pair of half-planes:
@@ -342,21 +341,21 @@ which is subsequently minimised \textcite[][231]{breimanClassificationRegression
     R_1(j, s)=\left\{X \mid X_j \leq s\right\} \text { and } R_2(j, s)=\left\{X \mid X_j>s\right\}.
 \end{equation}
 
-Thereby, the feature $j$ and value $s$ are selected in a way, that the combined error in the child nodes is minimised:
+Thereby, the feature $j$ and value $s$ are selected in a way, that the squared error in the child nodes is minimised:
 \begin{equation}
-    \min _{j, s}\left[\min _{c_1} \sum_{\mathbf{x}_i \in R_1(j, s)}\left(y_i-c_1\right)^2+\min _{c_2} \sum_{\mathbf{x}_i \in R_2(j, s)}\left(y_i-c_2\right)^2\right].
+    \min _{j, s}\left[\min _{\gamma_1} \sum_{\mathbf{x}_i \in R_1(j, s)}\left(y_i-\gamma_1\right)^2+\min _{\gamma_2} \sum_{\mathbf{x}_i \in R_2(j, s)}\left(y_i-\gamma_2\right)^2\right].
 \end{equation}
 
 Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample has its region, the tree would achieve a perfect fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence \emph{variance}, size complexity pruning procedures are employed. Likewise, if the decision tree is too simplistic, a high bias contributes to the model's overall expected error. Both extremes are to be avoided.
 
-Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredictors1996} and \emph{boosting} \autocite[][197--227]{schapireStrengthWeakLearnability1990}, decrease the expected error of the decision tree by combining multiple trees in a single model. Both approaches differ in the error term being minimised, which is reflected in the training procedure and the complexity of the ensemble members. More specifically, bagging aims at decreasing the variance, whereas boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we derive \gls{GBM}, a variant of boosting introduced by \textcite[][9]{friedmanGreedyFunctionApproximation2001} and apply it to classification.
+Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredictors1996} and \emph{boosting} \autocite[][197--227]{schapireStrengthWeakLearnability1990}, decrease the expected error of the decision tree by combining multiple trees in a single model. Both approaches differ in the error term being minimised, which is reflected in the training procedure and the complexity of the ensemble members. More specifically, bagging aims at decreasing the variance, whereas boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we focus on \gls{GBM}, a variant of boosting.
 
 \subsubsection{Gradient Boosting
     Procedure}\label{sec:gradient-boosting-procedure}
 
-    One approach that aims to reduce the bias and the variance, is gradient boosting, which was popularized by \textcite[][9]{friedmanGreedyFunctionApproximation2001}. Gradient boosting iteratively combines oversimplified models, the weak learners, to obtain an improved ensemble estimate. This chapter follows \textcite[][9]{friedmanGreedyFunctionApproximation2001} to derive gradient-boosting for binary classification.
+    One approach that aims to reduce the bias and the variance, is gradient boosting, which was popularized by \textcite[][9]{friedmanGreedyFunctionApproximation2001}. Gradient boosting iteratively combines oversimplified models, the weak learners, to obtain an improved ensemble estimate. This chapter draws on \textcite[][9]{friedmanGreedyFunctionApproximation2001} to derive gradient-boosting for binary classification.
 
-    Recall, by \cref{sec:problem-framing} we perform \emph{binary probabilistic classification} and by \cref{sec:trade-initiator} we defined the labels to be $y \in \{-1,1\}$. For gradient boosting, instead of modelling the class-conditional probabilities directly, we model the conditional \emph{log odds} instead, which can be interpreted as the probability of observing class $1$ or a buyer-initiated trade, and covert to class-conditional probabilities as needed.
+    Recall, by \cref{sec:problem-framing} we perform binary probabilistic classification and by \cref{sec:trade-initiator} we defined the labels to be $y \in \{-1,1\}$. For gradient boosting, instead of modelling the class-conditional probabilities directly, we model the conditional \emph{log odds} instead, which can be interpreted as the probability of observing class $1$ or a buyer-initiated trade, and covert to class-conditional probabilities as needed.
     
     Following \textcite[][9]{friedmanStochasticGradientBoosting2002} we set the loss function to be the cross-entropy loss, given by:
     
@@ -367,19 +366,16 @@ Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredicto
     
     where:
     \begin{equation}
-        F(\mathbf{x}) = \frac{1}{2} \log \left[\frac{\operatorname{Pr}(y=1\mid \mathbf{x})}{\operatorname{Pr}(y=-1\mid \mathbf{x})}\right]
+        F(\mathbf{x}) = \frac{1}{2} \log \left[\frac{\Pr(y=1\mid \mathbf{x})}{\Pr(y=-1\mid \mathbf{x})}\right]
     \label{eq:logits-gbm}
     \end{equation}
-    $F(\mathbf{x})$ is the model's prediction in terms of conditional \emph{log-odds}. The cross-entropy loss, as visualized in \cref{fig:cross-entropy-loss}, is a reasonable choice as a loss function, as it is suitable for binary classification, convex, and twice differentiable, a property we exploit later.
-    \begin{figure}[ht]
-        \centering
-        \includegraphics{cross-entropy-loss.pdf}
-        \caption[Cross-Entropy Loss]{Cross-entropy loss. Own work.}
-        \label{fig:cross-entropy-loss}
-    \end{figure} 
-    
-    % TODO: ![[cross-entropy-loss.png]]
-    % (y = loss, Margin y-f(x), x=0 log 2)
+    $F(\mathbf{x})$ is the model's prediction in terms of conditional \emph{log-odds}. The cross-entropy loss, is a reasonable choice as a loss function, as it is suitable for binary classification, convex, and twice differentiable, a property we exploit later.
+    % \begin{figure}[ht]
+    %     \centering
+    %     \includegraphics{cross-entropy-loss.pdf}
+    %     \caption[Cross-Entropy Loss]{Cross-entropy loss. Own work.}
+    %     \label{fig:cross-entropy-loss}
+    % \end{figure} 
     
     We first intialise the model with a naïve prediction, based on the average class $\bar{y}$ from all training samples:
     
@@ -417,10 +413,10 @@ Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredicto
     
     In recent years, variants of gradient boosting appeared in the literature. Prominent examples include \emph{LightGBM} \autocite{keLightGBMHighlyEfficient2017}, \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, and \emph{CatBoost} \autocite[][1--23]{prokhorenkovaCatBoostUnbiasedBoosting2018}, which differ by the policy how trees are grown and how \gls{overfitting} is addressed. Performance-wise, differences between the implementations are minor, as empirical studies suggest \textcites[cp.][??]{grinsztajnWhyTreebasedModels2022}[][??]{gorishniyRevisitingDeepLearning2021}.
     
-    As we noted at the beginning, $F_M(\mathbf{x})$ models the log odds. We can recover the class-conditional probabilities $p(y \mid \mathbf{x})$ by taking the inverse:
+    As we noted at the beginning, $F_M(\mathbf{x})$ models the log odds. We can recover the class-conditional probabilities $\widehat{\operatorname{Pr}}(y \mid \mathbf{x})$ by taking the inverse:
     
     \begin{equation}
-    p(y \mid \mathbf{x}) = 1 /\left(1+\exp(-2yF_M\mathbf{x})\right).
+        \widehat{\operatorname{Pr}}(y \mid \mathbf{x}) = 1 /\left(1+\exp(-2yF_M\mathbf{x})\right).
     \end{equation}
     and get the majority class by \cref{eq:class-from-prob}.    
 
@@ -483,17 +479,17 @@ Concluding the example from above with artificial embeddings of $d_e=3$:
 \end{equation}
 are likely to be close in embedding space with cosine-similarity of $\approx 1$ due to their high semantic similarity.
 
-As this work is concerned with classification on tabular data, the aforementioned concepts must be evolved. Differently from textual data, where all tokens come from the same vocabulary and a homogeneous embedding procedure suffices, tabular data is flexible regarding the columns, their data type, and their semantics. Only a shared meaning across rows can be assumed. For instance, every sample in a trade dataset may contain the previous trade price, yet the meaning of the trade price is different from other columns, urging the need for heterogeneous embeddings. Additionally, columns may be categorical or continuous.
+As this work is concerned with classification on tabular data, the aforementioned concepts must be evolved. Differently from textual data, where all tokens come from the same vocabulary and a homogeneous embedding procedure suffices, tabular data is flexible regarding the columns, their data type, and their semantics. Only a shared meaning across rows can be assumed. For instance, every sample in a trade dataset may contain the previous trade price, yet the meaning of the trade price is different from other columns, urging the need for heterogeneous embeddings. Additionally, columns may be categorical or numerical.
 
-\textbf{Embeddings For Continuous Data}
+\textbf{Embeddings For Numerical Data}
 
-Transformer networks can handle continuous features, such as the trade price, by mapping the scalar value to a high-dimensional embedding vector and process sequences thereof \autocite[][1]{gorishniyEmbeddingsNumericalFeatures2022}. In the simplest case, a learned linear projection is utilized to obtain the embedding. Linear embeddings of numerical features were previously explored in \textcites[][1]{kossenSelfAttentionDatapointsGoing2021}[][1]{somepalliSaintImprovedNeural2021}[][1]{gorishniyRevisitingDeepLearning2021}. More sophisticated approaches rely on parametric embeddings, like the \emph{piece-wise linear encoding} or the \emph{periodic encoding} of \textcite[][10]{gorishniyEmbeddingsNumericalFeatures2022}. Both enforce non-linearity. The authors show that these can alleviate the model's performance but at a non-neglectable computational cost.
+Transformer networks can handle numerical features, such as the trade price, by mapping the scalar value to a high-dimensional embedding vector and process sequences thereof \autocite[][1]{gorishniyEmbeddingsNumericalFeatures2022}. In the simplest case, a learned linear projection is utilized to obtain the embedding. Linear embeddings of numerical features were previously explored in \textcites[][1]{kossenSelfAttentionDatapointsGoing2021}[][1]{somepalliSaintImprovedNeural2021}[][1]{gorishniyRevisitingDeepLearning2021}. More sophisticated approaches rely on parametric embeddings, like the \emph{piece-wise linear encoding} or the \emph{periodic encoding} of \textcite[][10]{gorishniyEmbeddingsNumericalFeatures2022}. Both enforce non-linearity. The authors show that these can alleviate the model's performance but at a non-neglectable computational cost.
 
 More generally, the works of \textcites[][1]{gorishniyEmbeddingsNumericalFeatures2022}[][1]{somepalliSaintImprovedNeural2021} suggest, that numerical embedding can significantly improve performance and robustness to missing values or noise. Their work however provides no theoretical explanation. \textcite[][8--9]{grinsztajnWhyTreebasedModels2022} fill this void and attribute the increased robustness to the broken rotational invariance.
 
 \textbf{Embeddings For Categorical Data}
 
-Datasets often comprise not only continuous features but also categorical features like the underlying. In the context of tabular Transformers, learned categorical embeddings are widely used, which are similar to the word embedding % \autocites[][1]{wangTransTabLearningTransferable}
+Datasets often comprise categorical features like the underlying. In the context of tabular Transformers, learned categorical embeddings are widely used, which are similar to the word embedding % \autocites[][1]{wangTransTabLearningTransferable}
 \autocites[][1]{gorishniyRevisitingDeepLearning2021}[][1]{huangTabTransformerTabularData2020}[][1]{somepalliSaintImprovedNeural2021}. Analogous, each category is mapped to an embedding vector using a learned, embedding matrix. Due to the heterogeneous nature of tabular data, embeddings may not be shared between features.
 
 These categorical embeddings can potentially capture the intrinsic properties of categorical variables by arranging similar categories closer in the embedding space. For instance, consider the underlyings $\mathtt{GOOGL}$ (Alphabet Inc.), $\mathtt{MSFT}$ (Microsoft Inc.), and $\mathtt{K}$ (Kellogg Company). Due to the overlapping field of operations, one would anticipate greater similarity between Alphabet and Google.
@@ -629,7 +625,7 @@ Many of the previous concepts can be adapted to the tabular domain with minor ar
     {\renewcommand\normalsize{\scriptsize}
                 \normalsize
                 \input{./Graphs/fttransformer.pdf_tex}}
-    \caption[Overview Over the FT-Transformer Architecture]{Overview Over the Architecture of FT-Transformer. The FT-Transformer uses a pre-norm arrangement and operates on continuous and categorical embeddings. Own work inspired by \textcite[][4--5]{gorishniyRevisitingDeepLearning2021}.}
+    \caption[Overview Over the FT-Transformer Architecture]{Overview Over the Architecture of FT-Transformer. The FT-Transformer uses a pre-norm arrangement and operates on numerical and categorical embeddings. Own work inspired by \textcite[][4--5]{gorishniyRevisitingDeepLearning2021}.}
     \label{fig:fttransformer}
 \end{figure}
 
@@ -644,14 +640,14 @@ Many of the previous concepts can be adapted to the tabular domain with minor ar
     \end{align}
 \end{subequations}
 
-Recall from our discussion on self-attention (cp. \cref{sec:attention}), that each \gls{token} encodes the \glspl{token} within the sequence. Based on this notion, \textcite[][4174]{devlinBERTPretrainingDeep2019} prepend a specialised $\texttt{[CLS]}$ \gls{token} to the sequence, which stores the sequence's aggregate representation. Like any other \gls{token}, the $\texttt{[CLS]}$ \gls{token} is embedded first and contextualised in the encoder. Its final hidden state is then used for classification. \textcite[][4]{gorishniyRevisitingDeepLearning2021} adapt the idea of a $\texttt{[CLS]}$ \gls{token} for tabular representation models. Similar to the embeddings of categorical or continuous features, the embedding of the $[\texttt{CLS}]$ \gls{token} $\gls{e}_\texttt{[CLS]} \in \mathbb{R}^{d_{e}}$ is prepended to the column embeddings with $\gls{X} = \left[\gls{e}_\texttt{[CLS]}, \gls{e}_1, \gls{e}_2, \ldots \gls{e}_{n}\right]$, where $\gls{X} \in \mathbb{R}^{d_{e} \times n +1}$. Like before, $\gls{X}$ is passed through a stack of Transformer layers. The updated representation of the $\texttt{[CLS]}$ \gls{token} is used exclusively for prediction:
+Recall from our discussion on self-attention (cp. \cref{sec:attention}), that each \gls{token} encodes the \glspl{token} within the sequence. Based on this notion, \textcite[][4174]{devlinBERTPretrainingDeep2019} prepend a specialised $\texttt{[CLS]}$ \gls{token} to the sequence, which stores the sequence's aggregate representation. Like any other \gls{token}, the $\texttt{[CLS]}$ \gls{token} is embedded first and contextualised in the encoder. Its final hidden state is then used for classification. \textcite[][4]{gorishniyRevisitingDeepLearning2021} adapt the idea of a $\texttt{[CLS]}$ \gls{token} for tabular representation models. Similar to the embeddings of categorical or numerical features, the embedding of the $[\texttt{CLS}]$ \gls{token} $\gls{e}_\texttt{[CLS]} \in \mathbb{R}^{d_{e}}$ is prepended to the column embeddings with $\gls{X} = \left[\gls{e}_\texttt{[CLS]}, \gls{e}_1, \gls{e}_2, \ldots \gls{e}_{n}\right]$, where $\gls{X} \in \mathbb{R}^{d_{e} \times n +1}$. Like before, $\gls{X}$ is passed through a stack of Transformer layers. The updated representation of the $\texttt{[CLS]}$ \gls{token} is used exclusively for prediction:
 \begin{equation}
     P=\texttt{linear}\left(\texttt{ReLU}\left(\texttt{layer\_norm}\left(\gls{X}\left[:,0\right]\right)\right)\right).
     \label{eq:bert-ft}
 \end{equation}
 % TODO: Add softmax, think about ReLU
 
-\textcite[][8]{gorishniyRevisitingDeepLearning2021} achieve state-of-the-art performance through numerical and categorical embeddings. Embedding both categorical and continuous inputs enables the Transformer to attend to all other features, but at an increase in computational cost, that may only be justified by higher classification accuracies. While the linear embedding of continuous inputs from \cref{eq:numerical-embeddings-ft} is conceptually simple,a recent work of \textcite[][8]{gorishniyEmbeddingsNumericalFeatures2022} suggests, that more sophisticated periodic embeddings or piece-wise-linear embeddings, can further improve the model's performance for classification tasks. This idea has not yet been widely adopted by the research community, we focus on linear embeddings instead.
+\textcite[][8]{gorishniyRevisitingDeepLearning2021} achieve state-of-the-art performance through numerical and categorical embeddings. Embedding both categorical and numerical inputs enables the Transformer to attend to all other features, but at an increase in computational cost, that may only be justified by higher classification accuracies. While the linear embedding of numerical inputs from \cref{eq:numerical-embeddings-ft} is conceptually simple, a recent work of \textcite[][8]{gorishniyEmbeddingsNumericalFeatures2022} suggests, that more sophisticated periodic embeddings or piece-wise-linear embeddings, can further improve the model's performance for classification tasks. This idea has not yet been widely adopted by the research community, we focus on linear embeddings instead.
 
 In the subsequent section, extend all previous models including FT-Transformer for learning on partially labelled data.
 
