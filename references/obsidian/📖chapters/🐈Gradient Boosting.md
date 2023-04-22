@@ -1,4 +1,4 @@
-One approach that aims to reduce the bias and the variance, is *gradient boosting*, which was introduced by ([[@friedmanGreedyFunctionApproximation2001]]9). *Gradient Boosting* iteratively combines oversimplified models, the *weak learners*, to derive an improved accurate ensemble estimate. This chapter follows ([[@friedmanGreedyFunctionApproximation2001]]9) to derive gradient-boosted decision trees for binary classification.
+One approach that aims to reduce the bias and the variance, is *gradient boosting*, which was introduced by ([[@friedmanGreedyFunctionApproximation2001]]9). *Gradient Boosting* iteratively combines oversimplified models, the *weak learners*, to obtain an improved accurate ensemble estimate. This chapter follows ([[@friedmanGreedyFunctionApproximation2001]]9) to derive gradient-boosted decision trees for binary classification.
 
 Recall, by cref-problem we perform *binary probabilistic classification* and by cref-[[🔢Trade initiator]] we defined the labels are, $y \in \{-1,1\}$. For gradient boosting, instead of modelling the class-conditional probabilities directly, we model the conditional *log odds* instead, which can be interpreted as the probability of observing class $1$ or a buyer-initiated trade, and covert to class-conditional probabilities as needed.
 
@@ -19,7 +19,7 @@ $F(\mathbf{x})$ is the model's prediction in terms of conditional *log-odds*. Th
 
 We first intialise the model with a naïve prediction, based on the average class $\bar{y}$ from all training samples:
 $$
-F_0(\mathbf{x})= \frac{1}{2} \log \frac{1+\bar{y}}{1-\bar{y}}.
+F_0(\mathbf{x})= \frac{1}{2} \log \left[\frac{1+\bar{y}}{1-\bar{y}}\right].
 $$
 Expectedly, $F_0(x)$ is a poor estimate, capturing hardly any regularities of the data. Gradient-boosting solves this issue by adding weak learners to the ensemble. New trees are added greedily,  one per iteration $m$ with $m=1,2,\cdots M$. The weak learner in the $m$-th iteration is chosen to approximate the *pseudo residual* $r_i$, which is the negative gradient of the observed value of the $i$-th sample and the current estimate:
 $$
@@ -33,9 +33,9 @@ $$
 $$
 cref-eq cannot be solved in closed-form and is typically approached by the Newton-Raphson method with a second order-order approximation of the loss. Following ([[@friedmanAdditiveLogisticRegression2000]]??) this is -(footnote with calculus. Figure out second order polynomial):
 $$
-\gamma_{j m}=\sum_{\mathbf{x}_i \in R_{j m}} r_i / \sum_{\mathbf{x}_i \in R_{j m}}\left|r_i\right|\left(2-\left|\tilde{y}_i\right|\right)
+\gamma_{j m}=\sum_{\mathbf{x}_i \in R_{j m}} r_i / \sum_{\mathbf{x}_i \in R_{j m}}\left|r_i\right|\left(2-\left|r_i\right|\right)
 $$
-with $\tilde{r}_i$ given by cref-eq.
+with $r_i$ given by cref-eq.
 
 An improved estimate for $\mathbf{x}$ is calculated from the previous estimate by adding the new regression tree to the ensemble. The later moves the prediction towards the greatest descent and thus improves the overall prediction. The updated model is given by:
 $$
@@ -49,7 +49,7 @@ In recent years, variants of gradient boosting appeared in literature. Prominent
 
 As we noted at the beginning, $F_M(\mathbf{x})$ models the logg-odds. We can recover the class-conditional probabilities $p(y \mid \mathbf{x})$ by taking the inverse:
 $$
-p(y \mid \mathbf{x}) = 1 /\left(1+\exp(-2yF_M(x)\right).
+p(y \mid \mathbf{x}) = 1 /\left(1+\exp(-2yF_M(\mathbf{x})\right).
 $$
 and get the majority class by eq-simple-classifier. 
 %%
