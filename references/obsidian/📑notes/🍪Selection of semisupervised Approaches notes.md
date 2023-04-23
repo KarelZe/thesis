@@ -4,9 +4,6 @@ An exception are ([[@levinTransferLearningDeep2022]]7), who find no improvements
 Interesting resources on pre-training:
 - https://arxiv.org/pdf/2109.07437.pdf
 - https://phontron.com/class/anlp2022/assets/slides/anlp-07-pretraining.pdf
-- 
-
-
 
 [[@dalche-bucSemisupervisedMarginBoost2001]]
 *SSMBoost* requires semi-supervised base learners, which 
@@ -19,4 +16,3 @@ For the existing semi-supervised boosting methods [Bennett et al., 2002; Chen an
 
 [[@mallapragadaSemiBoostBoostingSemiSupervised2009]] [[@bennettExploitingUnlabeledData2002]][[@dalche-bucSemisupervisedMarginBoost2001]]
 
-![[Pasted image 20230423083202.png]]

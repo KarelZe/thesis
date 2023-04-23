@@ -451,6 +451,7 @@ For its original application, machine translation, both the encoder and decoder 
 \subsubsection{Token Embedding}\label{sec:token-embeddings}
 
 As explained previously, Transformers operate on sequences of numeric vector representations, the \emph{token embeddings}. The classical Transformer was trained on \emph{word embeddings}. Nevertheless, \gls{token} embeddings are generic and arbitrary inputs that can be embedded and then processed by the Transformer. In the spirit of \textcite[][5]{vaswaniAttentionAllYou2017}, we first explore word embeddings for textual data, before adapting embeddings to the tabular domain.
+
 % TODO: write down, how sequence of token ids is constructed.
 \textbf{Embeddings For Textual Data}
 
@@ -685,7 +686,7 @@ Our goal is to extend gradient-boosted trees and Transformers for the semi-super
 
 \textbf{Gradient Boosting}
 
-The success of supervised gradient boosting led to the development of gradient boosting for the semi-supervised setting. An early work of \textcite[][3--4]{dalche-bucSemisupervisedMarginBoost2001} explores replacing supervised weak learners, i.e., regression trees, with semi-supervised weak learners, i.e., mixture models and minimises a loss function over labelled and unlabelled instances. Another line of research, including \textcites[][290--291]{bennettExploitingUnlabeledData2002}[][2003--2004]{mallapragadaSemiBoostBoostingSemiSupervised2009}, keep supervised weak learners to generate pseudo labels of unlabelled instances per iteration. True labelled and pseudo-labelled data is then used in fitting weak learners of subsequent iterations. Approaches differ regarding the selection criterion of the pseudo-labelled instances. Both lines of work, however, require changes to the boosting procedure or the base learners.
+The success of supervised gradient boosting led to the development of gradient boosting for the semi-supervised setting. An early work of \textcite[][3--4]{dalche-bucSemisupervisedMarginBoost2001} explores replacing supervised weak learners, i.e., regression trees, with semi-supervised weak learners, i.e., mixture models and minimises a loss function over labelled and unlabelled instances. Another line of research, including \textcites[][290--291]{bennettExploitingUnlabeledData2002}[][2003--2004]{mallapragadaSemiBoostBoostingSemiSupervised2009}, retain supervised weak learners to generate pseudo labels of unlabelled instances per iteration. True labelled and pseudo-labelled data is then used in fitting weak learners of subsequent iterations. Approaches differ regarding the selection criterion of the pseudo-labelled instances. Both lines of work, however, require changes to the boosting procedure or the base learners.
 
 An alternative is to pair gradient boosting with self-training. Self-training is a wrapper algorithm around a supervised classifier, that incorporates its most-confident predictions of unlabelled instances into the training procedure \autocite[][190]{yarowskyUnsupervisedWordSense1995}. Other than before, pseudo labels are generated only from the fully-fledged ensemble and the ensemble is grown multiple times. Being a model-agnostic wrapper, the self-training classifier does not change the base classifier and ensures maximum comparability.  Its widespread adoption in literature reinforces its appeal as a compelling solution for semi-supervised trade classification.
 
@@ -722,6 +723,15 @@ Despite these limitations, the potentially improved decision boundary outweighs 
 
 \subsection{Transformers with Pre-Training}\label{sec:extensions-to-transformer}
 
+\gls{MLM} is a pre-training task proposed for the use in language models by  \textcite[][4174]{devlinBERTPretrainingDeep2019}. The core idea of \gls{MLM} is to randomly mask \SI{15}{\percent} of the tokens, i.e., words, in the input sequence. Eventually, the model learns to predict the original token of the now masked token through the tokens in the bidirectional context. Separately for each token, the final hidden state of the masked token is fed through an softmax activation to obtain the predicted probability distribution for the original token and the cross entropy loss is used to compare against the true distribution. For masking, the authors introduce an additional $\mathtt{[MASK]}$ token, that extends the vocabulary \autocite[][4174]{devlinBERTPretrainingDeep2019}. 
+
+A caveat of \gls{MLM} is, that the mask token only appears during pre-training, but not in fine-tuning, causing a mismatch between the pre-training and fine-tuning task. The issues is mitigated by a sophisticated replacement strategy of the masked token: only \SI{80}{\percent} of the time the token is replaced with the $\mathtt{[MASK]}$ token, in \SI{10}{\percent} it remains unchanged, and replaced with a random token \autocite[][4174]{devlinBERTPretrainingDeep2019}. The random or no replacement avidly avoids overfitting.
+
+Applied to tabular datasets, \gls{MLM} transfers to randomly masking features or elements in $\mathbf{x}_{i}$ instead of sequences.  Previous adaptions for tabular data, e.g., \textcites[][3]{huangTabTransformerTabularData2020}[][8]{levinTransferLearningDeep2022}, simplify the replacement strategy to substitution with the $\mathtt{[MASK]}$ token only, and try to reconstruct the original features.  Other than in the language case, reconstruction of masked features requires distinct classification heads per feature and adequate loss functions, which significantly increases the memory footprint and computational demand \autocite[][16]{levinTransferLearningDeep2022}.
+
+% A lightweight alternative is presented in \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}. Here, features are masked and replaced. The objective is now to predict the binary mask $\mathbf{m}_{i}\in \{0,1\}^{M}$ vector corresponding to $\mathbf{x}_{i}$, indicating which features, or entries in $\mathbf{x}_{i}$, have been corrupted.
+
+In summary, \gls{MLM} can help to learn expressive representations of the input, even if the true label is unavailable. Given previous research, we expect pre-training to improve the performance of the FT-Transformer and match or exceed the one of the \gls{GBM}.
 
 \newpage
 \addtocontents{toc}{\protect\newpage}
