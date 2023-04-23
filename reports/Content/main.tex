@@ -353,69 +353,69 @@ Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredicto
 \subsubsection{Gradient Boosting
     Procedure}\label{sec:gradient-boosting-procedure}
 
-% Gradient boosting iteratively combines oversimplified models, the weak learners, into an additive model to obtain an improved ensemble estimate. This chapter draws on \textcite[][9]{friedmanGreedyFunctionApproximation2001} to derive gradient boosting for binary classification.
+Gradient boosting iteratively combines oversimplified models, the weak learners, into an additive model to obtain an improved ensemble estimate. This chapter draws on \textcite[][9]{friedmanGreedyFunctionApproximation2001} to derive gradient boosting for binary classification.
 
-% % classifier with outputs in [-1, 1]
-% By \cref{sec:problem-framing} we perform binary probabilistic classification and by \cref{sec:trade-initiator} we defined the labels to be $y \in \{-1,1\}$. For gradient boosting, instead of modelling the class-conditional probabilities directly, we model the conditional log odds instead, which can be interpreted as the probability of observing class $1$ or a buyer-initiated trade, and covert to class-conditional probabilities as needed.
+% classifier with outputs in [-1, 1]
+By \cref{sec:problem-framing} we perform binary probabilistic classification and by \cref{sec:trade-initiator} we defined the labels to be $y \in \{-1,1\}$. For gradient boosting, instead of modelling the class-conditional probabilities directly, we model the conditional log odds instead, which can be interpreted as the probability of observing class $1$ or a buyer-initiated trade, and covert to class-conditional probabilities as needed.
 
-% Following \textcite[][9]{friedmanStochasticGradientBoosting2002} we set the loss function to be the cross-entropy loss, given by:
+Following \textcite[][9]{friedmanStochasticGradientBoosting2002} we set the loss function to be the cross-entropy loss, given by:
 
-% \begin{equation}
-%     L_{\mathrm{CE}} \colon \mathbb{R}^2 \to \mathbb{R} \quad L_{\mathrm{CE}}(y, F) = \log(1+\exp(-2yF))
-%     \label{eq:cross-entropy-loss}
-% \end{equation}
+\begin{equation}
+    L_{\mathrm{CE}} \colon \mathbb{R}^2 \to \mathbb{R} \quad L_{\mathrm{CE}}(y, F) = \log(1+\exp(-2yF))
+    \label{eq:cross-entropy-loss}
+\end{equation}
 
-% where:
-% \begin{equation}
-%     F(\mathbf{x}) = \frac{1}{2} \log \left[\frac{\Pr(y=1\mid \mathbf{x})}{\Pr(y=-1\mid \mathbf{x})}\right]
-%     \label{eq:logits-gbm}
-% \end{equation}
-% $F(\mathbf{x})$ is the model's prediction in terms of conditional log-odds. The cross-entropy loss, is a reasonable choice, as it is suitable for binary classification, convex, and twice differentiable: properties we exploit later.
+where:
+\begin{equation}
+    F(\mathbf{x}) = \frac{1}{2} \log \left[\frac{\Pr(y=1\mid \mathbf{x})}{\Pr(y=-1\mid \mathbf{x})}\right]
+    \label{eq:logits-gbm}
+\end{equation}
+$F(\mathbf{x})$ is the model's prediction in terms of conditional log-odds. The cross-entropy loss, is a reasonable choice, as it is suitable for binary classification, convex, and twice differentiable: properties we exploit later.
 
-% We first intialise the model with a naïve prediction, based on the average class $\bar{y}$ from all training samples:
+We first intialise the model with a naïve prediction, based on the average class $\bar{y}$ from all training samples:
 
-% \begin{equation}
-%     F_0(\mathbf{x})= \frac{1}{2} \log \left[\frac{1+\bar{y}}{1-\bar{y}}\right].
-% \end{equation}
-% Expectedly, $F_0(\mathbf{x})$ is a poor estimate, capturing hardly any regularities of the data. Gradient boosting solves this issue by adding weak learners to the ensemble. New trees are added greedily, one per iteration $m$ with $m=1,2,\cdots M$. The weak learner in the $m$-th iteration is chosen to approximate the pseudo residual $r_i$, which is the negative gradient of the observed value of the $i$-th sample and the current estimate:
+\begin{equation}
+    F_0(\mathbf{x})= \frac{1}{2} \log \left[\frac{1+\bar{y}}{1-\bar{y}}\right].
+\end{equation}
+Expectedly, $F_0(\mathbf{x})$ is a poor estimate, capturing hardly any regularities of the data. Gradient boosting solves this issue by adding weak learners to the ensemble. New trees are added greedily, one per iteration $m$ with $m=1,2,\cdots M$. The weak learner in the $m$-th iteration is chosen to approximate the pseudo residual $r_i$, which is the negative gradient of the observed value of the $i$-th sample and the current estimate:
 
-% \begin{equation}
-%     r_i=-\left[\frac{\partial L_{\mathrm{CM}}\left(y_i, F\left(\mathbf{x}_i\right)\right)}{\partial F\left(\mathbf{x}_i\right)}\right]_{F(\mathbf{x})=F_{m-1}(\mathbf{x})}=2 y_i /\left(1+\exp \left(2 y_i F_{m-1}\left(\mathbf{x}_i\right)\right)\right).
-% \end{equation}
+\begin{equation}
+    r_i=-\left[\frac{\partial L_{\mathrm{CM}}\left(y_i, F\left(\mathbf{x}_i\right)\right)}{\partial F\left(\mathbf{x}_i\right)}\right]_{F(\mathbf{x})=F_{m-1}(\mathbf{x})}=2 y_i /\left(1+\exp \left(2 y_i F_{m-1}\left(\mathbf{x}_i\right)\right)\right).
+\end{equation}
 
-% % TODO: yields the maximum decrease are similar to the components of the negative gradient descent. However, the  major drawback is tha tthe gradient is only defined for data points x_i seen during training, contradicting the creation of a generalising model. 
+% TODO: yields the maximum decrease are similar to the components of the negative gradient descent. However, the  major drawback is tha tthe gradient is only defined for data points x_i seen during training, contradicting the creation of a generalising model. 
 
-% Typically, regression trees (cp. \cref{sec:decision-tree}) are chosen as weak learners since they are computationally cheap and can produce continuous estimates for the residual. The $m$-th regression tree contains $J$ terminal regions, denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. We search for an estimate $\gamma_{j,m}$ for the terminal node $R_{jm}$ that minimizes the cross-entropy over all samples within the node:
+Typically, regression trees (cp. \cref{sec:decision-tree}) are chosen as weak learners since they are computationally cheap and can produce continuous estimates for the residual. The $m$-th regression tree contains $J$ terminal regions, denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. We search for an estimate $\gamma_{j,m}$ for the terminal node $R_{jm}$ that minimizes the cross-entropy over all samples within the node:
 
-% \begin{equation}
-%     \gamma_{j m}=\arg \min _\gamma \sum_{\mathbf{x}_i \in R_{j m}} \log \left(1+\exp \left(-2 y_i\left(F_{m-1}\left(\mathbf{x}_i\right)+\gamma\right)\right)\right)
-%     \label{eq:region-estimate-gbm}
-% \end{equation}
-% % TODO: Fill in footnote
-% \cref{eq:region-estimate-gbm} cannot be solved in closed form and is typically approached by the Newton-Raphson method with a second-order approximation of the loss~\footnote{Compare the second-order Taylor polynomial given by (...).}:
+\begin{equation}
+    \gamma_{j m}=\arg \min _\gamma \sum_{\mathbf{x}_i \in R_{j m}} \log \left(1+\exp \left(-2 y_i\left(F_{m-1}\left(\mathbf{x}_i\right)+\gamma\right)\right)\right)
+    \label{eq:region-estimate-gbm}
+\end{equation}
+% TODO: Fill in footnote
+\cref{eq:region-estimate-gbm} cannot be solved in closed form and is typically approached by the Newton-Raphson method with a second-order approximation of the loss~\footnote{Compare the second-order Taylor polynomial given by (...).}:
 
-% \begin{equation}
-%     \gamma_{j m}=\sum_{\mathbf{x}_i \in R_{j m}} r_i / \sum_{\mathbf{x}_i \in R_{j m}}\left|r_i\right|\left(2-\left|r_i\right|\right)
-% \end{equation}
-% with $r_i$ given by \cref{eq:logits-gbm}.
+\begin{equation}
+    \gamma_{j m}=\sum_{\mathbf{x}_i \in R_{j m}} r_i / \sum_{\mathbf{x}_i \in R_{j m}}\left|r_i\right|\left(2-\left|r_i\right|\right)
+\end{equation}
+with $r_i$ given by \cref{eq:logits-gbm}.
 
-% An improved estimate for $\mathbf{x}$ is calculated from the previous estimate by adding the new regression tree to the ensemble. The latter moves the prediction towards the greatest descent and thus improves the overall prediction. The updated model is given by:
+An improved estimate for $\mathbf{x}$ is calculated from the previous estimate by adding the new regression tree to the ensemble. The latter moves the prediction towards the greatest descent and thus improves the overall prediction. The updated model is given by:
 
-% \begin{equation}
-%     F_{m}(\mathbf{x})=F_{m-1}(\mathbf{x})+\eta \sum_{j=1}^{J_{m}} \gamma_{j m} \mathbb{I}\left(\mathbf{x} \in R_{j m}\right).
-% \end{equation}
-% After $M$ iterations we obtain the final estimate calculated as $F_M(\mathbf{x})$. To avoid \gls{overfitting} the residuals, only proportional steps towards the negative gradient are taken, which is controlled by the learning rate $\eta \in \left(0, 1\right]$ \autocite[][13]{friedmanGreedyFunctionApproximation2001}. The learning rate $\eta$ and the size of the ensemble $M$ are deeply intertwined are best tuned together \autocite[][13]{friedmanGreedyFunctionApproximation2001}.
+\begin{equation}
+    F_{m}(\mathbf{x})=F_{m-1}(\mathbf{x})+\eta \sum_{j=1}^{J_{m}} \gamma_{j m} \mathbb{I}\left(\mathbf{x} \in R_{j m}\right).
+\end{equation}
+After $M$ iterations we obtain the final estimate calculated as $F_M(\mathbf{x})$. To avoid \gls{overfitting} the residuals, only proportional steps towards the negative gradient are taken, which is controlled by the learning rate $\eta \in \left(0, 1\right]$ \autocite[][13]{friedmanGreedyFunctionApproximation2001}. The learning rate $\eta$ and the size of the ensemble $M$ are deeply intertwined are best tuned together \autocite[][13]{friedmanGreedyFunctionApproximation2001}.
 
-% Gradient boosting is still prone to \gls{overfitting}. One solution is to employ early stopping, whereby the ensemble is only grown in size, as long as adding more weak learners leads to a decrease in loss on the validation set \autocite[][384]{hastietrevorElementsStatisticalLearning2009}. Another approach is to limit the amount of data seen during training by fitting trees on random subset of samples, as proposed in \textcite[][3]{friedmanStochasticGradientBoosting2002}, or on a subset of features, as popularized by \textcite[][3]{chenXGBoostScalableTree2016}. \textcite[][6]{prokhorenkovaCatBoostUnbiasedBoosting2018} grow oblivious trees, which use the same splitting criterion for all nodes of one level in a tree. The rationale is, that these arguably simplistic trees, and achieve an imperfect fit, which regularises the model. Finally, the loss function can be extended for a $\ell_2$ regularization term to penalize the model for complexity, as applied in \textcite[][2]{chenXGBoostScalableTree2016}.
+Gradient boosting is still prone to \gls{overfitting}. One solution is to employ early stopping, whereby the ensemble is only grown in size, as long as adding more weak learners leads to a decrease in loss on the validation set \autocite[][384]{hastietrevorElementsStatisticalLearning2009}. Another approach is to limit the amount of data seen during training by fitting trees on random subset of samples, as proposed in \textcite[][3]{friedmanStochasticGradientBoosting2002}, or on a subset of features, as popularized by \textcite[][3]{chenXGBoostScalableTree2016}. \textcite[][6]{prokhorenkovaCatBoostUnbiasedBoosting2018} grow oblivious trees, which use the same splitting criterion for all nodes of one level in a tree. The rationale is, that these arguably simplistic trees, and achieve an imperfect fit, which regularises the model. Finally, the loss function can be extended for a $\ell_2$ regularization term to penalize the model for complexity, as applied in \textcite[][2]{chenXGBoostScalableTree2016}.
 
-% In recent years, several variants of gradient boosting have been proposed and studied in the literature, including \emph{CatBoost} \autocite[][1--23]{prokhorenkovaCatBoostUnbiasedBoosting2018}, \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, and \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, which differ by the policy how trees are grown and how \gls{overfitting} is addressed. Performance-wise, differences between the implementations are negligible, as empirical studies suggest \autocites[cp.][8]{grinsztajnWhyTreebasedModels2022}[][19--20]{gorishniyRevisitingDeepLearning2021}[][7]{somepalliSaintImprovedNeural2021}.
+In recent years, several variants of gradient boosting have been proposed and studied in the literature, including \emph{CatBoost} \autocite[][1--23]{prokhorenkovaCatBoostUnbiasedBoosting2018}, \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, and \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, which differ by the policy how trees are grown and how \gls{overfitting} is addressed. Performance-wise, differences between the implementations are negligible, as empirical studies suggest \autocites[cp.][8]{grinsztajnWhyTreebasedModels2022}[][19--20]{gorishniyRevisitingDeepLearning2021}[][7]{somepalliSaintImprovedNeural2021}.
 
-% As we noted at the beginning, $F_M(\mathbf{x})$ models the log odds. We can recover the class-conditional probabilities $\widehat{\operatorname{Pr}}(y \mid \mathbf{x})$ by taking the inverse:
+As we noted at the beginning, $F_M(\mathbf{x})$ models the log odds. We can recover the class-conditional probabilities $\widehat{\operatorname{Pr}}(y \mid \mathbf{x})$ by taking the inverse:
 
-% \begin{equation}
-%     \widehat{\operatorname{Pr}}(y \mid \mathbf{x}) = 1 /\left(1+\exp(-2yF_M(\mathbf{x}))\right).
-% \end{equation}
-% and get the majority class by \cref{eq:class-from-prob}.
+\begin{equation}
+    \widehat{\operatorname{Pr}}(y \mid \mathbf{x}) = 1 /\left(1+\exp(-2yF_M(\mathbf{x}))\right).
+\end{equation}
+and get the majority class by \cref{eq:class-from-prob}.
 
 \subsection{Transformer Networks}\label{sec:transformer-networks}
 
@@ -623,7 +623,7 @@ Like the attention layer, the position-wise \gls{FFN} is surrounded by residual 
 
 \subsubsection{Residual Connections and Layer Normalization}\label{sec:residual-connections-layer-norm}
 
-% Recall from earlier chapters, that the encoder stacks multiple Transformer blocks, each of which consists of several sublayers, resulting in a deep network. While depth is inevitable to learn hierarchical representations, the training of such a network is complicated. As neural networks are commonly trained using backpropagation, which relies on the gradient of the error to be propagated through the network starting at the last layer, \glslink{exploding-gradient}{vanishing or exploding gradients} pose a major difficulty in training deep neural nets \autocite[][1]{heDeepResidualLearning2015}. Without countermeasures, stacking multiple layers in the encoder and decoder of the Transformers impedes the gradient information to flow efficiently through the network and hampers the training behaviour \autocite[][1811]{wangLearningDeepTransformer2019}.
+Recall from earlier chapters, that the encoder stacks multiple Transformer blocks, each of which consists of several sublayers, resulting in a deep network. While depth is inevitable to learn hierarchical representations, the training of such a network is complicated. As neural networks are commonly trained using backpropagation, which relies on the gradient of the error to be propagated through the network starting at the last layer, vanishing or \glspl{exploding-gradient} pose a major difficulty in training deep neural nets \autocite[][1]{heDeepResidualLearning2015}. Without countermeasures, stacking multiple layers in the encoder and decoder of the Transformers impedes the gradient information to flow efficiently through the network and hampers the training behaviour \autocite[][1811]{wangLearningDeepTransformer2019}.
 
 As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connections around each sublayer, whereby the output of the sublayer is added element-wisely to its input. Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sublayer and thereby reach deeper layers within the stack. Vanishing or \glspl{exploding-gradient} are also mitigated, as gradients can bypass the sublayer, eventually contributing towards an easier optimisation \autocite[][3591]{liuRethinkingSkipConnection2020}. Residual connections moreover help to preserve the positional embeddings (cp. \cref{sec:positional-encoding}), as the layer's inputs are maintained in the identity mapping. Another technique to improve the training behaviour is layer normalization.
 
@@ -631,7 +631,7 @@ As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connecti
 
 Until now it remains unclear, how the layer normalization intertwines with the sublayers and the residual connections. Transformers are distinguished by the order in which layer normalization is added into the pre-norm and post-norm Transformer. Post-norm Transformers add layer normalization to the sublayer \emph{after} adding the input from the residual connections. The arrangement is depicted in \cref{fig:transformer-architecture-overview}. In contrast for pre-norm Transformers, the normalization is applied \emph{before} the self-attention and feed-forward sublayers and inside the residual connections. Pre-norm requires one additional normalization layer to pass only well-conditioned outputs from the Transformer block to the successive layers \autocite[][5]{xiongLayerNormalizationTransformer2020}.
 
-% \textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalization, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of the widespread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. In addition, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in \glslink{exploding-gradient}{vanishing gradients}, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in our discussion on the FT-Transformer.
+\textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalization, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of the widespread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. In addition, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in vanishing gradients, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in our discussion on the FT-Transformer.
 
 \subsubsection{FT-Transformer}\label{sec:fttransformer}
 
