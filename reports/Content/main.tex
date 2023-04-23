@@ -33,14 +33,14 @@ In summary, machine learning has been applied successfully in the context of tra
 \newpage
 \section{Rule-Based Approaches}\label{sec:rule-based-approaches}
 
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction. 
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction.
 
 In the following sections, we provide a concise overview of different trade initiator definitions and present rule-based methods for trade classification.
 
 \subsection{Trade Initiator}
 \label{sec:trade-initiator}
 
-Various definitions for the trade initiator have been proposed in prior 
+Various definitions for the trade initiator have been proposed in prior
 research. Among these, the:
 
 \emph{Chronological view:} \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000} adapts a chronological view based on the order arrival. She defines the initiator of the trade as the party (buyer or seller) who places their order last, chronologically. This definition requires knowledge about the order submission times.
@@ -48,7 +48,7 @@ research. Among these, the:
 \emph{Immediacy view:} In contrast, \textcite[][94--97]{leeInferringInvestorBehavior2000} equate the trade initiator with the party in demand for immediate execution. Thus, traders placing market orders, immediately executable at whatever price, or executable limit orders, are considered the trade initiator. By contrast, the party placing non-executable limit orders, which may not even result in a trade, is the non-initiator. This definition remains ambiguous for trades resulting from crossed limit orders, matched market orders, or batched orders \autocite[][94--95]{leeInferringInvestorBehavior2000}.
 % FIXME: introduce of notion of demanding / taking away liquidity and providing liquidity
 
-\emph{Positional view:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite to the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand. 
+\emph{Positional view:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite to the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand.
 
 The appropriate view differs by data availability and application context.
 Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is denoted as $\hat{y}$.
@@ -272,7 +272,7 @@ The most basic application is in the \gls{LR} algorithm. For a more complex exam
 
 \textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} and \textcite[][18]{grauerOptionTradeClassification2022} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and the quotes. Hence, current classification rules may not unleash their full potential. A obvious question is, if classifiers, \emph{learned} on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
 
-The trend towards sophisticated, hybrid rules, combining as many as five base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to stacked ensembles found in machine learning and expresses the need for better classifiers. 
+The trend towards sophisticated, hybrid rules, combining as many as five base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to stacked ensembles found in machine learning and expresses the need for better classifiers.
 
 We provide an overview of state-of-the-art machine learning-based classifiers and start by framing trade classification as a supervised learning
 problem.
@@ -357,71 +357,71 @@ Gradient boosting iteratively combines oversimplified models, the weak learners,
 
 % classifier with outputs in [-1, 1]
 By \cref{sec:problem-framing} we perform binary probabilistic classification and by \cref{sec:trade-initiator} we defined the labels to be $y \in \{-1,1\}$. For gradient boosting, instead of modelling the class-conditional probabilities directly, we model the conditional log odds instead, which can be interpreted as the probability of observing class $1$ or a buyer-initiated trade, and covert to class-conditional probabilities as needed.
-    
-    Following \textcite[][9]{friedmanStochasticGradientBoosting2002} we set the loss function to be the cross-entropy loss, given by:
-    
-    \begin{equation}
+
+Following \textcite[][9]{friedmanStochasticGradientBoosting2002} we set the loss function to be the cross-entropy loss, given by:
+
+\begin{equation}
     L_{\mathrm{CE}} \colon \mathbb{R}^2 \to \mathbb{R} \quad L_{\mathrm{CE}}(y, F) = \log(1+\exp(-2yF))
     \label{eq:cross-entropy-loss}
-    \end{equation}
-    
-    where:
-    \begin{equation}
-        F(\mathbf{x}) = \frac{1}{2} \log \left[\frac{\Pr(y=1\mid \mathbf{x})}{\Pr(y=-1\mid \mathbf{x})}\right]
+\end{equation}
+
+where:
+\begin{equation}
+    F(\mathbf{x}) = \frac{1}{2} \log \left[\frac{\Pr(y=1\mid \mathbf{x})}{\Pr(y=-1\mid \mathbf{x})}\right]
     \label{eq:logits-gbm}
-    \end{equation}
-    $F(\mathbf{x})$ is the model's prediction in terms of conditional \emph{log-odds}. The cross-entropy loss, is a reasonable choice, as it is suitable for binary classification, convex, and twice differentiable: properties we exploit later.
-    % \begin{figure}[ht]
-    %     \centering
-    %     \includegraphics{cross-entropy-loss.pdf}
-    %     \caption[Cross-Entropy Loss]{Cross-entropy loss. Own work.}
-    %     \label{fig:cross-entropy-loss}
-    % \end{figure} 
-    
-    We first intialise the model with a naïve prediction, based on the average class $\bar{y}$ from all training samples:
-    
-    \begin{equation}
+\end{equation}
+$F(\mathbf{x})$ is the model's prediction in terms of conditional \emph{log-odds}. The cross-entropy loss, is a reasonable choice, as it is suitable for binary classification, convex, and twice differentiable: properties we exploit later.
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics{cross-entropy-loss.pdf}
+%     \caption[Cross-Entropy Loss]{Cross-entropy loss. Own work.}
+%     \label{fig:cross-entropy-loss}
+% \end{figure} 
+
+We first intialise the model with a naïve prediction, based on the average class $\bar{y}$ from all training samples:
+
+\begin{equation}
     F_0(\mathbf{x})= \frac{1}{2} \log \left[\frac{1+\bar{y}}{1-\bar{y}}\right].
-    \end{equation}
-    Expectedly, $F_0(\mathbf{x})$ is a poor estimate, capturing hardly any regularities of the data. Gradient boosting solves this issue by adding weak learners to the ensemble. New trees are added greedily, one per iteration $m$ with $m=1,2,\cdots M$. The weak learner in the $m$-th iteration is chosen to approximate the pseudo residual $r_i$, which is the negative gradient of the observed value of the $i$-th sample and the current estimate:
-    
-    \begin{equation}
+\end{equation}
+Expectedly, $F_0(\mathbf{x})$ is a poor estimate, capturing hardly any regularities of the data. Gradient boosting solves this issue by adding weak learners to the ensemble. New trees are added greedily, one per iteration $m$ with $m=1,2,\cdots M$. The weak learner in the $m$-th iteration is chosen to approximate the pseudo residual $r_i$, which is the negative gradient of the observed value of the $i$-th sample and the current estimate:
+
+\begin{equation}
     r_i=-\left[\frac{\partial L_{\mathrm{CM}}\left(y_i, F\left(\mathbf{x}_i\right)\right)}{\partial F\left(\mathbf{x}_i\right)}\right]_{F(\mathbf{x})=F_{m-1}(\mathbf{x})}=2 y_i /\left(1+\exp \left(2 y_i F_{m-1}\left(\mathbf{x}_i\right)\right)\right).
-    \end{equation}
+\end{equation}
 
-    % TODO: yields the maximum decrease are similar to the components of the negative gradient descent. However, the  major drawback is tha tthe gradient is only defined for data points x_i seen during training, contradicting the creation of a generalising model. 
+% TODO: yields the maximum decrease are similar to the components of the negative gradient descent. However, the  major drawback is tha tthe gradient is only defined for data points x_i seen during training, contradicting the creation of a generalising model. 
 
-    Typically, regression trees (cp. \cref{sec:decision-tree}) are chosen as weak learners since they are computationally cheap and can produce continuous estimates for the residual. The $m$-th regression tree contains $J$ terminal regions, denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. We search for an estimate $\gamma_{j,m}$ for the terminal node $R_{jm}$ that minimizes the cross-entropy over all samples within the node:
-    
-    \begin{equation}
+Typically, regression trees (cp. \cref{sec:decision-tree}) are chosen as weak learners since they are computationally cheap and can produce continuous estimates for the residual. The $m$-th regression tree contains $J$ terminal regions, denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. We search for an estimate $\gamma_{j,m}$ for the terminal node $R_{jm}$ that minimizes the cross-entropy over all samples within the node:
+
+\begin{equation}
     \gamma_{j m}=\arg \min _\gamma \sum_{\mathbf{x}_i \in R_{j m}} \log \left(1+\exp \left(-2 y_i\left(F_{m-1}\left(\mathbf{x}_i\right)+\gamma\right)\right)\right)
     \label{eq:region-estimate-gbm}
-    \end{equation}
-    % TODO: Fill in footnote
-    \cref{eq:region-estimate-gbm} cannot be solved in closed form and is typically approached by the Newton-Raphson method with a second-order approximation of the loss~\footnote{Compare the second-order Taylor polynomial given by (...).}:
-    
-    \begin{equation}
+\end{equation}
+% TODO: Fill in footnote
+\cref{eq:region-estimate-gbm} cannot be solved in closed form and is typically approached by the Newton-Raphson method with a second-order approximation of the loss~\footnote{Compare the second-order Taylor polynomial given by (...).}:
+
+\begin{equation}
     \gamma_{j m}=\sum_{\mathbf{x}_i \in R_{j m}} r_i / \sum_{\mathbf{x}_i \in R_{j m}}\left|r_i\right|\left(2-\left|r_i\right|\right)
-    \end{equation}
-    with $r_i$ given by \cref{eq:logits-gbm}.
-    
-    An improved estimate for $\mathbf{x}$ is calculated from the previous estimate by adding the new regression tree to the ensemble. The latter moves the prediction towards the greatest descent and thus improves the overall prediction. The updated model is given by:
-    
-    \begin{equation}
+\end{equation}
+with $r_i$ given by \cref{eq:logits-gbm}.
+
+An improved estimate for $\mathbf{x}$ is calculated from the previous estimate by adding the new regression tree to the ensemble. The latter moves the prediction towards the greatest descent and thus improves the overall prediction. The updated model is given by:
+
+\begin{equation}
     F_{m}(\mathbf{x})=F_{m-1}(\mathbf{x})+\eta \sum_{j=1}^{J_{m}} \gamma_{j m} \mathbb{I}\left(\mathbf{x} \in R_{j m}\right).
-    \end{equation}
-    After $M$ iterations we obtain the final estimate calculated as $F_M(\mathbf{x})$. To avoid \gls{overfitting} the residuals, only proportional steps towards the negative gradient are taken, which is controlled by the learning rate $\eta \in \left(0, 1\right]$ \autocite[][13]{friedmanGreedyFunctionApproximation2001}. The learning rate $\eta$ and the size of the ensemble $M$ are deeply intertwined are best tuned together \autocite[][13]{friedmanGreedyFunctionApproximation2001}.
-    
-    Gradient boosting is still prone to \gls{overfitting}. One solution is to employ early stopping, whereby the ensemble is only grown in size, as long as adding more weak learners leads to a decrease in loss on the validation set \autocite[][384]{hastietrevorElementsStatisticalLearning2009}. Another approach is to limit the amount of data seen during training by fitting trees on random subset of samples, as proposed in \textcite[][3]{friedmanStochasticGradientBoosting2002}, or on a subset of features, as popularized by \textcite[][3]{chenXGBoostScalableTree2016}. \textcite[][6]{prokhorenkovaCatBoostUnbiasedBoosting2018} grow oblivious trees, which use the same splitting criterion for all nodes of one level in a tree. The rationale is, that these arguably simplistic trees, and achieve an imperfect fit, which regularises the model. Finally, the loss function can be extended for a $\ell_2$ regularization term to penalize the model for complexity, as applied in \textcite[][2]{chenXGBoostScalableTree2016}.
-    
-    In recent years, several variants of gradient boosting have been proposed and studied in the literature, including \emph{CatBoost} \autocite[][1--23]{prokhorenkovaCatBoostUnbiasedBoosting2018}, \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, and \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, which differ by the policy how trees are grown and how \gls{overfitting} is addressed. Performance-wise, differences between the implementations are negligible, as empirical studies suggest \autocites[cp.][8]{grinsztajnWhyTreebasedModels2022}[][19--20]{gorishniyRevisitingDeepLearning2021}[][7]{somepalliSaintImprovedNeural2021}.
-    
-    As we noted at the beginning, $F_M(\mathbf{x})$ models the log odds. We can recover the class-conditional probabilities $\widehat{\operatorname{Pr}}(y \mid \mathbf{x})$ by taking the inverse:
-    
-    \begin{equation}
-        \widehat{\operatorname{Pr}}(y \mid \mathbf{x}) = 1 /\left(1+\exp(-2yF_M(\mathbf{x}))\right).
-    \end{equation}
-    and get the majority class by \cref{eq:class-from-prob}.    
+\end{equation}
+After $M$ iterations we obtain the final estimate calculated as $F_M(\mathbf{x})$. To avoid \gls{overfitting} the residuals, only proportional steps towards the negative gradient are taken, which is controlled by the learning rate $\eta \in \left(0, 1\right]$ \autocite[][13]{friedmanGreedyFunctionApproximation2001}. The learning rate $\eta$ and the size of the ensemble $M$ are deeply intertwined are best tuned together \autocite[][13]{friedmanGreedyFunctionApproximation2001}.
+
+Gradient boosting is still prone to \gls{overfitting}. One solution is to employ early stopping, whereby the ensemble is only grown in size, as long as adding more weak learners leads to a decrease in loss on the validation set \autocite[][384]{hastietrevorElementsStatisticalLearning2009}. Another approach is to limit the amount of data seen during training by fitting trees on random subset of samples, as proposed in \textcite[][3]{friedmanStochasticGradientBoosting2002}, or on a subset of features, as popularized by \textcite[][3]{chenXGBoostScalableTree2016}. \textcite[][6]{prokhorenkovaCatBoostUnbiasedBoosting2018} grow oblivious trees, which use the same splitting criterion for all nodes of one level in a tree. The rationale is, that these arguably simplistic trees, and achieve an imperfect fit, which regularises the model. Finally, the loss function can be extended for a $\ell_2$ regularization term to penalize the model for complexity, as applied in \textcite[][2]{chenXGBoostScalableTree2016}.
+
+In recent years, several variants of gradient boosting have been proposed and studied in the literature, including \emph{CatBoost} \autocite[][1--23]{prokhorenkovaCatBoostUnbiasedBoosting2018}, \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, and \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, which differ by the policy how trees are grown and how \gls{overfitting} is addressed. Performance-wise, differences between the implementations are negligible, as empirical studies suggest \autocites[cp.][8]{grinsztajnWhyTreebasedModels2022}[][19--20]{gorishniyRevisitingDeepLearning2021}[][7]{somepalliSaintImprovedNeural2021}.
+
+As we noted at the beginning, $F_M(\mathbf{x})$ models the log odds. We can recover the class-conditional probabilities $\widehat{\operatorname{Pr}}(y \mid \mathbf{x})$ by taking the inverse:
+
+\begin{equation}
+    \widehat{\operatorname{Pr}}(y \mid \mathbf{x}) = 1 /\left(1+\exp(-2yF_M(\mathbf{x}))\right).
+\end{equation}
+and get the majority class by \cref{eq:class-from-prob}.
 
 \subsection{Transformer Networks}\label{sec:transformer-networks}
 
@@ -469,17 +469,17 @@ The conversion to token-ids, however, loses the semantics, as token-ids may be a
 The embedding layer from \cref{fig:transformer-architecture-overview} is ultimately a lookup table to retrieve the embedding vector $\gls{e} \in \mathbb{R}^{d_{e}}$ from a learned, embedding matrix $\gls{W-e} \in \mathbb{R}^{d_{e} \times N_{V}}$ with the token-id $v \in V \cong\left[N_{V}\right]$ as shown~\footnote{Throughout our discussion on Transformers we adopt a notation proposed in \textcite{phuongFormalAlgorithmsTransformers2022}.}:
 \begin{equation}
     \gls{e}=\gls{W-e}\left[:, v\right].
-\label{eq:word-embeddings}
+    \label{eq:word-embeddings}
 \end{equation}
 
 The weights of $\gls{W-e}$ are initialised randomly and updated using gradient descent to obtain the learned embeddings. The dimension of the embedding $d_e$, affects the expressiveness of the network and is thus an important tuneable hyperparameter of the model.
 
 Concluding the example from above with artificial embeddings of $d_e=3$:
 \begin{equation}
-\begin{aligned}
-    \gls{e}_{\text{king}}&=\gls{W-e}\left[:,2\right] = [0.01, 0.20, 0.13]^{\top}\\
-    \gls{e}_{\text{queen}}&=\gls{W-e}\left[:,1\right] = [0.07, 0.16, 0.14]^{\top}\\
-\end{aligned}
+    \begin{aligned}
+        \gls{e}_{\text{king}}  & =\gls{W-e}\left[:,2\right] = [0.01, 0.20, 0.13]^{\top} \\
+        \gls{e}_{\text{queen}} & =\gls{W-e}\left[:,1\right] = [0.07, 0.16, 0.14]^{\top} \\
+    \end{aligned}
 \end{equation}
 are likely to be close in embedding space with cosine-similarity of $\approx 1$ due to their high semantic similarity.
 
@@ -488,14 +488,14 @@ As this work is concerned with the classification of tabular data, the aforement
 % TODO: Explain how a sample maps / row in a dataset maps to a sequence. Maps to...
 \textbf{Embeddings For Numerical Data}
 
-Transformer networks can handle numerical features, such as the trade price, by mapping the scalar value to a high-dimensional embedding vector and process sequences thereof \autocite[][1]{gorishniyEmbeddingsNumericalFeatures2022}. In the simplest case, a learned linear projection is utilized to obtain the embedding. Linear embeddings of numerical features were previously explored in \textcites[][1]{kossenSelfAttentionDatapointsGoing2021}[][1]{somepalliSaintImprovedNeural2021}[][1]{gorishniyRevisitingDeepLearning2021}. 
+Transformer networks can handle numerical features, such as the trade price, by mapping the scalar value to a high-dimensional embedding vector and process sequences thereof \autocite[][1]{gorishniyEmbeddingsNumericalFeatures2022}. In the simplest case, a learned linear projection is utilized to obtain the embedding. Linear embeddings of numerical features were previously explored in \textcites[][1]{kossenSelfAttentionDatapointsGoing2021}[][1]{somepalliSaintImprovedNeural2021}[][1]{gorishniyRevisitingDeepLearning2021}.
 
 If the $m$-th feature, $\mathbf{x}[m]$, is numerical, it is projected to its embedding $\gls{e} \in \mathbb{R}^{d_e}$ by element-wise multiplication with a learned vector $\mathbf{W}_m \in \mathbb{R}^{d_{e}}$. Moreover, a feature-dependent bias term $\mathbf{b}_m \in \mathbb{R}^{d_{e}}$ is added, as noted in \cref{eq:numerical-embeddings}.
 
 \begin{equation}
-        \gls{e}= \mathbf{W}_m \mathbf{x}[m] +\mathbf{b}_m
-\label{eq:numerical-embeddings}
-\end{equation}  
+    \gls{e}= \mathbf{W}_m \mathbf{x}[m] +\mathbf{b}_m
+    \label{eq:numerical-embeddings}
+\end{equation}
 
 More sophisticated approaches rely on parametric embeddings, like the \emph{piece-wise linear encoding} or the \emph{periodic encoding} of \textcite[][10]{gorishniyEmbeddingsNumericalFeatures2022}. Both enforce non-linearity. The authors show that these can alleviate the model's performance but at a non-neglectable computational cost.
 
@@ -509,8 +509,8 @@ Datasets often comprise categorical features like the underlying. In the context
 For categorical inputs, the embedding is implemented as a lookup table, analogous to \cref{eq:word-embeddings}. However, each feature has
 its vocabulary $C_m$ with $N_{C_m}$ categories. Assume, the $m$-th feature is categorical. The specific embeddings $\gls{e}$ are queried with a unique integer key $c_{m} \in C_m \cong\left[N_{C_m}\right]$ from the learned embedding matrix $\mathbf{W}_m \in \mathbb{R}^{d_e \times N_{C_m}}$. Finally, a feature-specific bias term $\mathbf{b}_m \in \mathbb{R}^{d_{e}}$ is added as shown in \cref{eq:categorical-embeddings}.
 \begin{equation}
-        \gls{e}=\mathbf{W}_m[:,c_{m}] +\mathbf{b}_m
-        \label{eq:categorical-embeddings}
+    \gls{e}=\mathbf{W}_m[:,c_{m}] +\mathbf{b}_m
+    \label{eq:categorical-embeddings}
 \end{equation}
 
 These categorical embeddings can potentially capture the intrinsic properties of categorical variables by arranging similar categories closer in the embedding space. For instance, consider the underlyings $\mathtt{GOOGL}$ (Alphabet Inc.), $\mathtt{MSFT}$ (Microsoft Inc.), and $\mathtt{K}$ (Kellogg Company). Due to the overlapping field of operations, one would anticipate greater similarity between Alphabet and Microsoft.
@@ -524,7 +524,7 @@ Embeddings can only encode the semantic relationship of tokens, but they do not 
 
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
 
-In practice, the order of words is important for the overall meaning of a sentence. As such, \textcite[][6]{vaswaniAttentionAllYou2017} propose to inject information on the \gls{token}'s position within the sequence through a \emph{positional encoding}, that is added onto the \gls{token} embedding. 
+In practice, the order of words is important for the overall meaning of a sentence. As such, \textcite[][6]{vaswaniAttentionAllYou2017} propose to inject information on the \gls{token}'s position within the sequence through a \emph{positional encoding}, that is added onto the \gls{token} embedding.
 
 Contrary to sentences, columns in tabular datasets are arranged in an arbitrary order, which weakens the need for positional information. However, unless the embeddings per feature are unique, a positional embedding is also required so that the model can relate the otherwise identical embeddings to specific features and distinguish them \autocites[][3]{huangTabTransformerTabularData2020}[][15]{somepalliSaintImprovedNeural2021}.
 
@@ -533,7 +533,7 @@ Like \gls{token} embeddings, positional embeddings can also be learned \autocite
 \begin{equation}
     \begin{aligned}
         \gls{W-p}\left[2 i-1, t\right] & =\sin \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right), \\
-        \gls{W-p}\left[2 i, t\right] & =\cos \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right).
+        \gls{W-p}\left[2 i, t\right]   & =\cos \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right).
     \end{aligned}
     \label{eq:sinusodal-encoding}
 \end{equation}
@@ -578,11 +578,11 @@ Analogous to before, \emph{scaled dot-product attention} estimates the similarit
 For computational efficiency, attention is performed simultaneously over multiple queries. Thus, the author's group queries, keys, and values in matrices. In matrix notation outputs are estimated as:
 
 \begin{equation}
-\begin{aligned}
-\operatorname{Attention}(\mathbf{X},\mathbf{Z}) &= \mathbf{V} \operatorname{softmax}\left(\mathbf{S} / \sqrt{d_{\mathrm{attn}}}\right)\\
- \mathbf{S} &= \mathbf{K}^{\top} \mathbf{Q}
-\end{aligned}
-\label{eq:attention}
+    \begin{aligned}
+        \operatorname{Attention}(\mathbf{X},\mathbf{Z}) & = \mathbf{V} \operatorname{softmax}\left(\mathbf{S} / \sqrt{d_{\mathrm{attn}}}\right) \\
+        \mathbf{S}                                      & = \mathbf{K}^{\top} \mathbf{Q}
+    \end{aligned}
+    \label{eq:attention}
 \end{equation}
 where $\mathbf{X} \in \mathbb{R}^{d_X\times \ell_X}$ and $\mathbf{Z} \in \mathbb{R}^{d_Z\times \ell_Z}$  are vector representations of the primary input sequence and of the context sequence. Both the primary and the context sequences are identical for the encoder but are different for the decoder. The query, key, and value matrices $\mathbf{Q}=\mathbf{W}_q \mathbf{X} + \mathbf{b}_q\mathbf{1}^{\top}$, $\mathbf{K}=\mathbf{W}_k \mathbf{Z} + \mathbf{b}_k\mathbf{1}^{\top}$, and $\mathbf{V}=\mathbf{W}_v \mathbf{Z} + \mathbf{b}_v\mathbf{1}^{\top}$ are linear projections of the input and context sequences, and $\mathbf{W}_q, \mathbf{W}_k \in \mathbb{R}^{d_{\mathrm{attn}\times d_{X}}}$; $\mathbf{W}_v \in \mathbb{R}^{d_{\mathrm{out}\times d_{Z}}}$; $\mathbf{b}_q, \mathbf{b}_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}_v \in \mathbb{R}^{d_{\mathrm{out}}}$ are learnable parameters. The dimensionality of the attention mechanism, $d_{\mathrm{attn}}$, is typically a fraction of the model dimensionality to accelerate computation. Likewise, the output dimension, $d_{out}$, is another hyperparameter to the models. The attention scores are $\mathbf{S}$, which are scaled by $\sqrt{d_{\mathrm{attn}}}$ to avoid unstable gradients, and the softmax activation normalizes all scores. As normalized attention scores have a clear interpretation as the weights how much a token contributes to the model's output, the attention mechanism provides a window into the model, which we explore in \cref{sec:feature-importance-measure}.
 
@@ -595,10 +595,10 @@ Exemplary for machine translation, \textcite[][5795]{voitaAnalyzingMultiHeadSelf
 Multi-head attention can be computed as:
 
 \begin{equation}
-\begin{aligned}
-\operatorname{MHAttention}(\mathbf{X}, \mathbf{Z}) &= \mathbf{W}_{o}\left[\mathbf{Y}^{1};\mathbf{Y}^{2};\ldots;\mathbf{Y}^{H} \right] + \mathbf{b}_{o}\mathbf{1}^{\top}\\
-\mathbf{Y}^{h} &= \operatorname{Attention}(\mathbf{Q}^h, \mathbf{K}^h, \mathbf{V}^h) 
-\end{aligned}
+    \begin{aligned}
+        \operatorname{MHAttention}(\mathbf{X}, \mathbf{Z}) & = \mathbf{W}_{o}\left[\mathbf{Y}^{1};\mathbf{Y}^{2};\ldots;\mathbf{Y}^{H} \right] + \mathbf{b}_{o}\mathbf{1}^{\top} \\
+        \mathbf{Y}^{h}                                     & = \operatorname{Attention}(\mathbf{Q}^h, \mathbf{K}^h, \mathbf{V}^h)
+    \end{aligned}
 \end{equation}
 The query, key, and value matrices  $\mathbf{Q}^{h}=\mathbf{W}^h_q \mathbf{X} + \mathbf{b}^h_q\mathbf{1}^{\top}$, $\mathbf{K}^{h}=\mathbf{W}_k^h \mathbf{Z} + \mathbf{b}_k^h\mathbf{1}^{\top}$, and $\mathbf{V}^{h}=\mathbf{W}_v^h \mathbf{Z} + \mathbf{b}_v^h\mathbf{1}^{\top}$ are obtained from linear projections of the input and context sequences unique per head. Again, $\mathbf{W}^{h}_{q} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_{X}}$; $\mathbf{W}^{h}_{k}, \mathbf{W}^{h}_{v} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_Z}$; $\mathbf{b}^h_q, \mathbf{b}^h_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}^h_v \in \mathbb{R}^{d_{\mathrm{mid}}}$ are used for projection. Typically, the dimensionality of the attention heads, $d_{\mathrm{mid}}$, is reduced to $d_{\mathrm{attn}}/H$ to match the computational cost of single-head attention. The output dimensionality $d_{\text{out}}$ is restored with a final linear projection through the weight matrix $\mathbf{W}_{o} \in \mathbb{R}^{d_{\mathrm{out}}\times Hd_{\mathrm{mid}}}$ and bias $\mathbf{b}_o \in \mathbb{R}^{d_{\mathrm{out}}}$ applied to the concatenated results of the attention heads.
 
@@ -645,15 +645,15 @@ Many of the previous concepts can be adapted to the tabular domain with minor ar
 \begin{figure}[ht]
     \centering
     {\renewcommand\normalsize{\scriptsize}
-                \normalsize
-                \input{./Graphs/fttransformer.pdf_tex}}
+        \normalsize
+        \input{./Graphs/fttransformer.pdf_tex}}
     \caption[Overview Over the FT-Transformer Architecture]{Overview Over the Architecture of FT-Transformer. The FT-Transformer uses a pre-norm arrangement and operates on numerical and categorical embeddings. Own work inspired by \textcite[][4--5]{gorishniyRevisitingDeepLearning2021}.}
     \label{fig:fttransformer}
 \end{figure}
 
 \textcite[][5]{gorishniyRevisitingDeepLearning2021} propose with FT-Transformer an adaption, that pairs an embedding unit for both numerical and categorical inputs, dubbed the feature tokenizer, with a Transformer. The complete architecture is depicted in \cref{fig:fttransformer}. Notably, the Transformer units use a pre-norm setup for easier optimisation, whereby the very first normalization layer in the encoder is removed due to a propitious performance \textcite[][17]{gorishniyRevisitingDeepLearning2021}. The upstream feature tokenizer transforms every feature in $\mathbf{x}$ to their embeddings. The embeddings are given by \cref{eq:numerical-embeddings,eq:categorical-embeddings}.
 
-Recall from our discussion on self-attention (cp. \cref{sec:attention}), that each \gls{token} encodes the \glspl{token} within the sequence. Based on this notion, \textcite[][4174]{devlinBERTPretrainingDeep2019} prepend a specialised $\mathtt{[CLS]}$ \gls{token} to the sequence, which stores the sequence's aggregate representation. Like any other \gls{token}, the $\mathtt{[CLS]}$ \gls{token} is embedded first and contextualised in the encoder. Its final hidden state is then used for classification. 
+Recall from our discussion on self-attention (cp. \cref{sec:attention}), that each \gls{token} encodes the \glspl{token} within the sequence. Based on this notion, \textcite[][4174]{devlinBERTPretrainingDeep2019} prepend a specialised $\mathtt{[CLS]}$ \gls{token} to the sequence, which stores the sequence's aggregate representation. Like any other \gls{token}, the $\mathtt{[CLS]}$ \gls{token} is embedded first and contextualised in the encoder. Its final hidden state is then used for classification.
 
 \textcite[][4]{gorishniyRevisitingDeepLearning2021} adapt the idea of a $\mathtt{[CLS]}$ \gls{token} for tabular representation models. Similar to the embeddings of categorical or numerical features, the embedding of the $[\mathtt{CLS}]$ \gls{token} $\gls{e}_\mathtt{[CLS]} \in \mathbb{R}^{d_{e}}$ is prepended to the column embeddings with $\gls{X} = \left[\gls{e}_\mathtt{[CLS]}, \gls{e}_1, \ldots \gls{e}_{M}\right]$, where $\gls{X} \in \mathbb{R}^{d_{e} \times M +1}$. Like before, $\gls{X}$ is passed through a stack of Transformer layers. The updated representation of the $\mathtt{[CLS]}$ \gls{token} is used exclusively for prediction:
 \begin{equation}
@@ -674,7 +674,7 @@ Our supervised approaches depend on the availability of the trade initiator as t
 
 Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside with true labels \autocite[][6]{chapelleSemisupervisedLearning2006}. This property renders them appealing for trade classification.
 
-Semi-supervised learning is centred around the \emph{assumption of smoothness}, which states that if two samples $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if data points are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}. 
+Semi-supervised learning is centred around the \emph{assumption of smoothness}, which states that if two samples $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if data points are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}.
 
 \begin{figure}[h]
     \centering
@@ -882,7 +882,7 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
         \toprule
         Parameter                    & Distribution                              & {\gls{GBM} 1}           & {\gls{GBM} 2}               & {\gls{GBM} 3}            \\ \midrule
         Depth                        & $\operatorname{UniformInt}[1,12]$         & 9                       & 10                          & 8                        \\
-        Learning rate $\eta$      & $\operatorname{LogUniform}[0.001, 0.125]$ & 0.061147194180849546    & 0.12484853560495288         & 0.12484853839455994      \\
+        Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$ & 0.061147194180849546    & 0.12484853560495288         & 0.12484853839455994      \\
         $\ell_2$ Leaf Regularization & $\operatorname{UniformInt}[2, 30]$        & 16                      & 29                          & 17                       \\
         Random Strength              & $\operatorname{LogUniform}[1{e-}9, 10.0]$ & 0.000010476785242010688 & 0.0000000033898444462040114 & 0.0000013615032724416282 \\
         Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$        & 0.6538673528316611      & 0.4734183814715093          & 0.4515562770665896       \\ \midrule
@@ -900,12 +900,12 @@ The hyperparameter search for the FT-Transformer is identical to \textcite[][18]
     \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[ width=0.7\linewidth]{17malsep-hyperparam-search-space.pdf}}
     \vfill
     \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[ width=0.7\linewidth]{3laathab-hyperparam-search-space.pdf}}
-\end{figure} 
+\end{figure}
 
 \clearpage
 
 \begin{figure}[ht]
-        \addtocounter{figure}{-1} 
+    \addtocounter{figure}{-1}
     \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 3\label{fig:ise-gbm-hyperparam-ml}]{\includegraphics[ width=0.7\linewidth]{2a9iqsn0-hyperparam-search-space.pdf}}
     \caption[]{Hyperparameter Search Space of \gls{GBM} on \gls{ISE} Validation Set}
     \label{fig:ise-gbm-hyperparam}
@@ -954,8 +954,8 @@ Subsequent sub-chapters discusses metrics for evaluation and measures to retriev
 
 Our goal is to maximize the number of trades, where the predicted trade initiator matches the true trade initiator. We assess the quality of our model’s prediction in terms of \emph{accuracy}, which can be stated as:
 \begin{equation}
-% \operatorname{accuracy} \colon \mathbb{R}^{N} \times \mathbb{R}^{N} \to  \left[0, 1\right], \quad 
-\operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{L}_{\mathrm{0-1}}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
+    % \operatorname{accuracy} \colon \mathbb{R}^{N} \times \mathbb{R}^{N} \to  \left[0, 1\right], \quad 
+    \operatorname{accuracy}(\mathbf{y}, \widehat{\mathbf{y}}) = 1 - \frac{1}{N}\sum_{i=1}^{N} \operatorname{L}_{\mathrm{0-1}}(\mathbf{y}_i, \widehat{\mathbf{y}}_i),
 \end{equation}
 where $\operatorname{L}_{\mathrm{0-1}}(\cdot)$ is the 0-1-loss given by:
 \begin{equation}
@@ -970,36 +970,36 @@ Our datasets are approximately balanced and buyer-initiated trades predicted as 
 \subsubsection{Feature Importance
     Measure}\label{sec:feature-importance-measure}
 
-    Naturally, one would like to obtain insights into how the models arrived at the prediction and identify features relevant for the prediction. Both aspects can be subsumed under the term \emph{interpretability}. Following, \textcite[][4]{liptonMythosModelInterpretability2017} interpretability can be reached through model transparency or post-hoc interpretability methods. Transparent models provide interpretability through a transparent mechanism in the model, whereas post-hoc methods extract information from the already learned model \autocite[][4--5]{liptonMythosModelInterpretability2017}.
+Naturally, one would like to obtain insights into how the models arrived at the prediction and identify features relevant for the prediction. Both aspects can be subsumed under the term \emph{interpretability}. Following, \textcite[][4]{liptonMythosModelInterpretability2017} interpretability can be reached through model transparency or post-hoc interpretability methods. Transparent models provide interpretability through a transparent mechanism in the model, whereas post-hoc methods extract information from the already learned model \autocite[][4--5]{liptonMythosModelInterpretability2017}.
 
-    Classical trade classification algorithms, as a rule-based classifier, are transparent with an easily understandable decision process and thus provide interpretability \autocite[][91]{barredoarrietaExplainableArtificialIntelligence2020}. Interpretability, however, decreases for deep, stacked combinations involving a large feature count, when interactions between base rules become more complex and the effect of a single feature on the final prediction more challenging to interpret.
-    
-    The machine-learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through a \emph{model-agnostic, post-hoc interpretability techniques}. Thereby, our goal is to identify features that are important for the \emph{correct prediction}. This is fundamentally different from methods like standard \gls{SHAP}, that attribute \emph{any} prediction to the input features \autocite[][??]{chenTrueModelTrue2020}.
-    
-    Many model-agnostic methods are based on randomly permuting feature values. In this work, we specifically consider the variants \emph{permutation feature importance} \autocite[][23--24]{breimanRandomForests2001} and partial-dependence plots \autocite[][26--28]{friedmanGreedyFunctionApproximation2001}. Both serve a complementary purpose. Permutation feature importance derives the feature importance from the change in predictive accuracy before and after permuting a feature randomly, whereas partial dependence plots visualize the average change in prediction, if feature values are altered. These are widely adopted and computationally efficient.
+Classical trade classification algorithms, as a rule-based classifier, are transparent with an easily understandable decision process and thus provide interpretability \autocite[][91]{barredoarrietaExplainableArtificialIntelligence2020}. Interpretability, however, decreases for deep, stacked combinations involving a large feature count, when interactions between base rules become more complex and the effect of a single feature on the final prediction more challenging to interpret.
+
+The machine-learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through a \emph{model-agnostic, post-hoc interpretability techniques}. Thereby, our goal is to identify features that are important for the \emph{correct prediction}. This is fundamentally different from methods like standard \gls{SHAP}, that attribute \emph{any} prediction to the input features \autocite[][??]{chenTrueModelTrue2020}.
+
+Many model-agnostic methods are based on randomly permuting feature values. In this work, we specifically consider the variants \emph{permutation feature importance} \autocite[][23--24]{breimanRandomForests2001} and partial-dependence plots \autocite[][26--28]{friedmanGreedyFunctionApproximation2001}. Both serve a complementary purpose. Permutation feature importance derives the feature importance from the change in predictive accuracy before and after permuting a feature randomly, whereas partial dependence plots visualize the average change in prediction, if feature values are altered. These are widely adopted and computationally efficient.
 
 \textbf{Random Feature Permutation}
 
 Random feature permutation is easy to interpret by the virtue of being computationally efficient and model-agnostic. Like other feature importance measures, including \gls{SHAP}, it assumes independence between features \autocite[][2]{aasExplainingIndividualPredictions2021}.
 
-The importance measure was originally proposed by \textcite[][23--24]{breimanRandomForests2001} for random forests and has later been extended by \textcite[][??]{fisherAllModelsAre} into a model-agnostic feature importance measure. 
+The importance measure was originally proposed by \textcite[][23--24]{breimanRandomForests2001} for random forests and has later been extended by \textcite[][??]{fisherAllModelsAre} into a model-agnostic feature importance measure.
 
 Random feature permutation derives the feature importance from the mean decrease in accuracy before and after permuting a feature randomly. Expectedly, permuting features break the association with the target. Thus, the permutation of important features leads to a sharp decrease in accuracy, whereas unimportant features leave the accuracy unaffected.
 
 Given our feature matrix $\mathbf{X}$, we can define a second permuted version, $\mathbf{X}^{\pi,j}$, where the $j$-th feature is randomly permuted by $\pi$. Using $L(y_i, h(\mathbf{x}_i))$ for predicting $y_i$ from $h(\mathbf{x}_{i})$, the importance of $j$-th feature is given by:
 
 $$
-\operatorname{VI}^{\pi}_{j} = \sum_{i=1}^{N} L(y_{i}, h(\mathbf{x}_{i}^{\pi,j})) - L(y_{i}, h(\mathbf{x}_{i})),
+    \operatorname{VI}^{\pi}_{j} = \sum_{i=1}^{N} L(y_{i}, h(\mathbf{x}_{i}^{\pi,j})) - L(y_{i}, h(\mathbf{x}_{i})),
 $$
 which is the increase in loss, i.e., accuracy, before and after permutation \textcite[][82]{hookerUnrestrictedPermutationForces2021}. While \textcite[][23--24]{breimanRandomForests2001} uses a single permutation, \textcite[][??]{fisherAllModelsAre} consider multiple, random permutations. By definition, random feature importance only yields global feature importances, as the measure is aggregated from all $N$ samples.
 
 As defined above, every feature is permuted independently from other features which artificially breaks correlations between features and creates unrealistic feature combinations. Consider, for example, the apparent correlation between the ask, bid price and trade price. Permuting only the ask could result in strongly negative or extremely large spreads since the bid remains unchanged. In effect, the presence of correlated features leads to an overestimate of the importance of correlated features \autocite[][3]{stroblConditionalVariableImportance2008}.
 
-Vice versa, can the presence of correlated features decrease the importance of the associated feature, as the feature importance is now distributed across the features, thereby underestimating the true importance of the features. This affects all features, where information is encoded redundantly, such as the bid-ask ratio. 
+Vice versa, can the presence of correlated features decrease the importance of the associated feature, as the feature importance is now distributed across the features, thereby underestimating the true importance of the features. This affects all features, where information is encoded redundantly, such as the bid-ask ratio.
 
 % (footnote-for an extended discussion of substitution effects on feature importance in the financial domain see \textcite[][114--118]{lopezdepradoAdvancesFinancialMachine2018}.
 
-To alleviate the bias from dependent, we group dependent features and estimate the feature importance on a group-level. Arranging all features in a tree-like hierarchy gives us the freedom to derive feature importances at different levels, enabling cross-comparisons between classical rules and other classifiers, as the grouping of raw and derived features makes the implementation of classical rules transparent. 
+To alleviate the bias from dependent, we group dependent features and estimate the feature importance on a group-level. Arranging all features in a tree-like hierarchy gives us the freedom to derive feature importances at different levels, enabling cross-comparisons between classical rules and other classifiers, as the grouping of raw and derived features makes the implementation of classical rules transparent.
 
 % (footnote: Consider the implementation of the tick rule. Here, the implementation could use the feature price lag (ex) or calculate the price change from the trade price and price lag (ex). If not grouped, feature importances would be attributed to either the derived feature or raw features causing difficulties in comparison with machine learning classifiers, which have access to all three features simultaneously. Grouping all three features resolves this issue at the cost of interpretability.). 
 
@@ -1010,7 +1010,7 @@ Other than the classical random feature permutation, all features sharing the sa
 
 Related to the concept of random feature permutation are partial dependence plots by \textcite[][26--28]{friedmanGreedyFunctionApproximation2001} visualize the dependency between a single feature or multiple features and the effect on the target value as the feature value is adjusted / after marginalizing out all other features. Let $\mathbf{X}^{x,j}$ be a matrix, where the $j$-th feature value is replaced by $x$ and all other features are unaltered, partial feature dependence function:
 \begin{equation}
-\operatorname{PD}_{j}(x) = \frac{1}{N} \sum_{i=1}^{N} h(\mathbf{x}^{x,j}_{i}),
+    \operatorname{PD}_{j}(x) = \frac{1}{N} \sum_{i=1}^{N} h(\mathbf{x}^{x,j}_{i}),
 \end{equation}
 now gives the marginal average over all other features \autocite[][81]{hookerUnrestrictedPermutationForces2021}. By iterating over a grid of (observed) $x$, we obtain the partial dependence plot for the feature.
 
@@ -1047,7 +1047,7 @@ In an attempt to explain the decision-making process of multi-modal Transformers
 
 \begin{equation}
     \begin{aligned}
-        \bar{\mathbf{A}}^{(l)} & =I+ \mathbb{E}_h\left(\left(\nabla \mathbf{A}^{(l)} \odot \mathbf{A}^{(l)}\right)^{+}\right) \\
+        \bar{\mathbf{A}}^{(l)}   & =I+ \mathbb{E}_h\left(\left(\nabla \mathbf{A}^{(l)} \odot \mathbf{A}^{(l)}\right)^{+}\right) \\
         \operatorname {wrollout} & =\bar{\mathbf{A}}^{(1)} \cdot \bar{\mathbf{A}}^{(2)} \ldots \cdot \bar{\mathbf{A}}^{(L)}
     \end{aligned}
     \label{eq:attention-map-weighted}
