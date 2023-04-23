@@ -88,39 +88,6 @@ https://www.baeldung.com/cs/transformer-text-embeddings
 - The last decoder is connected to the output layer, generating the next output token, until the EOS token is reached.
 - The decoder outputs a stack of float vectors. This vector is connect to a linear layer to project the output vector into a vector the size of the vocabulary. By applying softmax, we obtain the probabilities for every token to be the next token in the sequence. The token with the highest probability is chosen.
 
-## Notes on Talk with Łukasz Kaiser 🎙️
-(see here: https://www.youtube.com/watch?v=rBCqOTEfxvg)
-
-- RNNs suffer from vanishing gradients
-- Some people used CNNs, but path length is still logarithmic (going down a tree). Is limited to position.
-- Attention: make a query with your vector and look at similar things in the past. Looks at everything, but choose things, that are similar.
-- Encoder attention allows to go from one word to another. (Encoder Self-Attention)
-- MaskedDecoder Self-Attention (is a single matrix multiply with a mask) to mask out all prev. elements not relevant
-- Attention A(Q, K, V) (q = query vector) (K, V matrices= memory) (K = current word working on, V = all words generated before). You want to use q to find most similar k and get values that correspond to keys. (QK^T) gives a probability distribution over keys, which is then multiplied with values
-- n^2 * d complexity
-- to preserve the order of words they use multi-head attention
-- attention heads can be interpreted (see winograd schemas)
-
-## Notes from talk with Lucas Beyer / Google🎙️
-
-^54aa8a
-(see https://www.youtube.com/watch?v=EixI6t5oif0)
-- attention was originally introduced in the Bahdu paper. But was not the most central part.
-- attention is like a (convoluted (soft)) dictionary lookup. like in a dict we have keys and values and want to query the dictionary. keys and values are a vector of quotes. measure the similarity with the dotproduct. we measure similarity between query and key (attention weights) and the result is normalized. We take weighted average of all values weighted by the attention weights. Note output can also be average over multiple 
-
-- q (word to translate), k, v (words in source language)
-- We not just have one query, but multiple. Also an attention matrix. We use multi-head attention
-- Multi-head attention splits the queries along the embedding dimension. Also outputs are split. Works empirically better. Requires less compute. (only implementation details. Not the gist of attention.)
-- Architecture is heavily inspired by the translation task / community. This is helpful, as it resulted in encoder / decoder architecture.
-- Every token from the input sequence is linearily projected. Each vector looks around to see what vectors are there and calculates the output. (self-attention)
-- Every token individually is sent to a oint-wise MLP. It's done individually for every token. Stores knowledge. There is a paper. (references in [[@gevaTransformerFeedForwardLayers2021]] are the best I could find?) Gives the model processing power to think about what it has seen." Larger hidden size gives better results.
-- skip processing. We have input and update it with our processing. (See residual stream in (mathematical foundations of Transformers))
-- Layer norm is technically important.
-- It's not clear, which variant of layer-norm is better.
-- Decoder learns to sample from all possible outputs of the target language. 10 most likely translation etc. Computationally infeasible. To solve we look at one token at a time. Decoder works auto-regressively. Choose most likely token. and update all the inputs / things we have computed so far.
-- All inputs are passed into the decoder at once to reduce training times. We multiply with mask matrix to lookup future tokens. In generation time we can not implement this trick and have to implement token by token.
-- Cross-attention. Tokens from decoder become queries and keys and values come from the encoder. Look at the tokens from the source language (keys, values). 
-- Flexible architecture. Needs loads of data. Are computationally efficient. That's true.
 
 ## Notes from Zhang
 (see here: [[@zhangDiveDeepLearning2021]])

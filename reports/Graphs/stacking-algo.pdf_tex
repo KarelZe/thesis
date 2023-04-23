@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{205.50000288bp}%
+    \setlength{\unitlength}{198.1489599bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,21 +50,21 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.82481751)%
+  \begin{picture}(1,0.85833779)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{stacking-algo.pdf}}%
-    \put(0.69756543,0.59563385){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}*\\\end{tabular}}}}%
-    \put(0.48078493,0.05922229){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small\textsf{trade size rule}\normalsize\end{tabular}}}}%
-    \put(0.65969388,0.16374869){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small\textsf{quote rule}\end{tabular}}}}%
-    \put(0.82735657,0.26025008){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small\textsf{tick test}\end{tabular}}}}%
-    \put(0.50752513,0.48666048){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}*\\\end{tabular}}}}%
-    \put(0.55292495,0.77007285){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small$P_{i,t}$\normalsize\end{tabular}}}}%
-    \put(0.34680601,0.66506029){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $P_{i,t}$\normalsize\end{tabular}}}}%
-    \put(0.17618558,0.57655664){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $\tilde{P}_{i, t}$\normalsize\end{tabular}}}}%
-    \put(0.91128052,0.34761798){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $P_{i,t-1}$\normalsize\end{tabular}}}}%
-    \put(0.73453718,0.23321584){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small$M_{i,t}$\normalsize\end{tabular}}}}%
-    \put(0.02703098,0.06425167){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $\tilde{A}_{i, t}$\normalsize\end{tabular}}}}%
-    \put(0.57413536,0.13392983){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small$\tilde{B}_{i, t}$\normalsize\end{tabular}}}}%
+    \put(0.80079529,0.57546809){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}*\\\end{tabular}}}}%
+    \put(0.49861593,0.06434023){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small trade size rule\normalsize\end{tabular}}}}%
+    \put(0.68416214,0.1727444){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small quote rule\end{tabular}}}}%
+    \put(0.85804487,0.27282586){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small tick test\end{tabular}}}}%
+    \put(0.52634815,0.50763576){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}*\\\end{tabular}}}}%
+    \put(0.57343223,0.80156232){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small$p_{i,t}$\normalsize\end{tabular}}}}%
+    \put(0.35966658,0.69265395){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $p_{i,t}$\normalsize\end{tabular}}}}%
+    \put(0.18271638,0.60086694){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $\tilde{p}_{i, t}$\normalsize\end{tabular}}}}%
+    \put(0.94508229,0.36343498){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $p_{i,t-1}$\normalsize\end{tabular}}}}%
+    \put(0.76178202,0.24478869){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small$m_{i,t}$\normalsize\end{tabular}}}}%
+    \put(0.02802835,0.06955618){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small $\tilde{a}_{i, t}$\normalsize\end{tabular}}}}%
+    \put(0.59542952,0.1418193){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\small$\tilde{b}_{i, t}$\normalsize\end{tabular}}}}%
   \end{picture}%
 \endgroup%

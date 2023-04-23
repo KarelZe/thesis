@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "5f20a3d8d35d78f4",
+        "id": "78ff271d71a2add7",
         "type": "tabs",
         "children": [
           {
-            "id": "7e91432f1a4dae66",
+            "id": "f39d35664e49442a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🤖Pre-training of Transformers.md",
+                "file": "📑notes/🍪Selection of semisupervised Approaches notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -61,7 +61,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 314.0110321044922
+    "width": 361.5
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🤖Pre-training of Transformers.md",
+                "file": "📑notes/🍪Selection of semisupervised Approaches notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +105,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🤖Pre-training of Transformers.md"
+                "file": "📑notes/🍪Selection of semisupervised Approaches notes.md"
               }
             }
           },
@@ -136,41 +136,43 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "7e91432f1a4dae66",
+  "active": "f39d35664e49442a",
   "lastOpenFiles": [
-    "📑notes/🧭Random Feature Permutation notes.md",
-    "📖chapters/🧭Random Feature Permutation.md",
-    "📥Inbox/@fisherAllModelsAre.md",
-    "📖chapters/🤖Pre-training of Transformers.md",
-    "🖼️Media/Pasted image 20230415084057.png",
-    "📖chapters/🅰️Attention.md",
-    "📖chapters/🧭Feature Importance Measure.md",
-    "📑notes/🍪Selection of supervised approaches notes.md",
-    "📖chapters/🔢Trade initiator.md",
-    "📖chapters/⭕Self-Training classifier.md",
-    "📑notes/🧭Evaluation metric notes.md",
-    "📑notes/⭕Self-Training classifier notes.md",
+    "📑notes/🔢Trade Initiator notes.md",
     "Ammo Trade Initiator.md",
-    "📑notes/🌏Dataset notes.md",
-    "📖chapters/🌏Dataset.md",
-    "📥Inbox/@chenTrueModelTrue2020.md",
-    "📖chapters/👶Introduction.md",
-    "📖chapters/🧃Feature Sets.md",
-    "📥Inbox/@kavajeczPackagingLiquidityBlind2005.md",
-    "📑notes/🍕Application study notes.md",
-    "📥Inbox/@sarkarMarketSidednessInsights2023.md",
-    "📥Inbox/@kavajeczPackagingLiquidityBlind2005.md",
-    "📥Inbox/@chenTrueModelTrue2020.md",
-    "📥Inbox/@barredoarrietaExplainableArtificialIntelligence2020.md",
-    "📥Inbox/@aasExplainingIndividualPredictions2021.md",
-    "🖼️Media/presentation-of-effective-spread.png",
-    "🖼️Media/performance-degradations.png",
-    "🖼️Media/Pasted image 20230407182457.png",
-    "🖼️Media/Pasted image 20230405172011.png",
-    "🖼️Media/Pasted image 20230405171940.png",
+    "1680261360742.jpg.md",
+    "📖chapters/🤖Pre-training of Transformers.md",
+    "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+    "📑notes/🍪Selection of semisupervised Approaches notes.md",
+    "📑notes/🍪Selection of supervised approaches notes.md",
+    "📥Inbox/@bennettExploitingUnlabeledData2002.md",
+    "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📑notes/🐈Gradient Boosting notes.md",
+    "🖼️Media/Pasted image 20230423083202.png",
+    "📑notes/🔢Hybrid rules notes.md",
+    "📖chapters/🔢Hybrid rules.md",
+    "📖chapters/🔢Stacked rules.md",
+    "📖chapters/🐈Gradient Boosting.md",
     "🖼️Media/Pasted image 20230405171919.png",
     "🖼️Media/Pasted image 20230405171902.png",
     "🖼️Media/Pasted image 20230405170430.png",
-    "🖼️Media/Pasted image 20230405170411.png"
+    "🖼️Media/Pasted image 20230405170411.png",
+    "🖼️Media/different-loss-functions.png",
+    "🖼️Media/cross-entropy-loss.png",
+    "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
+    "🖼️Media/Pasted image 20230421203616.png",
+    "📖chapters/🔢Trade initiator.md",
+    "🖼️Media/Pasted image 20230421145359.png",
+    "🖼️Media/Pasted image 20230421145319.png",
+    "📖chapters/🪄Data Preprocessing.md",
+    "📖chapters/🐈CatBoost.md",
+    "🍬Implementation/😺CatBoost.md",
+    "📑notes/🅰️attention notes.md",
+    "📖chapters/🅰️Attention.md",
+    "📥Inbox/@dosovitskiyImageWorth16x162021.md",
+    "📑notes/🤖Transformer notes.md",
+    "📖chapters/🧭Attention map.md",
+    "📥Inbox/@dalche-bucSemisupervisedMarginBoost2001.md"
   ]
 }

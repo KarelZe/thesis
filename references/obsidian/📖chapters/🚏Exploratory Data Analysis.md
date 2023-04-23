@@ -1,4 +1,7 @@
 
+Get inspired by https://www.sciencedirect.com/science/article/pii/S2049080120305604
+
+
 - high cardinality of underlyings
 - insert stats from `2.0-mb-data_preprocessing_loading_splitting.ipynb`
 

@@ -26,3 +26,5 @@ Tags: #trade-classification
 **Algorithms:**
 ![[pseudocode-of-algorithms.png]]
 (found in [[@jurkatisInferringTradeDirections2022]]). Overly complex description but helpful for implementation?
+
+![[Pasted image 20230421141343.png]]

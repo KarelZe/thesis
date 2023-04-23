@@ -1,34 +1,18 @@
+
+An exception are ([[@levinTransferLearningDeep2022]]7), who find no improvements from pre-training the FT-Transformer.
+
+Interesting resources on pre-training:
+- https://arxiv.org/pdf/2109.07437.pdf
 - https://phontron.com/class/anlp2022/assets/slides/anlp-07-pretraining.pdf
-- semi-supervised learning with pre-training for tabular data improves feature transfer. Also possible if features differ between the upstream and downstream task. [[@levinTransferLearningDeep2022]] 
 
-“The paper closest to our work is Gorishniy et al. [2021], benchmarking novel algorithms, on 11 tabular datasets. We provide a more comprehensive benchmark, with 45 datasets, split across different settings (medium-sized / large-size, with/without categorical features), accounting for the hyperparameter tuning cost, to establish a standard benchmark.” ([Grinsztajn et al., 2022, p. 2](zotero://select/library/items/G3KP2Z9W)) ([pdf](zotero://open-pdf/library/items/A3KU4A43?page=2&annotation=YXJLM6JN)) “FT_Transformer : a simple Transformer model combined with a module embedding categorical and numerical features, created in Gorishniy et al. [2021]. We choose this model because it was benchmarked in a convincing way against tree-based models and other tabular-specific models. It can thus be considered a “best case” for Deep learning models on tabular data.” ([Grinsztajn et al., 2022, p. 5](zotero://select/library/items/G3KP2Z9W)) ([pdf](zotero://open-pdf/library/items/A3KU4A43?page=5&annotation=AHYUCL2P))
+[[@dalche-bucSemisupervisedMarginBoost2001]]
+*SSMBoost* requires semi-supervised base learners, which 
+ASSEMBLE 
 
-“MLP-like architectures are not robust to uninformative features In the two experiments shown in Fig. 4, we can see that removing uninformative features (4a) reduces the performance gap between MLPs (Resnet) and the other models (FT Transformers and tree-based models), while adding uninformative features widens the gap. This shows that MLPs are less robust to uninformative features, and, given the frequency of such features in tabular datasets, partly explain the results from Sec. 4.2.” ([Grinsztajn et al., 2022, p. 7](zotero://select/library/items/G3KP2Z9W)) ([pdf](zotero://open-pdf/library/items/A3KU4A43?page=7&annotation=TQSG939L))
+Boosting, as an ensemble learning framework, is one of the most powerful classification algorithms in supervised learning. Based on the gradient descent view of boosting [Mason et al., 2000], many semi-supervised boosting methods have been proposed, such as SMarginBoost [d’Alch ́ e-Buc et al., 2002], ASSEMBLE [Bennett et al., 2002], RegBoost [Chen and Wang, 2007; Chen and Wang, 2011], SemiBoost [Mallapragada et al., 2009], SERBoost [Saffari et al., 2008] and information theoretic regularization based boosting [Zheng et al., 2009], where a margin loss function is minimized over both labeled and unlabeled data by the functional gradient descent method. The effectiveness of these methods can be ascribed to their tendency to produce large margin classifiers with a small classification error. However, these algorithms were not designed to directly maximize the margin (although some of them have the effects of margin enforcing), and the objective functions are not related to the margin in the sense that one can minimize these loss functions while simultaneously achieving a bad margin [Rudin et al., 2004]. Therefore, a natural goal is to construct classifiers that directly optimize margins as measured on both labeled and unlabeled data.
 
-“Why are MLPs much more hindered by uninformative features, compared to other models? One answer is that this learner is rotationally invariant in the sense of Ng [2004]: the learning procedure which learns an MLP on a training set and evaluate it on a testing set is unchanged when applying a rotation (unitary matrix) to the features on both the training and testing set. On the contrary, tree-based models are not rotationally invariant, as they attend to each feature separately, and neither are FT Transformers, because of the initial FT Tokenizer, which implements a pointwise operation theoretical link between this concept and uninformative features is provided by Ng [2004], which shows that any rotationallly invariant learning procedure has a worst-case sample complexity that grows at least linearly in the number of irrelevant features. Intuitively, to remove uninformative features, a rotationaly invariant algorithm has to first find the original orientation of the features, and then select the least informative ones: the information contained in the orientation of the data is lost.” ([Grinsztajn et al., 2022, p. 8](zotero://select/library/items/G3KP2Z9W)) ([pdf](zotero://open-pdf/library/items/A3KU4A43?page=8&annotation=W6LGGVAC))
+See [[@vanengelenSurveySemisupervisedLearning2020]] for different approaches.
+For the existing semi-supervised boosting methods [Bennett et al., 2002; Chen and Wang, 2007; d’Alche-Buc ´ et al., 2002; Mallapragada et al., 2009; Saffari et al., 2008; Zheng et al., 2009],A Direct Boosting Approach for Semi-Supervised Classification ([[@zhaiDirectBoostingApproach]]).
 
-- “Tuning hyperparameters does not make neural networks state-of-the-art Tree-based models are superior for every random search budget, and the performance gap stays wide even after a large number of random search iterations. This does not take into account that each random search iteration is generally slower for neural networks than for tree-based models (see A.2).” ([Grinsztajn et al., 2022, p. 6](zotero://select/library/items/G3KP2Z9W)) ([pdf](zotero://open-pdf/library/items/A3KU4A43?page=6&annotation=K2FYJND8)) [[@grinsztajnWhyTreebasedModels2022]]
+[[@mallapragadaSemiBoostBoostingSemiSupervised2009]] [[@bennettExploitingUnlabeledData2002]][[@dalche-bucSemisupervisedMarginBoost2001]]
 
-- Start with what the ultimate goal of semi-supervised classification is? See [[@chapelleSemiSupervisedClassificationLow2005]] for catchy introduction. -> We want to find a decision boundary that lies in a low-density region / want to create models that generalize. -> Obtain models that generalize. -> In ultimate consequence avoid overfitting of the model.
-- Instead of covering all possible semi-supervised approaches, do it the other way around. Take all the approaches from the supervised chapter and show how they can be extended to the semi-supervised setting. This will result in a shorter, yet more streamlined thesis, as results of supervised and semi-supervised learning can be directly compared. 
-- Motivation for semi-supervised learning
-- Differentiate semi-supervised learning into its subtypes transductive and inductive learning.
-- Insert a graphics. Use it as a guidance through the thesis.
-- Explain the limitations of transductive learning.
-- General we observe performance improvements
-- Labelling of data is costly, sometimes impossible (my case).
-- For overview see [[@zhuSemiSupervisedLearningLiterature]]
-- for problems / success of semi-supervised learning in tabular data see [[@yoonVIMEExtendingSuccess2020]]
-- **pseudo-labelling:** e. g., [How To Build an Efficient NLP Model – Weights & Biases (wandb.ai)](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) and [[@leePseudolabelSimpleEfficient]]. Requires solving the issue of obtaining soft probablities. Reason why pseudo-labels are a poor idea -> requires change in neural network architecture -> we aim for comparability.
-- For pretraining ofneural net architectures also see argumentation in [[@somepalliSAINTImprovedNeural2021]]
-- See also [[@bahriSCARFSelfSupervisedContrastive2022]], while the paper is not 100 % relevant, it contains interesting citations.
-- How does regularization relate to semi-supervised learning? Don't both aim for the same objective?
-- [[@huangTabTransformerTabularData2020]] compare in their semi-supervised comparsion against GBM (PL) GBMs trained on pseudo labelled data
-- Authors use unsupervised pre-training and supervised finetuning. They also try out techniques like pseudo labelling from [[@leePseudolabelSimpleEfficient]] for semi supervised learning among others.
-- [[@vanengelenSurveySemisupervisedLearning2020]] (nice overview of techniques)
-
-
-- Semi-supervised learning uses both labeled and unlabeled data to construct a classifier. 
-- The goal is to improve classification performance from the unlabeled data with explicit classification information of labeled data. (found in [[@tanhaSemisupervisedSelftrainingDecision2017]]) 
-- The goal of semi-supervised learning is to improve generalization performance using unlabeled data. (found in [[@chapelleSemiSupervisedClassificationLow2005]])
-- Interestingly most existing literature on semi-supervised learning focuses on vision tasks. And instead pre-training + fine-tuning is a more common paradigm for language tasks. (https://lilianweng.github.io/posts/2021-12-05-semi-supervised/)

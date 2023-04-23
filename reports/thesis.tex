@@ -7,6 +7,7 @@
 \usepackage{csquotes}
 \usepackage[style=apa,backend=biber]{biblatex}
 \DeclareLanguageMapping{british}{british-apa}
+% \renewcommand{\thepage}{} % Removes the page number
 \addbibresource{Content/bibliography.bib}
 
 % Format and layout
@@ -44,7 +45,7 @@ width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 triangle,isosceles triangle stretches,shape border rotate=90,minimum
 width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 
-\newcommand{\bestcircle}{\tikz{\node[circle,draw=darkgray, fill=black, line width=2pt, minimum width=0.2cm,minimum height=0.2cm, inner sep=0pt, draw opacity=.2] at (0,0){};}}
+\newcommand{\bestcircle}{\tikz{\node[circle,draw=darkgray, fill=white, line width=0.5pt, minimum width=0.2cm,minimum height=0.2cm, inner sep=0pt, draw opacity=.2] at (0,0){};}}
 
 % Tables and Graphs
 \usepackage{booktabs} % Improves the design of the tables
@@ -218,6 +219,7 @@ bookmarksopen
 \newacronym{LR}{LR}{Lee-Ready}
 \newacronym{MCC}{MCC}{Matthews correlation coefficient}
 \newacronym{MLP}{MLP}{multi-layer perceptron}
+\newacronym{MLM}{MLM}{masked language modelling}
 \newacronym[first={national best bid and offer}]{NBBO}{NBBO}{national best bid and offer}
 \newacronym{NYSE}{NYSE}{New York Stock Exchange}
 \newacronym{NASDAQ}{NASDAQ}{National Association of Securities Dealers Automated Quotations}
@@ -227,7 +229,7 @@ bookmarksopen
 \newacronym{SSE}{SSE}{sum of squared errors}
 \newacronym{SHAP}{SHAP}{SHapley Additive exPlanations}
 \newacronym{TRACE}{TRACE}{Trade Reporting and Compliance Engine}
-
+\newacronym{RTD}{RTD}{random token replacement}
 % see https://tex.stackexchange.com/questions/347586/symbols-as-glossary-entry-indicators
 %Symbols
 \newglossaryentry{V}{type=symbols,name={\ensuremath{\cong[N_\t{V}]}},sort=V, description={vocabulary}}
@@ -352,8 +354,8 @@ For tabular data, a token corresponds to a column in the data set.}}
 \listoftables % Inserts the list of figures.
 \addcontentsline{toc}{section}{List of Tables} % Adds the list of tables to the table of contents.
 
-\newpage
-\printglossary[title={List of Symbols},type=symbols,style=dotglos]
+% \newpage
+% \printglossary[title={List of Symbols},type=symbols,style=dotglos]
 
 % Main text section
 \newpage
