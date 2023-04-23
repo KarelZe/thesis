@@ -67,8 +67,8 @@ The quote rule classifies a trade by comparing the trade price against the corre
     \operatorname{quote}\colon \mathcal{A} \to \mathcal{Y},\quad
     \operatorname{quote}(i, t)=
     \begin{cases}
-        1,  & \text{if}\ P_{i, t}>M_{i, t}  \\
-        -1, & \text{if}\ P_{i, t}<M_{i, t}. \\
+        1,  & \mathrm{if}\ P_{i, t}>M_{i, t}  \\
+        -1, & \mathrm{if}\ P_{i, t}<M_{i, t}. \\
     \end{cases}
 \end{equation}
 
@@ -88,9 +88,9 @@ A common alternative to the quote rule is the tick test. Based on the rationale 
     \operatorname{tick}\colon \mathbb{N}^2 \to \mathcal{Y},\quad
     \operatorname{tick}(i, t)=
     \begin{cases}
-        1,                           & \text{if}\ t=1 \lor P_{t}>P_{t-1} \\
-        -1,                          & \text{if}\ P_{i, t} < P_{i, t-1}  \\
-        \operatorname{tick}(i, t-1), & \text{else}.
+        1,                           & \mathrm{if}\ t=1 \lor P_{t}>P_{t-1} \\
+        -1,                          & \mathrm{if}\ P_{i, t} < P_{i, t-1}  \\
+        \operatorname{tick}(i, t-1), & \mathrm{else}.
     \end{cases}
     \label{eq:tick-test}
 \end{equation}
@@ -108,9 +108,9 @@ The reverse tick test is a variant of the tick test proposed in \textcite[][241]
     \operatorname{rtick} \colon \mathbb{N}^2 \to \mathcal{Y},\quad
     \operatorname{rtick}(i, t)=
     \begin{cases}
-        1,                            & \text{if}\ t+1=T \lor P_{i, t} > P_{i, t+1} \\
-        -1,                           & \text{if}\ P_{i, t} < P_{i, t+1}            \\
-        \operatorname{rtick}(i, t+1), & \text{else}
+        1,                            & \mathrm{if}\ t+1=T \lor P_{i, t} > P_{i, t+1} \\
+        -1,                           & \mathrm{if}\ P_{i, t} < P_{i, t+1}            \\
+        \operatorname{rtick}(i, t+1), & \mathrm{else}
     \end{cases}
     \label{eq:reverse-tick-test}
 \end{equation}
@@ -135,8 +135,8 @@ Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t
     \operatorname{depth} \colon \mathcal{A} \to \mathcal{Y},\quad
     \operatorname{depth}(i, t)=
     \begin{cases}
-        1,  & \text{if}\ \tilde{A}_{i,t} > \tilde{B}_{i,t} \land P_{i, t} = M_{i, t}. \\
-        -1, & \text{if}\ \tilde{A}_{i,t} < \tilde{B}_{i,t} \land P_{i, t} = M_{i, t}  \\
+        1,  & \mathrm{if}\ \tilde{A}_{i,t} > \tilde{B}_{i,t} \land P_{i, t} = M_{i, t}. \\
+        -1, & \mathrm{if}\ \tilde{A}_{i,t} < \tilde{B}_{i,t} \land P_{i, t} = M_{i, t}  \\
     \end{cases}
     \label{eq:depth-rule}
 \end{equation}
@@ -153,8 +153,8 @@ As \cref{sec:tick-test} derives, quote-based approaches are generally preferred 
     \operatorname{tsize} \colon \mathcal{A} \to \mathcal{Y},\quad
     \operatorname{tsize}(i, t)=
     \begin{cases}
-        1,  & \text{if}\ \tilde{P}_{i, t} = \tilde{B}_{i, t} \neq \tilde{A}_{i, t}  \\
-        -1, & \text{if}\ \tilde{P}_{i, t} = \tilde{A}_{i, t} \neq \tilde{B}_{i, t}. \\
+        1,  & \mathrm{if}\ \tilde{P}_{i, t} = \tilde{B}_{i, t} \neq \tilde{A}_{i, t}  \\
+        -1, & \mathrm{if}\ \tilde{P}_{i, t} = \tilde{A}_{i, t} \neq \tilde{B}_{i, t}. \\
     \end{cases}
     \label{eq:trade-size-rule}
 \end{equation}
@@ -209,9 +209,9 @@ In combination, the algorithm primarily signs trades according to the quote rule
 \begin{equation}
     \operatorname{lr} \colon \mathbb{N}^2 \to \mathcal{Y},\quad\operatorname{lr}(i,t)=
     \begin{cases}
-        1,                         & \text{if}\ P_{i, t} > M_{i, t} \\
-        -1,                        & \text{if}\ P_{i, t} < M_{i, t} \\
-        \operatorname{tick}(i, t), & \text{else}.
+        1,                         & \mathrm{if}\ P_{i, t} > M_{i, t} \\
+        -1,                        & \mathrm{if}\ P_{i, t} < M_{i, t} \\
+        \operatorname{tick}(i, t), & \mathrm{else}.
     \end{cases}
 \end{equation}
 
@@ -227,9 +227,9 @@ As such, the \gls{EMO} algorithm extends the tick rule by classifying trades at 
     \operatorname{emo} \colon \mathbb{N}^2 \to \mathcal{Y}, \quad
     \operatorname{emo}(i, t)=
     \begin{cases}
-        1,                         & \text{if}\ P_{i, t} = A_{i, t} \\
-        -1,                        & \text{if}\ P_{i, t} = B_{i, t} \\
-        \operatorname{tick}(i, t), & \text{else}.
+        1,                         & \mathrm{if}\ P_{i, t} = A_{i, t} \\
+        -1,                        & \mathrm{if}\ P_{i, t} = B_{i, t} \\
+        \operatorname{tick}(i, t), & \mathrm{else}.
     \end{cases}
     \label{eq:emo-rule}
 \end{equation}
@@ -245,9 +245,9 @@ Like the previous two algorithms, the \gls{CLNV} method of \textcite[][3809]{cha
     \operatorname{clnv} \colon \mathbb{N}^2 \to \mathcal{Y}, \quad
     \operatorname{clnv}(i, t)=
     \begin{cases}
-        1,                         & \text{if}\ P_{i, t} \in \left(\frac{3}{10} B_{i,t} + \frac{7}{10} A_{i,t}, A_{i, t}\right] \\
-        -1,                        & \text{if}\ P_{i, t} \in \left[ B_{i,t}, \frac{7}{10} B_{i,t} + \frac{3}{10} A_{i,t}\right) \\
-        \operatorname{tick}(i, t), & \text{else}
+        1,                         & \mathrm{if}\ P_{i, t} \in \left(\frac{3}{10} B_{i,t} + \frac{7}{10} A_{i,t}, A_{i, t}\right] \\
+        -1,                        & \mathrm{if}\ P_{i, t} \in \left[ B_{i,t}, \frac{7}{10} B_{i,t} + \frac{3}{10} A_{i,t}\right) \\
+        \operatorname{tick}(i, t), & \mathrm{else}
     \end{cases}
     \label{eq:CLNV-rule}
 \end{equation}
@@ -291,7 +291,7 @@ All presented trade classification rules from \cref{sec:rule-based-approaches}  
 
 Thus, we frame trade signing as a supervised, probabilistic classification task. This is similar to \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis. A probabilistic view enables a richer evaluation, but constraints our selection to probabilistic classifiers. For comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
 
-We introduce more notation, which we use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times M}$ and described by a random variable $X$. Any of the $M$ features in $\mathbf{x}$ may be numerical, e.g., the trade price or categorical e.g., the option type. Like before, the target is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $\Pr(X, Y)$. The training set with $N$ i.i.d. samples drawn is denoted by $\mathcal{D}_N=\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
+We introduce more notation, which we use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times M}$ and described by a random variable $X$. Any of the $M$ features in $\mathbf{x}$ may be numerical, e.g., the trade price or categorical e.g., the option type. Like before, the target is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $\Pr(X, Y)$. The labelled data set with $N$ i.i.d. samples is denoted by $\mathcal{S} =\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
 
 For our machine learning classifiers, we aim to model $\Pr_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
 
@@ -311,7 +311,7 @@ and 1, no insight into the confidence of the prediction is gained. Nonetheless, 
 
 \subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches}
 
-\textbf{TODO:} Add a short discussion here, that derives why gradient-boosting and Transformers should be used.
+\textbf{TODO:} Add a short discussion here, that derives why gradient boosting and Transformers should be used.
 
 \subsection{Gradient Boosted Trees}\label{sec:gradient-boosted-trees}
 
@@ -353,7 +353,7 @@ Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredicto
 \subsubsection{Gradient Boosting
     Procedure}\label{sec:gradient-boosting-procedure}
 
-Gradient boosting iteratively combines oversimplified models, the weak learners, into an additive model to obtain an improved ensemble estimate. This chapter draws on \textcite[][9]{friedmanGreedyFunctionApproximation2001} to derive gradient-boosting for binary classification.
+Gradient boosting iteratively combines oversimplified models, the weak learners, into an additive model to obtain an improved ensemble estimate. This chapter draws on \textcite[][9]{friedmanGreedyFunctionApproximation2001} to derive gradient boosting for binary classification.
 
 % classifier with outputs in [-1, 1]
 By \cref{sec:problem-framing} we perform binary probabilistic classification and by \cref{sec:trade-initiator} we defined the labels to be $y \in \{-1,1\}$. For gradient boosting, instead of modelling the class-conditional probabilities directly, we model the conditional log odds instead, which can be interpreted as the probability of observing class $1$ or a buyer-initiated trade, and covert to class-conditional probabilities as needed.
@@ -370,13 +370,7 @@ where:
     F(\mathbf{x}) = \frac{1}{2} \log \left[\frac{\Pr(y=1\mid \mathbf{x})}{\Pr(y=-1\mid \mathbf{x})}\right]
     \label{eq:logits-gbm}
 \end{equation}
-$F(\mathbf{x})$ is the model's prediction in terms of conditional \emph{log-odds}. The cross-entropy loss, is a reasonable choice, as it is suitable for binary classification, convex, and twice differentiable: properties we exploit later.
-% \begin{figure}[ht]
-%     \centering
-%     \includegraphics{cross-entropy-loss.pdf}
-%     \caption[Cross-Entropy Loss]{Cross-entropy loss. Own work.}
-%     \label{fig:cross-entropy-loss}
-% \end{figure} 
+$F(\mathbf{x})$ is the model's prediction in terms of conditional log-odds. The cross-entropy loss, is a reasonable choice, as it is suitable for binary classification, convex, and twice differentiable: properties we exploit later.
 
 We first intialise the model with a naïve prediction, based on the average class $\bar{y}$ from all training samples:
 
@@ -437,7 +431,7 @@ Following the architecture for machine translation of \textcite[][3]{sutskeverSe
 
 The encoder consists of $\gls{L}=6$ stacked Transformer blocks \autocite[][6]{vaswaniAttentionAllYou2017}. Each block itself is composed of two sublayers: a multi-head self-attention layer, followed by a position-wise, \gls{feed-forward-network}. Both components serve a distinct purpose in the Transformer. The self-attention mechanism encodes the context in which the input appears onto the \glspl{embedding}, whereas the \gls{feed-forward-network} serves as a long-term memory persisting information outside the immediate context. In the multi-head self-attention mechanism of the encoder, inputs can learn from any \gls{token} of the input sequence, even if a \gls{token} appears causally before the other input. Each of the sublayers is surrounded by skip connections \autocite[][2]{heDeepResidualLearning2015} and followed by layer normalization \autocite[][4]{baLayerNormalization2016} to facilitate and stabilize training. Stacking multiple Transformer blocks enables the model to learn hierarchical features from the inputs and targets. Applied to language processing, the first layers in the stack extract coarse-grained syntactic features, and subsequent layers learn fine-grained semantic features \autocites[][3651]{jawaharWhatDoesBERT2019}[][4596]{tenneyBERTRediscoversClassical2019}. For tabular data, this translates to frequent feature combinations or infrequent feature interactions.
 
-Aside from the feed-forward sublayer, the decoder contains a sublayer for multi-head self-attention on the output of the encoder, known as cross-attention, and a masked variant of the multi-head self-attention for use on the output sequence. Here, causal masking enforces the auto-regressive properties of the decoder.
+Aside from the feed-forward sublayer, the decoder contains a sublayer for multi-head self-attention on the output of the encoder, known as cross-attention, and a masked variant of the multi-head self-attention for use on the output sequence. Here, causal masking enforces the autoregressive properties of the decoder.
 
 %TODO: Graphics contains a typo: W_q in cross attention comes from output sequence. Also fonts are wrong. They should be mathbf. rename to cross-attention?
 \begin{landscape}
@@ -462,11 +456,11 @@ As explained previously, Transformers operate on sequences of numeric vector rep
 
 To obtain \gls{token} embeddings from the raw input sequences i.e., a sentence, the sequence is first split into constituent vocabulary elements, the \emph{tokens}. All known \glspl{token} are stored in a vocabulary. The vocabulary $V$ consists of $N_{V}=|V|$ elements and maps \glspl{token} onto their unique integer keys, referred to as \emph{token-ids} \autocite[][3]{phuongFormalAlgorithmsTransformers2022}. Apart from \glspl{token} in the training corpus, the vocabulary may include special \glspl{token}, like the $\mathtt{[UNK]}$ \gls{token} to handle out-of-vocabulary items or $\mathtt{[CLS]}$ \gls{token} for storing an aggregate representation of the sequence for classification \autocite[cp.][4]{devlinBERTPretrainingDeep2019}.
 
-For ease of explanation, we equate \glspl{token} with words~\footnote{There is a subtle difference between \glspl{token} and words. A \gls{token} can be words including punctuation marks. But words can also be split into multiple \glspl{token}, such as sub-words \autocite[][3]{bojanowskiEnrichingWordVectors2017} or characters. To decrease the size of the vocabulary, words may be reduced to their stems, lower-cased, and stop words be removed.}. Consider the following example with a small vocabulary of $V=[1, N_v]$ and a mapping between the \gls{token} and token-id of $\text{queen}\mapsto 1$; $\text{king}\mapsto 2$. For the sample sequence »Kings and Queens«, the sequence of token-ids $x$ is $[2, 1]$, after applying tokenizing by words and common pre-processing like lower-casing, and the removal of the stop word »and«.
+For ease of explanation, we equate \glspl{token} with words~\footnote{There is a subtle difference between \glspl{token} and words. A \gls{token} can be words including punctuation marks. But words can also be split into multiple \glspl{token}, such as sub-words \autocite[][3]{bojanowskiEnrichingWordVectors2017} or characters. To decrease the size of the vocabulary, words may be reduced to their stems, lower-cased, and stop words be removed.}. Consider the following example with a small vocabulary of $V=[1, N_v]$ and a mapping between the \gls{token} and token-id of $\mathrm{queen}\mapsto 1$; $\mathrm{king}\mapsto 2$. For the sample sequence »Kings and Queens«, the sequence of token-ids $x$ is $[2, 1]$, after applying tokenizing by words and common pre-processing like lower-casing, and the removal of the stop word »and«.
 
 The conversion to token-ids, however, loses the semantics, as token-ids may be assigned arbitrarily or ordering by semantics may not be feasible. This limitation can be overcome by embeddings, as pioneered by \textcite[][1139]{bengioNeuralProbabilisticLanguage}, which map each token-id into a high-dimensional space. By representing words as a vector, semantic and syntactic relationships between tokens can be encoded. As such, related words share a similar embedding vector \autocite[][1139]{bengioNeuralProbabilisticLanguage}. Moreover, word embeddings are semantically meaningful and can capture linguistic regularities, like gender through offsets between vectors \autocite[][748--749]{mikolovLinguisticRegularitiesContinuous2013}.
 
-The embedding layer from \cref{fig:transformer-architecture-overview} is ultimately a lookup table to retrieve the embedding vector $\gls{e} \in \mathbb{R}^{d_{e}}$ from a learned, embedding matrix $\gls{W-e} \in \mathbb{R}^{d_{e} \times N_{V}}$ with the token-id $v \in V \cong\left[N_{V}\right]$ as shown~\footnote{Throughout our discussion on Transformers we adopt a notation proposed in \textcite{phuongFormalAlgorithmsTransformers2022}.}:
+The embedding layer from \cref{fig:transformer-architecture-overview} is ultimately a lookup table to retrieve the embedding vector $\gls{e} \in \mathbb{R}^{d_{e}}$ from a learned, embedding matrix $\gls{W-e} \in \mathbb{R}^{d_{e} \times N_{V}}$ with the token-id $v \in V \cong\left[N_{V}\right]$ as shown~\footnote{Throughout our discussion on Transformers we adopt a notation proposed in \textcite[][1--16]{phuongFormalAlgorithmsTransformers2022}.}:
 \begin{equation}
     \gls{e}=\gls{W-e}\left[:, v\right].
     \label{eq:word-embeddings}
@@ -477,8 +471,8 @@ The weights of $\gls{W-e}$ are initialised randomly and updated using gradient d
 Concluding the example from above with artificial embeddings of $d_e=3$:
 \begin{equation}
     \begin{aligned}
-        \gls{e}_{\text{king}}  & =\gls{W-e}\left[:,2\right] = [0.01, 0.20, 0.13]^{\top} \\
-        \gls{e}_{\text{queen}} & =\gls{W-e}\left[:,1\right] = [0.07, 0.16, 0.14]^{\top} \\
+        \gls{e}_{\mathrm{king}}  & =\gls{W-e}\left[:,2\right] = [0.01, 0.20, 0.13]^{\top} \\
+        \gls{e}_{\mathrm{queen}} & =\gls{W-e}\left[:,1\right] = [0.07, 0.16, 0.14]^{\top} \\
     \end{aligned}
 \end{equation}
 are likely to be close in embedding space with cosine-similarity of $\approx 1$ due to their high semantic similarity.
@@ -600,7 +594,7 @@ Multi-head attention can be computed as:
         \mathbf{Y}^{h}                                     & = \operatorname{Attention}(\mathbf{Q}^h, \mathbf{K}^h, \mathbf{V}^h)
     \end{aligned}
 \end{equation}
-The query, key, and value matrices  $\mathbf{Q}^{h}=\mathbf{W}^h_q \mathbf{X} + \mathbf{b}^h_q\mathbf{1}^{\top}$, $\mathbf{K}^{h}=\mathbf{W}_k^h \mathbf{Z} + \mathbf{b}_k^h\mathbf{1}^{\top}$, and $\mathbf{V}^{h}=\mathbf{W}_v^h \mathbf{Z} + \mathbf{b}_v^h\mathbf{1}^{\top}$ are obtained from linear projections of the input and context sequences unique per head. Again, $\mathbf{W}^{h}_{q} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_{X}}$; $\mathbf{W}^{h}_{k}, \mathbf{W}^{h}_{v} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_Z}$; $\mathbf{b}^h_q, \mathbf{b}^h_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}^h_v \in \mathbb{R}^{d_{\mathrm{mid}}}$ are used for projection. Typically, the dimensionality of the attention heads, $d_{\mathrm{mid}}$, is reduced to $d_{\mathrm{attn}}/H$ to match the computational cost of single-head attention. The output dimensionality $d_{\text{out}}$ is restored with a final linear projection through the weight matrix $\mathbf{W}_{o} \in \mathbb{R}^{d_{\mathrm{out}}\times Hd_{\mathrm{mid}}}$ and bias $\mathbf{b}_o \in \mathbb{R}^{d_{\mathrm{out}}}$ applied to the concatenated results of the attention heads.
+The query, key, and value matrices  $\mathbf{Q}^{h}=\mathbf{W}^h_q \mathbf{X} + \mathbf{b}^h_q\mathbf{1}^{\top}$, $\mathbf{K}^{h}=\mathbf{W}_k^h \mathbf{Z} + \mathbf{b}_k^h\mathbf{1}^{\top}$, and $\mathbf{V}^{h}=\mathbf{W}_v^h \mathbf{Z} + \mathbf{b}_v^h\mathbf{1}^{\top}$ are obtained from linear projections of the input and context sequences unique per head. Again, $\mathbf{W}^{h}_{q} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_{X}}$; $\mathbf{W}^{h}_{k}, \mathbf{W}^{h}_{v} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_Z}$; $\mathbf{b}^h_q, \mathbf{b}^h_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}^h_v \in \mathbb{R}^{d_{\mathrm{mid}}}$ are used for projection. Typically, the dimensionality of the attention heads, $d_{\mathrm{mid}}$, is reduced to $d_{\mathrm{attn}}/H$ to match the computational cost of single-head attention. The output dimensionality $d_{\mathrm{out}}$ is restored with a final linear projection through the weight matrix $\mathbf{W}_{o} \in \mathbb{R}^{d_{\mathrm{out}}\times Hd_{\mathrm{mid}}}$ and bias $\mathbf{b}_o \in \mathbb{R}^{d_{\mathrm{out}}}$ applied to the concatenated results of the attention heads.
 
 The concatenated and projected output of the attention heads is then passed to the point-wise feed-forward networks, which enables interaction between the head's outputs. We discuss position-wise feed-forward networks in \cref{sec:position-wise-ffn}.
 
@@ -636,7 +630,7 @@ As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connecti
 
 Until now it remains unclear, how the layer normalization intertwines with the sublayers and the residual connections. Transformers are distinguished by the order in which layer normalization is added into the pre-norm and post-norm Transformer. Post-norm Transformers add layer normalization to the sublayer \emph{after} adding the input from the residual connections. The arrangement is depicted in \cref{fig:transformer-architecture-overview}. In contrast for pre-norm Transformers, the normalization is applied \emph{before} the self-attention and feed-forward sublayers and inside the residual connections. Pre-norm requires one additional normalization layer to pass only well-conditioned outputs from the Transformer block to the successive layers \autocite[][5]{xiongLayerNormalizationTransformer2020}.
 
-\textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalization, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of the wide-spread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. In addition, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in \glslink{exploding-gradient}{vanishing gradients}, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in our discussion on the FT-Transformer.
+\textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalization, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of the widespread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. In addition, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in \glslink{exploding-gradient}{vanishing gradients}, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in our discussion on the FT-Transformer.
 
 \subsubsection{FT-Transformer}\label{sec:fttransformer}
 
@@ -670,11 +664,9 @@ In the subsequent section, extend all previous models including FT-Transformer f
 \section{Semi-Supervised Approaches}\label{sec:semi-supervised-approaches}
 \subsection{Framing as a Semi-Supervised Learning Problem}\label{sec:problem-framing-2}
 
-Our supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the initiator can be inferred through matching procedures, which may bias the selection. Unlabelled trades, though, are abundant and can help improve the generalisation performance of the classifier.
+The supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the initiator can be inferred through matching procedures (cp. \cref{sec:trade-initiator}), which may bias the selection. Unlabelled trades, though, are abundant and can help improve the generalisation performance of the classifier. This concern is adressed by semi-supervised methods.
 
-Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside with true labels \autocite[][6]{chapelleSemisupervisedLearning2006}. This property renders them appealing for trade classification.
-
-Semi-supervised learning is centred around the \emph{assumption of smoothness}, which states that if two samples $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if data points are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}.
+Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside with true labels \autocite[][6]{chapelleSemisupervisedLearning2006}. They are centred around the semi-supervised assumption of smoothness, which states that if two samples, say $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$, are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if data points are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}.
 
 \begin{figure}[h]
     \centering
@@ -683,11 +675,9 @@ Semi-supervised learning is centred around the \emph{assumption of smoothness}, 
     \label{fig:supervised-semi-supervised}
 \end{figure}
 
-Applied to trade classification, we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved classification.
+Applied to trade classification, with semi-supervised methods we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved generalisation performance. A visualization of a decision boundary of (semi-)supervised classifier is given in \cref{fig:supervised-semi-supervised}.
 
-The semi-supervised setting requires extending our notation from \cref{sec:problem-framing}, by dividing the dataset into labelled and unlabelled instances. Henceforth, $\mathbf{X}_{l} = \left[\mathbf{x}_{1},\ldots, \mathbf{x}_{l}\right]^{\top}$ is used for instances, where labels $\mathbf{y}_{l} = \left[y_{1},\ldots, y_{l}\right]^{\top}$ are known and $\mathbf{X}_{u} = \left[\mathbf{x}_{l+1},\ldots, \mathbf{x}_{l+u}\right]^{\top}$ for unlabelled datapoints. Like before, all trades are ordered by time.
-
-Our coverage of semi-supervised approaches includes \emph{self-training} for gradient-boosting and \emph{pre-training} of Transformers, which we derive from a subsequent discussion.
+The semi-supervised setting requires extending our notation from \cref{sec:problem-framing}, by distinguishing between labelled and unlabelled instances. Like before, $\mathcal{S}=\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$ denotes all labelled trades. Unlabelled datapoints are stored in separate set $\mathcal{U} = \left\{\mathbf{x}_i\right\}_{i=1}^{K}$. Our coverage of semi-supervised approaches includes self-training for gradient boosting and pre-training of Transformers, which we derive from a subsequent discussion.
 
 \subsection{Selection of Approaches}\label{sec:selection-of-approaches-1}
 
@@ -697,7 +687,7 @@ Our goal is to extend gradient-boosted trees and Transformers for the semi-super
 
 The success of supervised gradient boosting led to the development of gradient boosting for the semi-supervised setting. An early work of \textcite[][3--4]{dalche-bucSemisupervisedMarginBoost2001} explores replacing supervised weak learners, i.e., regression trees, with semi-supervised weak learners, i.e., mixture models and minimises a loss function over labelled and unlabelled instances. Another line of research, including \textcites[][290--291]{bennettExploitingUnlabeledData2002}[][2003--2004]{mallapragadaSemiBoostBoostingSemiSupervised2009}, keep supervised weak learners to generate pseudo labels of unlabelled instances per iteration. True labelled and pseudo-labelled data is then used in fitting weak learners of subsequent iterations. Approaches differ regarding the selection criterion of the pseudo-labelled instances. Both lines of work, however, require changes to the boosting procedure or the base learners.
 
-An alternative is to pair gradient boosting with self-training. Self-training is a wrapper algorithm around a supervised classifier, that incorporates its most-confident predictions of unlabelled instances into the training procedure \autocite[][190]{yarowskyUnsupervisedWordSense1995}. Other than before, pseudo labels are generated only from the fully-fledged ensemble and the ensemble is grown multiple times. Being a model-agnostic wrapper, it does not change the classifier and ensures maximum comparability.  Its widespread adoption in literature reinforces its appeal as a compelling solution for semi-supervised trade classification.
+An alternative is to pair gradient boosting with self-training. Self-training is a wrapper algorithm around a supervised classifier, that incorporates its most-confident predictions of unlabelled instances into the training procedure \autocite[][190]{yarowskyUnsupervisedWordSense1995}. Other than before, pseudo labels are generated only from the fully-fledged ensemble and the ensemble is grown multiple times. Being a model-agnostic wrapper, the self-training classifier does not change the base classifier and ensures maximum comparability.  Its widespread adoption in literature reinforces its appeal as a compelling solution for semi-supervised trade classification.
 
 \textbf{Transformer}
 
@@ -716,21 +706,21 @@ Self-training is a wrapper algorithm around a probabilistic classifier, that inc
 
 Initially, a base classifier is fitted on the labelled data points in a supervised manner. The classifier then assigns labels, so-called pseudo labels, to unlabelled instances. A subset of unlabelled instances with high-confidence predictions is selected, removed from the unlabelled dataset and added to labelled data dataset. A new classifier is then retrained on the labelled and pseudo-labelled instances \autocite[][190--192]{yarowskyUnsupervisedWordSense1995}. The process is repeated for several iterations until an abortion criterion applies, such as the maximum number of iterations is exhausted or when no unlabelled instances are left to label.
 
-Recall from our discussion on gradient-boosted trees in \cref{sec:gradient-boosting-procedure} that we optimised for the cross-entropy loss on the training set. When coupled with self-training in each training iteration the classifier $h$ now jointly minimises the loss over the labelled instances $S$ and the remaining, unlabelled samples $X_{\not{U}}$:
-$$
-    \frac{1}{m} \sum_{(\mathbf{x}, y) \in S} L(h(\mathbf{x}), y)+\frac{\gamma}{\left|X_{\not{U}}\right|} \sum_{(\mathbf{x}, \tilde{y}) \in X_{\not{U}}} L(h(\mathbf{x}), \tilde{y})+\lambda\|h\|^2,
-$$
-where $\gamma$ is a hyperparameter to control the impact of the pseudo-labelled data, $\tilde{y}$ is the pseudo-labelled instance, and $\lambda$ weights the regularisation term \autocite[][4]{aminiSelfTrainingSurvey2023}.
+Recall from our discussion on gradient-boosted trees in \cref{sec:gradient-boosting-procedure} that we optimised for the cross-entropy loss on the training set. When coupled with self-training in each training iteration the classifier $F$ now jointly minimises the loss over the labelled samples $\mathcal{S}$ and the pseudo-labelled samples $\not{\mathcal{U}}$:
+\begin{equation}
+    L_{\mathrm{ST}}=\frac{1}{\left|\mathcal{S}\right|} \sum_{(\mathbf{x}, y) \in \mathcal{S}} L(F(\mathbf{x}), y)+\frac{\epsilon}{\left|\not{\mathcal{U}}\right|} \sum_{(\mathbf{x}, \tilde{y}) \in \not{\mathcal{U}}} L(F(\mathbf{x}), \tilde{y})+\lambda\|F\|^2,
+\end{equation}
+where $\epsilon$ is a hyperparameter to control the impact of the pseudo-labelled data, $\tilde{y}$ is the pseudo-labelled instance, and $\lambda$ weights the regularisation term \autocite[][4]{aminiSelfTrainingSurvey2023}.
 
-In every iteration, only unlabelled instances are added to the training set, for which the predicted class probability exceeds a confidence threshold, denoted by $\tau$. This approach has implications, as highlighted by \textcite[][2]{chenDebiasedSelfTrainingSemiSupervised2022}. The threshold $\tau$ becomes an important hyperparameter in controlling that no noisy labels are added to the training set, but a restriction to highly-confidence samples may lead to a \emph{data bias} and over-confidence in the prediction. Self-training is prone to a \emph{confirmation bias}, as confident but wrong pseudo labels are erroneously incorporated into the training set, which in effect leads to a propagation of errors in the subsequent training rounds.
+In every iteration, only unlabelled instances are added to the training set, for which the predicted class probability exceeds a confidence threshold, say $\tau$. This approach has implications, as highlighted by \textcite[][2]{chenDebiasedSelfTrainingSemiSupervised2022}. The threshold $\tau$ becomes an important hyperparameter in controlling that no noisy labels are added to the training set, but a restriction to highly-confidence samples may lead to a data bias and over-confidence in the prediction. Self-training is prone to a confirmation bias, as confident but wrong pseudo labels are erroneously incorporated into the training set, which in effect leads to a propagation of errors in the subsequent training rounds.
 
-At the same time, self-training puts a high emphasis on the correctness of the probability estimates in the base classifier. This is problematic for decision trees, known to produce poor probability estimates, as probabilities are derived from the class frequency in the leaf node containing few samples \autocite[][357--358]{tanhaSemisupervisedSelftrainingDecision2017}. However, as gradient-boosting, directly optimises for the cross-entropy loss, the problem found for its ensemble member no longer occurs.
+At the same time, self-training puts a high emphasis on the correctness of the probability estimates in the base classifier. This is problematic for decision trees, known to produce poor probability estimates, as probabilities are derived from the class frequency in the leaf node containing few samples \autocite[][357--358]{tanhaSemisupervisedSelftrainingDecision2017}. However, as gradient boosting, directly optimises for the cross-entropy loss, the problem found for its ensemble member no longer occurs.
 
 Independent of the base classifier, self-training increases computational cost, as training is repeated over several iterations on a growing training set \autocite[][9]{zophRethinkingPretrainingSelftraining2020}.
 
-Despite these limitations, the potentially improved decision boundary outweighs the concerns. To the best of our knowledge, the application of self-training is novel in the context of trade classification.
+Despite these limitations, the potentially improved decision boundary outweighs the concerns.
 
-\subsection{Transformers with Pretraining}\label{sec:extensions-to-transformer}
+\subsection{Transformers with Pre-Training}\label{sec:extensions-to-transformer}
 
 
 \newpage
@@ -820,7 +810,7 @@ Normalization and log transformations have the advantage of preserving the data 
 
 \textbf{Categorical Features}
 
-As for the categorical variables, consisting of the option type, the underlying, and the issue type, different transformations are required. We perform a label encoding by randomly mapping every unique value onto an integer key. As an example, the option type in the set $\{\text{'C'},\text{'P'}\}$ would be randomly mapped onto $\{1,0\}$. This basic transformation defers the handling of categorical data to the model. Also, it minimises target leakage. Missing classes or classes unseen during training are mapped to the key of an $\mathtt{[UNK]}$ \gls{token}, as motivated in \cref{sec:token-embeddings}.
+As for the categorical variables, consisting of the option type, the underlying, and the issue type, different transformations are required. We perform a label encoding by randomly mapping every unique value onto an integer key. As an example, the option type in the set $\{\mathrm{'C'},\mathrm{'P'}\}$ would be randomly mapped onto $\{1,0\}$. This basic transformation defers the handling of categorical data to the model. Also, it minimises target leakage. Missing classes or classes unseen during training are mapped to the key of an $\mathtt{[UNK]}$ \gls{token}, as motivated in \cref{sec:token-embeddings}.
 
 The option type and issue type are both low-cardinal with two and five unique classes. Differently, the underlying is high-cardinal with more than \num{9999} distinct classes, as options are written on a wide range of underlyings. The high cardinality of the feature not just drives the computational demand through a higher parameter count but also affects the model's tendency to overfit, as most classes appear infrequently. Thus, we require each category to appear at least \num{1000} times in the training set. Infrequent categories are removed by mapping to the $\mathtt{[UNK]}$ \gls{token}. Virtually, this is identical to constraining the vocabulary size $N_V = \num{3333}$. Vocabulary is defined on the \gls{ISE} labelled train set and shared between all sets.
 
@@ -890,7 +880,7 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
     \end{tabular}
 \end{table}
 
-For gradient-boosting we raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive $100$ steps.
+For gradient boosting we raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive $100$ steps.
 
 The hyperparameter search for the FT-Transformer is identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)). From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we implement early stopping and halt training after $15$ consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
 
@@ -937,9 +927,9 @@ Akin to selecting the machine learning classifiers, we determine our classical b
     \input{Content/hyperparam-classical-ise_classical_supervised_val.tex}
 \end{table}
 
-Optimizing hybrids of trade classification rules through Bayesian search is theoretically feasible, but we found no outperformance over hybrid rules already reported in literature \footnote{We performed a Bayesian search with $50$ trials for trade classification rules, stacking up to five rules. Experiment available under: \url{https://wandb.ai/fbv/thesis}.}. Thus, \cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set. The tick test applied to trade prices at the trading venue performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving the tick rule over all exchanges ($\operatorname{tick}_{\text{all}}$). From all classical rules, a double-combination of the quote rule ($\operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}}$), where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE}, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly used in the literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
+Optimizing hybrids of trade classification rules through Bayesian search is theoretically feasible, but we found no outperformance over hybrid rules already reported in literature \footnote{We performed a Bayesian search with $50$ trials for trade classification rules, stacking up to five rules. Experiment available under: \url{https://wandb.ai/fbv/thesis}.}. Thus, \cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set. The tick test applied to trade prices at the trading venue performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving the tick rule over all exchanges ($\operatorname{tick}_{\mathrm{all}}$). From all classical rules, a double-combination of the quote rule ($\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$), where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE}, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly used in the literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
 
-By extension, we also estimate rule combinations involving overrides from the trade size rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}} \to \operatorname{depth}_{\text{nbbo}} \to \operatorname{depth}_{\text{ex}} \to \operatorname{rtick}_{\text{all}}$ achieves the highest validation accuracy. For brevity, we refer to this specific combination as the \gls{GSUH} method. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for the second feature set.
+By extension, we also estimate rule combinations involving overrides from the trade size rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ achieves the highest validation accuracy. For brevity, we refer to this specific combination as the \gls{GSUH} method. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for the second feature set.
 
 In absence of other baselines, we repeatedly compare against \gls{GSUH} method as a baseline for the third feature set, even if it doesn't involve option-specific features.
 

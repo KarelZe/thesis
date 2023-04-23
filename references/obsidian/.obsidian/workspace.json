@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+                "file": "📖chapters/🤖Pre-training of Transformers.md",
                 "mode": "source",
                 "source": false
               }
@@ -79,8 +79,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 361.5,
-    "collapsed": true
+    "width": 361.5
   },
   "right": {
     "id": "9db2ac4605daf425",
@@ -96,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+                "file": "📖chapters/🤖Pre-training of Transformers.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -124,7 +123,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md"
+                "file": "📖chapters/🤖Pre-training of Transformers.md"
               }
             }
           },
@@ -157,8 +156,8 @@
   },
   "active": "ab898284480cdbb5",
   "lastOpenFiles": [
-    "📑notes/🍪Selection of semisupervised Approaches notes.md",
     "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+    "📑notes/🍪Selection of semisupervised Approaches notes.md",
     "📑notes/🍪Selection of supervised approaches notes.md",
     "📥Inbox/@bennettExploitingUnlabeledData2002.md",
     "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
