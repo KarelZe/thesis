@@ -277,8 +277,6 @@ The trend towards sophisticated, hybrid rules, combining as many as five base ru
 We provide an overview of state-of-the-art machine learning-based classifiers and start by framing trade classification as a supervised learning
 problem.
 
-% In order to evaluate how much prediction models rely on variables, we now introduce notation for random variables, data, classes of prediction models, and loss functions for evaluating predictions.
-
 \newpage
 \addtocontents{toc}{\protect\newpage}
 \section{Supervised Approaches}\label{sec:supervised-approaches}
@@ -361,7 +359,7 @@ By \cref{sec:problem-framing} we perform binary probabilistic classification and
 Following \textcite[][9]{friedmanStochasticGradientBoosting2002} we set the loss function to be the cross-entropy loss, given by:
 
 \begin{equation}
-    L_{\mathrm{CE}} \colon \mathbb{R}^2 \to \mathbb{R} \quad L_{\mathrm{CE}}(y, F) = \log(1+\exp(-2yF))
+    L_{\mathrm{CE}} \colon \mathbb{R}^2 \to \mathbb{R} \quad L_{\mathrm{CE}}(y, F) = \log(1+\exp(-2yF))
     \label{eq:cross-entropy-loss}
 \end{equation}
 
