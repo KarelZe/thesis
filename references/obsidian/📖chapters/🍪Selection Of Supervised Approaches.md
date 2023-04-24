@@ -1,41 +1,18 @@
+The selection of methods in previous works is arbitrary and guided computational constraints (cp. cref-[[👪Related Work]]). Furthermore, the selection leaves out advancements in machine learning on tabular data.
+This paper provides a succinct discussion of these gaps and selects a set of supervised classifiers based on empirical evidence. 
 
-This succinct discussion aims to identify supervised classifiers, suitable for 
+We impose the following requirements a classifier must fulfil: 💂‍♀️
+- *(R1) performance:* The approach must deliver state-of-the-art performance in tabular classification tasks. 
+- *(R2) scalability:* The approach must scale to datasets with $>$ 10 Mio. samples.
+- (R3) *extendablity:* The approach must be extendable to train on partially-labelled trades.
 
-**Problem formulation:**
-- What type of data do we deal with?
-- What is tabular data? What do we mean by categorical and numerical?
-- What is probabilistic classification? Why do we do probabilistic classification?
-
-**Criteria formulation:**
-- What criteria should the models fulfil?
-	- Interpretable
-	- SOTA performance
-	- Extendable for learning on unlabelled data
-	- Suitable for classification
-- Why do these criteria make sense?
-- Why is it hard to assess the performance for tabular data? Can we be sure about SOTA?
-
-**Discussion:**
-- Which models does the discussion consider?
-- What models do we try out finally?
-
-- Discuss why probabilities of gradient boosted trees might be missleading [[@arikTabNetAttentiveInterpretable2020]]
-- Problems of tree-based approaches and neural networks in semi-supervised learning. See [[@huangTabTransformerTabularData2020]] or [[@arikTabNetAttentiveInterpretable2020]]and [[@tanhaSemisupervisedSelftrainingDecision2017]]
-
+Thus, our study considers gradient boosting and the FT-Transformer. This comparison is particularly appealing, as it compares tree-based learners against neural nets, as well as wide ensembles against deep neural networks.
 
 #gbm #transformer #supervised-learning #deep-learning 
 
+- Problems of tree-based approaches and neural networks in semi-supervised learning. See [[@huangTabTransformerTabularData2020]] or [[@arikTabNetAttentiveInterpretable2020]]and [[@tanhaSemisupervisedSelftrainingDecision2017]]
 
-Authors discuss an ideal Bayesian trade classification approach. Authors view the problem of trade classification similar to Bayesian statistican with priors on the unoverservable information (buy or sell indicator), who is trying to extract trading intentions from observable trade date. (found in [[@boweNewClassicalBayesian]] (do not cite but interesting to look at)) -> As this probabilistic view is similar to a probabilistic classifier it could be used to motivate my own work.
-
-“A Bayesian statistician would start with a prior on the unobservable information, observe the data, and use a likelihood function to update his or her prior to form a posterior on the underlying information. This is not what a tick rule does. It classifies a trade as a buy if the previous price is below the current price, a sell, if it is above. The bulk volume approach, by contrast, can be thought of as assigning a posterior probability to a trade being a buy or sell, an approach closer conceptually to Bayes’ rule.” ([Easley et al., 2016, p. 270](zotero://select/library/items/X6ZNZ556)) ([pdf](zotero://open-pdf/library/items/HPC6KBMF?page=2&annotation=8WU3R2SV)) “Tick: T ( ) = 1 if > 0 and T ( ) = 0 if < 0, and” ([Easley et al., 2016, p. 272](zotero://select/library/items/X6ZNZ556)) ([pdf](zotero://open-pdf/library/items/HPC6KBMF?page=4&annotation=E8GXDD5Y))
-
-“We consider three methodologies to assign a probability that the underlying trade type was a buy or a sell given the observation of a single draw of : Bayes’ rule, the tick rule, and BVC specialized to a single observation. The tick rule assigns probability one or zero to the trade having been a buy.” ([Easley et al., 2016, p. 272](zotero://select/library/items/X6ZNZ556)) ([pdf](zotero://open-pdf/library/items/HPC6KBMF?page=4&annotation=E9GPBVPP))
-
-“Using a statistical model, we investigate the errors that arise from a tick rule approach and the bulk volume approach, relative to a Bayesian approach. We show that when the noise in the data is low, tick rule errors can be relatively low, and over some regions the tick rule can perform better than the bulk volume approach. When noise is substantial, the bulk volume approach can outperform a tick rule and permit more accurate sorting of the data.” ([Easley et al., 2016, p. 270](zotero://select/library/items/X6ZNZ556)) ([pdf](zotero://open-pdf/library/items/HPC6KBMF?page=2&annotation=VDMJDEGC))
-
-“Much of market microstructure analysis is built on the concept that traders learn from market data. Some of this learning is prosaic, such as inferring buys and sells from trade execution. Other learning is more complex, such as inferring underlying new information from trade executions. In this paper, we investigate the general issue of how to discern underlying information from trading data. We examine the accuracy and efficacy of three methods for classifying trades: the tick rule, the aggregated tick rule, and the bulk volume classification methodology. Our results indicate that the tick rule is a reasonably good classifier of the aggressor side of trading, both for individual trades and in aggregate. Bulk volume is shown to also be reasonably accurate for classifying buy and sell trades, but, unlike the tick-based approaches, it can also provide insight into other proxies for underlying information.” ([Easley et al., 2016, p. 284](zotero://select/library/items/X6ZNZ556)) ([pdf](zotero://open-pdf/library/items/HPC6KBMF?page=16&annotation=VC98DC2N))
-
+(- *(R2) interpretability:* The method must interpretable. -> every classifier is somewhat interpretable. Better just mention attention mechanism / transparent.)
 
 “The paper closest to our work is Gorishniy et al. [2021], benchmarking novel algorithms, on 11 tabular datasets. We provide a more comprehensive benchmark, with 45 datasets, split across different settings (medium-sized / large-size, with/without categorical features), accounting for the hyperparameter tuning cost, to establish a standard benchmark.” ([Grinsztajn et al., 2022, p. 2](zotero://select/library/items/G3KP2Z9W)) ([pdf](zotero://open-pdf/library/items/A3KU4A43?page=2&annotation=YXJLM6JN)) “FT_Transformer : a simple Transformer model combined with a module embedding categorical and numerical features, created in Gorishniy et al. [2021]. We choose this model because it was benchmarked in a convincing way against tree-based models and other tabular-specific models. It can thus be considered a “best case” for Deep learning models on tabular data.” ([Grinsztajn et al., 2022, p. 5](zotero://select/library/items/G3KP2Z9W)) ([pdf](zotero://open-pdf/library/items/A3KU4A43?page=5&annotation=AHYUCL2P))
 
@@ -44,9 +21,6 @@ Authors discuss an ideal Bayesian trade classification approach. Authors view th
 “Why are MLPs much more hindered by uninformative features, compared to other models? One answer is that this learner is rotationally invariant in the sense of Ng [2004]: the learning procedure which learns an MLP on a training set and evaluate it on a testing set is unchanged when applying a rotation (unitary matrix) to the features on both the training and testing set. On the contrary, tree-based models are not rotationally invariant, as they attend to each feature separately, and neither are FT Transformers, because of the initial FT Tokenizer, which implements a pointwise operation theoretical link between this concept and uninformative features is provided by Ng [2004], which shows that any rotationallly invariant learning procedure has a worst-case sample complexity that grows at least linearly in the number of irrelevant features. Intuitively, to remove uninformative features, a rotationaly invariant algorithm has to first find the original orientation of the features, and then select the least informative ones: the information contained in the orientation of the data is lost.” ([Grinsztajn et al., 2022, p. 8](zotero://select/library/items/G3KP2Z9W)) ([pdf](zotero://open-pdf/library/items/A3KU4A43?page=8&annotation=W6LGGVAC))
 
 
-**Criteria:** 💂‍♀️
-- **performance** That is, approach must deliver state-of-the-art performance in similar problems.
-- **interpretability** Classical approaches are transparent in a sense that we know how the decision was derived. In the best case try to aim for local and global interpretability. Think about how interpretability can be narrowed down? Note supervisor wants to see if her features are also important to the model. 
 
 **Why tabular data is hard:**
 - “Tabular data is a database that is structured in a tabular form. It arranges data elements in vertical columns (features) and horizontal rows (samples)” ([Yoon et al., 2020, p. 1](zotero://select/library/items/XSYUS7JZ)) ([pdf](zotero://open-pdf/library/items/78GQQ36U?page=1&annotation=8MAKL2B9))
@@ -93,8 +67,6 @@ Authors discuss an ideal Bayesian trade classification approach. Authors view th
 
 “Semi-supervised boosting methods have been studied extensively over the past two decades. The success achieved by supervised boosting methods, such as AdaBoost (Freund and Schapire 1997), gradient boosting, and XGBoost (Chen and Guestrin 2016), provides ample motivation for bringing boosting to the semi-supervised setting. Furthermore, the pseudo-labelling approach of self-training and co-training can be easily extended to boosting methods.” (Engelen and Hoos, 2020, p. 391) [[@vanengelenSurveySemisupervisedLearning2020]]
 
-
-In the case of decision trees, where Pr(_y_|**x**) is the proportion of training samples with label y in the leaf where **x** ends up, these distortions come about because learning algorithms such as [C4.5](https://en.wikipedia.org/wiki/C4.5 "C4.5") or [CART](https://en.wikipedia.org/wiki/Predictive_analytics#Classification_and_regression_trees "Predictive analytics") explicitly aim to produce homogeneous leaves (giving probabilities close to zero or one, and thus high [bias](https://en.wikipedia.org/wiki/Bias_of_an_estimator "Bias of an estimator")) while using few samples to estimate the relevant proportion (high [variance](https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff "Bias–variance tradeoff")).[[4]](https://en.wikipedia.org/wiki/Probabilistic_classification#cite_note-4)
 
 
 “Our contributions are as follow: 1. We create a new benchmark for tabular data, with a precise methodology for choosing and preprocessing a large number of representative datasets. We share these datasets through OpenML [Vanschoren et al., 2014], which makes them easy to use. 2. We extensively compare deep learning models and tree-based models on generic tabular datasets in multiple settings, accounting for the cost of choosing hyperparameters.” (Grinsztajn et al., 2022, p. 2)
