@@ -4,22 +4,45 @@
     "type": "split",
     "children": [
       {
-        "id": "78ff271d71a2add7",
+        "id": "95434d4c81970336",
         "type": "tabs",
         "children": [
           {
-            "id": "f39d35664e49442a",
+            "id": "3879debfd1986030",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🍪Selection of semisupervised Approaches notes.md",
+                "file": "📖chapters/🤖Pre-training of Transformers.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "adec97898d8749d1",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "🖼️Media/architecture-rtd.png"
+              }
+            }
+          },
+          {
+            "id": "b832faed2b2a3691",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/⭕Self-Training classifier notes.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -77,7 +100,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🍪Selection of semisupervised Approaches notes.md",
+                "file": "🖼️Media/architecture-rtd.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +128,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🍪Selection of semisupervised Approaches notes.md"
+                "file": "🖼️Media/architecture-rtd.png"
               }
             }
           },
@@ -136,19 +159,26 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f39d35664e49442a",
+  "active": "adec97898d8749d1",
   "lastOpenFiles": [
+    "📖chapters/🤖Pre-training of Transformers.md",
+    "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+    "📖chapters/💡Tuning of models (semi-supervised).md",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📑notes/⭕Self-Training classifier notes.md",
+    "📑notes/☠️Problem Framing notes.md",
+    "📖chapters/☠️Problem Framing.md",
+    "📖chapters/🎨Inspiration.md",
+    "📑notes/🤖Pretraining notes.md",
+    "🖼️Media/architecture-rtd.png",
+    "📥Inbox/@chenSimpleFrameworkContrastive2020.md",
+    "📑notes/🍪Selection of semisupervised Approaches notes.md",
+    "📑notes/🐈Gradient Boosting notes.md",
     "📑notes/🔢Trade Initiator notes.md",
     "Ammo Trade Initiator.md",
     "1680261360742.jpg.md",
-    "📖chapters/🤖Pre-training of Transformers.md",
-    "📖chapters/🍪Selection Of Semisupervised Approaches.md",
-    "📑notes/🍪Selection of semisupervised Approaches notes.md",
-    "📑notes/🍪Selection of supervised approaches notes.md",
     "📥Inbox/@bennettExploitingUnlabeledData2002.md",
     "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
-    "📑notes/🐈Gradient Boosting notes.md",
     "🖼️Media/Pasted image 20230423083202.png",
     "📑notes/🔢Hybrid rules notes.md",
     "📖chapters/🔢Hybrid rules.md",
@@ -164,15 +194,8 @@
     "🖼️Media/Pasted image 20230421203616.png",
     "📖chapters/🔢Trade initiator.md",
     "🖼️Media/Pasted image 20230421145359.png",
-    "🖼️Media/Pasted image 20230421145319.png",
     "📖chapters/🪄Data Preprocessing.md",
     "📖chapters/🐈CatBoost.md",
-    "🍬Implementation/😺CatBoost.md",
-    "📑notes/🅰️attention notes.md",
-    "📖chapters/🅰️Attention.md",
-    "📥Inbox/@dosovitskiyImageWorth16x162021.md",
-    "📑notes/🤖Transformer notes.md",
-    "📖chapters/🧭Attention map.md",
-    "📥Inbox/@dalche-bucSemisupervisedMarginBoost2001.md"
+    "🍬Implementation/😺CatBoost.md"
   ]
 }
