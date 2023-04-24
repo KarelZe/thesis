@@ -338,7 +338,14 @@ For a tree with $J$ regions $R_1, R_2,\ldots, R_J$, and some numerical input $\m
     \label{eq:decision-tree}
 \end{equation}
 
-where $\mathbb{I}$ is the indicator function for region conformance and $\gamma_j$ the region's constant \autocite[][326]{hastietrevorElementsStatisticalLearning2009}. In the regression case, $\gamma_j$ is the mean of all target variables $y_i$ in the specific region. Since all samples of a region share a common response value, the tree estimates resemble a histogram that approximates the true regression surface.
+where $\mathbb{I}$ is the indicator function for region conformance and $\gamma_j$ the region's constant \autocite[][326]{hastietrevorElementsStatisticalLearning2009}. In the regression case, $\gamma_j$ is the mean of all target variables $y_i$ in the specific region. Since all samples of a region share a common response value, the tree estimates resemble a histogram that approximates the true regression surface, as visualized in \cref{fig:decision-boundary-dt}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{decision-boundary-dt.pdf}
+    \caption[Approximation of Decision Tree]{Approximation of Decision Tree.}
+    \label{fig:decision-boundary-dt}
+\end{figure}
 
 So far, it remains open how the best split can be found. The best split is where the deviation between the prediction and the true response variable diminishes. For a single region, this error can be captured in the \gls{SSE} given by:
 \begin{equation}
@@ -670,7 +677,7 @@ Recall from our discussion on self-attention (cp. \cref{sec:attention}), that ea
 
 \textcite[][8]{gorishniyRevisitingDeepLearning2021} achieve state-of-the-art performance through numerical and categorical embeddings. Embedding both categorical and numerical inputs enables the Transformer to attend to all other features, but at an considerable computational cost, that may only be justified by higher classification accuracies.
 
-In the subsequent section, extend all previous models including FT-Transformer for learning on partially labelled data.
+Next, all models are extended for learning on partially-labelled data.
 
 \newpage
 \section{Semi-Supervised Approaches}\label{sec:semi-supervised-approaches}
@@ -714,7 +721,7 @@ With a multitude of methods, tested on different datasets and neural architectur
 
 The next chapter covers self-training in detail.
 
-%TODO: Caruana caruanaObtainingCalibratedProbabilities -> ok for trees, but we do not optimize probabilities but the logits!
+%TODO: Caruana caruanaObtainingCalibratedProbabilities -> ok for trees, but we do not optimize the logits!
 \subsection{Gradient Boosted Trees With Self-Training}\label{sec:extensions-to-gradient-boosted-trees}
 
 Self-training is a wrapper algorithm around a probabilistic classifier, that incorporates its predictions of unlabelled instances as pseudo labels \autocite[][190]{yarowskyUnsupervisedWordSense1995}.
