@@ -1,4 +1,5 @@
 
+This succinct discussion aims to identify supervised classifiers, suitable for 
 
 **Problem formulation:**
 - What type of data do we deal with?
@@ -24,58 +25,6 @@
 
 #gbm #transformer #supervised-learning #deep-learning 
 
-**Notes:**
-[[🍪Selection of supervised approaches notes]]
-
-Formally, an "ordinary" classifier is some rule, or function, that assigns to a sample $x$ a class label $\hat{y}$
-$$
-\hat{y}=f(x)
-$$
-The samples come from some set $X$ (e.g., the set of all documents, or the set of all images), while the class labels form a finite set $Y$ defined prior to training.
-Probabilistic classifiers generalize this notion of classifiers: instead of functions, they are conditional distributions $\operatorname{Pr}(Y \mid X)$, meaning that for a given $x \in X$, they assign probabilities to all $y \in Y$ (and these probabilities sum to one). "Hard" classification can then be done using the optimal decision rule [2]:39-40
-$$
-\hat{y}=\arg \max _y \operatorname{Pr}(Y=y \mid X)
-$$
-or, in English, the predicted class is that which has the highest probability.
-Binary probabilistic classifiers are also called binary regression models in statistics. In econometrics, probabilistic classification in general is called discrete choice.
-
-Some classification models, such as naive Bayes, logistic regression and multilayer perceptrons (when trained under an appropriate loss function) are naturally probabilistic. Other models such as support vector machines are not, but methods exist to tum them into probabilistic classifiers.
-
-
-“We assume the reader is familiar with these concepts. For a complete reference see Hastie et al. [2009]. Let us just lay out our notation and say that in our framework we receive from an axiomatic data preparation stage an ordered set of multivariate observations W = (X , y). y is the outcome or target ordered set with individual elements y. Similarly, X and X are the feature-vector ordered set and element, respectively. Components of feature vectors are individual features, denoted x (ordered set) and x (element). Target and feature-vector elements y and X pertaining to the same element of W are said to be W-associated. The modeler’s goal is to infer the value of a target element, from its associated feature-vector element and from a separate group of observations, called the training examples Wtr. The solution to this problem is a model ˆ y = M(X , Wtr). We say that the model’s observational inputs for inferring ˆ y are X and Wtr, and this relation between the various entities in the framework is the base for our discussion.” ([[@kaufmanLeakageDataMining2012]], p. 158)
-
-Formally, we aim to model a target variable $Y \in \mathbb{Y}$ given some feature vector $X \in \mathbb{X}$ based on training data $\left\{\left(x_i, y_i\right)\right\}_{i=1}^n$ that has been sampled according to the joint distribution of $X$ and $Y$. We focus on models in the form of a single-valued scoring function $f: \mathbb{X} \rightarrow \mathbb{R}$. For instance, in regression problems $(\mathbb{Y}=\mathbb{R}), f$ typically models the conditional expectation of the target, i.e., $f(x) \approx E(Y \mid X=x)$, whereas in binary classification problems $(\mathbb{Y}=\{-1,1\}), f$ ty (found here[[@boleyBetterShortGreedy2021]]; do not cite but like their presentation)
-
-Assume that we are given a distribution $\mathcal{D}$ on $\mathcal{X} \times \mathcal{Y}$, where $\mathcal{X}$ is a feature space (typically $\mathbb{R}^k$ ) and $\mathcal{Y}$ is a target space (typically $\mathbb{R}$ for regression or $\{0,1\}$ for classification). ${ }^1$ We are also given a loss function $L(z, y): \mathcal{Z} \times \mathcal{Y} \rightarrow \mathbb{R}$, where $\mathcal{Z}$ is a space of predictions (typically $\mathbb{R}$ or $\{0,1\}$ ). Our goal is to minimize the expected loss $\mathcal{L}(f \mid \mathcal{D}):=\mathbb{E}_{\mathcal{D}} L(f(x), y)$
-https://arxiv.org/pdf/2001.07248.pdf
-
-
-$$
-\begin{array}{cl}
-x \in \mathcal{X} & \text { Features, typically from } \mathbb{R}^k \\
-y \in \mathcal{Y} & \text { Target, typically from } \mathbb{R} \text { or }\{0,1\} \\
-z \in \mathcal{Z} & \text { Prediction, typically from } \mathbb{R} \\
-\mathcal{D} & \text { Data distribution over } \mathcal{X} \times \mathcal{Y} \\
-\mathcal{D}_N=\left\{\left(x_i, y_i\right)\right\}_{i=1}^N & \text { I.i.d. samples from } \mathcal{D}
-\end{array}
-$$
-https://arxiv.org/pdf/2001.07248.pdf
-
-For a given data set with $n$ examples and $m$ features $\mathcal{D}=\left\{\left(\mathbf{x}_i, y_i\right)\right\}\left(|\mathcal{D}|=n, \mathbf{x}_i \in \mathbb{R}^m, y_i \in \mathbb{R}\right)$ to (from [[@chengWideDeepLearning2016]])
-
-Notation
-- $\mathbf{x} \in \mathbb{R}^d$ : feature inputs or covariates (usually high dimensional), described by the random variable $X$
-- $y \in\{1,2, \ldots, C\}$ : classes (labels), described by the random variable $Y$
-- Each instance of data is drawn from a join probability distribution $p^*(X, Y)$
-- $p^*(\mathbf{x}, y)$ : True distribution of $\mathbf{x}$ and $y$. Also denoted by $p^*(X, Y)$ or $p^*(X=\mathbf{x}, Y=y)$
-
-- $C$-class Classification problem setting:
-- true distribution is assumed to be a discrete distribution over $C$ classes
-- observed $y$ is a sample from conditional distribution $p^*(y \mid \mathbf{x})$ or $p^*(Y \mid X=\mathbf{x})$
-- Neural networks (discriminative classifiers) try and estimate $p_\theta(y \mid \mathbf{x})$ by fitting $\theta$ using $\mathcal{D}$ (training dataset)
-- During deployment, the $\mathrm{NN}$ is evaluated using a dataset $\mathcal{T}$, sampled from a distribution $q(\mathbf{x}, y)$ or $q(X, Y)$
-
-Classical trade classification rule (or at least the ones shown) perform hard classification. Some bulked trade classification algorithms can perform soft classification (See [[@easleyDiscerningInformationTrade2016]]). However, this is not the case for the algorithms working on a trade-per-trade basis. Still, one can derive probabilities. (See [[@easleyDiscerningInformationTrade2016]] for tick rule)
 
 Authors discuss an ideal Bayesian trade classification approach. Authors view the problem of trade classification similar to Bayesian statistican with priors on the unoverservable information (buy or sell indicator), who is trying to extract trading intentions from observable trade date. (found in [[@boweNewClassicalBayesian]] (do not cite but interesting to look at)) -> As this probabilistic view is similar to a probabilistic classifier it could be used to motivate my own work.
 
@@ -121,8 +70,6 @@ Authors discuss an ideal Bayesian trade classification approach. Authors view th
 	- [[@arikTabNetAttentiveInterpretable2020]] Discuss a number of reasons why decisiion tree esembles dominate neural networks for tabular data.
 	- [[@huangTabTransformerTabularData2020]] argue that tree-based ensembles are the leading approach for tabular data. The base this on the prediction accuracy, the speed of training and the ability to interpret the models. However, they list sevre limitations. As such they are not suitabl efor streaming data, multi-modality with tabular data e. g. additional image date and do not support semi-supervised learning by default.
 - Choose neural network architectures, that are tailored towards tabular data.
-
-
 
 **Camparison:**
 - large number of datapoints -> Transformers are data hungry (must be stated in the [[@vaswaniAttentionAllYou2017]] paper)
