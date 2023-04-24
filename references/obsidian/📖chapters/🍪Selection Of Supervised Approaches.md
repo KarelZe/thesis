@@ -2,9 +2,9 @@ The selection of methods in previous works is arbitrary and guided computational
 This paper provides a succinct discussion of these gaps and selects a set of supervised classifiers based on empirical evidence. 
 
 We impose the following requirements a classifier must fulfil: 💂‍♀️
-- *(R1) performance:* The approach must deliver state-of-the-art performance in tabular classification tasks. 
-- *(R2) scalability:* The approach must scale to datasets with $>$ 10 Mio. samples.
-- (R3) *extendablity:* The approach must be extendable to train on partially-labelled trades.
+*performance:* The approach must deliver state-of-the-art performance in tabular classification tasks. 
+*scalability:* The approach must scale to datasets with $>$ 10 Mio. samples.
+*extensibility:* The approach must be extendable to train on partially-labelled trades.
 
 Thus, our study considers gradient boosting and the FT-Transformer. This comparison is particularly appealing, as it compares tree-based learners against neural nets, as well as wide ensembles against deep neural networks.
 

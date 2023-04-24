@@ -1,0 +1,80 @@
+%% Creator: Inkscape 1.2.2 (732a01da63, 2022-12-09), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'random-token-replacement.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{354.33071136bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.26544839)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{random-token-replacement.pdf}}%
+    \put(0.36299862,0.01741562){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Generator\end{tabular}}}}%
+    \put(0.63667642,0.0170031){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Discriminator\end{tabular}}}}%
+    \put(0.04867142,0.22573477){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}the\end{tabular}}}}%
+    \put(0.54237586,0.22284717){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}the\end{tabular}}}}%
+    \put(0.81959711,0.21789702){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}original\end{tabular}}}}%
+    \put(0.0451267,0.19520879){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}chef\end{tabular}}}}%
+    \put(0.2197786,0.19562131){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}chef\end{tabular}}}}%
+    \put(0.54095683,0.19067114){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}chef\end{tabular}}}}%
+    \put(0.81888757,0.18654601){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}original\end{tabular}}}}%
+    \put(0.04370848,0.16468281){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}cook\end{tabular}}}}%
+    \put(0.54095683,0.15973265){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}ate\end{tabular}}}}%
+    \put(0.81888757,0.15519501){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}replaced\end{tabular}}}}%
+    \put(0.04299978,0.13209428){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}the\end{tabular}}}}%
+    \put(0.22261462,0.12714412){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}the\end{tabular}}}}%
+    \put(0.54096095,0.12920668){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}the\end{tabular}}}}%
+    \put(0.81888757,0.1234315){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}original\end{tabular}}}}%
+    \put(0.04299978,0.10198082){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}meal\end{tabular}}}}%
+    \put(0.22332374,0.10074327){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}meal\end{tabular}}}}%
+    \put(0.54025142,0.09785567){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}meal\end{tabular}}}}%
+    \put(0.81959711,0.09455557){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}original\end{tabular}}}}%
+    \put(0.2190699,0.22573477){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\mathtt{[MASK]}$\end{tabular}}}}%
+    \put(0.22048771,0.16179522){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\mathtt{[MASK]}$\end{tabular}}}}%
+  \end{picture}%
+\endgroup%
