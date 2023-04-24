@@ -267,3 +267,6 @@ for integration of regularization term see: https://arxiv.org/pdf/2001.07248.pdf
 
 ![[Pasted image 20230421145319.png]]
 ![[Pasted image 20230421145359.png]]
+
+https://blog.paperspace.com/gradient-boosting-for-classification/
+https://towardsdatascience.com/all-you-need-to-know-about-gradient-boosting-algorithm-part-2-classification-d3ed8f56541e
