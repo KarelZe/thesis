@@ -4,45 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "95434d4c81970336",
+        "id": "478773baa0127da4",
         "type": "tabs",
         "children": [
           {
-            "id": "3879debfd1986030",
+            "id": "916f416e25d3f84d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🤖Pre-training of Transformers.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "adec97898d8749d1",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "🖼️Media/architecture-rtd.png"
-              }
-            }
-          },
-          {
-            "id": "b832faed2b2a3691",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/⭕Self-Training classifier notes.md",
+                "file": "❓Questions.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -71,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tabular data",
                 "matchingCase": false,
                 "explainSearch": true,
                 "collapseAll": false,
@@ -100,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🖼️Media/architecture-rtd.png",
+                "file": "❓Questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -128,7 +105,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🖼️Media/architecture-rtd.png"
+                "file": "❓Questions.md"
               }
             }
           },
@@ -159,18 +136,29 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "adec97898d8749d1",
+  "active": "916f416e25d3f84d",
   "lastOpenFiles": [
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📖chapters/🤖TabTransformer.md",
+    "📑notes/🤖TabTransformer notes.md",
+    "🖼️Media/traversal-of-axis.png",
+    "🖼️Media/asymmetric-spread.png",
+    "🖼️Media/pre-data-loader.png",
+    "🖼️Media/presentation-of-effective-spread.png",
+    "🖼️Media/pseudocode-selftraining.png",
+    "🖼️Media/pseudocode-of-algorithms.png",
+    "🖼️Media/saint-architecture.png",
+    "🖼️Media/rules-across-underlyings.png",
+    "🖼️Media/SCARF.png",
+    "🖼️Media/self-training-algorithm.png",
+    "📑notes/⭕Self-Training classifier notes.md",
     "📖chapters/🤖Pre-training of Transformers.md",
     "📖chapters/🍪Selection Of Semisupervised Approaches.md",
     "📖chapters/💡Tuning of models (semi-supervised).md",
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
-    "📑notes/⭕Self-Training classifier notes.md",
     "📑notes/☠️Problem Framing notes.md",
     "📖chapters/☠️Problem Framing.md",
     "📖chapters/🎨Inspiration.md",
     "📑notes/🤖Pretraining notes.md",
-    "🖼️Media/architecture-rtd.png",
     "📥Inbox/@chenSimpleFrameworkContrastive2020.md",
     "📑notes/🍪Selection of semisupervised Approaches notes.md",
     "📑notes/🐈Gradient Boosting notes.md",
@@ -179,23 +167,12 @@
     "1680261360742.jpg.md",
     "📥Inbox/@bennettExploitingUnlabeledData2002.md",
     "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
-    "🖼️Media/Pasted image 20230423083202.png",
     "📑notes/🔢Hybrid rules notes.md",
     "📖chapters/🔢Hybrid rules.md",
     "📖chapters/🔢Stacked rules.md",
     "📖chapters/🐈Gradient Boosting.md",
-    "🖼️Media/Pasted image 20230405171919.png",
-    "🖼️Media/Pasted image 20230405171902.png",
-    "🖼️Media/Pasted image 20230405170430.png",
-    "🖼️Media/Pasted image 20230405170411.png",
-    "🖼️Media/different-loss-functions.png",
-    "🖼️Media/cross-entropy-loss.png",
     "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
-    "🖼️Media/Pasted image 20230421203616.png",
     "📖chapters/🔢Trade initiator.md",
-    "🖼️Media/Pasted image 20230421145359.png",
-    "📖chapters/🪄Data Preprocessing.md",
-    "📖chapters/🐈CatBoost.md",
-    "🍬Implementation/😺CatBoost.md"
+    "📖chapters/🪄Data Preprocessing.md"
   ]
 }

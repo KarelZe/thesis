@@ -46,7 +46,7 @@ research. Among these, the:
 \emph{Chronological view:} \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000} adapts a chronological view based on the order arrival. She defines the initiator of the trade as the party (buyer or seller) who places their order last, chronologically. This definition requires knowledge about the order submission times.
 
 \emph{Immediacy view:} In contrast, \textcite[][94--97]{leeInferringInvestorBehavior2000} equate the trade initiator with the party in demand for immediate execution. Thus, traders placing market orders, immediately executable at whatever price, or executable limit orders, are considered the trade initiator. By contrast, the party placing non-executable limit orders, which may not even result in a trade, is the non-initiator. This definition remains ambiguous for trades resulting from crossed limit orders, matched market orders, or batched orders \autocite[][94--95]{leeInferringInvestorBehavior2000}.
-% FIXME: introduce of notion of demanding / taking away liquidity and providing liquidity
+% FIXME: introduce of the notion of demanding/taking away liquidity and providing liquidity
 
 \emph{Positional view:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite to the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand.
 
@@ -62,7 +62,6 @@ This section presents basic classification rules, that may be used for trade cla
 \subsubsection{Quote Rule}\label{sec:quote-rule}
 
 The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $\gls{P}_i = \langle P_{i,1},P_{i,2},\dots,P_{i,T}\rangle$ and the corresponding ask at $t$ by $\gls{A}_{i,t}$ and bid by $\gls{B}_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, estimated as $\gls{M}_{i,t} = \tfrac{1}{2}(B_{i,t} + A_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} \neq M_{i,t}\right\}$ is given by:
-
 \begin{equation}
     \operatorname{quote}\colon \mathcal{A} \to \mathcal{Y},\quad
     \operatorname{quote}(i, t)=
@@ -71,7 +70,6 @@ The quote rule classifies a trade by comparing the trade price against the corre
         -1, & \mathrm{if}\ P_{i, t}<M_{i, t}. \\
     \end{cases}
 \end{equation}
-
 By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing midspread trades including ones based on the subsequent quotes, and contemporaneous, or the subsequent transaction. Yet, the most common approach to overcome this limitation is, coupling the quote rule with other approaches, as done in \cref{sec:hybrid-rules}.
 
 The quote rule requires matching one bid and ask quote with each trade based on a timestamp. Due to the finite resolution of the dataset's timestamps and active markets, multiple quote changes can co-occur at the time of the trade, some of which, may logically be after the trade. As such, it remains unclear which quote to consider in trade classification, and a quote timing technique must be employed. Empirically, the most common choice is to use the last quote in the order of the time increment (e.g., second) before the trade \autocite[][1765]{holdenLiquidityMeasurementProblems2014}.
@@ -83,7 +81,6 @@ The quote rule depends on price and quote data, which affects the data efficienc
 
 % TODO: his method uses the previous trade to gauge whether the current trade is at a higher price (and presumably a buy) or at a lower price (and presumably a sell).
 A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test is defined as:
-
 \begin{equation}
     \operatorname{tick}\colon \mathbb{N}^2 \to \mathcal{Y},\quad
     \operatorname{tick}(i, t)=
@@ -94,7 +91,6 @@ A common alternative to the quote rule is the tick test. Based on the rationale 
     \end{cases}
     \label{eq:tick-test}
 \end{equation}
-
 Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy~\footnote{To end recursion at $t=1$, we sign the trade to be buyer-initiated to simplify notation. Other choices are possible, e.g., random assignment or based on another rule. Similarly done for \cref{eq:reverse-tick-test}.}. Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[][735]{leeInferringTradeDirection1991}.
 
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
@@ -114,7 +110,6 @@ The reverse tick test is a variant of the tick test proposed in \textcite[][241]
     \end{cases}
     \label{eq:reverse-tick-test}
 \end{equation}
-
 As denoted in \cref{eq:reverse-tick-test}, the trade is classified as seller-initiated, if the next trade is on an uptick or a zero uptick, and classified as buyer-initiated for trades at a downtick or a zero downtick \autocite[][735--636]{leeInferringTradeDirection1991}.
 
 Both tests result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}.
@@ -140,7 +135,6 @@ Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t
     \end{cases}
     \label{eq:depth-rule}
 \end{equation}
-
 As shown in \cref{eq:depth-rule}, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for inferring the trade's initiator. Due to these restrictive conditions in $\mathcal{A}$, the depth rule can sign only a fraction of all trades and must be best stacked with other rules.
 
 Like the quote rule, the depth rule has additional dependencies on quote data. Despite being applied to midpoint trades only, \textcite[][4]{grauerOptionTradeClassification2022} report an improvement in the overall accuracy by \SI{1.2}{\percent} for \gls{CBOE} data and by \SI{0.8}{\percent} for trades from the \gls{ISE} merely through the depth rule. The rule has not yet seen wide adoption.
@@ -158,7 +152,6 @@ As \cref{sec:tick-test} derives, quote-based approaches are generally preferred 
     \end{cases}
     \label{eq:trade-size-rule}
 \end{equation}
-
 The trade size rule in \cref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{P}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the contemporaneous bid or ask, with a trade size equalling the quoted size \autocite[][13]{grauerOptionTradeClassification2022}. When both the size of the ask and bid correspond with the trade size, the result is ambiguous.
 
 \textcite[][13]{grauerOptionTradeClassification2022} obtain an accuracy of \SI{79.92}{\percent} for the subset of option trades at the \gls{ISE} (\SI{22.3}{\percent} of all trades) that can be signed using the methodology, which elevates the performance by \SI{11}{\percent} for the entire sample. Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \autocite[][15]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades inside or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces four hybrid algorithms, that combine basic rules into more sophisticated algorithms.
@@ -205,7 +198,6 @@ As put forth by \textcite[][18]{grauerOptionTradeClassification2022}, basic or h
 The popular \gls{LR} algorithm \autocite[][745]{leeInferringTradeDirection1991} combines the (reverse) tick test and quote rule into a single rule, which is derived from two observations. First, \textcite[][735--743]{leeInferringTradeDirection1991} observe a higher precision of the quote rule over the tick rule, which makes it their preferred choice. Second, by the means of a simple model, the authors demonstrate that the tick test can correctly classify at least \SI{85.0}{\percent} of all midspread trades if the model's assumptions of constant quotes between trades and the arrival of the market and standing orders following a Poisson process are met.
 
 In combination, the algorithm primarily signs trades according to the quote rule. Trades at the midpoint of the spread, unclassifiable by the quote rule, are classified by the tick rule. Overall:
-
 \begin{equation}
     \operatorname{lr} \colon \mathbb{N}^2 \to \mathcal{Y},\quad\operatorname{lr}(i,t)=
     \begin{cases}
@@ -214,7 +206,6 @@ In combination, the algorithm primarily signs trades according to the quote rule
         \operatorname{tick}(i, t), & \mathrm{else}.
     \end{cases}
 \end{equation}
-
 As the algorithm requires both trade and quote data, it is less data-efficient than its subparts. Even if data is readily available, in past option studies the algorithm does not significantly outperform the quote rule and outside the model's tight assumptions the expected accuracy of the tick test is unmet \autocites[][30--32]{grauerOptionTradeClassification2022}[][886]{savickasInferringDirectionOption2003}. Nevertheless, the algorithm is a common choice in option research \autocite[cp.][453]{easleyOptionVolumeStock1998}. It is also the basis for more advanced algorithms, such as the \gls{EMO} rule, which we cover next.
 
 \subsubsection{Ellis-Michaely-O'Hara
@@ -233,14 +224,12 @@ As such, the \gls{EMO} algorithm extends the tick rule by classifying trades at 
     \end{cases}
     \label{eq:emo-rule}
 \end{equation}
-
 \Cref{eq:emo-rule} embeds both the quote and tick rule. As trades off the quotes are classified by the tick rule, the algorithm's overall success rate is dominated by the tick test assuming most trades are off-the-quotes. For option markets \autocites[cp.][891]{savickasInferringDirectionOption2003}[][21]{grauerOptionTradeClassification2022} this dependence causes the performance to lag behind quote-based approaches, contrary to the successful adaption in the stock market \autocites[][541]{ellisAccuracyTradeClassification2000}[][3818]{chakrabartyTradeClassificationAlgorithms2007}. \textcite[][31--35]{grauerOptionTradeClassification2022} improve the classification accuracy for option trades by applying the reverse tick test as a proxy for the tick test.
 
 \subsubsection{Chakrabarty-Li-Nguyen-Van-Ness
     Method}\label{sec:chakarabarty-li-nguyen-van-ness-method}
 
 Like the previous two algorithms, the \gls{CLNV} method of \textcite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the \gls{EMO} rule by a differentiated treatment of trades inside the quotes, which are notoriously hard to classify. The authors segment the bid-ask spread into deciles (ten equal-width bins) and classify trades around the midpoint (\nth{4} to \nth{7} decile) by the tick rule and trades close or outside the quotes are categorized by the tick rule.
-
 \begin{equation}
     \operatorname{clnv} \colon \mathbb{N}^2 \to \mathcal{Y}, \quad
     \operatorname{clnv}(i, t)=
@@ -251,9 +240,7 @@ Like the previous two algorithms, the \gls{CLNV} method of \textcite[][3809]{cha
     \end{cases}
     \label{eq:CLNV-rule}
 \end{equation}
-
 % TODO: sucess rates are sensitive to trade location.
-
 The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \gls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
 
 \subsubsection{Stacked Rule}\label{sec:stacked-rule}
@@ -292,12 +279,10 @@ Thus, we frame trade signing as a supervised, probabilistic classification task.
 We introduce more notation, which we use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times M}$ and described by a random variable $X$. Any of the $M$ features in $\mathbf{x}$ may be numerical, e.g., the trade price or categorical e.g., the option type. Like before, the target is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $\Pr(X, Y)$. The labelled data set with $N$ i.i.d. samples is denoted by $\mathcal{S} =\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
 
 For our machine learning classifiers, we aim to model $\Pr_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
-
 \begin{equation}
     \widehat{\operatorname{Pr}}(y\mid \mathbf{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
     \label{eq:prob-from-point-estimate}
 \end{equation}
-
 % TODO: It's actually a one-hot vector with the "probabilities
 Consequently, if a trade is predicted as a sell, hence $\hat{y} = -1$, we assign a probability of one for being a sell and a zero probability for being a buy and vice versa. Given the estimated class probabilities, we retrieve the most probable class in $\mathcal{Y}$ as:
 \begin{equation}
@@ -337,7 +322,6 @@ For a tree with $J$ regions $R_1, R_2,\ldots, R_J$, and some numerical input $\m
     h(\mathbf{x})=\sum_{j=1}^{J} \gamma_{j} \mathbb{I}\left(\mathbf{x} \in R_{j}\right),
     \label{eq:decision-tree}
 \end{equation}
-
 where $\mathbb{I}$ is the indicator function for region conformance and $\gamma_j$ the region's constant \autocite[][326]{hastietrevorElementsStatisticalLearning2009}. In the regression case, $\gamma_j$ is the mean of all target variables $y_i$ in the specific region. Since all samples of a region share a common response value, the tree estimates resemble a histogram that approximates the true regression surface, as visualized in \cref{fig:decision-boundary-dt}.
 
 \begin{figure}[h]
@@ -351,18 +335,14 @@ So far, it remains open how the best split can be found. The best split is where
 \begin{equation}
     \operatorname{L}_{\mathrm{SSE}} =\sum_{\mathbf{x}_{i} \in R_j}\left(y_{i}-\gamma_{j}\right)^{2},
 \end{equation}
-
 which is subsequently minimised \textcite[][231]{breimanClassificationRegressionTrees2017}. As documented in \textcite[][326]{hastietrevorElementsStatisticalLearning2009} we start with the entire dataset and scan through all combinations of features and possible split values. For a split by the feature $k$ at the value $s$, the child nodes are given by a pair of half-planes:
-
 \begin{equation}
     R_1(k, s)=\left\{X \mid X_k \leq s\right\} \text { and } R_2(k, s)=\left\{X \mid X_k>s\right\}.
 \end{equation}
-
 Thereby, the feature $k$ and value $s$ are selected in a way, that the squared error in the child nodes is minimised:
 \begin{equation}
     \min _{k, s}\left[\min _{\gamma_1} \sum_{\mathbf{x}_i \in R_1(k, s)}\left(y_i-\gamma_1\right)^2+\min _{\gamma_2} \sum_{\mathbf{x}_i \in R_2(k, s)}\left(y_i-\gamma_2\right)^2\right].
 \end{equation}
-
 Trivially, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample has its region, the tree would achieve a perfect fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence \emph{variance}, size complexity pruning procedures are employed. Likewise, if the decision tree is too simplistic, a high bias contributes to the model's overall expected error. Both extremes are to be avoided.
 
 Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredictors1996} and \emph{boosting} \autocite[][197--227]{schapireStrengthWeakLearnability1990}, decrease the expected error of the decision tree by combining multiple trees in a single model. Both approaches differ in the error term being minimised, which is reflected in the training procedure and the complexity of the ensemble members. More specifically, bagging decreases the variance, whereas boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we focus on \gls{GBM}, a variant of boosting.
@@ -376,12 +356,10 @@ Gradient boosting iteratively combines oversimplified models, the weak learners,
 By \cref{sec:problem-framing} we perform binary probabilistic classification and by \cref{sec:trade-initiator} we defined the labels to be $y \in \{-1,1\}$. For gradient boosting, instead of modelling the class-conditional probabilities directly, we model the conditional log odds instead, which can be interpreted as the probability of observing class $1$ or a buyer-initiated trade, and covert to class-conditional probabilities as needed.
 
 Following \textcite[][9]{friedmanStochasticGradientBoosting2002} we set the loss function to be the cross-entropy loss, given by:
-
 \begin{equation}
     L_{\mathrm{CE}} \colon \mathbb{R}^2 \to \mathbb{R} \quad L_{\mathrm{CE}}(y, F) = \log(1+\exp(-2yF))
     \label{eq:cross-entropy-loss}
 \end{equation}
-
 where:
 \begin{equation}
     F(\mathbf{x}) = \frac{1}{2} \log \left[\frac{\Pr(y=1\mid \mathbf{x})}{\Pr(y=-1\mid \mathbf{x})}\right]
@@ -395,41 +373,33 @@ We first intialise the model with a naïve prediction, based on the average clas
     F_0(\mathbf{x})= \frac{1}{2} \log \left[\frac{1+\bar{y}}{1-\bar{y}}\right].
 \end{equation}
 Expectedly, $F_0(\mathbf{x})$ is a poor estimate, capturing hardly any regularities of the data. Gradient boosting solves this issue by adding weak learners to the ensemble. New trees are added greedily, one per iteration $m$ with $m=1,2,\cdots M$. The weak learner in the $m$-th iteration is chosen to approximate the pseudo residual $r_i$, which is the negative gradient of the observed value of the $i$-th sample and the current estimate:
-
 \begin{equation}
     r_i=-\left[\frac{\partial L_{\mathrm{CM}}\left(y_i, F\left(\mathbf{x}_i\right)\right)}{\partial F\left(\mathbf{x}_i\right)}\right]_{F(\mathbf{x})=F_{m-1}(\mathbf{x})}=2 y_i /\left(1+\exp \left(2 y_i F_{m-1}\left(\mathbf{x}_i\right)\right)\right).
 \end{equation}
-
 % TODO: yields the maximum decrease are similar to the components of the negative gradient descent. However, the  major drawback is tha tthe gradient is only defined for data points x_i seen during training, contradicting the creation of a generalising model. 
-
 Typically, regression trees (cp. \cref{sec:decision-tree}) are chosen as weak learners since they are computationally cheap and can produce continuous estimates for the residual. The $m$-th regression tree contains $J$ terminal regions, denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. We search for an estimate $\gamma_{j,m}$ for the terminal node $R_{jm}$ that minimizes the cross-entropy over all samples within the node:
-
 \begin{equation}
     \gamma_{j m}=\arg \min _\gamma \sum_{\mathbf{x}_i \in R_{j m}} \log \left(1+\exp \left(-2 y_i\left(F_{m-1}\left(\mathbf{x}_i\right)+\gamma\right)\right)\right)
     \label{eq:region-estimate-gbm}
 \end{equation}
 % TODO: Fill in footnote
 \cref{eq:region-estimate-gbm} cannot be solved in closed form and is typically approached by the Newton-Raphson method with a second-order approximation of the loss~\footnote{Compare the second-order Taylor polynomial given by (...).}:
-
 \begin{equation}
     \gamma_{j m}=\sum_{\mathbf{x}_i \in R_{j m}} r_i / \sum_{\mathbf{x}_i \in R_{j m}}\left|r_i\right|\left(2-\left|r_i\right|\right)
 \end{equation}
 with $r_i$ given by \cref{eq:logits-gbm}.
 
 An improved estimate for $\mathbf{x}$ is calculated from the previous estimate by adding the new regression tree to the ensemble. The latter moves the prediction towards the greatest descent and thus improves the overall prediction. The updated model is given by:
-
 \begin{equation}
     F_{m}(\mathbf{x})=F_{m-1}(\mathbf{x})+\eta \sum_{j=1}^{J_{m}} \gamma_{j m} \mathbb{I}\left(\mathbf{x} \in R_{j m}\right).
 \end{equation}
-
 After $M$ iterations we obtain the final estimate calculated as $F_M(\mathbf{x})$. To avoid \gls{overfitting} the residuals, only proportional steps towards the negative gradient are taken, which is controlled by the learning rate (...) \autocite[][13]{friedmanGreedyFunctionApproximation2001}. The learning rate (...) and the size of the ensemble $M$ are deeply intertwined are best tuned together \autocite[][13]{friedmanGreedyFunctionApproximation2001}.
 
 Gradient boosting is still prone to \gls{overfitting}. One solution is to employ early stopping, whereby the ensemble is only grown in size, as long as adding more weak learners leads to a decrease in loss on the validation set \autocite[][384]{hastietrevorElementsStatisticalLearning2009}. Another approach is to limit the amount of data seen during training by fitting trees on random subset of samples, as proposed in \textcite[][3]{friedmanStochasticGradientBoosting2002}, or on a subset of features, as popularized by \textcite[][3]{chenXGBoostScalableTree2016}. \textcite[][6]{prokhorenkovaCatBoostUnbiasedBoosting2018} grow oblivious trees, which use the same splitting criterion for all nodes of one level in a tree. The rationale is, that these arguably simplistic trees, and achieve an imperfect fit, which regularises the model. Finally, the loss function can be extended for a $\ell_2$ regularization term to penalize the model for complexity, as applied in \textcite[][2]{chenXGBoostScalableTree2016}.
 
-In recent years, several variants of gradient boosting have been proposed and studied in the literature, including \emph{CatBoost} \autocite[][1--23]{prokhorenkovaCatBoostUnbiasedBoosting2018}, \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, and \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, which differ by the policy how trees are grown and how \gls{overfitting} is addressed. Performance-wise, differences between the implementations are negligible, as empirical studies suggest \autocites[][8]{grinsztajnWhyTreebasedModels2022}[][19--20]{gorishniyRevisitingDeepLearning2021}[][7]{somepalliSaintImprovedNeural2021}.
+In recent years, several variants of gradient boosting have been proposed and studied in the literature, including \emph{CatBoost} \autocite[][1--23]{prokhorenkovaCatBoostUnbiasedBoosting2018}, \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, and \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, which differ by the policy how trees are grown and how \gls{overfitting} is addressed. Performance-wise, differences between the implementations are negligible, as empirical studies suggest \autocites[][8]{grinsztajnWhyTreebasedModels2022}[][19--20]{gorishniyRevisitingDeepLearning2021}[][7]{somepalliSaintImprovedNeural2021}[][14]{borisovDeepNeuralNetworks2022}.
 
 As we noted at the beginning, $F_M(\mathbf{x})$ models the log odds. We can recover the class-conditional probabilities $\widehat{\operatorname{Pr}}(y \mid \mathbf{x})$ by taking the inverse:
-
 \begin{equation}
     \widehat{\operatorname{Pr}}(y \mid \mathbf{x}) = 1 /\left(1+\exp(-2yF_M(\mathbf{x}))\right).
 \end{equation}
@@ -484,7 +454,6 @@ The embedding layer from \cref{fig:transformer-architecture-overview} is ultimat
     \gls{e}=\gls{W-e}\left[:, v\right].
     \label{eq:word-embeddings}
 \end{equation}
-
 The weights of $\gls{W-e}$ are initialised randomly and updated using gradient descent to obtain the learned embeddings. The dimension of the embedding $d_e$, affects the expressiveness of the network and is thus an important tuneable hyperparameter of the model.
 
 Concluding the example from above with artificial embeddings of $d_e=3$:
@@ -504,12 +473,10 @@ As this work is concerned with the classification of tabular data, the aforement
 Transformer networks can handle numerical features, such as the trade price, by mapping the scalar value to a high-dimensional embedding vector and process sequences thereof \autocite[][1]{gorishniyEmbeddingsNumericalFeatures2022}. In the simplest case, a learned linear projection is utilized to obtain the embedding. Linear embeddings of numerical features were previously explored in \textcites[][1]{kossenSelfAttentionDatapointsGoing2021}[][1]{somepalliSaintImprovedNeural2021}[][1]{gorishniyRevisitingDeepLearning2021}.
 
 If the $m$-th feature, $\mathbf{x}[m]$, is numerical, it is projected to its embedding $\gls{e} \in \mathbb{R}^{d_e}$ by element-wise multiplication with a learned vector $\mathbf{W}_m \in \mathbb{R}^{d_{e}}$. Moreover, a feature-dependent bias term $\mathbf{b}_m \in \mathbb{R}^{d_{e}}$ is added, as noted in \cref{eq:numerical-embeddings}.
-
 \begin{equation}
     \gls{e}= \mathbf{W}_m \mathbf{x}[m] +\mathbf{b}_m
     \label{eq:numerical-embeddings}
 \end{equation}
-
 More sophisticated approaches rely on parametric embeddings, like the \emph{piece-wise linear encoding} or the \emph{periodic encoding} of \textcite[][10]{gorishniyEmbeddingsNumericalFeatures2022}. Both enforce non-linearity. The authors show that these can alleviate the model's performance but at a non-neglectable computational cost.
 
 More generally, the works of \textcites[][1]{gorishniyEmbeddingsNumericalFeatures2022}[][1]{somepalliSaintImprovedNeural2021} suggest, that numerical embedding can significantly improve robustness to missing values or noise. Their work miss a theoretical explanation. \textcite[][8--9]{grinsztajnWhyTreebasedModels2022} fill this void and attribute the increased robustness to the broken rotational invariance.
@@ -525,7 +492,6 @@ its vocabulary $C_m$ with $N_{C_m}$ categories. Assume, the $m$-th feature is ca
     \gls{e}=\mathbf{W}_m[:,c_{m}] +\mathbf{b}_m
     \label{eq:categorical-embeddings}
 \end{equation}
-
 These categorical embeddings can potentially capture the intrinsic properties of categorical variables by arranging similar categories closer in the embedding space. For instance, consider the underlyings $\mathtt{GOOGL}$ (Alphabet Inc.), $\mathtt{MSFT}$ (Microsoft Inc.), and $\mathtt{K}$ (Kellogg Company). Due to the overlapping field of operations, one would anticipate greater similarity between Alphabet and Microsoft.
 
 Despite these advantages, high-cardinal features present a challenge for embeddings since they are typically learned from a few samples, which promotes \gls{overfitting}. Handling high-dimensional categorical data remains an open research problem, as noted by \textcite[][2]{borisovDeepNeuralNetworks2022}.
@@ -542,7 +508,6 @@ In practice, the order of words is important for the overall meaning of a senten
 Contrary to sentences, columns in tabular datasets are arranged in an arbitrary order, which weakens the need for positional information. However, unless the embeddings per feature are unique, a positional embedding is also required so that the model can relate the otherwise identical embeddings to specific features and distinguish them \autocites[][3]{huangTabTransformerTabularData2020}[][15]{somepalliSaintImprovedNeural2021}.
 
 Like \gls{token} embeddings, positional embeddings can also be learned \autocite[cp.][4174]{devlinBERTPretrainingDeep2019}. Due to better, extrapolation capabilities, \textcite[][6]{vaswaniAttentionAllYou2017}, propose an positional encoding with the mapping $\gls{W-p}: \mathbb{N} \rightarrow \mathbb{R}^{d_{e}}$ based on sine and cosine signals to encode the \emph{absolute} position of the \gls{token}:
-
 \begin{equation}
     \begin{aligned}
         \gls{W-p}\left[2 i-1, t\right] & =\sin \left(t / \gls{ellmax}^{2 i / \gls{d}_e}\right), \\
@@ -550,7 +515,6 @@ Like \gls{token} embeddings, positional embeddings can also be learned \autocite
     \end{aligned}
     \label{eq:sinusodal-encoding}
 \end{equation}
-
 with $0<i \leq \gls{d}_{e} / 2$, the maximum sequence length $\gls{ellmax}$, which is arbitrarily set to $\gls{ellmax}=10{,}000$, and $\gls{t}$ is again the position of the \gls{token} in the sequence. As shown in \cref{eq:sinusodal-encoding} the frequency decreases across the position dimension and alternates between sine and cosine for the embedding dimension. Each embedding thus contains a pattern, easily distinguishable by the model.
 
 \begin{figure}[ht]
@@ -571,7 +535,6 @@ The positional embedding is finally added per element to the token embedding to 
     \gls{e}=\gls{W-e}\left[:, x[t]\right]+\gls{W-p}\left[:, t\right].
     \label{eq:positional-embedding}
 \end{equation}
-
 Intuitionally, adding the positional encoding leads to a rotation of the \gls{token} embedding in the embedding space. As the positional embedding is different for every location within the sequence, otherwise identical \glspl{token}, now have a distinct embedding.
 
 \subsubsection{Attention Mechanism}\label{sec:attention}
@@ -632,7 +595,6 @@ The network consists of a linear transformation, followed by a non-linear activa
 \begin{equation}
     \gls{X} = \gls{X}+\mathbf{W}_{\mathrm{mlp} 2}^l \operatorname{ReLU}\left(\mathbf{W}_{\mathrm{mlp} 1}^l \gls{X}+\mathbf{b}_{\mathrm{mlp} 1}^l 1^{\top}\right)+\mathbf{b}_{\mathrm{mlp} 2}^l 1^{\top},
 \end{equation}
-
 with $\mathbf{W}_{\mathrm{mlp } 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times d_{e}}, \mathbf{b}_{\mathrm{mlp} 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}}}, \mathbf{W}_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}} \times d_{\mathrm{mlp}}$ and $\mathbf{b}_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}}$ being learnable parameters identical for all \glspl{embedding} in the layer. The network is applied to each embedding separately and identically.
 
 \textcite[][9]{vaswaniAttentionAllYou2017} set the hidden dimension to be two to eight magnitudes of the embedding dimension. The large capacity strengthens the model's ability to retain information but also contributes significantly to the high computational requirements and memory footprint of Transformers \autocites[][5]{tayEfficientTransformersSurvey2022}[][1]{kitaevReformerEfficientTransformer2020}. Both linear transformations are separated by a \gls{ReLU} \gls{activation-function} \autocite[][318]{glorotDeepSparseRectifier2011} to introduce non-linearities to the network.
@@ -714,7 +676,7 @@ Whilst Transformers could be combined with self-training, a more promising appro
 
 Until now we assumed the parameters e.g., weights and biases, of the Transformer to be initialized randomly. The joint goal of pre-training objectives is to initialize a neural network with weights that capture expressive representations of the input and thereby improve generalization performance over a random initialization when fine-tuning on a specific task \autocite[][12]{erhanWhyDoesUnsupervised}.The training is now decomposed into two stages: in the first stage the model is trained with respect to the pre-training objective to obtain the parameter estimates on unlabelled instances, and in the second stage the Transformer is initialized with the parameters and then finetuned on the labelled dataset. Particularly beneficial, general embeddings can be learned during pre-training, even if the true label, i.e., the trade initiator, is unknown.
 
-Pre-training objectives for tabular data differ vastly in their methodology and are often directly adapted from other domains including \gls{MLM} \autocite[][4174]{devlinBERTPretrainingDeep2019}, \gls{RTD} \autocite[][1--3]{radfordImprovingLanguageUnderstanding}, or contrastive learning \autocite[][2]{chenSimpleFrameworkContrastive2020}.
+Pre-training objectives for tabular data differ vastly in their methodology and are often directly adapted from other domains including \gls{MLM} \autocite[][4174]{devlinBERTPretrainingDeep2019}, \gls{RTD} \autocite[][1--3]{clarkElectraPretrainingText2020}, or contrastive learning \autocite[][2]{chenSimpleFrameworkContrastive2020}.
 As such, \textcite[][7]{huangTabTransformerTabularData2020} adapt \gls{MLM}, whereby features are randomly masked and the objective is to reconstruct the original input. Pre-training by \gls{RTD} aims to identify randomly replaced features and recover a binary mask used for replacement \autocite[][7]{huangTabTransformerTabularData2020}. \textcites[][3]{bahriSCARFSelfsupervisedContrastive2022}[][4--5]{yoonVIMEExtendingSuccess2020} reconstruct both the binary feature mask and the original input simultaneously. \textcite[][3]{somepalliSaintImprovedNeural2021} alter the methodology of \textcite[][4--5]{yoonVIMEExtendingSuccess2020} through a contrastive loss function.
 
 With a multitude of methods, tested on different datasets and neural architectures, a fair comparison between pre-training methods is tedious. Yet, \textcite[][2-3]{rubachevRevisitingPretrainingObjectives2022} provide guidance in selecting objectives. Among the pre-training objectives that they benchmark, the \gls{RTD} objective was among the best-performing approaches. The \gls{RTD} objective is easy to optimise, unsupervised, and leaves the model architecture unaltered, which makes \gls{RTD} a compelling choice for pre-training on unlabelled data.
@@ -742,20 +704,20 @@ Independent of the base classifier, self-training increases computational cost, 
 
 \subsection{Transformers with Pre-Training}\label{sec:extensions-to-transformer}
 
-\gls{RTD} is a pre-training objective proposed by \textcite[][2--3]{radfordImprovingLanguageUnderstanding} for the use in language models. The core idea is to randomly replace tokens with plausible alternatives and learn a binary classifier to distinguish between original and replaced tokens. Intuitionally, the random replacement forces the model to learn generalisable representations of the input, rather than memorizing the co-occurrence of certain tokens. Additionally, surprising the model with random tokens strengthens its ability to incorporate contextual information.
+\gls{RTD} is a pre-training objective proposed by \textcite[][2--3]{clarkElectraPretrainingText2020} for the use in language models. The core idea is to randomly replace tokens with plausible alternatives and learn a binary classifier to distinguish between original and replaced tokens. Intuitionally, the random replacement forces the model to learn generalisable representations of the input, rather than memorizing the co-occurrence of certain tokens. Additionally, surprising the model with random tokens strengthens its ability to incorporate contextual information.
 
 \begin{figure}[ht]
     \centering
     {\renewcommand\normalsize{\small}
         \normalsize
         \input{./Graphs/random-token-replacement.pdf_tex}}
-    \caption[Random Token Replacement]{Random Token Replacement. Own work inspired by \autocite[][2--3]{radfordImprovingLanguageUnderstanding}.}
+    \caption[Random Token Replacement]{Random Token Replacement. Own work inspired by \autocite[][2--3]{clarkElectraPretrainingText2020}.}
     \label{fig:random-token-replacement}
 \end{figure}
 
-The approach uses two neural networks, namely the generator and the discriminator, typically implemented as Transformers, as visualized in \cref{fig:random-token-replacement}.  The generator is responsible for generating replacement tokens, and receives an input sequence, i.e., a sentence, that has been intentionally masked out. It learns to predict the original token of the now-masked token through tokens in the bidirectional context (cp. \cref{sec:attention}). For masking, an additional $\mathtt{[MASK]}$ token is introduced, which extends the vocabulary (cp. \cref{sec:token-embeddings}). Separately for each token, the final hidden state of the masked token is fed through a softmax activation to obtain the predicted probability distribution of the masked token and the cross entropy loss is used to compare against the true distribution. By replacing the masked token with a token from the generator distribution, convincing replacements now take place for some of the original inputs \autocite[][2--3]{radfordImprovingLanguageUnderstanding}.
+The approach uses two neural networks, namely the generator and the discriminator, typically implemented as Transformers, as visualized in \cref{fig:random-token-replacement}.  The generator is responsible for generating replacement tokens, and receives an input sequence, i.e., a sentence, that has been intentionally masked out. It learns to predict the original token of the now-masked token through tokens in the bidirectional context (cp. \cref{sec:attention}). For masking, an additional $\mathtt{[MASK]}$ token is introduced, which extends the vocabulary (cp. \cref{sec:token-embeddings}). Separately for each token, the final hidden state of the masked token is fed through a softmax activation to obtain the predicted probability distribution of the masked token and the cross entropy loss is used to compare against the true distribution. By replacing the masked token with a token from the generator distribution, convincing replacements now take place for some of the original inputs \autocite[][2--3]{clarkElectraPretrainingText2020}.
 
-The discriminator then receives the corrupted input sequence and is trained to distinguish between original and replaced tokens originating from the generator. The output is a binary mask to be compared against the mask initially used for masking tokens in the generator \autocite[][2--3]{radfordImprovingLanguageUnderstanding}.
+The discriminator then receives the corrupted input sequence and is trained to distinguish between original and replaced tokens originating from the generator. The output is a binary mask to be compared against the mask initially used for masking tokens in the generator \autocite[][2--3]{clarkElectraPretrainingText2020}.
 
 Applied to tabular datasets, \gls{RTD} transfers to randomly replacing feature values in $\mathbf{x}_{i}$ instead of sequences. The objective is now to predict a binary mask $\mathbf{m}_{i}\in \{0,1\}^{M}$ corresponding to $\mathbf{x}_{i}$, indicating which features, or entries in $\mathbf{x}_{i}$, have been replaced. Previous adaptions for tabular data, e.g., \textcite[][3]{huangTabTransformerTabularData2020}, simplify the replacement strategy by sampling replacement values directly from the feature, which alleviates the need for a generator network and requires less compute. Since the replacement is done on a feature-per-feature basis, the replaced token is \emph{per se} harder to detect.
 
@@ -800,10 +762,7 @@ For the \gls{ISE} trades, our matched sample spans from 2 May 2005 to 31 May 201
 
 Following our initial rationale for using semi-supervised methods, we reserve unlabelled trades between 24 October 2012 and 24 October 2013 at the \gls{ISE} for pre- and self-training. We provide further details in \cref{sec:train-test-split}. Since Livevol doesn't distinguish by trader types, this dataset includes both customer and non-customer trades.
 
-While our procedure makes the inference of the true trade initiator partly feasible, concerns regarding a selection bias due to the excessive filtering have to be raised. We address these concerns as part of our exploratory data analysis in \cref{sec:exploratory-data-analysis}, in which we compare unmerged and merged sub-samples.
-
-\subsubsection{Exploratory Data Analysis (2~p)}
-\label{sec:exploratory-data-analysis}
+While our procedure makes the inference of the true trade initiator partly feasible, concerns regarding a selection bias due to the excessive filtering have to be raised. We address these concerns as part of our exploratory data analysis in (...), in which we compare unmerged and merged sub-samples.
 
 In the following chapter, we motivate feature engineering, present our feature sets and discuss strategies for transforming features into a form that accelerates and advances the training of our models.
 \subsubsection{Data Preprocessing}\label{sec:data-preprocessing}
@@ -826,7 +785,7 @@ Arguably, our models have simultaneous access to the previous and successive tra
 
 Pricing or quote data can often not be fully reconstructed, resulting in missing values across all features. Decision trees and ensembles thereof can inherently handle $\mathtt{[NaN]}$ values by discarding missing values in the splitting procedure \autocite[][150--152]{breimanClassificationRegressionTrees2017} or by incorporating missing values into the splitting criterion \autocite[][951]{twalaGoodMethodsCoping2008}. Transformers require missing values to be imputed beforehand, as a $\mathtt{[NaN]}$ value cannot be propagated through the network. We choose zero imputation for being a single-pass strategy that minimises data leakage and allows gradient-boosted trees and neural networks to separate imputed values from observed ones. With a low degree of missing values, the impact on the final result is minuscule.
 
-Price and size-related features exhibit positive skewness, as brought up in \cref{sec:exploratory-data-analysis}. Tree-based learners are unaffected by the feature scale, as the splitting process is based on the purity of the split but not on the scale of splitting value (cp. \cref{sec:decision-tree}). To avoid the tails of the distribution dominating the weight updates of neural networks, we apply power transformations, which transform the distribution of features to be Gaussian-like. Apart from quantization effects, gradient-boosted trees are unaffected. We determine the power transformation using the Box-Cox procedure \autocite[][214]{boxAnalysisTransformations2022}, given by:
+Price and size-related features exhibit positive skewness, as brought up in (...). Tree-based learners are unaffected by the feature scale, as the splitting process is based on the purity of the split but not on the scale of splitting value (cp. \cref{sec:decision-tree}). To avoid the tails of the distribution dominating the weight updates of neural networks, we apply power transformations, which transform the distribution of features to be Gaussian-like. Apart from quantization effects, gradient-boosted trees are unaffected. We determine the power transformation using the Box-Cox procedure \autocite[][214]{boxAnalysisTransformations2022}, given by:
 
 \begin{equation}
     \mathbf{X}^{*}\left[:,j\right]= \begin{cases}\frac{1}{\lambda}(\mathbf{X}\left[:,j\right]^\lambda-1), & \lambda \neq 0 \\ \log (\mathbf{X}\left[:,j\right]),& \lambda=0\end{cases}.
