@@ -2,16 +2,53 @@ The selection of methods in previous works is arbitrary and guided computational
 This paper provides a succinct discussion of these gaps and selects a set of supervised classifiers based on empirical evidence. 
 
 We impose the following requirements a classifier must fulfill:
-*performance:* The approach must deliver state-of-the-art performance in tabular classification tasks. Typically, trades are provided as tabular datasets, that consist of rows and columns. The classifier must be well-suited for classification on tabular data.
+*performance:* The approach must deliver state-of-the-art performance in tabular classification tasks. Typically, trades are provided as tabular datasets, that consist of rows and columns / vectors of heterogeneous features (What is in row? 🚧). Individual features may be both numerical or categorical. The classifier must be well-suited for classification on tabular data.
 *scalability:* The approach must scale to datasets with $>$ 10 Mio. samples. Due to the high trading activity and the long data history, datasets can contain many samples. Classifiers must scale to large to large data volumes.
 *extensibility:* The approach must be extendable to train on partially-labelled trades. Most definitions of the trade initiator apply only to a subset of trades e.g., certain order types. The so-excluded trades can still be valuable in training a classifier. The classifier, however, must support it.
 
-These results, contradict 
+Learning on tabular data has long been dominated by tree-based ensembles, in particular *gradient boosting*. Tree-based ensemble combine, individual decision trees into an ensemble to obtain an improved estimate. Notable models include random forests ([[@breimanRandomForests2001]])  and gradient-boosting ([[@friedmanStochasticGradientBoosting2002]]). 
 
+Why do they make sense?
+Why gradient-boosting? Why not random forests?
+
+However, embedding and contextualizing of only the categorical inputs remains imperfect, as no numerical data is considered in the attention mechanism, and correlations between categorical and numerical features are lost due to the processing in different sub-networks ([[@somepalliSAINTImprovedNeural2021]]2). Also, the robustness to noise is hardly improved for numerical inputs. In a small experimental setup, ([[@somepalliSAINTImprovedNeural2021]]8) address this concern for the TabTransformer by also embedding numerical inputs, which leads to a lift in AUC by 2.34 % merely through embedding. Their observation integrates with a wider strand of literature that suggests, that models can profit from numerical embeddings, as we derived in chapter [[🛌Token Embedding]]. To dwell on this idea, we introduce the [[🤖FTTransformer]] ne
+
+These includes architectures like, *TabNet* ([[@arikTabNetAttentiveInterpretable2020]]), *TabTransformer* ([[@huangTabTransformerTabularData2020]]), *SAINT* ([[@somepalliSAINTImprovedNeural2021]]), and *FT-Transformer* ([[@gorishniyRevisitingDeepLearning2021]]). 
+
+*SAINT* uses a specialized attention mechanism, the *intersample attention*, which performs attention over both columns and rows ([[@somepalliSAINTImprovedNeural2021]]4--5). Applied to our setting, the model could contextualise information from the trade itself, but also from neighbouring trades, which would provide an unfair advantage over classical trade classification rules. Differently, *TabTransformer* performs attention on categorical features separate for each row. All numerical features are processed in a separate stream, which breaks correlations between categorical and numerical features ([[@somepalliSAINTImprovedNeural2021]]2). Most importantly though, most features in trade data are numerical. As such, trade classification would hardly profit from the Transformer architecture and the model collapse to a gls-MLP. A conceptually more complete approach is given by ([[@gorishniyRevisitingDeepLearning2021]]) in the form *FT-Transformer*, which processes both numerical inputs and categorical input
+
+However, embedding and contextualizing of only the categorical inputs remains imperfect, as no numerical data is considered in the attention mechanism, and correlations between categorical and numerical features are lost due to the processing in different sub-networks ([[@somepalliSAINTImprovedNeural2021]]2). Also, the robustness to noise is hardly improved for numerical inputs. In a small experimental setup, ([[@somepalliSAINTImprovedNeural2021]]8) address this concern for the TabTransformer by also embedding numerical inputs, which leads to a lift in AUC by 2.34 % merely through embedding. Their observation integrates with a wider strand of literature that suggests, that models can profit from numerical embeddings, as we derived in chapter [[🛌Token Embedding]]. To dwell on this idea, we introduce the [[🤖FTTransformer]] next.
+
+A comparison of methods across works is a daunting task, as models differ greatly 
+
+
+
+Parts of this success lies in the robustness to noise, 
+
+A particularily promising strand of research are attention-based models.
+
+
+Standard-MLPs. 
+
+
+
+
+A line of research, including 
+
+
+
+
+
+A fair comparison betw
+
+These results, contradict 
 
 Thus, our study considers gradient boosting and the FT-Transformer. This comparison is particularly appealing, as it compares tree-based learners against neural nets, as well as wide ensembles against deep neural networks.
 
 #gbm #transformer #supervised-learning #deep-learning 
+
+“Creating tabular-specific deep learning architectures is a very active area of research (see section 2). One motivation is that tree-based models are not differentiable, and thus cannot be easily composed and jointly trained with other deep learning blocks. Most tabular deep learning publications claim to beat or match tree-based models, but their claims have been put into question: a simple Resnet seems to be competitive with some of these new models [Gorishniy et al., 2021], and most of these methods seem to fail on new datasets [Shwartz-Ziv and Armon, 2021]. Indeed, the lack of an established benchmark for tabular data learning provides additional degrees of freedom to researchers when evaluating their method. Furthermore, most tabular datasets available online are small compared to benchmarks in other machine learning subdomains, such as ImageNet [Ima], making evaluation noisier. These issues add up to other sources of unreplicability across machine learning, such as unequal hyperparameters tuning efforts [Lipton and Steinhardt, 2019] or failure to account for statistical uncertainty in benchmarks [Bouthillier et al., 2021].” (Grinsztajn et al., 2022, p. 1)
+
 
 - We discuss approaches in cref-[[🍪Selection Of Semisupervised Approaches]].
 - Problems of tree-based approaches and neural networks in semi-supervised learning. See [[@huangTabTransformerTabularData2020]] or [[@arikTabNetAttentiveInterpretable2020]]and [[@tanhaSemisupervisedSelftrainingDecision2017]]

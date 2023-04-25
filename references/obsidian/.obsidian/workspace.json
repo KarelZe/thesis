@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🍪Selection Of Supervised Approaches.md",
+                "file": "❓Questions.md",
                 "mode": "source",
                 "source": false
               }
@@ -57,8 +57,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -78,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🍪Selection Of Supervised Approaches.md",
+                "file": "❓Questions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,7 +105,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🍪Selection Of Supervised Approaches.md"
+                "file": "❓Questions.md"
               }
             }
           },
@@ -137,8 +136,11 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "6942b2f8be896a2c",
+  "active": "916f416e25d3f84d",
   "lastOpenFiles": [
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📖chapters/🤖TabTransformer.md",
+    "📑notes/🤖TabTransformer notes.md",
     "🖼️Media/traversal-of-axis.png",
     "🖼️Media/asymmetric-spread.png",
     "🖼️Media/pre-data-loader.png",
@@ -149,12 +151,10 @@
     "🖼️Media/rules-across-underlyings.png",
     "🖼️Media/SCARF.png",
     "🖼️Media/self-training-algorithm.png",
-    "🖼️Media/sgd-warm-restarts.png",
     "📑notes/⭕Self-Training classifier notes.md",
     "📖chapters/🤖Pre-training of Transformers.md",
     "📖chapters/🍪Selection Of Semisupervised Approaches.md",
     "📖chapters/💡Tuning of models (semi-supervised).md",
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📑notes/☠️Problem Framing notes.md",
     "📖chapters/☠️Problem Framing.md",
     "📖chapters/🎨Inspiration.md",
@@ -173,7 +173,6 @@
     "📖chapters/🐈Gradient Boosting.md",
     "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
     "📖chapters/🔢Trade initiator.md",
-    "📖chapters/🪄Data Preprocessing.md",
-    "📖chapters/🐈CatBoost.md"
+    "📖chapters/🪄Data Preprocessing.md"
   ]
 }
