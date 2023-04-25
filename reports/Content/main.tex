@@ -357,7 +357,7 @@ By \cref{sec:problem-framing} we perform binary probabilistic classification and
 
 Following \textcite[][9]{friedmanStochasticGradientBoosting2002} we set the loss function to be the cross-entropy loss, given by:
 \begin{equation}
-    L_{\mathrm{CE}} \colon \mathbb{R}^2 \to \mathbb{R} \quad L_{\mathrm{CE}}(y, F) = \log(1+\exp(-2yF))
+    L_{\mathrm{BCE}} \colon \mathbb{R}^2 \to \mathbb{R} \quad L_{\mathrm{BCE}}(y, F) = \log(1+\exp(-2yF))
     \label{eq:cross-entropy-loss}
 \end{equation}
 where:
@@ -374,7 +374,7 @@ We first intialise the model with a naïve prediction, based on the average clas
 \end{equation}
 Expectedly, $F_0(\mathbf{x})$ is a poor estimate, capturing hardly any regularities of the data. Gradient boosting solves this issue by adding weak learners to the ensemble. New trees are added greedily, one per iteration $m$ with $m=1,2,\cdots M$. The weak learner in the $m$-th iteration is chosen to approximate the pseudo residual $r_i$, which is the negative gradient of the observed value of the $i$-th sample and the current estimate:
 \begin{equation}
-    r_i=-\left[\frac{\partial L_{\mathrm{CM}}\left(y_i, F\left(\mathbf{x}_i\right)\right)}{\partial F\left(\mathbf{x}_i\right)}\right]_{F(\mathbf{x})=F_{m-1}(\mathbf{x})}=2 y_i /\left(1+\exp \left(2 y_i F_{m-1}\left(\mathbf{x}_i\right)\right)\right).
+    r_i=-\left[\frac{\partial L_{\mathrm{BCE}}\left(y_i, F\left(\mathbf{x}_i\right)\right)}{\partial F\left(\mathbf{x}_i\right)}\right]_{F(\mathbf{x})=F_{m-1}(\mathbf{x})}=2 y_i /\left(1+\exp \left(2 y_i F_{m-1}\left(\mathbf{x}_i\right)\right)\right).
 \end{equation}
 % TODO: yields the maximum decrease are similar to the components of the negative gradient descent. However, the  major drawback is tha tthe gradient is only defined for data points x_i seen during training, contradicting the creation of a generalising model. 
 Typically, regression trees (cp. \cref{sec:decision-tree}) are chosen as weak learners since they are computationally cheap and can produce continuous estimates for the residual. The $m$-th regression tree contains $J$ terminal regions, denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. We search for an estimate $\gamma_{j,m}$ for the terminal node $R_{jm}$ that minimizes the cross-entropy over all samples within the node:

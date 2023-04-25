@@ -11,6 +11,10 @@ Learning on tabular data has long been dominated by tree-based ensembles, in par
 Why do they make sense?
 Why gradient-boosting? Why not random forests?
 
+Classical neural networks 
+
+
+
 However, embedding and contextualizing of only the categorical inputs remains imperfect, as no numerical data is considered in the attention mechanism, and correlations between categorical and numerical features are lost due to the processing in different sub-networks ([[@somepalliSAINTImprovedNeural2021]]2). Also, the robustness to noise is hardly improved for numerical inputs. In a small experimental setup, ([[@somepalliSAINTImprovedNeural2021]]8) address this concern for the TabTransformer by also embedding numerical inputs, which leads to a lift in AUC by 2.34 % merely through embedding. Their observation integrates with a wider strand of literature that suggests, that models can profit from numerical embeddings, as we derived in chapter [[🛌Token Embedding]]. To dwell on this idea, we introduce the [[🤖FTTransformer]] ne
 
 These includes architectures like, *TabNet* ([[@arikTabNetAttentiveInterpretable2020]]), *TabTransformer* ([[@huangTabTransformerTabularData2020]]), *SAINT* ([[@somepalliSAINTImprovedNeural2021]]), and *FT-Transformer* ([[@gorishniyRevisitingDeepLearning2021]]). 
