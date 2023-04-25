@@ -4,16 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "8c7ebe0bc5be8336",
+        "id": "478773baa0127da4",
         "type": "tabs",
         "children": [
           {
-            "id": "210b7021b98e3a7d",
+            "id": "916f416e25d3f84d",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "🖼️Media/traversal-of-axis.png"
+                "file": "📖chapters/🍪Selection Of Supervised Approaches.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -46,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tabular data",
                 "matchingCase": false,
                 "explainSearch": true,
                 "collapseAll": false,
@@ -55,7 +57,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -75,7 +78,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🖼️Media/traversal-of-axis.png",
+                "file": "📖chapters/🍪Selection Of Supervised Approaches.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +106,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "🖼️Media/traversal-of-axis.png"
+                "file": "📖chapters/🍪Selection Of Supervised Approaches.md"
               }
             }
           },
@@ -134,8 +137,9 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "210b7021b98e3a7d",
+  "active": "6942b2f8be896a2c",
   "lastOpenFiles": [
+    "🖼️Media/traversal-of-axis.png",
     "🖼️Media/asymmetric-spread.png",
     "🖼️Media/pre-data-loader.png",
     "🖼️Media/presentation-of-effective-spread.png",
@@ -146,7 +150,6 @@
     "🖼️Media/SCARF.png",
     "🖼️Media/self-training-algorithm.png",
     "🖼️Media/sgd-warm-restarts.png",
-    "🖼️Media/stacking-algo.png",
     "📑notes/⭕Self-Training classifier notes.md",
     "📖chapters/🤖Pre-training of Transformers.md",
     "📖chapters/🍪Selection Of Semisupervised Approaches.md",
