@@ -30,12 +30,14 @@ from otc.models.objective import (
     ClassicalObjective,
     FTTransformerObjective,
     GradientBoostingObjective,
+    TabTransformerObjective,
     set_seed,
 )
 
 OBJECTIVES = {
     "gbm": GradientBoostingObjective,
     "classical": ClassicalObjective,
+    "tabtransformer": TabTransformerObjective,
     "fttransformer": FTTransformerObjective,
 }
 
@@ -58,7 +60,7 @@ FEATURE_SETS = {
 @click.option(
     "--model",
     type=click.Choice(
-        ["classical", "gbm", "fttransformer"],
+        ["classical", "gbm", "tabtransformer", "fttransformer"],
         case_sensitive=False,
     ),
     required=True,
@@ -157,16 +159,18 @@ def main(
         x_train = pd.concat([x_train_labelled, x_train_unlabelled])
         y_train = pd.concat([y_train_labelled, y_train_unlabelled])
     else:
+        # FIXME: Remove after testing
         x_train = pd.read_parquet(
             Path(artifact_dir_labelled, "train_set.parquet"), columns=columns
-        )
+        ).sample(frac=0.05, random_state=42)
         y_train = x_train["buy_sell"]
         x_train.drop(columns=["buy_sell"], inplace=True)
 
     # load validation data
+    # FIXME: Remove after testing
     x_val = pd.read_parquet(
         Path(artifact_dir_labelled, "val_set.parquet"), columns=columns
-    )
+    ).sample(frac=0.05, random_state=42)
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
