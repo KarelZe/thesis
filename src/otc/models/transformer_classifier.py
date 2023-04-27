@@ -5,6 +5,7 @@ Can be used as a consistent interface for evaluation and tuning.
 """
 from __future__ import annotations
 
+import gc
 import glob
 import os
 from typing import Any
@@ -128,9 +129,11 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             cat_unique_counts=self.module_params["cat_cardinalities"],
         )
 
-        return TabDataLoader(
+        tab_dl = TabDataLoader(
             data.x_cat, data.x_cont, data.weight, data.y, **self.dl_params
         )
+        del data
+        return tab_dl
 
     def fit(
         self,
@@ -173,11 +176,19 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         else:
             X_val, y_val = X, y
 
+        # save for accuracy calculation
+        len_x_val = len(X_val)
+
         self.classes_ = np.array([-1, 1])
 
         train_loader = self.array_to_dataloader(X, y)
         # no weight for validation set / every sample with weight = 1
         val_loader = self.array_to_dataloader(X_val, y_val)
+
+        # free up memory
+        del X, y, X_val, y_val
+        gc.collect()
+        torch.cuda.empty_cache()
 
         self.clf = self.module(**self.module_params)
 
@@ -213,6 +224,10 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         step = 0
         best_accuracy = -1
 
+        # save stats in classifier
+        self._stats_step = []
+        self._stats_epoch = []
+
         for epoch in range(self.epochs):
 
             # perform training
@@ -246,7 +261,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 scheduler.step()
 
                 # add the mini-batch training loss to epoch loss
-                loss_in_epoch_train += train_loss
+                loss_in_epoch_train += train_loss.item()
+
+                self._stats_step.append({"train_loss": train_loss.item(), "step": step})
 
                 # print(f"[{epoch}-{train_batch}] train loss: {train_loss}")
                 train_batch += 1
@@ -270,18 +287,27 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                     # loss calculation.
                     # Criterion contains softmax already.
                     val_loss = criterion(logits, targets)
-                    loss_in_epoch_val += val_loss
+                    loss_in_epoch_val += val_loss.item()
 
                     # print(f"[{epoch}-{val_batch}] val loss: {val_loss}")
                     val_batch += 1
             # loss average over all batches
-            train_loss = loss_in_epoch_train / len(train_loader)
-            val_loss = loss_in_epoch_val / len(val_loader)
+            train_loss_all = loss_in_epoch_train / len(train_loader)
+            val_loss_all = loss_in_epoch_val / len(val_loader)
             # correct samples / no samples
-            val_accuracy = correct / len(X_val)
-            print(f"train loss: {train_loss}")
-            print(f"val loss: {val_loss}")
+            val_accuracy = correct / len_x_val
+            print(f"train loss: {train_loss_all}")
+            print(f"val loss: {val_loss_all}")
             print(f"val accuracy: {val_accuracy}")
+
+            self._stats_epoch.append(
+                {
+                    "train_loss": train_loss_all,
+                    "val_loss": val_loss_all,
+                    "val_accuracy": val_accuracy,
+                    "epoch": epoch,
+                }
+            )
 
             self.callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
 
@@ -293,13 +319,24 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             early_stopping(-val_accuracy)
             if (
                 early_stopping.early_stop
-                or np.isnan(train_loss.detach().cpu().numpy())
-                or np.isnan(val_loss.detach().cpu().numpy())
+                or np.isnan(train_loss_all)
+                or np.isnan(val_loss_all)
             ):
                 break
 
         # restore best from checkpoint
         self._checkpoint_restore()
+        # self.clf.cpu()
+
+        # print(f"mem before cleanup: {torch.cuda.memory_allocated()/1024**2}")
+        # print(f"mem before reserved: {torch.cuda.memory_reserved()/1024**2}")
+        # https://discuss.huggingface.co/t/clear-gpu-memory-of-transformers-pipeline/18310/2
+        del train_loader, val_loader
+        gc.collect()
+        torch.cuda.empty_cache()
+
+        # print(f"mem after cleanup: {torch.cuda.memory_allocated()/1024**2}")
+        # print(f"mem after reserved: {torch.cuda.memory_reserved()/1024**2}")
 
         # is fitted flag
         self.is_fitted_ = True
