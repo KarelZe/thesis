@@ -84,7 +84,10 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             "poor_score": True,
         }
 
-    def _checkpoint_write(self):
+    def _checkpoint_write(self) -> None:
+        """
+        Write weights and biases to checkpoint.
+        """
         # remove old files
         print("deleting old checkpoints.")
         for filename in glob.glob("checkpoints/tf_clf*"):
@@ -98,7 +101,10 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         print("saving new checkpoint.")
         torch.save(self.clf.state_dict(), os.path.join(dir_checkpoints, "tf_clf.ptx"))
 
-    def _checkpoint_restore(self):
+    def _checkpoint_restore(self) -> None:
+        """
+        Restore weights and biases from checkpoint.
+        """
         print("restore from checkpoint.")
         cp = glob.glob("checkpoints/tf_clf*")
         self.clf.load_state_dict(torch.load(cp[0]))
@@ -192,9 +198,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         self.clf = self.module(**self.module_params)
 
-        # enable anomaly detection
-        # torch.autograd.set_detect_anomaly(True)
-
         # use multiple gpus, if available
         self.clf = nn.DataParallel(self.clf).to(self.dl_params["device"])
 
@@ -265,7 +268,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                 self._stats_step.append({"train_loss": train_loss.item(), "step": step})
 
-                # print(f"[{epoch}-{train_batch}] train loss: {train_loss}")
                 train_batch += 1
                 step += 1
 
@@ -329,17 +331,11 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         # restore best from checkpoint
         self._checkpoint_restore()
-        # self.clf.cpu()
 
-        # print(f"mem before cleanup: {torch.cuda.memory_allocated()/1024**2}")
-        # print(f"mem before reserved: {torch.cuda.memory_reserved()/1024**2}")
         # https://discuss.huggingface.co/t/clear-gpu-memory-of-transformers-pipeline/18310/2
         del train_loader, val_loader
         gc.collect()
         torch.cuda.empty_cache()
-
-        # print(f"mem after cleanup: {torch.cuda.memory_allocated()/1024**2}")
-        # print(f"mem after reserved: {torch.cuda.memory_reserved()/1024**2}")
 
         # is fitted flag
         self.is_fitted_ = True
