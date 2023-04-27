@@ -30,12 +30,14 @@ from otc.models.objective import (
     ClassicalObjective,
     FTTransformerObjective,
     GradientBoostingObjective,
+    TabTransformerObjective,
     set_seed,
 )
 
 OBJECTIVES = {
     "gbm": GradientBoostingObjective,
     "classical": ClassicalObjective,
+    "tabtransformer": TabTransformerObjective,
     "fttransformer": FTTransformerObjective,
 }
 
@@ -58,7 +60,7 @@ FEATURE_SETS = {
 @click.option(
     "--model",
     type=click.Choice(
-        ["classical", "gbm", "fttransformer"],
+        ["classical", "gbm", "tabtransformer", "fttransformer"],
         case_sensitive=False,
     ),
     required=True,
@@ -75,6 +77,12 @@ FEATURE_SETS = {
 @click.option(
     "--pretrain/--no-pretrain", default=False, help="Flag to activate pretraining."
 )
+@click.option(
+    "--sample",
+    type=click.FloatRange(0, 1),
+    default=1,
+    help="Sampling factor applied to train and validation set.",
+)
 def main(
     trials: int,
     seed: int,
@@ -83,6 +91,7 @@ def main(
     id: str,
     dataset: str,
     pretrain: bool,
+    sample: float,
 ) -> None:
     """
     Start study.
@@ -95,6 +104,7 @@ def main(
         id (str): id of study.
         dataset (str): name of data set.
         pretrain (bool): whether to pretrain model.
+        sample (float): sampling factor.
     """
     logger = logging.getLogger(__name__)
     warnings.filterwarnings("ignore", category=ExperimentalWarning)
@@ -160,6 +170,9 @@ def main(
         x_train = pd.read_parquet(
             Path(artifact_dir_labelled, "train_set.parquet"), columns=columns
         )
+        if sample < 1.0:
+            x_train = x_train.sample(frac=sample, random_state=set_seed(seed))
+
         y_train = x_train["buy_sell"]
         x_train.drop(columns=["buy_sell"], inplace=True)
 
@@ -167,6 +180,10 @@ def main(
     x_val = pd.read_parquet(
         Path(artifact_dir_labelled, "val_set.parquet"), columns=columns
     )
+
+    if sample < 1.0:
+        x_val = x_val.sample(frac=sample, random_state=set_seed(seed))
+
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
@@ -218,7 +235,7 @@ def main(
     study.optimize(
         objective,
         n_trials=trials,
-        # timeout=60 * 60 * 24,  # 24 hours
+        # timeout=60 * 60 * 12,  # 12 hours
         gc_after_trial=True,
         callbacks=[wand_cb, objective.objective_callback],
         show_progress_bar=True,
@@ -237,6 +254,7 @@ def main(
             "dataset": dataset,
             "seed": seed,
             "pretrain": pretrain,
+            "sample": sample,
         }
     )
 

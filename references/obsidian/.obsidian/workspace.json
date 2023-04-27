@@ -13,7 +13,38 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "❓Questions.md",
+                "file": "📖chapters/🍪Selection Of Supervised Approaches.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "24b84ce32bcc3015",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Open Points in my head.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "2b8022d1c8db2031",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "693cc83a728f5b1b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📑notes/🍪Selection of semisupervised Approaches notes.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "❓Questions.md",
+                "file": "Open Points in my head.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "❓Questions.md"
+                "file": "Open Points in my head.md"
               }
             }
           },
@@ -136,43 +167,42 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "916f416e25d3f84d",
+  "active": "24b84ce32bcc3015",
   "lastOpenFiles": [
+    "📖chapters/☠️Problem Framing.md",
+    "📑notes/🤖Pretraining notes.md",
+    "🖼️Media/cross-entropy-loss.png",
+    "🖼️Media/architecture-rtd.png",
+    "🖼️Media/Pasted image 20230427161504.png",
+    "🖼️Media/Pasted image 20230427155407.png",
+    "📥Inbox/@zhaiDirectBoostingApproach.md",
+    "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
+    "📥Inbox/@erhanWhyDoesUnsupervised.md",
+    "📥Inbox/@dalche-bucSemisupervisedMarginBoost2001.md",
+    "📥Inbox/@chenSimpleFrameworkContrastive2020.md",
+    "📥Inbox/@bennettExploitingUnlabeledData2002.md",
+    "📑notes/☠️Problem Framing notes.md",
+    "Open Points in my head.md",
+    "📖chapters/💡Training of models (supervised).md",
+    "🖼️Media/dotproduct-pos-embedding.png",
+    "🖼️Media/emo-algo.png",
+    "🖼️Media/Pasted image 20230326101313.png",
+    "🖼️Media/Pasted image 20230405170411.png",
+    "🖼️Media/Pasted image 20230405170430.png",
+    "🖼️Media/Pasted image 20230405171902.png",
+    "📖chapters/🐈CatBoost.md",
+    "📑notes/🍪Selection of supervised approaches notes.md",
+    "📖chapters/💡Hyperparameter tuning.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📑notes/🍪Selection of semisupervised Approaches notes.md",
+    "❓Questions.md",
     "📖chapters/🤖TabTransformer.md",
     "📑notes/🤖TabTransformer notes.md",
-    "🖼️Media/traversal-of-axis.png",
-    "🖼️Media/asymmetric-spread.png",
-    "🖼️Media/pre-data-loader.png",
-    "🖼️Media/presentation-of-effective-spread.png",
-    "🖼️Media/pseudocode-selftraining.png",
-    "🖼️Media/pseudocode-of-algorithms.png",
-    "🖼️Media/saint-architecture.png",
-    "🖼️Media/rules-across-underlyings.png",
-    "🖼️Media/SCARF.png",
-    "🖼️Media/self-training-algorithm.png",
     "📑notes/⭕Self-Training classifier notes.md",
     "📖chapters/🤖Pre-training of Transformers.md",
     "📖chapters/🍪Selection Of Semisupervised Approaches.md",
     "📖chapters/💡Tuning of models (semi-supervised).md",
-    "📑notes/☠️Problem Framing notes.md",
-    "📖chapters/☠️Problem Framing.md",
     "📖chapters/🎨Inspiration.md",
-    "📑notes/🤖Pretraining notes.md",
-    "📥Inbox/@chenSimpleFrameworkContrastive2020.md",
-    "📑notes/🍪Selection of semisupervised Approaches notes.md",
-    "📑notes/🐈Gradient Boosting notes.md",
-    "📑notes/🔢Trade Initiator notes.md",
-    "Ammo Trade Initiator.md",
-    "1680261360742.jpg.md",
-    "📥Inbox/@bennettExploitingUnlabeledData2002.md",
-    "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
-    "📑notes/🔢Hybrid rules notes.md",
-    "📖chapters/🔢Hybrid rules.md",
-    "📖chapters/🔢Stacked rules.md",
-    "📖chapters/🐈Gradient Boosting.md",
-    "📥Inbox/@friedmanGreedyFunctionApproximation2001.md",
-    "📖chapters/🔢Trade initiator.md",
-    "📖chapters/🪄Data Preprocessing.md"
+    "📑notes/🐈Gradient Boosting notes.md"
   ]
 }
