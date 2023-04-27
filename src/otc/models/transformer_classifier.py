@@ -87,7 +87,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
     def _checkpoint_write(self):
         # remove old files
         print("deleting old checkpoints.")
-        for filename in glob.glob(f"checkpoints/tf_clf*"):
+        for filename in glob.glob("checkpoints/tf_clf*"):
             os.remove(filename)
 
         # create_dir
@@ -100,7 +100,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
     def _checkpoint_restore(self):
         print("restore from checkpoint.")
-        cp = glob.glob(f"checkpoints/tf_clf*")
+        cp = glob.glob("checkpoints/tf_clf*")
         self.clf.load_state_dict(torch.load(cp[0]))
 
     def array_to_dataloader(
@@ -305,15 +305,18 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                     "train_loss": train_loss_all,
                     "val_loss": val_loss_all,
                     "val_accuracy": val_accuracy,
+                    "step": step,
                     "epoch": epoch,
                 }
             )
 
-            self.callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
-
             if best_accuracy < val_accuracy:
                 self._checkpoint_write()
                 best_accuracy = val_accuracy
+
+            self.callbacks.on_epoch_end(
+                epoch, self.epochs, train_loss_all, val_loss_all
+            )
 
             # return early if val accuracy doesn't improve. Minus to minimize.
             early_stopping(-val_accuracy)

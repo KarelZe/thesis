@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/💡Training of models (supervised).md",
+                "file": "Open Points in my head.md",
                 "mode": "source",
                 "source": false
               }
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Training of models (supervised).md",
+                "file": "Open Points in my head.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Training of models (supervised).md"
+                "file": "Open Points in my head.md"
               }
             }
           },
@@ -169,41 +169,40 @@
   },
   "active": "24b84ce32bcc3015",
   "lastOpenFiles": [
+    "📖chapters/☠️Problem Framing.md",
+    "📑notes/🤖Pretraining notes.md",
+    "🖼️Media/cross-entropy-loss.png",
+    "🖼️Media/architecture-rtd.png",
     "🖼️Media/Pasted image 20230427161504.png",
-    "Open Points in my head.md",
-    "📖chapters/💡Hyperparameter tuning.md",
-    "📖chapters/💡Training of models (supervised).md",
     "🖼️Media/Pasted image 20230427155407.png",
+    "📥Inbox/@zhaiDirectBoostingApproach.md",
+    "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
+    "📥Inbox/@erhanWhyDoesUnsupervised.md",
+    "📥Inbox/@dalche-bucSemisupervisedMarginBoost2001.md",
+    "📥Inbox/@chenSimpleFrameworkContrastive2020.md",
+    "📥Inbox/@bennettExploitingUnlabeledData2002.md",
+    "📑notes/☠️Problem Framing notes.md",
+    "Open Points in my head.md",
+    "📖chapters/💡Training of models (supervised).md",
+    "🖼️Media/dotproduct-pos-embedding.png",
+    "🖼️Media/emo-algo.png",
+    "🖼️Media/Pasted image 20230326101313.png",
+    "🖼️Media/Pasted image 20230405170411.png",
+    "🖼️Media/Pasted image 20230405170430.png",
+    "🖼️Media/Pasted image 20230405171902.png",
+    "📖chapters/🐈CatBoost.md",
+    "📑notes/🍪Selection of supervised approaches notes.md",
+    "📖chapters/💡Hyperparameter tuning.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📑notes/🍪Selection of semisupervised Approaches notes.md",
     "❓Questions.md",
     "📖chapters/🤖TabTransformer.md",
     "📑notes/🤖TabTransformer notes.md",
-    "🖼️Media/traversal-of-axis.png",
-    "🖼️Media/asymmetric-spread.png",
-    "🖼️Media/pre-data-loader.png",
-    "🖼️Media/presentation-of-effective-spread.png",
-    "🖼️Media/pseudocode-selftraining.png",
-    "🖼️Media/pseudocode-of-algorithms.png",
-    "🖼️Media/saint-architecture.png",
-    "🖼️Media/rules-across-underlyings.png",
-    "🖼️Media/SCARF.png",
     "📑notes/⭕Self-Training classifier notes.md",
     "📖chapters/🤖Pre-training of Transformers.md",
     "📖chapters/🍪Selection Of Semisupervised Approaches.md",
     "📖chapters/💡Tuning of models (semi-supervised).md",
-    "📑notes/☠️Problem Framing notes.md",
-    "📖chapters/☠️Problem Framing.md",
     "📖chapters/🎨Inspiration.md",
-    "📑notes/🤖Pretraining notes.md",
-    "📥Inbox/@chenSimpleFrameworkContrastive2020.md",
-    "📑notes/🐈Gradient Boosting notes.md",
-    "📑notes/🔢Trade Initiator notes.md",
-    "Ammo Trade Initiator.md",
-    "1680261360742.jpg.md",
-    "📥Inbox/@bennettExploitingUnlabeledData2002.md",
-    "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
-    "📑notes/🔢Hybrid rules notes.md",
-    "📖chapters/🔢Hybrid rules.md"
+    "📑notes/🐈Gradient Boosting notes.md"
   ]
 }
