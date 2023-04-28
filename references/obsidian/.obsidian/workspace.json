@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/💡Training of models (supervised).md",
+                "file": "📖chapters/🏅Results of supervised.md",
                 "mode": "source",
                 "source": false
               }
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Training of models (supervised).md",
+                "file": "📖chapters/🏅Results of supervised.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Training of models (supervised).md"
+                "file": "📖chapters/🏅Results of supervised.md"
               }
             }
           },
@@ -153,8 +153,10 @@
   },
   "active": "81beebcc5801c2ca",
   "lastOpenFiles": [
-    "🍬Implementation/😺CatBoost.md",
+    "🖼️Media/FT-Transformer.png",
+    "📖chapters/🏅Results.md",
     "📖chapters/💡Training of models (supervised).md",
+    "🍬Implementation/😺CatBoost.md",
     "🖼️Media/Pasted image 20230428134902.png",
     "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/💡Hyperparameter tuning.md",
@@ -186,8 +188,6 @@
     "📖chapters/🧭Feature Importance Measure.md",
     "📑notes/🍪Selection of supervised approaches notes.md",
     "📖chapters/🔢Trade initiator.md",
-    "📖chapters/⭕Self-Training classifier.md",
-    "📑notes/🧭Evaluation metric notes.md",
     "🖼️Media/presentation-of-effective-spread.png"
   ]
 }
