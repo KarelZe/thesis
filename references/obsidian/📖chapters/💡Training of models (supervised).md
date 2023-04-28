@@ -1,3 +1,139 @@
+This chapter documents the basic training setup, and sets up a baseline before tuning
+
+## Gradient-Boosting
+
+- early stopping
+- exponential weighting
+- quantization
+- weight decay
+- 
+
+Visualize model parameters:
+![[viz-model-params.png]]
+(from https://arxiv.org/pdf/2005.14165.pdf)
+
+
+deas to try out in CatBoost
+- look into search space, where did I choose the search space poorly
+- use custom weighting factor
+- make relatative distance to quote categorical / cut-off at threshold
+- Try out `lossguided` growing strategy. Add it to objective.
+- Try out `XGBoost` or `lightgbm`
+- Think about indicator variables
+- Think about interaction features, which e. g.,which features could be summed / multiplied etc.?
+- Perform an error analysis. For which classes does CatBoost do so poorly? See some ideas here. https://elitedatascience.com/feature-engineering-best-practices
+- Check time consistency (found idea here: https://www.kaggle.com/code/cdeotte/xgb-fraud-with-magic-0-9600/notebook)
+> We added 28 new feature above. We have already removed 219 V Columns from correlation analysis done [here](https://www.kaggle.com/cdeotte/eda-for-columns-v-and-id). So we currently have 242 features now. We will now check each of our 242 for "time consistency". We will build 242 models. Each model will be trained on the first month of the training data and will only use one feature. We will then predict the last month of the training data. We want both training AUC and validation AUC to be above `AUC = 0.5`. It turns out that 19 features fail this test so we will remove them. Additionally we will remove 7 D columns that are mostly NAN. More techniques for feature selection are listed [here](https://www.kaggle.com/c/ieee-fraud-detection/discussion/111308)
+> 
+
+- Could try featuretools. Not sure, if it actually has some advantage. The thing is features are not to fancy here. (Check out this kernel https://www.kaggle.com/code/vbmokin/titanic-featuretools-automatic-fe-fs/notebook?scriptVersionId=43519589)
+
+- Go for even greater ensembles, if stopped out early e. g., 20000. See kaggle notebooks e. g.,:
+```python
+# https://www.kaggle.com/code/kyakovlev/ieee-fe-for-local-test/notebook
+lgb_params = {
+                    'objective':'binary',
+                    'boosting_type':'gbdt',
+                    'metric':'auc',
+                    'n_jobs':-1,
+                    'learning_rate':0.01,
+                    'num_leaves': 2**8,
+                    'max_depth':-1,
+                    'tree_learner':'serial',
+                    'colsample_bytree': 0.7,
+                    'subsample_freq':1,
+                    'subsample':0.7,
+                    'n_estimators':80000,
+                    'max_bin':255,
+                    'verbose':-1,
+                    'seed': SEED,
+                    'early_stopping_rounds':100, 
+                }
+```
+- add statistics /  group features like min, max, std dev etc.
+```python
+# found at: https://www.kaggle.com/competitions/ieee-fraud-detection/discussion/108575
+temp = df.groupby('card1')['TransactionAmt'].agg(['mean'])   
+    .rename({'mean':'TransactionAmt_card1_mean'},axis=1)
+df = pd.merge(df,temp,on='card1',how='left')```
+```
+- add frequency encoding
+```python
+# found at: https://www.kaggle.com/competitions/ieee-fraud-detection/discussion/108575
+temp = df['card1'].value_counts().to_dict()
+df['card1_counts'] = df['card1'].map(temp)
+```
+- Fill missing values with something obvious e. g., `train_df.fillna(-999,inplace=True)`
+
+```python
+# found at: https://www.kaggle.com/code/kooaslansefat/tips-tricks-catboost-version
+# create new features from newly created categorical variables
+age_group_feat_eng = True
+bmi_group_feat_eng = True
+
+if age_group_feat_eng:
+    train_X, test_X = _group_feature_eng(combined_df, n_train, 'age_group', num_feats)
+
+if bmi_group_feat_eng:
+    train_X, test_X = _group_feature_eng(combined_df, n_train, 'bmi_group', num_feats)
+
+def _group_feature_eng(combined_df, n_train, group_var, num_feats):
+    
+    """
+    combined_df: the combined train & test datasets.
+    n_train: number of training observations
+    group_var: the variable we'd like to group by
+    num_feat: numerical features
+    
+    This function loops through all numerical features, 
+    group by the variable and compute new statistics of the numerical features.
+    """
+    
+    grouped = combined_df.groupby(group_var)
+
+    for nf in num_feats:
+
+        combined_df[group_var + '_' + nf + '_max'] = grouped[nf].transform('max')
+        combined_df[group_var + '_' + nf + '_min'] = grouped[nf].transform('min')
+        combined_df[group_var + '_' + nf + '_mean'] = grouped[nf].transform('mean')
+        combined_df[group_var + '_' + nf + '_skew'] = grouped[nf].transform('skew')
+        combined_df[group_var + '_' + nf + '_std'] = grouped[nf].transform('std')
+
+    train_X = combined_df.iloc[:n_train]
+    test_X = combined_df.iloc[n_train:]
+    
+    return train_X, test_X
+```
+
+Study feature interactions
+
+
+```python
+feature_interaction = [[X.columns[interaction[0]], X.columns[interaction[1]], interaction[2]] for i,interaction in interactions.iterrows()]
+feature_interaction_df = pd.DataFrame(feature_interaction, columns=['feature1', 'feature2', 'interaction_strength'])
+feature_interaction_df.head(10)
+```
+
+Restructure TOC conforming to CRISPDM:
+
+```
+1.  Project Scoping / Data Collection
+2.  Exploratory Analysis
+3.  Data Cleaning
+4.  **Feature Engineering**
+5.  Model Training (including cross-validation to tune hyper-parameters)
+6.  Project Delivery / Insights
+```
+
+
+
+
+As found in [KMH+20, MKAT18], larger models can typically use a larger batch size, but require a smaller learning rate. We measure the gradient noise scale during training and use it to guide our choice of batch size [MKAT18]. Table 2.1 shows the parameter settings we used. To train the larger models without running out of memory, we use a mixture of model parallelism within each matrix multiply and model parallelism across the layers of the network. All models were trained on V100 GPU’s on part of a high-bandwidth cluster provided by Microsoft. Details of the training process and hyperparameter settings are described in Appendix B.
+
+
+![[Pasted image 20230428134902.png]]
+
+
 Our search space is reported in Table-X, which we laid out based on the recommendations in ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]]20) and ([[@gorishniyRevisitingDeepLearning2021]]18) and ([[@rubachevRevisitingPretrainingObjectives2022]]., 2022, p. 4) with minor deviations. For gradient-boosting we raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowleding the observations ([[@friedmanGreedyFunctionApproximation2001]]14), that the learning rate $\lambda$ the learning rate and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive (...) steps.
 
 We grow symmetric trees, which acts as a regularizer.
@@ -9,6 +145,7 @@ We experimented with label smoothing,
 
 Visualize the decision of 
 
+To train all versions of GPT-3, we use Adam with β1 = 0.9, β2 = 0.95, and  = 10−8 , we clip the global norm of the gradient at 1.0, and we use cosine decay for learning rate down to 10% of its value, over 260 billion tokens (after 260 billion tokens, training continues at 10% of the original learning rate). There is a linear LR warmup over the first 375 million tokens. We also gradually increase the batch size linearly from a small value (32k tokens) to the full value over the first 4-12 billion tokens of training, depending on the model size. Data are sampled without replacement during training (until an epoch boundary is reached) to minimize overfitting. All models use weight decay of 0.1 to provide a small amount of regularization [LH17]. During training we always train on sequences of the full nctx = 2048 token context window, packing multiple documents into a single sequence when documents are shorter than 2048, in order to increase computational efficiency. Sequences with multiple documents are not masked in any special way but instead documents within a sequence are delimited with a special end of text token, giving the language model the information necessary to infer that context separated by the end of text token is unrelated. This allows for efficient training without need for any special sequence-specific masking.
 
 Visualize effect 
 
@@ -183,10 +320,6 @@ We aim to be transparent about the training setup
 ![[visualization_of_bleu_over_time.png]]
 
 ![[bleu_no_of_gpus.png]]
-
-Visualize model parameters:
-![[viz-model-params.png]]
-(from https://arxiv.org/pdf/2005.14165.pdf)
 
 
 

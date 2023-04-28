@@ -797,13 +797,14 @@ Price and size-related features exhibit positive skewness, as brought up in (...
 Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimising for the Gaussian likelihood on the training set. As shown in \cref{eq:box-cox-test}, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $\mathbf{X}\left[:,j\right]$, we follow common practice by adding a constant if needed. Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the Box-Cox test, we apply a common $\widehat{\mathbf{X}}\left[:,j\right]=\log(\mathbf{X}\left[:,j\right])$ transform on all price and size-related features with the effect of compressing large values and expanding smaller ones.\footnote{More specifically, $\mathtt{log1p}$ is used to improve numerical stability in floating point calculations. Results are not affected.}
 
 Note that, the use of the Box-Cox transform is different from its originated purpose. In feature engineering, the transformation is used in an unsupervised fashion, as the transformation's outcome is not directly used in the model. Also, the transform is applied to the features, rather than the model's residuals \autocite[122]{kuhnFeatureEngineeringSelection2020}.
-
 To further improve the convergence of our Transformer-based architectures, we normalize all numerical features using $z$-score normalization to obtain zero mean and unit variance.
 % given by:
 % \begin{equation}
 %     \widehat{\mathbf{X}}=\frac{\mathbf{X}-\mathbf{\mu}}{\mathbf{\sigma}}
 % \end{equation}
 % with mean $\mathbf{\mu} =\frac{1}{N} \sum_{i=1}^N\left(\mathbf{X}\left[i,:\right]\right)$ and standard deviation $\mathbf{\sigma}=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(\mathbf{X}\left[i,:\right]-\mathbf{\mu}\right)^2}$. 
+In experimental tests, features derived as ratios, such as the proximity to quotes, pose a particular challenge for training the FT-Transformer. We observe extreme outliers to dominate the gradient update, leading to unstable gradients and poor convergence. We resolve the issue through clipping to a range $[-3,3]$.
+
 Intuitionally, the zero means prevents bias in the direction of the weight update and scaling to unit variance balances the rate at which parameters are updated \autocite[][8]{lecunEfficientBackProp2012}. Normalization of raw inputs is complementary to batch normalization, which is used in deeper layers of the Transformer stack and single batches. Following good standards, all statistics are estimated on the imputed training set only. The unlabelled \gls{ISE} training set and the \gls{CBOE} test set share the statistics of the \gls{ISE} labelled training set.
 
 Normalization and log transformations have the advantage of preserving the data distribution, which is a desirable property when comparing the feature importances from machine learning models against their classical counterparts in \cref{sec:feature-importance}.
@@ -837,7 +838,7 @@ Overall, we use \gls{ISE} data from 2 May 2005 to 24 October 2013 to train and d
 
 Models are pre-trained on unlabelled samples from the last year of the training period. Given the significantly larger number of unlabelled customer trades, the pre-training period is reduced to one year to facilitate training on the available computing resources. Within the period, we filter out trades for which true label can be inferred, to avoid overlaps with the supervised training set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously.
 
-We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visualized in \cref{fig:train-test-split}. The start date ensures that leakage from the \gls{ISE} set is minimised. \footnote{The datasets contain features, such as the \gls{NBBO}, that are identical for both sets, assuming trades were executed at both exchanges simultaneously. Utilizing the full \gls{CBOE} sample could result in exaggerated performance estimates the corresponding \gls{ISE} trade is used in training.}
+We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visualized in \cref{fig:train-test-split}. Our evaluation approach is the most rigorous as it disallows any form of adaptation of the models, thereby ensuring a rigorous evaluation. Unlike transfer learning techniques such as parameter or model transfer, which expectedly improve model performance, we choose to forgo these techniques and demonstrate the effectiveness of our models without any transfer of knowledge. The start date ensures that leakage from the \gls{ISE} set is minimised. \footnote{The datasets contain features, such as the \gls{NBBO}, that are identical for both sets, assuming trades were executed at both exchanges simultaneously. Utilizing the full \gls{CBOE} sample could result in exaggerated performance estimates the corresponding \gls{ISE} trade is used in training.}
 
 Our train-test-split assumes that all subsets are drawn from the same distribution, so fitting a classifier on the training set and optimising for the validation set provides good estimates for the test set. To validate this assumption, we use adversarial validation. Specifically, we re-label all training samples with $y=-1$ and all trades of the validation set with $y=1$, train a classifier on a random subset of the composed dataset and predict class conformance. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which ranges between $\left[-1, 1\right]$ and is insensitive to class imbalances.\footnote{Classes are imbalanced, due to the training set being three times the size of the validation set.} Assuming train and validation samples are sampled from the same distribution, the performance estimate is near a random guess, or $\operatorname{MCC} = 0$, Depending on the feature sets, the \gls{MCC} ranges between \SI{0.00}{\percent} and \SI{99.999}{\percent} suggesting training and validation sets are approximately similar. The next section discusses techniques used in training the classifiers.
 
@@ -845,6 +846,10 @@ Our train-test-split assumes that all subsets are drawn from the same distributi
 
 \subsubsection{Training of Supervised
     Models (4~p)}\label{sec:training-of-supervised-models}
+
+From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we implement early stopping and halt training after $15$ consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
+
+For gradient boosting we raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive $100$ steps.
 
 \subsubsection{Training of Semi-Supervised
     Models (4~p)}\label{sec:training-of-semi-supervised-models}
@@ -866,11 +871,11 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
 
 \begin{table}[H]
     \centering
-    \caption{Hyperparameter Space of Gradient Boosting}
+    \caption{Hyperparameter Search Space of Gradient Boosting}
     \label{tab:hyperparameter-space}
     \begin{tabular}{llSSS}
         \toprule
-        Parameter                    & Distribution                              & {\gls{GBM} 1}           & {\gls{GBM} 2}               & {\gls{GBM} 3}            \\ \midrule
+        Parameter                    & Distribution                              & {FS 1}           & {FS 2}               & {FS 3}            \\ \midrule
         Depth                        & $\operatorname{UniformInt}[1,12]$         & 9                       & 10                          & 8                        \\
         Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$ & 0.061147194180849546    & 0.12484853560495288         & 0.12484853839455994      \\
         $\ell_2$ Leaf Regularization & $\operatorname{UniformInt}[2, 30]$        & 16                      & 29                          & 17                       \\
@@ -880,9 +885,9 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
     \end{tabular}
 \end{table}
 
-For gradient boosting we raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive $100$ steps.
+The search space of the FT-Transformer is given by:
 
-The hyperparameter search for the FT-Transformer is identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)). From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we implement early stopping and halt training after $15$ consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
+The hyperparameter search for the FT-Transformer is identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)). 
 
 \textbf{Solutions For Gradient Boosting}
 

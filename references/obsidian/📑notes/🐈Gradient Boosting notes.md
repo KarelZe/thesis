@@ -67,6 +67,42 @@ $$
 F_{\text {logistisch }}:=\operatorname{logit}^{-1}(s)=\frac{\exp (s)}{1+\exp (s)}=\frac{1}{1+\exp (-s)} .
 $$
 
+## Derivative
+To derive the second line from the first line, we need to use the fact that the logistic loss function, $l(y^*, p(x))$, is defined as follows:
+
+$l(y^_, p(x)) = y^_ \log(p(x)) + (1 - y^*) \log(1 - p(x))$
+
+where $y^*$ is the true label (either 0 or 1), and $p(x)$ is the predicted probability of the positive class.
+
+Now, let's substitute the logistic function, $p(x) = \frac{1}{1 + e^{-F(x)}}$, where $F(x)$ is some function of $x$, into the definition of the logistic loss function:
+
+$l(y^_, p(x)) = y^_ \log\left(\frac{1}{1 + e^{-F(x)}}\right) + (1 - y^*) \log\left(1 - \frac{1}{1 + e^{-F(x)}}\right)$
+
+Simplifying the second term using algebra, we get:
+
+$l(y^_, p(x)) = y^_ \log\left(\frac{1}{1 + e^{-F(x)}}\right) + (1 - y^*) \log\left(\frac{e^{-F(x)}}{1 + e^{-F(x)}}\right)$
+
+$l(y^_, p(x)) = y^_ \log\left(\frac{1}{1 + e^{-F(x)}}\right) - (1 - y^*) \log\left(1 + e^{-F(x)}\right)$
+
+Now, we can simplify the first term using the property that $\log\left(\frac{1}{a}\right) = -\log(a)$:
+
+$l(y^_, p(x)) = -y^_ \log\left(1 + e^{-F(x)}\right) - (1 - y^_) \log\left(1 + e^{-F(x)}\right) + (1 - y^_)\log(e^{-F(x)})$
+
+Simplifying the third term using algebra, we get:
+
+$l(y^*, p(x)) = -\log\left(1 + e^{-F(x)}\right) - (1 - y^*)F(x)$
+
+Now, since $y^* \in {0, 1}$, we can write $2y^_-1$ as a way to represent $1$ when $y^_=1$ and $-1$ when $y^*=0$. Using this notation, we can further simplify the expression as follows:
+
+$l(y^_, p(x)) = -\log\left(1 + e^{-(2y^_-1)F(x)}\right)$
+
+Finally, we can substitute $F(x)$ with $F(x) = \frac{1}{2}\log\left(\frac{p(x)}{1-p(x)}\right)$, which is the formula for the log-odds or logit function, to get:
+
+$l(y^_, p(x)) = -\log\left(1 + e^{-(2y^_-1)F(x)}\right) = -\log\left(1 + e^{-2y^*F(x)}\right)$
+
+This is the second line that we were asked to derive.
+
+
 ## Literature
 
 **Data set:** Formally, we aim to model a target variable $Y \in \mathbb{Y}$ given some feature vector $X \in \mathbb{X}$ based on training data $\left\{\left(x_i, y_i\right)\right\}_{i=1}^n$ that has been sampled according to the joint distribution of $X$ and $Y$. (Add to section [[🍪Selection Of Supervised Approaches]]) We focus on models in the form of a single-valued scoring function $f: \mathbb{X} \rightarrow \mathbb{R}$. For instance, in regression problems $(\mathbb{Y}=\mathbb{R}), f$ typically models the conditional expectation of the target, i.e., $f(x) \approx E(Y \mid X=x)$, whereas in binary classification problems $(\mathbb{Y}=\{-1,1\}), f$ typically models the conditional $\log$ odds, i.e., $f(x) \approx \ln P(Y=1 \mid X=x) / P(Y=-1 \mid X=x)$ and the conditional probabilities $p(y \mid x)$ are recovered by the sigmoid transform

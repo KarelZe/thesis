@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md",
+                "file": "📖chapters/💡Training of models (supervised).md",
                 "mode": "source",
                 "source": false
               }
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md",
+                "file": "📖chapters/💡Training of models (supervised).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md"
+                "file": "📖chapters/💡Training of models (supervised).md"
               }
             }
           },
@@ -153,6 +153,11 @@
   },
   "active": "81beebcc5801c2ca",
   "lastOpenFiles": [
+    "🍬Implementation/😺CatBoost.md",
+    "📖chapters/💡Training of models (supervised).md",
+    "🖼️Media/Pasted image 20230428134902.png",
+    "📑notes/🐈Gradient Boosting notes.md",
+    "📖chapters/💡Hyperparameter tuning.md",
     "🖼️Media/cross-entropy-loss.png",
     "🖼️Media/architecture-rtd.png",
     "🖼️Media/Pasted image 20230427161504.png",
@@ -168,9 +173,7 @@
     "📑notes/☠️Problem Framing notes.md",
     "Open Points in my head.md",
     "🖼️Media/search-space.png",
-    "📖chapters/💡Training of models (supervised).md",
     "📖chapters/🧭Random Feature Permutation.md",
-    "📖chapters/💡Hyperparameter tuning.md",
     "🖼️Media/Pasted image 20230428111917.png",
     "📖chapters/🤖Training of the Transformer.md",
     "🖼️Media/Pasted image 20230428110412.png",
@@ -185,9 +188,6 @@
     "📖chapters/🔢Trade initiator.md",
     "📖chapters/⭕Self-Training classifier.md",
     "📑notes/🧭Evaluation metric notes.md",
-    "📑notes/⭕Self-Training classifier notes.md",
-    "🖼️Media/presentation-of-effective-spread.png",
-    "🖼️Media/performance-degradations.png",
-    "🖼️Media/Pasted image 20230407182457.png"
+    "🖼️Media/presentation-of-effective-spread.png"
   ]
 }
