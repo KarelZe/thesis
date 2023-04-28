@@ -27,13 +27,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🧭Random Feature Permutation notes.md",
+                "file": "📖chapters/💡Training of models (supervised).md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -91,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md",
+                "file": "📖chapters/💡Training of models (supervised).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -119,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md"
+                "file": "📖chapters/💡Training of models (supervised).md"
               }
             }
           },
@@ -150,10 +151,11 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "65039196d3829d86",
+  "active": "81beebcc5801c2ca",
   "lastOpenFiles": [
-    "📑notes/🧭Random Feature Permutation notes.md",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📖chapters/🧭Random Feature Permutation.md",
+    "📑notes/🧭Random Feature Permutation notes.md",
     "📥Inbox/@fisherAllModelsAre.md",
     "📖chapters/🤖Pre-training of Transformers.md",
     "🖼️Media/Pasted image 20230415084057.png",
