@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/💡Training of models (supervised).md",
+                "file": "📖chapters/💡Hyperparameter tuning.md",
                 "mode": "source",
                 "source": false
               }
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Training of models (supervised).md",
+                "file": "📖chapters/💡Hyperparameter tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Training of models (supervised).md"
+                "file": "📖chapters/💡Hyperparameter tuning.md"
               }
             }
           },
@@ -153,8 +153,14 @@
   },
   "active": "81beebcc5801c2ca",
   "lastOpenFiles": [
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "🖼️Media/search-space.png",
+    "📖chapters/💡Training of models (supervised).md",
     "📖chapters/🧭Random Feature Permutation.md",
+    "📖chapters/💡Hyperparameter tuning.md",
+    "🖼️Media/Pasted image 20230428111917.png",
+    "📖chapters/🤖Training of the Transformer.md",
+    "🖼️Media/Pasted image 20230428110412.png",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📑notes/🧭Random Feature Permutation notes.md",
     "📥Inbox/@fisherAllModelsAre.md",
     "📖chapters/🤖Pre-training of Transformers.md",
@@ -176,17 +182,12 @@
     "📑notes/🍕Application study notes.md",
     "📥Inbox/@sarkarMarketSidednessInsights2023.md",
     "📥Inbox/@kavajeczPackagingLiquidityBlind2005.md",
-    "📥Inbox/@chenTrueModelTrue2020.md",
-    "📥Inbox/@barredoarrietaExplainableArtificialIntelligence2020.md",
-    "📥Inbox/@aasExplainingIndividualPredictions2021.md",
     "🖼️Media/presentation-of-effective-spread.png",
     "🖼️Media/performance-degradations.png",
     "🖼️Media/Pasted image 20230407182457.png",
     "🖼️Media/Pasted image 20230405172011.png",
     "🖼️Media/Pasted image 20230405171940.png",
     "🖼️Media/Pasted image 20230405171919.png",
-    "🖼️Media/Pasted image 20230405171902.png",
-    "🖼️Media/Pasted image 20230405170430.png",
-    "🖼️Media/Pasted image 20230405170411.png"
+    "🖼️Media/Pasted image 20230405171902.png"
   ]
 }
