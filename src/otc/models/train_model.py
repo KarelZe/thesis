@@ -30,14 +30,12 @@ from otc.models.objective import (
     ClassicalObjective,
     FTTransformerObjective,
     GradientBoostingObjective,
-    TabTransformerObjective,
     set_seed,
 )
 
 OBJECTIVES = {
     "gbm": GradientBoostingObjective,
     "classical": ClassicalObjective,
-    "tabtransformer": TabTransformerObjective,
     "fttransformer": FTTransformerObjective,
 }
 
@@ -60,7 +58,7 @@ FEATURE_SETS = {
 @click.option(
     "--model",
     type=click.Choice(
-        ["classical", "gbm", "tabtransformer", "fttransformer"],
+        ["classical", "gbm", "fttransformer"],
         case_sensitive=False,
     ),
     required=True,
@@ -111,7 +109,6 @@ def main(
 
     logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
 
-    # TODO:
     run = wandb.init(  # type: ignore
         project=settings.WANDB_PROJECT, entity=settings.WANDB_ENTITY, name=id
     )
@@ -180,7 +177,7 @@ def main(
     x_val = pd.read_parquet(
         Path(artifact_dir_labelled, "val_set.parquet"), columns=columns
     )
-
+    # sample randomly if < 1.0
     if sample < 1.0:
         x_val = x_val.sample(frac=sample, random_state=set_seed(seed))
 

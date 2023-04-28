@@ -150,7 +150,7 @@ class FTTransformerObjective(Objective):
         """
         self._cat_features = [] if not cat_features else cat_features
         self._cat_cardinalities = (
-            () if not cat_cardinalities else tuple(cat_cardinalities)
+            [] if not cat_cardinalities else cat_cardinalities
         )
         self._cont_features: list[int] = [
             x for x in x_train.columns.tolist() if x not in self._cat_features
