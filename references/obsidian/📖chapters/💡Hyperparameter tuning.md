@@ -27,6 +27,8 @@ The loss surface of the gls-gbm trained on the feature set including option feat
 **Gradient Boosting + Self-Training**
 The results for the gls-gbm in combination with self-training are similar and visualized in cref-a) c). To conserve space, we summarize the important findings.
 (...)
+- where does depth come from?
+- Why just two iterations
 
 **Classical rules**
 Akin to selecting the machine learning classifiers, we determine our classical baselines on the gls-ise validation set. This prevents overfitting the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the gls-cboe sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and gls-lr algorithm, due to their widespread adoption in literature.

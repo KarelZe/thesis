@@ -17,13 +17,41 @@ Visualize effect
 
 Classical trade signing algorithms, such as the tick test, are also impacted by missing values. In theses cases, we defer to a random classification or a subsequent rule, if rules can not be computed. Details are provided in section [[💡Training of models (supervised)]].
 
+## Gradient-Boosting
+- Refer to discussion. Gradient-boosted trees are prone to overfit
+- Employ early stopping
+- Visualize loss on training set evaluation set
+- What is the configuration
+- What can be inferred from the training / validation loss?
+- What is the loss function used in my gradient-boosting 
+- How to handle categoricals?
+
+
 
 ## Transformer
 [[🤖Training of the Transformer]]
 
+- what parameters
+- how to handle caregoricals
+- early stopping
+- gradient-checkpointing
+- adam with weight decay
+- attention dropout / feed forward drop out
+- visualize lr decay
+
+## Logistic regression
+- Think about simple baseline e. g., logistic regression
+
+
+![[Pasted image 20230427155407.png]]
+
 
 Look into grooking: https://arxiv.org/pdf/2201.02177.pdf
 ![[grocking.png]]
+
+![[Pasted image 20230427161504.png]]
+
+- Research Question 1: Which methods and models to encode long text sequences are most suited for downstream machine learning tasks?
 
 - What optimizer is chosen? Why? Could try out Adam or Adan?
 
@@ -53,6 +81,7 @@ Studies adressing high cardinality
 
 
 
+The best results of the efficient Transformer models can be obtained with the BigBird and LED models with a performance of 53.58% and 53.7% respectively. Using the Longformer encodings yields a comparably low accuracy of 48.02%. <mark style="background: #FF5582A6;">Of note is</mark>, however, that the classification model which receives the Longformer encodings fits the training data nearly perfectly. The models receiving BigBird and LED encodings on the other hand merely yield a training accuracy of 81.41% and 75.47% respectively.<mark style="background: #FFB8EBA6;"> There appears to be a clear trade-off relationship</mark> between the degree to which the models are able to fit to the training data and the results obtained on the test data. This is also evident in the performance of the baseline models. See Figure 6.2. for an illustration of the described trade-off.
 
 ## Resources
 - Do less Alchemy at NIPS: https://www.youtube.com/watch?v=Qi1Yry33TQE
