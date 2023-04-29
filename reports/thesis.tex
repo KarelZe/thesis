@@ -26,9 +26,9 @@
 % Colors
 \usepackage{xcolor} % Enables the definition of more colors.
 
-\definecolor{viz-red}{HTML}{FF2C00}
+\definecolor{viz-red}{HTML}{FF0000}
 \definecolor{viz-gray}{HTML}{D6DCE5}
-
+\definecolor{viz-white}{HTML}{FFFFFF}
 \usepackage{colorprofiles} % load colour profiles for pdf/a standard
 
 % https://tex.stackexchange.com/questions/188533/how-to-draw-squares-circles-and-triangles
@@ -38,7 +38,7 @@
 \newcommand{\mysquare}[1]{\tikz{\node[draw=#1,fill=#1,rectangle,minimum
 width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 
-\newcommand{\mycircle}[1]{\tikz{\node[draw=#1,fill=#1,circle,minimum
+\newcommand{\mycircle}[1]{\tikz{\node[draw=black,fill=#1,circle,minimum
 width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 
 \newcommand{\mytriangle}[1]{\tikz{\node[draw=#1,fill=#1,isosceles
@@ -46,7 +46,6 @@ triangle,isosceles triangle stretches,shape border rotate=90,minimum
 width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 
 \newcommand{\bestcircle}{\tikz{\node[circle,draw=darkgray, fill=white, line width=0.5pt, minimum width=0.2cm,minimum height=0.2cm, inner sep=0pt, draw opacity=.2] at (0,0){};}}
-
 % Tables and Graphs
 \usepackage{booktabs} % Improves the design of the tables
 \usepackage{longtable} % Allows tables to be longer than one page.

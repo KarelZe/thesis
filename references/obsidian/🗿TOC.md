@@ -172,7 +172,7 @@ describe if data set is actually used. Write similarily to
 ^d50f5d
 [[👨‍🍳Tain-Test-split]]
 ## Training and Tuning
-[[💡Training and tuning]]
+[[💡Training and Tuning]]
 
 ### Training of Supervised Models
 [[💡Training of models (supervised)]]

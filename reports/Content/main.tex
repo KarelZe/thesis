@@ -329,7 +329,7 @@ where $\mathbb{I}$ is the indicator function for region conformance and $\gamma_
 \begin{figure}[h]
     \centering
     \includegraphics{decision-boundary-dt.pdf}
-    \caption[Approximation of Decision Tree]{Approximation of Decision Tree.}
+    \caption[Approximation of Decision Tree]{Approximation of a Decision Tree. A single split is performed at $\approx\num{3.1327505111694336}$ using the feature. All datapoints left respecitvely right of the split point share the region and are approximated by the region's response value.}
     \label{fig:decision-boundary-dt}
 \end{figure}
 
@@ -367,7 +367,7 @@ where:
     F(\mathbf{x}) = \frac{1}{2} \log \left[\frac{\Pr(y=1\mid \mathbf{x})}{\Pr(y=-1\mid \mathbf{x})}\right]
     \label{eq:logits-gbm}
 \end{equation}
-$F(\mathbf{x})$ is the model's prediction in terms of conditional log odds. The cross-entropy loss, is a reasonable choice, as it is suitable for binary classification, convex, and twice differentiable: properties we exploit later.
+$F(\mathbf{x})$ is the model's prediction in terms of conditional log odds. The cross-entropy loss, is a reasonable choice, as it is suitable for binary classification, convex, and twice differentiable; properties we exploit later.
 
 We first intialise the model with a naïve prediction, based on the average class $\bar{y}$ from all training samples:
 
@@ -522,7 +522,7 @@ with $0<i \leq \gls{d}_{e} / 2$, the maximum sequence length $\gls{ellmax}$, whi
 \begin{figure}[ht]
     \centering
     \includegraphics{positional-encoding.pdf}
-    \caption[Positional Encoding of Transformer]{Positional encoding. The encoding is added onto the \gls{token} embeddings to add positional information. The heatmap visualizes the uniquely identifying pattern created from sine and cosine signals at increasing frequencies across the embedding dimension.}
+    \caption[Positional Encoding of Transformer]{Positional encoding. The encoding is added onto the \gls{token} embeddings to infer positional information. The heatmap visualizes the uniquely identifying pattern created from sine and cosine signals at increasing frequencies across the embedding dimension.}
     \label{fig:positional-embedding}
 \end{figure}
 
@@ -654,11 +654,11 @@ Semi-supervised methods leverage partially-labelled data by learning an algorith
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\linewidth]{decision-boundary-semi-supervised.pdf}
-    \caption[Decision Boundary of a Supervised and Semi-Supervised Classifier]{Decision Boundary of a Supervised and Semi-Supervised Classifier.}
+    \caption[Decision Boundary of a Supervised and Semi-Supervised Classifier]{Decision boundary of a supervised and semi-supervised classifier. The supervised classifier is trained entirely on labelled data. The semi-supervised classifier uses both labelled and unlabelled instances to determine the decision boundary. Predicted class probabilities of \mycircle{viz-red} are visualised as a contour. Here, the unlabelled datapoints, drawn as \mycircle{viz-white}, lead to more confident predictions and a stretched class.}
     \label{fig:supervised-semi-supervised}
 \end{figure}
 
-Applied to trade classification, with semi-supervised methods we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in an improved generalisation performance. A visualization of a decision boundary of (semi-)supervised classifier is given in \cref{fig:supervised-semi-supervised}.
+Applied to trade classification, with semi-supervised methods we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in improved generalisation performance. A visualization of a decision boundary of (semi-)supervised classifier is given in \cref{fig:supervised-semi-supervised}.
 
 The semi-supervised setting requires extending our notation from \cref{sec:problem-framing}, by distinguishing between labelled and unlabelled instances. Like before, $\mathcal{S}=\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$ denotes all labelled trades. Unlabelled datapoints are stored in separate set $\mathcal{U} = \left\{\mathbf{x}_i\right\}_{i=1}^{K}$. Our coverage of semi-supervised approaches includes self-training for gradient boosting and pre-training of Transformers, which we derive from a subsequent discussion.
 

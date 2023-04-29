@@ -9,9 +9,14 @@ While different algorithmic implementations exist for Bayesian optimization, we 
 
 ![[search-space.png]]
 
+![[hyperparameter-ft-transformer.png]]
+
+
 Depth refers to the depth of trees within the ensemble. 
 
+![[training-validation-accuracy.png]]
 
+![[training-vs-validation-accuracy.png]]
 
 
 

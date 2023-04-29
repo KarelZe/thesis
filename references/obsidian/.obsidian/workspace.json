@@ -20,21 +20,8 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "81beebcc5801c2ca",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/🏅Results of supervised.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -92,7 +79,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🏅Results of supervised.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -119,9 +105,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "📖chapters/🏅Results of supervised.md"
-              }
+              "state": {}
             }
           },
           {
@@ -151,18 +135,29 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "81beebcc5801c2ca",
+  "active": "8399eb31ec07fd72",
   "lastOpenFiles": [
+    "📖chapters/💡Tuning of models (semi-supervised).md",
+    "📖chapters/💡Training of models (supervised).md",
+    "📖chapters/💡Training and Tuning.md",
+    "📥Inbox/@shavittRegularizationLearningNetworks2018.md",
+    "📑notes/🪄Data Preprocessing notes.md",
+    "📖chapters/🧭Random Feature Permutation.md",
+    "🖼️Media/gbm-log-loss-accuracy.png",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📖chapters/💡Hyperparameter tuning.md",
+    "🖼️Media/training-validation-accuracy.png",
+    "🖼️Media/hyperparameter-ft-transformer.png",
+    "🖼️Media/training-loss-llama.png",
+    "📖chapters/🏅Results of supervised.md",
     "🖼️Media/FT-Transformer.png",
     "📖chapters/🏅Results.md",
-    "📖chapters/💡Training of models (supervised).md",
     "🍬Implementation/😺CatBoost.md",
     "🖼️Media/Pasted image 20230428134902.png",
     "📑notes/🐈Gradient Boosting notes.md",
-    "📖chapters/💡Hyperparameter tuning.md",
     "🖼️Media/cross-entropy-loss.png",
     "🖼️Media/architecture-rtd.png",
-    "🖼️Media/Pasted image 20230427161504.png",
+    "🖼️Media/training-vs-validation-accuracy.png",
     "🖼️Media/Pasted image 20230427155407.png",
     "📥Inbox/@zhaiDirectBoostingApproach.md",
     "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
@@ -174,20 +169,9 @@
     "📑notes/🤖Pretraining notes.md",
     "📑notes/☠️Problem Framing notes.md",
     "Open Points in my head.md",
-    "🖼️Media/search-space.png",
-    "📖chapters/🧭Random Feature Permutation.md",
-    "🖼️Media/Pasted image 20230428111917.png",
     "📖chapters/🤖Training of the Transformer.md",
-    "🖼️Media/Pasted image 20230428110412.png",
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📑notes/🧭Random Feature Permutation notes.md",
     "📥Inbox/@fisherAllModelsAre.md",
-    "📖chapters/🤖Pre-training of Transformers.md",
-    "🖼️Media/Pasted image 20230415084057.png",
-    "📖chapters/🅰️Attention.md",
-    "📖chapters/🧭Feature Importance Measure.md",
-    "📑notes/🍪Selection of supervised approaches notes.md",
-    "📖chapters/🔢Trade initiator.md",
-    "🖼️Media/presentation-of-effective-spread.png"
+    "📖chapters/🤖Pre-training of Transformers.md"
   ]
 }
