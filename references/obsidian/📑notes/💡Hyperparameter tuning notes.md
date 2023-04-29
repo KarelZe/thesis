@@ -42,7 +42,3 @@ For a new experiment, a new value for this hyper-parameter is picked using:
 ![](https://latex.codecogs.com/gif.latex?%5CLARGE%20x*%20%3D%20argmin%20x%20%28l%28x%29/g%28x%29%29 "This is the rendered form of the equation. You can not edit this directly. Right click will give you the option to save the image, and in most browsers you can drag the image onto your desktop or another program.")
 
 **Alternative visualization**
-![[optuna-as-boxplot.png]]
-
-**Optuna + wandb**
-https://www.h4pz.co/blog/2020/10/3/optuna-and-wandb
