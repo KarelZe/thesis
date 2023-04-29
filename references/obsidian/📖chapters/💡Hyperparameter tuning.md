@@ -9,18 +9,34 @@ While different algorithmic implementations exist for Bayesian optimization, we 
 
 ![[search-space.png]]
 
-![[hyperparameter-ft-transformer.png]]
+https://arxiv.org/pdf/1603.02754.pdf
 
+https://albertum.medium.com/l1-l2-regularization-in-xgboost-regression-7b2db08a59e0
 
 Depth refers to the depth of trees within the ensemble. 
 
-![[training-validation-accuracy.png]]
 
-![[training-vs-validation-accuracy.png]]
+
+Coefficient at the L2 regularization term of the cost function. Any positive value is allowed.
+
+We use Epsilon dataset and we measure mean tree construction time one can achieve without using feature subsampling and/or bagging by CatBoost (both Ordered and Plain modes), XGBoost (we use histogram-based version, which is faster) and LightGBM.
+
+Defines the settings of the Bayesian bootstrap. It is used by default in classification and regression modes.
+Use the Bayesian bootstrap to assign random weights to objects. The weights are sampled from exponential distribution if the value of this parameter is set to 1. All weights are equal to 1 if the value of this parameter is set to 0. Possible values are in the range $[0;\inf⁡)$The higher the value the more aggressive the bagging is.
+
+The amount of randomness to use for scoring splits when the tree structure is selected. Use this parameter to avoid overfitting the model.
+The value of this parameter is used when selecting splits. On every iteration each possible split gets a score (for example, the score indicates how much adding this split will improve the loss function for the training dataset). The split with the highest score is selected. The scores have no randomness. A normally distributed random variable is added to the score of the feature. It has a zero mean and a variance that decreases during the training. The value of this parameter is the multiplier of the variance.
+
+
+
+![[hyperparameter-ft-transformer.png]]
+
+
 
 
 
 ![[Pasted image 20230428111917.png]]
+
 
 **Gradient Boosting**
 Figure-Xa) visualizes the hyperparameter search space of the gls-gbm on the gls-ise dataset with classical features. We can derive several observations from it. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between (...) and (...) for different trials. Second, the best hyperparameter combination, marked in (), achieves a validation accuracy of sunitx-percent. As it lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is stable and reasonable for further analysis.
@@ -39,6 +55,13 @@ The results for the gls-gbm in combination with self-training are similar and vi
 Akin to selecting the machine learning classifiers, we determine our classical baselines on the gls-ise validation set. This prevents overfitting the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the gls-cboe sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and gls-lr algorithm, due to their widespread adoption in literature.
 
 While optimizing the combination of trade classification rules through Bayesian search is theoretically feasible, we found no out-performance over hybrid rules reported in literature \footnote{We performed a Bayesian search with 50 trials for trade classification rules, stacking up to five rules. Experiment available under: \url{https://wandb.ai/fbv/thesis}}.  Thus, \cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set.
+
+
+![[training-validation-accuracy.png]]
+
+![[training-vs-validation-accuracy.png]]
+
+
 
 **Notes:**
 [[💡Hyperparameter tuning notes]]

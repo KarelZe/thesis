@@ -32,7 +32,11 @@ Acknowleding the observations ([[@friedmanGreedyFunctionApproximation2001]]14), 
 **Quantization /  Border count:**
 For gradient-boosting we raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency.
 
+http://learningsys.org/nips17/assets/papers/paper_11.pdf
+
 We incorporate these ideas into our large-scale training. cref-hyperparameter-tuning, performs hyperparameter tuning.
+
+We employ additional measures to counterfight overfitting, but treat them as tunable hyperparameter. Thus, we discuss them in cref-
 
 
 ## Transformer

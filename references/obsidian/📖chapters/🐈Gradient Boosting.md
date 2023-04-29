@@ -1,3 +1,8 @@
+Incorporate this: 
+CatBoost, as well as all standard gradient boosting implementations, builds each new tree to approximate the gradients of the current model. However, all classical boosting algorithms suffer from overfitting caused by the problem of biased pointwise gradient estimates. Gradients used at each step are estimated using the same data points the current model was built on. This leads to a shift of the distribution of estimated gradients in any domain of feature space in comparison with the true distribution of gradients in this domain, which leads to overfitting. The idea of biased gradients was discussed in previous literature [1] [9]. [9] J. H. Friedman. Stochastic gradient boosting. Computational Statistics & Data Analysis, 38(4):367–378, 2002. [1] L. Breiman. Out-of-bag estimation, 1996
+
+
+
 One approach that aims to reduce the bias and the variance, is *gradient boosting*, which was introduced by ([[@friedmanGreedyFunctionApproximation2001]]9). *Gradient Boosting* iteratively combines oversimplified models, the *weak learners*, to obtain an improved accurate ensemble estimate. This chapter follows ([[@friedmanGreedyFunctionApproximation2001]]9) to derive gradient-boosted decision trees for binary classification.
 
 Recall, by cref-problem we perform *binary probabilistic classification* and by cref-[[🔢Trade initiator]] we defined the labels are, $y \in \{-1,1\}$. For gradient boosting, instead of modelling the class-conditional probabilities directly, we model the conditional *log odds* instead, which can be interpreted as the probability of observing class $1$ or a buyer-initiated trade, and covert to class-conditional probabilities as needed.

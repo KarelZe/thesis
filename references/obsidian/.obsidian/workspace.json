@@ -20,8 +20,37 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "ebe0f2d30b3089f8",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/💡Training and Tuning.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "f4f457f63a5960f2",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/💡Hyperparameter tuning.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -79,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md",
+                "file": "📖chapters/💡Hyperparameter tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -107,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md"
+                "file": "📖chapters/💡Hyperparameter tuning.md"
               }
             }
           },
@@ -138,24 +167,26 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "65039196d3829d86",
+  "active": "f4f457f63a5960f2",
   "lastOpenFiles": [
+    "📖chapters/💡Training and Tuning.md",
+    "📖chapters/💡Hyperparameter tuning.md",
+    "📑notes/💡Hyperparameter tuning notes.md",
+    "📑notes/🐈Gradient Boosting notes.md",
+    "📖chapters/🐈Gradient Boosting.md",
+    "📖chapters/🧭Random Feature Permutation.md",
     "🍬Implementation/🔥Speed-up PyTorch.md",
     "🖼️Media/after-data-loader.png",
     "🖼️Media/techniques-to-speed-up-training.png",
     "🍬Implementation/🛞GCP-Docker-Cluster.md",
     "🍬Implementation/😺CatBoost.md",
-    "📖chapters/🧭Random Feature Permutation.md",
-    "📑notes/💡Hyperparameter tuning notes.md",
     "🖼️Media/optuna-as-boxplot.png",
     "📖chapters/💡Training of models (supervised).md",
     "📖chapters/💡Tuning of models (semi-supervised).md",
-    "📖chapters/💡Training and Tuning.md",
     "📥Inbox/@shavittRegularizationLearningNetworks2018.md",
     "📑notes/🪄Data Preprocessing notes.md",
     "🖼️Media/gbm-log-loss-accuracy.png",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
-    "📖chapters/💡Hyperparameter tuning.md",
     "🖼️Media/training-validation-accuracy.png",
     "🖼️Media/hyperparameter-ft-transformer.png",
     "🖼️Media/training-loss-llama.png",
@@ -163,7 +194,6 @@
     "🖼️Media/FT-Transformer.png",
     "📖chapters/🏅Results.md",
     "🖼️Media/Pasted image 20230428134902.png",
-    "📑notes/🐈Gradient Boosting notes.md",
     "🖼️Media/cross-entropy-loss.png",
     "📥Inbox/@zhaiDirectBoostingApproach.md",
     "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
