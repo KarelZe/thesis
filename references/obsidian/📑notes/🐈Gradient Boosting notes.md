@@ -1,4 +1,7 @@
 
+Over
+
+
 ## Previous attempt
 One approach that aims to reduce the bias, is *gradient boosting*, which was popularized by [[@friedmanGreedyFunctionApproximation2001]]. *Gradient Boosting* is different from the afore-mentioned approach, as it sequentially adds the approximations of several over-simplified models (so-called *weak-lerners*) to an ensemble estimate. Shallow trees are commonly used as weak learners [[@friedmanGreedyFunctionApproximation2001]]. Due to the sequential ensemble building, the construction of the tree is only dependent on the trees previously built. 
 
@@ -51,22 +54,7 @@ $$
 After $M$ iterations we obtain the final estimate calculated as: $\hat{f}(x)=f_{M}(x)$. To avoid overfitting the residuals, only proportional steps towards the negative gradient are taken. The contribution of each tree is controlled by the learning rate $\nu \in \left(0, 1\right]$. 
 
 
-By our problem framing, the focus is on *binary classification*. Other than in the regression case, the target is no longer continuous ( $\mathcal{Y}\in \mathbb{R}$), but rather discrete ($\mathcal{Y}\in \{-1,1\}$). Instead of modelling the class-conditional probabilities directly, we model the conditional *log odds*, which can be interpreted as the probability of observing class $1$ or buyer-initiated trade.  The model now models:
-$$
-f(x) = \ln\left(\frac{P(Y=1 \mid X=x)}{1-P(Y=1\mid X=x)}\right)
-$$
 
-<mark style="background: #FFB86CA6;">If $p$ is a probability, then $p /(1-p)$ is the corresponding odds; the logit of the probability is the logarithm of the odds, i.e.:
-$$
-\operatorname{logit}(p)=\ln \left(\frac{p}{1-p}\right)=\ln (p)-\ln (1-p)=-\ln \left(\frac{1}{p}-1\right)=2 \operatorname{atanh}(2 p-1)
-$$
-(Wikipedia) https://en.wikipedia.org/wiki/Logit</mark> -> odds of success = probability of an even happening divided by prbability of an event not happening. 
-
-We can still recover the conditional probabilities $p(y \mid x)$ for a trade to be buyer- or seller-initiated with the Sigmoid transform, given by:
-$$
-p(y \mid x)=\sigma(f(x))=\frac{1}{1 + \exp(-y f(x))}.
-$$
-Like before, we require a differentiable loss function. A common replacement for the previous square loss, is the the log-loss (binary cross-entropy loss. -> seems to be equivalent for binary case https://stackoverflow.com/questions/50913508/what-is-the-difference-between-cross-entropy-and-log-loss-error).  $\operatorname{logistic} \operatorname{loss} l(y, f(x))=\log (1+\exp (-y f(x)))$
 
 
 
@@ -155,13 +143,6 @@ Optionally, Newton's method can be integrated to the training of gradient booste
 1. Once a tree is trained, a step of Newton is applied on each leaf and overrides its value. The tree structure is untouched; only the leaf values change.
 2. During the growth of a tree, conditions are selected according to a score that includes a component of the Newton formula. The structure of the tree is impacted.
 
-- Unlike random forests, gradient boosted trees _can_ overfit. Therefore, as for neural networks, you can apply regularization and early stopping using a validation dataset.
-
-- Common regularization parameters for gradient boosted trees include:
--   The maximum depth of the tree.
--   The shrinkage rate.
--   The ratio of attributes tested at each node.
--   L1 and L2 coefficient on the loss.
 
 Like bagging and boosting, gradient boosting is a methodology applied on top of another machine learning algorithm. Informally, gradient boosting involves two types of models:
 - a "weak" machine learning model, which is typically a decision tree.
@@ -179,63 +160,16 @@ Let's illustrate gradient boosting on a simple regression dataset where:
 - The objective is to predict $y$ from $x$.
 - The strong model is initialized to be a zero constant: $F_0(x)=0$.
 
-A small learning rate not just gives room for subsequent trees too ... / avoids overfitting the residuals
-
-The learning rate and the size of the ensemble are deeply intertwined.
-
-Another method to regularizing 
-
-
-While a small learning rate slows down learning, it hel
-
-- learning rate and size of ensembles must be tuned togehter
-- Friedman suggests to study the `LOF` and grow largest possible ensembles, which is possible 
-
-The learning rate $\nu$ and the size of the ensemble $M$ are deeply intertwined [[@friedmanGreedyFunctionApproximation2001]]. 
-
-
-- Above we assumed $M$ to be fixed,
-- observation similar to decision trees. One can overfit the training set. 
-- [[@hastietrevorElementsStatisticalLearning2009]] suggest to monitor the prediction risk on the validation sample. "monitor prediction risk as a function of $M$" 
-- We monitor using learning curves.
-- It's better to use smallest possible learning rate and choose $M$ as large as possible. Given the sequential nature of the algorithm no computation need to be repeated.
-
-Shrinkage (Eq. (...)) and (...) are not the only options to regularize gradient-boosted trees. Other techniques constrain the amount of data seen during training by fitting each trees on a random subset of samples, as proposed in [[@friedmanStochasticGradientBoosting2002]] (p. 3), or on a subset of features, as popularized by [[@chenXGBoostScalableTree2016]] (p. 3) (Footnote: Note the link to random forests and Bagging. Bagging by Breiman was sthe reason to implement stochastic gradient boosting in the first place (see [[@friedmanStochasticGradientBoosting2002]] (p. 4).) We denote the fraction of samples seen during training with $\eta$. Both approaches can not just improve generalization performance but also the computational complexity, due to the simplified splitting procedures [[@chenXGBoostScalableTree2016]] (p. 3) and [[@friedmanStochasticGradientBoosting2002]] (p.10). (also written in [[@hastietrevorElementsStatisticalLearning2009]] p. 365)
-
-So far we made several simplifying assumptions, that don't hold in real-world data sets:
-
-- all input input is numerical
-- data sets is free of missing data
-- it's computationally feasible to evaluate all possible splits from all features
-- Strategy how tree is grown
-
-
-We address these issues.
-- Variants of GBM, comparison: [CatBoost vs. LightGBM vs. XGBoost | by Kay Jan Wong | Towards Data Science](https://towardsdatascience.com/catboost-vs-lightgbm-vs-xgboost-c80f40662924) (e. g., symmetric, balanced trees vs. asymetric trees) or see kaggle book for differences between xgboost ([[@chenXGBoostScalableTree2016]]), lightgbm ([[@keLightGBMHighlyEfficient2017]]), catboost ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]]) etc. [[@banachewiczKaggleBookData2022]]
-- How can missing values be handled in decision trees? (see [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] as a primer)
-  How can categorical data be handled in decision trees?
-- Start of with gradient boosted trees for regression. Gradient boosted trees for classification are derived from that principle.
-- cover desirable properties of gradient boosted trees
-- for handling of missing values see [[@twalaGoodMethodsCoping2008]]. Send missing value to whether side, that leads to the largest information gain (Found in [[@josseConsistencySupervisedLearning2020]])
-- [[@chenXGBoostScalableTree2016]] use second order methods for optimization.
-
-### Adaptions for Probablistic Classification
-- Explain how the Gradient Boosting Procedure for the regression case, can be extended to the classifcation case
-- Discuss the problem of obtainining good probability estimates from a boosted decision tree. See e. g., [[@caruanaObtainingCalibratedProbabilities]] or [[@friedmanAdditiveLogisticRegression2000]] (Note paper is commenting about boosting, gradient boosting has not been published at the time)
-- Observations in [[@tanhaSemisupervisedSelftrainingDecision2017]] on poor probability estimates are equally applicable.
-- Compare my explanation against https://catboost.ai/news/catboost-enables-fast-gradient-boosting-on-decision-trees-using-gpus
-
-
 ## Some inspiration
-![[Pasted image 20230405170411.png]]
-![[Pasted image 20230405170430.png]]
+
+
 
 
 ![[Pasted image 20230405172011.png]]
 ![[Pasted image 20230405171940.png]]
 
-![[Pasted image 20230405171919.png]]
-![[Pasted image 20230405171902.png]]
+
+
 
 Our introduction assumes that all input is numerical, which is true for the mehrheit of our dataset.
 
@@ -243,3 +177,96 @@ Our introduction assumes that all input is numerical, which is true for the mehr
 $$
     \operatorname{l}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad \operatorname{l}_{0-1}(y, \widehat{y}) = \mathbb{I}\left(y_{i}\neq \widehat{y}_{i}\right).
 $$
+
+ The model now models:
+$$
+f(x) = \ln\left(\frac{P(Y=1 \mid X=x)}{1-P(Y=1\mid X=x)}\right)
+$$
+
+<mark style="background: #FFB86CA6;">If $p$ is a probability, then $p /(1-p)$ is the corresponding odds; the logit of the probability is the logarithm of the odds, i.e.:
+$$
+\operatorname{logit}(p)=\ln \left(\frac{p}{1-p}\right)=\ln (p)-\ln (1-p)=-\ln \left(\frac{1}{p}-1\right)=2 \operatorname{atanh}(2 p-1)
+$$
+(Wikipedia) https://en.wikipedia.org/wiki/Logit</mark> -> odds of success = probability of an even happening divided by prbability of an event not happening. 
+
+We can still recover the conditional probabilities $p(y \mid x)$ for a trade to be buyer- or seller-initiated with the Sigmoid transform, given by:
+$$
+p(y \mid x)=\sigma(f(x))=\frac{1}{1 + \exp(-y f(x))}.
+$$
+Like before, we require a differentiable loss function. A common replacement for the previous square loss, is the the log-loss (binary cross-entropy loss. -> seems to be equivalent for binary case https://stackoverflow.com/questions/50913508/what-is-the-difference-between-cross-entropy-and-log-loss-error).  $\operatorname{logistic} \operatorname{loss} l(y, f(x))=\log (1+\exp (-y f(x)))$
+
+![[Pasted image 20230420130156.png]]
+![[Pasted image 20230420131925.png]]
+![[Pasted image 20230420132045.png]]
+![[Pasted image 20230420132109.png]]
+
+High level idea:
+![[Pasted image 20230421085845.png]]
+
+Require a loss function, i.e., *binomial loss* / cross entropy loss:
+![[Pasted image 20230421091555.png]]
+(copied from Coors) (This is analogous to Friedman paper https://jerryfriedman.su.domains/ftp/trebst.pdf)
+(based on this conversion?)
+![[Pasted image 20230421105233.png]]
+(from [[@friedmanAdditiveLogisticRegression2000]])
+
+y is classification target (-1,1) and F(x) is the logodds (with constant?). 
+![[Pasted image 20230421094859.png]]
+(log(odds) = log(p/(1-p)))
+
+
+![[Pasted image 20230421094933.png]]
+(in hasties this baby is called residual)
+![[Pasted image 20230421095146.png]]
+(verified derivative)
+
+
+Start by making an initial prediction:
+![[Pasted image 20230421091802.png]]
+
+(how to arrive at formulation of )
+
+Start with naive prediction / initialize model with majority class (?) in terms of log odds? z. B. log(2/1) log(yes / no)
+![[Pasted image 20230421100927.png]]
+(0.5 is constant from above ) (ybar is the average label over all classes)
+![[Pasted image 20230421102232.png]]
+(example)
+
+TODO: calculate manually. Similar to:
+![[Pasted image 20230421102928.png]]
+
+![[Pasted image 20230421102951.png]]
+
+![[Pasted image 20230421103126.png]]
+
+
+![[Pasted image 20230420143656.png]]
+
+
+![[Pasted image 20230421103451.png]]
+
+Here (even simpler, just add as there is only a single term)
+
+![[Pasted image 20230421103540.png]]
+
+(hard to solve for. Use newton-Raphson step instead)
+
+![[Pasted image 20230421104203.png]]
+(cant find this in the original paper)
+
+![[Pasted image 20230421104256.png]]
+![[Pasted image 20230421104418.png]]
+Next, update the model = add tree
+
+![[Pasted image 20230421104525.png]]
+
+The final prediction is given in terms of log-odds. To obtain class probabilities, we can use logistic function?
+![[Pasted image 20230421104723.png]]
+
+for integration of regularization term see: https://arxiv.org/pdf/2001.07248.pdf
+
+![[Pasted image 20230421145319.png]]
+![[Pasted image 20230421145359.png]]
+
+https://blog.paperspace.com/gradient-boosting-for-classification/
+https://towardsdatascience.com/all-you-need-to-know-about-gradient-boosting-algorithm-part-2-classification-d3ed8f56541e

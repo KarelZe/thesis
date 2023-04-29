@@ -1,10 +1,12 @@
 ## Open
+- Ask for comments on theory.
+- Discuss changes i.e., removal of TabTransformer / change of pre-training routine.
+
+## Closed
 - Discuss questions from email. -> unsure about previous trade price. Didn't do data pre-processing so can't tell about order.
 - Discuss latest, improved results for CBOE / semi-supervised models. -> Should do model transfer on CBOE data. We discussed leakage. Think about what my conclusion should be.
 - Discuss strategies to select the benchmarks e. g., on validation set / intuition / your paper. -> Decide on my own.
 - Any tips what I should differently in the remaining two months? -> It's ok.
-
-## Closed
 - What happens to the trade volumes of professional customers? Filtered out or treated as ordinary customers? -> Filtered out, as professional customers (particularly large customers) are assumed to act like a market maker / provide liquidity not demand liquidity. Incorporate this in paragraph.
 - What is part of the unlabelled dataset? Only customer trades, where volumes don't match or also professional customer trades, broker/deal trades etc.? -> All trades.
 - How is the market maker identified in the raw sources? -> delta between total volume and volumes of customers, brokers etc. So-called market clearing condition.

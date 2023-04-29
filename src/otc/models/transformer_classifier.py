@@ -5,6 +5,9 @@ Can be used as a consistent interface for evaluation and tuning.
 """
 from __future__ import annotations
 
+import gc
+import glob
+import os
 from typing import Any
 
 import numpy as np
@@ -81,6 +84,31 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             "poor_score": True,
         }
 
+    def _checkpoint_write(self) -> None:
+        """
+        Write weights and biases to checkpoint.
+        """
+        # remove old files
+        print("deleting old checkpoints.")
+        for filename in glob.glob("checkpoints/tf_clf*"):
+            os.remove(filename)
+
+        # create_dir
+        dir_checkpoints = "checkpoints/"
+        os.makedirs(dir_checkpoints, exist_ok=True)
+
+        # save new file
+        print("saving new checkpoint.")
+        torch.save(self.clf.state_dict(), os.path.join(dir_checkpoints, "tf_clf.ptx"))
+
+    def _checkpoint_restore(self) -> None:
+        """
+        Restore weights and biases from checkpoint.
+        """
+        print("restore from checkpoint.")
+        cp = glob.glob("checkpoints/tf_clf*")
+        self.clf.load_state_dict(torch.load(cp[0]))
+
     def array_to_dataloader(
         self,
         X: npt.NDArray | pd.DataFrame,
@@ -107,9 +135,11 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             cat_unique_counts=self.module_params["cat_cardinalities"],
         )
 
-        return TabDataLoader(
+        tab_dl = TabDataLoader(
             data.x_cat, data.x_cont, data.weight, data.y, **self.dl_params
         )
+        del data
+        return tab_dl
 
     def fit(
         self,
@@ -152,16 +182,21 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         else:
             X_val, y_val = X, y
 
+        # save for accuracy calculation
+        len_x_val = len(X_val)
+
         self.classes_ = np.array([-1, 1])
 
         train_loader = self.array_to_dataloader(X, y)
         # no weight for validation set / every sample with weight = 1
         val_loader = self.array_to_dataloader(X_val, y_val)
 
-        self.clf = self.module(**self.module_params)
+        # free up memory
+        del X, y, X_val, y_val
+        gc.collect()
+        torch.cuda.empty_cache()
 
-        # enable anomaly detection
-        # torch.autograd.set_detect_anomaly(True)
+        self.clf = self.module(**self.module_params)
 
         # use multiple gpus, if available
         self.clf = nn.DataParallel(self.clf).to(self.dl_params["device"])
@@ -181,9 +216,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             optimizer=optimizer, warmup=warmup_steps, max_iters=max_steps
         )
 
-        # compile model
-        self.clf_compiled = torch.compile(self.clf)
-
         # see https://stackoverflow.com/a/53628783/5755604
         # no sigmoid required; numerically more stable
         # do not reduce, calculate mean after multiplication with weight
@@ -192,31 +224,39 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=10)
 
+        step = 0
+        best_accuracy = -1
+
+        # save stats in classifier
+        self._stats_step = []
+        self._stats_epoch = []
+
         for epoch in range(self.epochs):
 
             # perform training
             loss_in_epoch_train = 0
             train_batch = 0
 
-            self.clf_compiled.train()
+            self.clf.train()
 
             for x_cat, x_cont, _, targets in train_loader:
 
                 # reset the gradients back to zero
+                self.clf.train()
                 optimizer.zero_grad()
 
                 # compute the model output and train loss
-                with torch.cuda.amp.autocast():
-                    logits = self.clf_compiled(x_cat, x_cont).flatten()
+                with torch.autocast(device_type="cuda", dtype=torch.float16):
+                    logits = self.clf(x_cat, x_cont).flatten()
                     train_loss = criterion(logits, targets)
 
                 # https://pytorch.org/docs/stable/amp.html
                 # https://discuss.huggingface.co/t/why-is-grad-norm-clipping-done-during-training-by-default/1866
                 scaler.scale(train_loss).backward()
-                scaler.unscale_(optimizer)
-                nn.utils.clip_grad_norm_(
-                    self.clf_compiled.parameters(), 5, error_if_nonfinite=False
-                )
+                # scaler.unscale_(optimizer)
+                # nn.utils.clip_grad_norm_(
+                #     self.clf.parameters(), 5, error_if_nonfinite=False
+                # )
                 scaler.step(optimizer)
                 scaler.update()
 
@@ -224,12 +264,14 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 scheduler.step()
 
                 # add the mini-batch training loss to epoch loss
-                loss_in_epoch_train += train_loss
+                loss_in_epoch_train += train_loss.item()
 
-                print(f"[{epoch}-{train_batch}] train loss: {train_loss}")
+                self._stats_step.append({"train_loss": train_loss.item(), "step": step})
+
                 train_batch += 1
+                step += 1
 
-            self.clf_compiled.eval()
+            self.clf.eval()
 
             loss_in_epoch_val = 0.0
             correct = 0
@@ -237,7 +279,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             val_batch = 0
             with torch.no_grad():
                 for x_cat, x_cont, _, targets in val_loader:
-                    logits = self.clf_compiled(x_cat, x_cont)
+                    logits = self.clf(x_cat, x_cont)
                     logits = logits.flatten()
 
                     # get probabilities and round to nearest integer
@@ -247,23 +289,53 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                     # loss calculation.
                     # Criterion contains softmax already.
                     val_loss = criterion(logits, targets)
-                    loss_in_epoch_val += val_loss
+                    loss_in_epoch_val += val_loss.item()
 
-                    print(f"[{epoch}-{val_batch}] val loss: {val_loss}")
+                    # print(f"[{epoch}-{val_batch}] val loss: {val_loss}")
                     val_batch += 1
             # loss average over all batches
-            train_loss = loss_in_epoch_train / len(train_loader)
-            val_loss = loss_in_epoch_val / len(val_loader)
+            train_loss_all = loss_in_epoch_train / len(train_loader)
+            val_loss_all = loss_in_epoch_val / len(val_loader)
             # correct samples / no samples
-            val_accuracy = correct / len(X_val)
+            val_accuracy = correct / len_x_val
+            print(f"train loss: {train_loss_all}")
+            print(f"val loss: {val_loss_all}")
             print(f"val accuracy: {val_accuracy}")
 
-            self.callbacks.on_epoch_end(epoch, self.epochs, train_loss, val_loss)
+            self._stats_epoch.append(
+                {
+                    "train_loss": train_loss_all,
+                    "val_loss": val_loss_all,
+                    "val_accuracy": val_accuracy,
+                    "step": step,
+                    "epoch": epoch,
+                }
+            )
+
+            if best_accuracy < val_accuracy:
+                self._checkpoint_write()
+                best_accuracy = val_accuracy
+
+            self.callbacks.on_epoch_end(
+                epoch, self.epochs, train_loss_all, val_loss_all
+            )
 
             # return early if val accuracy doesn't improve. Minus to minimize.
             early_stopping(-val_accuracy)
-            if early_stopping.early_stop:
+            if (
+                early_stopping.early_stop
+                or np.isnan(train_loss_all)
+                or np.isnan(val_loss_all)
+            ):
                 break
+
+        # restore best from checkpoint
+        self._checkpoint_restore()
+
+        # https://discuss.huggingface.co/t/clear-gpu-memory-of-transformers-pipeline/18310/2
+        del train_loader, val_loader
+        gc.collect()
+        torch.cuda.empty_cache()
 
         # is fitted flag
         self.is_fitted_ = True
@@ -301,13 +373,13 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         test_loader = self.array_to_dataloader(X, y)
 
-        self.clf_compiled.eval()
+        self.clf.eval()
 
         # calculate probability and counter-probability
         probabilites = []
         with torch.no_grad():
             for x_cat, x_cont, _, _ in test_loader:
-                logits = self.clf_compiled(x_cat, x_cont)
+                logits = self.clf(x_cat, x_cont)
                 logits = logits.flatten()
                 probability = torch.sigmoid(logits)
                 probabilites.append(probability.detach().cpu().numpy())
