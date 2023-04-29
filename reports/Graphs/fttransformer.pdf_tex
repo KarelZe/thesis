@@ -80,9 +80,9 @@
     \put(0,0){\includegraphics[width=\unitlength,page=12]{fttransformer.pdf}}%
     \put(0.4545541,1.19145376){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Norm\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=13]{fttransformer.pdf}}%
-    \put(0.53201073,0.67192883){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{W}_v$\end{tabular}}}}%
-    \put(0.26604371,0.67407617){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{W}_k$\end{tabular}}}}%
-    \put(0.40068885,0.67296598){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{W}_q$\end{tabular}}}}%
+    \put(0.53201073,0.67192883){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{V}$\end{tabular}}}}%
+    \put(0.26604371,0.67407617){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{K}$\end{tabular}}}}%
+    \put(0.40068885,0.67296598){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\boldsymbol{Q}$\end{tabular}}}}%
     \put(0.01414491,1.64881845){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\texttt{[CLS]}$\end{tabular}}}}%
   \end{picture}%
 \endgroup%

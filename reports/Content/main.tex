@@ -447,7 +447,7 @@ As explained previously, Transformers operate on sequences of numeric vector rep
 
 To obtain \gls{token} embeddings from the raw input sequences i.e., a sentence, the sequence is first split into constituent vocabulary elements, the \emph{tokens}. All known \glspl{token} are stored in a vocabulary. The vocabulary $V$ consists of $N_{V}=|V|$ elements and maps \glspl{token} onto their unique integer keys, referred to as \emph{token-ids} \autocite[][3]{phuongFormalAlgorithmsTransformers2022}. Apart from \glspl{token} in the training corpus, the vocabulary may include special \glspl{token}, like the $\mathtt{[UNK]}$ \gls{token} to handle out-of-vocabulary items or $\mathtt{[CLS]}$ \gls{token} for storing an aggregate representation of the sequence for classification \autocite[cp.][4]{devlinBERTPretrainingDeep2019}.
 
-For ease of explanation, we equate \glspl{token} with words.\footnote{There is a subtle difference between \glspl{token} and words. A \gls{token} can be words including punctuation marks. But words can also be split into multiple \glspl{token}, such as sub-words \autocite[][3]{bojanowskiEnrichingWordVectors2017} or characters. To decrease the size of the vocabulary, words may be reduced to their stems, lower-cased, and stop words be removed.} Consider the following example with a small vocabulary of $V=[1, N_v]$ and a mapping between the \gls{token} and token-id of $\mathrm{queen}\mapsto 1$; $\mathrm{king}\mapsto 2$. For the sample sequence »Kings and Queens«, the sequence of token-ids $x$ is $[2, 1]$, after applying tokenizing by words and common pre-processing like lower-casing, and the removal of the stop word »and«.
+For ease of explanation, we equate \glspl{token} with words.\footnote{There is a subtle difference between \glspl{token} and words. A \gls{token} can be words including punctuation marks. But words can also be split into multiple \glspl{token}, such as sub-words \autocite[][3]{bojanowskiEnrichingWordVectors2017} or characters. To decrease the size of the vocabulary, words may be reduced to their stems, lower-cased, and stop words be removed.} Consider the following example with a small vocabulary of $V=\left\{1, N_v\right\}$ and a mapping between the \gls{token} and token-id of $\mathrm{'queen'}\mapsto 1$; $\mathrm{'king'}\mapsto 2$. For the sample sequence »Kings and Queens«, the sequence of token-ids is $\mathbf{s}=[2, 1]$, after applying tokenizing by words and common pre-processing like lower-casing, and the removal of the stop word »and«. Arbitrary sequences are given by $\mathbf{s} \equiv s[1: \ell] \equiv$ $s[1] s[2] \ldots s[\ell] \in V^*$.
 
 The conversion to token-ids, however, loses the semantics, as token-ids may be assigned arbitrarily or ordering by semantics may not be feasible. This limitation can be overcome by embeddings, as pioneered by \textcite[][1139]{bengioNeuralProbabilisticLanguage}, which map each token-id into a high-dimensional space. By representing words as a vector, semantic and syntactic relationships between tokens can be encoded. As such, related words share a similar embedding vector \autocite[][1139]{bengioNeuralProbabilisticLanguage}. Moreover, word embeddings are semantically meaningful and can capture linguistic regularities, like gender through offsets between vectors \autocite[][748--749]{mikolovLinguisticRegularitiesContinuous2013}.
 
@@ -456,7 +456,7 @@ The embedding layer from \cref{fig:transformer-architecture-overview} is ultimat
     \gls{e}=\gls{W-e}\left[:, v\right].
     \label{eq:word-embeddings}
 \end{equation}
-The weights of $\gls{W-e}$ are initialised randomly and updated using gradient descent to obtain the learned embeddings. The dimension of the embedding $d_e$, affects the expressiveness of the network and is thus an important tuneable hyperparameter of the model.
+The weights of $\gls{W-e}$ are initialised randomly and updated using gradient descent to obtain the learned embeddings. The dimension of the embedding $d_e$ affects the expressiveness of the network and is thus an important tuneable hyperparameter of the model. All embeddings of the input sequence are finally gathered in a matrix $\mathbf{S} \in \mathbb{R}^{d_e \times \ell_s}$.
 
 Concluding the example from above with artificial embeddings of $d_e=3$:
 \begin{equation}
@@ -474,14 +474,14 @@ As this work is concerned with the classification of tabular data, the aforement
 
 Transformer networks can handle numerical features, such as the trade price, by mapping the scalar value to a high-dimensional embedding vector and process sequences thereof \autocite[][1]{gorishniyEmbeddingsNumericalFeatures2022}. In the simplest case, a learned linear projection is utilized to obtain the embedding. Linear embeddings of numerical features were previously explored in \textcites[][1]{kossenSelfAttentionDatapointsGoing2021}[][1]{somepalliSaintImprovedNeural2021}[][1]{gorishniyRevisitingDeepLearning2021}.
 
-If the $m$-th feature, $\mathbf{x}[m]$, is numerical, it is projected to its embedding $\gls{e} \in \mathbb{R}^{d_e}$ by element-wise multiplication with a learned vector $\mathbf{W}_m \in \mathbb{R}^{d_{e}}$. Moreover, a feature-dependent bias term $\mathbf{b}_m \in \mathbb{R}^{d_{e}}$ is added, as noted in \cref{eq:numerical-embeddings}.
+In analogon to the word case, if the $m$-th feature, $\mathbf{x}[m]$, is numerical, it is projected to its embedding $\gls{e} \in \mathbb{R}^{d_e}$ by element-wise multiplication with a learned vector $\mathbf{W}_m \in \mathbb{R}^{d_{e}}$. Moreover, a feature-dependent bias term $\mathbf{b}_m \in \mathbb{R}^{d_{e}}$ is added, as noted in \cref{eq:numerical-embeddings}.
 \begin{equation}
     \gls{e}= \mathbf{W}_m \mathbf{x}[m] +\mathbf{b}_m
     \label{eq:numerical-embeddings}
 \end{equation}
-More sophisticated approaches rely on parametric embeddings, like the \emph{piece-wise linear encoding} or the \emph{periodic encoding} of \textcite[][10]{gorishniyEmbeddingsNumericalFeatures2022}. Both enforce non-linearity. The authors show that these can alleviate the model's performance but at a non-neglectable computational cost.
+More sophisticated approaches rely on parametric embeddings, like the \emph{piece-wise linear encoding} or the \emph{periodic encoding} of \textcite[][10]{gorishniyEmbeddingsNumericalFeatures2022}. Both enforce non-linearity. The authors show that these can alleviate the model's performance but at a non-neglectable computational cost. For this reason, our focus is on the computational more tractable linear embedding.
 
-More generally, the works of \textcites[][1]{gorishniyEmbeddingsNumericalFeatures2022}[][1]{somepalliSaintImprovedNeural2021} suggest, that numerical embedding can significantly improve robustness to missing values or noise. Their work miss a theoretical explanation. \textcite[][8--9]{grinsztajnWhyTreebasedModels2022} fill this void and attribute the increased robustness to the broken rotational invariance.
+More generally, the works of \textcites[][1]{gorishniyEmbeddingsNumericalFeatures2022}[][1]{somepalliSaintImprovedNeural2021} suggest, that numerical embedding can significantly improve robustness to missing values or noise. Their work misses a theoretical explanation. \textcite[][8--9]{grinsztajnWhyTreebasedModels2022} fill this void and attribute the increased robustness to the broken rotational invariance.
 
 \textbf{Embeddings For Categorical Data}
 
@@ -489,7 +489,7 @@ Datasets often comprise categorical features like the underlying. In the context
 \autocites[][1]{gorishniyRevisitingDeepLearning2021}[][1]{huangTabTransformerTabularData2020}[][1]{somepalliSaintImprovedNeural2021}. Analogous, each category is mapped to an embedding vector using a learned, embedding matrix. Due to the heterogeneous nature of tabular data, embeddings may not be shared between features.
 
 For categorical inputs, the embedding is implemented as a lookup table, analogous to \cref{eq:word-embeddings}. However, each feature has
-its vocabulary $C_m$ with $N_{C_m}$ categories. Assume, the $m$-th feature is categorical. The specific embeddings $\gls{e}$ are queried with a unique integer key $c_{m} \in C_m \cong\left[N_{C_m}\right]$ from the learned embedding matrix $\mathbf{W}_m \in \mathbb{R}^{d_e \times N_{C_m}}$. Finally, a feature-specific bias term $\mathbf{b}_m \in \mathbb{R}^{d_{e}}$ is added as shown in \cref{eq:categorical-embeddings}.
+its vocabulary $C_t$ with $N_{C_m}$ categories. Assume, the $m$-th feature is categorical. The specific embeddings $\gls{e}$ are queried with a unique integer key $c_{m} \in C_m \cong\left[N_{C_t}\right]$ from the learned embedding matrix $\mathbf{W}_m \in \mathbb{R}^{d_e \times N_{C_m}}$. Finally, a feature-specific bias term $\mathbf{b}_m \in \mathbb{R}^{d_{e}}$ is added as shown in \cref{eq:categorical-embeddings}. Like for the word case, all embeddings of an instance are gathered in $\mathbf{S}$.
 \begin{equation}
     \gls{e}=\mathbf{W}_m[:,c_{m}] +\mathbf{b}_m
     \label{eq:categorical-embeddings}
@@ -501,7 +501,7 @@ Despite these advantages, high-cardinal features present a challenge for embeddi
 \textbf{Link To Positional Encoding and Attention}
 
 % TODO: verify invariant property. Not sure if I got it right.
-Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position \autocite[][3744]{leeSetTransformerFramework2019}. Positional information must be induced to the model to preserve the ordering (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualised in the self-attention mechanism (cp. \cref{sec:attention}).
+Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position \autocite[][3744]{leeSetTransformerFramework2019}. Positional information must be induced into the model to preserve the ordering (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualised in the self-attention mechanism (cp. \cref{sec:attention}).
 
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
 
@@ -517,7 +517,7 @@ Like \gls{token} embeddings, positional embeddings can also be learned \autocite
     \end{aligned}
     \label{eq:sinusodal-encoding}
 \end{equation}
-with $0<i \leq \gls{d}_{e} / 2$, the maximum sequence length $\gls{ellmax}$, which is arbitrarily set to $\gls{ellmax}=10{,}000$, and $\gls{t}$ is again the position of the \gls{token} in the sequence. As shown in \cref{eq:sinusodal-encoding} the frequency decreases across the position dimension and alternates between sine and cosine for the embedding dimension. Each embedding thus contains a pattern, easily distinguishable by the model.
+with $0<i \leq \gls{d}_{e} / 2$, the maximum sequence length $\gls{ellmax}$, which is arbitrarily set to $\gls{ellmax}=\num{10000}$, and $\gls{t}$ is again the position of the \gls{token} in the sequence. As shown in \cref{eq:sinusodal-encoding} the frequency decreases across the position dimension and alternates between sine and cosine for the embedding dimension. Each embedding thus contains a pattern, easily distinguishable by the model.
 
 \begin{figure}[ht]
     \centering
@@ -532,9 +532,9 @@ Using trigonometric functions for the positional embedding is favourable, due to
 
 The reason for encoding with both the sine and cosine is more subtle, as either one would suffice for absolute embeddings. \textcite[][6]{vaswaniAttentionAllYou2017} hypothesize, that besides learning the \emph{absolute} position i.e., fifth place in sequence, providing both sine and cosine also enables the model to attend to \emph{relative} positions, i.e., two places from a given \gls{token}.
 
-The positional embedding is finally added per element to the token embedding to form a \gls{token}'s initial embedding $\gls{e}$. For the $\gls{t}$-th \gls{token} of a sequence $\gls{x}$, the embedding becomes:
+The positional embedding is finally added per element to the token embedding to form a \gls{token}'s initial embedding $\gls{e}$. For the $\gls{t}$-th \gls{token} of a sequence $\mathbf{s}$, the embedding becomes:
 \begin{equation}
-    \gls{e}=\gls{W-e}\left[:, x[t]\right]+\gls{W-p}\left[:, t\right].
+    \gls{e}=\gls{W-e}\left[:, s[t]\right]+\gls{W-p}\left[:, t\right].
     \label{eq:positional-embedding}
 \end{equation}
 Intuitionally, adding the positional encoding leads to a rotation of the \gls{token} embedding in the embedding space. As the positional embedding is different for every location within the sequence, otherwise identical \glspl{token}, now have a distinct embedding.
@@ -557,12 +557,12 @@ For computational efficiency, attention is performed simultaneously over multipl
 
 \begin{equation}
     \begin{aligned}
-        \operatorname{Attention}(\mathbf{X},\mathbf{Z}) & = \mathbf{V} \operatorname{softmax}\left(\mathbf{S} / \sqrt{d_{\mathrm{attn}}}\right) \\
-        \mathbf{S}                                      & = \mathbf{K}^{\top} \mathbf{Q}
+        \operatorname{Attention}(\mathbf{S},\mathbf{Z}) & = \mathbf{V} \mathtt{softmax}\left(\mathbf{A} / \sqrt{d_{\mathrm{attn}}}\right) \\
+        \mathbf{A}                                      & = \mathbf{K}^{\top} \mathbf{Q}
     \end{aligned}
     \label{eq:attention}
 \end{equation}
-where $\mathbf{X} \in \mathbb{R}^{d_X\times \ell_X}$ and $\mathbf{Z} \in \mathbb{R}^{d_Z\times \ell_Z}$  are vector representations of the primary input sequence and of the context sequence. Both the primary and the context sequences are identical for the encoder but are different for the decoder. The query, key, and value matrices $\mathbf{Q}=\mathbf{W}_q \mathbf{X} + \mathbf{b}_q\mathbf{1}^{\top}$, $\mathbf{K}=\mathbf{W}_k \mathbf{Z} + \mathbf{b}_k\mathbf{1}^{\top}$, and $\mathbf{V}=\mathbf{W}_v \mathbf{Z} + \mathbf{b}_v\mathbf{1}^{\top}$ are linear projections of the input and context sequences, and $\mathbf{W}_q, \mathbf{W}_k \in \mathbb{R}^{d_{\mathrm{attn}\times d_{X}}}$; $\mathbf{W}_v \in \mathbb{R}^{d_{\mathrm{out}\times d_{Z}}}$; $\mathbf{b}_q, \mathbf{b}_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}_v \in \mathbb{R}^{d_{\mathrm{out}}}$ are learnable parameters. The dimensionality of the attention mechanism, $d_{\mathrm{attn}}$, is typically a fraction of the model dimensionality to accelerate computation. Likewise, the output dimension, $d_{out}$, is another hyperparameter to the models. The attention scores are $\mathbf{S}$, which are scaled by $\sqrt{d_{\mathrm{attn}}}$ to avoid unstable gradients, and the softmax activation normalizes all scores. As normalized attention scores have a clear interpretation as the weights how much a token contributes to the model's output, the attention mechanism provides a window into the model, which we explore in \cref{sec:feature-importance-measure}.
+where $\mathbf{S} \in \mathbb{R}^{d_S\times \ell_X}$ and $\mathbf{Z} \in \mathbb{R}^{d_Z\times \ell_Z}$  are vector representations of the primary input sequence and of the context sequence. Both the primary and the context sequences are identical for the encoder but are different for the decoder. The query, key, and value matrices $\mathbf{Q}=\mathbf{W}_q \mathbf{S} + \mathbf{b}_q\mathbf{1}^{\top}$, $\mathbf{K}=\mathbf{W}_k \mathbf{Z} + \mathbf{b}_k\mathbf{1}^{\top}$, and $\mathbf{V}=\mathbf{W}_v \mathbf{Z} + \mathbf{b}_v\mathbf{1}^{\top}$ are linear projections of the input and context sequences, and $\mathbf{W}_q, \mathbf{W}_k \in \mathbb{R}^{d_{\mathrm{attn}\times d_{S}}}$; $\mathbf{W}_v \in \mathbb{R}^{d_{\mathrm{out}\times d_{Z}}}$; $\mathbf{b}_q, \mathbf{b}_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}_v \in \mathbb{R}^{d_{\mathrm{out}}}$ are learnable parameters. The dimensionality of the attention mechanism, $d_{\mathrm{attn}}$, is typically a fraction of the model dimensionality to accelerate computation. Likewise, the output dimension, $d_{out}$, is another hyperparameter to the models. The attention scores are $\mathbf{A}$, which are scaled by $\sqrt{d_{\mathrm{attn}}}$ to avoid unstable gradients, and the softmax activation normalizes all scores. As normalized attention scores have a clear interpretation as the weights of how much a token contributes to the model's output, the attention mechanism provides a window into the model, which we explore in \cref{sec:feature-importance-measure}.
 
 \textbf{Multi-Head Attention}
 
@@ -574,11 +574,11 @@ Multi-head attention can be computed as:
 
 \begin{equation}
     \begin{aligned}
-        \operatorname{MHAttention}(\mathbf{X}, \mathbf{Z}) & = \mathbf{W}_{o}\left[\mathbf{Y}^{1};\mathbf{Y}^{2};\ldots;\mathbf{Y}^{H} \right] + \mathbf{b}_{o}\mathbf{1}^{\top} \\
+        \operatorname{MHAttention}(\mathbf{S}, \mathbf{Z}) & = \mathbf{W}_{o}\left[\mathbf{Y}^{1};\mathbf{Y}^{2};\ldots;\mathbf{Y}^{H} \right] + \mathbf{b}_{o}\mathbf{1}^{\top} \\
         \mathbf{Y}^{h}                                     & = \operatorname{Attention}(\mathbf{Q}^h, \mathbf{K}^h, \mathbf{V}^h)
     \end{aligned}
 \end{equation}
-The query, key, and value matrices  $\mathbf{Q}^{h}=\mathbf{W}^h_q \mathbf{X} + \mathbf{b}^h_q\mathbf{1}^{\top}$, $\mathbf{K}^{h}=\mathbf{W}_k^h \mathbf{Z} + \mathbf{b}_k^h\mathbf{1}^{\top}$, and $\mathbf{V}^{h}=\mathbf{W}_v^h \mathbf{Z} + \mathbf{b}_v^h\mathbf{1}^{\top}$ are obtained from linear projections of the input and context sequences unique per head. Again, $\mathbf{W}^{h}_{q} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_{X}}$; $\mathbf{W}^{h}_{k}, \mathbf{W}^{h}_{v} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_Z}$; $\mathbf{b}^h_q, \mathbf{b}^h_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}^h_v \in \mathbb{R}^{d_{\mathrm{mid}}}$ are used for projection. Typically, the dimensionality of the attention heads, $d_{\mathrm{mid}}$, is reduced to $d_{\mathrm{attn}}/H$ to match the computational cost of single-head attention. The output dimensionality $d_{\mathrm{out}}$ is restored with a final linear projection through the weight matrix $\mathbf{W}_{o} \in \mathbb{R}^{d_{\mathrm{out}}\times Hd_{\mathrm{mid}}}$ and bias $\mathbf{b}_o \in \mathbb{R}^{d_{\mathrm{out}}}$ applied to the concatenated results of the attention heads.
+The query, key, and value matrices  $\mathbf{Q}^{h}=\mathbf{W}^h_q \mathbf{S} + \mathbf{b}^h_q\mathbf{1}^{\top}$, $\mathbf{K}^{h}=\mathbf{W}_k^h \mathbf{Z} + \mathbf{b}_k^h\mathbf{1}^{\top}$, and $\mathbf{V}^{h}=\mathbf{W}_v^h \mathbf{Z} + \mathbf{b}_v^h\mathbf{1}^{\top}$ are obtained from linear projections of the input and context sequences unique per head. Again, $\mathbf{W}^{h}_{q} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_{S}}$; $\mathbf{W}^{h}_{k}, \mathbf{W}^{h}_{v} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_Z}$; $\mathbf{b}^h_q, \mathbf{b}^h_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}^h_v \in \mathbb{R}^{d_{\mathrm{mid}}}$ are used for projection. Typically, the dimensionality of the attention heads, $d_{\mathrm{mid}}$, is reduced to $d_{\mathrm{attn}}/H$ to match the computational cost of single-head attention. The output dimensionality $d_{\mathrm{out}}$ is restored with a final linear projection through the weight matrix $\mathbf{W}_{o} \in \mathbb{R}^{d_{\mathrm{out}}\times Hd_{\mathrm{mid}}}$ and bias $\mathbf{b}_o \in \mathbb{R}^{d_{\mathrm{out}}}$ applied to the concatenated results of the attention heads.
 
 The concatenated and projected output of the attention heads is then passed to the point-wise feed-forward networks, which enables interaction between the head's outputs. We discuss position-wise feed-forward networks in \cref{sec:position-wise-ffn}.
 
@@ -595,9 +595,9 @@ The attention mechanism enables \glspl{token} to attend to other inputs in the i
 
 The network consists of a linear transformation, followed by a non-linear activation function and a second linear layer. For the $l$-th layer, the \gls{MLP} is given by
 \begin{equation}
-    \gls{X} = \gls{X}+\mathbf{W}_{\mathrm{mlp} 2}^l \operatorname{ReLU}\left(\mathbf{W}_{\mathrm{mlp} 1}^l \gls{X}+\mathbf{b}_{\mathrm{mlp} 1}^l 1^{\top}\right)+\mathbf{b}_{\mathrm{mlp} 2}^l 1^{\top},
+    \mathbf{S} = \mathbf{S}+\mathbf{W}_{\mathrm{mlp} 2}^l \mathtt{ReLU}\left(\mathbf{W}_{\mathrm{mlp} 1}^l \mathbf{S}+\mathbf{b}_{\mathrm{mlp} 1}^l 1^{\top}\right)+\mathbf{b}_{\mathrm{mlp} 2}^l 1^{\top},
 \end{equation}
-with $\mathbf{W}_{\mathrm{mlp } 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times d_{e}}, \mathbf{b}_{\mathrm{mlp} 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}}}, \mathbf{W}_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}} \times d_{\mathrm{mlp}}$ and $\mathbf{b}_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}}$ being learnable parameters identical for all \glspl{embedding} in the layer. The network is applied to each embedding separately and identically.
+with $\mathbf{W}_{\mathrm{mlp} 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times d_{e}}, \mathbf{b}_{\mathrm{mlp} 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}}}, \mathbf{W}_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}} \times d_{\mathrm{mlp}}$ and $\mathbf{b}_{\mathrm{mlp} 2}^l \in \mathbb{R}^{d_{e}}$ being learnable parameters identical for all \glspl{embedding} in the layer. The network is applied to each embedding separately and identically.
 
 \textcite[][9]{vaswaniAttentionAllYou2017} set the hidden dimension to be two to eight magnitudes of the embedding dimension. The large capacity strengthens the model's ability to retain information but also contributes significantly to the high computational requirements and memory footprint of Transformers \autocites[][5]{tayEfficientTransformersSurvey2022}[][1]{kitaevReformerEfficientTransformer2020}. Both linear transformations are separated by a \gls{ReLU} \gls{activation-function} \autocite[][318]{glorotDeepSparseRectifier2011} to introduce non-linearities to the network.
 
@@ -617,7 +617,7 @@ Until now it remains unclear, how the layer normalization intertwines with the s
 
 \subsubsection{FT-Transformer}\label{sec:fttransformer}
 
-Many of the previous concepts can be adapted to the tabular domain with minor architectural changes. We cover FT-Transformer as a state-of-the-art adaption.
+Many of the previous concepts can be adapted to the tabular domain with minor architectural changes. \textcite[][5]{gorishniyRevisitingDeepLearning2021} propose with FT-Transformer an adaption, that pairs an embedding unit for both numerical and categorical inputs, dubbed the feature tokenizer, with a Transformer. The complete architecture is depicted in \cref{fig:fttransformer}. Notably, the Transformer units use a pre-norm setup for easier optimisation, whereby the very first normalization layer in the encoder is removed due to a propitious performance \textcite[][17]{gorishniyRevisitingDeepLearning2021}. The upstream feature tokenizer transforms every feature in $\mathbf{x}$ to their embeddings. The embeddings are given by \cref{eq:numerical-embeddings,eq:categorical-embeddings}.
 
 \begin{figure}[ht]
     \centering
@@ -628,16 +628,14 @@ Many of the previous concepts can be adapted to the tabular domain with minor ar
     \label{fig:fttransformer}
 \end{figure}
 
-\textcite[][5]{gorishniyRevisitingDeepLearning2021} propose with FT-Transformer an adaption, that pairs an embedding unit for both numerical and categorical inputs, dubbed the feature tokenizer, with a Transformer. The complete architecture is depicted in \cref{fig:fttransformer}. Notably, the Transformer units use a pre-norm setup for easier optimisation, whereby the very first normalization layer in the encoder is removed due to a propitious performance \textcite[][17]{gorishniyRevisitingDeepLearning2021}. The upstream feature tokenizer transforms every feature in $\mathbf{x}$ to their embeddings. The embeddings are given by \cref{eq:numerical-embeddings,eq:categorical-embeddings}.
-
 Recall from our discussion on self-attention (cp. \cref{sec:attention}), that each \gls{token} encodes the \glspl{token} within the sequence. Based on this notion, \textcite[][4174]{devlinBERTPretrainingDeep2019} prepend a specialised $\mathtt{[CLS]}$ \gls{token} to the sequence, which stores the sequence's aggregate representation. Like any other \gls{token}, the $\mathtt{[CLS]}$ \gls{token} is embedded first and contextualised in the encoder. Its final hidden state is then used for classification.
 
-\textcite[][4]{gorishniyRevisitingDeepLearning2021} adapt the idea of a $\mathtt{[CLS]}$ \gls{token} for tabular representation models. Similar to the embeddings of categorical or numerical features, the embedding of the $[\mathtt{CLS}]$ \gls{token} $\gls{e}_\mathtt{[CLS]} \in \mathbb{R}^{d_{e}}$ is prepended to the column embeddings with $\gls{X} = \left[\gls{e}_\mathtt{[CLS]}, \gls{e}_1, \ldots \gls{e}_{M}\right]$, where $\gls{X} \in \mathbb{R}^{d_{e} \times M +1}$. Like before, $\gls{X}$ is passed through a stack of Transformer layers. The updated representation of the $\mathtt{[CLS]}$ \gls{token} is used exclusively for prediction:
+\textcite[][4]{gorishniyRevisitingDeepLearning2021} adapt the idea of a $\mathtt{[CLS]}$ \gls{token} for tabular representation models. Similar to the embeddings of categorical or numerical features, the embedding of the $[\mathtt{CLS}]$ \gls{token} $\gls{e}_\mathtt{[CLS]} \in \mathbb{R}^{d_{e}}$ is prepended to the column embeddings with $\mathbf{S} = \left[\gls{e}_\mathtt{[CLS]}, \gls{e}_1, \ldots \gls{e}_{M}\right]$, where $\mathbf{S} \in \mathbb{R}^{d_{e} \times M +1}$. Like before, $\mathbf{S}$ is passed through a stack of Transformer layers. The updated representation of the $\mathtt{[CLS]}$ \gls{token} is used exclusively for prediction:
 \begin{equation}
-    P=\mathtt{linear}\left(\mathtt{ReLU}\left(\mathtt{layer\_norm}\left(\gls{X}\left[:,0\right]\right)\right)\right).
+    P=\mathtt{linear}\left(\mathtt{ReLU}\left(\mathtt{layer\_norm}\left(\mathbf{S}\left[:,0\right]\right)\right)\right).
     \label{eq:bert-ft}
 \end{equation}
-% TODO: Add softmax, think about ReLU
+% TODO: Add softmax, think about ReLU, change linear layer to Weight matrix?
 
 \textcite[][8]{gorishniyRevisitingDeepLearning2021} achieve state-of-the-art performance through numerical and categorical embeddings. Embedding both categorical and numerical inputs enables the Transformer to attend to all other features, but at an considerable computational cost, that may only be justified by higher classification accuracies.
 
@@ -794,7 +792,7 @@ Price and size-related features exhibit positive skewness, as brought up in (...
     \label{eq:box-cox-test}
 \end{equation}
 
-Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimising for the Gaussian likelihood on the training set. As shown in \cref{eq:box-cox-test}, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $\mathbf{X}\left[:,j\right]$, we follow common practice by adding a constant if needed. Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the Box-Cox test, we apply a common $\widehat{\mathbf{X}}\left[:,j\right]=\log(\mathbf{X}\left[:,j\right])$ transform on all price and size-related features with the effect of compressing large values and expanding smaller ones.\footnote{More specifically, $\mathtt{log1p}$ is used to improve numerical stability in floating point calculations. Results are not affected.}
+Here, $\lambda$ is the power parameter and determines the specific power function. It is estimated by optimising the Gaussian likelihood on the training set. As shown in \cref{eq:box-cox-test}, a value of $\lambda=0$ corresponds to a log-transform, while $\lambda=1$ leaves the feature unaltered. As the test is only defined on positive $\mathbf{X}\left[:,j\right]$, we follow common practice by adding a constant if needed. Our estimates for $\lambda$ are documented in the \cref{app:power-transforms-of-features}. Based on the results of the Box-Cox test, we apply a common $\mathbf{X}\left[:,j\right]=\log(\mathbf{X}\left[:,j\right])$ transform on all price and size-related features with the effect of compressing large values and expanding smaller ones.\footnote{More specifically, $\mathtt{log1p}$ is used to improve numerical stability in floating point calculations. Results are not affected.}
 
 Note that, the use of the Box-Cox transform is different from its originated purpose. In feature engineering, the transformation is used in an unsupervised fashion, as the transformation's outcome is not directly used in the model. Also, the transform is applied to the features, rather than the model's residuals \autocite[122]{kuhnFeatureEngineeringSelection2020}.
 To further improve the convergence of our Transformer-based architectures, we normalize all numerical features using $z$-score normalization to obtain zero mean and unit variance.
@@ -1058,7 +1056,7 @@ In an attempt to explain the decision-making process of multi-modal Transformers
 
 \begin{equation}
     \begin{aligned}
-        \bar{\mathbf{A}}^{(l)}   & =I+ \mathbb{E}_h\left(\left(\nabla \mathbf{A}^{(l)} \odot \mathbf{A}^{(l)}\right)^{+}\right) \\
+        \bar{\mathbf{A}}^{(l)}   & =\mathbf{I} + \mathbb{E}_h\left(\left(\nabla \mathbf{A}^{(l)} \odot \mathbf{A}^{(l)}\right)^{+}\right) \\
         \operatorname {wrollout} & =\bar{\mathbf{A}}^{(1)} \cdot \bar{\mathbf{A}}^{(2)} \ldots \cdot \bar{\mathbf{A}}^{(L)}
     \end{aligned}
     \label{eq:attention-map-weighted}
