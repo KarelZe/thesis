@@ -31,7 +31,7 @@ The value of this parameter is used when selecting splits. On every iteration ea
 
 ![[hyperparameter-ft-transformer.png]]
 
-
+We apply dropout 
 
 
 

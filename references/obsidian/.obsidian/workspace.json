@@ -22,16 +22,6 @@
             }
           },
           {
-            "id": "ebe0f2d30b3089f8",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "empty",
-              "state": {},
-              "pinned": true
-            }
-          },
-          {
             "id": "f4f457f63a5960f2",
             "type": "leaf",
             "pinned": true,
@@ -46,19 +36,61 @@
             }
           },
           {
+            "id": "ebe0f2d30b3089f8",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "empty",
+              "state": {},
+              "pinned": true
+            }
+          },
+          {
             "id": "42166085033c05e5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+                "file": "📖chapters/🍪Selection Of Supervised Approaches.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
+      },
+      {
+        "id": "c77907ea811c67cb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1f8cce6dd1f360cc",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/💡Training and tuning.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "009faeb7a1e73709",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🍪Selection Of Supervised Approaches.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -116,7 +148,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+                "file": "📖chapters/💡Hyperparameter tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -144,7 +176,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md"
+                "file": "📖chapters/💡Hyperparameter tuning.md"
               }
             }
           },
@@ -175,10 +207,13 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "42166085033c05e5",
+  "active": "f4f457f63a5960f2",
   "lastOpenFiles": [
-    "📑notes/🐈Gradient Boosting notes.md",
+    "📖chapters/💡Training and tuning.md",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📖chapters/💡Hyperparameter tuning.md",
+    "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+    "📑notes/🐈Gradient Boosting notes.md",
     "🖼️Media/training-vs-validation-accuracy.png",
     "🖼️Media/training-validation-accuracy.png",
     "🖼️Media/training-loss-llama.png",
@@ -203,14 +238,12 @@
     "📑notes/🍪Selection of supervised approaches notes.md",
     "📖chapters/💡Training of models (supervised).md",
     "📖chapters/💡Tuning of models (semi-supervised).md",
-    "📖chapters/💡Training and tuning.md",
     "🍬Implementation/😺CatBoost.md",
     "📖chapters/💡Training and Tuning.md",
     "📑notes/💡Hyperparameter tuning notes.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/🧭Random Feature Permutation.md",
     "🍬Implementation/🔥Speed-up PyTorch.md",
-    "🍬Implementation/🛞GCP-Docker-Cluster.md",
-    "📥Inbox/@shavittRegularizationLearningNetworks2018.md"
+    "🍬Implementation/🛞GCP-Docker-Cluster.md"
   ]
 }

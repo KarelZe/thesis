@@ -295,19 +295,19 @@ and 1, no insight into the confidence of the prediction is gained. Nonetheless, 
 \subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches}
 
 The selection of methods in previous works is arbitrary and guided computational constraints (cp. \cref{sec:related-work}). Furthermore, the selection leaves out advancements in machine learning on tabular data.
-This paper provides a succinct discussion of these gaps and selects a set of supervised classifiers based on empirical evidence.
+In this thesis, we perform a succinct discussion to select a set of supervised classifiers based on empirical evidence. To guide our discussion, we establish the following requirements a classifier must met:
 
-The selection of methods in previous works is performed arbitrarily and leaves out advancements in machine learning on tabular data (cp. \cref{sec:related-work}). This thesis provides a succinct discussion and selects a set of supervised classifiers based on empirical evidence. We impose the following requirements a classifier must fulfill:
 
-We impose the following requirements a classifier must fulfill:
+\emph{performance:} The approach must deliver state-of-the-art performance in tabular classification tasks. Trades are typically provided as tabular datasets, consisting of rows representing instances and columns representing features. The classifier must be well-suited for probabilistic classification on tabular data.
 
-\emph{performance:} The approach must deliver state-of-the-art performance in tabular classification tasks.
 
-\emph{scalability:} The approach must scale to datasets with $>$ 10 Mio. samples.
+\emph{scalability:}  The approach must be able to scale to datasets with > 10 Mio. samples. Due to the high trading activity and long data history, datasets may contain millions of samples, so classifiers must be able to handle large quantities of trades.
 
-\emph{extensibility:} The approach must be extendable to train on partially-labelled trades.
+\emph{extensibility:} The approach must be extendable to train on partially-labelled trades. Most definitions of the trade initiator apply only to a subset of trades (e.g., certain order types), but excluded trades can still provide be valuable in training a classifier. The classifier must support training on unlabelled and labelled trades through extension.
 
-Thus, our study considers gradient boosting and the FT-Transformer. This comparison is particularly appealing, as it compares tree-based learners against neural nets, as well as wide ensembles against deep neural networks.
+(...)
+
+To summarize, our study considers gradient boosting and the FT-Transformer, each trained on labelled or partially labelled trades. This comparison is particularly appealing, as it enables a multi-faceted comparison of wide tree based ensembles versus deep neural networks, as well as supervised versus semi-supervised methods.
 
 
 \subsection{Gradient Boosted Trees}\label{sec:gradient-boosted-trees}
