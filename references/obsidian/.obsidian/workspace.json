@@ -26,12 +26,8 @@
             "type": "leaf",
             "pinned": true,
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/💡Training and Tuning.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "pinned": true
             }
           },
@@ -55,7 +51,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📑notes/🐈Gradient Boosting notes.md",
+                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md",
                 "mode": "source",
                 "source": false
               }
@@ -120,7 +116,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📑notes/🐈Gradient Boosting notes.md",
+                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -148,7 +144,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📑notes/🐈Gradient Boosting notes.md"
+                "file": "📖chapters/🍪Selection Of Semisupervised Approaches.md"
               }
             }
           },
@@ -181,6 +177,7 @@
   },
   "active": "42166085033c05e5",
   "lastOpenFiles": [
+    "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/💡Hyperparameter tuning.md",
     "🖼️Media/training-vs-validation-accuracy.png",
     "🖼️Media/training-validation-accuracy.png",
@@ -210,7 +207,6 @@
     "🍬Implementation/😺CatBoost.md",
     "📖chapters/💡Training and Tuning.md",
     "📑notes/💡Hyperparameter tuning notes.md",
-    "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/🧭Random Feature Permutation.md",
     "🍬Implementation/🔥Speed-up PyTorch.md",
