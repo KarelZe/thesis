@@ -28,8 +28,9 @@ The amount of randomness to use for scoring splits when the tree structure is se
 The value of this parameter is used when selecting splits. On every iteration each possible split gets a score (for example, the score indicates how much adding this split will improve the loss function for the training dataset). The split with the highest score is selected. The scores have no randomness. A normally distributed random variable is added to the score of the feature. It has a zero mean and a variance that decreases during the training. The value of this parameter is the multiplier of the variance.
 
 
-
 ![[hyperparameter-ft-transformer.png]]
+
+Layers refers to the number of layers in the encoder stack. 
 
 We apply dropout 
 

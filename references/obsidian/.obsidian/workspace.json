@@ -148,7 +148,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md",
+                "file": "📖chapters/💡Training and tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -176,7 +176,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md"
+                "file": "📖chapters/💡Training and tuning.md"
               }
             }
           },
@@ -207,11 +207,12 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f4f457f63a5960f2",
+  "active": "1f8cce6dd1f360cc",
   "lastOpenFiles": [
+    "📥Inbox/@dorogushCatBoostGradientBoosting.md",
+    "📖chapters/💡Hyperparameter tuning.md",
     "📖chapters/💡Training and tuning.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
-    "📖chapters/💡Hyperparameter tuning.md",
     "📖chapters/🍪Selection Of Semisupervised Approaches.md",
     "📑notes/🐈Gradient Boosting notes.md",
     "🖼️Media/training-vs-validation-accuracy.png",
@@ -243,7 +244,6 @@
     "📑notes/💡Hyperparameter tuning notes.md",
     "📖chapters/🐈Gradient Boosting.md",
     "📖chapters/🧭Random Feature Permutation.md",
-    "🍬Implementation/🔥Speed-up PyTorch.md",
-    "🍬Implementation/🛞GCP-Docker-Cluster.md"
+    "🍬Implementation/🔥Speed-up PyTorch.md"
   ]
 }
