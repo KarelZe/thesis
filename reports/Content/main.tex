@@ -1,5 +1,5 @@
 
-\section{Introduction (2~p)}\label{sec:introduction}
+\section{Introduction}\label{sec:introduction}
 
 \footnote{The authors acknowledge support by the state of Baden-Württemberg through \href{https://www.bwhpc.de/}{bwHPC}.}
 \newpage
@@ -292,7 +292,7 @@ Consequently, if a trade is predicted as a sell, hence $\hat{y} = -1$, we assign
 \cref{eq:prob-from-point-estimate} and \cref{eq:class-from-prob} allow to alternate between a discrete and probabilistic formulation for trade classification rules. Since the class probability estimates are either 0
 and 1, no insight into the confidence of the prediction is gained. Nonetheless, this approach enables a seamless comparison of classical rules and probabilistic classifiers in machine learning. Next, we discuss state-of-the-art classifiers suitable for trade classification.
 
-\subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches}
+\subsection{Selection of Approaches}\label{sec:selection-of-approaches}
 
 The selection of methods in previous works is arbitrary and guided computational constraints (cp. \cref{sec:related-work}). Furthermore, the selection leaves out advancements in machine learning on tabular data.
 In this thesis, we perform a succinct discussion to select a set of supervised classifiers based on empirical evidence. To guide our discussion, we establish the following requirements a classifier must met:
@@ -303,11 +303,9 @@ In this thesis, we perform a succinct discussion to select a set of supervised c
 
 \emph{scalability:}  The approach must be able to scale to datasets with > 10 Mio. samples. Due to the high trading activity and long data history, datasets may contain millions of samples, so classifiers must be able to handle large quantities of trades.
 
-\emph{extensibility:} The approach must be extendable to train on partially-labelled trades. Most definitions of the trade initiator apply only to a subset of trades (e.g., certain order types), but excluded trades can still provide be valuable in training a classifier. The classifier must support training on unlabelled and labelled trades through extension.
+\emph{extensibility:} The approach must be extendable to train on partially-labelled trades.
 
 (...)
-
-To summarize, our study considers gradient boosting and the FT-Transformer, each trained on labelled or partially labelled trades. This comparison is particularly appealing, as it enables a multi-faceted comparison of wide tree based ensembles versus deep neural networks, as well as supervised versus semi-supervised methods.
 
 
 \subsection{Gradient Boosted Trees}\label{sec:gradient-boosted-trees}
@@ -337,7 +335,7 @@ So far, it remains open how the best split can be found. The best split is where
 \begin{equation}
     \operatorname{L}_{\mathrm{SSE}} =\sum_{\mathbf{x}_{i} \in R_j}\left(y_{i}-\gamma_{j}\right)^{2},
 \end{equation}
-which is subsequently minimised \textcite[][231]{breimanClassificationRegressionTrees2017}. As documented in \textcite[][326]{hastietrevorElementsStatisticalLearning2009} we start with the entire dataset and scan through all combinations of features and possible split values. For a split by the feature $k$ at the value $s$, the child nodes are given by a pair of half-planes:
+which is subsequently minimised \autocite[][231]{breimanClassificationRegressionTrees2017}. As documented in \textcite[][326]{hastietrevorElementsStatisticalLearning2009} we start with the entire dataset and scan through all combinations of features and possible split values. For a split by the feature $k$ at the value $s$, the child nodes are given by a pair of half-planes:
 \begin{equation}
     R_1(k, s)=\left\{X \mid X_k \leq s\right\} \text { and } R_2(k, s)=\left\{X \mid X_k>s\right\}.
 \end{equation}
@@ -397,7 +395,7 @@ An improved estimate for $\mathbf{x}$ is calculated from the previous estimate b
 \begin{equation}
     F_{m}(\mathbf{x})=F_{m-1}(\mathbf{x})+\eta \sum_{j=1}^{J_{m}} \gamma_{j m} \mathbb{I}\left(\mathbf{x} \in R_{j m}\right).
 \end{equation}
-After $M$ iterations we obtain the final estimate calculated as $F_{M}\left(\mathbf{x}\right)$. To avoid \gls{overfitting} the residuals, only proportional steps towards the negative gradient are taken, which is controlled by the learning rate \eta \autocite[][13]{friedmanGreedyFunctionApproximation2001}. The learning rate \eta and the size of the ensemble $M$ are deeply intertwined and best tuned together \autocite[][13]{friedmanGreedyFunctionApproximation2001}.
+After $M$ iterations we obtain the final estimate calculated as $F_{M}\left(\mathbf{x}\right)$. To avoid \gls{overfitting} the residuals, only proportional steps towards the negative gradient are taken, which is controlled by the learning rate \eta~\autocite[][13]{friedmanGreedyFunctionApproximation2001}. The learning rate \eta~and the size of the ensemble $M$ are deeply intertwined and best tuned together \autocite[][13]{friedmanGreedyFunctionApproximation2001}.
 
 Gradient boosting is still prone to \gls{overfitting}. One solution is to employ early stopping, whereby the ensemble is only grown in size, as long as adding more weak learners leads to a decrease in loss on the validation set \autocite[][384]{hastietrevorElementsStatisticalLearning2009}. Another approach is to limit the amount of data seen during training by fitting trees on random subset of samples, as proposed in \textcite[][3]{friedmanStochasticGradientBoosting2002}, or on a subset of features, as popularized by \textcite[][3]{chenXGBoostScalableTree2016}. \textcite[][6]{prokhorenkovaCatBoostUnbiasedBoosting2018} grow oblivious trees, which use the same splitting criterion for all nodes of one level in a tree. The rationale is, that these arguably simplistic trees, and achieve an imperfect fit, which regularises the model. Finally, the loss function can be extended for a $\ell_2$ regularization term to penalize the model for complexity, as applied in \textcite[][2]{chenXGBoostScalableTree2016}.
 
@@ -407,7 +405,7 @@ As we noted at the beginning, $F_M(\mathbf{x})$ models the log odds. We can reco
 \begin{equation}
     \widehat{\operatorname{Pr}}(y \mid \mathbf{x}) = 1 /\left(1+\exp(-2yF_M(\mathbf{x}))\right).
 \end{equation}
-and get the majority class by \cref{eq:class-from-prob}.
+and get the most probable class by \cref{eq:class-from-prob}.
 
 \subsection{Transformer Networks}\label{sec:transformer-networks}
 
@@ -474,7 +472,7 @@ As this work is concerned with the classification of tabular data, the aforement
 % TODO: Explain how a sample maps / row in a dataset maps to a sequence. Maps to...
 \textbf{Embeddings For Numerical Data}
 
-Transformer networks can handle numerical features, such as the trade price, by mapping the scalar value to a high-dimensional embedding vector and process sequences thereof \autocite[][1]{gorishniyEmbeddingsNumericalFeatures2022}. In the simplest case, a learned linear projection is utilized to obtain the embedding. Linear embeddings of numerical features were previously explored in \textcites[][1]{kossenSelfAttentionDatapointsGoing2021}[][1]{somepalliSaintImprovedNeural2021}[][1]{gorishniyRevisitingDeepLearning2021}.
+Transformer networks can handle numerical features, such as the trade price, by mapping the scalar value to a high-dimensional embedding vector and process sequences thereof \autocite[][3]{gorishniyEmbeddingsNumericalFeatures2022}. In the simplest case, a learned linear projection is utilized to obtain the embedding. Linear embeddings of numerical features were previously explored in \textcites[][3]{kossenSelfAttentionDatapointsGoing2021}[][4]{somepalliSaintImprovedNeural2021}[][4]{gorishniyRevisitingDeepLearning2021}.
 
 In analogon to the word case, if the $m$-th feature, $\mathbf{x}[m]$, is numerical, it is projected to its embedding $\gls{e} \in \mathbb{R}^{d_e}$ by element-wise multiplication with a learned vector $\mathbf{W}_m \in \mathbb{R}^{d_{e}}$. Moreover, a feature-dependent bias term $\mathbf{b}_m \in \mathbb{R}^{d_{e}}$ is added, as noted in \cref{eq:numerical-embeddings}.
 \begin{equation}
@@ -483,12 +481,12 @@ In analogon to the word case, if the $m$-th feature, $\mathbf{x}[m]$, is numeric
 \end{equation}
 More sophisticated approaches rely on parametric embeddings, like the \emph{piece-wise linear encoding} or the \emph{periodic encoding} of \textcite[][10]{gorishniyEmbeddingsNumericalFeatures2022}. Both enforce non-linearity. The authors show that these can alleviate the model's performance but at a non-neglectable computational cost. For this reason, our focus is on the computational more tractable linear embedding.
 
-More generally, the works of \textcites[][1]{gorishniyEmbeddingsNumericalFeatures2022}[][1]{somepalliSaintImprovedNeural2021} suggest, that numerical embedding can significantly improve robustness to missing values or noise. Their work misses a theoretical explanation. \textcite[][8--9]{grinsztajnWhyTreebasedModels2022} fill this void and attribute the increased robustness to the broken rotational invariance.
+More generally, the works of \textcites[][1]{gorishniyEmbeddingsNumericalFeatures2022}[][1]{somepalliSaintImprovedNeural2021} suggest, that numerical embedding can significantly improve robustness to missing values or noise. Their work miss a theoretical explanation. \textcite[][8--9]{grinsztajnWhyTreebasedModels2022} fill this void and attribute the increased robustness to the broken rotational invariance.
 
 \textbf{Embeddings For Categorical Data}
 
-Datasets often comprise categorical features like the underlying. In the context of tabular Transformers, learned categorical embeddings are widely used, which are similar to the word embedding % \autocites[][1]{wangTransTabLearningTransferable}
-\autocites[][1]{gorishniyRevisitingDeepLearning2021}[][1]{huangTabTransformerTabularData2020}[][1]{somepalliSaintImprovedNeural2021}. Analogous, each category is mapped to an embedding vector using a learned, embedding matrix. Due to the heterogeneous nature of tabular data, embeddings may not be shared between features.
+Datasets often comprise categorical features like the underlying. In the context of tabular Transformers, learned categorical embeddings are widely used, which are similar to the word embedding 
+\autocites[][4]{gorishniyRevisitingDeepLearning2021}[][2]{huangTabTransformerTabularData2020}[][4]{somepalliSaintImprovedNeural2021}. Analogous, each category is mapped to an embedding vector using a learned, embedding matrix. Due to the heterogeneous nature of tabular data, embeddings may not be shared between features.
 
 For categorical inputs, the embedding is implemented as a lookup table, analogous to \cref{eq:word-embeddings}. However, each feature has
 its vocabulary $C_t$ with $N_{C_m}$ categories. Assume, the $m$-th feature is categorical. The specific embeddings $\gls{e}$ are queried with a unique integer key $c_{m} \in C_m \cong\left[N_{C_t}\right]$ from the learned embedding matrix $\mathbf{W}_m \in \mathbb{R}^{d_e \times N_{C_m}}$. Finally, a feature-specific bias term $\mathbf{b}_m \in \mathbb{R}^{d_{e}}$ is added as shown in \cref{eq:categorical-embeddings}. Like for the word case, all embeddings of an instance are gathered in $\mathbf{S}$.
@@ -564,7 +562,7 @@ For computational efficiency, attention is performed simultaneously over multipl
     \end{aligned}
     \label{eq:attention}
 \end{equation}
-where $\mathbf{S} \in \mathbb{R}^{d_S\times \ell_s}$ and $\mathbf{Z} \in \mathbb{R}^{d_Z\times \ell_z}$  are vector representations of the primary input sequence and of the context sequence. Both the primary and the context sequences are identical for the encoder but are different for the decoder. The query, key, and value matrices $\mathbf{Q}=\mathbf{W}_q \mathbf{S} + \mathbf{b}_q\mathbf{1}^{\top}$, $\mathbf{K}=\mathbf{W}_k \mathbf{Z} + \mathbf{b}_k\mathbf{1}^{\top}$, and $\mathbf{V}=\mathbf{W}_v \mathbf{Z} + \mathbf{b}_v\mathbf{1}^{\top}$ are linear projections of the input and context sequences, and $\mathbf{W}_q, \mathbf{W}_k \in \mathbb{R}^{d_{\mathrm{attn}\times d_{s}}}$; $\mathbf{W}_v \in \mathbb{R}^{d_{\mathrm{out}\times d_{z}}}$; $\mathbf{b}_q, \mathbf{b}_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}_v \in \mathbb{R}^{d_{\mathrm{out}}}$ are learnable parameters. The dimensionality of the attention mechanism, $d_{\mathrm{attn}}$, is typically a fraction of the model dimensionality to accelerate computation. Likewise, the output dimension, $d_{out}$, is another hyperparameter to the models. The attention scores are $\mathbf{A}$, which are scaled by $\sqrt{d_{\mathrm{attn}}}$ to avoid unstable gradients, and the softmax activation normalizes all scores. As normalized attention scores have a clear interpretation as the weights of how much a token contributes to the model's output, the attention mechanism provides a window into the model, which we explore in \cref{sec:feature-importance-measure}.
+where $\mathbf{S} \in \mathbb{R}^{d_s \times \ell_s}$ and $\mathbf{Z} \in \mathbb{R}^{d_z \times \ell_z}$ are vector representations of the primary input sequence and of the context sequence. Both the primary and the context sequences are identical for the encoder but are different for the decoder. The query, key, and value matrices $\mathbf{Q}=\mathbf{W}_q \mathbf{S} + \mathbf{b}_q\mathbf{1}^{\top}$, $\mathbf{K}=\mathbf{W}_k \mathbf{Z} + \mathbf{b}_k\mathbf{1}^{\top}$, and $\mathbf{V}=\mathbf{W}_v \mathbf{Z} + \mathbf{b}_v\mathbf{1}^{\top}$ are linear projections of the input and context sequences, and $\mathbf{W}_q, \mathbf{W}_k \in \mathbb{R}^{d_{\mathrm{attn}\times d_{s}}}$; $\mathbf{W}_v \in \mathbb{R}^{d_{\mathrm{out}\times d_{z}}}$; $\mathbf{b}_q, \mathbf{b}_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}_v \in \mathbb{R}^{d_{\mathrm{out}}}$ are learnable parameters. The dimensionality of the attention mechanism, $d_{\mathrm{attn}}$, is typically a fraction of the model dimensionality to accelerate computation. Likewise, the output dimension, $d_{out}$, is another hyperparameter to the models. The attention scores are $\mathbf{A}$, which are scaled by $\sqrt{d_{\mathrm{attn}}}$ to avoid unstable gradients, and the softmax activation normalizes all scores. As normalized attention scores have a clear interpretation as the weights of how much a token contributes to the model's output, the attention mechanism provides a window into the model, which we explore in \cref{sec:feature-importance-measure}.
 
 \textbf{Multi-Head Attention}
 
@@ -580,7 +578,7 @@ Multi-head attention can be computed as:
         \mathbf{Y}^{h}                                     & = \operatorname{Attention}(\mathbf{Q}^h, \mathbf{K}^h, \mathbf{V}^h)
     \end{aligned}
 \end{equation}
-The query, key, and value matrices  $\mathbf{Q}^{h}=\mathbf{W}^h_q \mathbf{S} + \mathbf{b}^h_q\mathbf{1}^{\top}$, $\mathbf{K}^{h}=\mathbf{W}_k^h \mathbf{Z} + \mathbf{b}_k^h\mathbf{1}^{\top}$, and $\mathbf{V}^{h}=\mathbf{W}_v^h \mathbf{Z} + \mathbf{b}_v^h\mathbf{1}^{\top}$ are obtained from linear projections of the input and context sequences unique per head. Again, $\mathbf{W}^{h}_{q} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_{S}}$; $\mathbf{W}^{h}_{k}, \mathbf{W}^{h}_{v} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_Z}$; $\mathbf{b}^h_q, \mathbf{b}^h_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}^h_v \in \mathbb{R}^{d_{\mathrm{mid}}}$ are used for projection. Typically, the dimensionality of the attention heads, $d_{\mathrm{mid}}$, is reduced to $d_{\mathrm{attn}}/H$ to match the computational cost of single-head attention. The output dimensionality $d_{\mathrm{out}}$ is restored with a final linear projection through the weight matrix $\mathbf{W}_{o} \in \mathbb{R}^{d_{\mathrm{out}}\times Hd_{\mathrm{mid}}}$ and bias $\mathbf{b}_o \in \mathbb{R}^{d_{\mathrm{out}}}$ applied to the concatenated results of the attention heads.
+The query, key, and value matrices  $\mathbf{Q}^{h}=\mathbf{W}^h_q \mathbf{S} + \mathbf{b}^h_q\mathbf{1}^{\top}$, $\mathbf{K}^{h}=\mathbf{W}_k^h \mathbf{Z} + \mathbf{b}_k^h\mathbf{1}^{\top}$, and $\mathbf{V}^{h}=\mathbf{W}_v^h \mathbf{Z} + \mathbf{b}_v^h\mathbf{1}^{\top}$ are obtained from linear projections of the input and context sequences unique per head. Again, $\mathbf{W}^{h}_{q} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_{S}}$; $\mathbf{W}^{h}_{k}, \mathbf{W}^{h}_{v} \in \mathbb{R}^{d_{\mathrm{attn}}\times d_z}$; $\mathbf{b}^h_q, \mathbf{b}^h_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}^h_v \in \mathbb{R}^{d_{\mathrm{mid}}}$ are used for projection. Typically, the dimensionality of the attention heads, $d_{\mathrm{mid}}$, is reduced to $d_{\mathrm{attn}}/H$ to match the computational cost of single-head attention. The output dimensionality $d_{\mathrm{out}}$ is restored with a final linear projection through the weight matrix $\mathbf{W}_{o} \in \mathbb{R}^{d_{\mathrm{out}}\times Hd_{\mathrm{mid}}}$ and bias $\mathbf{b}_o \in \mathbb{R}^{d_{\mathrm{out}}}$ applied to the concatenated results of the attention heads.
 
 The concatenated and projected output of the attention heads is then passed to the point-wise feed-forward networks, which enables interaction between the head's outputs. We discuss position-wise feed-forward networks in \cref{sec:position-wise-ffn}.
 
@@ -713,7 +711,7 @@ Independent of the base classifier, self-training increases computational cost, 
     {\renewcommand\normalsize{\small}
         \normalsize
         \input{./Graphs/random-token-replacement.pdf_tex}}
-    \caption[Random Token Replacement]{Random Token Replacement. Own work inspired by \autocite[][2--3]{clarkElectraPretrainingText2020}.}
+    \caption[Replaced Token Detection]{Replaced Token Detection. Own work inspired by \autocite[][2--3]{clarkElectraPretrainingText2020}.}
     \label{fig:random-token-replacement}
 \end{figure}
 
@@ -729,7 +727,7 @@ In summary, \gls{RTD} can help to learn expressive representations of the input,
 
 \newpage
 \addtocontents{toc}{\protect\newpage}
-\section{Empirical Study (19.5~p)}\label{sec:empirical-study}
+\section{Empirical Study}\label{sec:empirical-study}
 
 In this Section, we demonstrate the effectiveness of gradient boosting and Transformers for trade classification. We benchmark against the \gls{LR}, \gls{EMO}, and \gls{CLNV} algorithm, as well as hybrids involving the trade size rule and depth rule on two datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}.
 
@@ -737,7 +735,7 @@ Experiments were conducted on shared nodes of the bwHPC cluster, with 10 assigne
 
 The subsequent section provides details on the datasets.
 
-\subsection{Data and Data Preparation (6 p)}\label{sec:data-and-data-preparation}
+\subsection{Data and Data Preparation}\label{sec:data-and-data-preparation}
 
 The following chapter describes the construction of datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we define and infer the trade initiator.
 
@@ -842,20 +840,20 @@ We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visua
 
 Our train-test-split assumes that all subsets are drawn from the same distribution, so fitting a classifier on the training set and optimising for the validation set provides good estimates for the test set. To validate this assumption, we use adversarial validation. Specifically, we re-label all training samples with $y=-1$ and all trades of the validation set with $y=1$, train a classifier on a random subset of the composed dataset and predict class conformance. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which ranges between $\left[-1, 1\right]$ and is insensitive to class imbalances.\footnote{Classes are imbalanced, due to the training set being three times the size of the validation set.} Assuming train and validation samples are sampled from the same distribution, the performance estimate is near a random guess, or $\operatorname{MCC} = 0$, Depending on the feature sets, the \gls{MCC} ranges between \SI{0.00}{\percent} and \SI{99.999}{\percent} suggesting training and validation sets are approximately similar. The next section discusses techniques used in training the classifiers.
 
-\subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
+\subsection{Training and Tuning}\label{sec:training-and-tuning}
 
 \subsubsection{Training of Supervised
-    Models (4~p)}\label{sec:training-of-supervised-models}
+    Models}\label{sec:training-of-supervised-models}
 
 From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we implement early stopping and halt training after \num{15} consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
 
 For gradient boosting we raise the border count to \num{265}, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive \num{100} steps.
 
 \subsubsection{Training of Semi-Supervised
-    Models (4~p)}\label{sec:training-of-semi-supervised-models}
+    Models}\label{sec:training-of-semi-supervised-models}
 
 
-\subsubsection{Hyperparameter Tuning (2~p)}\label{sec:hyperparameter-tuning}
+\subsubsection{Hyperparameter Tuning}\label{sec:hyperparameter-tuning}
 
 All of our machine-learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[][5]{grinsztajnWhyTreebasedModels2022}, emphasize the need for tuning routines, as the test performance of the FT-Transformer and gradient-boosted trees largely fluctuates with the hyperparameter configuration. For a fair comparison, we employ an exhaustive hyperparameter search, to find a suitable hyperparameter configuration for each of our models.
 
@@ -1073,25 +1071,23 @@ In absence of ground truth for the true feature attribution, we resort to attent
 
 
 \subsection{Results of Supervised
-    Models (2~p)}\label{sec:results-of-supervised-models}
+    Models}\label{sec:results-of-supervised-models}
 
 \textbf{Gradient Boosting}
 
 \textbf{FT-Transformer}
 
 \subsection{Results of Semi-Supervised
-    Models (2~p)}\label{sec:results-of-semi-supervised-models}
+    Models}\label{sec:results-of-semi-supervised-models}
 
 
 \textbf{Gradient-Boosting With Self-Training}
 
 \textbf{FT-Transformer With Pretraining}
 
-\subsection{Robustness of Results (3~p)}\label{sec:robustness-checks}
+\subsection{Robustness of Results}\label{sec:robustness-checks}
 
-\subsection{Feature Importance (3~p)}\label{sec:feature-importance}
-
-% \subsection{Ablation Study of Models (2~p)}\label{sec:ablation-study}
+\subsection{Feature Importance}\label{sec:feature-importance}
 
 \newpage
 \section{Application in Transaction Cost Estimation}\label{sec:application}
@@ -1134,11 +1130,11 @@ Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conduc
 % TODO: Discuss results. See Zettelkasten.
 
 \newpage
-\section{Discussion (3~p)}\label{sec:discussion}
+\section{Discussion}\label{sec:discussion}
 
 \newpage
-\section{Conclusion (2~p)}\label{sec:conclusion}
+\section{Conclusion}\label{sec:conclusion}
 
 \newpage
-\section{Outlook (0.5~p=67.5~p)}\label{sec:outlook}
+\section{Outlook}\label{sec:outlook}
 
