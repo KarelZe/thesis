@@ -1,5 +1,5 @@
 
-\section{Introduction (2~p)}\label{sec:introduction}
+\section{Introduction}\label{sec:introduction}
 
 \footnote{The authors acknowledge support by the state of Baden-Württemberg through \href{https://www.bwhpc.de/}{bwHPC}.}
 \newpage
@@ -292,7 +292,7 @@ Consequently, if a trade is predicted as a sell, hence $\hat{y} = -1$, we assign
 \cref{eq:prob-from-point-estimate} and \cref{eq:class-from-prob} allow to alternate between a discrete and probabilistic formulation for trade classification rules. Since the class probability estimates are either 0
 and 1, no insight into the confidence of the prediction is gained. Nonetheless, this approach enables a seamless comparison of classical rules and probabilistic classifiers in machine learning. Next, we discuss state-of-the-art classifiers suitable for trade classification.
 
-\subsection{Selection of Approaches (2~p)}\label{sec:selection-of-approaches}
+\subsection{Selection of Approaches}\label{sec:selection-of-approaches}
 
 The selection of methods in previous works is arbitrary and guided computational constraints (cp. \cref{sec:related-work}). Furthermore, the selection leaves out advancements in machine learning on tabular data.
 In this thesis, we perform a succinct discussion to select a set of supervised classifiers based on empirical evidence. To guide our discussion, we establish the following requirements a classifier must met:
@@ -407,7 +407,7 @@ As we noted at the beginning, $F_M(\mathbf{x})$ models the log odds. We can reco
 \begin{equation}
     \widehat{\operatorname{Pr}}(y \mid \mathbf{x}) = 1 /\left(1+\exp(-2yF_M(\mathbf{x}))\right).
 \end{equation}
-and get the majority class by \cref{eq:class-from-prob}.
+and get the most probable class by \cref{eq:class-from-prob}.
 
 \subsection{Transformer Networks}\label{sec:transformer-networks}
 
@@ -564,7 +564,7 @@ For computational efficiency, attention is performed simultaneously over multipl
     \end{aligned}
     \label{eq:attention}
 \end{equation}
-where $\mathbf{S} \in \mathbb{R}^{d_S\times \ell_s}$ and $\mathbf{Z} \in \mathbb{R}^{d_Z\times \ell_z}$  are vector representations of the primary input sequence and of the context sequence. Both the primary and the context sequences are identical for the encoder but are different for the decoder. The query, key, and value matrices $\mathbf{Q}=\mathbf{W}_q \mathbf{S} + \mathbf{b}_q\mathbf{1}^{\top}$, $\mathbf{K}=\mathbf{W}_k \mathbf{Z} + \mathbf{b}_k\mathbf{1}^{\top}$, and $\mathbf{V}=\mathbf{W}_v \mathbf{Z} + \mathbf{b}_v\mathbf{1}^{\top}$ are linear projections of the input and context sequences, and $\mathbf{W}_q, \mathbf{W}_k \in \mathbb{R}^{d_{\mathrm{attn}\times d_{s}}}$; $\mathbf{W}_v \in \mathbb{R}^{d_{\mathrm{out}\times d_{z}}}$; $\mathbf{b}_q, \mathbf{b}_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}_v \in \mathbb{R}^{d_{\mathrm{out}}}$ are learnable parameters. The dimensionality of the attention mechanism, $d_{\mathrm{attn}}$, is typically a fraction of the model dimensionality to accelerate computation. Likewise, the output dimension, $d_{out}$, is another hyperparameter to the models. The attention scores are $\mathbf{A}$, which are scaled by $\sqrt{d_{\mathrm{attn}}}$ to avoid unstable gradients, and the softmax activation normalizes all scores. As normalized attention scores have a clear interpretation as the weights of how much a token contributes to the model's output, the attention mechanism provides a window into the model, which we explore in \cref{sec:feature-importance-measure}.
+where $\mathbf{S} \in \mathbb{R}^{d_s \times \ell_s}$ and $\mathbf{Z} \in \mathbb{R}^{d_z\times \ell_z}$  are vector representations of the primary input sequence and of the context sequence. Both the primary and the context sequences are identical for the encoder but are different for the decoder. The query, key, and value matrices $\mathbf{Q}=\mathbf{W}_q \mathbf{S} + \mathbf{b}_q\mathbf{1}^{\top}$, $\mathbf{K}=\mathbf{W}_k \mathbf{Z} + \mathbf{b}_k\mathbf{1}^{\top}$, and $\mathbf{V}=\mathbf{W}_v \mathbf{Z} + \mathbf{b}_v\mathbf{1}^{\top}$ are linear projections of the input and context sequences, and $\mathbf{W}_q, \mathbf{W}_k \in \mathbb{R}^{d_{\mathrm{attn}\times d_{s}}}$; $\mathbf{W}_v \in \mathbb{R}^{d_{\mathrm{out}\times d_{z}}}$; $\mathbf{b}_q, \mathbf{b}_k \in \mathbb{R}^{d_{\mathrm{attn}}}$, and $\mathbf{b}_v \in \mathbb{R}^{d_{\mathrm{out}}}$ are learnable parameters. The dimensionality of the attention mechanism, $d_{\mathrm{attn}}$, is typically a fraction of the model dimensionality to accelerate computation. Likewise, the output dimension, $d_{out}$, is another hyperparameter to the models. The attention scores are $\mathbf{A}$, which are scaled by $\sqrt{d_{\mathrm{attn}}}$ to avoid unstable gradients, and the softmax activation normalizes all scores. As normalized attention scores have a clear interpretation as the weights of how much a token contributes to the model's output, the attention mechanism provides a window into the model, which we explore in \cref{sec:feature-importance-measure}.
 
 \textbf{Multi-Head Attention}
 
@@ -713,7 +713,7 @@ Independent of the base classifier, self-training increases computational cost, 
     {\renewcommand\normalsize{\small}
         \normalsize
         \input{./Graphs/random-token-replacement.pdf_tex}}
-    \caption[Random Token Replacement]{Random Token Replacement. Own work inspired by \autocite[][2--3]{clarkElectraPretrainingText2020}.}
+    \caption[Replaced Token Detection]{Replaced Token Detection. Own work inspired by \autocite[][2--3]{clarkElectraPretrainingText2020}.}
     \label{fig:random-token-replacement}
 \end{figure}
 
@@ -729,7 +729,7 @@ In summary, \gls{RTD} can help to learn expressive representations of the input,
 
 \newpage
 \addtocontents{toc}{\protect\newpage}
-\section{Empirical Study (19.5~p)}\label{sec:empirical-study}
+\section{Empirical Study}\label{sec:empirical-study}
 
 In this Section, we demonstrate the effectiveness of gradient boosting and Transformers for trade classification. We benchmark against the \gls{LR}, \gls{EMO}, and \gls{CLNV} algorithm, as well as hybrids involving the trade size rule and depth rule on two datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}.
 
@@ -737,7 +737,7 @@ Experiments were conducted on shared nodes of the bwHPC cluster, with 10 assigne
 
 The subsequent section provides details on the datasets.
 
-\subsection{Data and Data Preparation (6 p)}\label{sec:data-and-data-preparation}
+\subsection{Data and Data Preparation}\label{sec:data-and-data-preparation}
 
 The following chapter describes the construction of datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we define and infer the trade initiator.
 
@@ -842,20 +842,20 @@ We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visua
 
 Our train-test-split assumes that all subsets are drawn from the same distribution, so fitting a classifier on the training set and optimising for the validation set provides good estimates for the test set. To validate this assumption, we use adversarial validation. Specifically, we re-label all training samples with $y=-1$ and all trades of the validation set with $y=1$, train a classifier on a random subset of the composed dataset and predict class conformance. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which ranges between $\left[-1, 1\right]$ and is insensitive to class imbalances.\footnote{Classes are imbalanced, due to the training set being three times the size of the validation set.} Assuming train and validation samples are sampled from the same distribution, the performance estimate is near a random guess, or $\operatorname{MCC} = 0$, Depending on the feature sets, the \gls{MCC} ranges between \SI{0.00}{\percent} and \SI{99.999}{\percent} suggesting training and validation sets are approximately similar. The next section discusses techniques used in training the classifiers.
 
-\subsection{Training and Tuning (10~p)}\label{sec:training-and-tuning}
+\subsection{Training and Tuning}\label{sec:training-and-tuning}
 
 \subsubsection{Training of Supervised
-    Models (4~p)}\label{sec:training-of-supervised-models}
+    Models}\label{sec:training-of-supervised-models}
 
 From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we implement early stopping and halt training after \num{15} consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
 
 For gradient boosting we raise the border count to \num{265}, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive \num{100} steps.
 
 \subsubsection{Training of Semi-Supervised
-    Models (4~p)}\label{sec:training-of-semi-supervised-models}
+    Models}\label{sec:training-of-semi-supervised-models}
 
 
-\subsubsection{Hyperparameter Tuning (2~p)}\label{sec:hyperparameter-tuning}
+\subsubsection{Hyperparameter Tuning}\label{sec:hyperparameter-tuning}
 
 All of our machine-learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[][5]{grinsztajnWhyTreebasedModels2022}, emphasize the need for tuning routines, as the test performance of the FT-Transformer and gradient-boosted trees largely fluctuates with the hyperparameter configuration. For a fair comparison, we employ an exhaustive hyperparameter search, to find a suitable hyperparameter configuration for each of our models.
 
@@ -1073,25 +1073,23 @@ In absence of ground truth for the true feature attribution, we resort to attent
 
 
 \subsection{Results of Supervised
-    Models (2~p)}\label{sec:results-of-supervised-models}
+    Models}\label{sec:results-of-supervised-models}
 
 \textbf{Gradient Boosting}
 
 \textbf{FT-Transformer}
 
 \subsection{Results of Semi-Supervised
-    Models (2~p)}\label{sec:results-of-semi-supervised-models}
+    Models}\label{sec:results-of-semi-supervised-models}
 
 
 \textbf{Gradient-Boosting With Self-Training}
 
 \textbf{FT-Transformer With Pretraining}
 
-\subsection{Robustness of Results (3~p)}\label{sec:robustness-checks}
+\subsection{Robustness of Results}\label{sec:robustness-checks}
 
-\subsection{Feature Importance (3~p)}\label{sec:feature-importance}
-
-% \subsection{Ablation Study of Models (2~p)}\label{sec:ablation-study}
+\subsection{Feature Importance}\label{sec:feature-importance}
 
 \newpage
 \section{Application in Transaction Cost Estimation}\label{sec:application}
@@ -1134,11 +1132,11 @@ Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conduc
 % TODO: Discuss results. See Zettelkasten.
 
 \newpage
-\section{Discussion (3~p)}\label{sec:discussion}
+\section{Discussion}\label{sec:discussion}
 
 \newpage
-\section{Conclusion (2~p)}\label{sec:conclusion}
+\section{Conclusion}\label{sec:conclusion}
 
 \newpage
-\section{Outlook (0.5~p=67.5~p)}\label{sec:outlook}
+\section{Outlook}\label{sec:outlook}
 
