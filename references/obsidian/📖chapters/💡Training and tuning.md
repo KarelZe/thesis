@@ -1,51 +1,46 @@
 This chapter documents the basic training setup, and defines a baseline before applying hyperparameter tuning.
 
+![[research-framework.png]]
+
 ## Gradient-Boosting
 Our implementation of gradient-boosted trees is based on *CatBoost* ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]]5--6) due to its native support for categorical variables and its efficient implementation on gls-gpu. Though, we expect the chosen library to have marginal effects on performance as discussed earlier in cref-gradient-boosting. 
 
 ![[gbm-log-loss-accuracy.png]]
+(One iteration equals one tree added to the ensemble. )
 
 Fig-learning-curves visualises the learning curves of the default implementation on the ISE training and validation set / feature set classical.
 
 Specifically, the ensemble consists of (...) trees, grown to depth of (...). The learning rate is chosen by a simple heuristic / fixed $\eta=0.03$ . We set the loss function to be the (...) loss. Several conclusions can be drawn from this plot (...) First, the model is trained beyond (...) the optimal model complexity which is reached at an ensemble width of (...). Second, the model overfits the training . While we cannot change the training or validation data due to the temporal split, we can employ regularisation to reduce the effects from overfitting. Overfitting is inlien with theoretical obsersvations. See chapter ...
 
-The improvements in terms of 
-The large gap between the training and validation loss indicates overfitting, 
-
-(One iteration equals one tree added to the ensemble. )
+**Status Quo**
+The improvements in terms of  (...). The large gap between the training and validation loss indicates overfitting, 
 
 
 
-We introduce the following ideas to improve performance of the gradient-boosting implementation. We keep all other parameters constant, and vary the single parameter. Gradually add complexity
-
+**Ideas:**
+We introduce the following ideas to improve performance of the gradient-boosting implementation. We keep all other parameters constant, and vary the single parameter. 
 
 **Growth Strategy:**
-We grow trees loss-guided. 
-
-- Try out `lossguided` growing strategy. Add it to objective.
+By default, *CatBoost* grows oblivious regression trees ([[@dorogushCatBoostGradientBoosting]]4). In this setting, trees are symmetric and grown level-wise and splits are performed on the same feature and split values across all nodes of a single level. This strategy is computationally efficient, but may sacrifice performance, as the split is performed on the same features or split values. Following ([[@chenXGBoostScalableTree2016]]4) we switch to a leaf-wise growth strategy, whereby terminal nodes are selected for splitting provide the largest improvement in loss. Nodes within the same level may result from different feature splits and thereby fit data more closely. Leaf-wise growth matches our intuition of split finding in cref-[[🎄Decision Trees]].
 
 **Early Stopping:**
-Acknowleding the observations ([[@friedmanGreedyFunctionApproximation2001]]14), that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble once the validation accuracy decreases for 100 iterations and prune the ensemble back to the one with the highest validation accuracy. 
+Acknowleding the observations ([[@friedmanGreedyFunctionApproximation2001]]14), that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble once the validation accuracy decreases for 100 iterations. The ensemble is then pruned to achieve highest validation accuracy. 
 
-**Sample Weighting**
+**Sample Weighting:**
+The work of ([[@grauerOptionTradeClassification2022]]) suggests a strong temporal shift in the data, with the performance of classical trade classification rules to deteriorate over time. In consequence, the predictability of features defined on top of classical rules diminishes over time and patterns learned on old observations loose their relevance for predictions of test samples. In absence of an update mechanism, we extend the cross-entropy loss by a sample weighting scheme to assign higher weights to recent training samples and gradually decay weights over time. Validation and test samples are equally-weighted. Sample weighting has the strongest impact on validation performance, increasing validation accuracies by (... %).  
 
-The work of () suggests a strong temporal shift in the data, with the performance deterioriate ...
-
-
+$$
+\frac{-\sum_{i=1}^N w_i\left(c_i \log \left(p_i\right)+\left(1-c_i\right) \log \left(1-p_i\right)\right)}{\sum_{i=1}^N w_i}
+$$
+(from https://catboost.ai/en/docs/concepts/loss-functions-classification 🔢)
 
 **Quantization /  Border count:**
-Typically split finding in the regression trees of gradient-boosting is approximated through quantization, whereby all numeric features are discretized into a fixed count of bins through histogram building and splits are only evaluated at the border of the bins ([[@dorogushCatBoostGradientBoosting]]4) and ([[@keLightGBMHighlyEfficient2017]]2).  We raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization. Expectedly, accuracy increases at the cost of computational efficiency.
+Split finding in regression trees of gradient-boosting is typically approximated through quantization, whereby all numeric features are discretized first into a fixed number of buckets through histogram building and splits are evaluated at the border of the buckets ([[@dorogushCatBoostGradientBoosting]]4) and ([[@keLightGBMHighlyEfficient2017]]2).  We raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization. Expectedly, accuracy increases at the cost of computational efficiency. 
 
+(visualization of border counts 🖼️)
 
-For gradient-boosting 
+We incorporate these concepts into the large-scale studies. We employ additional measures to counterfight overfitting, but treat them as tunable hyperparameter. More details are provided in cref-hyperparameter-tuning.
 
-http://learningsys.org/nips17/assets/papers/paper_11.pdf
-
-We incorporate these ideas into our large-scale training. cref-hyperparameter-tuning, performs hyperparameter tuning.
-
-We employ additional measures to counterfight overfitting, but treat them as tunable hyperparameter. Thus, we discuss them in cref-
-
-“Dense numerical features One of the most important building blocks for any GBDT implementation is searching for the best split. This block is the main computation burden for building decision tree on dense numerical datasets. CatBoost uses oblivious decision trees as base learners and performs feature discretization into a fixed amount of bins to reduce memory usage [10]. The number of bins is the parameter of the algorithm. As a result we could use histogram-based approach for searching for best splits. Our approach to building decision trees on GPU is similar in spirit to one described in [11]. We group several numerical features in one 32-bit integer and currently use: • 1 bit for binary features and group 32 features per integer. • 4 bits for features with no more than 15 bins, 8 features per integer. • 8 bits for other features (maximum feature discretization is 255), 4 features per integer. In terms of GPU memory usage CatBoost is at least as efficient as LightGBM [11]. The main difference is another way of histogram computation. Algorithms in LightGBM and XGBoost4 have a major drawback: they rely on atomic operations. Such technique is very easy to deal with concurrent memory accesses but it is also relatively slow even on the modern generation of GPU. Actually histograms could be computed more efficiently without any atomic operations. We will describe here only the basic idea of our approach by a simplified example: simultaneous computation of four 32-bin histograms with a single float additive statistic per feature. This idea could be efficiently generalized for cases with several statistics and multiple histograms. So we have gradient values g[i] and feature groups (f1, f2, f3, f4)[i]. We need to compute 4 histograms: hist[j][b] = ∑ i:fj[i]=b g[i]. CatBoost builds partial histogram per each warp5 histograms instead of histogram per thread block. We will describe work which is done by one warp on first 32 samples. Thread with index i processes sample i. Since we are building 4 histograms at once we need 32 ∗ 32 ∗ 4 bytes of shared memory per warp. To update histograms all 32 threads load sample labels and grouped features to registers. Then warp performs updates of shared-memory histogram simultaneously in 4 iterations: on l-th (l = 0 . . . 3) iteration thread with index i works with feature f(l+i) mod 4 and adds g[i] for hist[(l + i) mod 4][f(l+i) mod 4]. With proper histogram layout this operation could avoid any bank conflicts and add statistics via all 32 threads in parallel.” (Dorogush et al., p. 4)
 
 
 ## Transformer

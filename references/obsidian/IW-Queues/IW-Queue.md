@@ -27,7 +27,7 @@ interval: 1
 | [[🌏Dataset]]                               |       45 |       |        1 | 1970-01-01 |
 | [[💡Training of models (supervised)]]           |       47 |       |        1 | 1970-01-01 |
 | [[👶Introduction]]                              |     47.5 |       |        1 | 1970-01-01 |
-| [[💡Hyperparameter tuning]]                     |       50 |       |        1 | 1970-01-01 |
+| [[💡Hyperparameter Tuning]]                     |       50 |       |        1 | 1970-01-01 |
 | [[🔢Hybrid rules]]                              |     52.5 |       |        1 | 1970-01-01 |
 | [[🧭Feature Importance Measure]]                |     57.5 |       |        1 | 1970-01-01 |
 | [[🏅Feature importance results]]                |       60 |       |        1 | 1970-01-01 |
