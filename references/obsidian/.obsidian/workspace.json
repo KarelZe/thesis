@@ -62,13 +62,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/🍪Selection Of Supervised Approaches.md",
+                "file": "📖chapters/💡Training and tuning.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -189,6 +190,7 @@
   "lastOpenFiles": [
     "📖chapters/💡Training and tuning.md",
     "📖chapters/💡Hyperparameter Tuning.md",
+    "📖chapters/🤖Pre-training of Transformers.md",
     "📖chapters/🎄Decision Trees.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
     "🖼️Media/research-framework.png",
@@ -221,7 +223,6 @@
     "🍬Implementation/😺CatBoost.md",
     "📖chapters/💡Training and Tuning.md",
     "📑notes/💡Hyperparameter tuning notes.md",
-    "📖chapters/🐈Gradient Boosting.md",
-    "📖chapters/🧭Random Feature Permutation.md"
+    "📖chapters/🐈Gradient Boosting.md"
   ]
 }

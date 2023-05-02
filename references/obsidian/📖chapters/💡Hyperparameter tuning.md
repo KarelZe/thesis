@@ -9,9 +9,42 @@ While different algorithmic implementations exist for Bayesian optimization, we 
 
 (Where does search space come from?)
 
-As documented in cref-table, we tune five hyperparameters. Depth refers to the depth or number of levels of the regression trees. Other than ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]]), we increase the upper bound to twelve to allow for more complex ensemble members. The learning rate scales the contribution of individual trees to the ensemble. Random strength, bagging temperature, and $\ell_2$ leaf regularization are all measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of potential split candidates to introduce randomness in the selected splits.  In a similar vain, bagging temperature is a hyperparameter for the 
+As documented in cref-table, we tune five hyperparameters. Depth refers to the depth or number of levels of the regression trees. Other than ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]]), we increase the upper bound to twelve to allow for more complex ensemble members. The learning rate scales the contribution of individual trees to the ensemble. Random strength, bagging temperature, and $\ell_2$ leaf regularization are all measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness in the selected splits. In a similar vain, the algorithm introduces randomness on the sample level through Bayesian bootstrap. The hyperparameter controls the distribution used for sampling, and thereby the aggressiveness of Bagging. Finally, $\ell_2$ leaf regularization adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularization.
 
-Finally, $\ell_2$ leaf regularization adds a regularization term to the terminal leaf's estimates. The hyperparameter
+Analogously, we define a hyperparameter search space for FT-Transformer based on (). We vary the layer count and the embedding dimension, which directly affect the capacity of the network. 
+Layers refers to the number of layers in the encoder stack.  (halfen embedding dimension) Dropout in the Attention modules and the FFN is used to prevent overfitting.  
+
+![[hyperparameter-ft-transformer.png]]
+
+The search space of the semi-supervised is identical to the supervised variants. 
+(learning rate)
+
+
+![[Pasted image 20230428111917.png]]
+
+
+**Gradient Boosting**
+Figure-Xa) visualizes the hyperparameter search space of the gls-gbm on the gls-ise dataset with classical features. We can derive several observations from it. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between (...) and (...) for different trials. Second, the best hyperparameter combination, marked in (), achieves a validation accuracy of sunitx-percent. As it lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is stable and reasonable for further analysis.
+
+In Figure-Xb) we repeat the analysis for gls-gbm trained on classical-size features. The loss surface is smooth with with large connected regions. As the best solution lies within a splayed region of dense sampling, it is a good choice for further analysis. Consistent with the loss-surface of Figure-Xa), the trees are grown to the maximum depth with a high learning rate, indicating the need for complex ensemble members highly corrective to previous predictions. Part of this could be due to the low signal-to-noise ratio in financial data.
+
+The loss surface of the gls-gbm trained on the feature set including option features is least fragmented. While the validation accuracy of the best combinations improves significantly to sunitx-percent, worst trials even under-perform these of smaller feature sets. Based on this finding we conjecture, that more data does not *per-se* improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradict the one of ([[@ronenMachineLearningTrade2022]]14), who find no advantage from tuning their tree-based ensemble.
+
+**Gradient Boosting + Self-Training**
+The results for the gls-gbm in combination with self-training are similar and visualized in cref-a) c). To conserve space, we summarize the important findings.
+(...)
+- where does depth come from?
+- Why just two iterations
+
+**Classical rules**
+Akin to selecting the machine learning classifiers, we determine our classical baselines on the gls-ise validation set. This prevents overfitting the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the gls-cboe sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and gls-lr algorithm, due to their widespread adoption in literature.
+
+While optimizing the combination of trade classification rules through Bayesian search is theoretically feasible, we found no out-performance over hybrid rules reported in literature \footnote{We performed a Bayesian search with 50 trials for trade classification rules, stacking up to five rules. Experiment available under: \url{https://wandb.ai/fbv/thesis}}.  Thus, \cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set.
+
+
+![[training-validation-accuracy.png]]
+
+![[training-vs-validation-accuracy.png]]
 
 
 https://arxiv.org/pdf/1603.02754.pdf
@@ -43,44 +76,6 @@ Use the Bayesian bootstrap to assign random weights to objects. The weights are 
 
 The amount of randomness to use for scoring splits when the tree structure is selected. Use this parameter to avoid overfitting the model.
 The value of this parameter is used when selecting splits. On every iteration each possible split gets a score (for example, the score indicates how much adding this split will improve the loss function for the training dataset). The split with the highest score is selected. The scores have no randomness. A normally distributed random variable is added to the score of the feature. It has a zero mean and a variance that decreases during the training. The value of this parameter is the multiplier of the variance.
-
-Analogously, we define 
-
-![[hyperparameter-ft-transformer.png]]
-
-Layers refers to the number of layers in the encoder stack. 
-
-We apply dropout 
-
-
-
-![[Pasted image 20230428111917.png]]
-
-
-**Gradient Boosting**
-Figure-Xa) visualizes the hyperparameter search space of the gls-gbm on the gls-ise dataset with classical features. We can derive several observations from it. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between (...) and (...) for different trials. Second, the best hyperparameter combination, marked in (), achieves a validation accuracy of sunitx-percent. As it lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is stable and reasonable for further analysis.
-
-In Figure-Xb) we repeat the analysis for gls-gbm trained on classical-size features. The loss surface is smooth with with large connected regions. As the best solution lies within a splayed region of dense sampling, it is a good choice for further analysis. Consistent with the loss-surface of Figure-Xa), the trees are grown to the maximum depth with a high learning rate, indicating the need for complex ensemble members highly corrective to previous predictions. Part of this could be due to the low signal-to-noise ratio in financial data.
-
-The loss surface of the gls-gbm trained on the feature set including option features is least fragmented. While the validation accuracy of the best combinations improves significantly to sunitx-percent, worst trials even under-perform these of smaller feature sets. Based on this finding we conjecture, that more data does not *per-se* improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradict the one of ([[@ronenMachineLearningTrade2022]]14), who find no advantage from tuning their tree-based ensemble.
-
-**Gradient Boosting + Self-Training**
-The results for the gls-gbm in combination with self-training are similar and visualized in cref-a) c). To conserve space, we summarize the important findings.
-(...)
-- where does depth come from?
-- Why just two iterations
-
-**Classical rules**
-Akin to selecting the machine learning classifiers, we determine our classical baselines on the gls-ise validation set. This prevents overfitting the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the gls-cboe sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and gls-lr algorithm, due to their widespread adoption in literature.
-
-While optimizing the combination of trade classification rules through Bayesian search is theoretically feasible, we found no out-performance over hybrid rules reported in literature \footnote{We performed a Bayesian search with 50 trials for trade classification rules, stacking up to five rules. Experiment available under: \url{https://wandb.ai/fbv/thesis}}.  Thus, \cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set.
-
-
-![[training-validation-accuracy.png]]
-
-![[training-vs-validation-accuracy.png]]
-
-
 
 **Notes:**
 [[💡Hyperparameter tuning notes]]

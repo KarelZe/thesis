@@ -10,7 +10,7 @@ Our implementation of gradient-boosted trees is based on *CatBoost* ([[@prokhore
 
 Fig-learning-curves visualises the learning curves of the default implementation on the ISE training and validation set / feature set classical.
 
-Specifically, the ensemble consists of (...) trees, grown to depth of (...). The learning rate is chosen by a simple heuristic / fixed $\eta=0.03$ . We set the loss function to be the (...) loss. Several conclusions can be drawn from this plot (...) First, the model is trained beyond (...) the optimal model complexity which is reached at an ensemble width of (...). Second, the model overfits the training . While we cannot change the training or validation data due to the temporal split, we can employ regularisation to reduce the effects from overfitting. Overfitting is inlien with theoretical obsersvations. See chapter ...
+Specifically, the ensemble consists of (...) trees, grown to depth of (...). The learning rate is chosen by a simple heuristic / fixed $\eta=0.03$ . We set the loss function to be the (...) loss. Several conclusions can be drawn from this plot (...) First, the model is trained beyond (...) the optimal model complexity which is reached at an ensemble width of (...). Second, the model overfits the training . While we cannot change the training or validation data due to the temporal split, we can employ regularisation to reduce the effects from overfitting. Overfitting is inline with theoretical obsersvations. See chapter ... (write down full combination in Appendix)
 
 ### Status Quo
 The improvements in terms of  (...). The large gap between the training and validation loss indicates overfitting, 
@@ -129,7 +129,8 @@ Classical trade signing algorithms, such as the tick test, are also impacted by 
 
 
 
-## Logistic regression
+
+### Logistic regression
 - Think about simple baseline e. g., logistic regression
 
 
