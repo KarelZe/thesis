@@ -40,10 +40,14 @@ Split finding in regression trees of gradient-boosting is typically approximated
 We incorporate these concepts into the large-scale studies. We employ additional measures to counterfight overfitting, but treat them as tunable hyperparameter. More details are provided in cref-hyperparameter-tuning.
 
 ## Transformer
-Training Transformers has been found non-trivial ([[@liuUnderstandingDifficultyTraining2020]]). We apply minor modifications to the standard FT-Transformer to stabilize training and improve performance. The loss and accuracy of the FT-Transformer without modifications is visualized in cref-x. (what is the configuration?, layers, pre-norm, no. of epochs... We train for 20 epochs at maximum, which equals 20 full passes through the training set.)
+The training Transformers has been found non-trivial ([[@liuUnderstandingDifficultyTraining2020]]). We apply minor modifications to the standard FT-Transformer to stabilize training and improve performance. The loss and accuracy of the FT-Transformer without modifications is visualized in cref-x. (what is the configuration?, layers, pre-norm, no. of epochs... We train for 20 epochs at maximum, which equals 20 full passes through the training set. The entire configuration is documented cref-appendix)
 
 ![[training-loss-llama.png]]
 (One step equals one batched gradient update. )
+
+Clearly, overfitting is evident, (...)
+
+General overview for neural nets in [[@melisStateArtEvaluation2017]]. Also, [[@kadraWelltunedSimpleNets2021]]
 
 **Batch Size:**
 
@@ -61,6 +65,8 @@ Similar to the gls-gbm, we we prematurely halt training based on an consecutive 
 For gradient-boosting 
 
 **Dropout:**
+Following common practice, dropout
+
 - attention dropout / feed forward drop out
 - Also see [[@shavittRegularizationLearningNetworks2018]] for regularization in neural networks for tabular data.
 

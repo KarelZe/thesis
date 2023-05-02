@@ -1,7 +1,5 @@
 All of our machine learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of ([[@grinsztajnWhyTreebasedModels2022]]5), emphasize the need for tuning routines, as the test performance of the FT-Transformer and gradient-boosted trees largely fluctuates with the hyperparameter configuration.  For a fair comparison, we employ an exhaustive hyperparameter search, to find suitable hyperparameter configuration for each of our models. 
 
-General overview for neural nets in [[@melisStateArtEvaluation2017]]. Also, [[@kadraWelltunedSimpleNets2021]]
-
 **Bayesian search**
 We perform a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function ([[@shahriariTakingHumanOut2016]]2). Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in fewer trials.
 
@@ -9,11 +7,30 @@ While different algorithmic implementations exist for Bayesian optimization, we 
 
 ![[search-space.png]]
 
+(Where does search space come from?)
+
+As documented in cref-table, we tune five hyperparameters. Depth refers to the depth or number of levels of the regression trees. Other than ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]]), we increase the upper bound to twelve to allow for more complex ensemble members. The learning rate scales the contribution of individual trees to the ensemble. Random strength, bagging temperature, and $\ell_2$ leaf regularization are all measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of potential split candidates to introduce randomness in the selected splits.  In a similar vain, bagging temperature is a hyperparameter for the 
+
+Finally, $\ell_2$ leaf regularization adds a regularization term to the terminal leaf's estimates. The hyperparameter
+
+
 https://arxiv.org/pdf/1603.02754.pdf
 
 https://albertum.medium.com/l1-l2-regularization-in-xgboost-regression-7b2db08a59e0
 
-Depth refers to the depth of trees within the ensemble. 
+random_strength  
+This parameter helps to overcome overfitting of the model.
+
+When selecting a new split, each possible split gets a score (for example, by how much does adding this split improve the loss function on train). After that all scores are sorted and a split with the highest score is selected.  
+The scores are not random. This parameter adds a normally distributed random variable to the score of the feature. It has zero mean and variance that is larger in the start of the training and decreases during the training. random_strength is the multiplier of the variance.
+
+Using randomness during split selection procedure helps to overcome overfitting and increase the resulting quality of the model.
+
+bagging_temperature  
+This parameter is responsible for Bayesian bootstrap.  
+Bayesian bootstrap is used by default in classification and regression modes. In ranking we use Bernoulli bootstrap by default.
+
+In bayesian bootstrap each object is assigned random weight. If bagging temperature is equal to 1 then weights are sampled from exponential distribution. If bagging temperature is equal to 0 then all weights are equal to 1. By changing this parameter from 0 to +infty you can controll intensity of the bootstrap.
 
 
 
@@ -27,6 +44,7 @@ Use the Bayesian bootstrap to assign random weights to objects. The weights are 
 The amount of randomness to use for scoring splits when the tree structure is selected. Use this parameter to avoid overfitting the model.
 The value of this parameter is used when selecting splits. On every iteration each possible split gets a score (for example, the score indicates how much adding this split will improve the loss function for the training dataset). The split with the highest score is selected. The scores have no randomness. A normally distributed random variable is added to the score of the feature. It has a zero mean and a variance that decreases during the training. The value of this parameter is the multiplier of the variance.
 
+Analogously, we define 
 
 ![[hyperparameter-ft-transformer.png]]
 

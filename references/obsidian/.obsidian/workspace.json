@@ -126,7 +126,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Training and tuning.md",
+                "file": "📖chapters/💡Hyperparameter Tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -154,7 +154,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Training and tuning.md"
+                "file": "📖chapters/💡Hyperparameter Tuning.md"
               }
             }
           },
@@ -185,12 +185,12 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "1f8cce6dd1f360cc",
+  "active": "f4f457f63a5960f2",
   "lastOpenFiles": [
-    "📖chapters/🎄Decision Trees.md",
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📖chapters/💡Training and tuning.md",
     "📖chapters/💡Hyperparameter Tuning.md",
+    "📖chapters/🎄Decision Trees.md",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
     "🖼️Media/research-framework.png",
     "📥Inbox/@dorogushCatBoostGradientBoosting.md",
     "📖chapters/🍪Selection Of Semisupervised Approaches.md",
