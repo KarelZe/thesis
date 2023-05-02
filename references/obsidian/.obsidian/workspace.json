@@ -34,19 +34,9 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "ebe0f2d30b3089f8",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "empty",
-              "state": {},
-              "pinned": true
-            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       },
       {
         "id": "c77907ea811c67cb",
@@ -136,6 +126,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "📖chapters/💡Training and tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -162,7 +153,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "📖chapters/💡Training and tuning.md"
+              }
             }
           },
           {
@@ -192,7 +185,7 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "ebe0f2d30b3089f8",
+  "active": "1f8cce6dd1f360cc",
   "lastOpenFiles": [
     "📖chapters/🎄Decision Trees.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",

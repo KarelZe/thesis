@@ -12,12 +12,10 @@ Fig-learning-curves visualises the learning curves of the default implementation
 
 Specifically, the ensemble consists of (...) trees, grown to depth of (...). The learning rate is chosen by a simple heuristic / fixed $\eta=0.03$ . We set the loss function to be the (...) loss. Several conclusions can be drawn from this plot (...) First, the model is trained beyond (...) the optimal model complexity which is reached at an ensemble width of (...). Second, the model overfits the training . While we cannot change the training or validation data due to the temporal split, we can employ regularisation to reduce the effects from overfitting. Overfitting is inlien with theoretical obsersvations. See chapter ...
 
-**Status Quo**
+### Status Quo
 The improvements in terms of  (...). The large gap between the training and validation loss indicates overfitting, 
 
-
-
-**Ideas:**
+### Improvements
 We introduce the following ideas to improve performance of the gradient-boosting implementation. We keep all other parameters constant, and vary the single parameter. 
 
 **Growth Strategy:**
@@ -41,24 +39,11 @@ Split finding in regression trees of gradient-boosting is typically approximated
 
 We incorporate these concepts into the large-scale studies. We employ additional measures to counterfight overfitting, but treat them as tunable hyperparameter. More details are provided in cref-hyperparameter-tuning.
 
-
-
 ## Transformer
-
-- look into [[@lonesHowAvoidMachine2022]]
-- training of the transformer has been found non-trivial[[@liuUnderstandingDifficultyTraining2020]]
-- Keep algorithms / ideas simple. Add complexity only where needed! 
-- Do less alchemy and more understanding [Ali Rahimi's talk at NIPS(NIPS 2017 Test-of-time award presentation) - YouTube](https://www.youtube.com/watch?v=Qi1Yry33TQE)
-
-
-- Also see [[@shavittRegularizationLearningNetworks2018]] for regularization in neural networks for tabular data.
-- On activation function see [[@shazeerGLUVariantsImprove2020]]
-
-
-We train for 20 epochs at maximum, which equals 20 complete passes through the training set.
-One step equals one batched gradient update.
+Training Transformers has been found non-trivial ([[@liuUnderstandingDifficultyTraining2020]]). We apply minor modifications to the standard FT-Transformer to stabilize training and improve performance. The loss and accuracy of the FT-Transformer without modifications is visualized in cref-x. (what is the configuration?, layers, pre-norm, no. of epochs... We train for 20 epochs at maximum, which equals 20 full passes through the training set.)
 
 ![[training-loss-llama.png]]
+(One step equals one batched gradient update. )
 
 **Batch Size:**
 
@@ -75,19 +60,17 @@ Similar to the gls-gbm, we we prematurely halt training based on an consecutive 
 
 For gradient-boosting 
 
-
-
-**Pre-Norm:**
-
 **Dropout:**
 - attention dropout / feed forward drop out
+- Also see [[@shavittRegularizationLearningNetworks2018]] for regularization in neural networks for tabular data.
+
+
+
+**Activation Function:**
+- On activation function see [[@shazeerGLUVariantsImprove2020]]
+
 
 **Label Smoothing**
-
-
-
-Dropout, 
-
 
 2.2 Architecture Following recent work on large language models, our network is based on the transformer architecture (Vaswani et al., 2017). We leverage various improvements that were subsequently proposed, and used in different models such as PaLM. Here are the main difference with the original architecture, and where we were found the inspiration for this change (in bracket): Pre-normalization [GPT3]. To improve the training stability, we normalize the input of each transformer sub-layer, instead of normalizing the output. We use the RMSNorm normalizing function, introduced by Zhang and Sennrich (2019). SwiGLU activation function [PaLM]. We replace the ReLU non-linearity by the SwiGLU activation function, introduced by Shazeer (2020) to improve the performance. We use a dimension of 2 3 4d instead of 4d as in PaLM. Rotary Embeddings [GPTNeo]. We remove the absolute positional embeddings, and instead, add rotary positional embeddings (RoPE), introduced by Su et al. (2021), at each layer of the network. The details of the hyper-parameters for our different models are given in Table 2.
 
@@ -96,8 +79,6 @@ Our models are trained using the AdamW optimizer (Loshchilov and Hutter, 2017), 
 To train all versions of GPT-3, we use Adam with β1 = 0.9, β2 = 0.95, and  = 10−8 , we clip the global norm of the gradient at 1.0, and we use cosine decay for learning rate down to 10% of its value, over 260 billion tokens (after 260 billion tokens, training continues at 10% of the original learning rate). There is a linear LR warmup over the first 375 million tokens. We also gradually increase the batch size linearly from a small value (32k tokens) to the full value over the first 4-12 billion tokens of training, depending on the model size. Data are sampled without replacement during training (until an epoch boundary is reached) to minimize overfitting. All models use weight decay of 0.1 to provide a small amount of regularization [LH17]. During training we always train on sequences of the full nctx = 2048 token context window, packing multiple documents into a single sequence when documents are shorter than 2048, in order to increase computational efficiency. Sequences with multiple documents are not masked in any special way but instead documents within a sequence are delimited with a special end of text token, giving the language model the information necessary to infer that context separated by the end of text token is unrelated. This allows for efficient training without need for any special sequence-specific masking.
 
 We make several optimizations to improve the training speed of our models. First, we use an efficient implementation of the causal multi-head attention to reduce memory usage and runtime. This implementation, available in the xformers library,2 is inspired by Rabe and Staats (2021) and uses the backward from Dao et al. (2022). This is achieved by not storing the attention weights and not computing the key/query scores that are masked due to the causal nature of the language modeling task. To further improve training efficiency, we reduced the amount of activations that are recomputed during the backward pass with checkpointing. More precisely, we save the activations that are expensive to compute, such as the outputs of linear layers. This is achieved by manually implementing the backward function for the transformer layers, instead of relying on the PyTorch autograd. To fully benefit from this optimization, we need to  reduce the memory usage of the model by using model and sequence parallelism, as described by Korthikanti et al. (2022). Moreover, we also overlap the computation of activations and the communication between GPUs over the network (due to all_reduce operations) as much as possible. When training a 65B-parameter model, our code processes around 380 tokens/sec/GPU on 2048 A100 GPU with 80GB of RAM. This means that training over our dataset containing 1.4T tokens takes approximately 21 days.
-
-
 
 Visualize model parameters:
 
@@ -127,7 +108,7 @@ We grow symmetric trees, which acts as a regularizer.
 The hyperparameter search for the FT-Transformer is identical to ([[@gorishniyRevisitingDeepLearning2021]]18) variant (b). From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy (cp. cref-training-of-supervised). Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we employ early stopping and halt training after 15 consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the orginal author's to provide a conservative baseline ([[@gorishniyRevisitingDeepLearning2021]]5), for the sake of a fair comparison in our context both techniques should be used.
 
 **Failed attempts:**
-We experimented with label smoothing, 
+We experimented with label smoothing and sample weighting, but didn't find any advantage.
 
 Visualize the decision of 
 
@@ -135,7 +116,6 @@ Visualize the decision of
 
 Visualize effect 
 
-![[Pasted image 20230428110412.png]]
 
 
 Classical trade signing algorithms, such as the tick test, are also impacted by missing values. In theses cases, we defer to a random classification or a subsequent rule, if rules can not be computed. Details are provided in section [[💡Training of models (supervised)]].
@@ -146,8 +126,6 @@ Classical trade signing algorithms, such as the tick test, are also impacted by 
 ## Logistic regression
 - Think about simple baseline e. g., logistic regression
 
-
-![[Pasted image 20230427155407.png]]
 
 
 Look into grooking: https://arxiv.org/pdf/2201.02177.pdf
@@ -299,3 +277,7 @@ We aim to be transparent about the training setup
 
 “For deep models with transfer learning, we tune the hyperparameters on the full upstream data using the available large upstream validation set with the goal to obtain the best performing feature extractor for the pre-training multi-target task. We then fine-tune this feature extractor with a small learning rate on the downstream data. As this strategy offers considerable performance gains over default hyperparameters, we highlight the importance of tuning the feature extractor and present the comparison with default hyperparameters in Appendix B as well as the details on hyperparameter search spaces for each model.” ([Levin et al., 2022, p. 6](zotero://select/library/items/GNKZPFYK)) ([pdf](zotero://open-pdf/library/items/QCVUFCDQ?page=6&annotation=PICSZEZU)) [[@levinTransferLearningDeep2022]]
 
+
+
+- look into [[@lonesHowAvoidMachine2022]]
+- Do less alchemy and more understanding [Ali Rahimi's talk at NIPS(NIPS 2017 Test-of-time award presentation) - YouTube](https://www.youtube.com/watch?v=Qi1Yry33TQE)
