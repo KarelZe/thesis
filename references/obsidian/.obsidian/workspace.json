@@ -44,9 +44,21 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "a89d39d1cf42fdf6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/💡Training and tuning.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -104,7 +116,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md",
+                "file": "📖chapters/💡Training and tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -132,7 +144,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md"
+                "file": "📖chapters/💡Training and tuning.md"
               }
             }
           },
@@ -163,10 +175,10 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f4f457f63a5960f2",
+  "active": "a89d39d1cf42fdf6",
   "lastOpenFiles": [
-    "📖chapters/💡Training and Tuning.md",
     "📖chapters/💡Hyperparameter tuning.md",
+    "📖chapters/💡Training and Tuning.md",
     "📑notes/💡Hyperparameter tuning notes.md",
     "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/🐈Gradient Boosting.md",
