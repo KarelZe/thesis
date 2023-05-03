@@ -93,6 +93,8 @@ Visualize model parameters:
 ![[viz-model-params.png]]
 (from https://arxiv.org/pdf/2005.14165.pdf)
 
+![[galatica.png]]
+(Galactica paper)
 
 
 deas to try out in CatBoost
@@ -227,7 +229,7 @@ We aim to be transparent about the training setup
 - Some intuition on learning rate warm-up can be found in [[@liuVarianceAdaptiveLearning2021]] and https://stackoverflow.com/a/55942518/5755604
 
 ## Random Shuffle
-- For random shuffling with stochastic gradient descent see [[@lecunEfficientBackProp2012 1]]
+- For random shuffling with stochastic gradient descent see [[@lecunEfficientBackProp2012]]
 -   Shuffle in memory if samples are otherwise correlated. (see https://www.lesswrong.com/posts/b3CQrAo2nufqzwNHF/how-to-train-your-transformer)
 -   Shuffle in memory if samples are otherwise correlated. (see https://www.lesswrong.com/posts/b3CQrAo2nufqzwNHF/how-to-train-your-transformer)
 

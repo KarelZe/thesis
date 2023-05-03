@@ -22,34 +22,23 @@
             }
           },
           {
+            "id": "ebe0f2d30b3089f8",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "empty",
+              "state": {},
+              "pinned": true
+            }
+          },
+          {
             "id": "f4f457f63a5960f2",
             "type": "leaf",
             "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/💡Hyperparameter Tuning.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "c77907ea811c67cb",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "1f8cce6dd1f360cc",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/💡Training and tuning.md",
+                "file": "📖chapters/💡Hyperparameter tuning.md",
                 "mode": "source",
                 "source": false
               },
@@ -57,19 +46,19 @@
             }
           },
           {
-            "id": "009faeb7a1e73709",
+            "id": "a89d39d1cf42fdf6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/💡Training and tuning.md",
+                "file": "📖chapters/💡Hyperparameter tuning.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -127,7 +116,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Hyperparameter Tuning.md",
+                "file": "📖chapters/💡Hyperparameter tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -155,7 +144,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Hyperparameter Tuning.md"
+                "file": "📖chapters/💡Hyperparameter tuning.md"
               }
             }
           },
@@ -189,23 +178,33 @@
   "active": "f4f457f63a5960f2",
   "lastOpenFiles": [
     "📖chapters/💡Training and tuning.md",
-    "📖chapters/💡Hyperparameter Tuning.md",
-    "📖chapters/🤖Pre-training of Transformers.md",
-    "📖chapters/🎄Decision Trees.md",
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "🖼️Media/galatica.png",
     "🖼️Media/research-framework.png",
     "📥Inbox/@dorogushCatBoostGradientBoosting.md",
-    "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+    "📖chapters/💡Hyperparameter tuning.md",
+    "📖chapters/💡Training and Tuning.md",
+    "📑notes/💡Hyperparameter tuning notes.md",
     "📑notes/🐈Gradient Boosting notes.md",
-    "🖼️Media/training-vs-validation-accuracy.png",
-    "🖼️Media/training-validation-accuracy.png",
-    "🖼️Media/training-loss-llama.png",
-    "🖼️Media/search-space.png",
-    "🖼️Media/hyperparameter-ft-transformer.png",
+    "📖chapters/🐈Gradient Boosting.md",
+    "📖chapters/🧭Random Feature Permutation.md",
+    "🍬Implementation/🔥Speed-up PyTorch.md",
+    "🖼️Media/after-data-loader.png",
+    "🖼️Media/techniques-to-speed-up-training.png",
+    "🍬Implementation/🛞GCP-Docker-Cluster.md",
+    "🍬Implementation/😺CatBoost.md",
+    "🖼️Media/optuna-as-boxplot.png",
+    "📖chapters/💡Training of models (supervised).md",
+    "📖chapters/💡Tuning of models (semi-supervised).md",
+    "📥Inbox/@shavittRegularizationLearningNetworks2018.md",
+    "📑notes/🪄Data Preprocessing notes.md",
     "🖼️Media/gbm-log-loss-accuracy.png",
-    "🖼️Media/cross-entropy-loss.png",
-    "🖼️Media/architecture-rtd.png",
-    "🖼️Media/Pasted image 20230428134902.png",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "🖼️Media/training-validation-accuracy.png",
+    "🖼️Media/hyperparameter-ft-transformer.png",
+    "🖼️Media/training-loss-llama.png",
+    "📖chapters/🏅Results of supervised.md",
+    "🖼️Media/FT-Transformer.png",
+    "📖chapters/🏅Results.md",
     "📥Inbox/@zhaiDirectBoostingApproach.md",
     "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
     "📥Inbox/@erhanWhyDoesUnsupervised.md",
@@ -213,16 +212,6 @@
     "📥Inbox/@chenSimpleFrameworkContrastive2020.md",
     "📥Inbox/@bennettExploitingUnlabeledData2002.md",
     "📖chapters/☠️Problem Framing.md",
-    "📑notes/🤖Pretraining notes.md",
-    "📑notes/☠️Problem Framing notes.md",
-    "Open Points in my head.md",
-    "📖chapters/🐈CatBoost.md",
-    "📑notes/🍪Selection of supervised approaches notes.md",
-    "📖chapters/💡Training of models (supervised).md",
-    "📖chapters/💡Tuning of models (semi-supervised).md",
-    "🍬Implementation/😺CatBoost.md",
-    "📖chapters/💡Training and Tuning.md",
-    "📑notes/💡Hyperparameter tuning notes.md",
-    "📖chapters/🐈Gradient Boosting.md"
+    "📑notes/🤖Pretraining notes.md"
   ]
 }

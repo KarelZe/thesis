@@ -865,15 +865,15 @@ While different algorithmic implementations exist for Bayesian optimisation, we 
 
 \textbf{Hyperparameter Space}
 
-Our search space is reported in \cref{tab:hyperparameter-space}, which is laid out based on the recommendations in \textcites[][20]{prokhorenkovaCatBoostUnbiasedBoosting2018}[][18]{gorishniyRevisitingDeepLearning2021}[][4]{rubachevRevisitingPretrainingObjectives2022} with minor, reasoned deviations.
+Our search space is reported in \cref{tab:hyperparameter-space}, which is laid out based on the recommendations in \textcites[][20]{prokhorenkovaCatBoostUnbiasedBoosting2018}[][18]{gorishniyRevisitingDeepLearning2021}[][4]{rubachevRevisitingPretrainingObjectives2022} with minor deviations.
 
 \begin{table}[H]
     \centering
-    \caption{Hyperparameter Search Space of Gradient Boosting}
+    \caption[Hyperparameter Search Space of Gradient Boosting]{Hyperparameter search space of gradient boosting. The three most right columns document the best combination in terms validation accuracy per feature set. We perform \num{50} trials each.}
     \label{tab:hyperparameter-space}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyerparameter                    & Distribution                              & {FS 1}           & {FS 2}               & {FS 3}            \\ \midrule
+        Hyperparameter                    & Distribution                              & {FS 1}           & {FS 2}               & {FS 3}            \\ \midrule
         Depth                        & $\operatorname{UniformInt}[1,12]$         & 9                       & 10                          & 8                        \\
         Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$ & 0.061147194180849546    & 0.12484853560495288         & 0.12484853839455994      \\
         $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$        & 16                      & 29                          & 17                       \\
@@ -882,6 +882,7 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
         Accuracy in \%               &                                           & 64.20927249609458       & 75.03173105450845           & 76.98607312092097        \\ \bottomrule
     \end{tabular}
 \end{table}
+As documented in \cref{{tab:hyperparameter-space}}, we tune five hyperparameters. The first is the depth, which determines the number of levels in each tree. Other than \textcite[][]{gorishniyRevisitingDeepLearning2021}, we increase the upper bound to twelve to allow for more complex ensemble members. The learning rate scales the contribution of individual trees to the ensemble. Random strength, bagging temperature, and $\ell_2$ leaf regularization are all measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness of selected splits. In a similar vain, the algorithm introduces randomness on the sample level through Bayesian bootstrap. The hyperparameter controls the distribution used for sampling, and thereby the aggressiveness of Bagging. Finally, $\ell_2$ leaf regularization adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularization.
 
 The search space of the FT-Transformer is given by:
 
