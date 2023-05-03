@@ -6,6 +6,7 @@ Our implementation of gradient-boosted trees is based on *CatBoost* ([[@prokhore
 ![[gbm-log-loss-accuracy.png]]
 
 Fig-learning-curves visualises the learning curves of the default implementation on the ISE training and validation set / feature set classical.
+
 Specifically, the ensemble consists of (...) trees, grown to depth of (...). The learning rate is chosen by a simple heuristic / fixed $\eta=0.03$ . We set the loss function to be the (...) loss. Several conclusions can be drawn from this plot (...) First, the model is trained beyond (...) the optimal model complexity which is reached at an ensemble width of (...). Second, the model overfits the training . While we cannot change the training or validation data due to the temporal split, we can employ regularisation to reduce the effects from overfitting. Overfitting is inlien with theoretical obsersvations. See chapter ...
 
 The improvements in terms of 
@@ -18,25 +19,33 @@ The large gap between the training and validation loss indicates overfitting,
 We introduce the following ideas to improve performance of the gradient-boosting implementation. We keep all other parameters constant, and vary the single parameter. Gradually add complexity
 
 
-**Weight Decay:**
-
-**Exponential Weighting:**
-
-**Early Stopping:**
-Acknowleding the observations ([[@friedmanGreedyFunctionApproximation2001]]14), that the learning rate $\lambda$ the learning rate and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive (...) steps.
-
-
 **Growth Strategy:**
+We grow trees loss-guided. 
+
 - Try out `lossguided` growing strategy. Add it to objective.
 
+**Early Stopping:**
+Acknowleding the observations ([[@friedmanGreedyFunctionApproximation2001]]14), that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble once the validation accuracy decreases for 100 iterations and prune the ensemble back to the one with the highest validation accuracy. 
+
+**Sample Weighting**
+
+The work of () suggests a strong temporal shift in the data, with the performance deterioriate ...
+
+
+
 **Quantization /  Border count:**
-For gradient-boosting we raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency.
+Typically split finding in the regression trees of gradient-boosting is approximated through quantization, whereby all numeric features are discretized into a fixed count of bins through histogram building and splits are only evaluated at the border of the bins ([[@dorogushCatBoostGradientBoosting]]4) and ([[@keLightGBMHighlyEfficient2017]]2).  We raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization. Expectedly, accuracy increases at the cost of computational efficiency.
+
+
+For gradient-boosting 
 
 http://learningsys.org/nips17/assets/papers/paper_11.pdf
 
 We incorporate these ideas into our large-scale training. cref-hyperparameter-tuning, performs hyperparameter tuning.
 
 We employ additional measures to counterfight overfitting, but treat them as tunable hyperparameter. Thus, we discuss them in cref-
+
+“Dense numerical features One of the most important building blocks for any GBDT implementation is searching for the best split. This block is the main computation burden for building decision tree on dense numerical datasets. CatBoost uses oblivious decision trees as base learners and performs feature discretization into a fixed amount of bins to reduce memory usage [10]. The number of bins is the parameter of the algorithm. As a result we could use histogram-based approach for searching for best splits. Our approach to building decision trees on GPU is similar in spirit to one described in [11]. We group several numerical features in one 32-bit integer and currently use: • 1 bit for binary features and group 32 features per integer. • 4 bits for features with no more than 15 bins, 8 features per integer. • 8 bits for other features (maximum feature discretization is 255), 4 features per integer. In terms of GPU memory usage CatBoost is at least as efficient as LightGBM [11]. The main difference is another way of histogram computation. Algorithms in LightGBM and XGBoost4 have a major drawback: they rely on atomic operations. Such technique is very easy to deal with concurrent memory accesses but it is also relatively slow even on the modern generation of GPU. Actually histograms could be computed more efficiently without any atomic operations. We will describe here only the basic idea of our approach by a simplified example: simultaneous computation of four 32-bin histograms with a single float additive statistic per feature. This idea could be efficiently generalized for cases with several statistics and multiple histograms. So we have gradient values g[i] and feature groups (f1, f2, f3, f4)[i]. We need to compute 4 histograms: hist[j][b] = ∑ i:fj[i]=b g[i]. CatBoost builds partial histogram per each warp5 histograms instead of histogram per thread block. We will describe work which is done by one warp on first 32 samples. Thread with index i processes sample i. Since we are building 4 histograms at once we need 32 ∗ 32 ∗ 4 bytes of shared memory per warp. To update histograms all 32 threads load sample labels and grouped features to registers. Then warp performs updates of shared-memory histogram simultaneously in 4 iterations: on l-th (l = 0 . . . 3) iteration thread with index i works with feature f(l+i) mod 4 and adds g[i] for hist[(l + i) mod 4][f(l+i) mod 4]. With proper histogram layout this operation could avoid any bank conflicts and add statistics via all 32 threads in parallel.” (Dorogush et al., p. 4)
 
 
 ## Transformer
@@ -60,15 +69,29 @@ One step equals one batched gradient update.
 
 As found in [KMH+20, MKAT18], larger models can typically use a larger batch size, but require a smaller learning rate. We measure the gradient noise scale during training and use it to guide our choice of batch size [MKAT18]. Table 2.1 shows the parameter settings we used. To train the larger models without running out of memory, we use a mixture of model parallelism within each matrix multiply and model parallelism across the layers of the network. All models were trained on V100 GPU’s on part of a high-bandwidth cluster provided by Microsoft. Details of the training process and hyperparameter settings are described in Appendix B. (Found in gpt paper)
 
-
 We scale the *effective batch size* 
 
-**Early Stopping:**
+**Learning rate schedule**
+We use a cosine learning rate schedule, such that the final learning rate is equal to 10% of the maximal learning rate. We use a weight decay of 0.1 and gradient clipping of 1.0. We use 2, 000 warmup 0 200 400 600 800 1000 1200 1400 Billion of tokens 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 Training loss LLaMA 7B LLaMA 13B LLaMA 33B LLaMA 65B Figure 1: Training loss over train tokens for the 7B, 13B, 33B, and 65 models. LLaMA-33B and LLaMA65B were trained on 1.4T tokens. The smaller models were trained on 1.0T tokens. All models are trained with a batch size of 4M tokens. steps, and vary the learning rate and batch size with the size of the model (see Table 2 for details)
+
+**Early Stopping and Checkpointing:**
+Similar to the gls-gbm, we we prematurely halt training based on an consecutive increase in validation accuracy. We set the patience to 10 epochs and restore the best model in terms of validation accuracy through checkpointing. (Checkpoint averaging? [[@popelTrainingTipsTransformer2018]] 66)
+
+
+For gradient-boosting 
+
+
 
 **Pre-Norm:**
 
 **Dropout:**
 - attention dropout / feed forward drop out
+
+**Label Smoothing**
+
+
+
+Dropout, 
 
 
 2.2 Architecture Following recent work on large language models, our network is based on the transformer architecture (Vaswani et al., 2017). We leverage various improvements that were subsequently proposed, and used in different models such as PaLM. Here are the main difference with the original architecture, and where we were found the inspiration for this change (in bracket): Pre-normalization [GPT3]. To improve the training stability, we normalize the input of each transformer sub-layer, instead of normalizing the output. We use the RMSNorm normalizing function, introduced by Zhang and Sennrich (2019). SwiGLU activation function [PaLM]. We replace the ReLU non-linearity by the SwiGLU activation function, introduced by Shazeer (2020) to improve the performance. We use a dimension of 2 3 4d instead of 4d as in PaLM. Rotary Embeddings [GPTNeo]. We remove the absolute positional embeddings, and instead, add rotary positional embeddings (RoPE), introduced by Su et al. (2021), at each layer of the network. The details of the hyper-parameters for our different models are given in Table 2.
