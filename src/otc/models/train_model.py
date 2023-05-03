@@ -142,47 +142,43 @@ def main(
     artifact_labelled = run.use_artifact(dataset)
     artifact_dir_labelled = artifact_labelled.download()
 
+    # Load labelled data
+    x_train = pd.read_parquet(
+        Path(artifact_dir_labelled, "train_set.parquet"), columns=columns
+    )
+    y_train = x_train["buy_sell"]
+    x_train.drop(columns=["buy_sell"], inplace=True)
+
     if pretrain:
-        # unlabelled data
+        # Load unlabelled data
         unlabelled_dataset = dataset.replace("supervised", "unsupervised")
         artifact_unlabelled = run.use_artifact(unlabelled_dataset)
         artifact_dir_unlabelled = artifact_unlabelled.download()
-
         x_train_unlabelled = pd.read_parquet(
             Path(artifact_dir_unlabelled, "train_set.parquet"), columns=columns
         )
         y_train_unlabelled = x_train_unlabelled["buy_sell"]
         x_train_unlabelled.drop(columns=["buy_sell"], inplace=True)
 
-        # labelled data
-        x_train_labelled = pd.read_parquet(
-            Path(artifact_dir_labelled, "train_set.parquet"), columns=columns
-        )
-        y_train_labelled = x_train_labelled["buy_sell"]
-        x_train_labelled.drop(columns=["buy_sell"], inplace=True)
-
-        x_train = pd.concat([x_train_labelled, x_train_unlabelled])
-        y_train = pd.concat([y_train_labelled, y_train_unlabelled])
-    else:
-        x_train = pd.read_parquet(
-            Path(artifact_dir_labelled, "train_set.parquet"), columns=columns
-        )
-        if sample < 1.0:
-            x_train = x_train.sample(frac=sample, random_state=set_seed(seed))
-
-        y_train = x_train["buy_sell"]
-        x_train.drop(columns=["buy_sell"], inplace=True)
+        # Concatenate labelled and unlabelled data unlabelled will merge in between
+        x_train = pd.concat([x_train, x_train_unlabelled])
+        y_train = pd.concat([y_train, y_train_unlabelled])
 
     # load validation data
     x_val = pd.read_parquet(
         Path(artifact_dir_labelled, "val_set.parquet"), columns=columns
     )
-    # sample randomly if < 1.0
-    if sample < 1.0:
-        x_val = x_val.sample(frac=sample, random_state=set_seed(seed))
-
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
+
+    if sample < 1.0:
+        # sample down train data
+        x_train = x_train.sample(frac=sample, random_state=set_seed(seed))
+        y_train = y_train[x_train.index]
+
+        # sample down validation data
+        x_val = x_val.sample(frac=sample, random_state=set_seed(seed))
+        y_val = y_val[x_val.index]
 
     # pretrain training activated
     has_label = (y_train != 0).all()
