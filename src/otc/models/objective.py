@@ -149,9 +149,7 @@ class FTTransformerObjective(Objective):
             pretrain (bool, optional): Whether to pretrain. Defaults to False.
         """
         self._cat_features = [] if not cat_features else cat_features
-        self._cat_cardinalities = (
-            [] if not cat_cardinalities else cat_cardinalities
-        )
+        self._cat_cardinalities = [] if not cat_cardinalities else cat_cardinalities
         self._cont_features: list[int] = [
             x for x in x_train.columns.tolist() if x not in self._cat_features
         ]
@@ -237,6 +235,7 @@ class FTTransformerObjective(Objective):
             "feature_tokenizer": FeatureTokenizer(**feature_tokenizer_kwargs),  # type: ignore # noqa: E501
             "cat_features": self._cat_features,
             "cat_cardinalities": self._cat_cardinalities,
+            "d_token": d_token,
         }
 
         optim_params = {"lr": lr, "weight_decay": weight_decay}

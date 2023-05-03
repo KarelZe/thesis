@@ -21,10 +21,9 @@ from torch import nn, optim
 
 from otc.data.dataloader import TabDataLoader
 from otc.data.dataset import TabDataset
+from otc.models.fttransformer import CLSHead
 from otc.optim.early_stopping import EarlyStopping
 from otc.optim.scheduler import CosineWarmupScheduler
-
-from otc.models.fttransformer import CLSHead
 
 
 class TransformerClassifier(BaseEstimator, ClassifierMixin):
@@ -246,16 +245,16 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self._stats_pretrain_epoch = []
 
         if self.pretrain:
-            # isolate unlabelled data
-            X_unlabelled = X[y == 0]
-            y_unlabelled = y[y == 0]
 
-            X_unlabelled = check_array(X_unlabelled, accept_sparse=False)
-            y_unlabelled = check_array(y_unlabelled, accept_sparse=False)
+            mask = y == 0
+
+            # isolate unlabelled
+            X_unlabelled = X[mask]
+            y_unlabelled = y[mask]
 
             # remove unlabelled
-            X = X[y != 0]
-            y = y[y != 0]
+            X = X[~mask]
+            y = y[~mask]
 
             # convert to dataloader
             train_loader_pretrain = self.array_to_dataloader_pretrain(
@@ -271,7 +270,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             torch.cuda.empty_cache()
 
             # replace head with classification head capacity similar to rubachev
-            self.clf.transformer.head = CLSHead(self.module_params["d_token"], 512)
+            self.clf.transformer.head = CLSHead(
+                d_in=self.module_params["d_token"], d_hidden=512
+            )
             self.clf.to(self.dl_params["device"])
 
             # half precision, see https://pytorch.org/docs/stable/amp.html
@@ -355,7 +356,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                 print(f"train loss: {train_loss}")
                 print(f"val loss: {val_loss}")
-            
+
             # https://discuss.huggingface.co/t/clear-gpu-memory-of-transformers-pipeline/18310/2
             del train_loader_pretrain, val_loader_pretrain
             gc.collect()

@@ -173,12 +173,16 @@ def main(
 
     if sample < 1.0:
         # sample down train data
-        x_train = x_train.sample(frac=sample, random_state=set_seed(seed))
-        y_train = y_train[x_train.index]
+        x_train = x_train.sample(frac=sample, random_state=set_seed(seed)).reset_index(
+            drop=True
+        )
+        y_train = y_train.iloc[x_train.index]
 
         # sample down validation data
-        x_val = x_val.sample(frac=sample, random_state=set_seed(seed))
-        y_val = y_val[x_val.index]
+        x_val = x_val.sample(frac=sample, random_state=set_seed(seed)).reset_index(
+            drop=True
+        )
+        y_val = y_val.iloc[x_val.index]
 
     # pretrain training activated
     has_label = (y_train != 0).all()
