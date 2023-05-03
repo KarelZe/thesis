@@ -46,6 +46,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         dl_params: dict[str, Any],
         callbacks: Any,
         features: list[str] | None = None,
+        pretrain: bool = False,
     ) -> None:
         """
         Initialize the model.
@@ -60,6 +61,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             columns. Required to match columns in feature matrix with label. If no
             feature names are provided for pd.DataFrames, names are taken from
             `X.columns` in `fit()`. Defaults to None.
+            pretrain (bool, optional): Whether to pretrain the model. Defaults to False.
         """
         self.module = module
 
@@ -71,6 +73,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self.dl_params = dl_params
         self.features = features
         self.callbacks = callbacks
+        self.pretrain = pretrain
 
     def _more_tags(self) -> dict[str, bool]:
         """
@@ -165,15 +168,25 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         if isinstance(X, pd.DataFrame) and self.features is None:
             self.features = X.columns.tolist()
 
-        check_classification_targets(y)
+        # isolate unlabelled data
+        if self.pretrain:
+            X_unlabelled = X[y == 0]
+            y_unlabelled = y[y == 0]
+            X_unlabelled = check_array(X_unlabelled, accept_sparse=False)
+            y_unlabelled = check_array(y_unlabelled, accept_sparse=False)
+            
+            # remove unlabelled
+            X = X[y != 0]
+            y = y[y != 0]
 
+        check_classification_targets(y)
         X, y = check_X_y(X, y, multi_output=False, accept_sparse=False)
 
         # if no features are provided or inferred, use default
         if not self.features:
             self.features = [str(i) for i in range(X.shape[1])]
 
-        # use insample instead of validation set, if None is passed
+        # use in-sample instead of validation set, if None is provided
         if eval_set:
             X_val, y_val = eval_set
             X_val, y_val = check_X_y(

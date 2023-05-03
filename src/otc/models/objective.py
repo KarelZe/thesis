@@ -158,6 +158,7 @@ class FTTransformerObjective(Objective):
 
         self._clf: BaseEstimator
         self._callbacks = CallbackContainer([SaveCallback(), PrintCallback()])
+        self._pretrain = pretrain
 
         super().__init__(x_train, y_train, x_val, y_val, name, pretrain)
 
@@ -246,6 +247,7 @@ class FTTransformerObjective(Objective):
             optim_params=optim_params,
             dl_params=dl_params,
             callbacks=self._callbacks,  # type: ignore # noqa: E501
+            pretrain=self._pretrain,
         )
 
         self._clf.fit(
