@@ -22,43 +22,19 @@
             }
           },
           {
-            "id": "ebe0f2d30b3089f8",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "empty",
-              "state": {},
-              "pinned": true
-            }
-          },
-          {
-            "id": "f4f457f63a5960f2",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "a89d39d1cf42fdf6",
+            "id": "9da72a436bfb4fb7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md",
+                "file": "📖chapters/💡Training and tuning.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -124,7 +100,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md",
+                "file": "📖chapters/💡Training and tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -152,7 +128,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Hyperparameter tuning.md"
+                "file": "📖chapters/💡Training and tuning.md"
               }
             }
           },
@@ -183,18 +159,18 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f4f457f63a5960f2",
+  "active": "9da72a436bfb4fb7",
   "lastOpenFiles": [
+    "📖chapters/🧭Random Feature Permutation.md",
+    "📖chapters/💡Hyperparameter tuning.md",
     "📖chapters/💡Training and tuning.md",
     "🖼️Media/galatica.png",
     "🖼️Media/research-framework.png",
     "📥Inbox/@dorogushCatBoostGradientBoosting.md",
-    "📖chapters/💡Hyperparameter tuning.md",
     "📖chapters/💡Training and Tuning.md",
     "📑notes/💡Hyperparameter tuning notes.md",
     "📑notes/🐈Gradient Boosting notes.md",
     "📖chapters/🐈Gradient Boosting.md",
-    "📖chapters/🧭Random Feature Permutation.md",
     "🍬Implementation/🔥Speed-up PyTorch.md",
     "🖼️Media/after-data-loader.png",
     "🖼️Media/techniques-to-speed-up-training.png",
