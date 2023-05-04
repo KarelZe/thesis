@@ -12,55 +12,45 @@ Our implementation of gradient-boosted trees is based on *CatBoost* ([[@prokhore
 ![[gbm-log-loss-accuracy.png]]
 (One iteration equals one tree added to the ensemble. )
 
-Fig-learning-curves visualises the learning curves of the default implementation on the ISE training and validation set / feature set classical.
-
-Specifically, the ensemble consists of (...) trees, grown to depth of (...). The learning rate is chosen by a simple heuristic / fixed $\eta=0.03$ . We set the loss function to be the (...) loss. Several conclusions can be drawn from this plot (...) First, the model is trained beyond (...) the optimal model complexity which is reached at an ensemble width of (...). Second, the model overfits the training . While we cannot change the training or validation data due to the temporal split, we can employ regularisation to reduce the effects from overfitting. Overfitting is inline with theoretical obsersvations. See chapter ... (write down full combination in Appendix)
-
-### Status Quo
-The improvements in terms of  (...). The large gap between the training and validation loss indicates overfitting, 
+Fig-learning-curves visualizes the learning curves of the default implementation on the ISE training and validation set / feature set classical. The complete configuration is documented in cref-appendix-loss. Several conclusions can be drawn from this plot (...) First, the model is overfitting the training data, as indicated by the significant gap between training and validation accuracies. As the training performance does not transfer to the validation set, we apply regularization techniques to improve generalization performance. Second, the validation loss spikes for larger ensembles while validation accuracy continues to improve. In other words, the correctness of the predicted class improves, but the ensemble becomes less confident in the correctness of the prediction. Part of this behaviour may be explained with the log-loss being unbound, whereby single incorrect predictions can lead to an explosion in loss. Consider the case where the ensemble learns to confidently classify a trade based on the training samples, but the label is different for the validation set (...)
 
 ### Improvements / Configuration
 
 ![[loss_train.png]]
 
-![[acc_train.png]]
-
 ![[loss_val.png]]
+
+
+![[acc_train.png]]
 
 ![[accuracy_val.png]]
 
+-> train loss decreases -> predictions become more accurate, but model is less certain about the predictions
+https://stats.stackexchange.com/questions/282160/how-is-it-possible-that-validation-loss-is-increasing-while-validation-accuracy
+https://github.com/keras-team/keras/issues/3755
 
-We introduce the following ideas to improve performance of the gradient-boosting implementation. We keep all other parameters constant, and vary the single parameter. 
+We leverage the following architectural changes to improve the performance of gradient-boosting. The effects on validation accuracy and log-loss over the default configuration are visualized in cref-fig. To derive the plots, all other parameters are kept at defaults and a single parameter is varied. While this approach neglects inter-changes between parameters, it can still provide guidance for the optimal training configuration. The training is performed on the ISE training set with FS1 and metrics are reported on the validation set.
 
 **Growth Strategy:**
-By default, *CatBoost* grows oblivious regression trees ([[@dorogushCatBoostGradientBoosting]]4). In this setting, trees are symmetric and grown level-wise and splits are performed on the same feature and split values across all nodes of a single level. This strategy is computationally efficient, but may sacrifice performance, as the split is performed on the same features or split values. Following ([[@chenXGBoostScalableTree2016]]4) we switch to a leaf-wise growth strategy, whereby terminal nodes are selected for splitting provide the largest improvement in loss. Nodes within the same level may result from different feature splits and thereby fit data more closely. Leaf-wise growth matches our intuition of split finding in cref-[[🎄Decision Trees]].
+By default, *CatBoost* grows oblivious regression trees ([[@dorogushCatBoostGradientBoosting]]4). In this configuration, trees are symmetric and grown level-wise and splits are performed on the same feature and split values across all nodes of a single level. This strategy is computationally efficient, but may sacrifice performance, as the split is performed on the same features or split values. Following ([[@chenXGBoostScalableTree2016]]4) we switch to a leaf-wise growth strategy, whereby terminal nodes are selected for splitting that provide the largest improvement in loss. Nodes within the same level may result from different feature splits and thereby fit data more closely. Leaf-wise growth also matches our intuition of split finding in cref-[[🎄Decision Trees]]. Changing to a leaf-wise growth improves validation accuracy by perc-num, but hardly improves the loss.
 
-**Early Stopping:**
-Acknowleding the recommendation ([[@friedmanGreedyFunctionApproximation2001]]14), that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble once the validation accuracy decreases for 100 iterations. The ensemble is then pruned to achieve highest validation accuracy. The size of the ensemble $M$ may not be fully exhausted. 
-
-**Sample Weighting:**
-The work of ([[@grauerOptionTradeClassification2022]]) suggests a strong temporal shift in the data, with the performance of classical trade classification rules to deteriorate over time. In consequence, the predictability of features defined on top of classical rules diminishes over time and patterns learned on old observations loose their relevance for predictions of test samples. In absence of an update mechanism, we extend the cross-entropy loss by a sample weighting scheme to assign higher weights to recent training samples and gradually decay weights over time. Validation and test samples are equally-weighted. Sample weighting has the strongest impact on validation performance, increasing validation accuracies by (... %).  
+**Sample Weighting:** 
+The work of ([[@grauerOptionTradeClassification2022]]36--38) suggests a strong temporal shift in the data, with the performance of classical trade classification rules to deteriorate over time. In consequence, the predictability of features defined on top of classical rules diminishes over time and patterns learned on old observations loose their relevance for predictions of test samples. In absence of an update mechanism, we extend the log loss by a sample weighting scheme to assign higher weights to recent training samples and gradually decay weights over time. Validation and test samples are equally-weighted. Sample weighting turns out to be vital for high validation performance. It positively affects the correctness and the confidence in the prediction. 
 
 $$
 \frac{-\sum_{i=1}^N w_i\left(c_i \log \left(p_i\right)+\left(1-c_i\right) \log \left(1-p_i\right)\right)}{\sum_{i=1}^N w_i}
 $$
-(from https://catboost.ai/en/docs/concepts/loss-functions-classification 🔢)
+(from https://catboost.ai/en/docs/concepts/loss-functions-classification 🔢) (logloss)
 
-**Quantization /  Border count:**
-Split finding in regression trees of gradient-boosting is typically approximated through quantization, whereby all numeric features are discretized first into a fixed number of buckets through histogram building and splits are evaluated at the border of the buckets ([[@dorogushCatBoostGradientBoosting]]4) and ([[@keLightGBMHighlyEfficient2017]]2).  We raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization. Expectedly, accuracy increases at the cost of computational efficiency. 
+**Border Count:**
+Split finding in regression trees of gradient-boosting is typically approximated through quantization, whereby all numeric features are discretised first into a fixed number of buckets through histogram building and splits are evaluated at the border of the buckets ([[@dorogushCatBoostGradientBoosting]]4) and ([[@keLightGBMHighlyEfficient2017]]2). We raise the border count to $254$, which increases the number of split candidates per feature through a finer quantization. In general, accuracy increases at the cost of computational efficiency. In the experiment above, the improvements in validation loss and accuracy are minor compared to the previous changes.
 
-For gradient boosting we raise the border count to \num{265}, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. 
+**Early Stopping:**
+To avidly fight overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for 100 iterations. The ensemble is then pruned to achieve highest validation accuracy. In consequence, the maximum size of the ensemble may not be fully exhausted. For the experiment above, early stopping did not apply, as validation accuracy increased for larger ensembles. We employ additional measures to address overfitting, but treat them as a tunable hyperparameter. More details are provided in cref-hyperparameter-tuning.
 
-(visualization of border counts 🖼️)
-
-We incorporate these concepts into the large-scale studies. We employ additional measures to counterfight overfitting, but treat them as tunable hyperparameter. More details are provided in cref-hyperparameter-tuning.
+We combine these ideas to leverage the improvements for our large-scale studies. 
 
 ## Gradient-Boosting + Self-Training
-
-
-
-## Transformer + Pre-Training
-
 
 
 ## Transformer
@@ -96,11 +86,14 @@ Following common practice, dropout
 - attention dropout / feed forward drop out
 - Also see [[@shavittRegularizationLearningNetworks2018]] for regularization in neural networks for tabular data.
 
+**Depth:**
+(Feels somewhat wrong here) 
 
 
 **Activation Function:**
 - On activation function see [[@shazeerGLUVariantsImprove2020]]
 
+## Transformer + Pre-Training
 
 **Label Smoothing**
 
