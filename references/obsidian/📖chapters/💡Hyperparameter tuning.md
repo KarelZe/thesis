@@ -3,21 +3,27 @@ All of our machine learning models feature a set of tunable hyperparameters. The
 **Bayesian search**
 We perform a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function ([[@shahriariTakingHumanOut2016]]2). Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in fewer trials.
 
-While different algorithmic implementations exist for Bayesian optimization, we choose the Optuna library by ([[@akibaOptunaNextgenerationHyperparameter2019]]1--10), which implements the *tree parzen estimator* and is capable of handling both continuous and categorical hyperparameters. We maximize for the accuracy on the validation set and run 50 trials per combination of model and feature set. 
+While different algorithmic implementations exist for Bayesian optimization, we choose the *Optuna* library by ([[@akibaOptunaNextgenerationHyperparameter2019]]1--10), which implements the *tree parzen estimator* and is capable of handling both continuous and categorical hyperparameters. We maximize for the accuracy on the validation set and run 50 trials per combination of model and feature set. 
 
 ![[search-space.png]]
 
 (Where does search space come from?)
 
+**Gradient Boosting:**
+
 As documented in cref-table, we tune five hyperparameters. Depth refers to the depth or number of levels of the regression trees. Other than ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]]), we increase the upper bound to twelve to allow for more complex ensemble members. The learning rate scales the contribution of individual trees to the ensemble. Random strength, bagging temperature, and $\ell_2$ leaf regularization are all measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness in the selected splits. In a similar vain, the algorithm introduces randomness on the sample level through Bayesian bootstrap. The hyperparameter controls the distribution used for sampling, and thereby the aggressiveness of Bagging. Finally, $\ell_2$ leaf regularization adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularization.
 
-Analogously, we define a hyperparameter search space for FT-Transformer based on (). We vary the layer count and the embedding dimension, which directly affect the capacity of the network. 
-Layers refers to the number of layers in the encoder stack.  (halfen embedding dimension) Dropout in the Attention modules and the FFN is used to prevent overfitting.  
+**FT-Transformer:**
+
+Analogously, we define a hyperparameter search space for FT-Transformer based on ([[@gorishniyRevisitingDeepLearning2021]]18). We vary the layer count and the embedding dimension, which directly affect the capacity of the network. Layers refers to the number of layers in the encoder stack. The dimension of numerical and continuous embeddings $d_e$ is at 256 at maximum, which is half the dimension used in the author's work. We make this sacrifice, due to being computation-bound by the size of the dataset. Dropout ([[@srivastavaDropoutSimpleWay]]1930) in the attention modules and the gls-FFN is used to prevent overfitting the training data. We treat the weight decay term in the weight update rule of *AdamW* optimizer as a hyperparameter, with larger values for $\lambda$ enforcing a stronger shrinkage of weights and thereby reducing overfitting.
 
 ![[hyperparameter-ft-transformer.png]]
 
-The search space of the semi-supervised is identical to the supervised variants. 
-(learning rate)
+**Transformer With Pre-Training**
+The hyperparameter search space for Transformers with a pre-training objective is identical to that shown in cref-table-hyperparameters. Following ([[@rubachevRevisitingPretrainingObjectives2022]]4), we share the learning rate and weight decay for both the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
+
+**Gradient-Boosting with Self-Training** 
+The search space for the semi-supervised variant is identical to the supervised gradient boosting.
 
 
 ![[Pasted image 20230428111917.png]]
@@ -40,6 +46,7 @@ The results for the gls-gbm in combination with self-training are similar and vi
 Akin to selecting the machine learning classifiers, we determine our classical baselines on the gls-ise validation set. This prevents overfitting the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the gls-cboe sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and gls-lr algorithm, due to their widespread adoption in literature.
 
 While optimizing the combination of trade classification rules through Bayesian search is theoretically feasible, we found no out-performance over hybrid rules reported in literature \footnote{We performed a Bayesian search with 50 trials for trade classification rules, stacking up to five rules. Experiment available under: \url{https://wandb.ai/fbv/thesis}}.  Thus, \cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set.
+
 
 
 ![[training-validation-accuracy.png]]

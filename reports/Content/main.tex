@@ -861,15 +861,15 @@ All of our machine-learning models feature a set of tunable hyperparameters. The
 
 We perform a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function \autocite[][2]{shahriariTakingHumanOut2016}. Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in more promising trials.
 
-While different algorithmic implementations exist for Bayesian optimisation, we choose the optuna library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters. We maximize the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $50$ trials per combination of the model and feature set. To compensate for varying computational costs between the classifiers, we set an additional time budget of 12 hours. The best combination of each is tested out-of-sample in \cref{sec:results}.
+While different algorithmic implementations exist for Bayesian optimisation, we choose the \emph{Optuna} library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters. We maximize the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $50$ trials per feature set for the \gls{GBM} and $5$ trials for the FT-Transformer. The best combination of each is tested out-of-sample in \cref{sec:results}.
 
-\textbf{Hyperparameter Space}
+\textbf{Hyperparameter Search Space}
 
 Our search space is reported in \cref{tab:hyperparameter-space}, which is laid out based on the recommendations in \textcites[][20]{prokhorenkovaCatBoostUnbiasedBoosting2018}[][18]{gorishniyRevisitingDeepLearning2021}[][4]{rubachevRevisitingPretrainingObjectives2022} with minor deviations.
 
 \begin{table}[H]
     \centering
-    \caption[Hyperparameter Search Space of Gradient Boosting]{Hyperparameter search space of gradient boosting. The three most right columns document the best combination in terms validation accuracy per feature set. We perform \num{50} trials each.}
+    \caption[Hyperparameter Search Space of Gradient Boosting]{Hyperparameter search space of gradient boosting. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials each. A discussion of these results is provided below.}
     \label{tab:hyperparameter-space}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
@@ -879,32 +879,45 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
         $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$        & 16                      & 29                          & 17                       \\
         Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ & 0.0000104767852 & 0.00000000338984444 & 0.0000013615032724416282 \\
         Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$        & 0.6538673528316611      & 0.4734183814        & 0.4515562770665896       \\ \midrule
-        Accuracy in \%               &                                           & 64.20927249609458       & 75.03173105450845           & 76.98607312092097        \\ \bottomrule
+        Validation Accuracy in \%            &                                           & 64.20927249609458    & 75.03173105450845         & 76.98607312092097 \\ \bottomrule
     \end{tabular}
 \end{table}
-As documented in \cref{{tab:hyperparameter-space}}, we tune five hyperparameters. The first is the depth, which determines the number of levels in each tree. Other than \textcite[][]{gorishniyRevisitingDeepLearning2021}, we increase the upper bound to twelve to allow for more complex ensemble members. The learning rate scales the contribution of individual trees to the ensemble. Random strength, bagging temperature, and $\ell_2$ leaf regularization are all measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness of selected splits. In a similar vain, the algorithm introduces randomness on the sample level through Bayesian bootstrap. The hyperparameter controls the distribution used for sampling, and thereby the aggressiveness of Bagging. Finally, $\ell_2$ leaf regularization adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularization.
 
-The search space of the FT-Transformer is given by:
+\emph{Gradient-Boosting}
+
+As documented in \cref{tab:hyperparameter-space}, we tune five hyperparameters for gradient boosting. The first is the depth, which determines the number of levels in each tree. Other than \textcite[][]{gorishniyRevisitingDeepLearning2021}, we increase the upper bound to twelve to allow for more complex ensemble members. The learning rate scales the contribution of individual trees to the ensemble. Random strength, bagging temperature, and $\ell_2$ leaf regularization are all measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness of selected splits. In a similar vein, the algorithm introduces randomness on the sample level through Bayesian bootstrap. The hyperparameter controls the distribution used for sampling, and thereby the aggressiveness of Bagging. Finally, $\ell_2$ leaf regularization adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularization.
+
+\emph{FT-Transformer}
+
+The hyperparameter search for the FT-Transformer is almost identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)) and denoted in \cref{tab:hyperparameter-space-2}. We vary the layer count and the embedding dimension, which directly affect the capacity of the network. Layers refer to the number of Transformer blocks in the encoder stack. The dimension of numerical and continuous embeddings $d_e$ is at \num{256} at maximum, which is half the dimension used in the author's work. We make this sacrifice, due to being computation-bound by the size of the dataset. Dropout \autocite[][1930]{srivastavaDropoutSimpleWay} in the attention module and the \gls{FFN} is used to prevent overfitting the training data. We treat the weight decay term in the weight update rule of the AdamW optimizer as a hyperparameter, with larger values for \lambda~enforcing a stronger shrinkage of weights and thereby reducing overfitting.
 
 \begin{table}[H]
     \centering
-        \caption{Hyperparameter Search Space of FT-Transformer}
+        \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{5} trials each. A discussion of these results is provided below.}
         \label{tab:hyperparameter-space-2}
     \begin{tabular}{@{}llSSS@{}}
     \toprule
     Hyperparameter         & Distribution  & {FS 1} & {FS 2} & {FS 3} \\ \midrule
     Layers $L$               & $\operatorname{UniformInt}[1,6]$ &      &      &      \\
-    $d_{\mathrm{e}}$             & $\operatorname{UniformInt}[64, 256]$                                 &      &      &      \\
-    Attention dropout & $\operatorname{Uniform}[0, 0.05]$                                 &      &      &      \\
-    \gls{FFN} dropout       & $\operatorname{Uniform}[0, 0.05]$                                 &      &      &      \\
+    Embedding dimension $d_{\mathrm{e}}$             & $\operatorname{UniformInt}[64, 256]$                                 &      &      &      \\
+    Attention dropout & $\operatorname{Uniform}[0, 0.5]$                                 &      &      &      \\
+    \gls{FFN} dropout       & $\operatorname{Uniform}[0, 0.5]$                                 &      &      &      \\
     Learning rate $\eta$ &  $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$                                &      &      &      \\ 
-    weight decay     & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$                                 &      &      &      \\ \bottomrule
+    weight decay $\lambda$     & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$                                 &      &      &      \\ \bottomrule
     \end{tabular}
 \end{table}
-    
-The hyperparameter search for the FT-Transformer is almost identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)). We halfen the maximum dimension to facilitate training on large feature sets.
 
-\textbf{Solutions For Gradient Boosting}
+\emph{Transformer With Pre-Training}
+
+The hyperparameter search space for Transformers with a pre-training objective is identical to that shown in \cref{tab:hyperparameter-space-2}. Following \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}, we share the learning rate and weight decay between the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
+
+\emph{Gradient-Boosting With Self-Training}
+
+The search space for the semi-supervised variant is identical to the supervised gradient boosting.
+
+\textbf{Solutions}
+
+\emph{Gradient Boosting:}
 
 \begin{figure}[!b]
     \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[ width=0.7\linewidth]{17malsep-hyperparam-search-space.pdf}}
@@ -929,14 +942,15 @@ In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \gls{
 % https://wandb.ai/fbv/thesis/runs/2a9iqsn0?workspace=user-karelze
 The loss surface of the \gls{GBM} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.98}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not per se improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles.
 
-% #     ("semi-classical", "3dtuffae_CatBoostClassifier_default.cbm:v7"),
-% #     ("semi-classical-size", "2vnqg1sj_CatBoostClassifier_default.cbm:v8"),
-
-\textbf{Solutions For FT-Transformer}
+\emph{Transformer With Pre-Training}
 
 (insert here)
 
-\textbf{Solutions For Classical Rules}
+\emph{Gradient-Boosting With Self-Training}
+
+(insert here)
+
+\emph{Classical Rules:}
 
 Akin to selecting the machine learning classifiers, we determine our classical baselines on the \gls{ISE} validation set. This prevents \gls{overfitting} the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the \gls{CBOE} sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and \gls{LR} algorithm, due to their widespread adoption in literature.
 
@@ -951,14 +965,14 @@ Optimizing hybrids of trade classification rules through Bayesian search is theo
 
 By extension, we also estimate rule combinations involving overrides from the trade size rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ achieves the highest validation accuracy. For brevity, we refer to this specific combination as the \gls{GSUH} method. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for the second feature set.
 
-In absence of other baselines, we repeatedly compare against \gls{GSUH} method as a baseline for the third feature set, even if it doesn't involve option-specific features.
+In the absence of other baselines, we repeatedly compare against \gls{GSUH} method as a baseline for the third feature set, even if it doesn't involve option-specific features.
 
 In the direct comparison between the validation accuracies of classical rules and our classifiers, the validation accuracies of classical rules considerably underperform the learned classifier. \cref{sec:results} discusses if the results hold for the test sets. But before we do so, we present the metrics used
 for evaluation.
 
 \subsection{Evaluation}\label{sec:evaluation}
 
-Subsequent sub-chapters discusses metrics for evaluation and measures to retrieve feature importance estimates from the estimators.
+Subsequent sub-chapters discuss metrics for evaluation and measures to retrieve feature importance estimates from the estimators.
 
 \subsubsection{Evaluation Metric}\label{sec:evaluation-metric}
 
