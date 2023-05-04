@@ -1,6 +1,10 @@
 This chapter documents the basic training setup, and defines a baseline before applying hyperparameter tuning.
 
+## Research Framework
+
 ![[research-framework.png]]
+
+
 
 ## Gradient-Boosting
 Our implementation of gradient-boosted trees is based on *CatBoost* ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]]5--6) due to its native support for categorical variables and its efficient implementation on gls-gpu. Though, we expect the chosen library to have marginal effects on performance as discussed earlier in cref-gradient-boosting. 
@@ -15,14 +19,24 @@ Specifically, the ensemble consists of (...) trees, grown to depth of (...). The
 ### Status Quo
 The improvements in terms of  (...). The large gap between the training and validation loss indicates overfitting, 
 
-### Improvements
+### Improvements / Configuration
+
+![[loss_train.png]]
+
+![[acc_train.png]]
+
+![[loss_val.png]]
+
+![[accuracy_val.png]]
+
+
 We introduce the following ideas to improve performance of the gradient-boosting implementation. We keep all other parameters constant, and vary the single parameter. 
 
 **Growth Strategy:**
 By default, *CatBoost* grows oblivious regression trees ([[@dorogushCatBoostGradientBoosting]]4). In this setting, trees are symmetric and grown level-wise and splits are performed on the same feature and split values across all nodes of a single level. This strategy is computationally efficient, but may sacrifice performance, as the split is performed on the same features or split values. Following ([[@chenXGBoostScalableTree2016]]4) we switch to a leaf-wise growth strategy, whereby terminal nodes are selected for splitting provide the largest improvement in loss. Nodes within the same level may result from different feature splits and thereby fit data more closely. Leaf-wise growth matches our intuition of split finding in cref-[[🎄Decision Trees]].
 
 **Early Stopping:**
-Acknowleding the observations ([[@friedmanGreedyFunctionApproximation2001]]14), that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble once the validation accuracy decreases for 100 iterations. The ensemble is then pruned to achieve highest validation accuracy. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive \num{100} steps.
+Acknowleding the recommendation ([[@friedmanGreedyFunctionApproximation2001]]14), that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble once the validation accuracy decreases for 100 iterations. The ensemble is then pruned to achieve highest validation accuracy. The size of the ensemble $M$ may not be fully exhausted. 
 
 **Sample Weighting:**
 The work of ([[@grauerOptionTradeClassification2022]]) suggests a strong temporal shift in the data, with the performance of classical trade classification rules to deteriorate over time. In consequence, the predictability of features defined on top of classical rules diminishes over time and patterns learned on old observations loose their relevance for predictions of test samples. In absence of an update mechanism, we extend the cross-entropy loss by a sample weighting scheme to assign higher weights to recent training samples and gradually decay weights over time. Validation and test samples are equally-weighted. Sample weighting has the strongest impact on validation performance, increasing validation accuracies by (... %).  
@@ -40,6 +54,14 @@ For gradient boosting we raise the border count to \num{265}, which increases th
 (visualization of border counts 🖼️)
 
 We incorporate these concepts into the large-scale studies. We employ additional measures to counterfight overfitting, but treat them as tunable hyperparameter. More details are provided in cref-hyperparameter-tuning.
+
+## Gradient-Boosting + Self-Training
+
+
+
+## Transformer + Pre-Training
+
+
 
 ## Transformer
 The training Transformers has been found non-trivial ([[@liuUnderstandingDifficultyTraining2020]]). We apply minor modifications to the standard FT-Transformer to stabilize training and improve performance. The loss and accuracy of the FT-Transformer without modifications is visualized in cref-x. (what is the configuration?, layers, pre-norm, no. of epochs... We train for 20 epochs at maximum, which equals 20 full passes through the training set. The entire configuration is documented cref-appendix)

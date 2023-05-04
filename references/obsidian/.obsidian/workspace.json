@@ -161,6 +161,10 @@
   },
   "active": "9da72a436bfb4fb7",
   "lastOpenFiles": [
+    "🖼️Media/loss_train.png",
+    "🖼️Media/acc_train.png",
+    "🖼️Media/loss_val.png",
+    "🖼️Media/accuracy_val.png",
     "📖chapters/🧭Random Feature Permutation.md",
     "📖chapters/💡Hyperparameter tuning.md",
     "📖chapters/💡Training and tuning.md",
@@ -184,10 +188,7 @@
     "🖼️Media/gbm-log-loss-accuracy.png",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
     "🖼️Media/training-validation-accuracy.png",
-    "🖼️Media/hyperparameter-ft-transformer.png",
-    "🖼️Media/training-loss-llama.png",
     "📖chapters/🏅Results of supervised.md",
-    "🖼️Media/FT-Transformer.png",
     "📖chapters/🏅Results.md",
     "📥Inbox/@zhaiDirectBoostingApproach.md",
     "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
@@ -195,7 +196,6 @@
     "📥Inbox/@dalche-bucSemisupervisedMarginBoost2001.md",
     "📥Inbox/@chenSimpleFrameworkContrastive2020.md",
     "📥Inbox/@bennettExploitingUnlabeledData2002.md",
-    "📖chapters/☠️Problem Framing.md",
-    "📑notes/🤖Pretraining notes.md"
+    "📖chapters/☠️Problem Framing.md"
   ]
 }
