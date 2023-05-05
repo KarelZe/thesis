@@ -14,27 +14,17 @@ Our implementation of gradient-boosted trees is based on *CatBoost* ([[@prokhore
 
 Fig-learning-curves visualizes the learning curves of the default implementation on the ISE training and validation set / feature set classical. The complete configuration is documented in cref-appendix-loss. Several conclusions can be drawn from this plot (...) First, the model is overfitting the training data, as indicated by the significant gap between training and validation accuracies. As the training performance does not transfer to the validation set, we apply regularization techniques to improve generalization performance. Second, the validation loss spikes for larger ensembles while validation accuracy continues to improve. In other words, the correctness of the predicted class improves, but the ensemble becomes less confident in the correctness of the prediction. Part of this behaviour may be explained with the log-loss being unbound, whereby single incorrect predictions can lead to an explosion in loss. Consider the case where the ensemble learns to confidently classify a trade based on the training samples, but the label is different for the validation set (...)
 
-### Improvements / Configuration
-
-![[loss_train.png]]
-
-![[loss_val.png]]
-
-
-![[acc_train.png]]
-
-![[accuracy_val.png]]
-
+*Improvements / Configuration:*
 -> train loss decreases -> predictions become more accurate, but model is less certain about the predictions
 https://stats.stackexchange.com/questions/282160/how-is-it-possible-that-validation-loss-is-increasing-while-validation-accuracy
 https://github.com/keras-team/keras/issues/3755
 
 We leverage the following architectural changes to improve the performance of gradient-boosting. The effects on validation accuracy and log-loss over the default configuration are visualized in cref-fig. To derive the plots, all other parameters are kept at defaults and a single parameter is varied. While this approach neglects inter-changes between parameters, it can still provide guidance for the optimal training configuration. The training is performed on the ISE training set with FS1 and metrics are reported on the validation set.
 
-**Growth Strategy:**
+*Growth Strategy:*
 By default, *CatBoost* grows oblivious regression trees ([[@dorogushCatBoostGradientBoosting]]4). In this configuration, trees are symmetric and grown level-wise and splits are performed on the same feature and split values across all nodes of a single level. This strategy is computationally efficient, but may sacrifice performance, as the split is performed on the same features or split values. Following ([[@chenXGBoostScalableTree2016]]4) we switch to a leaf-wise growth strategy, whereby terminal nodes are selected for splitting that provide the largest improvement in loss. Nodes within the same level may result from different feature splits and thereby fit data more closely. Leaf-wise growth also matches our intuition of split finding in cref-[[🎄Decision Trees]]. Changing to a leaf-wise growth improves validation accuracy by perc-num, but hardly improves the loss.
 
-**Sample Weighting:** 
+*Sample Weighting:*
 The work of ([[@grauerOptionTradeClassification2022]]36--38) suggests a strong temporal shift in the data, with the performance of classical trade classification rules to deteriorate over time. In consequence, the predictability of features defined on top of classical rules diminishes over time and patterns learned on old observations loose their relevance for predictions of test samples. In absence of an update mechanism, we extend the log loss by a sample weighting scheme to assign higher weights to recent training samples and gradually decay weights over time. Validation and test samples are equally-weighted. Sample weighting turns out to be vital for high validation performance. It positively affects the correctness and the confidence in the prediction. 
 
 $$
@@ -42,19 +32,31 @@ $$
 $$
 (from https://catboost.ai/en/docs/concepts/loss-functions-classification 🔢) (logloss)
 
-**Border Count:**
+*Border Count:*
 Split finding in regression trees of gradient-boosting is typically approximated through quantization, whereby all numeric features are discretised first into a fixed number of buckets through histogram building and splits are evaluated at the border of the buckets ([[@dorogushCatBoostGradientBoosting]]4) and ([[@keLightGBMHighlyEfficient2017]]2). We raise the border count to $254$, which increases the number of split candidates per feature through a finer quantization. In general, accuracy increases at the cost of computational efficiency. In the experiment above, the improvements in validation loss and accuracy are minor compared to the previous changes.
 
-**Early Stopping:**
-To avidly fight overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for 100 iterations. The ensemble is then pruned to achieve highest validation accuracy. In consequence, the maximum size of the ensemble may not be fully exhausted. For the experiment above, early stopping did not apply, as validation accuracy increased for larger ensembles. We employ additional measures to address overfitting, but treat them as a tunable hyperparameter. More details are provided in cref-hyperparameter-tuning.
+*Early Stopping:*
+To avidly fight overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for 100 iterations. The ensemble is then pruned to achieve highest validation accuracy. In consequence, the maximum size of the ensemble may not be fully exhausted. For the experiment above, early stopping does not apply, as validation accuracy continues to improve for larger ensembles. We employ additional measures to address overfitting, but treat them as a tunable hyperparameter. More details are provided in cref-hyperparameter-tuning.
 
-We combine these ideas to leverage the improvements for our large-scale studies. 
+We combine these ideas to leverage the improvements for our large-scale studies in cref-hyperparameter-tuning. 
 
-## Gradient-Boosting + Self-Training
+**Classical Rules**
+Classical trade classification rules serve as a benchmark in our work. We implement them as a generic classifier which combines arbitrary trade classification rules through stacking, as covered in cref-stacking. In case where no classification is not feasible due to missing data or the definition of the rules itself, we resort to a random classification, which achieves an average accuracy of perc-50. In this regard we deviate from ([[@grauerOptionTradeClassification2022]]29--32), who treat unclassified trades as falsely classified resulting in perc-0 accuracy. In our setting, this procedure would introduce a bias towards machine learning classifiers.
 
+**Gradient-Boosting + Self-Training**
+To incorporate unlabelled trades into the training procedure, we combine gradient boosting with a self-training classifier, as derived in cref-self-training-gbm. We repeat self-training for 2 iterations and require the predicted class probability to exceed $\tau=0.9$. As the entire ensemble is rebuilt three times, the relatively low number of iterations and high confidence threshold, is a compromise to balance computational requirements and the need for high-quality predictions. The base classifier is otherwise identical to supervised gradient boosting from cref-supervised-training.
 
-## Transformer
-The training Transformers has been found non-trivial ([[@liuUnderstandingDifficultyTraining2020]]). We apply minor modifications to the standard FT-Transformer to stabilize training and improve performance. The loss and accuracy of the FT-Transformer without modifications is visualized in cref-x. (what is the configuration?, layers, pre-norm, no. of epochs... We train for 20 epochs at maximum, which equals 20 full passes through the training set. The entire configuration is documented cref-appendix)
+**Transformer + Pre-Training**
+As derived in cref-pretraining, we
+
+Following ([[@rubachevRevisitingPretrainingObjectives2022]]14) we set the hidden dimension of the classification head to 512. The configuration of the Transformer with pre-training objective is otherwise identical to the Transformer trained from scratch.
+
+When finetuning 
+
+“Pretraining. Pretraining is always performed directly on the target dataset and does not exploit additional data. The learning process thus comprises two stages. On the first stage, the model parameters are optimized w.r.t. the pretraining objective. On the second stage, the model is initialized with the pretrained weights and finetuned on the downstream classification or regression task. We focus on the fully-supervised setup, i.e., assume that target labels are provided for all dataset objects. Typically, pretraining stage involves the input corruption: for instance, to generate positive pairs in contrastive-like objectives or to corrupt the input for reconstruction in self-prediction based objectives. We use random feature resampling as a proven simple baseline for input corruption in tabular data [4, 42]. Learning rate and weight decay are shared between the two stages (see Table 11 for the ablation). We fix the maximum number of pretraining iterations for each dataset at 100k. On every 10k-th iteration, we compute the value of the pretraining objective using the hold-out validation objects for early-stopping on large-scale WE, CO and MI datasets. On other datasets we directly finetune the current model every 10k-th iteration and perform early-stopping based on the target metric after finetuning (we do not observe much difference between early stopping by loss or by downstream metric, see Table 12).” (Rubachev et al., 2022, p. 4)
+
+**Transformer**
+The training Transformers has been found non-trivial ([[@liuUnderstandingDifficultyTraining2020]]). We apply minor modifications to the default FT-Transformer to stabilize training and improve performance. The loss and accuracy of the FT-Transformer without modifications is visualized in cref-x. The configuration is listed in the cref-appendix. (what is the configuration?, layers, pre-norm, no. of epochs... We train for 20 epochs at maximum, which equals 20 full passes through the training set. The entire configuration is documented cref-appendix)
 
 ![[training-loss-llama.png]]
 (One step equals one batched gradient update. )
@@ -93,7 +95,6 @@ Following common practice, dropout
 **Activation Function:**
 - On activation function see [[@shazeerGLUVariantsImprove2020]]
 
-## Transformer + Pre-Training
 
 **Label Smoothing**
 

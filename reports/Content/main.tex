@@ -845,10 +845,69 @@ Our train-test-split assumes that all subsets are drawn from the same distributi
 \subsubsection{Training of Supervised
     Models}\label{sec:training-of-supervised-models}
 
+\textbf{Gradient Boosting}
+
+Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autocite[][5--6]{prokhorenkovaCatBoostUnbiasedBoosting2018} due to its native support for categorical variables and its efficient implementation on \glspl{GPU}. Though, we expect the chosen library to have marginal effects on performance as discussed earlier in \cref{sec:gradient-boosting-procedure}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{gbm-train-val-loss-acc.pdf}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \glsentryshort{ISE} Sample]{Training and validation accuracy of \gls{GBM} on \gls{ISE} sample. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \label{fig:gbm-train-val-loss-acc}
+\end{figure}
+
+\cref{fig:gbm-train-val-loss-acc} visualizes the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The complete configuration is documented in (...). Several conclusions can be drawn from these plots. First, the model is overfitting the training data, as indicated by the significant gap between training and validation accuracies. As the training performance does not transfer to the validation set, we apply regularization techniques to improve generalization performance. Second, the validation loss spikes for larger ensembles while validation accuracy continues to improve. In other words, the correctness of the predicted class improves, but the ensemble becomes less confident in the correctness of the prediction. Part of this behaviour may be explained by the log loss being unbound, whereby single incorrect predictions can lead to an explosion in the loss. 
+% Consider the case where the ensemble learns to confidently classify a trade based on the training samples, but the label is different for the validation set (...)
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{gbm-optimisations-loss-acc.pdf}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \gls{ISE} with Optimisations]{Training and validation accuracy of \gls{GBM} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \label{fig:gbm-optimisations-loss-acc}
+\end{figure}
+
+We leverage the following architectural changes to improve the performance and mitigate overfitting of gradient boosting. The effects on validation accuracy and log loss over the default configuration are visualized in \cref{fig:gbm-optimisations-loss-acc}. To derive the plots, all other parameters are kept at defaults and a single parameter is varied. While this approach neglects interchanges between parameters, it can still guide the optimal training configuration. The training is performed on the ISE training set with classical features and metrics reported on the validation set.
+
+\emph{Growth Strategy}
+
+By default, \emph{CatBoost} grows oblivious regression trees \autocite[][4]{dorogushCatBoostGradientBoosting}. In this configuration, trees are symmetric and grown level-wise and splits are performed on the same feature and split values across all nodes of a single level. This strategy is computationally efficient but may sacrifice performance, as the split is performed on the same features or split values. Following \textcite[][4]{chenXGBoostScalableTree2016} we switch to a leaf-wise growth strategy, whereby terminal nodes are selected for splitting that provide the largest improvement in the loss. Nodes within the same level may result from different feature splits and thereby fit data more closely. Leaf-wise growth also matches our intuition of split finding from \cref{sec:decision-tree}. Changing to a leaf-wise growth improves validation accuracy by \SI{0.3461}{\percent}, but hardly improves the loss.
+
+\emph{Sample Weighting}
+
+The work of \textcite[][36--38]{grauerOptionTradeClassification2022} suggests a strong temporal shift in the data, with the performance of classical trade classification rules deteriorating over time. In consequence, the predictability of features defined on top of classical rules diminishes over time and patterns learned on old observations lose their relevance for predictions of test samples. In the absence of an update mechanism, we extend the log loss by a sample weighting scheme to assign higher weights to recent training samples and gradually decay weights over time. Validation and test samples are equally weighted. Sample weighting turns out to be vital for high validation performance. It positively affects the correctness and confidence in the prediction.
+
+% $$
+% \frac{-\sum_{i=1}^N w_i\left(c_i \log \left(p_i\right)+\left(1-c_i\right) \log \left(1-p_i\right)\right)}{\sum_{i=1}^N w_i}
+% $$
+% (from \url{https://catboost.ai/en/docs/concepts/loss-functions-classification} 🔢) (logloss)
+
+\emph{Border Count}
+
+Split finding in regression trees of gradient-boosting is typically approximated through quantization, whereby all numeric features are discretised first into a fixed number of buckets through histogram building and splits are evaluated at the border of the buckets \autocites[][4]{dorogushCatBoostGradientBoosting}[][2]{keLightGBMHighlyEfficient2017}. We raise the border count to \num{254}, which increases the number of split candidates per feature through a finer quantization. In general, accuracy increases at the cost of computational efficiency. In the experiment above, the improvements in validation loss and accuracy are minor compared to the previous changes.
+
+\emph{Early Stopping}
+
+To reduce overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for 100 iterations. The ensemble is then pruned to achieve the highest validation accuracy. In consequence, the maximum size of the ensemble may not be fully exhausted. For the experiment above, early stopping does not apply, as validation accuracy continues to improve for larger ensembles. We employ additional measures to address overfitting but treat them as a tunable hyperparameter. More details are provided in \cref{sec:hyperparameter-tuning}.
+
+We combine these ideas to leverage the improvements for our large-scale studies.
+
+\textbf{Classical Rules}
+
+Classical trade classification rules serve as a benchmark in our work. We implement them as a classifier which combines arbitrary trade classification rules through stacking, as covered in \cref{sec:semi-supervised-approaches}. 
+
+% FIXME: They write that they classify randomly, but they don't do so.
+In cases where classification is not feasible due to missing data or the definition of the rules itself, we resort to a random classification, which achieves an average accuracy of \SI{50}{\percent}. In this regard, we deviate from \textcite[][29--32]{grauerOptionTradeClassification2022}, who treat unclassified trades as falsely classified resulting in \SI{0}{\percent} accuracy. In our setting, their procedure would introduce a bias towards machine learning classifiers.
 
 \subsubsection{Training of Semi-Supervised
     Models}\label{sec:training-of-semi-supervised-models}
 
+\textbf{Gradient Boosting With Self-Training}
+
+To incorporate unlabelled trades into the training procedure, we combine gradient boosting with a self-training classifier, as derived in \cref{sec:extensions-to-gradient-boosted-trees}. We repeat self-training for 2 iterations and require the predicted class probability to exceed $\tau=0.9$. As the entire ensemble is rebuilt three times, the relatively low number of iterations and high confidence threshold, is a compromise to balance computational requirements and the need for high-quality predictions. The base classifier is otherwise identical to supervised gradient boosting from \cref{sec:training-of-supervised-models}.
+
+\textbf{Transformer with Pre-Training}
+
+(...)
 
 \subsubsection{Hyperparameter Tuning}\label{sec:hyperparameter-tuning}
 
@@ -880,9 +939,9 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
     \end{tabular}
 \end{table}
 
-\emph{Gradient-Boosting}
+\emph{Gradient Boosting}
 
-As documented in \cref{tab:hyperparameter-space}, we tune five hyperparameters for gradient boosting. The first is the depth, which determines the number of levels in each tree. Other than \textcite[][]{gorishniyRevisitingDeepLearning2021}, we increase the upper bound to twelve to allow for more complex ensemble members. Acknowleding the research of \textcite[][14]{friedmanGreedyFunctionApproximation2001} that the learning rate \eta and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop extending the ensemble based on the early stopping criterion. Random strength, bagging temperature, and $\ell_2$ leaf regularization are all measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness of selected splits. In a similar vein, the algorithm introduces randomness on the sample level through Bayesian bootstrap. The hyperparameter controls the distribution used for sampling, and thereby the aggressiveness of Bagging. Finally, $\ell_2$ leaf regularization adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularization.
+As documented in \cref{tab:hyperparameter-space}, we tune five hyperparameters for gradient boosting. The first is the depth, which determines the number of levels in each tree. Other than \textcite[][]{gorishniyRevisitingDeepLearning2021}, we increase the upper bound to twelve to allow for more complex ensemble members. Acknowledging the research of \textcite[][14]{friedmanGreedyFunctionApproximation2001} that the learning rate \eta and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop extending the ensemble based on the early stopping criterion. Random strength, bagging temperature, and $\ell_2$ leaf regularization are all measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness of selected splits. In a similar vein, the algorithm introduces randomness on the sample level through Bayesian bootstrap. The hyperparameter controls the distribution used for sampling, and thereby the aggressiveness of Bagging. Finally, $\ell_2$ leaf regularization adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularization.
 
 \emph{FT-Transformer}
 
@@ -908,7 +967,7 @@ The hyperparameter search for the FT-Transformer is almost identical to \textcit
 
 The hyperparameter search space for Transformers with a pre-training objective is identical to that shown in \cref{tab:hyperparameter-space-2}. Following \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}, we share the learning rate and weight decay between the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
 
-\emph{Gradient-Boosting With Self-Training}
+\emph{Gradient Boosting With Self-Training}
 
 The search space for the semi-supervised variant is identical to the supervised gradient boosting.
 
@@ -943,7 +1002,7 @@ The loss surface of the \gls{GBM} trained on the feature set including option fe
 
 (insert here)
 
-\emph{Gradient-Boosting With Self-Training}
+\emph{Gradient Boosting With Self-Training}
 
 (insert here)
 
@@ -1093,7 +1152,7 @@ In absence of ground truth for the true feature attribution, we resort to attent
     Models}\label{sec:results-of-semi-supervised-models}
 
 
-\textbf{Gradient-Boosting With Self-Training}
+\textbf{Gradient Boosting With Self-Training}
 
 \textbf{FT-Transformer With Pretraining}
 
