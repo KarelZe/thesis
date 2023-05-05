@@ -63,8 +63,6 @@ As derived in cref-pretraining, we
 Following ([[@rubachevRevisitingPretrainingObjectives2022]]14) we set the hidden dimension of the classification head to 512. The configuration of the Transformer with pre-training objective is otherwise identical to the Transformer trained from scratch.
 
 “For deep models with transfer learning, we tune the hyperparameters on the full upstream data using the available large upstream validation set with the goal to obtain the best performing feature extractor for the pre-training multi-target task. We then fine-tune this feature extractor with a small learning rate on the downstream data. As this strategy offers considerable performance gains over default hyperparameters, we highlight the importance of tuning the feature extractor and present the comparison with default hyperparameters in Appendix B as well as the details on hyperparameter search spaces for each model.” ([Levin et al., 2022, p. 6](zotero://select/library/items/GNKZPFYK)) ([pdf](zotero://open-pdf/library/items/QCVUFCDQ?page=6&annotation=PICSZEZU)) [[@levinTransferLearningDeep2022]]
-
-
 When finetuning 
 
 “Pretraining. Pretraining is always performed directly on the target dataset and does not exploit additional data. The learning process thus comprises two stages. On the first stage, the model parameters are optimized w.r.t. the pretraining objective. On the second stage, the model is initialized with the pretrained weights and finetuned on the downstream classification or regression task. We focus on the fully-supervised setup, i.e., assume that target labels are provided for all dataset objects. Typically, pretraining stage involves the input corruption: for instance, to generate positive pairs in contrastive-like objectives or to corrupt the input for reconstruction in self-prediction based objectives. We use random feature resampling as a proven simple baseline for input corruption in tabular data [4, 42]. Learning rate and weight decay are shared between the two stages (see Table 11 for the ablation). We fix the maximum number of pretraining iterations for each dataset at 100k. On every 10k-th iteration, we compute the value of the pretraining objective using the hold-out validation objects for early-stopping on large-scale WE, CO and MI datasets. On other datasets we directly finetune the current model every 10k-th iteration and perform early-stopping based on the target metric after finetuning (we do not observe much difference between early stopping by loss or by downstream metric, see Table 12).” (Rubachev et al., 2022, p. 4)
@@ -89,7 +87,6 @@ The best results of the efficient Transformer models can be obtained with the Bi
 - Motivate the importance of regularized neural nets with [[@kadraWelltunedSimpleNets2021]] papers. Authors state, that the improvements from regularization of neural nets are very pronounced and highly significant. Discuss which regularization approaches are applied and why.  
 - Similarly, [[@heBagTricksImage2018]] show how they can improve the performance of neural nets for computer vision through "tricks" like learning rate scheduling.
 - Also see [[@shavittRegularizationLearningNetworks2018]] for regularization in neural networks for tabular data.
-- Search space is adapated from [[@huangTabTransformerTabularData2020]] and [[@gorishniyRevisitingDeepLearning2021]]. We make sure optimal solution is not on the borders of the search space.
 - post norm / pre-norm / lr warm up [[@xiongLayerNormalizationTransformer2020]].  Use of Post-Norm (Hello [[🤖TabTransformer]]) has been deemed outdated in Transformers due to a more fragile training process (see [[@gorishniyRevisitingDeepLearning2021]]). 
 
 - training tips for Transformer https://www.borealisai.com/research-blogs/tutorial-17-transformers-iii-training/
@@ -101,26 +98,6 @@ The best results of the efficient Transformer models can be obtained with the Bi
 2.2 Architecture Following recent work on large language models, our network is based on the transformer architecture (Vaswani et al., 2017). We leverage various improvements that were subsequently proposed, and used in different models such as PaLM. Here are the main difference with the original architecture, and where we were found the inspiration for this change (in bracket): Pre-normalization [GPT3]. To improve the training stability, we normalize the input of each transformer sub-layer, instead of normalizing the output. We use the RMSNorm normalizing function, introduced by Zhang and Sennrich (2019). SwiGLU activation function [PaLM]. We replace the ReLU non-linearity by the SwiGLU activation function, introduced by Shazeer (2020) to improve the performance. We use a dimension of 2 3 4d instead of 4d as in PaLM. Rotary Embeddings [GPTNeo]. We remove the absolute positional embeddings, and instead, add rotary positional embeddings (RoPE), introduced by Su et al. (2021), at each layer of the network. The details of the hyper-parameters for our different models are given in Table 2.
 
 Clearly, overfitting is evident, (...)
-
-
-**Batch Size:**
-
-- Estimate the maximum batch size early on, as many parameters depend on it. (see https://github.com/google-research/tuning_playbook)
-
-
-
-- Introduce notion of effective batch size (batch size when training is split across multiple gpus; see [[@popelTrainingTipsTransformer2018]] p. 46)
-- For random shuffling with stochastic gradient descent see [[@lecunEfficientBackProp2012]]
--   Shuffle in memory if samples are otherwise correlated. (see https://www.lesswrong.com/posts/b3CQrAo2nufqzwNHF/how-to-train-your-transformer)
-
-As found in [KMH+20, MKAT18], larger models can typically use a larger batch size, but require a smaller learning rate. We measure the gradient noise scale during training and use it to guide our choice of batch size [MKAT18]. Table 2.1 shows the parameter settings we used. To train the larger models without running out of memory, we use a mixture of model parallelism within each matrix multiply and model parallelism across the layers of the network. All models were trained on V100 GPU’s on part of a high-bandwidth cluster provided by Microsoft. Details of the training process and hyperparameter settings are described in Appendix B. (Found in gpt paper)
-- Base implementation on https://github.com/BlackHC/toma or this blog post https://towardsdatascience.com/a-batch-too-large-finding-the-batch-size-that-fits-on-gpus-aef70902a9f1 (nice idea with the dummy data.)
-
-We do exploit model parallelism
-- results are the same when trained on multiple gpus, if batch size across all gpus remains the same. [[@poppeSensitivityVPINChoice2016]] confirmed this empirically.
-
-
-We scale the *effective batch size* 
 
 **Learning rate schedule**
 We use a cosine learning rate schedule, such that the final learning rate is equal to 10% of the maximal learning rate. We use a weight decay of 0.1 and gradient clipping of 1.0. We use 2, 000 warmup 0 200 400 600 800 1000 1200 1400 Billion of tokens 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 Training loss LLaMA 7B LLaMA 13B LLaMA 33B LLaMA 65B Figure 1: Training loss over train tokens for the 7B, 13B, 33B, and 65 models. LLaMA-33B and LLaMA65B were trained on 1.4T tokens. The smaller models were trained on 1.0T tokens. All models are trained with a batch size of 4M tokens. steps, and vary the learning rate and batch size with the size of the model (see Table 2 for details)
@@ -143,7 +120,7 @@ Their constant learning rate and our decayed learning rate may thus not be entir
 Similar to the gls-gbm, we we prematurely halt training based on an consecutive decrease in validation accuracy. We set the patience to 10 epochs and restore the best model in terms of validation accuracy through checkpointing.
 
 **Activation Function:**
-We replace the $\operatorname{ReLU}$ activation in the gls-FFN and the classification head with $\operatorname{GeLU}$ non-linearities due to improved performance in our experiments. Compared to the 
+We replace the $\operatorname{ReLU}$ activation in the gls-FFN and the classification head with $\operatorname{GELU}$ non-linearities due to improved performance in our experiments. Compared to the 
 - On activation function see [[@shazeerGLUVariantsImprove2020]]
 
 **Label Smoothing:**
@@ -151,6 +128,26 @@ We experiment with label smoothing () and sample weighting, but find no advantag
 
 **Sample weighting:**
 Transferring the idea of We find no positive effect from sample weighting for Transformers.
+
+**Batch Size:**
+
+- Estimate the maximum batch size early on, as many parameters depend on it. (see https://github.com/google-research/tuning_playbook)
+
+
+
+- Introduce notion of effective batch size (batch size when training is split across multiple gpus; see [[@popelTrainingTipsTransformer2018]] p. 46)
+- For random shuffling with stochastic gradient descent see [[@lecunEfficientBackProp2012]]
+-   Shuffle in memory if samples are otherwise correlated. (see https://www.lesswrong.com/posts/b3CQrAo2nufqzwNHF/how-to-train-your-transformer)
+
+As found in [KMH+20, MKAT18], larger models can typically use a larger batch size, but require a smaller learning rate. We measure the gradient noise scale during training and use it to guide our choice of batch size [MKAT18]. Table 2.1 shows the parameter settings we used. To train the larger models without running out of memory, we use a mixture of model parallelism within each matrix multiply and model parallelism across the layers of the network. All models were trained on V100 GPU’s on part of a high-bandwidth cluster provided by Microsoft. Details of the training process and hyperparameter settings are described in Appendix B. (Found in gpt paper)
+- Base implementation on https://github.com/BlackHC/toma or this blog post https://towardsdatascience.com/a-batch-too-large-finding-the-batch-size-that-fits-on-gpus-aef70902a9f1 (nice idea with the dummy data.)
+
+We do exploit model parallelism
+- results are the same when trained on multiple gpus, if batch size across all gpus remains the same. [[@poppeSensitivityVPINChoice2016]] confirmed this empirically.
+
+
+We scale the *effective batch size* 
+
 
 Visualize the decision of 
 
