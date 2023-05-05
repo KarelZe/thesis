@@ -891,6 +891,8 @@ To reduce overfitting, we monitor the training and validation accuracies when ad
 
 We combine these ideas to leverage the improvements for our large-scale studies.
 
+\textbf{Transformer}
+
 \textbf{Classical Rules}
 
 Classical trade classification rules serve as a benchmark in our work. We implement them as a classifier which combines arbitrary trade classification rules through stacking, as covered in \cref{sec:semi-supervised-approaches}. 
@@ -943,7 +945,7 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
 
 As documented in \cref{tab:hyperparameter-space}, we tune five hyperparameters for gradient boosting. The first is the depth, which determines the number of levels in each tree. Other than \textcite[][]{gorishniyRevisitingDeepLearning2021}, we increase the upper bound to twelve to allow for more complex ensemble members. Acknowledging the research of \textcite[][14]{friedmanGreedyFunctionApproximation2001} that the learning rate \eta and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop extending the ensemble based on the early stopping criterion. Random strength, bagging temperature, and $\ell_2$ leaf regularization are all measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness of selected splits. In a similar vein, the algorithm introduces randomness on the sample level through Bayesian bootstrap. The hyperparameter controls the distribution used for sampling, and thereby the aggressiveness of Bagging. Finally, $\ell_2$ leaf regularization adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularization.
 
-\emph{FT-Transformer}
+\emph{Transformer}
 
 The hyperparameter search for the FT-Transformer is almost identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)) and denoted in \cref{tab:hyperparameter-space-2}. We vary the layer count and the embedding dimension, which directly affect the capacity of the network. Layers refer to the number of Transformer blocks in the encoder stack. The dimension of numerical and continuous embeddings $d_e$ is at \num{256} at maximum, which is half the dimension used in the author's work. We make this sacrifice, due to being computation-bound by the size of the dataset. Dropout \autocite[][1930]{srivastavaDropoutSimpleWay} in the attention module and the \gls{FFN} is used to prevent overfitting the training data. We treat the weight decay term in the weight update rule of the AdamW optimizer as a hyperparameter, with larger values for \lambda~enforcing a stronger shrinkage of weights and thereby reducing overfitting.
 
