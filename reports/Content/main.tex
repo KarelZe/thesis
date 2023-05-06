@@ -856,7 +856,7 @@ Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autoci
     \label{fig:gbm-train-val-loss-acc}
 \end{figure}
 
-\cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The configuration details are documented in (...). The plots reveal several insights. Firstly, the model overfits the training data, as evident from the considerable gap between training and validation accuracies. To improve generalisation performance, we apply regularization techniques. Secondly, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction. This behavior may be explained by the log loss being unbound, where single incorrect predictions can cause the loss to explode.
+\cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The configuration details are documented in (...). The plots reveal several insights. Firstly, the model overfits the training data, as evident from the considerable gap between training and validation accuracies. To improve generalisation performance, we apply regularization techniques. Secondly, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction. This behaviour may be explained by the log loss being unbound, where single incorrect predictions can cause the loss to explode.
 
 % Consider the case where the ensemble learns to confidently classify a trade based on the training samples, but the label is different for the validation set (...)
 
@@ -881,13 +881,29 @@ The work of \textcite[][36--38]{grauerOptionTradeClassification2022} suggests a 
 
 In regression trees of gradient-boosting, split finding is typically approximated through quantization, whereby all numeric features are first discretised into a fixed number of buckets through histogram building, and splits are evaluated at the border of the buckets \autocites[][4]{dorogushCatBoostGradientBoosting}[][2]{keLightGBMHighlyEfficient2017}. To increase the number of split candidates per feature through finer quantization, we raise the border count to \num{254}. Generally, this leads to increased accuracy at the cost of computational efficiency. Yet, in the experiment above, the improvements in validation loss and accuracy are minor compared to the previous changes.
 
-\emph{Early Stopping}
+\emph{Early Stopping and Checkpointing}
 
-To reduce overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for 100 iterations. The ensemble is then pruned to achieve the highest validation accuracy, and the maximum size of the ensemble may not be fully exhausted. In the experiment above, early stopping does not apply, as validation accuracy continues to improve for larger ensembles. We employ additional measures to address overfitting but treat them as a tunable hyperparameter, with more details provided in \cref{sec:hyperparameter-tuning}.
+To reduce overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for 100 iterations. The ensemble is then cut back to achieve the highest validation accuracy, and the maximum size of the ensemble may not be fully exhausted. In the experiment above, early stopping does not apply, as validation accuracy continues to improve for larger ensembles. We employ additional measures to address overfitting but treat them as a tunable hyperparameter, with more details provided in \cref{sec:hyperparameter-tuning}.
 
 We combine these ideas to leverage the improvements for our large-scale studies.
 
 \textbf{Transformer}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{fttransformer-optimisations-loss-acc.pdf}
+    \caption[Training and Validation Accuracy of FT-Transformer on \gls{ISE} with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One step corresponds to one batch. Loss is expected to decrease throughout training and accuracy to increase.}
+    \label{fig:fttransformer-optimisations-loss-acc}
+\end{figure}
+
+
+\emph{Activation Function}
+
+Motivated by previous research, we experiment with replacing the $\operatorname{ReLU}$ activation with the $\operatorname{GELU}$ activation function \autocite[][2]{hendrycksGaussianErrorLinear2020} in the classification head and the gated variant $\operatorname{ReGLU}$ with the gated variant $\operatorname{GEGLU}$ \autocite[][2]{shazeerGLUVariantsImprove2020} in the \gls{FFN}. However, we observe no advantage in terms of validation accuracy or loss. As a result, we decided to stick with the default configuration, as the performance is comparable.
+
+\emph{Early Stopping and Checkpointing}
+
+Similar to the \gls{GBM}, we halt training prematurely based on a consecutive decrease in validation accuracy. We set the patience to \num{10} epochs and restore the best model in terms of validation accuracy from the checkpoint. Checkpoints are saved at the end of each epoch.
 
 \textbf{Classical Rules}
 
@@ -902,7 +918,7 @@ In cases where classification is not feasible due to missing data or the rules' 
 
 \textbf{Gradient Boosting With Self-Training}
 
-To incorporate unlabelled trades into the training procedure, we combine gradient boosting with a self-training classifier, as derived in \cref{sec:extensions-to-gradient-boosted-trees}. We repeat self-training for 2 iterations and require the predicted class probability to exceed $\tau=0.9$. As the entire ensemble is rebuilt three times, the relatively low number of iterations and high confidence threshold, is a compromise to balance computational requirements and the need for high-quality predictions. The base classifier is otherwise identical to supervised gradient boosting from \cref{sec:training-of-supervised-models}.
+To incorporate unlabelled trades into the training procedure, we combine gradient boosting with a self-training classifier, as derived in \cref{sec:extensions-to-gradient-boosted-trees}. We repeat self-training for 2 iterations and require the predicted class probability to exceed $\tau=0.9$. As the entire ensemble is rebuilt three times, the relatively low number of iterations and high confidence threshold, strike a balance between computational requirements and the need for high-quality predictions. The base classifier is otherwise identical to supervised gradient boosting from \cref{sec:training-of-supervised-models}.
 
 \textbf{Transformer with Pre-Training}
 

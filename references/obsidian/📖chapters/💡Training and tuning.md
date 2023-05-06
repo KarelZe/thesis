@@ -50,7 +50,9 @@ To avidly fight overfitting, we monitor the training and validation accuracies w
 We combine these ideas to leverage the improvements for our large-scale studies in cref-hyperparameter-tuning. 
 
 **Classical Rules**
-Classical trade classification rules serve as a benchmark in our work. We implement them as a generic classifier which combines arbitrary trade classification rules through stacking, as covered in cref-stacking. In case where no classification is not feasible due to missing data or the definition of the rules itself, we resort to a random classification, which achieves an average accuracy of perc-50. In this regard we deviate from ([[@grauerOptionTradeClassification2022]]29--32), who treat unclassified trades as falsely classified resulting in perc-0 accuracy. In our setting, this procedure would introduce a bias towards machine learning classifiers.
+Classical trade classification rules serve as a benchmark in our work. We implement them as a generic classifier which combines arbitrary trade classification rules through stacking, as covered in cref-stacking. The implementation conforms to the interface of *scikit-learn* proposed by ([[@pedregosaScikitlearnMachineLearning2018]]).
+
+In case where no classification is not feasible due to missing data or the definition of the rules itself, we resort to a random classification, which achieves an average accuracy of perc-50. In this regard we deviate from ([[@grauerOptionTradeClassification2022]]29--32), who treat unclassified trades as falsely classified resulting in perc-0 accuracy. In our setting, this procedure would introduce a bias towards machine learning classifiers.
 
 **Gradient-Boosting + Self-Training**
 To incorporate unlabelled trades into the training procedure, we combine gradient boosting with a self-training classifier, as derived in cref-self-training-gbm. We repeat self-training for 2 iterations and require the predicted class probability to exceed $\tau=0.9$. As the entire ensemble is rebuilt three times, the relatively low number of iterations and high confidence threshold, is a compromise to balance computational requirements and the need for high-quality predictions. The base classifier is otherwise identical to supervised gradient boosting from cref-supervised-training.
@@ -68,17 +70,21 @@ When finetuning
 “Pretraining. Pretraining is always performed directly on the target dataset and does not exploit additional data. The learning process thus comprises two stages. On the first stage, the model parameters are optimized w.r.t. the pretraining objective. On the second stage, the model is initialized with the pretrained weights and finetuned on the downstream classification or regression task. We focus on the fully-supervised setup, i.e., assume that target labels are provided for all dataset objects. Typically, pretraining stage involves the input corruption: for instance, to generate positive pairs in contrastive-like objectives or to corrupt the input for reconstruction in self-prediction based objectives. We use random feature resampling as a proven simple baseline for input corruption in tabular data [4, 42]. Learning rate and weight decay are shared between the two stages (see Table 11 for the ablation). We fix the maximum number of pretraining iterations for each dataset at 100k. On every 10k-th iteration, we compute the value of the pretraining objective using the hold-out validation objects for early-stopping on large-scale WE, CO and MI datasets. On other datasets we directly finetune the current model every 10k-th iteration and perform early-stopping based on the target metric after finetuning (we do not observe much difference between early stopping by loss or by downstream metric, see Table 12).” (Rubachev et al., 2022, p. 4)
 
 **Transformer**
-As derived in cref-supervised selection, we rely on FT-Transformer of ([[@gorishniyRevisitingDeepLearning2021]]) as our second model due to the convincing performance in the literature. Training Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule ([[@liuUnderstandingDifficultyTraining2020]]1). We apply minor modifications to the default FT-Transformer to stabilize training and improve overall performance. 
+As derived in cref-supervised selection, we rely on FT-Transformer of ([[@gorishniyRevisitingDeepLearning2021]]) as our second model. Training Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule ([[@liuUnderstandingDifficultyTraining2020]]1). We investigate minor modifications to the default FT-Transformer to stabilize training and improve overall performance. 
 
-The loss and accuracy of the default FT-Transformer trained for 1000 steps are visualized in cref-x. The configuration is listed in the cref-appendix.
-![[training-loss-llama.png]]
+The loss and accuracy of the default FT-Transformer trained for 10 epochs on gls-ise dataset  are visualized in cref-x. The configuration is listed in the cref-appendix.
+
+![[train-val-loss-acc-transformer.png]]
+
 (One step equals one batched gradient update. Training is performed for 1000 steps) (similarily in https://arxiv.org/pdf/2005.14165.pdf)
 
 
 
-(What can be seen? General overview for neural nets in [[@melisStateArtEvaluation2017]]. Also, [[@kadraWelltunedSimpleNets2021]])
-### Transformer
+Our implementation is based on *PyTorch* ([[@paszkePyTorchImperativeStyle2019]]).
 
+
+
+(What can be seen? General overview for neural nets in [[@melisStateArtEvaluation2017]]. Also, [[@kadraWelltunedSimpleNets2021]])
 
 The best results of the efficient Transformer models can be obtained with the BigBird and LED models with a performance of 53.58% and 53.7% respectively. Using the Longformer encodings yields a comparably low accuracy of 48.02%. <mark style="background: #FF5582A6;">Of note is</mark>, however, that the classification model which receives the Longformer encodings fits the training data nearly perfectly. The models receiving BigBird and LED encodings on the other hand merely yield a training accuracy of 81.41% and 75.47% respectively.<mark style="background: #FFB8EBA6;"> There appears to be a clear trade-off relationship</mark> between the degree to which the models are able to fit to the training data and the results obtained on the test data. This is also evident in the performance of the baseline models. See Figure 6.2. for an illustration of the described trade-off.
 
@@ -94,12 +100,13 @@ The best results of the efficient Transformer models can be obtained with the Bi
 
 - For training the transformer see: https://datascience.stackexchange.com/questions/64583/what-are-the-good-parameter-ranges-for-bert-hyperparameters-while-finetuning-it
 
-
 2.2 Architecture Following recent work on large language models, our network is based on the transformer architecture (Vaswani et al., 2017). We leverage various improvements that were subsequently proposed, and used in different models such as PaLM. Here are the main difference with the original architecture, and where we were found the inspiration for this change (in bracket): Pre-normalization [GPT3]. To improve the training stability, we normalize the input of each transformer sub-layer, instead of normalizing the output. We use the RMSNorm normalizing function, introduced by Zhang and Sennrich (2019). SwiGLU activation function [PaLM]. We replace the ReLU non-linearity by the SwiGLU activation function, introduced by Shazeer (2020) to improve the performance. We use a dimension of 2 3 4d instead of 4d as in PaLM. Rotary Embeddings [GPTNeo]. We remove the absolute positional embeddings, and instead, add rotary positional embeddings (RoPE), introduced by Su et al. (2021), at each layer of the network. The details of the hyper-parameters for our different models are given in Table 2.
 
 Clearly, overfitting is evident, (...)
 
 **Learning rate schedule**
+We apply a 
+
 We use a cosine learning rate schedule, such that the final learning rate is equal to 10% of the maximal learning rate. We use a weight decay of 0.1 and gradient clipping of 1.0. We use 2, 000 warmup 0 200 400 600 800 1000 1200 1400 Billion of tokens 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 Training loss LLaMA 7B LLaMA 13B LLaMA 33B LLaMA 65B Figure 1: Training loss over train tokens for the 7B, 13B, 33B, and 65 models. LLaMA-33B and LLaMA65B were trained on 1.4T tokens. The smaller models were trained on 1.0T tokens. All models are trained with a batch size of 4M tokens. steps, and vary the learning rate and batch size with the size of the model (see Table 2 for details)
 
 From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we implement early stopping and halt training after \num{15} consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
@@ -111,27 +118,48 @@ Their constant learning rate and our decayed learning rate may thus not be entir
 - Lower the learning rate when the model stagnates, but don't start too low.  Try cyclic learning rates https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.CyclicLR.html
 - cycling procedure was proposed in [[@loshchilovSGDRStochasticGradient2017]] and [[@smithCyclicalLearningRates2017]]
 - for intuitive explanation on learning rate warm up see https://stackoverflow.com/questions/55933867/what-does-learning-rate-warm-up-mean
-- One might has to adjust the lr when scaling across multiple gpus [[@poppeSensitivityVPINChoice2016]] contains a nice discussion.
+- One might has to adjust the lr when scaling across multiple gpus contains a nice discussion.
 - Use learning rate warmup for post-LN transformers and maybe also for other
 - Some intuition on learning rate warm-up can be found in [[@liuVarianceAdaptiveLearning2021]] and https://stackoverflow.com/a/55942518/5755604
 - In case of diverged training, try gradient clipping and/or more warmup steps. (found in [[@popelTrainingTipsTransformer2018]])
 
-**Early Stopping and Checkpointing:**
-Similar to the gls-gbm, we we prematurely halt training based on an consecutive decrease in validation accuracy. We set the patience to 10 epochs and restore the best model in terms of validation accuracy through checkpointing.
 
-**Activation Function:**
-We replace the $\operatorname{ReLU}$ activation in the gls-FFN and the classification head with $\operatorname{GELU}$ non-linearities due to improved performance in our experiments. Compared to the 
-- On activation function see [[@shazeerGLUVariantsImprove2020]]
+*Activation Function:*
+Motivated by previous research, we conducted an experiment by replacing the $\operatorname{ReLU}$ activation with the $\operatorname{GELU}$ activation function ([[@hendrycksGaussianErrorLinear2020]]) in the classification head and the gated variant $\operatorname{ReGLU}$ with the gated variant $\operatorname{GEGLU}$ ([[@shazeerGLUVariantsImprove2020]]2) in the glspl-FFN. However, we observe no advantage in terms of validation accuracy or loss. As a result, we decided to stick with the default configuration, as the performance is comparable.
 
 **Label Smoothing:**
-We experiment with label smoothing () and sample weighting, but find no advantage with regard to validation performance.
+We experiment with label smoothing () to mitigate the networks tendency to overfit the training data  
+
+**Label Smoothing** is a regularization technique that introduces noise for the labels. This accounts for the fact that datasets may have mistakes in them, so maximizing the likelihood of log⁡�(�∣�) directly can be harmful. Assume for a small constant �, the training set label � is correct with probability 1−� and incorrect otherwise. Label Smoothing regularizes a model based on a [softmax](https://paperswithcode.com/method/softmax) with � output values by replacing the hard 0 and 1 classification targets with targets of ��−1 and 1−� respectively.
+
+Label smoothing has been used successfully to improve the accuracy of deep learning models across a range of tasks, including image classification, speech recognition, and machine translation (Table 1). Szegedy et al. [6] originally proposed label smoothing as a strategy that improved the performance of the Inception architecture on the ImageNet dataset, and many state-of-the-art image classification models have incorporated label smoothing into training procedures ever since [7, 8, 9]
+
+In machine learning or deep learning, we usually use a lot of regularization techniques, such as L1, L2, dropout, etc., to prevent our model from overfitting. In classification problems, sometimes our model would learn to predict the training examples extremely confidently. This is not good for generalization.
+In this blog post, I am going to talk about label smoothing as a regularization technique for classification problems to prevent the model from predicting the training examples too confidently.
+
+but find no advantage with regard to validation performance. 
 
 **Sample weighting:**
-Transferring the idea of We find no positive effect from sample weighting for Transformers.
+We transfer the idea of sample weighting from gls-gbm. Again, the contribution of individual training samples to the cross-entropy loss is scaled by a sample weight which is higher for more recent observations. As the loss in this configuration shows spurious patterns of early overfitting, we equally weight all samples instead.
 
 **Batch Size:**
+We maximize the batch size on 
 
 - Estimate the maximum batch size early on, as many parameters depend on it. (see https://github.com/google-research/tuning_playbook)
+
+We do not distribute batches across multiple accelerators, as it would require
+
+*Early Stopping and Checkpointing:*
+Similar to the gls-gbm, we prematurely halt training based on an consecutive decrease in validation accuracy. We set the patience to 10 epochs and restore the best model in terms of validation accuracy through checkpointing. Checkpointing is performed at the end of each epoch. 
+
+
+*Optimizer*
+We optimize our models using AdamW optimizer ([[@loshchilovDecoupledWeightDecay2019]]) and treat the weight decay term in AdamW as a hyperparameter. 
+
+- Use weight decay of 0.1 for a small amount of regularization [[@loshchilovDecoupledWeightDecay2019]].
+
+
+To this end, we extend the training setup of ([[@gorishniyRevisitingDeepLearning2021]]) with a learning rate schedule and early stopping
 
 
 
@@ -143,7 +171,7 @@ As found in [KMH+20, MKAT18], larger models can typically use a larger batch siz
 - Base implementation on https://github.com/BlackHC/toma or this blog post https://towardsdatascience.com/a-batch-too-large-finding-the-batch-size-that-fits-on-gpus-aef70902a9f1 (nice idea with the dummy data.)
 
 We do exploit model parallelism
-- results are the same when trained on multiple gpus, if batch size across all gpus remains the same. [[@poppeSensitivityVPINChoice2016]] confirmed this empirically.
+
 
 
 We scale the *effective batch size* 
@@ -151,10 +179,6 @@ We scale the *effective batch size*
 
 Visualize the decision of 
 
-**Optimizer**
-We 
-
-- Use weight decay of 0.1 for a small amount of regularization [[@loshchilovDecoupledWeightDecay2019]].
 
 Our models are trained using the AdamW optimizer (Loshchilov and Hutter, 2017), with the following hyper-parameters: β1 = 0.9, β2 = 0.95. We use a cosine learning rate schedule, such that the final learning rate is equal to 10% of the maximal learning rate. We use a weight decay of 0.1 and gradient clipping of 1.0. We use 2, 000 warmup 0 200 400 600 800 1000 1200 1400 Billion of tokens 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 Training loss LLaMA 7B LLaMA 13B LLaMA 33B LLaMA 65B Figure 1: Training loss over train tokens for the 7B, 13B, 33B, and 65 models. LLaMA-33B and LLaMA65B were trained on 1.4T tokens. The smaller models were trained on 1.0T tokens. All models are trained with a batch size of 4M tokens. steps, and vary the learning rate and batch size with the size of the model (see Table 2 for details).
 
