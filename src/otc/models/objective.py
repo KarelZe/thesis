@@ -226,7 +226,7 @@ class FTTransformerObjective(Objective):
         dl_params: dict[str, Any] = {
             "batch_size": batch_size
             * max(no_devices, 1),  # dataprallel splits batches across devices
-            "shuffle": False,
+            "shuffle": True,  # only used during training
             "device": device,
         }
 

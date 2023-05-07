@@ -381,8 +381,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         # save for accuracy calculation
         len_x_val = len(X_val)
+        weight = np.geomspace(0.001, 1, num=len(y))
 
-        train_loader_finetune = self.array_to_dataloader_finetune(X, y)
+        train_loader_finetune = self.array_to_dataloader_finetune(X, y, weight)
         # no weight for validation set / every sample with weight = 1
         val_loader_finetune = self.array_to_dataloader_finetune(X_val, y_val)
 
@@ -408,13 +409,13 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         # see https://stackoverflow.com/a/53628783/5755604
         # no sigmoid required; numerically more stable
-        criterion = nn.BCEWithLogitsLoss()
+        criterion = nn.BCEWithLogitsLoss(reduction="none")
 
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=10)
 
         step = 0
-        best_accuracy = -1
+        best_accuracy = -1.0
 
         # save stats in classifier
         self._stats_step = []
@@ -428,7 +429,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             self.clf.train()
 
-            for x_cat, x_cont, _, targets in train_loader_finetune:
+            for x_cat, x_cont, weights, targets in train_loader_finetune:
 
                 # reset the gradients back to zero
                 self.clf.train()
@@ -437,7 +438,10 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 # compute the model output and train loss
                 with torch.autocast(device_type="cuda", dtype=torch.float16):
                     logits = self.clf(x_cat, x_cont).flatten()
-                    train_loss = criterion(logits, targets)
+                    intermediate_loss = criterion(logits, targets)
+                    train_loss = torch.sum(weights * intermediate_loss) / torch.sum(
+                        weights
+                    )
 
                 # https://pytorch.org/docs/stable/amp.html
                 # https://discuss.huggingface.co/t/why-is-grad-norm-clipping-done-during-training-by-default/1866
@@ -463,7 +467,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             val_batch = 0
             with torch.no_grad():
-                for x_cat, x_cont, _, targets in val_loader_finetune:
+                for x_cat, x_cont, weights, targets in val_loader_finetune:
                     logits = self.clf(x_cat, x_cont)
                     logits = logits.flatten()
 
@@ -473,7 +477,10 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                     # loss calculation.
                     # Criterion contains softmax already.
-                    val_loss = criterion(logits, targets)
+                    intermediate_loss = criterion(logits, targets)
+                    val_loss = torch.sum(weights * intermediate_loss) / torch.sum(
+                        weights
+                    )
                     loss_in_epoch_val += val_loss.item()
 
                     # print(f"[{epoch}-{val_batch}] val loss: {val_loss}")
@@ -524,6 +531,10 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         # is fitted flag
         self.is_fitted_ = True
+
+        # disable random shuffle once fitted
+        self.dl_params = {"shuffle": False}
+
         return self
 
     def predict(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
