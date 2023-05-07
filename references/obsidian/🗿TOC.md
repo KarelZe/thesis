@@ -179,7 +179,7 @@ describe if data set is actually used. Write similarily to
 ### Training of Semi-Supervised Models
 [[💡Tuning of models (semi-supervised)]]
 ### Hyperparameter Tuning
-[[💡Hyperparameter tuning]]
+[[💡Hyperparameter Tuning]]
 
 ## Evaluation
 ### Feature Importance Measure

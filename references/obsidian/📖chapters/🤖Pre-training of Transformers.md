@@ -1,3 +1,11 @@
+
+Code github.com/LevinRoman/tabular-transfer-learning.
+
+For deep models with transfer learning, we tune the hyperparameters on the full upstream data using the available large upstream validation set with the goal to obtain the best performing feature extractor for the pre-training multi-target task. We then fine-tune this feature extractor with a small learning rate on the downstream data. As this strategy offers considerable performance gains over default hyperparameters, we highlight the importance of tuning the feature extractor and present the comparison with default hyperparameters in Appendix B as well as the details on hyperparameter search spaces for each model.
+
+
+
+
 **RTD for Textual Data**
 gls-rtd is a pre-training objective proposed by ([[@radfordImprovingLanguageUnderstanding]]2--3) for the use in language models. The core idea is to randomly replace tokens with plausible alternatives and learn a binary classifier to distinguish between original and replaced tokens. Intuitionally, the random replacement forces the model to learn generalisable representations of the input, rather than memorizing the co-occurrence of certain tokens. Additionally, surprising the model with random tokens strengthens its ability to incorporate contextual information.
 

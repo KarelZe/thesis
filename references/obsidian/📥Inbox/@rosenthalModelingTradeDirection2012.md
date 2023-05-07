@@ -9,7 +9,7 @@ related:
 - [[@ellisAccuracyTradeClassification2000]]
 - [[@chakrabartyTradeClassificationAlgorithms2007]]
 - [[@aitkenIntradayAnalysisProbability1995]] (also use logistic regression)
-- [[@blazejewskiLocalNonparametricModel2005]] (also use logistic regression)
+- [[@blazejewskiLocalNonParametricModel2005]] (also use logistic regression)
 
 ## Notes 
 

@@ -1,100 +1,181 @@
 This chapter documents the basic training setup, and defines a baseline before applying hyperparameter tuning.
 
+Practical guide for researchers by Google: https://github.com/google-research/tuning_playbook or [[tuningplaybookgithub]]
+
+
+## Research Framework
+
+![[research-framework.png]]
+
+
+
 ## Gradient-Boosting
 Our implementation of gradient-boosted trees is based on *CatBoost* ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]]5--6) due to its native support for categorical variables and its efficient implementation on gls-gpu. Though, we expect the chosen library to have marginal effects on performance as discussed earlier in cref-gradient-boosting. 
 
 ![[gbm-log-loss-accuracy.png]]
-
-Fig-learning-curves visualises the learning curves of the default implementation on the ISE training and validation set / feature set classical.
-
-Specifically, the ensemble consists of (...) trees, grown to depth of (...). The learning rate is chosen by a simple heuristic / fixed $\eta=0.03$ . We set the loss function to be the (...) loss. Several conclusions can be drawn from this plot (...) First, the model is trained beyond (...) the optimal model complexity which is reached at an ensemble width of (...). Second, the model overfits the training . While we cannot change the training or validation data due to the temporal split, we can employ regularisation to reduce the effects from overfitting. Overfitting is inlien with theoretical obsersvations. See chapter ...
-
-The improvements in terms of 
-The large gap between the training and validation loss indicates overfitting, 
-
 (One iteration equals one tree added to the ensemble. )
 
+Use to motivate?💡
+<mark style="background: #FFB8EBA6;">- Write why we use a quasi-random search during exploration and Bayesian search during exploitation phase. (see https://github.com/google-research/tuning_playbook)
+- Isolate the optimization of different hyperparameters e. g., optimizer, activation functions etc. during the exploration phase. Take into account nuance parameters. Decompose into smaller problems, that are manageable.</mark>
+
+gap between training and validation loss💡Though there is some gap between training and validation performance, the gap grows only minimally with model size and training time, suggesting that most of the gap comes from a difference in difficulty rather than overfitting (From gpt-3 paper)
+
+Fig-learning-curves visualizes the learning curves of the default implementation on the ISE training and validation set / feature set classical. The complete configuration is documented in cref-appendix-loss. Several conclusions can be drawn from this plot (...) First, the model is overfitting the training data, as indicated by the significant gap between training and validation accuracies. As the training performance does not transfer to the validation set, we apply regularization techniques to improve generalization performance. Second, the validation loss spikes for larger ensembles while validation accuracy continues to improve. In other words, the correctness of the predicted class improves, but the ensemble becomes less confident in the correctness of the prediction. Part of this behaviour may be explained with the log-loss being unbound, whereby single incorrect predictions can lead to an explosion in loss. Consider the case where the ensemble learns to confidently classify a trade based on the training samples, but the label is different for the validation set (...)
+
+*Improvements / Configuration:*
+-> train loss decreases -> predictions become more accurate, but model is less certain about the predictions
+https://stats.stackexchange.com/questions/282160/how-is-it-possible-that-validation-loss-is-increasing-while-validation-accuracy
+https://github.com/keras-team/keras/issues/3755
+
+We leverage the following architectural changes to improve the performance of gradient-boosting. The effects on validation accuracy and log-loss over the default configuration are visualized in cref-fig. To derive the plots, all other parameters are kept at defaults and a single parameter is varied. While this approach neglects inter-changes between parameters, it can still provide guidance for the optimal training configuration. The training is performed on the ISE training set with FS1 and metrics are reported on the validation set.
+
+*Growth Strategy:*
+By default, *CatBoost* grows oblivious regression trees ([[@dorogushCatBoostGradientBoosting]]4). In this configuration, trees are symmetric and grown level-wise and splits are performed on the same feature and split values across all nodes of a single level. This strategy is computationally efficient, but may sacrifice performance, as the split is performed on the same features or split values. Following ([[@chenXGBoostScalableTree2016]]4) we switch to a leaf-wise growth strategy, whereby terminal nodes are selected for splitting that provide the largest improvement in loss. Nodes within the same level may result from different feature splits and thereby fit data more closely. Leaf-wise growth also matches our intuition of split finding in cref-[[🎄Decision Trees]]. Changing to a leaf-wise growth improves validation accuracy by perc-num, but hardly improves the loss.
+
+*Sample Weighting:*
+The work of ([[@grauerOptionTradeClassification2022]]36--38) suggests a strong temporal shift in the data, with the performance of classical trade classification rules to deteriorate over time. In consequence, the predictability of features defined on top of classical rules diminishes over time and patterns learned on old observations loose their relevance for predictions of test samples. In absence of an update mechanism, we extend the log loss by a sample weighting scheme to assign higher weights to recent training samples and gradually decay weights over time. The loss over all samples is normalized by the summed weights. Validation and test samples are equally-weighted. Sample weighting turns out to be vital for high validation performance. It positively affects the correctness and the confidence in the prediction. 
+
+$$
+\frac{-\sum_{i=1}^N w_i\left(c_i \log \left(p_i\right)+\left(1-c_i\right) \log \left(1-p_i\right)\right)}{\sum_{i=1}^N w_i}
+$$
+(from https://catboost.ai/en/docs/concepts/loss-functions-classification 🔢) (logloss)
+
+*Border Count:*
+Split finding in regression trees of gradient-boosting is typically approximated through quantization, whereby all numeric features are discretised first into a fixed number of buckets through histogram building and splits are evaluated at the border of the buckets ([[@dorogushCatBoostGradientBoosting]]4) and ([[@keLightGBMHighlyEfficient2017]]2). We raise the border count to $254$, which increases the number of split candidates per feature through a finer quantization. In general, accuracy increases at the cost of computational efficiency. In the experiment above, the improvements in validation loss and accuracy are minor compared to the previous changes.
+
+*Early Stopping:*
+To avidly fight overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for 100 iterations. The ensemble is then pruned to achieve highest validation accuracy. In consequence, the maximum size of the ensemble may not be fully exhausted. For the experiment above, early stopping does not apply, as validation accuracy continues to improve for larger ensembles. We employ additional measures to address overfitting, but treat them as a tunable hyperparameter. More details are provided in cref-hyperparameter-tuning.
+
+We combine these ideas to leverage the improvements for our large-scale studies in cref-hyperparameter-tuning. 
+
+**Classical Rules**
+Classical trade classification rules serve as a benchmark in our work. We implement them as a generic classifier which combines arbitrary trade classification rules through stacking, as covered in cref-stacking. The implementation conforms to the interface of *scikit-learn* proposed by ([[@pedregosaScikitlearnMachineLearning2018]]).
+
+In case where no classification is not feasible due to missing data or the definition of the rules itself, we resort to a random classification, which achieves an average accuracy of perc-50. In this regard we deviate from ([[@grauerOptionTradeClassification2022]]29--32), who treat unclassified trades as falsely classified resulting in perc-0 accuracy. In our setting, this procedure would introduce a bias towards machine learning classifiers.
+
+**Transformer**
+As derived in cref-supervised selection, we rely on FT-Transformer of ([[@gorishniyRevisitingDeepLearning2021]]4--5) as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule ([[@liuUnderstandingDifficultyTraining2020]]1). We investigate minor modifications to the default FT-Transformer to stabilize training and improve overall performance. The default FT-Transformer trained for 10 epochs on gls-ise dataset with classical features and loss and accuracy is visualized in cref-x and the model itself is summarized in the cref-appendix.
+
+The convergence behaviour of our model is similar to that of gradient boosting. Equally, a significant generalization gap exists between the training and validation loss. Particularly concerning, the training loss decreases sharply, while the validation loss fluctuates around its initial estimate. Despite this, validation accuracy improves throughout the entire training cycle. We reason that the network learns to correctly classify trades, indicated by the improved accuracy, but only attains low-confident correct predictions or confident but erroneous predictions which both contribute to a large validation loss. The shape of the flat validation loss and the decreasing training loss suggest that the training set may not be representative of trades in the validation set. This has broader implications on the classifiability of option trades using decision rules from classical trade classification rules for more recent observations. We explore this phenomenon thoroughly as part of our result discussion.
+
+![[train-val-loss-acc-transformer.png]]
+
+https://cs231n.github.io/neural-networks-3/#sanitycheck
+
+(One step equals one batched gradient update. Training is performed for 1000 steps) (similarily in https://arxiv.org/pdf/2005.14165.pdf)
+
+From [_1 Adversarial Perturbations of Deep Neural Networks_, 2016](https://www.semanticscholar.org/paper/1-Adversarial-Perturbations-of-Deep-Neural-Networks-Warde-Farley/b5ec486044c6218dd41b17d8bba502b32a12b91a):
+
+> Without label smoothing, a softmax classifier is trained to make infinitely confident predictions on the training set. This encourages the model to learn large weights and strong responses. When values are pushed outside the areas where training data concentrates, the model makes even more extreme predictions when extrapolating linearly. Label smoothing penalizes the model for making overly confident predictions on the training set, forcing it to learn either a more non-linear function or a linear function with smaller slope. Extrapolations by the label-smoothed model are consequently less extreme.
+
+Our implementation is based on *PyTorch* ([[@paszkePyTorchImperativeStyle2019]]).
 
 
-We introduce the following ideas to improve performance of the gradient-boosting implementation. We keep all other parameters constant, and vary the single parameter. Gradually add complexity
 
+(What can be seen? General overview for neural nets in [[@melisStateArtEvaluation2017]]. Also, [[@kadraWelltunedSimpleNets2021]])
 
-**Growth Strategy:**
-We grow trees loss-guided. 
+The best results of the efficient Transformer models can be obtained with the BigBird and LED models with a performance of 53.58% and 53.7% respectively. Using the Longformer encodings yields a comparably low accuracy of 48.02%. <mark style="background: #FF5582A6;">Of note is</mark>, however, that the classification model which receives the Longformer encodings fits the training data nearly perfectly. The models receiving BigBird and LED encodings on the other hand merely yield a training accuracy of 81.41% and 75.47% respectively.<mark style="background: #FFB8EBA6;"> There appears to be a clear trade-off relationship</mark> between the degree to which the models are able to fit to the training data and the results obtained on the test data. This is also evident in the performance of the baseline models. See Figure 6.2. for an illustration of the described trade-off.
 
-- Try out `lossguided` growing strategy. Add it to objective.
-
-**Early Stopping:**
-Acknowleding the observations ([[@friedmanGreedyFunctionApproximation2001]]14), that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble once the validation accuracy decreases for 100 iterations and prune the ensemble back to the one with the highest validation accuracy. 
-
-**Sample Weighting**
-
-The work of () suggests a strong temporal shift in the data, with the performance deterioriate ...
-
-
-
-**Quantization /  Border count:**
-Typically split finding in the regression trees of gradient-boosting is approximated through quantization, whereby all numeric features are discretized into a fixed count of bins through histogram building and splits are only evaluated at the border of the bins ([[@dorogushCatBoostGradientBoosting]]4) and ([[@keLightGBMHighlyEfficient2017]]2).  We raise the border count to $256$, which increases the number of split candidates per feature through a finer quantization. Expectedly, accuracy increases at the cost of computational efficiency.
-
-
-For gradient-boosting 
-
-http://learningsys.org/nips17/assets/papers/paper_11.pdf
-
-We incorporate these ideas into our large-scale training. cref-hyperparameter-tuning, performs hyperparameter tuning.
-
-We employ additional measures to counterfight overfitting, but treat them as tunable hyperparameter. Thus, we discuss them in cref-
-
-“Dense numerical features One of the most important building blocks for any GBDT implementation is searching for the best split. This block is the main computation burden for building decision tree on dense numerical datasets. CatBoost uses oblivious decision trees as base learners and performs feature discretization into a fixed amount of bins to reduce memory usage [10]. The number of bins is the parameter of the algorithm. As a result we could use histogram-based approach for searching for best splits. Our approach to building decision trees on GPU is similar in spirit to one described in [11]. We group several numerical features in one 32-bit integer and currently use: • 1 bit for binary features and group 32 features per integer. • 4 bits for features with no more than 15 bins, 8 features per integer. • 8 bits for other features (maximum feature discretization is 255), 4 features per integer. In terms of GPU memory usage CatBoost is at least as efficient as LightGBM [11]. The main difference is another way of histogram computation. Algorithms in LightGBM and XGBoost4 have a major drawback: they rely on atomic operations. Such technique is very easy to deal with concurrent memory accesses but it is also relatively slow even on the modern generation of GPU. Actually histograms could be computed more efficiently without any atomic operations. We will describe here only the basic idea of our approach by a simplified example: simultaneous computation of four 32-bin histograms with a single float additive statistic per feature. This idea could be efficiently generalized for cases with several statistics and multiple histograms. So we have gradient values g[i] and feature groups (f1, f2, f3, f4)[i]. We need to compute 4 histograms: hist[j][b] = ∑ i:fj[i]=b g[i]. CatBoost builds partial histogram per each warp5 histograms instead of histogram per thread block. We will describe work which is done by one warp on first 32 samples. Thread with index i processes sample i. Since we are building 4 histograms at once we need 32 ∗ 32 ∗ 4 bytes of shared memory per warp. To update histograms all 32 threads load sample labels and grouped features to registers. Then warp performs updates of shared-memory histogram simultaneously in 4 iterations: on l-th (l = 0 . . . 3) iteration thread with index i works with feature f(l+i) mod 4 and adds g[i] for hist[(l + i) mod 4][f(l+i) mod 4]. With proper histogram layout this operation could avoid any bank conflicts and add statistics via all 32 threads in parallel.” (Dorogush et al., p. 4)
-
-
-## Transformer
-
-- look into [[@lonesHowAvoidMachine2022]]
-- training of the transformer has been found non-trivial[[@liuUnderstandingDifficultyTraining2020]]
-- Keep algorithms / ideas simple. Add complexity only where needed! 
-- Do less alchemy and more understanding [Ali Rahimi's talk at NIPS(NIPS 2017 Test-of-time award presentation) - YouTube](https://www.youtube.com/watch?v=Qi1Yry33TQE)
-
-
+- See tips in [[tuningplaybookgithub]]
+- Transformers are much more elaborate to train than gradient boosting approaches. Training of the transformer has been found non-trivial [[@liuUnderstandingDifficultyTraining2020]]
+- Motivate the importance of regularized neural nets with [[@kadraWelltunedSimpleNets2021]] papers. Authors state, that the improvements from regularization of neural nets are very pronounced and highly significant. Discuss which regularization approaches are applied and why.  
+- Similarly, [[@heBagTricksImage2018]] show how they can improve the performance of neural nets for computer vision through "tricks" like learning rate scheduling.
 - Also see [[@shavittRegularizationLearningNetworks2018]] for regularization in neural networks for tabular data.
-- On activation function see [[@shazeerGLUVariantsImprove2020]]
+- post norm / pre-norm / lr warm up [[@xiongLayerNormalizationTransformer2020]].  Use of Post-Norm (Hello [[🤖TabTransformer]]) has been deemed outdated in Transformers due to a more fragile training process (see [[@gorishniyRevisitingDeepLearning2021]]). 
+
+- training tips for Transformer https://www.borealisai.com/research-blogs/tutorial-17-transformers-iii-training/
+- Might use additional tips from here: ([[@liuRoBERTaRobustlyOptimized2019]] and [[@liuUnderstandingDifficultyTraining2020]])
+
+- For training the transformer see: https://datascience.stackexchange.com/questions/64583/what-are-the-good-parameter-ranges-for-bert-hyperparameters-while-finetuning-it
+
+2.2 Architecture Following recent work on large language models, our network is based on the transformer architecture (Vaswani et al., 2017). We leverage various improvements that were subsequently proposed, and used in different models such as PaLM. Here are the main difference with the original architecture, and where we were found the inspiration for this change (in bracket): Pre-normalization [GPT3]. To improve the training stability, we normalize the input of each transformer sub-layer, instead of normalizing the output. We use the RMSNorm normalizing function, introduced by Zhang and Sennrich (2019). SwiGLU activation function [PaLM]. We replace the ReLU non-linearity by the SwiGLU activation function, introduced by Shazeer (2020) to improve the performance. We use a dimension of 2 3 4d instead of 4d as in PaLM. Rotary Embeddings [GPTNeo]. We remove the absolute positional embeddings, and instead, add rotary positional embeddings (RoPE), introduced by Su et al. (2021), at each layer of the network. The details of the hyper-parameters for our different models are given in Table 2.
+
+Clearly, overfitting is evident, (...)
+
+**Learning rate schedule**
+We apply a 
+
+Training is performed for 
+
+We use a cosine learning rate schedule, such that the final learning rate is equal to 10% of the maximal learning rate. We use a weight decay of 0.1 and gradient clipping of 1.0. We use 2, 000 warmup 0 200 400 600 800 1000 1200 1400 Billion of tokens 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 Training loss LLaMA 7B LLaMA 13B LLaMA 33B LLaMA 65B Figure 1: Training loss over train tokens for the 7B, 13B, 33B, and 65 models. LLaMA-33B and LLaMA65B were trained on 1.4T tokens. The smaller models were trained on 1.0T tokens. All models are trained with a batch size of 4M tokens. steps, and vary the learning rate and batch size with the size of the model (see Table 2 for details)
+
+From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we implement early stopping and halt training after \num{15} consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
+
+Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we employ early stopping and halt training after 15 consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the orginal author's to provide a conservative baseline ([[@gorishniyRevisitingDeepLearning2021]]5), for the sake of a fair comparison in our context both techniques should be used.
+
+- One commonly used technique for training a Transformer is learning rate warm-up. This means that we gradually increase the learning rate from 0 on to our originally specified learning rate in the first few iterations. Thus, we slowly start learning instead of taking very large steps from the beginning. In fact, training a deep Transformer without learning rate warm-up can make the model diverge and achieve a much worse performance on training and testing (https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html).
+
+- Lower the learning rate when the model stagnates, but don't start too low.  Try cyclic learning rates https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.CyclicLR.html
+- cycling procedure was proposed in [[@loshchilovSGDRStochasticGradient2017]] and [[@smithCyclicalLearningRates2017]]
+- for intuitive explanation on learning rate warm up see https://stackoverflow.com/questions/55933867/what-does-learning-rate-warm-up-mean
+- One might has to adjust the lr when scaling across multiple gpus contains a nice discussion.
+- Use learning rate warmup for post-LN transformers and maybe also for other
+- Some intuition on learning rate warm-up can be found in [[@liuVarianceAdaptiveLearning2021]] and https://stackoverflow.com/a/55942518/5755604
+- In case of diverged training, try gradient clipping and/or more warmup steps. (found in [[@popelTrainingTipsTransformer2018]])
 
 
-We train for 20 epochs at maximum, which equals 20 complete passes through the training set.
-One step equals one batched gradient update.
+*Activation Function:*
+Motivated by previous research, we conducted an experiment by replacing the $\operatorname{ReLU}$ activation with the $\operatorname{GELU}$ activation function ([[@hendrycksGaussianErrorLinear2020]]) in the classification head and the gated variant $\operatorname{ReGLU}$ with the gated variant $\operatorname{GEGLU}$ ([[@shazeerGLUVariantsImprove2020]]2) in the glspl-FFN. However, we observe no advantage in terms of validation accuracy or loss. As a result, we decided to stick with the default configuration, as the performance is comparable.
 
-![[training-loss-llama.png]]
+**Label Smoothing:**
+A major problem in classification with neural networks is, that the network becomes overconfident in predicting the class. We experiment with label smoothing ([[@szegedyRethinkingInceptionArchitecture2016]]2823) to regularize the network through learning on soft labels. 
 
-**Batch Size:**
+
+
+“First, it may result in over-fitting: if the model learns to assign full probability to the groundtruth label for each training example, it is not guaranteed to generalize. Second, it encourages the differences between the largest logit and all others to become large, and this, combined with the bounded gradient ∂ℓ ∂zk , reduces the ability of the model to adapt. Intuitively, this happens because the model becomes too confident about its predictions.” (Szegedy et al., 2016, p. 2823)
+
+
+**Label Smoothing** is a regularization technique that introduces noise for the labels. This accounts for the fact that datasets may have mistakes in them, so maximizing the likelihood of log⁡�(�∣�) directly can be harmful. Assume for a small constant �, the training set label � is correct with probability 1−� and incorrect otherwise. Label Smoothing regularizes a model based on a [softmax](https://paperswithcode.com/method/softmax) with � output values by replacing the hard 0 and 1 classification targets with targets of ��−1 and 1−� respectively.
+
+Label smoothing has been used successfully to improve the accuracy of deep learning models across a range of tasks, including image classification, speech recognition, and machine translation (Table 1). Szegedy et al. [6] originally proposed label smoothing as a strategy that improved the performance of the Inception architecture on the ImageNet dataset, and many state-of-the-art image classification models have incorporated label smoothing into training procedures ever since [7, 8, 9]
+
+In machine learning or deep learning, we usually use a lot of regularization techniques, such as L1, L2, dropout, etc., to prevent our model from overfitting. In classification problems, sometimes our model would learn to predict the training examples extremely confidently. This is not good for generalization.
+In this blog post, I am going to talk about label smoothing as a regularization technique for classification problems to prevent the model from predicting the training examples too confidently.
+
+but find no advantage with regard to validation performance. 
+
+*Sample weighting:*
+We transfer the idea of sample weighting from gls-gbm. Again, the contribution of individual training samples to the loss is scaled by a sample weight to penalize the model for getting recent observations wrong. The mechanism is vital to attain a low validation loss and high validation accuracies. The significantly lower training accuracy implies, that patterns learned a latter observations do not universally transfer to previous observations. At this time, it remains unclear what causes the data drift within the training set. 
+
+*Batch Size*
+We use a fixed batch size of num-8192 for the feature set classical / classical-size and num-2048 for the feature set option, which is the largest possible size on our gls-gpu. Training is performed for 20 epochs (approx num-36460 / num-145840 iterations) at maximum. All samples within the training and validation set are shuffled randomly to promote convergence. Although a smaller batch size could enhance generalization capabilities of the model, as found in ([[@keskarLargeBatchTrainingDeep2017]]3), we train on the largest possible number of trades per iteration, chiefly to cut training times. Additional regularization is added to our model, but treated as a tunable hyperparameter.
+
+*Early Stopping and Checkpointing*
+Similar to the gls-gbm, we prematurely halt training based on an consecutive decrease in validation accuracy. We set the patience to 10 epochs and restore the best model in terms of validation accuracy from the best checkpoint. Checkpointing is performed at the end of each epoch. 
+
+*Optimizer*
+
+“Label smoothed cross entropy is used as the objective function with an uncertainty = 0.1 (Szegedy et al., 2016). For Model training, we use RAdam as the optimizer (Liu et al., 2020a) and adopt almost all hyperparameter settings from Lu et al. (2020). Specifically, for the WMT’14 En-De and WMT’14 En-Fr dataset, all dropout ratios (including (activation dropout and attention dropout) are set to 0.1. For the IWSLT’14 De-En dataset, after-layer dropout is set to 0.3, and a weight decay of 0.0001 is used. As to optimizer, we set (β1, β2) = (0.9, 0.98), use inverse sqrt learning rate scheduler with a warmup phrase (8000 steps on the WMT’14 En-De/Fr dataset, and 6000 steps on the IWSLT’14 De-En dataset). The maximum learning rate is set to 1e−3 on the WMT’14 En-De dataset and 7e−4 on the IWSLT’14 De-En and WMT’14 En-Fr datasets. We conduct training for 100 epochs on the WMT’14 En-De dataset, 90 epochs on the IWSLT’14 De-En dataset and 50 epochs on the WMT’14 En-Fr dataset, while the last 10 checkpoints are averaged before inference.” (Liu et al., 2020, p. 17)
+
+AdamW optimizer ([[@loshchilovDecoupledWeightDecay2019]]) and treat the weight decay term in AdamW as a hyperparameter. 
+
+- Use weight decay of 0.1 for a small amount of regularization [[@loshchilovDecoupledWeightDecay2019]].
+
+To train all versions of GPT-3, we use Adam with β1 = 0.9, β2 = 0.95, and  = 10−8, we clip the global norm of the gradient at 1.0, and we use cosine decay for learning rate down to 10% of its value, over 260 billion tokens (after 260 billion tokens, training continues at 10% of the original learning rate). There is a linear LR warmup over the first 375 million tokens. We also gradually increase the batch size linearly from a small value (32k tokens) to the full value over the first 4-12 billion tokens of training, depending on the model size. Data are sampled without replacement during training (until an epoch boundary is reached) to minimize overfitting. All models use weight decay of 0.1 to provide a small amount of regularization [LH17].
+
+
+To this end, we extend the training setup of ([[@gorishniyRevisitingDeepLearning2021]]) with a learning rate schedule and early stopping
+
+
+
+- Introduce notion of effective batch size (batch size when training is split across multiple gpus; see [[@popelTrainingTipsTransformer2018]] p. 46)
+- For random shuffling with stochastic gradient descent see [[@lecunEfficientBackProp2012]]
+-   Shuffle in memory if samples are otherwise correlated. (see https://www.lesswrong.com/posts/b3CQrAo2nufqzwNHF/how-to-train-your-transformer)
 
 As found in [KMH+20, MKAT18], larger models can typically use a larger batch size, but require a smaller learning rate. We measure the gradient noise scale during training and use it to guide our choice of batch size [MKAT18]. Table 2.1 shows the parameter settings we used. To train the larger models without running out of memory, we use a mixture of model parallelism within each matrix multiply and model parallelism across the layers of the network. All models were trained on V100 GPU’s on part of a high-bandwidth cluster provided by Microsoft. Details of the training process and hyperparameter settings are described in Appendix B. (Found in gpt paper)
+- Base implementation on https://github.com/BlackHC/toma or this blog post https://towardsdatascience.com/a-batch-too-large-finding-the-batch-size-that-fits-on-gpus-aef70902a9f1 (nice idea with the dummy data.)
+
+We do exploit model parallelism
+
+As the loss in this configuration shows spurious patterns of early overfitting, we equally weight all samples instead.
+
 
 We scale the *effective batch size* 
 
-**Learning rate schedule**
-We use a cosine learning rate schedule, such that the final learning rate is equal to 10% of the maximal learning rate. We use a weight decay of 0.1 and gradient clipping of 1.0. We use 2, 000 warmup 0 200 400 600 800 1000 1200 1400 Billion of tokens 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 Training loss LLaMA 7B LLaMA 13B LLaMA 33B LLaMA 65B Figure 1: Training loss over train tokens for the 7B, 13B, 33B, and 65 models. LLaMA-33B and LLaMA65B were trained on 1.4T tokens. The smaller models were trained on 1.0T tokens. All models are trained with a batch size of 4M tokens. steps, and vary the learning rate and batch size with the size of the model (see Table 2 for details)
 
-**Early Stopping and Checkpointing:**
-Similar to the gls-gbm, we we prematurely halt training based on an consecutive increase in validation accuracy. We set the patience to 10 epochs and restore the best model in terms of validation accuracy through checkpointing. (Checkpoint averaging? [[@popelTrainingTipsTransformer2018]] 66)
+Visualize the decision of 
 
-
-For gradient-boosting 
-
-
-
-**Pre-Norm:**
-
-**Dropout:**
-- attention dropout / feed forward drop out
-
-**Label Smoothing**
-
-
-
-Dropout, 
-
-
-2.2 Architecture Following recent work on large language models, our network is based on the transformer architecture (Vaswani et al., 2017). We leverage various improvements that were subsequently proposed, and used in different models such as PaLM. Here are the main difference with the original architecture, and where we were found the inspiration for this change (in bracket): Pre-normalization [GPT3]. To improve the training stability, we normalize the input of each transformer sub-layer, instead of normalizing the output. We use the RMSNorm normalizing function, introduced by Zhang and Sennrich (2019). SwiGLU activation function [PaLM]. We replace the ReLU non-linearity by the SwiGLU activation function, introduced by Shazeer (2020) to improve the performance. We use a dimension of 2 3 4d instead of 4d as in PaLM. Rotary Embeddings [GPTNeo]. We remove the absolute positional embeddings, and instead, add rotary positional embeddings (RoPE), introduced by Su et al. (2021), at each layer of the network. The details of the hyper-parameters for our different models are given in Table 2.
 
 Our models are trained using the AdamW optimizer (Loshchilov and Hutter, 2017), with the following hyper-parameters: β1 = 0.9, β2 = 0.95. We use a cosine learning rate schedule, such that the final learning rate is equal to 10% of the maximal learning rate. We use a weight decay of 0.1 and gradient clipping of 1.0. We use 2, 000 warmup 0 200 400 600 800 1000 1200 1400 Billion of tokens 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 Training loss LLaMA 7B LLaMA 13B LLaMA 33B LLaMA 65B Figure 1: Training loss over train tokens for the 7B, 13B, 33B, and 65 models. LLaMA-33B and LLaMA65B were trained on 1.4T tokens. The smaller models were trained on 1.0T tokens. All models are trained with a batch size of 4M tokens. steps, and vary the learning rate and batch size with the size of the model (see Table 2 for details).
 
@@ -104,203 +185,31 @@ We make several optimizations to improve the training speed of our models. First
 
 
 
-Visualize model parameters:
-
-
-
-![[viz-model-params.png]]
-(from https://arxiv.org/pdf/2005.14165.pdf)
-
-
-
-deas to try out in CatBoost
-- look into search space, where did I choose the search space poorly
-- use custom weighting factor
-- make relatative distance to quote categorical / cut-off at threshold
-
-
-- Perform an error analysis. For which classes does CatBoost do so poorly? See some ideas here. https://elitedatascience.com/feature-engineering-best-practices
-
-
-
-
-![[Pasted image 20230428134902.png]]
-
-Our search space is reported in Table-X, which we laid out based on the recommendations in ([[@prokhorenkovaCatBoostUnbiasedBoosting2018]]20) and ([[@gorishniyRevisitingDeepLearning2021]]18) and ([[@rubachevRevisitingPretrainingObjectives2022]]., 2022, p. 4) with minor deviations.  The size of the ensemble $M$ may not be fully exhausted. 
-We grow symmetric trees, which acts as a regularizer.
-
-The hyperparameter search for the FT-Transformer is identical to ([[@gorishniyRevisitingDeepLearning2021]]18) variant (b). From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy (cp. cref-training-of-supervised). Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we employ early stopping and halt training after 15 consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the orginal author's to provide a conservative baseline ([[@gorishniyRevisitingDeepLearning2021]]5), for the sake of a fair comparison in our context both techniques should be used.
-
-**Failed attempts:**
-We experimented with label smoothing, 
-
-Visualize the decision of 
-
-
-
-Visualize effect 
-
-![[Pasted image 20230428110412.png]]
-
-
-Classical trade signing algorithms, such as the tick test, are also impacted by missing values. In theses cases, we defer to a random classification or a subsequent rule, if rules can not be computed. Details are provided in section [[💡Training of models (supervised)]].
-
-
-
-
-## Logistic regression
-- Think about simple baseline e. g., logistic regression
-
-
-![[Pasted image 20230427155407.png]]
-
-
-Look into grooking: https://arxiv.org/pdf/2201.02177.pdf
-![[grocking.png]]
-
-
-- Research Question 1: Which methods and models to encode long text sequences are most suited for downstream machine learning tasks?
-
-- What optimizer is chosen? Why? Could try out Adam or Adan?
-
-[[@somepalliSAINTImprovedNeural2021]] use logistic regression. I really like the fact they also compare a simple logistic regression to these models, because if you’re not able to perform notably better relative to the simplest model one could do, then why would we care? The fact that logistic regression is at times competitive and even beats boosting/SAINT methods occasionally gives me pause though. Perhaps some of these data are not sufficiently complex to be useful in distinguishing these methods? It is realistic though. While it’s best not to assume as such, sometimes a linear model is appropriate given the features and target at hand.
-
-
-Many practical implementations of boosting like XGBoost (Chen & Guestrin, 2016), LightGBM (Ke et al., 2017), and CatBoost (Prokhorenkova et al., 2018) use constant learning rate in their default settings as in practice it outperforms dynamically decreasing ones. However, existing works on the convergence of boosting algorithms assume decreasing learning rates (Zhang & Yu, 2005; Zhou & Hooker, 2018), thus leaving an open question: if we assume constant learning rate  > 0, can convergence be guaranteed? https://arxiv.org/pdf/2001.07248.pdf
-
-## Categoricals
-- The problem of high number of categories is called a high cardinality problem of categoricals see e. g., [[@huangTabTransformerTabularData2020]]
-- To inform our models which features are categorical, we pass the index the index of categorical features and the their cardinality to the models.
-- Discuss cardinality of categoricals.
-- strict assumption as we have out-of-vocabulary tokens e. g., unseen symbols like "TSLA".  (see done differently here https://keras.io/examples/structured_data/tabtransformer/)
-- Idea: Instead of assign an unknown token it could help assign to map the token to random vector. https://stackoverflow.com/questions/45495190/initializing-out-of-vocabulary-oov-tokens
-- Idea: reduce the least frequent root symbols.
-- Apply an idea similar to sentence piece. Here, the number of words in vocabulary is fixed https://github.com/google/sentencepiece. See repo for paper / algorithm.
-- For explosion in parameters also see [[@tunstallNaturalLanguageProcessing2022]]. Could apply their reasoning (calculate no. of parameters) for my work. 
-- KISS. Dimensionality is probably not so high, that it can not be handled. It's much smaller than common corpi sizes. Mapping to 'UKNWN' character. -> Think how this can be done using the current `sklearn` implementation.
-- **Solutions:** 
-	- Use a linear projection: https://www.kaggle.com/code/limerobot/dsb2019-v77-tr-dt-aug0-5-3tta/notebook
-	- https://en.wikipedia.org/wiki/Additive_smoothing
-
-
-
-Studies adressing high cardinality
-<mark style="background: #ADCCFFA6;">“Study how both tree-based models and neural networks cope with specific challenges such as missing data or high-cardinality categorical features, thus extending to neural networks prior empirical work [Cerda et al., 2018, Cerda and Varoquaux, 2020, Perez-Lebel et al., 2022].” ([Grinsztajn et al., 2022, p. 9](zotero://select/library/items/G3KP2Z9W)) ([pdf](zotero://open-pdf/library/items/A3KU4A43?page=9&annotation=PCA3SDUE))</mark>
-
-
-
-The best results of the efficient Transformer models can be obtained with the BigBird and LED models with a performance of 53.58% and 53.7% respectively. Using the Longformer encodings yields a comparably low accuracy of 48.02%. <mark style="background: #FF5582A6;">Of note is</mark>, however, that the classification model which receives the Longformer encodings fits the training data nearly perfectly. The models receiving BigBird and LED encodings on the other hand merely yield a training accuracy of 81.41% and 75.47% respectively.<mark style="background: #FFB8EBA6;"> There appears to be a clear trade-off relationship</mark> between the degree to which the models are able to fit to the training data and the results obtained on the test data. This is also evident in the performance of the baseline models. See Figure 6.2. for an illustration of the described trade-off.
-
-## Resources
-- Do less Alchemy at NIPS: https://www.youtube.com/watch?v=Qi1Yry33TQE
-- Practical guide for researchers by Google: https://github.com/google-research/tuning_playbook or [[@tuningplaybookgithub]]
-
-
-Following the example of ([[@rubachevRevisitingPretrainingObjectives2022]]), we share the 
-
-We aim to be transparent about the training setup
-
-
-
-
-
-## Task to be done⛑️
-1.  create an action plan for improving module results
-2. restructure all notes and info, that I've gathered so far and incorporate into this plan
-3. Find optimal batch size, remove batch size code from objective
-4. Implement a much simpler approach e. g., logistic regression
-5. Allow to keep certain hyperparameters fixed
-6. add learning rate scheduler
-7. decide on a optimizer
-8.  complete evaluation pipeline
-
-## Chapter structure
-- Write about the general idea of training / tuning.
-- Differentiate into exploration and exploitation. Do this in a structured way.
-- Set up a simple baseline
-- Write why we use a quasi-random search during exploration and Bayesian search during exploitation phase. (see https://github.com/google-research/tuning_playbook)
-- Isolate the optimization of different hyperparameters e. g., optimizer, activation functions etc. during the exploration phase. Take into account nuance parameters. Decompose into smaller problems, that are manageable.
-- Discuss why retraining of the best model could make sense.
-- Keep ideas simple and gradually add complexity and make it visible in the structure of the chapter. Helps with reasoning later. Possible steps could be:
-	- tbd
-	- tbd
-
-## Batch size
-- Estimate the maximum batch size early on, as many parameters depend on it. (see https://github.com/google-research/tuning_playbook)
-- Base implementation on https://github.com/BlackHC/toma or this blog post https://towardsdatascience.com/a-batch-too-large-finding-the-batch-size-that-fits-on-gpus-aef70902a9f1 (nice idea with the dummy data.)
-- Introduce notion of effective batch size (batch size when training is split across multiple gpus; see [[@popelTrainingTipsTransformer2018]] p. 46)
-- Reason why we aim for compleete batches. See e. g., https://mccormickml.com/2020/07/29/smart-batching-tutorial/#why-we-pad
-- results are the same when trained on multiple gpus, if batch size across all gpus remains the same. [[@poppeSensitivityVPINChoice2016]] confirmed this empirically.
-
-## Advanced logging 🗞️
-- advance experiment tracking https://www.learnpytorch.io/07_pytorch_experiment_tracking/
-- log gradients and loss using `wandb.watch` as shown here https://www.youtube.com/watch?v=k6p-gqxJfP4 with `wandb.log({"epoch":epoch, "loss":loss}, step)` (nested in `if ((batch_ct +1) % 25) == 0:`) and `wandb.watch(model, criterion, log="all", log_freq=10)`
-- In-depth weights and bias blog post: https://wandb.ai/site/articles/debugging-neural-networks-with-pytorch-and-w-b-using-gradients-and-visualizations
-- Mind the double descent effect https://openai.com/blog/deep-double-descent/
-
-## Learning rate
-- Lower the learning rate when the model stagnates, but don't start too low.  Try cyclic learning rates https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.CyclicLR.html
-- cycling procedure was proposed in [[@loshchilovSGDRStochasticGradient2017]] and [[@smithCyclicalLearningRates2017]]
-- for intuitive explanation on learning rate warm up see https://stackoverflow.com/questions/55933867/what-does-learning-rate-warm-up-mean
-- One might has to adjust the lr when scaling across multiple gpus [[@poppeSensitivityVPINChoice2016]] contains a nice discussion.
-- Use learning rate warmup for post-LN transformers and maybe also for other
-- Some intuition on learning rate warm-up can be found in [[@liuVarianceAdaptiveLearning2021]] and https://stackoverflow.com/a/55942518/5755604
-
-## Random Shuffle
-- For random shuffling with stochastic gradient descent see [[@lecunEfficientBackProp2012 1]]
--   Shuffle in memory if samples are otherwise correlated. (see https://www.lesswrong.com/posts/b3CQrAo2nufqzwNHF/how-to-train-your-transformer)
--   Shuffle in memory if samples are otherwise correlated. (see https://www.lesswrong.com/posts/b3CQrAo2nufqzwNHF/how-to-train-your-transformer)
-
-## Classical algorithms
-- Implement as sklearn classifier for easier evaluation, ease of use, and re-usability.
-
-## Baseline 
-- Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Also  [[@grauerOptionTradeClassification2022]] could be a baseline.
--   Train a simple fully connected network as baseline and sanity check. We could argue that TabTransformer callapses to one.
-
-### Gradient Boosting
-- Discuss overfitting and underfitting. What measures are taken to address the problem?
-- Use early stopping
-- Use sample weighting
-
-### Transformer
-- See tips in [[@tuningplaybookgithub]]
-- Transformers are much more elaborate to train than gradient boosting approaches. Training of the transformer has been found non-trivial [[@liuUnderstandingDifficultyTraining2020]]
-- Motivate the importance of regularized neural nets with [[@kadraWelltunedSimpleNets2021]] papers. Authors state, that the improvements from regularization of neural nets are very pronounced and highly significant. Discuss which regularization approaches are applied and why.  
-- Similarly, [[@heBagTricksImage2018]] show how they can improve the performance of neural nets for computer vision through "tricks" like learning rate scheduling.
-- Also see [[@shavittRegularizationLearningNetworks2018]] for regularization in neural networks for tabular data.
-- Motivate different activation functions with [[@shazeerGLUVariantsImprove2020]]
-- Search space is adapated from [[@huangTabTransformerTabularData2020]] and [[@gorishniyRevisitingDeepLearning2021]]. We make sure optimal solution is not on the borders of the search space.
-- post norm / pre-norm / lr warm up [[@xiongLayerNormalizationTransformer2020]].  Use of Post-Norm (Hello [[🤖TabTransformer]]) has been deemed outdated in Transformers due to a more fragile training process (see [[@gorishniyRevisitingDeepLearning2021]]). 
-- In case of diverged training, try gradient clipping and/or more warmup steps. (found in [[@popelTrainingTipsTransformer2018]])
-- Use weight decay of 0.1 for a small amount of regularization [[@loshchilovDecoupledWeightDecay2019]].
-- on the compute cost of transformers [[@ivanovDataMovementAll2021]]
-- training tips for Transformer https://www.borealisai.com/research-blogs/tutorial-17-transformers-iii-training/
-- Might use additional tips from here: ([[@liuRoBERTaRobustlyOptimized2019]] and [[@liuUnderstandingDifficultyTraining2020]])
-- One commonly used technique for training a Transformer is learning rate warm-up. This means that we gradually increase the learning rate from 0 on to our originally specified learning rate in the first few iterations. Thus, we slowly start learning instead of taking very large steps from the beginning. In fact, training a deep Transformer without learning rate warm-up can make the model diverge and achieve a much worse performance on training and testing (https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html).
-- For training the transformer see: https://datascience.stackexchange.com/questions/64583/what-are-the-good-parameter-ranges-for-bert-hyperparameters-while-finetuning-it
-
-### Additional techniques 🍰
-- Try out adverserial weight perturbation as done [here.][feedback-nn-train | Kaggle](https://www.kaggle.com/code/wht1996/feedback-nn-train/notebook)
-- Try out Stochastic weight averaging for neural net as done [here.](https://wandb.ai/darek/fbck/reports/How-To-Build-an-Efficient-NLP-Model--VmlldzoyNTE5MDEx) or here [Stochastic Weight Averaging in PyTorch](https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/)
-- Use weighting scheme for samples. See: https://pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html
-
-
-## Visualizations 🖼️
-
-![[visualization_of_bleu_over_time.png]]
-
-![[bleu_no_of_gpus.png]]
-
-
-
-
-## Self-Training / Pre-Training
-
-- for pre-training using ELECTRA see: https://blog.ml6.eu/how-a-pretrained-tabtransformer-performs-in-the-real-world-eccb12362950
+**Transformer + Pre-Training**
+As derived in cref-pretraining, we
 - For pre-training objectives see: https://github.com/puhsu/tabular-dl-pretrain-objectives/
 - For implementation of masked language modelling see https://nn.labml.ai/transformers/mlm/index.html
-- form implementation of semi-supervised catboost see: https://github.com/catboost/catboost/issues/525
+
+Following ([[@rubachevRevisitingPretrainingObjectives2022]]14) we set the hidden dimension of the classification head to 512. The configuration of the Transformer with pre-training objective is otherwise identical to the Transformer trained from scratch.
 
 “For deep models with transfer learning, we tune the hyperparameters on the full upstream data using the available large upstream validation set with the goal to obtain the best performing feature extractor for the pre-training multi-target task. We then fine-tune this feature extractor with a small learning rate on the downstream data. As this strategy offers considerable performance gains over default hyperparameters, we highlight the importance of tuning the feature extractor and present the comparison with default hyperparameters in Appendix B as well as the details on hyperparameter search spaces for each model.” ([Levin et al., 2022, p. 6](zotero://select/library/items/GNKZPFYK)) ([pdf](zotero://open-pdf/library/items/QCVUFCDQ?page=6&annotation=PICSZEZU)) [[@levinTransferLearningDeep2022]]
+When finetuning 
+
+“Pretraining. Pretraining is always performed directly on the target dataset and does not exploit additional data. The learning process thus comprises two stages. On the first stage, the model parameters are optimized w.r.t. the pretraining objective. On the second stage, the model is initialized with the pretrained weights and finetuned on the downstream classification or regression task. We focus on the fully-supervised setup, i.e., assume that target labels are provided for all dataset objects. Typically, pretraining stage involves the input corruption: for instance, to generate positive pairs in contrastive-like objectives or to corrupt the input for reconstruction in self-prediction based objectives. We use random feature resampling as a proven simple baseline for input corruption in tabular data [4, 42]. Learning rate and weight decay are shared between the two stages (see Table 11 for the ablation). We fix the maximum number of pretraining iterations for each dataset at 100k. On every 10k-th iteration, we compute the value of the pretraining objective using the hold-out validation objects for early-stopping on large-scale WE, CO and MI datasets. On other datasets we directly finetune the current model every 10k-th iteration and perform early-stopping based on the target metric after finetuning (we do not observe much difference between early stopping by loss or by downstream metric, see Table 12).” (Rubachev et al., 2022, p. 4)
+
+**Gradient-Boosting + Self-Training**
+To incorporate unlabelled trades into the training procedure, we combine gradient boosting with a self-training classifier, as derived in cref-self-training-gbm. We repeat self-training for 2 iterations and require the predicted class probability to exceed $\tau=0.9$. As the entire ensemble is rebuilt three times, the relatively low number of iterations and high confidence threshold, is a compromise to balance computational requirements and the need for high-quality predictions. The base classifier is otherwise identical to supervised gradient boosting from cref-supervised-training.
+
+
+### Logistic regression
+
+- KISS 💘
+
+[[@somepalliSaintImprovedNeural2021]] use logistic regression. I really like the fact they also compare a simple logistic regression to these models, because if you’re not able to perform notably better relative to the simplest model one could do, then why would we care? The fact that logistic regression is at times competitive and even beats boosting/SAINT methods occasionally gives me pause though. Perhaps some of these data are not sufficiently complex to be useful in distinguishing these methods? It is realistic though. While it’s best not to assume as such, sometimes a linear model is appropriate given the features and target at hand.
+
+Start with something simple e. g., Logistic Regression or Gradient Boosted Trees, due to being well suited for tabular data. Also  [[@grauerOptionTradeClassification2022]] could be a baseline.
+
+Train a simple fully connected network as baseline and sanity check. We could argue that TabTransformer callapses to one.
+
+
 

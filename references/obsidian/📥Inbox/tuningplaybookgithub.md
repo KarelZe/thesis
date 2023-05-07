@@ -12,6 +12,8 @@
 ## Annotations 📖
 
 ## Batch size
+
+
 - The batch size should _not be_ treated as a tunable hyperparameter for validation set performance. (from https://github.com/google-research/tuning_playbook)
 -   As long as all hyperparameters are well-tuned (especially the learning rate and regularization hyperparameters) and the number of training steps is sufficient, the same final performance should be attainable using any batch size (see[[@shallueMeasuringEffectsData]]. (from https://github.com/google-research/tuning_playbook)
 - Smaller batch sizes introduce more noise into the training algorithm due to sample variance, and this noise can have a regularizing effect. Thus, larger batch sizes can be more prone to overfitting and may require stronger regularization and/or additional regularization techniques. (from https://github.com/google-research/tuning_playbook)

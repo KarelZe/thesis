@@ -4,7 +4,7 @@
 *tags:* #semi-supervised #deep-learning #semi-supervised #self-learning 
 *status:* #📦 
 *related:*
-- [[@clarkELECTRAPretrainingText2020]]
+- [[@clarkElectraPretrainingText2020]]
 - [[@yoonVIMEExtendingSuccess2020]]
 - [[@huangTabTransformerTabularData2020]]
 # Notes 

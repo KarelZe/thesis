@@ -8,7 +8,7 @@ related:
 - [[@friedmanGreedyFunctionApproximation2001]]
 - [[@hastietrevorElementsStatisticalLearning2009]]
 - [[@breimanRandomForests2001]]
-- [[@arikTabNetAttentiveInterpretable2020]]
+- [[@arikTabnetAttentiveInterpretable2020]]
 - [[@huangTabTransformerTabularData2020]]
 Code: 
 - https://github.com/LeoGrin/tabular-benchmark
