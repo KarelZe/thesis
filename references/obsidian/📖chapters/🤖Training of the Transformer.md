@@ -2,7 +2,7 @@
 
 ## Resources
 - Do less Alchemy at NIPS: https://www.youtube.com/watch?v=Qi1Yry33TQE
-- Practical guide for researchers by Google: https://github.com/google-research/tuning_playbook or [[@tuningplaybookgithub]]
+- Practical guide for researchers by Google: https://github.com/google-research/tuning_playbook or [[tuningplaybookgithub]]
 
 
 ## Task to be done⛑️
@@ -65,7 +65,7 @@
 - Use sample weighting
 
 ### Transformer
-- See tips in [[@tuningplaybookgithub]]
+- See tips in [[tuningplaybookgithub]]
 - Transformers are much more elaborate to train than gradient boosting approaches. Training of the transformer has been found non-trivial [[@liuUnderstandingDifficultyTraining2020]]
 - Motivate the importance of regularized neural nets with [[@kadraWelltunedSimpleNets2021]] papers. Authors state, that the improvements from regularization of neural nets are very pronounced and highly significant. Discuss which regularization approaches are applied and why.  
 - Similarly, [[@heBagTricksImage2018]] show how they can improve the performance of neural nets for computer vision through "tricks" like learning rate scheduling.

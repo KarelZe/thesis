@@ -4,11 +4,11 @@
 *tags:* #supervised-learning #semi-supervised #deep-learning #tabular #supervised-learning #transformer #attention
 *status:* #📦 
 *related:*
-- [[@arikTabNetAttentiveInterpretable2020]] (other transformer)
+- [[@arikTabnetAttentiveInterpretable2020]] (other transformer)
 - [[@huangTabTransformerTabularData2020]] (other transformer)
  [[@vaswaniAttentionAllYou2017]]
 - [[@huangTabTransformerTabularData2020]]
-- [[@arikTabNetAttentiveInterpretable2020]]
+- [[@arikTabnetAttentiveInterpretable2020]]
 - [[@grinsztajnWhyTreebasedModels2022]]
 *code:* [https://github.com/somepago/saint](https://github.com/somepago/saint)
 *review:* https://openreview.net/forum?id=nL2lDlsrZU (Was rejected at ICLR. Fairness of the comparison was doubted.) 

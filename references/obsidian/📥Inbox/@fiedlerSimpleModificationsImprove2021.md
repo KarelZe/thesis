@@ -4,7 +4,7 @@
 *tags:* #gbm #transformer #regularization
 *status:* #📥
 *related:*
-- [[@arikTabNetAttentiveInterpretable2020]]
+- [[@arikTabnetAttentiveInterpretable2020]]
 - [[@huangTabTransformerTabularData2020]]
 - [[@kadraWelltunedSimpleNets2021]](similar idea)
 ## Notes 

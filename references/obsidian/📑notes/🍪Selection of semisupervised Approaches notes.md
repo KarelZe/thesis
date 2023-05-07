@@ -20,7 +20,7 @@ For the existing semi-supervised boosting methods [Bennett et al., 2002; Chen an
 
 
 - We discuss approaches in cref-[[🍪Selection Of Semisupervised Approaches]].
-- Problems of tree-based approaches and neural networks in semi-supervised learning. See [[@huangTabTransformerTabularData2020]] or [[@arikTabNetAttentiveInterpretable2020]]and [[@tanhaSemisupervisedSelftrainingDecision2017]]
+- Problems of tree-based approaches and neural networks in semi-supervised learning. See [[@huangTabTransformerTabularData2020]] or [[@arikTabnetAttentiveInterpretable2020]]and [[@tanhaSemisupervisedSelftrainingDecision2017]]
 
 (- *(R2) interpretability:* The method must interpretable. -> every classifier is somewhat interpretable. Better just mention attention mechanism / transparent.)
 
@@ -55,7 +55,7 @@ For the existing semi-supervised boosting methods [Bennett et al., 2002; Chen an
 	- For "shallow" state-of-the-art are ensembles such as GBMs. (see [[@gorishniyRevisitingDeepLearning2021]])
 	- Deep learning for tabular data could potentially yield a higher performance and allow to combine tbular data with non-tabular data such as images, audio or other data that can be easily processed with deep learning. [[@gorishniyRevisitingDeepLearning2021]]
 	- Despite growing number of novel (neural net) architectures, there is still no simple, yet reliable solution that achieves stable performance across many tasks. 
-	- [[@arikTabNetAttentiveInterpretable2020]] Discuss a number of reasons why decisiion tree esembles dominate neural networks for tabular data.
+	- [[@arikTabnetAttentiveInterpretable2020]] Discuss a number of reasons why decisiion tree esembles dominate neural networks for tabular data.
 	- [[@huangTabTransformerTabularData2020]] argue that tree-based ensembles are the leading approach for tabular data. The base this on the prediction accuracy, the speed of training and the ability to interpret the models. However, they list sevre limitations. As such they are not suitabl efor streaming data, multi-modality with tabular data e. g. additional image date and do not support semi-supervised learning by default.
 - Choose neural network architectures, that are tailored towards tabular data.
 

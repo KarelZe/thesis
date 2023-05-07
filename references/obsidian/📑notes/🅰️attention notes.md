@@ -34,7 +34,7 @@ Attention can be thought of as a mapping between a query and a set of key-value 
 - Multi-head attention splits the queries along the embedding dimension. Also outputs are split. Works empirically better. Requires less compute. (only implementation details. Not the gist of attention.)
 - Architecture is heavily inspired by the translation task / community. This is helpful, as it resulted in encoder / decoder architecture.
 - Every token from the input sequence is linearily projected. Each vector looks around to see what vectors are there and calculates the output. (self-attention)
-- Every token individually is sent to a oint-wise MLP. It's done individually for every token. Stores knowledge. There is a paper. (references in [[@gevaTransformerFeedForwardLayers2021]] are the best I could find?) Gives the model processing power to think about what it has seen." Larger hidden size gives better results.
+- Every token individually is sent to a oint-wise MLP. It's done individually for every token. Stores knowledge. There is a paper. (references in [[@gevaTransformerFeedforwardLayers2021]] are the best I could find?) Gives the model processing power to think about what it has seen." Larger hidden size gives better results.
 - skip processing. We have input and update it with our processing. (See residual stream in (mathematical foundations of Transformers))
 - Layer norm is technically important.
 - It's not clear, which variant of layer-norm is better.

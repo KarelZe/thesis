@@ -19,7 +19,7 @@ year: 2020
 
 ## Notes
 - TabTransformer is a tansformer-based architecture for tabular data. Using transformer layer ([[@vaswaniAttentionAllYou2017]]) it transforms the parametric embeddings of contextual data into robust contextual embeddings through the use of a sequence of multi-head attention-based transformer layers. The motivation for this step is, that highly correlated features within one column or across columns result in embedding pairs that are close in Euclidean space which could not be learned for a vanilla MLP. Embeddings also increases robustness.
-- TabTransformer only learns contextual embeddings on categorical features. Continous features are concatenated with the embeddings and fed into a vanilla neural network. [[@somepalliSAINTImprovedNeural2021]] critize that information about correlations between categorical and continous features are lost, as continous features are not passed through the transformer block. Approches like FTTransformer (see [[@gorishniyRevisitingDeepLearning2021]]) embed both categorical and continous data and pass it through a transformer.
+- TabTransformer only learns contextual embeddings on categorical features. Continous features are concatenated with the embeddings and fed into a vanilla neural network. [[@somepalliSaintImprovedNeural2021]] critize that information about correlations between categorical and continous features are lost, as continous features are not passed through the transformer block. Approches like FTTransformer (see [[@gorishniyRevisitingDeepLearning2021]]) embed both categorical and continous data and pass it through a transformer.
 - Authors claim that TabTransformer improves by at least 1.0 % over other deep learning method and matches the performance of gbts. Unsupervised pre-training further improves performance with an improvement of 2.1 % over SOTA approaches.
 - **Advantage:** 
 	- The contextual embeddings makes the transformer highly robust against noise (i. e., random values) and missing values.
@@ -32,7 +32,7 @@ year: 2020
 	- suboptimal for multi-modality data (e. g., image data + tabular data)
 	- In their basic form not suitable for semi-supervised methods.
 - Authors critize that the comparsion of GBTs and deep learning methods is mostly done on a limited number of datasets and often does not generalize. They actually show that GBTs are superior. 
-- Their study finds that in large scale comparsion GBTs outperform recent architectures like [[@arikTabNetAttentiveInterpretable2020]]. Unsurprisingly TabTransformer shows superior performance to other-state-of-the-art deep learning methods and has a competitive perforance to tree-based ensembles. They test on 15 public data sets. They use five-fold cross validation with a 65/15/20% split. For hyperparameter tuning they make 20 runs for each fold. See hyperapram search space in appendix.
+- Their study finds that in large scale comparsion GBTs outperform recent architectures like [[@arikTabnetAttentiveInterpretable2020]]. Unsurprisingly TabTransformer shows superior performance to other-state-of-the-art deep learning methods and has a competitive perforance to tree-based ensembles. They test on 15 public data sets. They use five-fold cross validation with a 65/15/20% split. For hyperparameter tuning they make 20 runs for each fold. See hyperapram search space in appendix.
 - **Architecture**
 	- ![[tabtransformer-architecture.png]]
 	- Architecture is based on the transformer architecture of [[@vaswaniAttentionAllYou2017]]
@@ -44,7 +44,7 @@ year: 2020
 	- They perform an ablation study for different embedding strategies e. g.different choices for dimensions and adding unique identifiers and feature-value specific embeddings instead of concatenating them.
 
  - **Pre-training:**
-	- They propose to pretrain using masked language modeling ([[@clarkELECTRAPretrainingText2020]]) and replaced token detection ([[@devlinBERTPretrainingDeep2019]])
+	- They propose to pretrain using masked language modeling ([[@clarkElectraPretrainingText2020]]) and replaced token detection ([[@devlinBERTPretrainingDeep2019]])
 	- Pre-training is only used in the semi-supervised scenario. They say, that there is no benefit if the entire data is labeled. Models only profit if unlabeled samples make up a large portion.
 -
 - **Visualization of learned embeddings on categorical features:**
@@ -56,7 +56,7 @@ year: 2020
 - **Semi-supervised results:**
 	- For large number of unlabeled data pre-trained transformers outperform all other models in terms of AUC.
 	- Tab-Transformer RTD performs better tahn TabTransformer-MLM as pre-training task is just a binary classification instead of a multi-class classification. They say, that the result is consistent with 
-	- [[@clarkELECTRAPretrainingText2020]]
+	- [[@clarkElectraPretrainingText2020]]
 
 ## Search space
 - AdamW optimizer

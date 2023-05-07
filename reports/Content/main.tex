@@ -845,13 +845,107 @@ Our train-test-split assumes that all subsets are drawn from the same distributi
 \subsubsection{Training of Supervised
     Models}\label{sec:training-of-supervised-models}
 
-From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we implement early stopping and halt training after \num{15} consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
+\textbf{Gradient Boosting}
 
-For gradient boosting we raise the border count to \num{265}, which increases the number of split candidates per feature through a finer quantization, Expectedly, accuracy increases at the cost of computational efficiency. The size of the ensemble $M$ may not be fully exhausted. Acknowledging the observations of \textcite[][14]{friedmanGreedyFunctionApproximation2001}, that the learning rate $\eta$ and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop adding new trees to the ensemble, once the validation accuracy decreases for consecutive \num{100} steps.
+Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autocite[][5--6]{prokhorenkovaCatBoostUnbiasedBoosting2018} because of its efficient implementation on \glspl{GPU} and native support for categorical variables. However, as discussed in \cref{sec:gradient-boosting-procedure}, we expect the chosen library to have minimal impact on performance.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{gbm-train-val-loss-acc.pdf}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \glsentryshort{ISE} Sample]{Training and validation accuracy of \gls{GBM} on \gls{ISE} sample. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \label{fig:gbm-train-val-loss-acc}
+\end{figure}
+
+\cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The configuration details are documented in (...). The plots reveal several insights. Firstly, the model overfits the training data, as evident from the generalisation gap between training and validation accuracies. To improve generalisation performance, we apply regularization techniques. Secondly, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction. This behaviour may be explained by the log loss being unbound, where single incorrect predictions can cause the loss to explode.
+
+% Consider the case where the ensemble learns to confidently classify a trade based on the training samples, but the label is different for the validation set (...)
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{gbm-optimisations-loss-acc.pdf}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \gls{ISE} with Optimisations]{Training and validation accuracy of \gls{GBM} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \label{fig:gbm-optimisations-loss-acc}
+\end{figure}
+
+We leverage several architectural changes to further improve performance and mitigate overfitting in gradient boosting, as shown in \cref{fig:gbm-optimisations-loss-acc}, where the effects on validation accuracy and log loss over the default configuration are visualised. All other parameters are kept at their default values, while a single parameter is varied to derive the plots. Although this approach ignores parameter interactions, it still can provide guidance for the optimal training configuration. We train on the ISE training set with classical features and report metrics on the validation set.
+
+\emph{Growth Strategy}
+
+To improve performance, we switch to a leaf-wise growth strategy, following \textcite[][4]{chenXGBoostScalableTree2016}. By default, \emph{CatBoost} grows oblivious regression trees, which are symmetric and grown level-wise. In this strategy, splits are performed on the same feature and split values across all nodes of a single level, which is computationally efficient but may compromise performance. In contrast, leaf-wise growth selects terminal nodes that provide the largest improvement in the loss, potentially leading to nodes within the same level being split with different features and values, resulting in a closer fit to the data. Leaf-wise growth also aligns with the intuition of split finding from \cref{sec:decision-tree}. This change improves validation accuracy by \SI{0.3461}{\percent} but has little effect on the loss.
+
+\emph{Sample Weighting}
+
+The work of \textcite[][36--38]{grauerOptionTradeClassification2022} suggests a strong temporal shift in the data, with the performance of classical trade classification rules deteriorating over time.  As a result, the predictability of features derived from these rules diminishes over time, and patterns learned from old observations become less relevant for predicting test samples. To address this, we introduce a sample weighting scheme that assigns higher weights to recent training samples and gradually decays weights over time, which we incorporate into the log loss. Validation and test samples are equally weighted. Sample weighting proves to be essential for achieving high validation performance, and it positively impacts the accuracy and confidence in the prediction.
+
+\emph{Border Count}
+
+In regression trees of gradient-boosting, split finding is typically approximated through quantization, whereby all numeric features are first discretised into a fixed number of buckets through histogram building, and splits are evaluated at the border of the buckets \autocites[][4]{dorogushCatBoostGradientBoosting}[][2]{keLightGBMHighlyEfficient2017}. To increase the number of split candidates per feature through finer quantization, we raise the border count to \num{254}. Generally, this leads to increased accuracy at the cost of computational efficiency. Yet, in the experiment above, the improvements in validation loss and accuracy are minor compared to the previous changes.
+
+\emph{Early Stopping and Checkpointing}
+
+To reduce overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for 100 iterations. The ensemble is then cut back to achieve the highest validation accuracy, and the maximum size of the ensemble may not be fully exhausted. In the experiment above, early stopping does not apply, as validation accuracy continues to improve for larger ensembles. We employ additional measures to address overfitting but treat them as a tunable hyperparameter, with more details provided in \cref{sec:hyperparameter-tuning}.
+
+We combine these ideas to leverage the improvements for our large-scale studies.
+
+\textbf{Transformer}
+
+As derived in \cref{sec:supervised-approaches}, we rely on FT-Transformer of \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule \autocite[][1]{liuUnderstandingDifficultyTraining2020}. We investigate minor modifications to the default FT-Transformer to stabilize training and improve overall performance. The default FT-Transformer trained for 10 epochs on \gls{ISE} dataset with classical features and loss and accuracy is visualized in \cref{fig:fttransformer-optimisations-loss-acc} and the model itself is summarized in (...).
+
+The convergence behaviour of our model is similar to that of gradient boosting. Equally, a significant generalization gap exists between the training and validation loss. Particularly concerning, the training loss decreases sharply, while the validation loss spuriously improves over its initial estimate. Despite this, validation accuracy improves throughout the entire training cycle. We reason that the network learns to correctly classify trades, indicated by the improved accuracy, but only attains low-confident correct predictions or confident but erroneous predictions which both contribute to a large validation loss. The shape of the flat validation loss and the decreasing training loss suggest that the training set may not be representative of trades in the validation set. This has broader implications on the classifiability of option trades using decision rules from classical trade classification rules for more recent observations. We explore this phenomenon thoroughly as part of our result discussion.
+
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics{fttransformer-optimisations-loss-acc.pdf}
+    \caption[Training and Validation Accuracy of FT-Transformer on \gls{ISE} with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to one gradient update. The end of each epoch is marked with a grey bar. Loss is expected to decrease throughout training and accuracy to increase.}
+    \label{fig:fttransformer-optimisations-loss-acc}
+\end{figure}
+
+\emph{Activation Function}
+
+Motivated by previous research, we experiment with replacing the $\operatorname{ReLU}$ activation with the $\operatorname{GELU}$ activation function \autocite[][2]{hendrycksGaussianErrorLinear2020} in the classification head and the gated variant $\operatorname{ReGLU}$ with the gated variant $\operatorname{GEGLU}$ \autocite[][2]{shazeerGLUVariantsImprove2020} in the \gls{FFN}.As visualized in \cref{fig:fttransformer-optimisations-loss-acc}, no advantage in terms of validation accuracy or loss is evident. As a result, we retain the default.
+
+\emph{Sample Weighting}
+
+We apply the concept of sample weighting from \gls{GBM} to Transformers. Specifically, we scale the contribution of individual training samples to the loss using a sample weight, which penalizes the model for misclassifying recent observations. This method is crucial for achieving low validation loss and high validation accuracies, as visible in \cref{fig:fttransformer-optimisations-loss-acc}. The significantly lower training accuracy implies, that patterns from latter observations do not universally transfer to previous observations. At this time, it remains unclear what is causing the data drift within the training set.
+
+\emph{Label Smoothing}
+
+(...)
+
+\emph{Learning Rate Schedule}
+
+(...)
+
+\emph{Batch Size}
+
+We use a fixed batch size of \num{8192} samples for the feature set classical / classical-size and \num{2047} for the feature set option, which is the largest possible size on our \gls{GPU}. Training is performed for 20 epochs (\num{36460} / \num{145840} iterations) at maximum. All samples within the training and validation set are shuffled randomly to promote convergence. Although a smaller batch size could enhance the generalization capabilities of the model, as found in \textcite[][3]{keskarLargeBatchTrainingDeep2017}, we train on the largest possible number of trades per iteration, chiefly to cut training times. Additional regularization is added to the model, but treated as a tunable hyperparameter.
+
+\emph{Early Stopping and Checkpointing}
+
+Similar to the \gls{GBM}, we halt training prematurely based on a consecutive decrease in validation accuracy. We set the patience to \num{10} epochs and restore the best model in terms of validation accuracy from the checkpoint. Checkpoints are saved at the end of each epoch.
+
+\emph{Optimizer}
+
+(...)
+
+\textbf{Classical Rules}
+
+Classical trade classification rules serve as a benchmark in our work. We implement them as a classifier that combines arbitrary trade classification rules through stacking, as covered in \cref{sec:semi-supervised-approaches}. 
+
+% FIXME: They write that they classify randomly, but they don't do so.
+In cases where classification is not feasible due to missing data or the rules' definition itself, we resort to a random classification, which achieves an average accuracy of \SI{50}{\percent}. In this regard, we deviate from \textcite[][29--32]{grauerOptionTradeClassification2022}, who consider unclassified trades as falsely classified, resulting in a  resulting in \SI{0}{\percent} accuracy. In our context, such a procedure would bias towards machine learning classifiers.
 
 \subsubsection{Training of Semi-Supervised
     Models}\label{sec:training-of-semi-supervised-models}
 
+\textbf{Gradient Boosting With Self-Training}
+
+To incorporate unlabelled trades into the training procedure, we combine gradient boosting with a self-training classifier, as derived in \cref{sec:extensions-to-gradient-boosted-trees}. We repeat self-training for 2 iterations and require the predicted class probability to exceed $\tau=0.9$. As the entire ensemble is rebuilt three times, the relatively low number of iterations and high confidence threshold, strike a balance between computational requirements and the need for high-quality predictions. The base classifier is otherwise identical to supervised gradient boosting from \cref{sec:training-of-supervised-models}.
+
+\textbf{Transformer with Pre-Training}
+
+(...)
 
 \subsubsection{Hyperparameter Tuning}\label{sec:hyperparameter-tuning}
 
@@ -861,49 +955,63 @@ All of our machine-learning models feature a set of tunable hyperparameters. The
 
 We perform a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function \autocite[][2]{shahriariTakingHumanOut2016}. Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in more promising trials.
 
-While different algorithmic implementations exist for Bayesian optimisation, we choose the optuna library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters. We maximize the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $50$ trials per combination of the model and feature set. To compensate for varying computational costs between the classifiers, we set an additional time budget of 12 hours. The best combination of each is tested out-of-sample in \cref{sec:results}.
+While different algorithmic implementations exist for Bayesian optimisation, we choose the \emph{Optuna} library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters. We maximize the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $50$ trials per feature set for the \gls{GBM} and $5$ trials for the FT-Transformer. The best combination of each is tested out-of-sample in \cref{sec:results}.
 
-\textbf{Hyperparameter Space}
+\textbf{Hyperparameter Search Space}
 
-Our search space is reported in \cref{tab:hyperparameter-space}, which is laid out based on the recommendations in \textcites[][20]{prokhorenkovaCatBoostUnbiasedBoosting2018}[][18]{gorishniyRevisitingDeepLearning2021}[][4]{rubachevRevisitingPretrainingObjectives2022} with minor, reasoned deviations.
+Our search space is reported in \cref{tab:hyperparameter-space}, which is laid out based on the recommendations in \textcites[][20]{prokhorenkovaCatBoostUnbiasedBoosting2018}[][18]{gorishniyRevisitingDeepLearning2021}[][4]{rubachevRevisitingPretrainingObjectives2022} with minor deviations.
 
 \begin{table}[H]
     \centering
-    \caption{Hyperparameter Search Space of Gradient Boosting}
+    \caption[Hyperparameter Search Space of Gradient Boosting]{Hyperparameter search space of gradient boosting. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials each. A discussion of these results is provided below.}
     \label{tab:hyperparameter-space}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyerparameter                    & Distribution                              & {FS 1}           & {FS 2}               & {FS 3}            \\ \midrule
+        Hyperparameter                    & Distribution                              & {FS 1}           & {FS 2}               & {FS 3}            \\ \midrule
         Depth                        & $\operatorname{UniformInt}[1,12]$         & 9                       & 10                          & 8                        \\
         Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$ & 0.061147194180849546    & 0.12484853560495288         & 0.12484853839455994      \\
         $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$        & 16                      & 29                          & 17                       \\
         Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ & 0.0000104767852 & 0.00000000338984444 & 0.0000013615032724416282 \\
         Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$        & 0.6538673528316611      & 0.4734183814        & 0.4515562770665896       \\ \midrule
-        Accuracy in \%               &                                           & 64.20927249609458       & 75.03173105450845           & 76.98607312092097        \\ \bottomrule
+        Validation Accuracy in \%            &                                           & 64.20927249609458    & 75.03173105450845         & 76.98607312092097 \\ \bottomrule
     \end{tabular}
 \end{table}
 
-The search space of the FT-Transformer is given by:
+\emph{Gradient Boosting}
+
+As documented in \cref{tab:hyperparameter-space}, we tune five hyperparameters for gradient boosting. The first is the depth, which determines the number of levels in each tree. Other than \textcite[][]{gorishniyRevisitingDeepLearning2021}, we increase the upper bound to twelve to allow for more complex ensemble members. Acknowledging the research of \textcite[][14]{friedmanGreedyFunctionApproximation2001} that the learning rate \eta and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop extending the ensemble based on the early stopping criterion. Random strength, bagging temperature, and $\ell_2$ leaf regularization are all measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness of selected splits. In a similar vein, the algorithm introduces randomness on the sample level through Bayesian bootstrap. The hyperparameter controls the distribution used for sampling, and thereby the aggressiveness of Bagging. Finally, $\ell_2$ leaf regularization adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularization.
+
+\emph{Transformer}
+
+The hyperparameter search for the FT-Transformer is almost identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)) and denoted in \cref{tab:hyperparameter-space-2}. We vary the layer count and the embedding dimension, which directly affect the capacity of the network. Layers refer to the number of Transformer blocks in the encoder stack. The dimension of numerical and continuous embeddings $d_e$ is at \num{256} at maximum, which is half the dimension used in the author's work. We make this sacrifice, due to being computation-bound by the size of the dataset. Dropout \autocite[][1930]{srivastavaDropoutSimpleWay} in the attention module and the \gls{FFN} is used to prevent overfitting the training data. We treat the weight decay term in the weight update rule of the AdamW optimizer as a hyperparameter, with larger values for \lambda~enforcing a stronger shrinkage of weights and thereby reducing overfitting.
 
 \begin{table}[H]
     \centering
-        \caption{Hyperparameter Search Space of FT-Transformer}
+        \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{5} trials each. A discussion of these results is provided below.}
         \label{tab:hyperparameter-space-2}
     \begin{tabular}{@{}llSSS@{}}
     \toprule
     Hyperparameter         & Distribution  & {FS 1} & {FS 2} & {FS 3} \\ \midrule
     Layers $L$               & $\operatorname{UniformInt}[1,6]$ &      &      &      \\
-    $d_{\mathrm{e}}$             & $\operatorname{UniformInt}[64, 256]$                                 &      &      &      \\
-    Attention dropout & $\operatorname{Uniform}[0, 0.05]$                                 &      &      &      \\
-    \gls{FFN} dropout       & $\operatorname{Uniform}[0, 0.05]$                                 &      &      &      \\
+    Embedding dimension $d_{\mathrm{e}}$             & $\operatorname{UniformInt}[64, 256]$                                 &      &      &      \\
+    Attention dropout & $\operatorname{Uniform}[0, 0.5]$                                 &      &      &      \\
+    \gls{FFN} dropout       & $\operatorname{Uniform}[0, 0.5]$                                 &      &      &      \\
     Learning rate $\eta$ &  $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$                                &      &      &      \\ 
-    weight decay     & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$                                 &      &      &      \\ \bottomrule
+    weight decay $\lambda$     & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$                                 &      &      &      \\ \bottomrule
     \end{tabular}
 \end{table}
-    
-The hyperparameter search for the FT-Transformer is almost identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)). We halfen the maximum dimension to facilitate training on large feature sets.
 
-\textbf{Solutions For Gradient Boosting}
+\emph{Transformer With Pre-Training}
+
+The hyperparameter search space for Transformers with a pre-training objective is identical to that shown in \cref{tab:hyperparameter-space-2}. Following \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}, we share the learning rate and weight decay between the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
+
+\emph{Gradient Boosting With Self-Training}
+
+The search space for the semi-supervised variant is identical to the supervised gradient boosting.
+
+\textbf{Solutions}
+
+\emph{Gradient Boosting}
 
 \begin{figure}[!b]
     \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[ width=0.7\linewidth]{17malsep-hyperparam-search-space.pdf}}
@@ -928,14 +1036,15 @@ In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \gls{
 % https://wandb.ai/fbv/thesis/runs/2a9iqsn0?workspace=user-karelze
 The loss surface of the \gls{GBM} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.98}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not per se improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles.
 
-% #     ("semi-classical", "3dtuffae_CatBoostClassifier_default.cbm:v7"),
-% #     ("semi-classical-size", "2vnqg1sj_CatBoostClassifier_default.cbm:v8"),
-
-\textbf{Solutions For FT-Transformer}
+\emph{Transformer With Pre-Training}
 
 (insert here)
 
-\textbf{Solutions For Classical Rules}
+\emph{Gradient Boosting With Self-Training}
+
+(insert here)
+
+\emph{Classical Rules}
 
 Akin to selecting the machine learning classifiers, we determine our classical baselines on the \gls{ISE} validation set. This prevents \gls{overfitting} the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the \gls{CBOE} sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and \gls{LR} algorithm, due to their widespread adoption in literature.
 
@@ -946,18 +1055,18 @@ Akin to selecting the machine learning classifiers, we determine our classical b
     \input{Content/hyperparam-classical-ise_classical_supervised_val.tex}
 \end{table}
 
-Optimizing hybrids of trade classification rules through Bayesian search is theoretically feasible, but we found no outperformance over hybrid rules already reported in literature.\footnote{We performed a Bayesian search with $50$ trials for trade classification rules, stacking up to five rules. Experiment available under: \url{https://wandb.ai/fbv/thesis}.} Thus, \cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set. The tick test applied to trade prices at the trading venue performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving the tick rule over all exchanges ($\operatorname{tick}_{\mathrm{all}}$). From all classical rules, a double-combination of the quote rule ($\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$), where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE}, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly used in the literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
+Optimizing hybrids of trade classification rules through Bayesian search is theoretically feasible, but we found no outperformance over hybrid rules already reported in the literature.\footnote{We performed a Bayesian search with $50$ trials for trade classification rules, stacking up to five rules. Experiment available under: \url{https://wandb.ai/fbv/thesis}.} Thus, \cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set. The tick test applied to trade prices at the trading venue performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving the tick rule over all exchanges ($\operatorname{tick}_{\mathrm{all}}$). From all classical rules, a double-combination of the quote rule ($\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$), where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE}, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly used in the literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
 
 By extension, we also estimate rule combinations involving overrides from the trade size rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ achieves the highest validation accuracy. For brevity, we refer to this specific combination as the \gls{GSUH} method. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for the second feature set.
 
-In absence of other baselines, we repeatedly compare against \gls{GSUH} method as a baseline for the third feature set, even if it doesn't involve option-specific features.
+In the absence of other baselines, we repeatedly compare against \gls{GSUH} method as a baseline for the third feature set, even if it doesn't involve option-specific features.
 
 In the direct comparison between the validation accuracies of classical rules and our classifiers, the validation accuracies of classical rules considerably underperform the learned classifier. \cref{sec:results} discusses if the results hold for the test sets. But before we do so, we present the metrics used
 for evaluation.
 
 \subsection{Evaluation}\label{sec:evaluation}
 
-Subsequent sub-chapters discusses metrics for evaluation and measures to retrieve feature importance estimates from the estimators.
+Subsequent sub-chapters discuss metrics for evaluation and measures to retrieve feature importance estimates from the estimators.
 
 \subsubsection{Evaluation Metric}\label{sec:evaluation-metric}
 
@@ -985,52 +1094,15 @@ Classical trade classification algorithms, as a rule-based classifier, are trans
 
 The machine-learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through a \emph{model-agnostic, post-hoc interpretability techniques}. Thereby, our goal is to identify features that are important for the \emph{correct prediction}. This is fundamentally different from methods like standard \gls{SHAP}, that attribute \emph{any} prediction to the input features \autocite[][??]{chenTrueModelTrue2020}.
 
-Many model-agnostic methods are based on randomly permuting feature values. In this work, we specifically consider the variants \emph{permutation feature importance} \autocite[][23--24]{breimanRandomForests2001} and partial-dependence plots \autocite[][26--28]{friedmanGreedyFunctionApproximation2001}. Both serve a complementary purpose. Permutation feature importance derives the feature importance from the change in predictive accuracy before and after permuting a feature randomly, whereas partial dependence plots visualize the average change in prediction, if feature values are altered. These are widely adopted and computationally efficient.
+Many model-agnostic methods are based on (...)
 
-\textbf{Random Feature Permutation}
-
-Random feature permutation is easy to interpret by the virtue of being computationally efficient and model-agnostic. Like other feature importance measures, including \gls{SHAP}, it assumes independence between features \autocite[][2]{aasExplainingIndividualPredictions2021}.
-
-The importance measure was originally proposed by \textcite[][23--24]{breimanRandomForests2001} for random forests and has later been extended by \textcite[][??]{fisherAllModelsAre} into a model-agnostic feature importance measure.
-
-Random feature permutation derives the feature importance from the mean decrease in accuracy before and after permuting a feature randomly. Expectedly, permuting features break the association with the target. Thus, the permutation of important features leads to a sharp decrease in accuracy, whereas unimportant features leave the accuracy unaffected.
-
-Given our feature matrix $\mathbf{X}$, we can define a second permuted version, $\mathbf{X}^{\pi,j}$, where the $j$-th feature is randomly permuted by $\pi$. Using $L(y_i, h(\mathbf{x}_i))$ for predicting $y_i$ from $h(\mathbf{x}_{i})$, the importance of $j$-th feature is given by:
-
-$$
-    \operatorname{VI}^{\pi}_{j} = \sum_{i=1}^{N} L(y_{i}, h(\mathbf{x}_{i}^{\pi,j})) - L(y_{i}, h(\mathbf{x}_{i})),
-$$
-which is the increase in loss, i.e., accuracy, before and after permutation \textcite[][82]{hookerUnrestrictedPermutationForces2021}. While \textcite[][23--24]{breimanRandomForests2001} uses a single permutation, \textcite[][??]{fisherAllModelsAre} consider multiple, random permutations. By definition, random feature importance only yields global feature importances, as the measure is aggregated from all $N$ samples.
-
-As defined above, every feature is permuted independently from other features which artificially breaks correlations between features and creates unrealistic feature combinations. Consider, for example, the apparent correlation between the ask, bid price and trade price. Permuting only the ask could result in strongly negative or extremely large spreads since the bid remains unchanged. In effect, the presence of correlated features leads to an overestimate of the importance of correlated features \autocite[][3]{stroblConditionalVariableImportance2008}.
-
-Vice versa, can the presence of correlated features decrease the importance of the associated feature, as the feature importance is now distributed across the features, thereby underestimating the true importance of the features. This affects all features, where information is encoded redundantly, such as the bid-ask ratio.
-
-% (footnote-for an extended discussion of substitution effects on feature importance in the financial domain see \textcite[][114--118]{lopezdepradoAdvancesFinancialMachine2018}.
-
-To alleviate the bias from dependent, we group dependent features and estimate the feature importance on a group-level. Arranging all features in a tree-like hierarchy gives us the freedom to derive feature importances at different levels, enabling cross-comparisons between classical rules and other classifiers, as the grouping of raw and derived features makes the implementation of classical rules transparent.
-
-% (footnote: Consider the implementation of the tick rule. Here, the implementation could use the feature price lag (ex) or calculate the price change from the trade price and price lag (ex). If not grouped, feature importances would be attributed to either the derived feature or raw features causing difficulties in comparison with machine learning classifiers, which have access to all three features simultaneously. Grouping all three features resolves this issue at the cost of interpretability.). 
-
-Other than the classical random feature permutation, all features sharing the same parent node are permuted together. We define the following dependency structure:
-(tbd)
-
-\textbf{Partial Dependence Plots}
-
-Related to the concept of random feature permutation are partial dependence plots by \textcite[][26--28]{friedmanGreedyFunctionApproximation2001} visualize the dependency between a single feature or multiple features and the effect on the target value as the feature value is adjusted / after marginalizing out all other features. Let $\mathbf{X}^{x,j}$ be a matrix, where the $j$-th feature value is replaced by $x$ and all other features are unaltered, partial feature dependence function:
-\begin{equation}
-    \operatorname{PD}_{j}(x) = \frac{1}{N} \sum_{i=1}^{N} h(\mathbf{x}^{x,j}_{i}),
-\end{equation}
-now gives the marginal average over all other features \autocite[][81]{hookerUnrestrictedPermutationForces2021}. By iterating over a grid of (observed) $x$, we obtain the partial dependence plot for the feature.
-
-Like random feature permutation, partial dependence plots are a global feature importance measure, unable to capture dependencies between features and visualization is constrained to two dimensions or features at once \autocite[][p. 388]{hastietrevorElementsStatisticalLearning2009}. Despite these limitations partial dependence plots help us verify the assumed relationships in classical rules, such as the linear relationship in the tick rule, with the learned relationships in our classifier.
-
+\textbf{Shapley Additive Global Importance}
 
 \textbf{Attention Maps}
 
 In addition to permutation-based methods, Transformer-based models offer \emph{some} interpretability through their attention mechanism. In recent research a major controversy embarked around the question, of whether attention offers explanations to model predictions \autocites[cp.][150]{bastingsElephantInterpretabilityRoom2020}[][5--7]{jainAttentionNotExplanation2019}[][9]{wiegreffeAttentionNotNot2019}. The debate sparked around opposing definitions of explainability and the consistency of attention scores with other, established feature-importance measures. Our focus is less on post-hoc explainability of the model, but rather on transparency. Consistent with \textcite[][8]{wiegreffeAttentionNotNot2019} we view attention scores as a vehicle to model transparency.
 
-Recall from our discussion on attention (cp. \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features to which the model is paying attention to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in \cref{fig:attention-maps}.
+Recall from our discussion on attention (cp. \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualizing features to which the model attends to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. An example is shown in \cref{fig:attention-maps}.
 
 \begin{figure}[ht]
     \centering
@@ -1064,7 +1136,7 @@ In an attempt to explain the decision-making process of multi-modal Transformers
 
 In this approach, the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(l)}=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(l)}$ is calculated to weight the attention head's importance. As previously suggested in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. Like all other presented approaches \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and is therefore computationally efficient.
 
-In absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all transformer blocks. The level of agreement between attributions from attention maps and random feature permutation by calculating Spearman's rank correlation between them.
+In the absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all transformer blocks. The level of agreement between attributions from attention maps and random feature permutation by calculating Spearman's rank correlation between them.
 
 \newpage
 \section{Results}\label{sec:results}
@@ -1081,7 +1153,7 @@ In absence of ground truth for the true feature attribution, we resort to attent
     Models}\label{sec:results-of-semi-supervised-models}
 
 
-\textbf{Gradient-Boosting With Self-Training}
+\textbf{Gradient Boosting With Self-Training}
 
 \textbf{FT-Transformer With Pretraining}
 

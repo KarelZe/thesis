@@ -4,7 +4,7 @@
 *tags:* #transformer #encoder #attention #sequence-modelling
 *status:* #📥
 *related:*
-- [[@arikTabNetAttentiveInterpretable2020]]
+- [[@arikTabnetAttentiveInterpretable2020]]
 - [[@huangTabTransformerTabularData2020]]
 - [[@gorishniyRevisitingDeepLearning2021]]
 # Notes 

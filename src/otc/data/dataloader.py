@@ -40,7 +40,7 @@ class TabDataLoader:
         self.device = device
         # check for tensors that are None
         self.none_mask = tuple(t is None for t in tensors)
-        # filter if for not none tensors
+        # filter out none tensors
         self.tensors = tuple(t for t in tensors if t is not None)
 
         # check if all tensors have same length
@@ -65,7 +65,7 @@ class TabDataLoader:
         """
         if self.shuffle:
             r = torch.randperm(self.dataset_len)
-            self.tensors = tuple(t[r] for t in self.tensors if t)
+            self.tensors = tuple(t[r] for t in self.tensors)
         # reset counter on new iteration
         self.i = 0
         return self

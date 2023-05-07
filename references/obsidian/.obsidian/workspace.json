@@ -95,6 +95,14 @@
                 "sortOrder": "alphabetical"
               }
             }
+          },
+          {
+            "id": "4f4219eae268c63a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
           }
         ]
       }
@@ -116,7 +124,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Training and tuning.md",
+                "file": "📖chapters/💡Training and Tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -144,16 +152,8 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Training and tuning.md"
+                "file": "📖chapters/💡Training and Tuning.md"
               }
-            }
-          },
-          {
-            "id": "9809af47a095750a",
-            "type": "leaf",
-            "state": {
-              "type": "stat-view",
-              "state": {}
             }
           }
         ],
@@ -167,7 +167,6 @@
   "left-ribbon": {
     "hiddenItems": {
       "obsidian-tts:Text to Speech": false,
-      "obsidian-word-sprint:Activate Word Sprint Leaf": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -177,7 +176,7 @@
   },
   "active": "a89d39d1cf42fdf6",
   "lastOpenFiles": [
-    "📥Inbox/@dorogushCatBoostGradientBoosting.md",
+    "📥Inbox/@szegedyRethinkingInceptionArchitecture2016.md",
     "📖chapters/💡Hyperparameter tuning.md",
     "📖chapters/💡Training and Tuning.md",
     "📑notes/💡Hyperparameter tuning notes.md",
