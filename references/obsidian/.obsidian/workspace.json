@@ -20,8 +20,21 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "4517fb6e5bf3488a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/💡Training and Tuning.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -50,7 +63,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "nasdaq frequentl",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": true,
                 "collapseAll": false,
@@ -67,8 +80,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -88,7 +100,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md",
+                "file": "📖chapters/💡Training and Tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +128,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/🧭Random Feature Permutation.md"
+                "file": "📖chapters/💡Training and Tuning.md"
               }
             }
           }
@@ -138,8 +150,15 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "65039196d3829d86",
+  "active": "4517fb6e5bf3488a",
   "lastOpenFiles": [
+    "📥Inbox/@szegedyRethinkingInceptionArchitecture2016.md",
+    "📖chapters/💡Hyperparameter tuning.md",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📖chapters/🏅Results.md",
+    "📖chapters/🏅Results of semi-supervised.md",
+    "📖chapters/🏅Results of supervised.md",
+    "📖chapters/🧭Random Feature Permutation.md",
     "📥Inbox/@nasdaqincFrequentlyAskedQuestions2017.md",
     "📥Inbox/@blazejewskiLocalNonParametricModel2005.md",
     "📥Inbox/@bahriSCARFSelfsupervisedContrastive2022.md",
@@ -148,7 +167,6 @@
     "📥Inbox/@tancikFourierFeaturesLet2020.md",
     "📥Inbox/tuningplaybookgithub.md",
     "📥Inbox/@somepalliSaintImprovedNeural2021.md",
-    "📖chapters/🧭Random Feature Permutation.md",
     "📥Inbox/@shiQuantizedTrainingGradient2022.md",
     "📥Inbox/@liuHardSoftClassification2011.md",
     "📥Inbox/@khanBootstrappingMultipleImputation2019.md",
@@ -164,17 +182,11 @@
     "🖼️Media/Pasted image 20230427155407.png",
     "🖼️Media/Pasted image 20230428111917.png",
     "🖼️Media/Pasted image 20230428110412.png",
-    "📖chapters/💡Training and Tuning.md",
     "🖼️Media/training-loss-llama.png",
     "🖼️Media/train-val-loss-acc-transformer.png",
     "🖼️Media/train-loss-accuracy-fttransformer.png",
     "🖼️Media/val_accuracy_transformer.png",
     "🖼️Media/Pasted image 20230506133622.png",
-    "🖼️Media/val_accuracy_transformer.png",
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
-    "📥Inbox/@paszkePyTorchImperativeStyle2019.md",
-    "📥Inbox/@pedregosaScikitlearnMachineLearning2018.md",
-    "📖chapters/💡Hyperparameter tuning.md",
-    "📑notes/💡Hyperparameter tuning notes.md"
+    "🖼️Media/val_accuracy_transformer.png"
   ]
 }

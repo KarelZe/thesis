@@ -34,7 +34,7 @@ We leverage the following architectural changes to improve the performance of gr
 By default, *CatBoost* grows oblivious regression trees ([[@dorogushCatBoostGradientBoosting]]4). In this configuration, trees are symmetric and grown level-wise and splits are performed on the same feature and split values across all nodes of a single level. This strategy is computationally efficient, but may sacrifice performance, as the split is performed on the same features or split values. Following ([[@chenXGBoostScalableTree2016]]4) we switch to a leaf-wise growth strategy, whereby terminal nodes are selected for splitting that provide the largest improvement in loss. Nodes within the same level may result from different feature splits and thereby fit data more closely. Leaf-wise growth also matches our intuition of split finding in cref-[[🎄Decision Trees]]. Changing to a leaf-wise growth improves validation accuracy by perc-num, but hardly improves the loss.
 
 *Sample Weighting:*
-The work of ([[@grauerOptionTradeClassification2022]]36--38) suggests a strong temporal shift in the data, with the performance of classical trade classification rules to deteriorate over time. In consequence, the predictability of features defined on top of classical rules diminishes over time and patterns learned on old observations loose their relevance for predictions of test samples. In absence of an update mechanism, we extend the log loss by a sample weighting scheme to assign higher weights to recent training samples and gradually decay weights over time. Validation and test samples are equally-weighted. Sample weighting turns out to be vital for high validation performance. It positively affects the correctness and the confidence in the prediction. 
+The work of ([[@grauerOptionTradeClassification2022]]36--38) suggests a strong temporal shift in the data, with the performance of classical trade classification rules to deteriorate over time. In consequence, the predictability of features defined on top of classical rules diminishes over time and patterns learned on old observations loose their relevance for predictions of test samples. In absence of an update mechanism, we extend the log loss by a sample weighting scheme to assign higher weights to recent training samples and gradually decay weights over time. The loss over all samples is normalized by the summed weights. Validation and test samples are equally-weighted. Sample weighting turns out to be vital for high validation performance. It positively affects the correctness and the confidence in the prediction. 
 
 $$
 \frac{-\sum_{i=1}^N w_i\left(c_i \log \left(p_i\right)+\left(1-c_i\right) \log \left(1-p_i\right)\right)}{\sum_{i=1}^N w_i}
@@ -96,6 +96,8 @@ Clearly, overfitting is evident, (...)
 **Learning rate schedule**
 We apply a 
 
+Training is performed for 
+
 We use a cosine learning rate schedule, such that the final learning rate is equal to 10% of the maximal learning rate. We use a weight decay of 0.1 and gradient clipping of 1.0. We use 2, 000 warmup 0 200 400 600 800 1000 1200 1400 Billion of tokens 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 Training loss LLaMA 7B LLaMA 13B LLaMA 33B LLaMA 65B Figure 1: Training loss over train tokens for the 7B, 13B, 33B, and 65 models. LLaMA-33B and LLaMA65B were trained on 1.4T tokens. The smaller models were trained on 1.0T tokens. All models are trained with a batch size of 4M tokens. steps, and vary the learning rate and batch size with the size of the model (see Table 2 for details)
 
 From preliminary tests, we observed that the use of a learning rate schedule with a short learning rate warm-up phase both stabilizes training and improves accuracy as derived in \cref{sec:training-of-supervised-models}. Their constant learning rate and our decayed learning rate may thus not be entirely comparable. Additionally, we implement early stopping and halt training after \num{15} consecutive decreases in validation accuracy, affecting the effective number of epochs. Both techniques have not been used by the original authors to provide a conservative baseline, for the sake of a fair comparison in our work, both techniques should be used.
@@ -117,7 +119,12 @@ Their constant learning rate and our decayed learning rate may thus not be entir
 Motivated by previous research, we conducted an experiment by replacing the $\operatorname{ReLU}$ activation with the $\operatorname{GELU}$ activation function ([[@hendrycksGaussianErrorLinear2020]]) in the classification head and the gated variant $\operatorname{ReGLU}$ with the gated variant $\operatorname{GEGLU}$ ([[@shazeerGLUVariantsImprove2020]]2) in the glspl-FFN. However, we observe no advantage in terms of validation accuracy or loss. As a result, we decided to stick with the default configuration, as the performance is comparable.
 
 **Label Smoothing:**
-We experiment with label smoothing () to mitigate the networks tendency to overfit the training data  
+A major problem in classification with neural networks is, that the network becomes overconfident in predicting the class. We experiment with label smoothing ([[@szegedyRethinkingInceptionArchitecture2016]]2823) to regularize the network through learning on soft labels. 
+
+
+
+“First, it may result in over-fitting: if the model learns to assign full probability to the groundtruth label for each training example, it is not guaranteed to generalize. Second, it encourages the differences between the largest logit and all others to become large, and this, combined with the bounded gradient ∂ℓ ∂zk , reduces the ability of the model to adapt. Intuitively, this happens because the model becomes too confident about its predictions.” (Szegedy et al., 2016, p. 2823)
+
 
 **Label Smoothing** is a regularization technique that introduces noise for the labels. This accounts for the fact that datasets may have mistakes in them, so maximizing the likelihood of log⁡�(�∣�) directly can be harmful. Assume for a small constant �, the training set label � is correct with probability 1−� and incorrect otherwise. Label Smoothing regularizes a model based on a [softmax](https://paperswithcode.com/method/softmax) with � output values by replacing the hard 0 and 1 classification targets with targets of ��−1 and 1−� respectively.
 
@@ -128,22 +135,20 @@ In this blog post, I am going to talk about label smoothing as a regularization 
 
 but find no advantage with regard to validation performance. 
 
-**Sample weighting:**
-We transfer the idea of sample weighting from gls-gbm. Again, the contribution of individual training samples to the cross-entropy loss is scaled by a sample weight which is higher for more recent observations. As the loss in this configuration shows spurious patterns of early overfitting, we equally weight all samples instead.
+*Sample weighting:*
+We transfer the idea of sample weighting from gls-gbm. Again, the contribution of individual training samples to the loss is scaled by a sample weight to penalize the model for getting recent observations wrong. The mechanism is vital to attain a low validation loss and high validation accuracies. The significantly lower training accuracy implies, that patterns learned a latter observations do not universally transfer to previous observations. At this time, it remains unclear what causes the data drift within the training set. 
 
-**Batch Size:**
-We maximize the batch size on 
+*Batch Size*
+We use a fixed batch size of num-8192 for the feature set classical / classical-size and num-2048 for the feature set option, which is the largest possible size on our gls-gpu. Training is performed for 20 epochs (approx num-36460 / num-145840 iterations) at maximum. All samples within the training and validation set are shuffled randomly to promote convergence. Although a smaller batch size could enhance generalization capabilities of the model, as found in ([[@keskarLargeBatchTrainingDeep2017]]3), we train on the largest possible number of trades per iteration, chiefly to cut training times. Additional regularization is added to our model, but treated as a tunable hyperparameter.
 
-- Estimate the maximum batch size early on, as many parameters depend on it. (see https://github.com/google-research/tuning_playbook)
-
-We do not distribute batches across multiple accelerators, as it would require
-
-*Early Stopping and Checkpointing:*
-Similar to the gls-gbm, we prematurely halt training based on an consecutive decrease in validation accuracy. We set the patience to 10 epochs and restore the best model in terms of validation accuracy through checkpointing. Checkpointing is performed at the end of each epoch. 
-
+*Early Stopping and Checkpointing*
+Similar to the gls-gbm, we prematurely halt training based on an consecutive decrease in validation accuracy. We set the patience to 10 epochs and restore the best model in terms of validation accuracy from the best checkpoint. Checkpointing is performed at the end of each epoch. 
 
 *Optimizer*
-We optimize our models using AdamW optimizer ([[@loshchilovDecoupledWeightDecay2019]]) and treat the weight decay term in AdamW as a hyperparameter. 
+
+“Label smoothed cross entropy is used as the objective function with an uncertainty = 0.1 (Szegedy et al., 2016). For Model training, we use RAdam as the optimizer (Liu et al., 2020a) and adopt almost all hyperparameter settings from Lu et al. (2020). Specifically, for the WMT’14 En-De and WMT’14 En-Fr dataset, all dropout ratios (including (activation dropout and attention dropout) are set to 0.1. For the IWSLT’14 De-En dataset, after-layer dropout is set to 0.3, and a weight decay of 0.0001 is used. As to optimizer, we set (β1, β2) = (0.9, 0.98), use inverse sqrt learning rate scheduler with a warmup phrase (8000 steps on the WMT’14 En-De/Fr dataset, and 6000 steps on the IWSLT’14 De-En dataset). The maximum learning rate is set to 1e−3 on the WMT’14 En-De dataset and 7e−4 on the IWSLT’14 De-En and WMT’14 En-Fr datasets. We conduct training for 100 epochs on the WMT’14 En-De dataset, 90 epochs on the IWSLT’14 De-En dataset and 50 epochs on the WMT’14 En-Fr dataset, while the last 10 checkpoints are averaged before inference.” (Liu et al., 2020, p. 17)
+
+AdamW optimizer ([[@loshchilovDecoupledWeightDecay2019]]) and treat the weight decay term in AdamW as a hyperparameter. 
 
 - Use weight decay of 0.1 for a small amount of regularization [[@loshchilovDecoupledWeightDecay2019]].
 
@@ -163,6 +168,7 @@ As found in [KMH+20, MKAT18], larger models can typically use a larger batch siz
 
 We do exploit model parallelism
 
+As the loss in this configuration shows spurious patterns of early overfitting, we equally weight all samples instead.
 
 
 We scale the *effective batch size* 

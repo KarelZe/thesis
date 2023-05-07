@@ -891,32 +891,49 @@ We combine these ideas to leverage the improvements for our large-scale studies.
 
 As derived in \cref{sec:supervised-approaches}, we rely on FT-Transformer of \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule \autocite[][1]{liuUnderstandingDifficultyTraining2020}. We investigate minor modifications to the default FT-Transformer to stabilize training and improve overall performance. The default FT-Transformer trained for 10 epochs on \gls{ISE} dataset with classical features and loss and accuracy is visualized in \cref{fig:fttransformer-optimisations-loss-acc} and the model itself is summarized in (...).
 
-The convergence behaviour of our model is similar to that of gradient boosting. Equally, a significant generalization gap exists between the training and validation loss. Particularly concerning, the training loss decreases sharply, while the validation loss fluctuates around its initial estimate. Despite this, validation accuracy improves throughout the entire training cycle. We reason that the network learns to correctly classify trades, indicated by the improved accuracy, but only attains low-confident correct predictions or confident but erroneous predictions which both contribute to a large validation loss. The shape of the flat validation loss and the decreasing training loss suggest that the training set may not be representative of trades in the validation set. This has broader implications on the classifiability of option trades using decision rules from classical trade classification rules for more recent observations. We explore this phenomenon thoroughly as part of our result discussion.
+The convergence behaviour of our model is similar to that of gradient boosting. Equally, a significant generalization gap exists between the training and validation loss. Particularly concerning, the training loss decreases sharply, while the validation loss spuriously improves over its initial estimate. Despite this, validation accuracy improves throughout the entire training cycle. We reason that the network learns to correctly classify trades, indicated by the improved accuracy, but only attains low-confident correct predictions or confident but erroneous predictions which both contribute to a large validation loss. The shape of the flat validation loss and the decreasing training loss suggest that the training set may not be representative of trades in the validation set. This has broader implications on the classifiability of option trades using decision rules from classical trade classification rules for more recent observations. We explore this phenomenon thoroughly as part of our result discussion.
 
 
-\begin{figure}[ht]
+\begin{figure}[!ht]
     \centering
     \includegraphics{fttransformer-optimisations-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of FT-Transformer on \gls{ISE} with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to one gradient update. End of epoch is marked with a grey bar. Loss is expected to decrease throughout training and accuracy to increase.}
+    \caption[Training and Validation Accuracy of FT-Transformer on \gls{ISE} with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to one gradient update. The end of each epoch is marked with a grey bar. Loss is expected to decrease throughout training and accuracy to increase.}
     \label{fig:fttransformer-optimisations-loss-acc}
 \end{figure}
 
-(...)
-
 \emph{Activation Function}
 
-Motivated by previous research, we experiment with replacing the $\operatorname{ReLU}$ activation with the $\operatorname{GELU}$ activation function \autocite[][2]{hendrycksGaussianErrorLinear2020} in the classification head and the gated variant $\operatorname{ReGLU}$ with the gated variant $\operatorname{GEGLU}$ \autocite[][2]{shazeerGLUVariantsImprove2020} in the \gls{FFN}. However, we observe no advantage in terms of validation accuracy or loss. As a result, we decided to stick with the default configuration, as the performance is comparable.
+Motivated by previous research, we experiment with replacing the $\operatorname{ReLU}$ activation with the $\operatorname{GELU}$ activation function \autocite[][2]{hendrycksGaussianErrorLinear2020} in the classification head and the gated variant $\operatorname{ReGLU}$ with the gated variant $\operatorname{GEGLU}$ \autocite[][2]{shazeerGLUVariantsImprove2020} in the \gls{FFN}.As visualized in \cref{fig:fttransformer-optimisations-loss-acc}, no advantage in terms of validation accuracy or loss is evident. As a result, we retain the default.
+
+\emph{Sample Weighting}
+
+We apply the concept of sample weighting from \gls{GBM} to Transformers. Specifically, we scale the contribution of individual training samples to the loss using a sample weight, which penalizes the model for misclassifying recent observations. This method is crucial for achieving low validation loss and high validation accuracies, as visible in \cref{fig:fttransformer-optimisations-loss-acc}. The significantly lower training accuracy implies, that patterns from latter observations do not universally transfer to previous observations. At this time, it remains unclear what is causing the data drift within the training set.
+
+\emph{Label Smoothing}
+
+(...)
+
+\emph{Learning Rate Schedule}
+
+(...)
+
+\emph{Batch Size}
+
+We use a fixed batch size of \num{8192} samples for the feature set classical / classical-size and \num{2047} for the feature set option, which is the largest possible size on our \gls{GPU}. Training is performed for 20 epochs (\num{36460} / \num{145840} iterations) at maximum. All samples within the training and validation set are shuffled randomly to promote convergence. Although a smaller batch size could enhance the generalization capabilities of the model, as found in \textcite[][3]{keskarLargeBatchTrainingDeep2017}, we train on the largest possible number of trades per iteration, chiefly to cut training times. Additional regularization is added to the model, but treated as a tunable hyperparameter.
 
 \emph{Early Stopping and Checkpointing}
 
 Similar to the \gls{GBM}, we halt training prematurely based on a consecutive decrease in validation accuracy. We set the patience to \num{10} epochs and restore the best model in terms of validation accuracy from the checkpoint. Checkpoints are saved at the end of each epoch.
+
+\emph{Optimizer}
+
+(...)
 
 \textbf{Classical Rules}
 
 Classical trade classification rules serve as a benchmark in our work. We implement them as a classifier that combines arbitrary trade classification rules through stacking, as covered in \cref{sec:semi-supervised-approaches}. 
 
 % FIXME: They write that they classify randomly, but they don't do so.
-
 In cases where classification is not feasible due to missing data or the rules' definition itself, we resort to a random classification, which achieves an average accuracy of \SI{50}{\percent}. In this regard, we deviate from \textcite[][29--32]{grauerOptionTradeClassification2022}, who consider unclassified trades as falsely classified, resulting in a  resulting in \SI{0}{\percent} accuracy. In our context, such a procedure would bias towards machine learning classifiers.
 
 \subsubsection{Training of Semi-Supervised

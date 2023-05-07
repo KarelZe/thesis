@@ -15,9 +15,6 @@ In absence of other suitable baselines, we also the GSU method for FS3, even if 
 
 Calculate average rank
 
-![[Pasted image 20230407182457.png]]
-
-
 
 ![[performance-degradations.png]]
 
