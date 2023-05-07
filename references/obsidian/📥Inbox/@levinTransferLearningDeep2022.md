@@ -6,7 +6,7 @@
 *related:*
 - [[@huangTabTransformerTabularData2020]]
 - [[@devlinBERTPretrainingDeep2019]]
-- [[@somepalliSAINTImprovedNeural2021]]
+- [[@somepalliSaintImprovedNeural2021]]
 ## Notes 📍
 
 ## Annotations 📖

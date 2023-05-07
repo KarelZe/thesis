@@ -53,4 +53,4 @@ $$
 For visualization see also:
 http://nlp.seas.harvard.edu/annotated-transformer/
 ![[attention-map-saint.png]] ^401670
-(Copied from [[@somepalliSAINTImprovedNeural2021]])
+(Copied from [[@somepalliSaintImprovedNeural2021]])

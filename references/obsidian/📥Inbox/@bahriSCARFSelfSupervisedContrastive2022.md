@@ -6,7 +6,7 @@
 *related:*
 - [[@yoonVIMEExtendingSuccess2020]]
 - [[@devlinBERTPretrainingDeep2019]]
-- [[@somepalliSAINTImprovedNeural2021]]
+- [[@somepalliSaintImprovedNeural2021]]
 # Notes Sebastian Raschka
 -   No code available, so results are not directly reproducible and must be taken with a grain of salt.
 -   The paper proposes a contrastive loss for self-supervised learning for tabular data

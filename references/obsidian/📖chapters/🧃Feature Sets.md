@@ -10,7 +10,7 @@ The goal of my feature set definition is:
 **Other research:**
 - Add frequency of trade and order imbalances as features. Came up with this idea when reading [[@aitkenIntradayAnalysisProbability1995]]
 - Some feature ideas like order imbalance could be adapted from [[@aitkenIntradayAnalysisProbability1995]].
-- [[@blazejewskiLocalNonparametricModel2005]] use more previous trades to a $k$-nn search. Not feasible, as my data set only contains the previous trade and it misses rather often already.
+- [[@blazejewskiLocalNonParametricModel2005]] use more previous trades to a $k$-nn search. Not feasible, as my data set only contains the previous trade and it misses rather often already.
 - [[@ronenMachineLearningTrade2022]] suggest to use models that can handle time series components. This would limit our choices. Thus we use feature engineering to induce a notion of time into our models.
 
 “An interesting upshot of these results is that the aggressor side of trading appears little related to any underlying information, a decoupling that we argue arises from how trading transpires in modern high frequency markets. Our findings complement recent work by Collin-Dufresne and Vos (2015) who find that standard measures of adverse selection relying on estimates of the persistent price effect” (Easley et al., 2016, p. 270)
