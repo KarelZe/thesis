@@ -65,7 +65,9 @@ https://cs231n.github.io/neural-networks-3/#sanitycheck
 
 (One step equals one batched gradient update. Training is performed for 1000 steps) (similarily in https://arxiv.org/pdf/2005.14165.pdf)
 
+From [_1 Adversarial Perturbations of Deep Neural Networks_, 2016](https://www.semanticscholar.org/paper/1-Adversarial-Perturbations-of-Deep-Neural-Networks-Warde-Farley/b5ec486044c6218dd41b17d8bba502b32a12b91a):
 
+> Without label smoothing, a softmax classifier is trained to make infinitely confident predictions on the training set. This encourages the model to learn large weights and strong responses. When values are pushed outside the areas where training data concentrates, the model makes even more extreme predictions when extrapolating linearly. Label smoothing penalizes the model for making overly confident predictions on the training set, forcing it to learn either a more non-linear function or a linear function with smaller slope. Extrapolations by the label-smoothed model are consequently less extreme.
 
 Our implementation is based on *PyTorch* ([[@paszkePyTorchImperativeStyle2019]]).
 
