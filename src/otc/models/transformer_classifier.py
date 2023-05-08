@@ -533,7 +533,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self.is_fitted_ = True
 
         # disable random shuffle once fitted
-        self.dl_params = {"shuffle": False}
+        self.dl_params.update({"shuffle": False})
 
         return self
 
