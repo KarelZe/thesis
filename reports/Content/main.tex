@@ -977,6 +977,7 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
 
 \begin{table}[H]
     \centering
+    \sisetup{table-number-alignment=left}
     \caption[Hyperparameter Search Space of Gradient Boosting]{Hyperparameter search space of gradient boosting. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials each. A discussion of these results is provided below.}
     \label{tab:hyperparameter-space}
     \begin{tabular}{@{}llSSS@{}}
@@ -991,6 +992,7 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
     \end{tabular}
 \end{table}
 
+
 \emph{Gradient Boosting}
 
 As documented in \cref{tab:hyperparameter-space}, we tune five hyperparameters for gradient boosting. The first is the depth, which determines the number of levels in each tree. Other than \textcite[][]{gorishniyRevisitingDeepLearning2021}, we increase the upper bound to twelve to allow for more complex ensemble members. Acknowledging the research of \textcite[][14]{friedmanGreedyFunctionApproximation2001} that the learning rate \eta and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop extending the ensemble based on the early stopping criterion. Random strength, bagging temperature, and $\ell_2$ leaf regularization are all measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness of selected splits. In a similar vein, the algorithm introduces randomness on the sample level through Bayesian bootstrap. The hyperparameter controls the distribution used for sampling, and thereby the aggressiveness of Bagging. Finally, $\ell_2$ leaf regularization adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularization.
@@ -1001,6 +1003,7 @@ The hyperparameter search for the FT-Transformer is almost identical to \textcit
 
 \begin{table}[H]
     \centering
+    \sisetup{table-text-alignment=right}
         \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{5} trials each. A discussion of these results is provided below.}
         \label{tab:hyperparameter-space-2}
     \begin{tabular}{@{}llSSS@{}}
