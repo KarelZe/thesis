@@ -137,6 +137,8 @@
   },
   "active": "4517fb6e5bf3488a",
   "lastOpenFiles": [
+    "🖼️Media/warmup-cosine-decay.png",
+    "📖chapters/💡Training and tuning.md",
     "🖼️Media/cosine-lr-decay.png",
     "📖chapters/🧭Random Feature Permutation.md",
     "📥Inbox/@szegedyRethinkingInceptionArchitecture2016.md",
@@ -162,7 +164,6 @@
     "📥Inbox/@carionEndtoEndObjectDetection2020.md",
     "📥Inbox/@butcherFeatureEngineeringSelection2020.md",
     "📥Inbox/@arikTabnetAttentiveInterpretable2020.md",
-    "📥Inbox/@AnnotatedTransformer.md",
     "🖼️Media/log-loss-train.png",
     "🖼️Media/Pasted image 20230427155407.png",
     "🖼️Media/Pasted image 20230428111917.png",
@@ -170,8 +171,6 @@
     "🖼️Media/training-loss-llama.png",
     "🖼️Media/train-val-loss-acc-transformer.png",
     "🖼️Media/train-loss-accuracy-fttransformer.png",
-    "🖼️Media/val_accuracy_transformer.png",
-    "🖼️Media/Pasted image 20230506133622.png",
     "🖼️Media/val_accuracy_transformer.png"
   ]
 }
