@@ -863,10 +863,11 @@ Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autoci
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-optimisations-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \gls{ISE} with Optimisations]{Training and validation accuracy of \gls{GBM} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \glsentryshort{ISE} with Optimisations]{Training and validation accuracy of \gls{GBM} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
     \label{fig:gbm-optimisations-loss-acc}
 \end{figure}
 
+% TODO: Cite e.g., Dahl et. al (tuningplaybookgithub) who recommend such a procedure?
 We leverage several architectural changes to further improve performance and mitigate overfitting in gradient boosting, as shown in \cref{fig:gbm-optimisations-loss-acc}, where the effects on validation accuracy and log loss over the default configuration are visualised. All other parameters are kept at their default values, while a single parameter is varied to derive the plots. Although this approach ignores parameter interactions, it still can provide guidance for the optimal training configuration. We train on the ISE training set with classical features and report metrics on the validation set.
 
 \emph{Growth Strategy}
@@ -897,13 +898,13 @@ The convergence behaviour of our model is similar to that of gradient boosting. 
 \begin{figure}[!ht]
     \centering
     \includegraphics{fttransformer-optimisations-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of FT-Transformer on \gls{ISE} with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to one gradient update. The end of each epoch is marked with a grey bar. Loss is expected to decrease throughout training and accuracy to increase.}
+    \caption[Training and Validation Accuracy of FT-Transformer on \gls{ISE} with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to one gradient update. The end of each epoch is marked with a dashed bar. Loss is expected to decrease throughout training and accuracy to increase.}
     \label{fig:fttransformer-optimisations-loss-acc}
 \end{figure}
 
 \emph{Activation Function}
 
-Motivated by previous research, we experiment with replacing the $\operatorname{ReLU}$ activation with the $\operatorname{GELU}$ activation function \autocite[][2]{hendrycksGaussianErrorLinear2020} in the classification head and the gated variant $\operatorname{ReGLU}$ with the gated variant $\operatorname{GEGLU}$ \autocite[][2]{shazeerGLUVariantsImprove2020} in the \gls{FFN}.As visualized in \cref{fig:fttransformer-optimisations-loss-acc}, no advantage in terms of validation accuracy or loss is evident. As a result, we retain the default.
+Motivated by previous research, we experiment with replacing the $\operatorname{ReLU}$ activation with the $\operatorname{GELU}$ activation function \autocite[][2]{hendrycksGaussianErrorLinear2020} in the classification head and the gated variant $\operatorname{ReGLU}$ with the gated variant $\operatorname{GEGLU}$ \autocite[][2]{shazeerGLUVariantsImprove2020} in the \gls{FFN}. As visualized in \cref{fig:fttransformer-optimisations-loss-acc}, no advantage in terms of validation accuracy or loss is evident.
 
 \emph{Sample Weighting}
 
@@ -911,30 +912,43 @@ We apply the concept of sample weighting from \gls{GBM} to Transformers. Specifi
 
 \emph{Label Smoothing}
 
-(...)
+A major problem in classification with neural networks is, that the network becomes over-confident in predicting training samples but perform poorly on unseen data. In \cref{fig:fttransformer-optimisations-loss-acc} the effect is evident, as the increased confidence in the prediction on the training set does not transfer to the validation set. To regularize the network, we experiment with label smoothing \autocite[][2823]{szegedyRethinkingInceptionArchitecture2016} by training on soft labels with an uncertainty constant of $\zeta$. Instead of assigning hard class probabilities of 0 or 1, we assume that true labels in the training set are correct with $1-\zeta$ probability and incorrect otherwise. For $\zeta=\num{0.1}$, a trade with the true label $-1$ is assumed to be \SI{90}{\percent} seller-initiated and \SI{10}{\percent} buyer-initiated. While we observe that label smoothing improves the validation loss and reduces the generalization gap, we find that it has a negligible effect on validation accuracy and therefore abandon this approach.
 
 \emph{Learning Rate Schedule}
 
-(...)
+When training Transformers, the learning rate is often adjusted throughout the training process. \textcite[][7]{vaswaniAttentionAllYou2017} use a learning rate warm-up period, whereby the learning rate is linearly increased in the early stages of training, followed by decay using an inverse square root learning rate schedule. The warm-up phase is thought to stabilize gradients as weight updates are considerably smaller. According to the research of \textcite[][3--4]{xiongLayerNormalizationTransformer2020}, learning rate warm-up is crucial for training post-norm Transformers, but optional for pre-norm Transformers like the FT-Transformer. Nevertheless, we experiment with the effect of learning rate warm-up in our setting and combine a linear warm-up for two epochs with subsequent cosine decay, as visualized in \cref{fig:lr-lin-warmup-cosine-decay}. 
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics{lr-lin-warmup-cosine-decay.pdf}
+    \caption[Linear Learning Rate Warm-Up With Cosine Decay]{Linear learning rate warm-up with cosine decay. Warm-up is performed for the first \SI{5}{\percent} of iterations. In the example, the maximum learning rate is \num{1e-3}.}
+    \label{fig:lr-lin-warmup-cosine-decay}
+\end{figure}
+
+The scheduled learning rate has soothing effects on the training loss and accuracy estimates, as evident in \cref{fig:fttransformer-optimisations-loss-acc}. Therefore, we adopt a training setup with a learning rate schedule, despite the potential negative effects on training time. The learning rate itself is tuned as part of \cref{sec:hyperparameter-tuning}.
+
 
 \emph{Batch Size}
 
-We use a fixed batch size of \num{8192} samples for the feature set classical / classical-size and \num{2047} for the feature set option, which is the largest possible size on our \gls{GPU}. Training is performed for 20 epochs (\num{36460} / \num{145840} iterations) at maximum. All samples within the training and validation set are shuffled randomly to promote convergence. Although a smaller batch size could enhance the generalization capabilities of the model, as found in \textcite[][3]{keskarLargeBatchTrainingDeep2017}, we train on the largest possible number of trades per iteration, chiefly to cut training times. Additional regularization is added to the model, but treated as a tunable hyperparameter.
+% 20 epochs (\num{36460} / \num{145840} iterations) 
+We use a fixed batch size of \num{8192} samples for the feature set classical / classical-size and \num{2048} for the feature set option, which is the largest possible size on our \gls{GPU}. Training is performed for \num{20} epochs at maximum. All samples within the training and validation set are shuffled randomly to promote convergence. Although a smaller batch size could enhance the generalization capabilities of the model, as found in \textcite[][3]{keskarLargeBatchTrainingDeep2017}, we train on the largest number of trades per iteration, to optimize throughput. Additional regularization is added to the model, but treated as a tunable hyperparameter.
 
 \emph{Early Stopping and Checkpointing}
 
-Similar to the \gls{GBM}, we halt training prematurely based on a consecutive decrease in validation accuracy. We set the patience to \num{10} epochs and restore the best model in terms of validation accuracy from the checkpoint. Checkpoints are saved at the end of each epoch.
+Similar to the \gls{GBM}, we halt training prematurely based on a consecutive decrease in validation accuracy. We set the patience to \num{10} epochs and restore the best model in terms of validation accuracy from the checkpoint. Checkpoints are saved at the end of each epoch. In the experiment above, early stopping does not apply.
 
 \emph{Optimizer}
 
-(...)
+In line with \textcite[][6]{gorishniyRevisitingDeepLearning2021}, we train the models using the AdamW optimizer \autocite[][2--3]{loshchilovDecoupledWeightDecay2019} with the standard hyperparameters $\beta_{1}=0.9, \beta_{2}=0.999$, and $\epsilon = \num{1e-8}$. The weight decay coefficient in AdamW determining the degree of regularization is tuned in \cref{sec:hyperparameter-tuning}. Weight decay is selectively applied and excludes embeddings, LayerNorm, and biases.
+
+In summary, we extend the training setup of \textcite[][6]{gorishniyRevisitingDeepLearning2021} with a sample weighting scheme and learning rate schedule aimed at boosting performance and training stability.
 
 \textbf{Classical Rules}
 
 Classical trade classification rules serve as a benchmark in our work. We implement them as a classifier that combines arbitrary trade classification rules through stacking, as covered in \cref{sec:semi-supervised-approaches}. 
 
 % FIXME: They write that they classify randomly, but they don't do so.
-In cases where classification is not feasible due to missing data or the rules' definition itself, we resort to a random classification, which achieves an average accuracy of \SI{50}{\percent}. In this regard, we deviate from \textcite[][29--32]{grauerOptionTradeClassification2022}, who consider unclassified trades as falsely classified, resulting in a  resulting in \SI{0}{\percent} accuracy. In our context, such a procedure would bias towards machine learning classifiers.
+In cases where classification is not feasible due to missing data or the rules' definition itself, we resort to a random classification, which achieves an average accuracy of \SI{50}{\percent}. In this regard, we deviate from \textcite[][29--32]{grauerOptionTradeClassification2022}, who consider unclassified trades as falsely classified, resulting in a resulting in \SI{0}{\percent} accuracy. In our context, such a procedure would bias towards machine learning classifiers.
 
 \subsubsection{Training of Semi-Supervised
     Models}\label{sec:training-of-semi-supervised-models}
@@ -971,7 +985,7 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
         Depth                        & $\operatorname{UniformInt}[1,12]$         & 9                       & 10                          & 8                        \\
         Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$ & 0.061147194180849546    & 0.12484853560495288         & 0.12484853839455994      \\
         $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$        & 16                      & 29                          & 17                       \\
-        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ & 0.0000104767852 & 0.00000000338984444 & 0.0000013615032724416282 \\
+        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ & \num{1e-5} & \num{3e-9} & \num{1e-6} \\
         Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$        & 0.6538673528316611      & 0.4734183814        & 0.4515562770665896       \\ \midrule
         Validation Accuracy in \%            &                                           & 64.20927249609458    & 75.03173105450845         & 76.98607312092097 \\ \bottomrule
     \end{tabular}
@@ -1097,6 +1111,8 @@ The machine-learning classifiers, studied in this work, can be deemed a black bo
 Many model-agnostic methods are based on (...)
 
 \textbf{Shapley Additive Global Importance}
+
+(...)
 
 \textbf{Attention Maps}
 
