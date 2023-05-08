@@ -278,11 +278,33 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             # half precision, see https://pytorch.org/docs/stable/amp.html
             scaler = torch.cuda.amp.GradScaler()
 
+            # Specify parameters for which weight decay should be disabled
+            no_decay = ["tokenizer", ".norm", ".bias"]
+
+            # Create a list of parameter groups
+            param_groups = [
+                {
+                    "params": [
+                        p
+                        for n, p in self.clf.named_parameters()
+                        if not any(nd in n for nd in no_decay)
+                    ],
+                    "weight_decay": self.optim_params["weight_decay"],
+                },
+                {
+                    "params": [
+                        p
+                        for n, p in self.clf.named_parameters()
+                        if any(nd in n for nd in no_decay)
+                    ],
+                    "weight_decay": 0.0,
+                },
+            ]
+
             # Generate the optimizers
             optimizer = optim.AdamW(
-                self.clf.parameters(),
+                param_groups,
                 lr=self.optim_params["lr"],
-                weight_decay=self.optim_params["weight_decay"],
             )
 
             # set up cosine lr scheduler
@@ -394,11 +416,35 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         # half precision, see https://pytorch.org/docs/stable/amp.html
         scaler = torch.cuda.amp.GradScaler()
+
+        # Specify parameters for which weight decay should be disabled
+        # https://github.com/Yura52/tabular-dl-revisiting-models/blob/main/bin/ft_transformer.py
+        no_decay = ["tokenizer", ".norm", ".bias"]
+
+        # Create a list of parameter groups
+        param_groups = [
+            {
+                "params": [
+                    p
+                    for n, p in self.clf.named_parameters()
+                    if not any(nd in n for nd in no_decay)
+                ],
+                "weight_decay": self.optim_params["weight_decay"],
+            },
+            {
+                "params": [
+                    p
+                    for n, p in self.clf.named_parameters()
+                    if any(nd in n for nd in no_decay)
+                ],
+                "weight_decay": 0.0,
+            },
+        ]
+
         # Generate the optimizers
         optimizer = optim.AdamW(
-            self.clf.parameters(),
+            param_groups,
             lr=self.optim_params["lr"],
-            weight_decay=self.optim_params["weight_decay"],
         )
 
         max_steps = self.epochs_finetune * len(train_loader_finetune)
