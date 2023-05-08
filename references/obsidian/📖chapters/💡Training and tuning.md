@@ -67,6 +67,7 @@ The convergence behaviour of our model is similar to that of gradient boosting. 
 
 A major problem in classification with neural networks is, that the network becomes over-confident in predicting training samples but perform poorly on unseen data. In Figure-x the effect is evident, as the increased confidence in the prediction on the training set does not transfer to the validation set. To regularize the network, we experiment with label smoothing ([[@szegedyRethinkingInceptionArchitecture2016]]2823) by training on soft labels with an uncertainty constant of $\epsilon=0.1$. Instead of assigning hard class probabilities of 0 or 1, we assume that true labels in the training set are correct with $1-\epsilon$ probability and incorrect with probability $\epsilon$, such that a trade with the true label $-1$ is assumed to be perc-90 seller-initiated and perc-10 buyer-initiated. While we observe that label smoothing improves the validation loss and reduces the generalization gap, we find that it has a negligible effect on validation accuracy in our setting and therefore abandon this approach.
 
+gap between training and validation loss💡Though there is some gap between training and validation performance, the gap grows only minimally with model size and training time, suggesting that most of the gap comes from a difference in difficulty rather than overfitting (From gpt-3 paper)
 
 *Learning Rate Warm-up and Schedule*
 
@@ -74,6 +75,10 @@ When training Transformers, the learning rate is often adjusted throughout the t
 
 ![[cosine-lr-decay.png]]
 
+*Improvements / Configuration:*
+-> train loss decreases -> predictions become more accurate, but model is less certain about the predictions
+https://stats.stackexchange.com/questions/282160/how-is-it-possible-that-validation-loss-is-increasing-while-validation-accuracy
+https://github.com/keras-team/keras/issues/3755
 
 *Activation Function:*
 Motivated by previous research, we conducted an experiment by replacing the $\operatorname{ReLU}$ activation with the $\operatorname{GELU}$ activation function ([[@hendrycksGaussianErrorLinear2020]]) in the classification head and the gated variant $\operatorname{ReGLU}$ with the gated variant $\operatorname{GEGLU}$ ([[@shazeerGLUVariantsImprove2020]]2) in the glspl-FFN. However, we observe no advantage in terms of validation accuracy or loss. As a result, we decided to stick with the default configuration, as the performance is comparable.
