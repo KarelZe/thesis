@@ -930,7 +930,8 @@ The scheduled learning rate has soothing effects on the training loss and accura
 
 \emph{Batch Size}
 
-We use a fixed batch size of \num{8192} samples for the feature set classical / classical-size and \num{2048} for the feature set option, which is the largest possible size on our \gls{GPU}. Training is performed for \num{20} epochs (\num{36460} / \num{145840} iterations) at maximum. All samples within the training and validation set are shuffled randomly to promote convergence. Although a smaller batch size could enhance the generalization capabilities of the model, as found in \textcite[][3]{keskarLargeBatchTrainingDeep2017}, we train on the largest number of trades per iteration, to optimize throughput. Additional regularization is added to the model, but treated as a tunable hyperparameter.
+% 20 epochs (\num{36460} / \num{145840} iterations) 
+We use a fixed batch size of \num{8192} samples for the feature set classical / classical-size and \num{2048} for the feature set option, which is the largest possible size on our \gls{GPU}. Training is performed for \num{20} epochs at maximum. All samples within the training and validation set are shuffled randomly to promote convergence. Although a smaller batch size could enhance the generalization capabilities of the model, as found in \textcite[][3]{keskarLargeBatchTrainingDeep2017}, we train on the largest number of trades per iteration, to optimize throughput. Additional regularization is added to the model, but treated as a tunable hyperparameter.
 
 \emph{Early Stopping and Checkpointing}
 
@@ -984,7 +985,7 @@ Our search space is reported in \cref{tab:hyperparameter-space}, which is laid o
         Depth                        & $\operatorname{UniformInt}[1,12]$         & 9                       & 10                          & 8                        \\
         Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$ & 0.061147194180849546    & 0.12484853560495288         & 0.12484853839455994      \\
         $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$        & 16                      & 29                          & 17                       \\
-        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ & 0.0000104767852 & 0.00000000338984444 & 0.0000013615032724416282 \\
+        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ & \num{1e-5} & \num{3e-9} & \num{1e-6} \\
         Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$        & 0.6538673528316611      & 0.4734183814        & 0.4515562770665896       \\ \midrule
         Validation Accuracy in \%            &                                           & 64.20927249609458    & 75.03173105450845         & 76.98607312092097 \\ \bottomrule
     \end{tabular}
