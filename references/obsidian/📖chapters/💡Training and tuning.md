@@ -135,6 +135,9 @@ In this blog post, I am going to talk about label smoothing as a regularization 
 
 but find no advantage with regard to validation performance. 
 
+“Label smoothed cross entropy is used as the objective function with an uncertainty = 0.1 (Szegedy et al., 2016). For Model training, we use RAdam as the optimizer (Liu et al., 2020a) and adopt almost all hyperparameter settings from Lu et al. (2020). Specifically, for the WMT’14 En-De and WMT’14 En-Fr dataset, all dropout ratios (including (activation dropout and attention dropout) are set to 0.1. For the IWSLT’14 De-En dataset, after-layer dropout is set to 0.3, and a weight decay of 0.0001 is used. As to optimizer, we set (β1, β2) = (0.9, 0.98), use inverse sqrt learning rate scheduler with a warmup phrase (8000 steps on the WMT’14 En-De/Fr dataset, and 6000 steps on the IWSLT’14 De-En dataset). The maximum learning rate is set to 1e−3 on the WMT’14 En-De dataset and 7e−4 on the IWSLT’14 De-En and WMT’14 En-Fr datasets. We conduct training for 100 epochs on the WMT’14 En-De dataset, 90 epochs on the IWSLT’14 De-En dataset and 50 epochs on the WMT’14 En-Fr dataset, while the last 10 checkpoints are averaged before inference.” (Liu et al., 2020, p. 17)
+
+
 *Sample weighting:*
 We transfer the idea of sample weighting from gls-gbm. Again, the contribution of individual training samples to the loss is scaled by a sample weight to penalize the model for getting recent observations wrong. The mechanism is vital to attain a low validation loss and high validation accuracies. The significantly lower training accuracy implies, that patterns learned a latter observations do not universally transfer to previous observations. At this time, it remains unclear what causes the data drift within the training set. 
 
@@ -145,17 +148,24 @@ We use a fixed batch size of num-8192 for the feature set classical / classical-
 Similar to the gls-gbm, we prematurely halt training based on an consecutive decrease in validation accuracy. We set the patience to 10 epochs and restore the best model in terms of validation accuracy from the best checkpoint. Checkpointing is performed at the end of each epoch. 
 
 *Optimizer*
+In line with ([[@gorishniyRevisitingDeepLearning2021]]6), we train the models using the AdamW optimizer ([[@loshchilovDecoupledWeightDecay2019]]2--3) with the standard hyperparameters $\beta_{1}=0.9, \beta_{2}=0.999$. The weight decay coefficient in AdamW is tuned in cp. cref-hyperparameter. Weight decay is selectively applied and excludes embeddings, LayerNorm, and biases.
 
-“Label smoothed cross entropy is used as the objective function with an uncertainty = 0.1 (Szegedy et al., 2016). For Model training, we use RAdam as the optimizer (Liu et al., 2020a) and adopt almost all hyperparameter settings from Lu et al. (2020). Specifically, for the WMT’14 En-De and WMT’14 En-Fr dataset, all dropout ratios (including (activation dropout and attention dropout) are set to 0.1. For the IWSLT’14 De-En dataset, after-layer dropout is set to 0.3, and a weight decay of 0.0001 is used. As to optimizer, we set (β1, β2) = (0.9, 0.98), use inverse sqrt learning rate scheduler with a warmup phrase (8000 steps on the WMT’14 En-De/Fr dataset, and 6000 steps on the IWSLT’14 De-En dataset). The maximum learning rate is set to 1e−3 on the WMT’14 En-De dataset and 7e−4 on the IWSLT’14 De-En and WMT’14 En-Fr datasets. We conduct training for 100 epochs on the WMT’14 En-De dataset, 90 epochs on the IWSLT’14 De-En dataset and 50 epochs on the WMT’14 En-Fr dataset, while the last 10 checkpoints are averaged before inference.” (Liu et al., 2020, p. 17)
+*Lr Schedule*
 
-AdamW optimizer ([[@loshchilovDecoupledWeightDecay2019]]) and treat the weight decay term in AdamW as a hyperparameter. 
+![[cosine-lr-decay.png]]
 
-- Use weight decay of 0.1 for a small amount of regularization [[@loshchilovDecoupledWeightDecay2019]].
+In our initial tests, we observe smoothing effects on the loss and accuracy estimates.
+
+
+Learning rate warm-up (in which the learning rate is gradually increased during the early stages of training) is particularly puzzling. This is not required for most deep learning architectures. However, training fails for transformers if we just start with a typical learning rate. If we start with a very small learning rate, then the training is stable, but then it takes an impractically long time.
+
+[Xiong _et_ al., 2020](https://arxiv.org/abs/2002.04745) explored this phenomenon by conducting experiments on a machine translation task with different optimizers and learning rate schedules. Their results (figure 2) show that learning rate warm-up is essential for both Adam and SGD, and that the training process is sensitive to the warm-up steps.
+
 
 To train all versions of GPT-3, we use Adam with β1 = 0.9, β2 = 0.95, and  = 10−8, we clip the global norm of the gradient at 1.0, and we use cosine decay for learning rate down to 10% of its value, over 260 billion tokens (after 260 billion tokens, training continues at 10% of the original learning rate). There is a linear LR warmup over the first 375 million tokens. We also gradually increase the batch size linearly from a small value (32k tokens) to the full value over the first 4-12 billion tokens of training, depending on the model size. Data are sampled without replacement during training (until an epoch boundary is reached) to minimize overfitting. All models use weight decay of 0.1 to provide a small amount of regularization [LH17].
 
 
-To this end, we extend the training setup of ([[@gorishniyRevisitingDeepLearning2021]]) with a learning rate schedule and early stopping
+In summary, we extend the training setup of ([[@gorishniyRevisitingDeepLearning2021]]6) with a sample weighting scheme and learning rate schedule to boost performance and training stability.
 
 
 
@@ -166,15 +176,6 @@ To this end, we extend the training setup of ([[@gorishniyRevisitingDeepLearning
 As found in [KMH+20, MKAT18], larger models can typically use a larger batch size, but require a smaller learning rate. We measure the gradient noise scale during training and use it to guide our choice of batch size [MKAT18]. Table 2.1 shows the parameter settings we used. To train the larger models without running out of memory, we use a mixture of model parallelism within each matrix multiply and model parallelism across the layers of the network. All models were trained on V100 GPU’s on part of a high-bandwidth cluster provided by Microsoft. Details of the training process and hyperparameter settings are described in Appendix B. (Found in gpt paper)
 - Base implementation on https://github.com/BlackHC/toma or this blog post https://towardsdatascience.com/a-batch-too-large-finding-the-batch-size-that-fits-on-gpus-aef70902a9f1 (nice idea with the dummy data.)
 
-We do exploit model parallelism
-
-As the loss in this configuration shows spurious patterns of early overfitting, we equally weight all samples instead.
-
-
-We scale the *effective batch size* 
-
-
-Visualize the decision of 
 
 
 Our models are trained using the AdamW optimizer (Loshchilov and Hutter, 2017), with the following hyper-parameters: β1 = 0.9, β2 = 0.95. We use a cosine learning rate schedule, such that the final learning rate is equal to 10% of the maximal learning rate. We use a weight decay of 0.1 and gradient clipping of 1.0. We use 2, 000 warmup 0 200 400 600 800 1000 1200 1400 Billion of tokens 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 Training loss LLaMA 7B LLaMA 13B LLaMA 33B LLaMA 65B Figure 1: Training loss over train tokens for the 7B, 13B, 33B, and 65 models. LLaMA-33B and LLaMA65B were trained on 1.4T tokens. The smaller models were trained on 1.0T tokens. All models are trained with a batch size of 4M tokens. steps, and vary the learning rate and batch size with the size of the model (see Table 2 for details).
@@ -186,6 +187,9 @@ We make several optimizations to improve the training speed of our models. First
 
 
 **Transformer + Pre-Training**
+
+As the loss in this configuration shows spurious patterns of early overfitting, we equally weight all samples instead.
+
 As derived in cref-pretraining, we
 - For pre-training objectives see: https://github.com/puhsu/tabular-dl-pretrain-objectives/
 - For implementation of masked language modelling see https://nn.labml.ai/transformers/mlm/index.html
