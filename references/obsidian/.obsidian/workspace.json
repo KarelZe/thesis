@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/💡Training and tuning.md",
+                "file": "📖chapters/💡Training and Tuning.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Training and tuning.md",
+                "file": "📖chapters/💡Training and Tuning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +113,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Training and tuning.md"
+                "file": "📖chapters/💡Training and Tuning.md"
               }
             }
           }
@@ -135,15 +135,17 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "4517fb6e5bf3488a",
+  "active": "8399eb31ec07fd72",
   "lastOpenFiles": [
+    "🖼️Media/train-val-loss-acc-transformer.png",
+    "📖chapters/🍪Selection Of Semisupervised Approaches.md",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📖chapters/💡Training and Tuning.md",
     "🖼️Media/warmup-cosine-decay.png",
-    "📖chapters/💡Training and tuning.md",
     "🖼️Media/cosine-lr-decay.png",
     "📖chapters/🧭Random Feature Permutation.md",
     "📥Inbox/@szegedyRethinkingInceptionArchitecture2016.md",
     "📖chapters/💡Hyperparameter tuning.md",
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
     "📖chapters/🏅Results.md",
     "📖chapters/🏅Results of semi-supervised.md",
     "📖chapters/🏅Results of supervised.md",
@@ -163,7 +165,6 @@
     "📥Inbox/@foodyHardSoftClassifications2002.md",
     "📥Inbox/@carionEndtoEndObjectDetection2020.md",
     "📥Inbox/@butcherFeatureEngineeringSelection2020.md",
-    "📥Inbox/@arikTabnetAttentiveInterpretable2020.md",
     "🖼️Media/log-loss-train.png",
     "🖼️Media/Pasted image 20230427155407.png",
     "🖼️Media/Pasted image 20230428111917.png",

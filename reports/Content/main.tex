@@ -867,6 +867,7 @@ Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autoci
     \label{fig:gbm-optimisations-loss-acc}
 \end{figure}
 
+% TODO: Cite e.g., Dahl et. al (tuningplaybookgithub) who recommend such a procedure?
 We leverage several architectural changes to further improve performance and mitigate overfitting in gradient boosting, as shown in \cref{fig:gbm-optimisations-loss-acc}, where the effects on validation accuracy and log loss over the default configuration are visualised. All other parameters are kept at their default values, while a single parameter is varied to derive the plots. Although this approach ignores parameter interactions, it still can provide guidance for the optimal training configuration. We train on the ISE training set with classical features and report metrics on the validation set.
 
 \emph{Growth Strategy}
@@ -911,7 +912,7 @@ We apply the concept of sample weighting from \gls{GBM} to Transformers. Specifi
 
 \emph{Label Smoothing}
 
-(...)
+A major problem in classification with neural networks is, that the network becomes over-confident in predicting training samples but perform poorly on unseen data. In \cref{fig:fttransformer-optimisations-loss-acc} the effect is evident, as the increased confidence in the prediction on the training set does not transfer to the validation set. To regularize the network, we experiment with label smoothing \autocite[][2823]{szegedyRethinkingInceptionArchitecture2016} by training on soft labels with an uncertainty constant of $\zeta$. Instead of assigning hard class probabilities of 0 or 1, we assume that true labels in the training set are correct with $1-\zeta$ probability and incorrect otherwise. For $\zeta=\num{0.1}$, a trade with the true label $-1$ is assumed to be \SI{90}{\percent} seller-initiated and \SI{10}{\percent} buyer-initiated. While we observe that label smoothing improves the validation loss and reduces the generalization gap, we find that it has a negligible effect on validation accuracy and therefore abandon this approach.
 
 \emph{Learning Rate Schedule}
 
@@ -1099,6 +1100,8 @@ The machine-learning classifiers, studied in this work, can be deemed a black bo
 Many model-agnostic methods are based on (...)
 
 \textbf{Shapley Additive Global Importance}
+
+(...)
 
 \textbf{Attention Maps}
 
