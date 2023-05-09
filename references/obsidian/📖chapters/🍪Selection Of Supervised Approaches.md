@@ -3,17 +3,20 @@ Previous studies on trade classification with machine learning made arbitrary se
 -  *scalability:* The approach must be able to scale to datasets with $>$ 10 Mio. samples. Due to the high trading activity and long data history, datasets may contain millions of samples, so classifiers must be able to handle large quantities of trades.
 - *extensibility:* The approach must be extendable to train on partially-labelled trades. Most definitions of the trade initiator apply only to a subset of trades (e.g., certain order types), but excluded trades can still provide be valuable in training a classifier. The classifier must support training on unlabelled and labelled trades.
 
-Considering the performance criterion its vital to survey the 
-Focusing on the performance requirement, 
-For the performance criterion surveying the success of machine learning models on tabular datasets can guide the selection.
+Our framing of trade classification fits into supervised learning on tabular data, which is broadly covered by the research community. Several studies including (..., ...), review and benchmark newly proposed methods against established machine learning methods. Based on these r
 
 **Shallow Tree-Based Ensembles**
-Tree-based ensembles, in particular gradient-boosted decision trees, have long dominated other machine learning approaches for tabular classification problems ([[@grinsztajnWhyTreebasedModels2022]]) and ([[@kadraWelltunedSimpleNets2021]]) and ([[@borisovDeepNeuralNetworks2022]]14). At its core, tree-based ensembles combine the estimate of individual decision trees into an ensemble to obtain a more accurate prediction. In particular, gradient-boosted trees ([[@friedmanStochasticGradientBoosting2002]]), sequentially add small-sized trees into an ensemble, to improve upon the error of the previous trees. Closely related to gradient-boosted trees are random forests (breiman?). Random forests ([[@breimanRandomForests2001]]) fuse decision trees with the bagging principle by growing deep decision trees on random subsets of data and aggregate the individual estimates. 
+Traditionally, tree-based ensembles, in particular gradient-boosted decision trees, have dominated modelling on tabular data with regard to predictive performance ([[@grinsztajnWhyTreebasedModels2022]]) and ([[@kadraWelltunedSimpleNets2021]]) and ([[@borisovDeepNeuralNetworks2022]]14). At its core, tree-based ensembles combine the estimates of individual decision trees into an ensemble to obtain a more accurate prediction. For gradient-boosting ([[@friedmanStochasticGradientBoosting2002]]) the ensemble is constructed by sequentially adding small-sized trees into the ensemble that improve upon the error of the previous trees. Closely related to gradient-boosted trees are random forests (breiman / shappire paper?). Random forests ([[@breimanRandomForests2001]]) fuse decision trees with the bagging principle by growing deep decision trees on random subsets of data and aggregate the individual estimates. 
 
-([[@ronenMachineLearningTrade2022]]13--14) have unparalleled success in classifying trades through random forests. Due to our framing as a *probabilistic* classification task, however, random forests are suboptimal, as decision trees yield poorly calibrated probability estimates, which carry into the ensemble ([[@tanhaSemisupervisedSelftrainingDecision2017]]356--360). Gradient boosting is unaffected by this problem due to optimising for the class probability rather than the class itself, scales to large data set due to the availability of highly optimized implementations that approximate the construction of ensemble members, and is extensible to learn on unlabelled and labelled instances simultaneously. The state-of-the art performance in tabular classification tasks, together with its ability to scale and extend, makes it perfect choice for trade classification.
+([[@ronenMachineLearningTrade2022]]13--14) have unparalleled success in classifying trades through random forests. However, due to the framing as a *probabilistic* classification task, random forests are not optimal. This is because decision trees yield poorly calibrated probability estimates, which carry into the ensemble ([[@tanhaSemisupervisedSelftrainingDecision2017]]356--360). Gradient boosting is unaffected by this problem (due to optimising for the class probability rather than the class itself), scales to large data set due to the availability of highly optimized implementations that approximate the construction of ensemble members, and is extensible to learn on unlabelled and labelled instances simultaneously. The state-of-the art performance in tabular classification tasks, together with its ability to scale and extend, makes it perfect choice for trade classification.
 
 **Deep Neural Networks**
 Recently, deep learning approaches excel the performance of gradient-boosted trees through sophisticated architectures. One can distinguish three main lines of research: attention-based architectures, architectures based on differentiable trees, and others.
+
+**Differentiable Trees**
+
+**Regularized Networks**
+
 
 take inspiration from 
 
@@ -22,6 +25,7 @@ Differentiable trees try to adapt the success of
 These architectures are often based 
 
 Networks, 
+
 
 
 Recently, several deep learning approaches claim to excel the performance of gradient boosting. 
@@ -40,6 +44,8 @@ A fair comparison betw
 These results, contradict 
 
 -> NODE poor performance? (in [[@gorishniyRevisitingDeepLearning2021]]) fairly reasonable / poor in ([[@kadraWelltunedSimpleNets2021]]) / ([[@borisovDeepNeuralNetworks2022]])
+
+Ronen have no success in deep neural networks, while still try it?
 
 (🚧short discussion what attention is)
 
