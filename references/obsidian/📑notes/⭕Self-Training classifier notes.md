@@ -239,7 +239,11 @@ $$
 $$
 and $\Phi_{\ell}(\mathbf{x}, f)=(\mathbf{x}, \tilde{y})$. An unlabeled example $\mathbf{x}$ that does not satisfy the conditions (1) is not pseudo-labeled; i.e. $\Phi_{\ell}(\mathbf{x}, f)=\emptyset$.
 
-Intuitively, thresholds should be set to high absolute values as pseudo-labeling examples with low confidence would increase chances of assigning wrong labels. However, thresholds of very high value imply excessive trust in the confidence measure underlying the model, which, in reality, can be biased due to the small labeled sample size. Using several iterations makes also the situation more intricate as at every iteration the optimal threshold might be different. ([[@aminiSelfTrainingSurvey2023]])
+Intuitively, thresholds should be set to high absolute values as pseudo-labeling examples with low confidence would increase chances of assigning wrong labels. However, thresholds of very high value imply excessive trust in the confidence measure underlying the model, which, in reality, can be biased due to the small labeled sample size. Using several iterations makes also the situation more intricate as at every iteration the optimal threshold might be different. ([[@aminiSelfTrainingSurvey2023]]
+
+
+### Probabilities
+In the case of decision trees, where Pr(_y_|**x**) is the proportion of training samples with label y in the leaf where **x** ends up, these distortions come about because learning algorithms such as [C4.5](https://en.wikipedia.org/wiki/C4.5 "C4.5") or [CART](https://en.wikipedia.org/wiki/Predictive_analytics#Classification_and_regression_trees "Predictive analytics") explicitly aim to produce homogeneous leaves (giving probabilities close to zero or one, and thus high [bias](https://en.wikipedia.org/wiki/Bias_of_an_estimator "Bias of an estimator")) while using few samples to estimate the relevant proportion (high [variance](https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff "Bias–variance tradeoff")).[[4]](https://en.wikipedia.org/wiki/Probabilistic_classification#cite_note-4)
 
 
 ## Notes on Yarowsky paper

@@ -1,3 +1,9 @@
+## Advanced logging 🗞️
+- advance experiment tracking https://www.learnpytorch.io/07_pytorch_experiment_tracking/
+- log gradients and loss using `wandb.watch` as shown here https://www.youtube.com/watch?v=k6p-gqxJfP4 with `wandb.log({"epoch":epoch, "loss":loss}, step)` (nested in `if ((batch_ct +1) % 25) == 0:`) and `wandb.watch(model, criterion, log="all", log_freq=10)`
+- In-depth weights and bias blog post: https://wandb.ai/site/articles/debugging-neural-networks-with-pytorch-and-w-b-using-gradients-and-visualizations
+- Mind the double descent effect https://openai.com/blog/deep-double-descent/
+
 
 > “Hyperparameters & Evaluation. Hyperparameter tuning is crucial for a fair comparison, therefore, we use Optuna [1] to optimize the model and pretraining hyperparameters for each method on each dataset. We use the validation subset of each dataset for hyperparameter tuning. The exact search spaces for the hyperparameters of each method are provided in Appendix B.” ([[@rubachevRevisitingPretrainingObjectives2022]]., 2022, p. 4)
 
@@ -42,7 +48,3 @@ For a new experiment, a new value for this hyper-parameter is picked using:
 ![](https://latex.codecogs.com/gif.latex?%5CLARGE%20x*%20%3D%20argmin%20x%20%28l%28x%29/g%28x%29%29 "This is the rendered form of the equation. You can not edit this directly. Right click will give you the option to save the image, and in most browsers you can drag the image onto your desktop or another program.")
 
 **Alternative visualization**
-![[optuna-as-boxplot.png]]
-
-**Optuna + wandb**
-https://www.h4pz.co/blog/2020/10/3/optuna-and-wandb

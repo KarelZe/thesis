@@ -6,7 +6,7 @@
 *related:*
 - [[@borisovDeepNeuralNetworks2022]]
 - [[@prokhorenkovaCatBoostUnbiasedBoosting2018]] (used as benchmark)
-- [[@arikTabNetAttentiveInterpretable2020]] (used as benchmark)
+- [[@arikTabnetAttentiveInterpretable2020]] (used as benchmark)
 - [[@hintonImprovingNeuralNetworks2012]] (used for regularization)
 - [[@loshchilovSGDRStochasticGradient2017]] (used for regularization)
 *code:* [https://github.com/releaunifreiburg/WellTunedSimpleNets](https://github.com/releaunifreiburg/WellTunedSimpleNets)

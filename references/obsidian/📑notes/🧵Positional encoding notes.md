@@ -18,6 +18,11 @@ Resources:
 - According to this [reddit post](https://www.reddit.com/r/learnmachinelearning/comments/9e4j4q/positional_encoding_in_transformer_model/), [[@vaswaniAttentionAllYou2017]] chose the fixed encoding with sine and cosine, to enable learning about the relative position in a sequence. It's also documented in the paper, even though it is covered only briefly.
 - *Absolute positional embeddings* work well if the dataset is small.
 
+**Rope positional embeddings**
+(Here for ROPE embeddings)
+![[rope-embeddings.png]]
+(from [[@suRoFormerEnhancedTransformer2022]])
+
 **Visualization:**
 
 

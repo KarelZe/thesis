@@ -15,7 +15,6 @@ from pathlib import Path
 from typing import Any
 
 import optuna
-import torch
 from catboost import CatBoostClassifier
 
 import wandb
@@ -197,7 +196,8 @@ class SaveCallback(Callback):
 
                 # https://stackoverflow.com/a/72511896/5755604
                 with fs.open(uri_model, "wb") as f:
-                    torch.save(model, f)
+                    # torch.save(model.clf, f)
+                    pickle.dump(model, f, protocol=4)
 
                 m_artifact = wandb.Artifact(name=file_model, type="model")  # type: ignore # noqa: E501
             else:

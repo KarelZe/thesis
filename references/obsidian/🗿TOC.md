@@ -172,14 +172,14 @@ describe if data set is actually used. Write similarily to
 ^d50f5d
 [[👨‍🍳Tain-Test-split]]
 ## Training and Tuning
-[[💡Training and tuning]]
+[[💡Training and Tuning]]
 
 ### Training of Supervised Models
 [[💡Training of models (supervised)]]
 ### Training of Semi-Supervised Models
 [[💡Tuning of models (semi-supervised)]]
 ### Hyperparameter Tuning
-[[💡Hyperparameter tuning]]
+[[💡Hyperparameter Tuning]]
 
 ## Evaluation
 ### Feature Importance Measure

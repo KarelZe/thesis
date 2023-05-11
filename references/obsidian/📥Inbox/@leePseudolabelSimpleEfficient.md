@@ -7,7 +7,7 @@
 - [[@chapelleSemiSupervisedClassificationLow2005]]
 - [[@zhuSemiSupervisedLearningLiterature]]
 - [[@devlinBERTPretrainingDeep2019]]
-- [[@clarkELECTRAPretrainingText2020]]
+- [[@clarkElectraPretrainingText2020]]
 
 ## Notes 📍
 - Authors propose a simple way of training neural networks in a [[semi-supervised]] fashion. The network is trained with labeled and unlabeled data simultaneously instead of using separated pre-training and finetuning. In absence of true labels, for unlabeled data pseudo labels are assigned from the class with the highest class probablity ($y_i^{\prime}= \begin{cases}1 & \text { if } i=\operatorname{argmax} \min _{i^{\prime}} f_{i^{\prime}}(x) \\ 0 & \text { otherwise }\end{cases}$) and re-calculated every weight update. Therefore pseudo-labels are treated similar to manual labels.
