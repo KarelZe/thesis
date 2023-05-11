@@ -1,10 +1,12 @@
 ## Open
+
+## Closed
+- Ask for comments on theory. -> will comment / excited to read.
+- Discuss changes i.e., removal of TabTransformer / change of pre-training routine. -> Changes are ok.
 - Discuss questions from email. -> unsure about previous trade price. Didn't do data pre-processing so can't tell about order.
 - Discuss latest, improved results for CBOE / semi-supervised models. -> Should do model transfer on CBOE data. We discussed leakage. Think about what my conclusion should be.
 - Discuss strategies to select the benchmarks e. g., on validation set / intuition / your paper. -> Decide on my own.
 - Any tips what I should differently in the remaining two months? -> It's ok.
-
-## Closed
 - What happens to the trade volumes of professional customers? Filtered out or treated as ordinary customers? -> Filtered out, as professional customers (particularly large customers) are assumed to act like a market maker / provide liquidity not demand liquidity. Incorporate this in paragraph.
 - What is part of the unlabelled dataset? Only customer trades, where volumes don't match or also professional customer trades, broker/deal trades etc.? -> All trades.
 - How is the market maker identified in the raw sources? -> delta between total volume and volumes of customers, brokers etc. So-called market clearing condition.
@@ -45,6 +47,6 @@
 - Any feedback to TOC / expose / first results? -> *It's ok.*
 - Opinions on weekly release info 📧 (e.g., every Sunday) with closed issues and completed tasks + short bi-weekly meeting. -> *Meeting scheduled. Release notes sent.*
 - Who would co-supervise / grade the thesis? What is his / her special focus e. g., economical inference/interpretability? -> *Prof. Dr. Uhrig-Homburg (1), Prof. Dr. Ruckes (2). Prof. Uhrig-Homburg is very open to new ideas.* 
-- Discuss what to do with low-quality papers e. g., [[@ronenMachineLearningTrade2022]] or [[@blazejewskiLocalNonparametricModel2005]]? Cite, but be critical? Is it ok to also leave some poor papers out? -> *Ok, to leave out or point out what is problematic.*
+- Discuss what to do with low-quality papers e. g., [[@ronenMachineLearningTrade2022]] or [[@blazejewskiLocalNonParametricModel2005]]? Cite, but be critical? Is it ok to also leave some poor papers out? -> *Ok, to leave out or point out what is problematic.*
 - What to do with `@hansenApplicationsMachineLearning`? Thesis does something similar but was not published. Mostly different techniques / different data set / focus on EDA.
 - Discuss citations of pre-prints? Some important concepts in ML have only been published on `www.archive.org`. -> *Citing preprints is ok.*

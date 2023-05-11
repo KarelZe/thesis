@@ -1,4 +1,8 @@
 
+**FT-Transformer (10 % of  Data / 10 Trials)**
+![[FT-Transformer.png]]
+
+
 Things get a bit more complicated when you want to use statistical tests to compare more than two models, since doing multiple pairwise tests is a bit like using the test set multiple times — it can lead to overly-optimistic interpretations of significance. Basically, each time you carry out a comparison between two models using a statistical test, there’s a probability that it will discover significant differences where there aren’t any. This is represented by the confidence level of the test, usually set at 95%: meaning that 1 in 20 times it will give you a false positive. For a single comparison, this may be a level of uncertainty you can live with. However, it accumulates. That is, if you do 20 pairwise tests with a confidence level of 95%, one of them is likely to give you the wrong answer. This is known as the multiplicity effect, and is an example of a broader issue in data science known as data dredging or p-hacking — see [Head et al., 2015]. To address this problem, you can apply a correction for multiple tests. The most common approach is the Bonferroni correction, a very simple method that lowers the significance threshold based on the number of tests that are being carried out — see [Salzberg, 1997] for a gentle introduction. However, there are numerous other approaches, and there is also some debate about when and where these corrections should be applied; for an 1 accessible overview, see [Streiner, 2015]. (from [[@lonesHowAvoidMachine2022]])
 
 

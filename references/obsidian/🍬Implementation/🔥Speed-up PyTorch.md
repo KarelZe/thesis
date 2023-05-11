@@ -4,35 +4,10 @@
 - Increase `num_workers` as explained here: https://wandb.ai/srishti-gureja-wandb/posts/How-to-Eliminate-the-Data-Processing-Bottleneck-with-PyTorch--VmlldzoyNDMxNzM1
 - 
 ## Decoupeling of serving batches and gpu operations
-**Status quo:**
-Similar to this one:
-```python
-all_inputs, all_true_labels = /
 
-pd.read_csv(input_data).iloc[:,0:100], pd.read_csv(input_data).iloc[:, 100]
-
-for epoch in range(n_epochs):
-
-for i in range(num_batches):
-
-batch_inputs, batch_true_labels = /
-
-all_inputs.iloc[i*64:(1+i)*64, :], all_true_labels.iloc[i*64:(1+i)*64, :]
-
-# applying any transformations to batched data etc.
-
-output = model(batch_inputs)
-
-# model training steps
-```
-
-![[pre-data-loader.png]]
-**To be:**
-![[after-data-loader.png]]
 (adapted from https://wandb.ai/srishti-gureja-wandb/posts/How-to-Eliminate-the-Data-Processing-Bottleneck-with-PyTorch--VmlldzoyNDMxNzM1)
-## Single GPU:
 
-![[techniques-to-speed-up-training.png]]
+
 (https://huggingface.co/docs/transformers/perf_train_gpu_one)
 
 Monitor memory usage using.
@@ -96,14 +71,8 @@ Data parallelism or model parallelism:
 
 ## Profiler
 https://pytorch.org/tutorials/recipes/recipes/profiler_recipe.html
-
-
 https://huggingface.co/docs/transformers/performance
-
 https://spell.ml/blog/gradient-checkpointing-pytorch-YGypLBAAACEAefHs
-
-## Scientific papers
-- https://arxiv.org/pdf/2007.00072.pdf
 
 
 ## Gradient checkpointing

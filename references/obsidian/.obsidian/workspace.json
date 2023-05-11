@@ -20,12 +20,12 @@
             }
           },
           {
-            "id": "24b84ce32bcc3015",
+            "id": "4517fb6e5bf3488a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "📖chapters/💡Training of models (supervised).md",
+                "file": "📖chapters/🏅Results of supervised.md",
                 "mode": "source",
                 "source": false
               }
@@ -33,24 +33,6 @@
           }
         ],
         "currentTab": 1
-      },
-      {
-        "id": "2b8022d1c8db2031",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "693cc83a728f5b1b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "📑notes/🍪Selection of semisupervised Approaches notes.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ]
       }
     ],
     "direction": "vertical"
@@ -87,6 +69,14 @@
                 "sortOrder": "alphabetical"
               }
             }
+          },
+          {
+            "id": "4f4219eae268c63a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
           }
         ]
       }
@@ -108,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "📖chapters/💡Training of models (supervised).md",
+                "file": "📖chapters/🏅Results of supervised.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,16 +126,8 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "📖chapters/💡Training of models (supervised).md"
+                "file": "📖chapters/🏅Results of supervised.md"
               }
-            }
-          },
-          {
-            "id": "9809af47a095750a",
-            "type": "leaf",
-            "state": {
-              "type": "stat-view",
-              "state": {}
             }
           }
         ],
@@ -159,7 +141,6 @@
   "left-ribbon": {
     "hiddenItems": {
       "obsidian-tts:Text to Speech": false,
-      "obsidian-word-sprint:Activate Word Sprint Leaf": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -167,43 +148,43 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "24b84ce32bcc3015",
+  "active": "4517fb6e5bf3488a",
   "lastOpenFiles": [
-    "🖼️Media/visualize-classical-rules-vs-ml.png",
-    "🖼️Media/pre-data-loader.png",
-    "🖼️Media/mashup-tokenizer-fttransformer.png",
-    "🖼️Media/lognormal-distribution-logs.png",
-    "📑notes/🍪Selection of supervised approaches notes.md",
-    "🖼️Media/Pasted image 20230427161504.png",
-    "Open Points in my head.md",
-    "📖chapters/💡Hyperparameter tuning.md",
-    "📖chapters/💡Training of models (supervised).md",
-    "🖼️Media/Pasted image 20230427155407.png",
-    "📖chapters/🍪Selection Of Supervised Approaches.md",
-    "📑notes/🍪Selection of semisupervised Approaches notes.md",
-    "❓Questions.md",
-    "📖chapters/🤖TabTransformer.md",
-    "📑notes/🤖TabTransformer notes.md",
-    "🖼️Media/traversal-of-axis.png",
-    "🖼️Media/asymmetric-spread.png",
-    "🖼️Media/presentation-of-effective-spread.png",
-    "🖼️Media/pseudocode-selftraining.png",
-    "🖼️Media/pseudocode-of-algorithms.png",
-    "📑notes/⭕Self-Training classifier notes.md",
-    "📖chapters/🤖Pre-training of Transformers.md",
-    "📖chapters/🍪Selection Of Semisupervised Approaches.md",
-    "📖chapters/💡Tuning of models (semi-supervised).md",
-    "📑notes/☠️Problem Framing notes.md",
-    "📖chapters/☠️Problem Framing.md",
-    "📖chapters/🎨Inspiration.md",
-    "📑notes/🤖Pretraining notes.md",
-    "📥Inbox/@chenSimpleFrameworkContrastive2020.md",
-    "📑notes/🐈Gradient Boosting notes.md",
-    "📑notes/🔢Trade Initiator notes.md",
-    "Ammo Trade Initiator.md",
-    "1680261360742.jpg.md",
     "📥Inbox/@bennettExploitingUnlabeledData2002.md",
+    "📥Inbox/@chenSimpleFrameworkContrastive2020.md",
+    "📥Inbox/@dalche-bucSemisupervisedMarginBoost2001.md",
+    "📥Inbox/@dorogushCatBoostGradientBoosting.md",
+    "📥Inbox/@erhanWhyDoesUnsupervised.md",
+    "📥Inbox/@hookerUnrestrictedPermutationForces2021.md",
     "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
-    "📑notes/🔢Hybrid rules notes.md"
+    "📥Inbox/@nasdaqincFrequentlyAskedQuestions2017.md",
+    "📥Inbox/@pedregosaScikitlearnMachineLearning2018.md",
+    "📖chapters/☠️Problem Framing.md",
+    "📑notes/☠️Problem Framing notes.md",
+    "📑notes/🤖Pretraining notes.md",
+    "📖chapters/💡Training of models (supervised).md",
+    "🖼️Media/visualization-of-word-embeddings.png",
+    "🖼️Media/training-vs-validation-accuracy.png",
+    "🖼️Media/training-validation-accuracy.png",
+    "🖼️Media/train-val-loss-acc-transformer.png",
+    "🖼️Media/search-space.png",
+    "🖼️Media/rope-embeddings.png",
+    "🖼️Media/research-framework.png",
+    "🖼️Media/loss_val.png",
+    "🖼️Media/hyperparameter-ft-transformer.png",
+    "🖼️Media/gbm-log-loss-accuracy.png",
+    "📥Inbox/tuningplaybookgithub.md",
+    "📥Inbox/@zhaiDirectBoostingApproach.md",
+    "📥Inbox/@szegedyRethinkingInceptionArchitecture2016.md",
+    "📥Inbox/@suRoFormerEnhancedTransformer2022.md",
+    "📥Inbox/@stroblConditionalVariableImportance2008.md",
+    "📥Inbox/@powerGrokkingGeneralizationOverfitting2022.md",
+    "Open Points in my head.md",
+    "📥Inbox/@nasdaqinc.FrequentlyAskedQuestions2017.md",
+    "📥Inbox/@liuHardSoftClassification2011.md",
+    "📥Inbox/@khanBootstrappingMultipleImputation2019.md",
+    "📖chapters/💡Hyperparameter tuning.md",
+    "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📖chapters/🏅Results.md"
   ]
 }

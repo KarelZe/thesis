@@ -1,7 +1,48 @@
+
+
 https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html
 
 ![[context-xl-transformer.png]]
 (found in [[@daiTransformerXLAttentiveLanguage2019]])
+
+
+## Notes on Talk with Łukasz Kaiser 🎙️
+(see here: https://www.youtube.com/watch?v=rBCqOTEfxvg)
+
+Attention can be thought of as a mapping between a query and a set of key-value pairs to an output. In general, the current token is first projected onto a query vector $\mathbf{q} \in \mathbb{R}^{d_{\mathrm{attn}}}$, and all tokens in the context are mapped to key $\mathbf{k}_{t} \in \mathbb{R}^{d_{\mathrm{attn}}}$ and value vectors $\mathbf{v}_{t} \in \mathbb{R}^{d_{\mathrm{value}}}$. Similar to a soft dictionary lookup, the goal is now to retrieve the values from tokens for which the keys are similar to the query and return an aggregate estimate of the values weighted by the similarity of the keys and the query. Naturally, if a token in the context is important for predicting the current token it will be highly similar to the query, and thus contribute largely to the output. 
+
+
+- RNNs suffer from vanishing gradients
+- Some people used CNNs, but path length is still logarithmic (going down a tree). Is limited to position.
+- Attention: make a query with your vector and look at similar things in the past. Looks at everything, but choose things, that are similar.
+- Encoder attention allows to go from one word to another. (Encoder Self-Attention)
+- MaskedDecoder Self-Attention (is a single matrix multiply with a mask) to mask out all prev. elements not relevant
+- Attention A(Q, K, V) (q = query vector) (K, V matrices= memory) (K = current word working on, V = all words generated before). You want to use q to find most similar k and get values that correspond to keys. (QK^T) gives a probability distribution over keys, which is then multiplied with values
+- n^2 * d complexity
+- to preserve the order of words they use multi-head attention
+- attention heads can be interpreted (see winograd schemas)
+
+## Notes from talk with Lucas Beyer / Google🎙️
+
+^54aa8a
+(see https://www.youtube.com/watch?v=EixI6t5oif0)
+- attention was originally introduced in the Bahdu paper. But was not the most central part.
+- attention is like a (convoluted (soft)) dictionary lookup. like in a dict we have keys and values and want to query the dictionary. keys and values are a vector of quotes. measure the similarity with the dotproduct. we measure similarity between query and key (attention weights) and the result is normalized. We take weighted average of all values weighted by the attention weights. Note output can also be average over multiple 
+
+- q (word to translate), k, v (words in source language)
+- We not just have one query, but multiple. Also an attention matrix. We use multi-head attention
+- Multi-head attention splits the queries along the embedding dimension. Also outputs are split. Works empirically better. Requires less compute. (only implementation details. Not the gist of attention.)
+- Architecture is heavily inspired by the translation task / community. This is helpful, as it resulted in encoder / decoder architecture.
+- Every token from the input sequence is linearily projected. Each vector looks around to see what vectors are there and calculates the output. (self-attention)
+- Every token individually is sent to a oint-wise MLP. It's done individually for every token. Stores knowledge. There is a paper. (references in [[@gevaTransformerFeedforwardLayers2021]] are the best I could find?) Gives the model processing power to think about what it has seen." Larger hidden size gives better results.
+- skip processing. We have input and update it with our processing. (See residual stream in (mathematical foundations of Transformers))
+- Layer norm is technically important.
+- It's not clear, which variant of layer-norm is better.
+- Decoder learns to sample from all possible outputs of the target language. 10 most likely translation etc. Computationally infeasible. To solve we look at one token at a time. Decoder works auto-regressively. Choose most likely token. and update all the inputs / things we have computed so far.
+- All inputs are passed into the decoder at once to reduce training times. We multiply with mask matrix to lookup future tokens. In generation time we can not implement this trick and have to implement token by token.
+- Cross-attention. Tokens from decoder become queries and keys and values come from the encoder. Look at the tokens from the source language (keys, values). 
+- Flexible architecture. Needs loads of data. Are computationally efficient. That's true.
+
 
 [[@dosovitskiyImageWorth16x162021]]
 ## Attention
@@ -9,12 +50,19 @@ https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html
 An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors. The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key. (unknown)
 
 
+
+
 ## Dot-product attention
 
 “Dot-product attention. The standard attention used in the Transformer is the scaled dot-product attention (Vaswani et al., 2017). The input consists of queries and keys of dimension dk, and values of dimension dv. The dot products of the query with all keys are computed, scaled by √dk, and a softmax function is applied to obtain the weights on the values. In practice, the attention function on a set of queries is computed simultaneously, packed together into a matrix Q. Assuming the keys and values are also packed together into matrices K and V , the matrix of outputs is defined as: Attention(Q, K, V ) = softmax( QKT √dk )V” ([Kitaev et al., 2020, p. 2](zotero://select/library/items/D93TNTMS)) ([pdf](zotero://open-pdf/library/items/5F5L22PR?page=2&annotation=YLGCST6K))
 
 
+
+We call our particular attention "Scaled Dot-Product Attention" (Figure 2). The input consists of queries and keys of dimension dk, and values of dimension dv. We compute the dot products of the query with all keys, divide each by √dk, and apply a softmax function to obtain the weights on the values. In practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix Q. The keys and values are also packed together into matrices K and V . We compute the matrix of outputs as: Attention(Q, K, V ) = softmax( QKT √dk )V (1) The two most commonly used attention functions are additive attention [2], and dot-product (multiplicative) attention. Dot-product attention is identical to our algorithm, except for the scaling factor of 1 √dk . Additive attention computes the compatibility function using a feed-forward network with a single hidden layer. While the two are similar in theoretical complexity, dot-product attention is much faster and more space-efficient in practice, since it can be implemented using highly optimized matrix multiplication code. While for small values of dk the two mechanisms perform similarly, additive attention outperforms dot product attention without scaling for larger values of dk [3]. We suspect that for large values of dk, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients 4. To counteract this effect, we scale the dot products by 1 √dk (Vaswani)
+
 ## Multi-headed attention
+
+
 
 
 - [[@vaswaniAttentionAllYou2017]] propose to run several attention heads in parallel, instead of using a single attention heads. They write it improves performance and has a similar computational cost to the single-headed version. Multiple heads may also learn different patterns, not all are equally important, and some can be pruned. This means given a specific context there attention heads learn to attend to different patterns. 
@@ -115,6 +163,9 @@ $$
 - Attention heads split the data only logically. All attention heads share the same linear layer but simply operate on their own logical section of the data matrix. The splitting is done with a logical split across the attention heads. The dimension is given by the query size = Embedding size / no of heads
 - attention scores from each the heads need to be combined. Reverse the splitting through reshaping into (batch, sequence, head * query size)
 - Multi-headed attention: each section of the embedding can learn different aspect of the meanings of each word, as it realtes to other words, in the sequence. Thus, the transformer can learn richer representations.
+
+2.1.1 Self-attention (Vaswani et al., 2017) introduced the self-attention mechanism. This mechanism is able to retrieve the contextual information of a word in a sentence. The module compares every word in the sentence to every other word in the same sentence, including itself. During this comparison, the word embeddings of all words in the sentence are reweighed to include the contextual relevance. The logic behind comparing the word with itself is to determine the exact meaning 4 Figure 2.1: The calculated attention for a sentence. Thicker lines indicate that more attention should be paid to that word.a aRetrieved from a presentation by (Vaswani et al., 2017): https://www.slideshare.net/ilblackdragon/attention-is-all-you-need of the word, since a single word can have different meanings, depending on the context of the word, i.e. I am going to the bank to retrieve money, and the bank of a river. Figure 2.1 contains calculated attention scores for a sentence. The attentions scores are represented by the lines. How thicker a line, the more attention should be paid to this word. For a model to be capable of learning the contextual connections between words, three weight matrices are introduced, called the query weight matrix, key weight matrix and value weight matrix. These weight matrices are learned during training, and using matrices enables simultaneous calculations for the whole sequence. The input word embeddings are all multiplied with each of the weight matrices separately, to get three new matrices, the query, key and value matrix. Equations 2.1 - 2.3 show these multiplications, whereas X is the word embedding matrix of the input, WQ is the query weight matrix, W K is the key weight matrix, WV is the value weight matrix. Q = X × WQ (2.1) K = X × W K (2.2) V = X × WV (2.3) The next step is to deduce to which words the Transformer should focus on, pay attention to, for a specific word. Ideally, all these words refer to this specific word. Calculating the dot product similarity is the first step to calculate the attention scores. The result of the dot product similarity indicates to which words 5 the Transformer should pay attention to. A higher score indicates that more attention should be paid to this specific word. These products are calculated by multiplying the query matrix with the transpose of the key matrix. After calculating all these dot products, the values are normalized with the softmax function, to focus on the relevant words, and to drown-out irrelevant words. Equation 2.4 shows the equation used to calculate these values, where dk is the dimension of key vectors. Dividing by this dimension leads to more stable gradients. Attention(Q, K) = sof tmax( Q × KT √ dk ) (2.4) Finally, to calculate the new word embeddings, the context vector, the previously calculated attention matrix is multiplied by the originally calculated value matrix. The result of this final multiplication, Equation 2.5, are the newly weighted word embeddings, Z. Z = Attention(Q, K) × V (2.5) Finally, one of these self-attention blocks might not be capable of paying attention to several important words and might not make an observable change to their respective word embeddings. To resolve this problem, multi-headed attention is introduced. Multi-head attention exists out of several attention blocks which run in parallel, each calculating attention scores independently. Therefore, using this mechanism expands the model’s ability to focus on different positions. The three weight matrices are not shared between the different selfattention blocks, and are all randomly initialized. The results of these selfattention blocks are concatenated together to retrieve the new word embeddings, the new context vectors.
+(https://ai4lt.anthropomatik.kit.edu/downloads/Masterarbeiten/2022/Master_Thesis_Tim_Debets_Final.pdf)
 
 ## Notes from Tenney et al
 [[@tenneyBERTRediscoversClassical2019]]

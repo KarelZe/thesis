@@ -7,6 +7,7 @@
 \usepackage{csquotes}
 \usepackage[style=apa,backend=biber]{biblatex}
 \DeclareLanguageMapping{british}{british-apa}
+% \renewcommand{\thepage}{} % Removes the page number
 \addbibresource{Content/bibliography.bib}
 
 % Format and layout
@@ -19,15 +20,15 @@
 \renewcommand{\footnotelayout}{\setstretch{1}} % Sets a line spacing of 1 for the footnotes.
 \pagestyle{headings} % Creates a header using the page number and the heading of the current section.
 \usepackage{eurosym} % Usage of €
-
+\usepackage[all]{nowidow} % avoid widows https://tex.stackexchange.com/a/30409/169093
 \usepackage{pdflscape}
 
 % Colors
 \usepackage{xcolor} % Enables the definition of more colors.
 
-\definecolor{viz-red}{HTML}{FF2C00}
+\definecolor{viz-red}{HTML}{FF0000}
 \definecolor{viz-gray}{HTML}{D6DCE5}
-
+\definecolor{viz-white}{HTML}{FFFFFF}
 \usepackage{colorprofiles} % load colour profiles for pdf/a standard
 
 % https://tex.stackexchange.com/questions/188533/how-to-draw-squares-circles-and-triangles
@@ -37,15 +38,14 @@
 \newcommand{\mysquare}[1]{\tikz{\node[draw=#1,fill=#1,rectangle,minimum
 width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 
-\newcommand{\mycircle}[1]{\tikz{\node[draw=#1,fill=#1,circle,minimum
+\newcommand{\mycircle}[1]{\tikz{\node[draw=black,fill=#1,circle,minimum
 width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 
 \newcommand{\mytriangle}[1]{\tikz{\node[draw=#1,fill=#1,isosceles
 triangle,isosceles triangle stretches,shape border rotate=90,minimum
 width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 
-\newcommand{\bestcircle}{\tikz{\node[circle,draw=darkgray, fill=black, line width=2pt, minimum width=0.2cm,minimum height=0.2cm, inner sep=0pt, draw opacity=.2] at (0,0){};}}
-
+\newcommand{\bestcircle}{\tikz{\node[circle,draw=darkgray, fill=white, line width=0.5pt, minimum width=0.2cm,minimum height=0.2cm, inner sep=0pt, draw opacity=.2] at (0,0){};}}
 % Tables and Graphs
 \usepackage{booktabs} % Improves the design of the tables
 \usepackage{longtable} % Allows tables to be longer than one page.
@@ -83,6 +83,7 @@ retain-explicit-plus=true,
 % round-integer-to-decimal=false,
 round-precision=2,
 table-format = 1.2, 
+output-exponent-marker=\ensuremath{\mathrm{e}}
 } % round to 2 decimal places
 
 \usepackage[super]{nth} % 1st, 2nd etc.
@@ -214,10 +215,12 @@ bookmarksopen
 \newacronym{FFN}{FFN}{feed-forward network}
 \newacronym{ISE}{ISE}{International Securities Exchange}
 \newacronym{GBM}{GBM}{gradient boosting machine}
-\newacronym{GSU}{GSU}{Grauer-Schuster-Uhrig-Homburg}
+\newacronym{GPU}{GPU}{graphics processing unit}
+\newacronym{GSUH}{GSUH}{Grauer-Schuster-Uhrig-Homburg}
 \newacronym{LR}{LR}{Lee-Ready}
 \newacronym{MCC}{MCC}{Matthews correlation coefficient}
 \newacronym{MLP}{MLP}{multi-layer perceptron}
+\newacronym{MLM}{MLM}{masked language modelling}
 \newacronym[first={national best bid and offer}]{NBBO}{NBBO}{national best bid and offer}
 \newacronym{NYSE}{NYSE}{New York Stock Exchange}
 \newacronym{NASDAQ}{NASDAQ}{National Association of Securities Dealers Automated Quotations}
@@ -227,7 +230,7 @@ bookmarksopen
 \newacronym{SSE}{SSE}{sum of squared errors}
 \newacronym{SHAP}{SHAP}{SHapley Additive exPlanations}
 \newacronym{TRACE}{TRACE}{Trade Reporting and Compliance Engine}
-
+\newacronym{RTD}{RTD}{random token replacement}
 % see https://tex.stackexchange.com/questions/347586/symbols-as-glossary-entry-indicators
 %Symbols
 \newglossaryentry{V}{type=symbols,name={\ensuremath{\cong[N_\t{V}]}},sort=V, description={vocabulary}}
@@ -265,62 +268,6 @@ bookmarksopen
     \renewcommand*{\glsgroupskip}{}%
 }
 
-% \renewcommand*{\glossentry}[2]{%
-% \item[]\makebox[\glslistdottedwidth][l]{%
-% \glsentryitem{##1}%
-% \glstarget{##1}{\glossentryname{##1}}%
-% \unskip\leaders\hbox to 2.9mm{\hss.}\hfill\strut}\glossentrydesc{##1}}%
-
-% \renewcommand{\glossentry}[2]{%
-% \glsentryitem{##1}\glstarget{##1}{\glossentryname{##1}} & $\acem{##1}$ & \glossentrydesc{##1}\tabularnewline
-% }%
-
-% 	{\bf Symbol }      \> {\bf Type}     \> {\bf Explanation}                                      \\[0ex]
-% 	$[N]$              \> $:=\{1,...,N\}$  \> set of integers $1,2,...,N-1,N$                  \\[0ex]
-% 	$i,j$              \> $âˆˆâ„•$           \> generic integer indices       \\[0ex]  
-% 	$V$                \> $\cong[N_\t{V}]$      \> vocabulary                               \\[0ex]
-% 	$N_\t{V}$          \> $âˆˆ\mathbb{N}$  \> vocabulary size                                 \\[0ex]
-% 	$V^*$              \> $=\bigcup_{\ell=0}^âˆž V^{\ell}$ \> set of token sequences; elements include e.g.\ sentences or documents  \\[0ex]
-% 	$\ell_{\max}$      \> $âˆˆ\mathbb{N}$     \> maximum sequence length                          \\[0ex]
-% 	$\ell$             \> $âˆˆ[\ell_{\max}]$      \> length of token sequence                           \\[0ex]  
-% 	$t$                \> $âˆˆ[\ell]$           \> index of token in a sequence                       \\[0ex]
-% 	$d_{...}$          \> $âˆˆâ„•$           \> dimension of various vectors                       \\[0ex]  
-% 	$\v{x}$            \> $â‰¡x[1:\ell]$   \> $â‰¡x[1]x[2]...x[\ell]âˆˆV^\ell$ ~~ primary token sequence  \\[0ex]
-% 	$\v{z}$            \> $â‰¡z[1:\ell]$   \> $â‰¡z[1]z[2]...z[\ell]âˆˆV^\ell$ ~~ context token sequence  \\[0ex]
-% 	$M[i,j]$           \> $âˆˆâ„$            \> entry $M_{ij}$ of matrix $Mâˆˆâ„^{dÃ—d'}$        \\[0ex]
-% 	$M[i,:]\!â‰¡\!M[i]$  \> $âˆˆâ„^{d'}$      \> $i$-th row of matrix $Mâˆˆâ„^{dÃ—d'}$          \\[0ex]
-% 	$M[:,j]$           \> $âˆˆâ„^d$         \> $j$-th column of matrix $Mâˆˆâ„^{dÃ—d'}$        \\[0ex]
-% 	$\v{e}$            \> $âˆˆâ„^{d_\t{e}}$    \> vector representation / embedding of a token            \\[0ex]
-% 	$\m{X}$              \> $âˆˆâ„^{d_\t{e} Ã— \ell_x}$    \> encoded primary token sequence                             \\[0ex]
-% 	$\m{Z}$              \> $âˆˆâ„^{d_\t{e} Ã— \ell_z}$     \> encoded context token sequence                             \\[0ex]  
-% 	$\t{Mask}$         \> $âˆˆâ„^{\ell_z\times \ell_x}$   \> masking matrix, it determines the attention context for each token \\[0ex]
-% 	$L, L_\t{enc}, L_\t{dec}$ \> $âˆˆâ„•$       \> number of network (encoder, decoder) layers                   \\[0ex]  
-% 	$l$                \> $âˆˆ[L]$           \> index of network layer                             \\[0ex]
-% 	$H$                \> $âˆˆ\mathbb{N}$     \> number of attention heads                        \\[0ex]
-% 	$h$                \> $âˆˆ[H]$         \> index of attention head                            \\[0ex]
-% 	$N_\t{data}$       \> $âˆˆâ„•$           \> (i.i.d.) sample size                               \\[0ex]  
-% 	$n$                \> $âˆˆ[N_\t{data}]$     \> index of sample sequence                         \\[0ex]
-% 	$Î·$                \> $âˆˆ(0,âˆž)$           \> learning rate                                      \\[0ex]
-% 	$Ï„$                \> $âˆˆ(0,âˆž)$           \> temperature; it controls the diversity-plausibility trade-off at inference  \\[0ex]
-% 	$\m{W_e}$     \> $âˆˆâ„^{d_\t{e}Ã—N_\t{V}}$ \> token embedding matrix       \\[0ex]  
-% 	$\m{W_p}$     \> $âˆˆâ„^{d_\t{e}Ã—\ell_{\max}}$ \> positional embedding matrix       \\[0ex]  
-% 	$\m{W_u}$     \> $âˆˆâ„^{N_\t{V}Ã—d_\t{e}}$ \> unembedding matrix       \\[0ex]  
-% 	$\m{W_q}$     \> $âˆˆâ„^{d_\t{attn}Ã—d_\t{x}}$ \> query weight matrix \\[0ex]
-% 	$\v{b_q}$     \> $âˆˆâ„^{d_\t{attn}}$ \> query bias \\[0ex]
-% 	$\m{W_k}$     \> $âˆˆâ„^{d_\t{attn}Ã—d_\t{z}}$ \> key weight matrix \\[0ex]
-% 	$\v{b_k}$     \> $âˆˆâ„^{d_\t{attn}}$ \> key bias \\[0ex]
-% 	$\m{W_v}$     \> $âˆˆâ„^{d_\t{out}Ã—d_\t{z}}$ \> value weight matrix \\[0ex]
-% 	$\v{b_v}$     \> $âˆˆâ„^{d_\t{out}}$ \> value bias \\[0ex]
-% 	$\bmcWqkv$     \>  \> collection of above parameters of a single-head attention layer \\[0ex]  
-% 	$\m{W_o}$     \> $âˆˆâ„^{d_\t{out}Ã—Hd_\t{mid}}$ \> output weight matrix \\[0ex]
-% 	$\v{b_o}$     \> $âˆˆâ„^{d_\t{out}}$ \> output bias \\[0ex]
-% 	$\bmcW$       \>  \> collection of above parameters of a multi-head attention layer, see \cref{eq:Wall} \\[0ex]
-% 	$\m{W_\t{mlp}}$    \> $âˆˆâ„^{d_1Ã—d_2}$ \> weight matrix corresponding to an MLP layer in a Transformer \\[0ex]
-% 	$\v{b_\t{mlp}}$    \> $âˆˆâ„^{d_1}$ \> bias corresponding to an MLP layer in a Transformer \\[0ex]  
-% 	$\vga$            \> $âˆˆâ„^{d_\t{e}}$ \> layer-norm learnable scale parameter \\[0ex]
-% 	$\vbe$                \> $âˆˆâ„^{d_\t{e}}$  \> layer-norm learnable offset parameter \\[0ex]
-% 	$\vth,\hat{\vth}$        \> $âˆˆâ„^d$        \> collection of all learnable / learned Transformer parameters \\[0ex]
-
 %Glossary
 \newglossaryentry{activation-function}{name={activation function},plural={activation functions}, description={An activation function is a function, that breaks up the linearity of the neural network. It determines if neurons are activated or not. Common variants include \gls{ReLU} and Softmax.}}
 \newglossaryentry{embedding}{name={embedding},plural={embeddings},description={Numerical vector representation of the input, e.g. a word, category, or scalar.}}
@@ -352,8 +299,8 @@ For tabular data, a token corresponds to a column in the data set.}}
 \listoftables % Inserts the list of figures.
 \addcontentsline{toc}{section}{List of Tables} % Adds the list of tables to the table of contents.
 
-\newpage
-\printglossary[title={List of Symbols},type=symbols,style=dotglos]
+% \newpage
+% \printglossary[title={List of Symbols},type=symbols,style=dotglos]
 
 % Main text section
 \newpage
