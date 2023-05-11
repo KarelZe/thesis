@@ -996,16 +996,17 @@ Our search space is reported in \cref{tab:hyperparameter-space-gbm}, which is al
 \begin{table}[H]
     \centering
     \sisetup{table-number-alignment=left}
-    \caption[Hyperparameter Search Space of Gradient Boosting]{Hyperparameter search space of gradient boosting.}
+    \caption[Hyperparameter Search Space of Gradient Boosting]{Hyperparameter search space of gradient boosting. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials each. A discussion of these results is provided below.}
     \label{tab:hyperparameter-space-gbm}
-    \begin{tabular}{@{}ll@{}}
+    \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyperparameter               & Distribution                                           \\ \midrule
-        Depth                        & $\operatorname{UniformInt}[1,12]$                         \\
-        Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$      \\
-        $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$                         \\
-        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$          \\
-        Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$                \\ \bottomrule
+        Hyperparameter               & Distribution                                  & {FS 1}              & {FS 2}              & {FS 3}              \\ \midrule
+        Depth                        & $\operatorname{UniformInt}[1,12]$             & 8                   & 9                   & 12                  \\
+        Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$     & 0.12484221864046671 & 0.12347889459796775 & 0.12471458170177774 \\
+        $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$            & 15                  & 5                   & 16                  \\
+        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ & \num{4e-9}          & \num{4e-7}          & \num{8e-6}          \\
+        Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$            & 0.6419530220498153  & 0.5574912093427532  & 0.45578836944233    \\ \midrule
+        Validation Accuracy in \%    &                                               & 64.37816236230594   & 75.03504680858162   & 76.99459643967347   \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -1017,25 +1018,41 @@ As documented in \cref{tab:hyperparameter-space-gbm}, we tune five hyperparamete
 \emph{Gradient Boosting With Self-Training}
 
 The search space for the semi-supervised variant is identical to the supervised gradient boosting.
+\begin{table}[H]
+    \centering
+    \sisetup{table-number-alignment=left}
+    \caption[Hyperparameter Search Space of Gradient Boosting With Self-Training]{Hyperparameter search space of gradient boosting with self-training. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials each. Arrows indicate the change compared to the supervised variant. A discussion of these results is provided below.}
+    \label{tab:hyperparameter-space-gbm-self-training}
+    \begin{tabular}{@{}lSSS@{}}
+        \toprule
+        Hyperparameter               & {FS 1}         & {FS 2}       & {FS 3}       \\ \midrule
+        Depth                        & 9              & 10            & 9            \\
+        Learning rate $\eta$         & 0.12337960608926582              & 0.1248422186404667            & 0.12347504812996231           \\
+        $\ell_2$ Leaf Regularisation & 12              & 9            & 13            \\
+        Random Strength              & \num{2e-8}     & \num{5e-8}   & \num{5e-8}   \\
+        Bagging Temperature          &   0.34010535578784745             & 0.5214954412829511            & 0.4666577105566224             \\ \midrule
+        Validation Accuracy in \%    & {$\downarrow \num{64.29671279599335}$} & {$\downarrow \num{74.83010065958079}$} & {$\downarrow \num{76.41433947686962}$} \\ \bottomrule
+    \end{tabular}
+\end{table}
 
 \emph{Transformer}
 
-The search space for the FT-Transformer is almost identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)) and reported in \cref{tab:hyperparameter-space-2}. We vary the layer count and the embedding dimension, which directly affect the capacity of the network. Layers refer to the number of Transformer blocks in the encoder stack. The dimension of numerical and continuous embeddings $d_e$ is at \num{256} at maximum, which is half the dimension used in the author's work. We make this sacrifice, due to being computation-bound by the size of the dataset. Dropout \autocite[][1930]{srivastavaDropoutSimpleWay} in the attention module and the \gls{FFN} is used to prevent overfitting the training data. As discussed in \cref{sec:training-of-supervised-models}, we treat the weight decay term in the weight update rule of the AdamW optimizer as a hyperparameter, with larger values for \lambda~enforcing a stronger shrinkage of weights and thereby reducing overfitting.
+The search space for the FT-Transformer is almost identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)) and reported in \cref{tab:hyperparameter-space-2}. We vary the layer count and the embedding dimension, which directly affect the capacity of the network. Layers refer to the number of Transformer blocks in the encoder stack. The dimension of numerical and continuous embeddings $d_e$ is at \num{256} at maximum, which is half the dimension used in the author's work. We make this sacrifice, due to being computation-bound by the size of the dataset. Dropout \autocite[][1930]{srivastavaDropoutSimpleWay} in the attention module and the \gls{FFN} is used to prevent overfitting the training data. As discussed in \cref{sec:training-of-supervised-models} treat the weight decay term in the weight update rule of the AdamW optimizer as a hyperparameter, with larger values for \lambda~enforcing a stronger shrinkage of weights and thereby reducing overfitting.
 
 \begin{table}[H]
     \centering
     \sisetup{table-text-alignment=left}
-    \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer.}
+    \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{5} trials each. A discussion of these results is provided below.}
     \label{tab:hyperparameter-space-2}
-    \begin{tabular}{@{}ll@{}}
+    \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyperparameter                       & Distribution                                         \\ \midrule
-        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                            \\
-        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                       \\
-        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                            \\
-        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                            \\
-        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$         \\
-        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$         \\ \bottomrule
+        Hyperparameter                       & Distribution                                        & {FS 1} & {FS 2} & {FS 3} \\ \midrule
+        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    &        &        &        \\
+        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                &        &        &        \\
+        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &        &        &        \\
+        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &        &        &        \\
+        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ &        &        &        \\
+        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ &        &        &        \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -1043,60 +1060,77 @@ The search space for the FT-Transformer is almost identical to \textcite[][18]{g
 
 The hyperparameter search space for Transformers with a pre-training objective is identical to that shown in \cref{tab:hyperparameter-space-2}. Following \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}, we share the learning rate and weight decay between the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
 
+\clearpage
+
 \textbf{Solutions}
 
 \emph{Gradient Boosting}
 
-\cref{fig:ise-gbm-hyperparam-classical} visualizes the hyperparameter search space of the \gls{GBM} on the \gls{ISE} dataset with classical features, from which we can derive several observations from. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.429}{\percent} and \SI{64.378}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
-
-
 \begin{figure}[!b]
-    \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[ width=0.6\linewidth]{1gzk7msy-hyperparam-search-space.pdf}}
+    \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[ width=0.65\linewidth]{1gzk7msy-hyperparam-search-space.pdf}}
     \vfill
-    \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[ width=0.6\linewidth]{3vntumoi-hyperparam-search-space.pdf}}
+    \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[ width=0.65\linewidth]{3vntumoi-hyperparam-search-space.pdf}}
 \end{figure}
+
 \clearpage
+
 \begin{figure}[ht]
     \addtocounter{figure}{-1}
-    \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 3\label{fig:ise-gbm-hyperparam-ml}]{\includegraphics[ width=0.6\linewidth]{2t5zo50f-hyperparam-search-space.pdf}}
+    \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 3\label{fig:ise-gbm-hyperparam-ml}]{\includegraphics[ width=0.65\linewidth]{2t5zo50f-hyperparam-search-space.pdf}}
     \caption[]{Hyperparameter Search Space of \gls{GBM} on \gls{ISE} Validation Set}
     \label{fig:ise-gbm-hyperparam}
 \end{figure}
 
+\cref{fig:ise-gbm-hyperparam-classical} visualizes the hyperparameter search space of the \gls{GBM} on the \gls{ISE} dataset with classical features, from which we can derive several observations from. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.429}{\percent} and \SI{64.378}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
+
 In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \gls{GBM} trained on classical-size features. The loss surface is smooth with large connected regions. As the best solution achieving \SI{75.03504680858162}{\percent} accuracy lies within a splayed region of dense sampling, it is a good choice for further analysis. Consistent with the loss surface of \cref{fig:ise-gbm-hyperparam-classical}, the trees are grown to the maximum depth and a high learning rate, indicating the need for complex ensemble members highly corrective to previous predictions. Part of this could be due to the low signal-to-noise ratio in financial data.
 
-The loss surface of the \gls{GBM} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.99459643967347}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not per se improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles for trade classification. Results are tabulated in \cref{tab:solutions-gbm}.
+The loss surface of the \gls{GBM} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.99459643967347}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not per se improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles for trade classification.
 
 \clearpage
 
 \emph{Gradient Boosting With Self-Training}
 
 \begin{figure}[!b]
-    \subfloat[Hyperparameter Search Space of \gls{GBM} With Self-Training With Feature Set 1\label{fig:ise-gbm-self-training-hyperparam-classical}]{\includegraphics[ width=0.6\linewidth]{37lymmzc-hyperparam-search-space.pdf}}
+    \subfloat[Hyperparameter Search Space of \gls{GBM} With Self-Training With Feature Set 1\label{fig:ise-gbm-self-training-hyperparam-classical}]{\includegraphics[ width=0.65\linewidth]{37lymmzc-hyperparam-search-space.pdf}}
     \vfill
-    \subfloat[Hyperparameter Search Space of \gls{GBM} With Self-Training With Feature Set 2\label{fig:ise-gbm-self-training-hyperparam-classical-size}]{\includegraphics[ width=0.6\linewidth]{1vmti6db-hyperparam-search-space.pdf}}
+    \subfloat[Hyperparameter Search Space of \gls{GBM} With Self-Training With Feature Set 2\label{fig:ise-gbm-self-training-hyperparam-classical-size}]{\includegraphics[ width=0.65\linewidth]{1vmti6db-hyperparam-search-space.pdf}}
 \end{figure}
 
 \clearpage
 
 \begin{figure}[ht]
     \addtocounter{figure}{-1}
-    \subfloat[Hyperparameter Search Space of \gls{GBM} With Self-Training With Feature Set 3\label{fig:ise-gbm-self-training-hyperparam-ml}]{\includegraphics[width=0.6\linewidth]{t55nd8r0-hyperparam-search-space.pdf}}
+    \subfloat[Hyperparameter Search Space of \gls{GBM} With Self-Training With Feature Set 3\label{fig:ise-gbm-self-training-hyperparam-ml}]{\includegraphics[width=0.65\linewidth]{t55nd8r0-hyperparam-search-space.pdf}}
     \caption[]{Hyperparameter Search Space of \gls{GBM} with Self-Training on \gls{ISE} Validation Set}
     \label{fig:ise-gbm-self-training-hyperparam}
 \end{figure}
 
-Results are tabulated in \cref{tab:solutions-gbm-self-training}.
-
 \emph{Transformer}
 
 (insert here)
-
-Results are tabulated in \cref{tab:solutions-transformer}.
+\begin{table}[H]
+    \centering
+    \sisetup{table-text-alignment=left}
+    \caption[Solutions of Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{5} trials each. A discussion of these results is provided below.}
+    \label{tab:hyperparameter-space-2}
+    \begin{tabular}{@{}llSSS@{}}
+        \toprule
+        Hyperparameter                       & Distribution                                        & {FS 1} & {FS 2} & {FS 3} \\ \midrule
+        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    &        &        &        \\
+        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                &        &        &        \\
+        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &        &        &        \\
+        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &        &        &        \\
+        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ &        &        &        \\
+        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ &        &        &        \\ \midrule
+        Validation Accuracy in \%    & {$\downarrow \num{0.0}$} & {$\downarrow \num{0.0}$} & {$\downarrow \num{0.0}$} \\ \bottomrule
+    \end{tabular}
+\end{table}
 
 \emph{Transformer With Pre-Training}
 
 (insert here)
+
 
 \emph{Classical Rules}
 

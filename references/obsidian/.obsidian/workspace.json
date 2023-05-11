@@ -25,8 +25,12 @@
             "id": "4517fb6e5bf3488a",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "📖chapters/🏅Results of supervised.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ],
@@ -96,6 +100,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "📖chapters/🏅Results of supervised.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +127,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "📖chapters/🏅Results of supervised.md"
+              }
             }
           }
         ],
@@ -145,6 +152,18 @@
   },
   "active": "4517fb6e5bf3488a",
   "lastOpenFiles": [
+    "📥Inbox/@bennettExploitingUnlabeledData2002.md",
+    "📥Inbox/@chenSimpleFrameworkContrastive2020.md",
+    "📥Inbox/@dalche-bucSemisupervisedMarginBoost2001.md",
+    "📥Inbox/@dorogushCatBoostGradientBoosting.md",
+    "📥Inbox/@erhanWhyDoesUnsupervised.md",
+    "📥Inbox/@hookerUnrestrictedPermutationForces2021.md",
+    "📥Inbox/@mallapragadaSemiBoostBoostingSemiSupervised2009.md",
+    "📥Inbox/@nasdaqincFrequentlyAskedQuestions2017.md",
+    "📥Inbox/@pedregosaScikitlearnMachineLearning2018.md",
+    "📖chapters/☠️Problem Framing.md",
+    "📑notes/☠️Problem Framing notes.md",
+    "📑notes/🤖Pretraining notes.md",
     "📖chapters/💡Training of models (supervised).md",
     "🖼️Media/visualization-of-word-embeddings.png",
     "🖼️Media/training-vs-validation-accuracy.png",
@@ -168,18 +187,6 @@
     "📥Inbox/@khanBootstrappingMultipleImputation2019.md",
     "📖chapters/💡Hyperparameter tuning.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
-    "📖chapters/🏅Results.md",
-    "📖chapters/🏅Results of semi-supervised.md",
-    "📖chapters/🏅Results of supervised.md",
-    "📖chapters/🧭Random Feature Permutation.md",
-    "📥Inbox/@nasdaqincFrequentlyAskedQuestions2017.md",
-    "📥Inbox/@blazejewskiLocalNonParametricModel2005.md",
-    "📥Inbox/@bahriSCARFSelfsupervisedContrastive2022.md",
-    "📥Inbox/@clarkElectraPretrainingText2020.md",
-    "📥Inbox/@gevaTransformerFeedforwardLayers2021.md",
-    "📥Inbox/@tancikFourierFeaturesLet2020.md",
-    "📥Inbox/@somepalliSaintImprovedNeural2021.md",
-    "📥Inbox/@shiQuantizedTrainingGradient2022.md",
-    "📥Inbox/@jamesIntroductionStatisticalLearning2013.md"
+    "📖chapters/🏅Results.md"
   ]
 }
