@@ -28,3 +28,57 @@
     \caption[Autocorrelation of Features]{Autocorrelation Features. Own work.}
     \label{fig:auto-correlation-features}
 \end{figure}
+
+\subsection{Results of Hyperparameter Searches}
+
+\begin{table}[H]
+    \centering
+    \sisetup{table-number-alignment=left}
+    \caption[Solutions of Gradient Boosting]{Solutions of gradient boosting. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials each.}
+    \label{tab:solutions-gbm}
+    \begin{tabular}{@{}llSSS@{}}
+        \toprule
+        Hyperparameter               & Distribution                                  & {FS 1}              & {FS 2}              & {FS 3}              \\ \midrule
+        Depth                        & $\operatorname{UniformInt}[1,12]$             & 8                   & 9                   & 12                  \\
+        Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$     & 0.12484221864046671 & 0.12347889459796775 & 0.12471458170177774 \\
+        $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$            & 15                  & 5                   & 16                  \\
+        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ & \num{4e-9}          & \num{4e-7}          & \num{8e-6}          \\
+        Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$            & 0.6419530220498153  & 0.5574912093427532  & 0.45578836944233    \\ \midrule
+        Validation Accuracy in \%    &                                               & 64.37816236230594   & 75.03504680858162   & 76.99459643967347   \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \sisetup{table-number-alignment=left}
+    \caption[Hyperparameter Search Space of Gradient Boosting With Self-Training]{Hyperparameter search space of gradient boosting with self-training. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials each. Arrows indicate the change compared to the supervised variant. }
+    \label{tab:solutions-gbm-self-training}
+    \begin{tabular}{@{}llSSS@{}}
+        \toprule
+        Hyperparameter             & Distribution  & {FS 1}         & {FS 2}       & {FS 3}       \\ \midrule
+        Depth                       &$\operatorname{UniformInt}[1,12]$   & 9              & 10            & 9            \\
+        Learning rate $\eta$        &$\operatorname{LogUniform}[0.001, 0.125]$  & 0.12337960608926582              & 0.1248422186404667            & 0.12347504812996231           \\
+        $\ell_2$ Leaf Regularisation &$\operatorname{UniformInt}[2, 30]$ & 12              & 9            & 13            \\
+        Random Strength             & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$& \num{2e-8}     & \num{5e-8}   & \num{5e-8}   \\
+        Bagging Temperature         &$\operatorname{Uniform}[0.0, 1.0]$  &   0.34010535578784745             & 0.5214954412829511            & 0.4666577105566224             \\ \midrule
+        Validation Accuracy in \%   & & {$\downarrow \num{64.29671279599335}$} & {$\downarrow \num{74.83010065958079}$} & {$\downarrow \num{76.41433947686962}$} \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \sisetup{table-text-alignment=left}
+    \caption[Solutions of Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{10} trials each. A discussion of these results is provided below.}
+    \label{tab:solutions-transformer}
+    \begin{tabular}{@{}llSSS@{}}
+        \toprule
+        Hyperparameter                       & Distribution                                        & {FS 1} & {FS 2} & {FS 3} \\ \midrule
+        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    &        &        &        \\
+        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                &        &        &        \\
+        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &        &        &        \\
+        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &        &        &        \\
+        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ &        &        &        \\
+        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ &        &        &        \\ \midrule
+        Validation Accuracy in \%  &  & {$\downarrow \num{0.0}$} & {$\downarrow \num{0.0}$} & {$\downarrow \num{0.0}$} \\ \bottomrule
+    \end{tabular}
+\end{table}
