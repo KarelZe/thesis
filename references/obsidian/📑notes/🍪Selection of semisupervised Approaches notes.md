@@ -79,3 +79,52 @@ For the existing semi-supervised boosting methods [Bennett et al., 2002; Chen an
 “Our contributions are as follow: 1. We create a new benchmark for tabular data, with a precise methodology for choosing and preprocessing a large number of representative datasets. We share these datasets through OpenML [Vanschoren et al., 2014], which makes them easy to use. 2. We extensively compare deep learning models and tree-based models on generic tabular datasets in multiple settings, accounting for the cost of choosing hyperparameters.” (Grinsztajn et al., 2022, p. 2)
 
 with several works claiming to outperform tree-based learners for tabular classification tasks
+
+corrobates
+
+*Differentiable Trees*
+the ideas of creating differentiable learner ensembles [55, 29, 77, 43, 8], i
+
+corroborates this
+
+Tabluar specific deep learning architectures
+
+
+-> NODE poor performance? (in [[@gorishniyRevisitingDeepLearning2021]]) fairly reasonable / poor in ([[@kadraWelltunedSimpleNets2021]]) / ([[@borisovDeepNeuralNetworks2022]])
+Differentiable trees take inspiration from tree-based learners. 
+
+A class of of networks that takes inspiration from tree-based learners are differentiable trees.
+to warrants
+By the virtue
+take inspiration from 
+Differentiable trees try to adapt the success of 
+These architectures are often based 
+Recently, several deep learning approaches claim to excel the performance of gradient boosting. 
+Why do they make sense?
+Why gradient-boosting? Why not random forests?
+Classical neural networks 
+Parts of this success lies in the robustness to noise, 
+A particularily promising strand of research are attention-based models.
+Standard-MLPs. 
+A line of research, including 
+A fair comparison betw
+These results, contradict 
+
+(🚧short discussion what attention is)
+
+(What can be seen? General overview for neural nets in [[@melisStateArtEvaluation2017]]. Also, [[@kadraWelltunedSimpleNets2021]])
+
+
+Neural Oblivious Decision Ensembles (NODE). The NODE network [Popov et al., 2020] contains equal-depth oblivious decision trees (ODTs), which are differentiable such that error gradients can backpropagate through them. Like classical decision trees, ODTs split data according to selected features and compare each with a learned threshold. However, only one feature is chosen at each level, resulting in a balanced ODT that can be differentiated. Thus, the complete model provides an ensemble of differentiable trees.
+
+“In its essence, the proposed NODE architecture generalizes CatBoost, making the splitting feature choice and decision tree routing differentiable. As a result, the NODE architecture is fully differentiable and could be incorporated in any computational graph of existing DL packages,” (Popov et al., 2019, p. 2)
+
+“We introduce the Neural Oblivious Decision Ensemble (NODE) architecture with a layer-wise structure similar to existing deep learning models. In a nutshell, our architecture consists of differentiable oblivious decision trees (ODT) that are trained end-to-end by backpropagation. We describe our implementation of the differentiable NODE layer in Section 3.1, the full model architecture in Section 3.2, and the training and inference procedures in section 3.3.” (Popov et al., 2019, p. 3)
+“Differentiable trees. The significant drawback of tree-based approaches is that they usually do not allow end-to-end optimization and employ greedy, local optimization procedures for tree construction.” (Popov et al., 2019, p. 2)
+
+“Thus, they cannot be used as a component for pipelines, trained in an end-to-end fashion. To address this issue, several works (Kontschieder et al., 2015; Yang et al., 2018; Lay et al., 2018) 1https://github.com/Qwicen/node” (Popov et al., 2019, p. 2)
+
+“propose to ”soften” decision functions in the internal tree nodes to make the overall tree function and tree routing differentiable. In our work, we advocate the usage of the recent entmax transformation (Peters et al., 2019) to ”soften” decision trees. We confirm its advantages over the previously proposed approaches in the experimental section” (Popov et al., 2019, p. 3)
+“To address this issue, several works (Hazimeh et al., 2020; Kontschieder et al., 2015; Popov et al., 2020; Yang et al., 2018) propose to “smooth” decision functions in the internal tree nodes to make the overall tree function and tree routing differentiable. While the methods of this family can outperform GBDT on some tasks (Popov et al., 2020), in our experiments, they do not consistently outperform ResNet.” (Gorishniy et al., 2021, p. 2)
+
+hat combines.... In large-scale,  

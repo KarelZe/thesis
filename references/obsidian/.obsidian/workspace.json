@@ -39,6 +39,18 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "📖chapters/🍪Selection Of Supervised Approaches.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "ee51b79816cc0c65",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "📑notes/🍪Selection of semisupervised Approaches notes.md",
                 "mode": "source",
                 "source": false
@@ -58,7 +70,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -174,10 +186,11 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "f6e96c4c49a2d719",
+  "active": "f1c7a027d0cef047",
   "lastOpenFiles": [
     "📑notes/🍪Selection of semisupervised Approaches notes.md",
     "📖chapters/🍪Selection Of Supervised Approaches.md",
+    "📥Inbox/@popovNeuralObliviousDecision2019.md",
     "📥Inbox/@kadraWelltunedSimpleNets2021.md",
     "📖chapters/🧭Random Feature Permutation.md",
     "Inbox/@bennettExploitingUnlabeledData2002.md",
@@ -210,7 +223,6 @@
     "📥Inbox/@stroblConditionalVariableImportance2008.md",
     "📥Inbox/@powerGrokkingGeneralizationOverfitting2022.md",
     "Open Points in my head.md",
-    "📥Inbox/@nasdaqinc.FrequentlyAskedQuestions2017.md",
-    "📥Inbox/@liuHardSoftClassification2011.md"
+    "📥Inbox/@nasdaqinc.FrequentlyAskedQuestions2017.md"
   ]
 }
