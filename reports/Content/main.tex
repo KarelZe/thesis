@@ -310,11 +310,11 @@ In this thesis, we perform a succinct discussion to select a set of supervised c
 
 \textbf{Deep Neural Networks}
 
-Many recently proposed deep learning architectures use an attention mechanism. For instance, \emph{TabNet} \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, fuses the concept of decision trees and attention. Similar to growing a decision tree, several sub-networks are used to process the input in a sequential, hierarchical fashion. Sequential attention, a variant of attention, is used to decide which features to select in each step. The output of \emph{TabNet} is the aggregate of all sub-networks. Its poor performance in independent comparisons e.g., \textcites[][7]{kadraWelltunedSimpleNets2021}[][7]{gorishniyRevisitingDeepLearning2021}, raises doubts about its usefulness.
+Many recently proposed deep learning architectures use an attention mechanism. For instance, \emph{TabNet} \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, fuses the concept of decision trees and attention. Similar to growing a decision tree, several sub-networks are used to process the input in a sequential, hierarchical fashion. Sequential attention, a variant of attention, is used to decide which features to select in each step. The output of \emph{TabNet} is the aggregate of all sub-networks. Its poor performance in independent comparisons e.g., \textcites[][7]{kadraWelltunedSimpleNets2021}[][7]{gorishniyRevisitingDeepLearning2021}, raises doubts about its usefulness. 
 
-Tailored to tabular datasets \emph{SAINT} uses a specialized attention mechanism, the intersample attention, which performs attention over both columns and rows \autocite[][4--5]{somepalliSaintImprovedNeural2021}. Applied to our setting, the model would contextualize information from the trade itself, but also from neighbouring trades, which would be an unfair advantage over classical trade classification rules. Similarly, the \emph{Non-Parametric Transformer} of \textcite[][3--4]{kossenSelfAttentionDatapointsGoing2021} uses the entire dataset as a context, which rules out the application in our work.
+Tailored to tabular datasets \emph{SAINT} uses a specialized attention mechanism, the intersample attention, which performs attention over both columns and rows \autocite[][4--5]{somepalliSaintImprovedNeural2021}. Applied to our setting, the model would contextualize information from the trade itself, but also from neighbouring trades, which would be an unfair advantage over classical trade classification rules. Similarly, the \emph{Non-Parametric Transformer} of \textcite[][3--4]{kossenSelfAttentionDatapointsGoing2021} uses the entire dataset as a context, which rules out the application in our work. 
 
-Differently, \emph{TabTransformer} of \textcite[][2--3]{huangTabTransformerTabularData2020} performs attention per sample on categorical features-only. All numerical features are processed in a separate stream, which breaks correlations between categorical and numerical features \autocite[][2]{somepalliSaintImprovedNeural2021}. Importantly, most features in trade datasets are numerical. As such, trade classification would hardly profit from the Transformer architecture, causing the model to collapse to a vanilla \gls{MLP}.
+Differently, \emph{TabTransformer} of \textcite[][2--3]{huangTabTransformerTabularData2020} performs attention per sample on categorical features-only. All numerical features are processed in a separate stream, which breaks correlations between categorical and numerical features \autocite[][2]{somepalliSaintImprovedNeural2021}. Importantly, most features in trade datasets are numerical. As such, trade classification would hardly profit from the Transformer architecture, causing the model to collapse to a vanilla \gls{MLP}. 
 
 A more comprehensive approach is provided by \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} in the form \emph{FT-Transformer}, which is a Transformer-based architecture, that processes both numerical inputs and categorical input in the Transformer blocks. Since it achieved competitive performance in several empirical studies, we further consider FT-Transformer for our empirical study \autocite[][5]{grinsztajnWhyTreebasedModels2022}. Being based on the Transformer architecture, FT-Transformer \emph{naturally} scales to large amounts of data and can utilize unlabelled data through self-training procedures.
 
@@ -1024,18 +1024,19 @@ The search space for the FT-Transformer is almost identical to \textcite[][18]{g
 
 \begin{table}[H]
     \centering
-    \sisetup{table-text-alignment=left}
-    \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer.}
-    \label{tab:hyperparameter-space-2}
-    \begin{tabular}{@{}ll@{}}
-        \toprule
-        Hyperparameter                       & Distribution                                         \\ \midrule
-        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                            \\
-        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                       \\
+<<<<<<< HEAD
+    \sisetup{table-text-alignment=right}
+        \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{5} trials each. A discussion of these results is provided below.}
+        \label{tab:hyperparameter-space-2}
+    \begin{tabular}{@{}llSSS@{}}
+    \toprule
+    Hyperparameter         & Distribution  & {FS 1} & {FS 2} & {FS 3} \\ \midrule
+    Layers $L$               & $\operatorname{UniformInt}[1,6]$ &      &      &      \\
         Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                            \\
         \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                            \\
         Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$         \\
         weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$         \\ \bottomrule
+>>>>>>> origin/main
     \end{tabular}
 \end{table}
 
@@ -1043,7 +1044,6 @@ The search space for the FT-Transformer is almost identical to \textcite[][18]{g
 
 The hyperparameter search space for Transformers with a pre-training objective is identical to that shown in \cref{tab:hyperparameter-space-2}. Following \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}, we share the learning rate and weight decay between the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
 
-\textbf{Solutions}
 
 \emph{Gradient Boosting}
 
