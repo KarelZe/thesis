@@ -310,11 +310,11 @@ In this thesis, we perform a succinct discussion to select a set of supervised c
 
 \textbf{Deep Neural Networks}
 
-Many recently proposed deep learning architectures use an attention mechanism. For instance, \emph{TabNet} \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, fuses the concept of decision trees and attention. Similar to growing a decision tree, several sub-networks are used to process the input in a sequential, hierarchical fashion. Sequential attention, a variant of attention, is used to decide which features to select in each step. The output of \emph{TabNet} is the aggregate of all sub-networks. Its poor performance in independent comparisons e.g., \textcites[][7]{kadraWelltunedSimpleNets2021}[][7]{gorishniyRevisitingDeepLearning2021}, raises doubts about its usefulness. 
+Many recently proposed deep learning architectures use an attention mechanism. For instance, \emph{TabNet} \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, fuses the concept of decision trees and attention. Similar to growing a decision tree, several sub-networks are used to process the input in a sequential, hierarchical fashion. Sequential attention, a variant of attention, is used to decide which features to select in each step. The output of \emph{TabNet} is the aggregate of all sub-networks. Its poor performance in independent comparisons e.g., \textcites[][7]{kadraWelltunedSimpleNets2021}[][7]{gorishniyRevisitingDeepLearning2021}, raises doubts about its usefulness.
 
-Tailored to tabular datasets \emph{SAINT} uses a specialized attention mechanism, the intersample attention, which performs attention over both columns and rows \autocite[][4--5]{somepalliSaintImprovedNeural2021}. Applied to our setting, the model would contextualize information from the trade itself, but also from neighbouring trades, which would be an unfair advantage over classical trade classification rules. Similarly, the \emph{Non-Parametric Transformer} of \textcite[][3--4]{kossenSelfAttentionDatapointsGoing2021} uses the entire dataset as a context, which rules out the application in our work. 
+Tailored to tabular datasets \emph{SAINT} uses a specialized attention mechanism, the intersample attention, which performs attention over both columns and rows \autocite[][4--5]{somepalliSaintImprovedNeural2021}. Applied to our setting, the model would contextualize information from the trade itself, but also from neighbouring trades, which would be an unfair advantage over classical trade classification rules. Similarly, the \emph{Non-Parametric Transformer} of \textcite[][3--4]{kossenSelfAttentionDatapointsGoing2021} uses the entire dataset as a context, which rules out the application in our work.
 
-Differently, \emph{TabTransformer} of \textcite[][2--3]{huangTabTransformerTabularData2020} performs attention per sample on categorical features-only. All numerical features are processed in a separate stream, which breaks correlations between categorical and numerical features \autocite[][2]{somepalliSaintImprovedNeural2021}. Importantly, most features in trade datasets are numerical. As such, trade classification would hardly profit from the Transformer architecture, causing the model to collapse to a vanilla \gls{MLP}. 
+Differently, \emph{TabTransformer} of \textcite[][2--3]{huangTabTransformerTabularData2020} performs attention per sample on categorical features-only. All numerical features are processed in a separate stream, which breaks correlations between categorical and numerical features \autocite[][2]{somepalliSaintImprovedNeural2021}. Importantly, most features in trade datasets are numerical. As such, trade classification would hardly profit from the Transformer architecture, causing the model to collapse to a vanilla \gls{MLP}.
 
 A more comprehensive approach is provided by \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} in the form \emph{FT-Transformer}, which is a Transformer-based architecture, that processes both numerical inputs and categorical input in the Transformer blocks. Since it achieved competitive performance in several empirical studies, we further consider FT-Transformer for our empirical study \autocite[][5]{grinsztajnWhyTreebasedModels2022}. Being based on the Transformer architecture, FT-Transformer \emph{naturally} scales to large amounts of data and can utilize unlabelled data through self-training procedures.
 
@@ -739,15 +739,19 @@ In summary, \gls{RTD} can help to learn expressive representations of the input,
 \addtocontents{toc}{\protect\newpage}
 \section{Empirical Study}\label{sec:empirical-study}
 
-In this Section, we demonstrate the effectiveness of gradient boosting and Transformers for trade classification. We benchmark against the \gls{LR}, \gls{EMO}, and \gls{CLNV} algorithm, as well as hybrids involving the trade size rule and depth rule on two datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}.
+In this section, we demonstrate the effectiveness of machine learning for trade classification in an empirical setting. To commence, the research framework is introduced.
 
-Experiments were conducted on shared nodes of the bwHPC cluster, with 10 assigned Intel Xeon Gold 6230 cores at \SI{2.1}{\GHz}, an NVIDIA V100 \SI{32}{\giga\byte}, and \SI{92.160}{\giga\byte} random access memory running Red Hat Enterprise Linux release 8.4. For reproducibility, the implementation and experiment tracking are publicly available\footnote{Code is available at~\url{https://github.com/KarelZe/thesis} Experiments are tracked at \url{https://wandb.ai/fbv/thesis}.}.
+\subsection{Research Framework}\label{sec:research-framework}
+
+(...)
+
+We benchmark against the \gls{LR}, \gls{EMO}, and \gls{CLNV} algorithm, as well as hybrids involving the trade size rule and depth rule on two datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}.
 
 The subsequent section provides details on the datasets.
 
 \subsection{Data and Data Preparation}\label{sec:data-and-data-preparation}
 
-The following chapter describes the construction of datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we define and infer the trade initiator.
+The following chapter describes the construction of datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we define and infer the true trade initiator.
 
 \subsubsection{Data Collection}\label{sec:data-collection}
 
@@ -851,6 +855,8 @@ We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visua
 Our train-test-split assumes that all subsets are drawn from the same distribution, so fitting a classifier on the training set and optimising for the validation set provides good estimates for the test set. To validate this assumption, we use adversarial validation. Specifically, we re-label all training samples with $y=-1$ and all trades of the validation set with $y=1$, train a classifier on a random subset of the composed dataset and predict class conformance. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which ranges between $\left[-1, 1\right]$ and is insensitive to class imbalances.\footnote{Classes are imbalanced, due to the training set being three times the size of the validation set.} Assuming train and validation samples are sampled from the same distribution, the performance estimate is near a random guess, or $\operatorname{MCC} = 0$, Depending on the feature sets, the \gls{MCC} ranges between (...) and (...) suggesting training and validation sets are approximately similar. The next section discusses techniques used in training the classifiers.
 
 \subsection{Training and Tuning}\label{sec:training-and-tuning}
+
+Experiments are conducted on shared nodes of the bwHPC cluster, with 10 assigned Intel Xeon Gold 6230 cores at \SI{2.1}{\GHz}, an NVIDIA V100 \SI{32}{\giga\byte}, and \SI{92.160}{\giga\byte} random access memory running Red Hat Enterprise Linux release 8.4. For reproducibility, the implementation and experiment tracking are publicly available\footnote{Code is available at~\url{https://github.com/KarelZe/thesis} Experiments are tracked at \url{https://wandb.ai/fbv/thesis}.}.
 
 \subsubsection{Training of Supervised
     Models}\label{sec:training-of-supervised-models}
@@ -1000,12 +1006,12 @@ Our search space is reported in \cref{tab:hyperparameter-space-gbm}, which is al
     \label{tab:hyperparameter-space-gbm}
     \begin{tabular}{@{}ll@{}}
         \toprule
-        Hyperparameter               & Distribution                                           \\ \midrule
-        Depth                        & $\operatorname{UniformInt}[1,12]$                         \\
-        Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$      \\
-        $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$                         \\
-        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$          \\
-        Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$                \\ \bottomrule
+        Hyperparameter               & Distribution                                  \\ \midrule
+        Depth                        & $\operatorname{UniformInt}[1,12]$             \\
+        Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$     \\
+        $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$            \\
+        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ \\
+        Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$            \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -1025,16 +1031,16 @@ The search space for the FT-Transformer is almost identical to \textcite[][18]{g
 \begin{table}[H]
     \centering
     \sisetup{table-text-alignment=right}
-        \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{5} trials each. A discussion of these results is provided below.}
-        \label{tab:hyperparameter-space-2}
-    \begin{tabular}{@{}llSSS@{}}
-    \toprule
-    Hyperparameter         & Distribution  & {FS 1} & {FS 2} & {FS 3} \\ \midrule
-    Layers $L$               & $\operatorname{UniformInt}[1,6]$ &      &      &      \\
-        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                            \\
-        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                            \\
-        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$         \\
-        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$         \\ \bottomrule
+    \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{5} trials each. A discussion of these results is provided below.}
+    \label{tab:hyperparameter-space-2}
+    \begin{tabular}{@{}ll@{}}
+        \toprule
+        Hyperparameter         & Distribution                                        \\ \midrule
+        Layers $L$             & $\operatorname{UniformInt}[1,6]$                    \\
+        Attention dropout      & $\operatorname{Uniform}[0, 0.5]$                    \\
+        \gls{FFN} dropout      & $\operatorname{Uniform}[0, 0.5]$                    \\
+        Learning rate $\eta$   & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ \\
+        weight decay $\lambda$ & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ \\ \bottomrule
     \end{tabular}
 \end{table}
 
