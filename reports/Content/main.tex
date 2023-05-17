@@ -125,7 +125,7 @@ As \cref{sec:quote-rule} unveils, the tick rule yields significantly lower succe
 
 The depth rule gauges the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity at one trade side, trades are classified as a buy (sell) for a larger ask (bid) size \autocite[][14]{grauerOptionTradeClassification2022}.
 
-Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t}$ of the bid, and $\gls{P-tilde}_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} = \gls{M}_{i,t} \land \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \right\}$. The depth rule is now calculated as:
+Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t}$ of the bid, and $P_{i,t}$ the trade Price at $t$ of the $i$-th option. We set the domain as $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} = \gls{M}_{i,t} \land \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \right\}$. The depth rule is now calculated as:
 \begin{equation}
     \operatorname{depth} \colon \mathcal{A} \to \mathcal{Y},\quad
     \operatorname{depth}(i, t)=
@@ -1190,7 +1190,7 @@ In an attempt to explain the decision-making process of multi-modal Transformers
 
 In this approach, the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(l)}=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(l)}$ is calculated to weight the attention head's importance. As previously suggested in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. Like all other presented approaches \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and is therefore computationally efficient.
 
-In the absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all transformer blocks. The level of agreement between attributions from attention maps and random feature permutation by calculating Spearman's rank correlation between them.
+In the absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all Transformer blocks. The level of agreement between attributions from attention maps and random feature permutation by calculating Spearman's rank correlation between them.
 
 \newpage
 \section{Results}\label{sec:results}
