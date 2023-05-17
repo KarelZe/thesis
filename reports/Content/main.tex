@@ -1024,7 +1024,6 @@ The search space for the FT-Transformer is almost identical to \textcite[][18]{g
 
 \begin{table}[H]
     \centering
-<<<<<<< HEAD
     \sisetup{table-text-alignment=right}
         \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{5} trials each. A discussion of these results is provided below.}
         \label{tab:hyperparameter-space-2}
@@ -1036,7 +1035,6 @@ The search space for the FT-Transformer is almost identical to \textcite[][18]{g
         \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                            \\
         Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$         \\
         weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$         \\ \bottomrule
->>>>>>> origin/main
     \end{tabular}
 \end{table}
 
@@ -1208,7 +1206,7 @@ In the absence of ground truth for the true feature attribution, we resort to at
 \begin{figure}[ht]
     \centering
     \includegraphics{categorical-embeddings.pdf}
-    \caption[Categorical Embeddings of Underlyings]{Categorical embeddings of underlyings. The plot depicts the projected embedding of Microsoft ($\mathtt{MSFT}$) and its most similar embeddings. The similarity is highest for Intel ($\mathtt{INTC}$), Oracle ($\mathtt{ORCL}$), Nokia ($\mathtt{NOK}$), and Cisco ($\mathtt{CSCO}$). Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. The nine most similar embeddings by cosine similarity in the original space are coloured and annotated.}
+    \caption[Categorical Embeddings of Underlyings]{Categorical embeddings of underlyings. The plot depicts the projected embedding of Microsoft ($\mathtt{MSFT}$) and its most similar embeddings. The nine most similar embeddings by cosine similarity in the original space are coloured and annotated. The similarity is highest for Intel ($\mathtt{INTC}$), Oracle ($\mathtt{ORCL}$), Nokia ($\mathtt{NOK}$), and Cisco ($\mathtt{CSCO}$). Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}.}
     \label{fig:categorical-embeddings}
 \end{figure}
 
