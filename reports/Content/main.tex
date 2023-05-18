@@ -746,7 +746,7 @@ We present our research framework for trade classification, summarized in \cref{
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=12cm, height=6cm]{example-image}
+    \includegraphics[width=14cm]{research-framework}
     \caption[Research Framework]{Research Framework}
     \label{fig:research-framework}
 \end{figure}
@@ -927,8 +927,6 @@ The convergence behaviour of our model is similar to that of gradient boosting. 
 The loss surface of the \gls{GBM} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.98}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not \emph{per-se} improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles.
 
 \textbf{Solutions For FT-Transformer}
-
-(insert here)
 
 \emph{Activation Function}
 
@@ -1216,7 +1214,7 @@ In the absence of ground truth for the true feature attribution, we resort to at
 \begin{figure}[ht]
     \centering
     \includegraphics{categorical-embeddings.pdf}
-    \caption[Categorical Embeddings of Underlyings]{Categorical embeddings of underlyings. The plot depicts the projected embedding of Microsoft ($\mathtt{MSFT}$) and its most similar embeddings. The nine most similar embeddings by cosine similarity in the original space are coloured and annotated. The similarity is highest for Intel ($\mathtt{INTC}$), Oracle ($\mathtt{ORCL}$), Nokia ($\mathtt{NOK}$), and Cisco ($\mathtt{CSCO}$). Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}.}
+    \caption[Categorical Embeddings of Underlyings]{Categorical embeddings of underlyings. The plot depicts the projected embedding of Microsoft ($\mathtt{MSFT}$) and its most similar embeddings. The similarity is highest for Intel ($\mathtt{INTC}$), Oracle ($\mathtt{ORCL}$), Nokia ($\mathtt{NOK}$), and Cisco ($\mathtt{CSCO}$). Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. The nine most similar embeddings by cosine similarity in the original space are coloured and annotated.}
     \label{fig:categorical-embeddings}
 \end{figure}
 
