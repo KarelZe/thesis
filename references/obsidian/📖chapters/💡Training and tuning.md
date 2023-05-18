@@ -1,12 +1,11 @@
 This chapter documents the basic training setup, and defines a baseline before applying hyperparameter tuning.
 
+
+
 Practical guide for researchers by Google: https://github.com/google-research/tuning_playbook or [[tuningplaybookgithub]]
 
 
-## Research Framework
-
-![[research-framework.png]]
-
+Experiments were conducted on nodes of the *bwHPC cluster* running Ubuntu 20.04, with x processor x.xGHz, x GB RAM,  and 4 Nvidia Tesla V100. For reproducibility the implementation and experiment tracking is publicly available. -footnote(wandb + github)
 
 
 ## Gradient-Boosting

@@ -144,7 +144,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 # 👒 Empirical Study
 - In the subsequent sections we apply methods from (...) in an empirical setting.
 ## Environment 🟡
-[[🌏Environment]]
+[[🌏Research Framework]]
 
 ## Data and Data Preparation 🟡
 
