@@ -125,7 +125,7 @@ As \cref{sec:quote-rule} unveils, the tick rule yields significantly lower succe
 
 The depth rule gauges the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity at one trade side, trades are classified as a buy (sell) for a larger ask (bid) size \autocite[][14]{grauerOptionTradeClassification2022}.
 
-Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t}$ of the bid, and $\gls{P-tilde}_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} = \gls{M}_{i,t} \land \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \right\}$. The depth rule is now calculated as:
+Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t}$ of the bid, and $P_{i,t}$ the trade Price at $t$ of the $i$-th option. We set the domain as $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} = \gls{M}_{i,t} \land \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \right\}$. The depth rule is now calculated as:
 \begin{equation}
     \operatorname{depth} \colon \mathcal{A} \to \mathcal{Y},\quad
     \operatorname{depth}(i, t)=
@@ -310,11 +310,11 @@ In this thesis, we perform a succinct discussion to select a set of supervised c
 
 \textbf{Deep Neural Networks}
 
-Many recently proposed deep learning architectures use an attention mechanism. For instance, \emph{TabNet} \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, fuses the concept of decision trees and attention. Similar to growing a decision tree, several sub-networks are used to process the input in a sequential, hierarchical fashion. Sequential attention, a variant of attention, is used to decide which features to select in each step. The output of \emph{TabNet} is the aggregate of all sub-networks. Its poor performance in independent comparisons e.g., \textcites[][7]{kadraWelltunedSimpleNets2021}[][7]{gorishniyRevisitingDeepLearning2021}, raises doubts about its usefulness. 
+Many recently proposed deep learning architectures use an attention mechanism. For instance, \emph{TabNet} \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, fuses the concept of decision trees and attention. Similar to growing a decision tree, several sub-networks are used to process the input in a sequential, hierarchical fashion. Sequential attention, a variant of attention, is used to decide which features to select in each step. The output of \emph{TabNet} is the aggregate of all sub-networks. Its poor performance in independent comparisons e.g., \textcites[][7]{kadraWelltunedSimpleNets2021}[][7]{gorishniyRevisitingDeepLearning2021}, raises doubts about its usefulness.
 
-Tailored to tabular datasets \emph{SAINT} uses a specialized attention mechanism, the intersample attention, which performs attention over both columns and rows \autocite[][4--5]{somepalliSaintImprovedNeural2021}. Applied to our setting, the model would contextualize information from the trade itself, but also from neighbouring trades, which would be an unfair advantage over classical trade classification rules. Similarly, the \emph{Non-Parametric Transformer} of \textcite[][3--4]{kossenSelfAttentionDatapointsGoing2021} uses the entire dataset as a context, which rules out the application in our work. 
+Tailored to tabular datasets \emph{SAINT} uses a specialized attention mechanism, the intersample attention, which performs attention over both columns and rows \autocite[][4--5]{somepalliSaintImprovedNeural2021}. Applied to our setting, the model would contextualize information from the trade itself, but also from neighbouring trades, which would be an unfair advantage over classical trade classification rules. Similarly, the \emph{Non-Parametric Transformer} of \textcite[][3--4]{kossenSelfAttentionDatapointsGoing2021} uses the entire dataset as a context, which rules out the application in our work.
 
-Differently, \emph{TabTransformer} of \textcite[][2--3]{huangTabTransformerTabularData2020} performs attention per sample on categorical features-only. All numerical features are processed in a separate stream, which breaks correlations between categorical and numerical features \autocite[][2]{somepalliSaintImprovedNeural2021}. Importantly, most features in trade datasets are numerical. As such, trade classification would hardly profit from the Transformer architecture, causing the model to collapse to a vanilla \gls{MLP}. 
+Differently, \emph{TabTransformer} of \textcite[][2--3]{huangTabTransformerTabularData2020} performs attention per sample on categorical features-only. All numerical features are processed in a separate stream, which breaks correlations between categorical and numerical features \autocite[][2]{somepalliSaintImprovedNeural2021}. Importantly, most features in trade datasets are numerical. As such, trade classification would hardly profit from the Transformer architecture, causing the model to collapse to a vanilla \gls{MLP}.
 
 A more comprehensive approach is provided by \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} in the form \emph{FT-Transformer}, which is a Transformer-based architecture, that processes both numerical inputs and categorical input in the Transformer blocks. Since it achieved competitive performance in several empirical studies, we further consider FT-Transformer for our empirical study \autocite[][5]{grinsztajnWhyTreebasedModels2022}. Being based on the Transformer architecture, FT-Transformer \emph{naturally} scales to large amounts of data and can utilize unlabelled data through self-training procedures.
 
@@ -594,7 +594,6 @@ The concatenated and projected output of the attention heads is then passed to t
 
 \textbf{Masked Self-Attention and Cross-Attention}
 
-
 In the \cref{eq:attention}, tokens can attend to any preceding or subsequent token without restrictions. Thus, the full \emph{bidirectional context} is used. This design is optimal for the encoder, where the entire input sequence shall serve as the context.
 
 For the decoder, the self-attention is modified to \emph{masked self-attention} and \emph{cross-attention} mechanism. First, causal masking is required to achieve autoregressive sequence generation in the decoder. The context is \emph{unidirectional}, where a token is only allowed to attend to itself or all previously generated tokens. Second, the decoder uses \emph{cross-attention} to connect between the encoder and decoder. Other than in the self-attention mechanism, where keys, values and queries are generated from the same sequence, keys and values come from the encoder and queries are provided by the decoder. As our focus is on encoder-only architectures, we refer the reader to \textcite[][16--17]{raffelExploringLimitsTransfer2020} for an in-depth treatment of both topics.
@@ -739,15 +738,24 @@ In summary, \gls{RTD} can help to learn expressive representations of the input,
 \addtocontents{toc}{\protect\newpage}
 \section{Empirical Study}\label{sec:empirical-study}
 
-In this Section, we demonstrate the effectiveness of gradient boosting and Transformers for trade classification. We benchmark against the \gls{LR}, \gls{EMO}, and \gls{CLNV} algorithm, as well as hybrids involving the trade size rule and depth rule on two datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}.
+In this section, we demonstrate the effectiveness of machine learning for trade classification in an empirical setting. To commence, the research framework is introduced.
 
-Experiments were conducted on shared nodes of the bwHPC cluster, with 10 assigned Intel Xeon Gold 6230 cores at \SI{2.1}{\GHz}, an NVIDIA V100 \SI{32}{\giga\byte}, and \SI{92.160}{\giga\byte} random access memory running Red Hat Enterprise Linux release 8.4. For reproducibility, the implementation and experiment tracking are publicly available\footnote{Code is available at~\url{https://github.com/KarelZe/thesis} Experiments are tracked at \url{https://wandb.ai/fbv/thesis}.}.
+\subsection{Research Framework}\label{sec:research-framework}
 
-The subsequent section provides details on the datasets.
+We present our research framework for trade classification, summarized in \cref{fig:research-framework}. Our approach revolves around two key ideas. First, we utilize \glspl{GBM} and Transformers for trade classification, chosen in \cref{sec:supervised-approaches} for their expected performance, scalability, and extensibility. Distinctions are made between models trained on singly labelled trades and models trained on both labelled and unlabelled trades simultaneously. Second, classical trade classification rules, such as the \gls{LR}, are realised as a generic classifier leveraging the stacking principle, thereby enabling a coherent evaluation and model interpretation.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=12cm, height=6cm]{example-image}
+    \caption[Research Framework]{Research Framework}
+    \label{fig:research-framework}
+\end{figure}
+
+The data preparation process, outlined in \cref{sec:data-and-data-preparation}, encompasses all steps necessary to obtain features to be processed by the classifiers. Model enhancements, training setups, and tuning procedures are detailed in \cref{sec:training-and-tuning}. The predictions of the classifiers are consistently evaluated in terms of accuracy as part of \cref{sec:evaluation}. With the model-agnostic interpretability method \gls{SAGE}, we attribute predictions to features and cross-compare the feature importances of classical trade classification rules and machine learning predictors. In turn, for Transformers attention maps provide additional insights into the model. Lastly, \cref{sec:application} tests all classifiers in the problem of effective spread calculation to demonstrate the effectiveness of our approach.
 
 \subsection{Data and Data Preparation}\label{sec:data-and-data-preparation}
 
-The following chapter describes the construction of datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we define and infer the trade initiator.
+The following chapter describes the construction of datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we define and infer the true trade initiator.
 
 \subsubsection{Data Collection}\label{sec:data-collection}
 
@@ -851,6 +859,8 @@ We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visua
 Our train-test-split assumes that all subsets are drawn from the same distribution, so fitting a classifier on the training set and optimising for the validation set provides good estimates for the test set. To validate this assumption, we use adversarial validation. Specifically, we re-label all training samples with $y=-1$ and all trades of the validation set with $y=1$, train a classifier on a random subset of the composed dataset and predict class conformance. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which ranges between $\left[-1, 1\right]$ and is insensitive to class imbalances.\footnote{Classes are imbalanced, due to the training set being three times the size of the validation set.} Assuming train and validation samples are sampled from the same distribution, the performance estimate is near a random guess, or $\operatorname{MCC} = 0$, Depending on the feature sets, the \gls{MCC} ranges between (...) and (...) suggesting training and validation sets are approximately similar. The next section discusses techniques used in training the classifiers.
 
 \subsection{Training and Tuning}\label{sec:training-and-tuning}
+
+Experiments are conducted on shared nodes of the bwHPC cluster, with 10 assigned Intel Xeon Gold 6230 cores at \SI{2.1}{\GHz}, an NVIDIA V100 \SI{32}{\giga\byte}, and \SI{92.160}{\giga\byte} random access memory running Red Hat Enterprise Linux release 8.4. For reproducibility, the implementation and experiment tracking are publicly available\footnote{Code is available at~\url{https://github.com/KarelZe/thesis} Experiments are tracked at \url{https://wandb.ai/fbv/thesis}.}.
 
 \subsubsection{Training of Supervised
     Models}\label{sec:training-of-supervised-models}
@@ -1000,12 +1010,12 @@ Our search space is reported in \cref{tab:hyperparameter-space-gbm}, which is al
     \label{tab:hyperparameter-space-gbm}
     \begin{tabular}{@{}ll@{}}
         \toprule
-        Hyperparameter               & Distribution                                           \\ \midrule
-        Depth                        & $\operatorname{UniformInt}[1,12]$                         \\
-        Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$      \\
-        $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$                         \\
-        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$          \\
-        Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$                \\ \bottomrule
+        Hyperparameter               & Distribution                                  \\ \midrule
+        Depth                        & $\operatorname{UniformInt}[1,12]$             \\
+        Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$     \\
+        $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$            \\
+        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ \\
+        Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$            \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -1024,19 +1034,17 @@ The search space for the FT-Transformer is almost identical to \textcite[][18]{g
 
 \begin{table}[H]
     \centering
-<<<<<<< HEAD
     \sisetup{table-text-alignment=right}
-        \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{5} trials each. A discussion of these results is provided below.}
-        \label{tab:hyperparameter-space-2}
-    \begin{tabular}{@{}llSSS@{}}
-    \toprule
-    Hyperparameter         & Distribution  & {FS 1} & {FS 2} & {FS 3} \\ \midrule
-    Layers $L$               & $\operatorname{UniformInt}[1,6]$ &      &      &      \\
-        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                            \\
-        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                            \\
-        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$         \\
-        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$         \\ \bottomrule
->>>>>>> origin/main
+    \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{5} trials each. A discussion of these results is provided below.}
+    \label{tab:hyperparameter-space-2}
+    \begin{tabular}{@{}ll@{}}
+        \toprule
+        Hyperparameter         & Distribution                                        \\ \midrule
+        Layers $L$             & $\operatorname{UniformInt}[1,6]$                    \\
+        Attention dropout      & $\operatorname{Uniform}[0, 0.5]$                    \\
+        \gls{FFN} dropout      & $\operatorname{Uniform}[0, 0.5]$                    \\
+        Learning rate $\eta$   & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ \\
+        weight decay $\lambda$ & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -1192,7 +1200,7 @@ In an attempt to explain the decision-making process of multi-modal Transformers
 
 In this approach, the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(l)}=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(l)}$ is calculated to weight the attention head's importance. As previously suggested in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. Like all other presented approaches \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and is therefore computationally efficient.
 
-In the absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all transformer blocks. The level of agreement between attributions from attention maps and random feature permutation by calculating Spearman's rank correlation between them.
+In the absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all Transformer blocks. The level of agreement between attributions from attention maps and random feature permutation by calculating Spearman's rank correlation between them.
 
 \newpage
 \section{Results}\label{sec:results}
@@ -1208,7 +1216,7 @@ In the absence of ground truth for the true feature attribution, we resort to at
 \begin{figure}[ht]
     \centering
     \includegraphics{categorical-embeddings.pdf}
-    \caption[Categorical Embeddings of Underlyings]{Categorical embeddings of underlyings. The plot depicts the projected embedding of Microsoft ($\mathtt{MSFT}$) and its most similar embeddings. The similarity is highest for Intel ($\mathtt{INTC}$), Oracle ($\mathtt{ORCL}$), Nokia ($\mathtt{NOK}$), and Cisco ($\mathtt{CSCO}$). Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. The nine most similar embeddings by cosine similarity in the original space are coloured and annotated.}
+    \caption[Categorical Embeddings of Underlyings]{Categorical embeddings of underlyings. The plot depicts the projected embedding of Microsoft ($\mathtt{MSFT}$) and its most similar embeddings. The nine most similar embeddings by cosine similarity in the original space are coloured and annotated. The similarity is highest for Intel ($\mathtt{INTC}$), Oracle ($\mathtt{ORCL}$), Nokia ($\mathtt{NOK}$), and Cisco ($\mathtt{CSCO}$). Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}.}
     \label{fig:categorical-embeddings}
 \end{figure}
 
