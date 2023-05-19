@@ -2,14 +2,50 @@
 
 \crefalias{section}{appsec}
 
-\subsection{Feature Sets}
+\subsection{Features and Transformations}
 \label{app:feature-sets}
 
 \begin{table}[H]
     \centering
-    \input{Content/feature-sets.tex}
-    \caption[Overview of Feature Sets]{Definition of Feature Sets}
-    \label{tab:feature-set-definition}
+    \begin{threeparttable}
+        \begin{tabular}{@{}lll@{}}
+            \toprule
+            Feature Name            & Definition                                                                                       & Transform \\ \midrule
+            trade price             & $P_{i, t}$                                                                                       &           \\
+            price lag (ex)          & $P_{i, t-1}^{\text{ex}}$\tnote{*}                                                                &           \\
+            price lag (all)         & $P_{i, t-1}^{\text{all}}$\tnote{*}                                                               &           \\
+            price change lag (ex)   & $P_{i, t-1}^{\text{ex}}/P_{i, t}^{\text{ex}}$\tnote{*}                                           &           \\
+            price change lag (all)  & $P_{i, t-1}^{\text{all}}/P_{i, t}^{\text{all}}$\tnote{*}                                         &           \\
+            priced lead (ex)        & $P_{i, t+1}^{\text{ex}}$\tnote{*}                                                                &           \\
+            price lead (all)        & $P_{i, t+1}^{\text{all}}$\tnote{*}                                                               &           \\
+            price change lead (ex)  & $P_{i, t}^{\text{ex}}/P_{i, t+1}^{\text{ex}}$\tnote{*}                                           &           \\
+            price change lead (all) & $P_{i, t}^{\text{all}}/P_{i, t+1}^{\text{all}}$\tnote{*}                                         &           \\
+            bid (all)               & $B_{i, t}^{\text{all}}$                                                                          &           \\
+            bid (ex)                & $B_{i, t}^{\text{ex}}$                                                                           &           \\
+            ask (all)               & $A_{i, t}^{\text{all}}$                                                                          &           \\
+            ask (ex)                & $A_{i, t}^{\text{all}}$                                                                          &           \\
+            prox. to quotes (ex)    & $\left(P_{i, t}^{\text{ex}}- M_{i, t}^{\text{ex}}\right) / \tfrac{1}{2} S_{i, t}^{\text{ex}}$    &           \\
+            prox. to quotes (all)   & $\left(P_{i, t}^{\text{all}}- M_{i, t}^{\text{all}}\right) / \tfrac{1}{2} S_{i, t}^{\text{all}}$ &           \\
+            bid ask size ratio (ex) & $\tilde{B}_{i, t}^{\text{ex}}/\tilde{A}_{i, t}^{\text{ex}}$                                      &           \\
+            bid size (ex)           & $\tilde{B}_{i, t}^{\text{ex}}$                                                                   &           \\
+            ask size (ex)           & $\tilde{A}_{i, t}^{\text{ex}}$                                                                   &           \\
+            rel. bid size (ex)      & $\tilde{B}_{i, t}^{\text{ex}}/\tilde{P}_{i, t}^{\text{ex}}$                                      &           \\
+            rel. ask size (ex)      & $\tilde{A}_{i, t}^{\text{ex}}/\tilde{P}_{i, t}^{\text{ex}}$                                      &           \\
+            trade size              & $\tilde{P}_{i, t}$                                                                               &           \\
+            strike price            &                                                                                                  &           \\
+            volume option series    &                                                                                                  &           \\
+            root                    &                                                                                                  &           \\
+            time to maturity        &                                                                                                  &           \\
+            moneyness               &                                                                                                  &           \\
+            option type             &                                                                                                  &           \\
+            issue type              &                                                                                                  &           \\ \bottomrule
+        \end{tabular}
+        \begin{tablenotes}\footnotesize
+            \item[*] Notation assumes, that the previous or next trade price is distinguishable.
+        \end{tablenotes}
+    \end{threeparttable}
+    \caption[Overview of Features and Transformations]{Overview of Features and Transformations}
+    \label{tab:features-transformations}
 \end{table}
 
 \newpage

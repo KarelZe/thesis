@@ -21,7 +21,7 @@ All feature set, the their definition and origin is documented in Appendix [[üç
 
 Our second feature set extends the first feature set by the trade size and size of the quotes, required to estimate hybrid rules involving the depth rule and trade size rule. Both rules are state-of-the-art when paired with hybrid algorithms and are thus benchmark and source for features. We model the depth rule as the ratio between ask and bid sizes and the trade size rule as the ratio between the size of the trade and the quoted bid and ask sizes. Again, features are not quantized The trade price and midspread required for the depth rule are already encompassed in the first feature set. 
 
-Our largest feature set also incorporates option characteristics, including the strike price, the time to maturity, the moneyness, the option type and issue type as well as the underlying and traded volume of the option series. By providing the model with option-specific features, we make nuances between underlyings, security types, and option types learnable. We hypothesize
+Our largest feature set also incorporates option characteristics, including the strike price, the time to maturity, the moneyness, the option type and issue type as well as the underlying and traded volume of the option series. By providing the model with option-specific features, we make nuances between underlyings, security types, and option types learnable. 
 
 Arguably, our models have simultaneous access to the previous and successive trade price and quotes for both the exchange and the NBBO, which is an advantage over base rules. As we benchmark against various, stacked hybrid rules, the data requirements are comparable. We emphasize this aspect, as it is neglected in previous works ([[@blazejewskiLocalNonParametricModel2005]]485) and ([[@ronenMachineLearningTrade2022]]48) and ([[@rosenthalModelingTradeDirection2012]]9). 
 
@@ -94,3 +94,7 @@ A comprehensive overview of all feature transformations is given in Appendix [[
 [^3]: Notice the similarities to the positional encoding used in [[@vaswaniAttentionAllYou2017]].
 [^4]: Optionally, add proof in the appendix.
 [^5]: Subsequent scaling may also affect the imputation constant.
+
+**Notes:**
+[[üßÉFeature Sets]]
+[[ü™ÑData Preprocessing notes]]
