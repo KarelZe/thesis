@@ -4,23 +4,28 @@
 
 **Data Cleaning**
 
-
 In the following chapter, we motivate feature engineering, present our feature sets and discuss strategies for transforming features into a form that accelerates and advances the training of our models.
 
 ## Goal of feature engineering
 Classical algorithms infer the initiator of the trade from the *raw* price and quote data. We employ feature engineering to pre-process input data and enhance the convergence and performance of our machine learning models. Gradient-boosted trees and neural networks, though flexible estimators, have limitations in synthesizing new features from existing ones, as demonstrated in empirical work on synthetic data by ([[@heatonEmpiricalAnalysisFeature2016]]5--6). Specifically, ratios, standard deviations, and differences can be difficult for these models to learn and must therefore be engineered beforehand. 
 
+## Features 
+
+Cref-tab-features compiles an extensive list of features and their definition and sources. 
+
 ## Feature set definition
 
-To establish a common ground, we derive three sets of features from raw data. The  feature sets are motivated by features inherent to classical trade classification rules  and are consequently derived from quote and price data. Except for a third feature set, which includes additional option characteristics.  
+To establish a common ground, we derive three sets from cref-tab-features. The feature sets are motivated by features inherent to classical trade classification rules and are consequently derived from quote and price data. Except for a third feature set, which includes additional option characteristics.  
 
 All feature set, the their definition and origin is documented in Appendix [[🍬appendix#^7c0162]].  Our first feature set uses price and quote data required by classical algorithms such as the (reversed) Lee-and-Ready algorithm. We aid the models by estimating the change in trade price between the previous and successive distinguishable trades. This is identical to the criterion used in the (reverse) tick rule, but in an non-quantized fashion to enforce a richer decision boundary and to surpass hard cut-off points. Similarly, the proximity of the trade price to the quotes, which is the decisive criterion in the quote rule and hybrids there-off is added. The feature value ranges from $\left(-\infty,\infty\right)$ and is $-1$ for trades at bid, 0 for trades at the mid, and 1 for trades at the ask. Quotes and trade prices are also incorporated as-is.
 
-Our second feature set extends the first feature set by the trade size and size of the quotes, required to estimate hybrid rules involving the depth rule and trade size rule. Both rules are state-of-the-art when paired with hybrid algorithms and are thus benchmark and source for features. We model the depth rule as the ratio between ask and bid sizes and the trade size rule as the ratio between the size of the trade and the quoted bid and ask sizes. The trade price and midspread required for the depth rule are already encompassed in the first feature set. 
+Our second feature set extends the first feature set by the trade size and size of the quotes, required to estimate hybrid rules involving the depth rule and trade size rule. Both rules are state-of-the-art when paired with hybrid algorithms and are thus benchmark and source for features. We model the depth rule as the ratio between ask and bid sizes and the trade size rule as the ratio between the size of the trade and the quoted bid and ask sizes. Again, features are not quantized The trade price and midspread required for the depth rule are already encompassed in the first feature set. 
 
-Our largest feature set also incorporates option characteristics, including the strike price, the time to maturity, the moneyness, the option type and issue type as well as the underlying and traded volume of the option series. By providing the model with option-specific features, we hope to to make nuances between underlyings, security types, and option types learnable. 
+Our largest feature set also incorporates option characteristics, including the strike price, the time to maturity, the moneyness, the option type and issue type as well as the underlying and traded volume of the option series. By providing the model with option-specific features, we make nuances between underlyings, security types, and option types learnable. 
 
-Arguably, our models have simultaneous access to the previous and successive trade price and quotes for both the exchange and the NBBO, which is an advantage over base rules. As we benchmark against various, stacked hybrid rules, the data requirements are comparable. We emphasize this aspect, as it is neglected in previous works ([[@blazejewskiLocalNonParametricModel2005]]485) and ([[@ronenMachineLearningTrade2022]]48) and ([[@rosenthalModelingTradeDirection2012]]9).
+Arguably, our models have simultaneous access to the previous and successive trade price and quotes for both the exchange and the NBBO, which is an advantage over base rules. As we benchmark against various, stacked hybrid rules, the data requirements are comparable. We emphasize this aspect, as it is neglected in previous works ([[@blazejewskiLocalNonParametricModel2005]]485) and ([[@ronenMachineLearningTrade2022]]48) and ([[@rosenthalModelingTradeDirection2012]]9). 
+
+
 
 ## Problem of missing values and categoricals
 The required pre-processing is minimal for tree-based learners. As one of few predictive models, trees can be extended to handle $\mathtt{[NaN]}$ values. Either by discarding missing values in the splitting procedure  ([[@breimanClassificationRegressionTrees2017]]150--152) or by incorporating missing values into the splitting criterion ([[@twalaGoodMethodsCoping2008]]951). Recent literature for gradient boosting suggests, that handling missing data inside the algorithm slightly improves the accuracy over fitting trees on imputed data ([[@josseConsistencySupervisedLearning2020]] (p. 24) or [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]] (p. 6)). Also, some tree-based learners can handle categorical data without prior pre-processing, as shown in our chapter on ordered boosting ([[🐈Gradient Boosting]]).
@@ -89,3 +94,7 @@ A comprehensive overview of all feature transformations is given in Appendix [[�
 [^3]: Notice the similarities to the positional encoding used in [[@vaswaniAttentionAllYou2017]].
 [^4]: Optionally, add proof in the appendix.
 [^5]: Subsequent scaling may also affect the imputation constant.
+
+**Notes:**
+[[🧃Feature Sets]]
+[[🪄Data Preprocessing notes]]

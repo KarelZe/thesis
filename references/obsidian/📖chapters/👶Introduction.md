@@ -1,3 +1,5 @@
+The validity of many economic studies hinges on the ability to properly classify trades as buyer or seller-initiated. ([[@odders-whiteOccurrenceConsequencesInaccurate2000]])
+
 “The trade indicator is a binary variable stating whether the buyer or seller of an asset has initiated the trade by submitting a market order or an immediately executed limit order.” (Frömmel et al., 2021, p. 4)
 
 - “Although extant algorithms are adequate to the basic job of sorting trades, our work suggests that a refinement to the extant methods of classifying trades will do even better.” (Ellis et al., 2000, p. 539) -> nice word "extant methods"
