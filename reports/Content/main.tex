@@ -792,13 +792,33 @@ Classical algorithms infer the initiator of the trade from the \emph{raw} price 
 
 To establish a common ground, we derive three sets of features from raw data. The feature sets are motivated by features inherent to classical trade classification rules and are consequently derived from quote and price data. Except for a third feature set, which includes additional option characteristics. Differentiated feature sets improve the transferability of our results.
 
-\begin{threeparttable}[H]
+\begin{ThreePartTable}
     \centering
-    \caption[Features and Feature Sets]{Features and Feature Sets.}
-    \label{tab:feature-sets}    
-    \begin{tabular}{@{}lllllll@{}}
-            \toprule
-            Feature Name            & Definition                                                                                       & Source               & FS 1 & FS 2 & FS 3 \\ \midrule
+    \begin{TableNotes}\footnotesize
+        \item[*] Notation assumes, that the previous or next trade price is distinguishable.
+    \end{TableNotes}
+    \begin{longtable}{@{}lllllll@{}}
+        % \multicolumn{3}{c}%
+        % {\tablename\ \thetable\ -- \textit{Continued from previous page}} \\
+        % \hline
+        % Header 1 & Header 2 & Header 3 \\
+        % \hline
+        % \endhead
+
+        \caption[Features and Feature Sets]{Features and Feature Sets.}\label{tab:feature-sets}    \\
+
+        \toprule
+        Feature Name            & Definition                                                                                       & Source               & FS 1 & FS 2 & FS 3 \\ \midrule
+        \endhead
+        %\endfirsthead
+        
+        \bottomrule
+
+        \endfoot
+
+        \insertTableNotes         
+        \endlastfoot
+
             trade price             & $P_{i, t}$                                                                                       & tick rule            & x & x & x        \\
             price lag (ex)          & $P_{i, t-1}^{\text{ex}}$\tnote{*}                                                                & tick rule            & x & x & x         \\
             price lag (all)         & $P_{i, t-1}^{\text{all}}$\tnote{*}                                                               & tick rule            & x & x & x          \\
@@ -827,11 +847,8 @@ To establish a common ground, we derive three sets of features from raw data. Th
             moneyness               &                                                                                                  & option               & &  & x           \\
             option type             &                                                                                                  & option               & &  & x           \\
             issue type              &                                                                                                  & option               & &  & x           \\ \bottomrule
-        \end{tabular}
-        \begin{tablenotes}\footnotesize
-            \item[*] Notation assumes, that the previous or next trade price is distinguishable.
-        \end{tablenotes}
-\end{threeparttable}
+        \end{longtable}
+\end{ThreePartTable}
 
 Features and feature sets are documented in \cref{tab:feature-sets}. 
 We aid the models by estimating the change in trade price between the previous and successive distinguishable trades. This is identical to the criterion used in the (reverse) tick rule, but in a non-quantized fashion to enforce a richer decision boundary and to surpass hard cut-off points. Similarly, the proximity of the trade price to the quotes, which is the decisive criterion in the quote rule and hybrids' there-off is added. The feature value ranges from $\left(-\infty,\infty\right)$ and is $-1$ for trades at the bid, 0 for trades at the mid, and 1 for trades at the ask. Quotes and trade prices are also incorporated as-is.
