@@ -307,25 +307,38 @@ Trade classification, as we framed it, fits into supervised learning on tabular 
 
 \textbf{Wide Tree-Based Ensembles}
 
-Traditionally, tree-based ensembles, in particular, \gls{GBM} have dominated modelling on tabular data concerning predictive performance \autocites[][24--25]{grinsztajnWhyTreebasedModels2022}[][7]{kadraWelltunedSimpleNets2021}[][8]{gorishniyRevisitingDeepLearning2021}. At its core, tree-based ensembles combine the estimates of individual decision trees into an ensemble to obtain a more accurate prediction. For \gls{GBM} \autocite[][9]{friedmanGreedyFunctionApproximation2001} the ensemble is constructed by sequentially adding small-sized trees into the ensemble that improve upon the error of the previous trees. Conceptually related to gradient-boosted trees are random forests. Random forests \autocite[][6]{breimanRandomForests2001} fuse decision trees with the bagging principle by growing multiple deep decision trees on random subsets of data and aggregating the individual estimates. 
+Traditionally, tree-based ensembles, in particular, \gls{GBRT} have dominated modelling on tabular data concerning predictive performance \autocites[][24--25]{grinsztajnWhyTreebasedModels2022}[][7]{kadraWelltunedSimpleNets2021}[][8]{gorishniyRevisitingDeepLearning2021}. At its core, tree-based ensembles combine the estimates of individual decision trees into an ensemble to obtain a more accurate prediction. For \gls{GBRT} \autocite[][9]{friedmanGreedyFunctionApproximation2001} the ensemble is constructed by sequentially adding small-sized trees into the ensemble that improve upon the error of the previous trees. Conceptually related to gradient-boosted trees are random forests. Random forests \autocite[][6]{breimanRandomForests2001} fuse decision trees with the bagging principle by growing multiple deep decision trees on random subsets of data and aggregating the individual estimates. 
 
 \textcite[][7-9]{grinsztajnWhyTreebasedModels2022} trace back the strong performance of tree-based ensembles in tabular classification tasks to being a non-rotationally-invariant learner and tabular data being non-invariant to rotation. By intuition, rows and columns in a tabular dataset may be arranged in an arbitrary order, but each features carries a distinct meaning, which implies that feature values cannot be simply rotated without affecting the overall meaning. Thus, tabular data is non-invariant by rotation. So are tree-based ensembles, as they attend to each feature separately. This property also strengthens the model's ability to uninformative features \autocite[][8-9]{grinsztajnWhyTreebasedModels2022}.
 
 \textcite[][13--14]{ronenMachineLearningTrade2022} have unparalleled success in classifying trades through random forests. Due to the framing as a probabilistic classification task, random forests are not optimal. This is because decision trees yield poorly calibrated probability estimates caused by limited samples in leaf nodes, which propagate to the ensemble \autocite[][356--360]{tanhaSemisupervisedSelftrainingDecision2017}. Gradient boosting is unaffected by this problem, and scales to large data sets due to the availability of highly optimised implementations that approximate the construction of ensemble members and can simultaneously learn from labelled and unlabelled instances. The state-of-the-art performance in tabular classification tasks, together with its ability to scale and extend, renders it suitable for trade classification.
 
+
 \textbf{Deep Neural Networks}
 
-Many recently proposed deep learning architectures use an attention mechanism. For instance, \emph{TabNet} \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, fuses the concept of decision trees and attention. Similar to growing a decision tree, several sub-networks are used to process the input in a sequential, hierarchical fashion. Sequential attention, a variant of attention, is used to decide which features to select in each step. The output of \emph{TabNet} is the aggregate of all sub-networks. Its poor performance in independent comparisons e.g., \textcites[][7]{kadraWelltunedSimpleNets2021}[][7]{gorishniyRevisitingDeepLearning2021}, raises doubts about its usefulness.
+Neural networks have emerged as powerful models for tabular data with several publications claiming to surpass \glspl{GBRT} in terms of performance. For brevity, we focus on two lines of research: regularized networks and attention-based networks, which have accumulated significant interest in the field. A comprehensive overview of tabular deep learning can be found in \textcite[][1--22]{borisovDeepNeuralNetworks2022}.
 
-Tailored to tabular datasets \emph{SAINT} uses a specialized attention mechanism, the intersample attention, which performs attention over both columns and rows \autocite[][4--5]{somepalliSaintImprovedNeural2021}. Applied to our setting, the model would contextualize information from the trade itself, but also from neighbouring trades, which would be an unfair advantage over classical trade classification rules. Similarly, the \emph{Non-Parametric Transformer} of \textcite[][3--4]{kossenSelfAttentionDatapointsGoing2021} uses the entire dataset as a context, which rules out the application in our work.
+\emph{Regularized Networks}
 
-Differently, \emph{TabTransformer} of \textcite[][2--3]{huangTabTransformerTabularData2020} performs attention per sample on categorical features-only. All numerical features are processed in a separate stream, which breaks correlations between categorical and numerical features \autocite[][2]{somepalliSaintImprovedNeural2021}. Importantly, most features in trade datasets are numerical. As such, trade classification would hardly profit from the Transformer architecture, causing the model to collapse to a vanilla \gls{MLP}.
+Among the simplest neural networks are \glspl{MLP}, which consists of multiple linear layers with non-linear activation functions in between. \textcite[][9--10]{kadraWelltunedSimpleNets2021} among others, advocate for the use of vanilla \gls{MLP} with an extensive mix of regularization techniques, such as dropout \autocite{srivastavaDropoutSimpleWay} or residual connections \autocite{heDeepResidualLearning2015}, and report performance improvements over complex tabular-specific architectures or \glspl{GBRT}. Regularization is expected to enhance generalization performance, but the benefit is non-exclusive to \gls{MLP}. Conversely, when regularization is equally applied to tabular-specific architectures, the effect reverses and multiple works including \textcites[][7]{gorishniyRevisitingDeepLearning2021}[][5]{grinsztajnWhyTreebasedModels2022} suggest that regularized \gls{MLP} actually trail the performance of specialized tabular-specific architectures. Also, \glspl{MLP} are rotatinally-invariant learners, as showed in \textcite[][5]{grinsztajnWhyTreebasedModels2022}, which contradicts our reasoning from above. To meet our performance criterion we instead focus on specialized architectures, particularly attention-based networks, while still emphasizing the importance of a careful regularization and optimization.
 
-A more comprehensive approach is provided by \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} in the form \emph{FT-Transformer}, which is a Transformer-based architecture, that processes both numerical inputs and categorical input in the Transformer blocks. Since it achieved competitive performance in several empirical studies, we further consider FT-Transformer for our empirical study \autocite[][5]{grinsztajnWhyTreebasedModels2022}. Being based on the Transformer architecture, FT-Transformer naturally scales to large amounts of data and can utilize unlabelled data through self-training procedures.
+\emph{Attention-based Networks}
 
-To summarize, our study considers gradient boosting and the FT-Transformer, each trained on labelled or partially labelled trades. This comparison is particularly appealing, as it enables a multi-faceted comparison of wide tree-based ensembles versus deep neural networks, as well as supervised versus semi-supervised methods.
+Another emerging strand of research focuses on neural networks with an attention mechanism. Attention, intuitively, allows to gather information from the immediate context and learn relationships between features or between features and instances. It has been incorporated into various architectures, including the tree-like TabNet \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, and several Transformer-based architectures including TabTransformer \autocite[][2--3]{huangTabTransformerTabularData2020}, Self-Attention and Intersample Attention Transformer \autocite[][4--5]{somepalliSaintImprovedNeural2021}, Non-Parametric Transformer \autocite[][3--4]{kossenSelfAttentionDatapointsGoing2021}, and FT-Transformer \autocite[][4--5]{gorishniyRevisitingDeepLearning2021}.
+
+TabNet \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, fuses the concept of decision trees with attention. Similar to growing a decision tree, several sub-networks are used to process the input in a sequential, hierarchical fashion. Sequential attention, a variant of attention, is used to decide which features to select in each step. The output of TabNet is the aggregate of all sub-networks. Its poor performance in independent comparisons e.g., \textcites[][7]{kadraWelltunedSimpleNets2021}[][7]{gorishniyRevisitingDeepLearning2021}, raises doubts about its usefulness.
+
+The Self-Attention and Intersample Attention Transformer  uses a specialized attention mechanism, the intersample attention, to perform attention over both columns and rows \autocite[][4--5]{somepalliSaintImprovedNeural2021}. Applied to our setting, the model would contextualize information from the trade itself, but also from neighbouring trades, which is an unfair advantage over classical trade classification rules. Similarly, the Non-Parametric Transformer of \textcite[][3--4]{kossenSelfAttentionDatapointsGoing2021} uses the entire data set as a context, which rules out the application in our work.
+
+Differently, TabTransformer \autocite[][2--3]{huangTabTransformerTabularData2020} performs attention per sample on categorical features-only. All numerical features are processed in a separate stream, a \gls{MLP}, which breaks correlations between categorical and numerical features \autocite[][2]{somepalliSaintImprovedNeural2021}. Most importantly though, most features in trade datasets are numerical. As such, trade classification would hardly profit from the Transformer architecture, causing the model to collapse to a vanilla \gls{MLP}. A more comprehensive approach is provided by \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} in the form FT-Transformer, that processes both numerical inputs and categorical input in Transformer blocks featuring an attention mechanism. Since it achieved state-of-the-art performance in independent empirical studies, like \textcite[][5]{grinsztajnWhyTreebasedModels2022}, and is non-rotationally invariant, we further consider FT-Transformer in our empirical study. Being based on the Transformer architecture, FT-Transformer naturally scales to large amounts of data and can utilize unlabelled data through self-training procedures.
+
+The findings \textcite[][50]{ronenMachineLearningTrade2022} do not support the use of neural networks in trade classification. But due to the lack of details regarding the model architecture, regularization techniques, and training insights, it is necessary to reevaluate these findings in the context of option trades.
+
+To summarize, our study considers gradient boosting and the FT-Transformer, each trained on labelled or partially-labelled trades. This comparison is particularly appealing, as it enables a multi-faceted comparison of wide tree-based ensembles versus deep neural networks, as well as supervised versus semi-supervised methods.
 
 \subsection{Gradient Boosted Trees}\label{sec:gradient-boosted-trees}
+
+This chapter first introduces decision trees and then combines individual trees in the gradient boosting procedure.
 
 \subsubsection{Decision Tree}\label{sec:decision-tree}
 
@@ -362,7 +375,7 @@ Thereby, the feature $k$ and value $s$ are selected in a way, that the squared e
 \end{equation}
 Clearly, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample has its region, the tree would achieve a perfect fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence \emph{variance}, size complexity pruning procedures are employed. Likewise, if the decision tree is too simplistic, a high bias contributes to the model's overall expected error. Both extremes are to be avoided.
 
-Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredictors1996} and \emph{boosting} \autocite[][197--227]{schapireStrengthWeakLearnability1990}, decrease the expected error of the decision tree by combining multiple trees in a single model. Both approaches differ in the error term being minimised, which is reflected in the training procedure and the complexity of the ensemble members. More specifically, bagging decreases the variance, whereas boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we focus on \gls{GBM}, a variant of boosting.
+Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredictors1996} and \emph{boosting} \autocite[][197--227]{schapireStrengthWeakLearnability1990}, decrease the expected error of the decision tree by combining multiple trees in a single model. Both approaches differ in the error term being minimised, which is reflected in the training procedure and the complexity of the ensemble members. More specifically, bagging decreases the variance, whereas boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we focus on \gls{GBRT}, a variant of boosting.
 
 \subsubsection{Gradient Boosting
     Procedure}\label{sec:gradient-boosting-procedure}
@@ -414,9 +427,9 @@ An improved estimate for $\mathbf{x}$ is calculated from the previous estimate b
 \end{equation}
 After $M$ iterations we obtain the final estimate calculated as $F_{M}\left(\mathbf{x}\right)$. To avoid \gls{overfitting} the residuals, only proportional steps towards the negative gradient are taken, which is controlled by the learning rate \eta~\autocite[][13]{friedmanGreedyFunctionApproximation2001}. The learning rate \eta~and the size of the ensemble $M$ are deeply intertwined and best tuned together \autocite[][13]{friedmanGreedyFunctionApproximation2001}.
 
-Gradient boosting is still prone to \gls{overfitting}. One solution is to employ early stopping, whereby the ensemble is only grown in size, as long as adding more weak learners leads to a decrease in loss on the validation set \autocite[][384]{hastietrevorElementsStatisticalLearning2009}. Another approach is to limit the amount of data seen during training by fitting trees on random subset of samples, as proposed in \textcite[][3]{friedmanStochasticGradientBoosting2002}, or on a subset of features, as popularized by \textcite[][3]{chenXGBoostScalableTree2016}. \textcite[][6]{prokhorenkovaCatBoostUnbiasedBoosting2018} grow oblivious trees, which use the same splitting criterion for all nodes of one level in a tree. The rationale is, that these arguably simplistic trees, and achieve an imperfect fit, which regularises the model. Finally, the loss function can be extended for a $\ell_2$ regularisation term to penalize the model for complexity, as applied in \textcite[][2]{chenXGBoostScalableTree2016}.
+Gradient boosting is still prone to \gls{overfitting} due to fitting trees to point-wise gradients. One solution is to employ early stopping, whereby the ensemble is only grown in size, as long as adding more weak learners leads to a decrease in loss on the validation set \autocite[][384]{hastietrevorElementsStatisticalLearning2009}. Another approach is to limit the amount of data seen during training by fitting trees on random subset of samples, as proposed in \textcite[][3]{friedmanStochasticGradientBoosting2002}, or on a subset of features, as popularized by \textcite[][3]{chenXGBoostScalableTree2016}. \textcite[][6]{prokhorenkovaCatBoostUnbiasedBoosting2018} grow oblivious trees, which use the same splitting criterion for all nodes of one level in a tree. The rationale is, that these arguably simplistic trees, and achieve an imperfect fit, which regularises the model. Finally, the loss function can be extended for a $\ell_2$ regularisation term to penalize the model for complexity \autocite[][2]{chenXGBoostScalableTree2016}.
 
-In recent years, several variants of gradient boosting have been proposed and studied in the literature, including \emph{CatBoost} \autocite[][1--23]{prokhorenkovaCatBoostUnbiasedBoosting2018}, \emph{XGBoost} \autocite[][1--13]{chenXGBoostScalableTree2016}, and \emph{LightGBM} \autocite[][3]{keLightGBMHighlyEfficient2017}, which differ by the policy how trees are grown and how \gls{overfitting} is addressed. Performance-wise, differences between the implementations are negligible, as empirical studies suggest \autocites[][8]{grinsztajnWhyTreebasedModels2022}[][19--20]{gorishniyRevisitingDeepLearning2021}[][7]{somepalliSaintImprovedNeural2021}[][14]{borisovDeepNeuralNetworks2022}.
+In recent years, several variants of gradient boosting have been proposed and studied in the literature, including CatBoost \autocite[][1--23]{prokhorenkovaCatBoostUnbiasedBoosting2018}, XGBoost \autocite[][1--13]{chenXGBoostScalableTree2016}, and LightGBM \autocite[][3]{keLightGBMHighlyEfficient2017}, which differ by the policy how trees are grown and how \gls{overfitting} is addressed. Performance-wise, differences between the implementations are negligible, as empirical studies suggest \autocites[][8]{grinsztajnWhyTreebasedModels2022}[][19--20]{gorishniyRevisitingDeepLearning2021}[][7]{somepalliSaintImprovedNeural2021}[][14]{borisovDeepNeuralNetworks2022}.
 
 As we noted at the beginning, $F_M(\mathbf{x})$ models the log odds. We can recover the class-conditional probabilities $\widehat{\operatorname{Pr}}(y \mid \mathbf{x})$ by taking the inverse:
 \begin{equation}
@@ -739,7 +752,7 @@ Applied to tabular datasets, \gls{RTD} transfers to randomly replacing feature v
 
 For tabular the random replacement of feature values also strengthens the model's ability to incorporate a combination of features, rather than a single or few features based on their absolute value, which would facilitate overfitting.
 
-In summary, \gls{RTD} can help to learn expressive representations of the input, even if the true label is unavailable. Given previous research, we expect pre-training \gls{RTD} to improve the performance of the FT-Transformer and match or exceed the of the \gls{GBM}.
+In summary, \gls{RTD} can help to learn expressive representations of the input, even if the true label is unavailable. Given previous research, we expect pre-training \gls{RTD} to improve the performance of the FT-Transformer and match or exceed the of the \gls{GBRT}.
 
 \newpage
 \addtocontents{toc}{\protect\newpage}
@@ -749,7 +762,7 @@ In this section, we demonstrate the effectiveness of machine learning for trade 
 
 \subsection{Research Framework}\label{sec:research-framework}
 
-We present our research framework for trade classification, summarized in \cref{fig:research-framework}. Our approach revolves around two key ideas. First, we utilize \glspl{GBM} and Transformers for trade classification, chosen in \cref{sec:supervised-approaches} for their expected performance, scalability, and extensibility. Distinctions are made between models trained on singly labelled trades and models trained on both labelled and unlabelled trades simultaneously. Second, classical trade classification rules, such as the \gls{LR}, are realised as a generic classifier leveraging the stacking principle, thereby enabling a coherent evaluation and model interpretation.
+We present our research framework for trade classification, summarized in \cref{fig:research-framework}. Our approach revolves around two key ideas. First, we utilize \glspl{GBRT} and Transformers for trade classification, chosen in \cref{sec:supervised-approaches} for their expected performance, scalability, and extensibility. Distinctions are made between models trained on singly labelled trades and models trained on both labelled and unlabelled trades simultaneously. Second, classical trade classification rules, such as the \gls{LR}, are realised as a generic classifier leveraging the stacking principle, thereby enabling a coherent evaluation and model interpretation.
 
 \begin{figure}[!ht]
     \centering
@@ -940,11 +953,11 @@ Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autoci
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-train-val-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \glsentryshort{ISE} Sample]{Training and validation accuracy of \gls{GBM} on \gls{ISE} sample. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \glsentryshort{ISE} Sample]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
     \label{fig:gbm-train-val-loss-acc}
 \end{figure}
 % https://wandb.ai/fbv/thesis/runs/17malsep?workspace=user-karelze
-\cref{fig:ise-gbm-hyperparam-classical} visualizes the hyperparameter search space of the \gls{GBM} on the \gls{ISE} dataset with classical features. We can derive several observations from it. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.42}{\percent} and \SI{64.35}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
+\cref{fig:ise-gbm-hyperparam-classical} visualizes the hyperparameter search space of the \gls{GBRT} on the \gls{ISE} dataset with classical features. We can derive several observations from it. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.42}{\percent} and \SI{64.35}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
 
 \cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The configuration details are documented in (...). The plots reveal several insights. Firstly, the model overfits the training data, as evident from the generalisation gap between training and validation accuracies. To improve generalisation performance, we apply regularisation techniques. Secondly, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction. This behaviour may be explained by the log loss being unbound, where single incorrect predictions can cause the loss to explode.
 
@@ -953,7 +966,7 @@ Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autoci
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-optimisations-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \glsentryshort{ISE} with Optimisations]{Training and validation accuracy of \gls{GBM} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \glsentryshort{ISE} with Optimisations]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
     \label{fig:gbm-optimisations-loss-acc}
 \end{figure}
 
@@ -992,7 +1005,7 @@ The convergence behaviour of our model is similar to that of gradient boosting. 
     \label{fig:fttransformer-optimisations-loss-acc}
 \end{figure}
 % https://wandb.ai/fbv/thesis/runs/2a9iqsn0?workspace=user-karelze
-The loss surface of the \gls{GBM} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.98}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not \emph{per-se} improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles.
+The loss surface of the \gls{GBRT} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.98}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not \emph{per-se} improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles.
 
 \textbf{Solutions For FT-Transformer}
 
@@ -1002,7 +1015,7 @@ Motivated by previous research, we experiment with replacing the $\operatorname{
 
 \emph{Sample Weighting}
 
-We apply the concept of sample weighting from \gls{GBM} to Transformers. Specifically, we scale the contribution of individual training samples to the loss using a sample weight, which penalizes the model for misclassifying recent observations. This method is crucial for achieving low validation loss and high validation accuracies, as visible in \cref{fig:fttransformer-optimisations-loss-acc}. The significantly lower training accuracy implies, that patterns from latter observations do not universally transfer to previous observations. At this time, it remains unclear what is causing the data drift within the training set.
+We apply the concept of sample weighting from \gls{GBRT} to Transformers. Specifically, we scale the contribution of individual training samples to the loss using a sample weight, which penalizes the model for misclassifying recent observations. This method is crucial for achieving low validation loss and high validation accuracies, as visible in \cref{fig:fttransformer-optimisations-loss-acc}. The significantly lower training accuracy implies, that patterns from latter observations do not universally transfer to previous observations. At this time, it remains unclear what is causing the data drift within the training set.
 
 \emph{Label Smoothing}
 
@@ -1029,7 +1042,7 @@ We use a fixed batch size of \num{8192} samples for the feature set classical / 
 
 \emph{Early Stopping and Checkpointing}
 
-Similar to the \gls{GBM}, we halt training prematurely based on a consecutive decrease in validation accuracy. We set the patience to \num{10} epochs and restore the best model in terms of validation accuracy from the checkpoint. Checkpoints are saved at the end of each epoch. In the experiment above, early stopping does not apply.
+Similar to the \gls{GBRT}, we halt training prematurely based on a consecutive decrease in validation accuracy. We set the patience to \num{10} epochs and restore the best model in terms of validation accuracy from the checkpoint. Checkpoints are saved at the end of each epoch. In the experiment above, early stopping does not apply.
 
 \emph{Optimizer}
 
@@ -1063,7 +1076,7 @@ All of our machine-learning models feature a set of tunable hyperparameters. The
 
 We perform a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function \autocite[][2]{shahriariTakingHumanOut2016}. Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in more promising trials.
 
-While different algorithmic implementations exist for Bayesian optimisation, we choose the \emph{Optuna} library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters. We maximize the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $\num{50}$ trials per feature set for the \gls{GBM} and $\num{10}$ trials for the FT-Transformer. The best combination of each is tested out-of-sample in \cref{sec:results}.
+While different algorithmic implementations exist for Bayesian optimisation, we choose the \emph{Optuna} library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters. We maximize the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $\num{50}$ trials per feature set for the \gls{GBRT} and $\num{10}$ trials for the FT-Transformer. The best combination of each is tested out-of-sample in \cref{sec:results}.
 
 \textbf{Hyperparameter Search Space}
 
@@ -1121,42 +1134,42 @@ The hyperparameter search space for Transformers with a pre-training objective i
 
 \emph{Gradient Boosting}
 
-\cref{fig:ise-gbm-hyperparam-classical} visualizes the hyperparameter search space of the \gls{GBM} on the \gls{ISE} dataset with classical features, from which we can derive several observations from. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.429}{\percent} and \SI{64.378}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
+\cref{fig:ise-gbm-hyperparam-classical} visualizes the hyperparameter search space of the \gls{GBRT} on the \gls{ISE} dataset with classical features, from which we can derive several observations from. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.429}{\percent} and \SI{64.378}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
 
 
 \begin{figure}[!b]
-    \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[ width=0.6\linewidth]{1gzk7msy-hyperparam-search-space.pdf}}
+    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[ width=0.6\linewidth]{1gzk7msy-hyperparam-search-space.pdf}}
     \vfill
-    \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[ width=0.6\linewidth]{3vntumoi-hyperparam-search-space.pdf}}
+    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[ width=0.6\linewidth]{3vntumoi-hyperparam-search-space.pdf}}
 \end{figure}
 \clearpage
 \begin{figure}[ht]
     \addtocounter{figure}{-1}
-    \subfloat[Hyperparameter Search Space of \gls{GBM} With Feature Set 3\label{fig:ise-gbm-hyperparam-ml}]{\includegraphics[ width=0.6\linewidth]{2t5zo50f-hyperparam-search-space.pdf}}
-    \caption[]{Hyperparameter Search Space of \gls{GBM} on \gls{ISE} Validation Set}
+    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 3\label{fig:ise-gbm-hyperparam-ml}]{\includegraphics[ width=0.6\linewidth]{2t5zo50f-hyperparam-search-space.pdf}}
+    \caption[]{Hyperparameter Search Space of \gls{GBRT} on \gls{ISE} Validation Set}
     \label{fig:ise-gbm-hyperparam}
 \end{figure}
 
-In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \gls{GBM} trained on classical-size features. The loss surface is smooth with large connected regions. As the best solution achieving \SI{75.03504680858162}{\percent} accuracy lies within a splayed region of dense sampling, it is a good choice for further analysis. Consistent with the loss surface of \cref{fig:ise-gbm-hyperparam-classical}, the trees are grown to the maximum depth and a high learning rate, indicating the need for complex ensemble members highly corrective to previous predictions. Part of this could be due to the low signal-to-noise ratio in financial data.
+In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \gls{GBRT} trained on classical-size features. The loss surface is smooth with large connected regions. As the best solution achieving \SI{75.03504680858162}{\percent} accuracy lies within a splayed region of dense sampling, it is a good choice for further analysis. Consistent with the loss surface of \cref{fig:ise-gbm-hyperparam-classical}, the trees are grown to the maximum depth and a high learning rate, indicating the need for complex ensemble members highly corrective to previous predictions. Part of this could be due to the low signal-to-noise ratio in financial data.
 
-The loss surface of the \gls{GBM} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.99459643967347}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not per se improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles for trade classification. Results are tabulated in \cref{tab:solutions-gbm}.
+The loss surface of the \gls{GBRT} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.99459643967347}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not per se improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles for trade classification. Results are tabulated in \cref{tab:solutions-gbm}.
 
 \clearpage
 
 \emph{Gradient Boosting With Self-Training}
 
 \begin{figure}[!b]
-    \subfloat[Hyperparameter Search Space of \gls{GBM} With Self-Training With Feature Set 1\label{fig:ise-gbm-self-training-hyperparam-classical}]{\includegraphics[ width=0.6\linewidth]{37lymmzc-hyperparam-search-space.pdf}}
+    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Self-Training With Feature Set 1\label{fig:ise-gbm-self-training-hyperparam-classical}]{\includegraphics[ width=0.6\linewidth]{37lymmzc-hyperparam-search-space.pdf}}
     \vfill
-    \subfloat[Hyperparameter Search Space of \gls{GBM} With Self-Training With Feature Set 2\label{fig:ise-gbm-self-training-hyperparam-classical-size}]{\includegraphics[ width=0.6\linewidth]{1vmti6db-hyperparam-search-space.pdf}}
+    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Self-Training With Feature Set 2\label{fig:ise-gbm-self-training-hyperparam-classical-size}]{\includegraphics[ width=0.6\linewidth]{1vmti6db-hyperparam-search-space.pdf}}
 \end{figure}
 
 \clearpage
 
 \begin{figure}[ht]
     \addtocounter{figure}{-1}
-    \subfloat[Hyperparameter Search Space of \gls{GBM} With Self-Training With Feature Set 3\label{fig:ise-gbm-self-training-hyperparam-ml}]{\includegraphics[width=0.6\linewidth]{t55nd8r0-hyperparam-search-space.pdf}}
-    \caption[]{Hyperparameter Search Space of \gls{GBM} with Self-Training on \gls{ISE} Validation Set}
+    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Self-Training With Feature Set 3\label{fig:ise-gbm-self-training-hyperparam-ml}]{\includegraphics[width=0.6\linewidth]{t55nd8r0-hyperparam-search-space.pdf}}
+    \caption[]{Hyperparameter Search Space of \gls{GBRT} with Self-Training on \gls{ISE} Validation Set}
     \label{fig:ise-gbm-self-training-hyperparam}
 \end{figure}
 
