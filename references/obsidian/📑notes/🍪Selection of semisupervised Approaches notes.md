@@ -1,3 +1,7 @@
+*Differentiable Trees*
+Differentiable trees combine properties of neural networks and tree-based learners. In anticipation of cref-[[🎄Decision Trees]], standard decision trees are not differentiable and rely on local, greedy splitting procedures. On the other hand, neural networks, are trained in an end-to-end fashion using back-propagation. Differentiable trees become differentiable by using a soft splitting criterion within nodes of the tree, as proposed in (Hazimeh, Kontschieder, Popov). A frequently benchmarked variant of this family is the NODE network ([[@popovNeuralObliviousDecision2019]]3--5), which uses oblivious decision trees (trees, that use the same splitting criterion for all nodes at a single level) and uses entmax (Peters; function which maps a vector of real-valued scores to a discrete probability distribution) to perform soft splits and combines trees as layers in a neural network. NODE delivers performance on-par with gls-gbt in the author's experiments ([[@popovNeuralObliviousDecision2019]]7). The success of NODE is not corroborated by independent studies. In ([[@kadraWelltunedSimpleNets2021]]7) falls short to achieve the performance of simple, regularized networks. ([[@gorishniyRevisitingDeepLearning2021]]7) and ([[@borisovDeepNeuralNetworks2022]]14) demonstrate, that NODE is inferior to attention-based architectures. Hence, our focus shifts towards attention-based networks to perform trade classification.
+
+
 
 An exception are ([[@levinTransferLearningDeep2022]]7), who find no improvements from pre-training the FT-Transformer.
 
