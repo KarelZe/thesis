@@ -433,3 +433,8 @@ thesis.pdf
 # venvs
 thesis/
 venv/
+
+# obsidian
+references/obsidian/.obsidian/workspace.json
+references/obsidian/.obsidian/hotkeys.json
+references/obsidian/.obsidian/appearance.json

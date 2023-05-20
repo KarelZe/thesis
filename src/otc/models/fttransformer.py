@@ -51,10 +51,12 @@ def _all_or_none(values: list[Any]) -> bool:
     """
     return all(x is None for x in values) or all(x is not None for x in values)
 
+
 class CLSHead(nn.Module):
     """
     2 Layer MLP projection head
     """
+
     def __init__(self, *, d_in: int, d_hidden: int):
         """
         tbd
@@ -534,6 +536,18 @@ class MultiheadAttention(nn.Module):
             .reshape(batch_size * self.n_heads, n_tokens, d_head)
         )
 
+    def save_attn_gradients(self, attn_gradients):
+        self.attn_gradients = attn_gradients
+
+    def get_attn_gradients(self):
+        return self.attn_gradients
+
+    def get_attn(self):
+        return self.attn
+
+    def save_attn(self, attn):
+        self.attn = attn
+
     def forward(
         self,
         x_q: torch.Tensor,
@@ -574,9 +588,15 @@ class MultiheadAttention(nn.Module):
         k = self._reshape(k)
         attention_logits = q @ k.transpose(1, 2) / math.sqrt(d_head_key)
         attention_probs = F.softmax(attention_logits, dim=-1)
+
+        # https://github.com/hila-chefer/Transformer-Explainability/blob/c3e578f76b954e8528afeaaee26de3f07e3fe559/BERT_explainability/modules/BERT/BERT.py#L348
+        self.save_attn(attention_probs)
+        attention_probs.register_hook(self.save_attn_gradients)
+
         if self.dropout is not None:
             attention_probs = self.dropout(attention_probs)
         x = attention_probs @ self._reshape(v)
+
         x = (
             x.reshape(batch_size, self.n_heads, n_q_tokens, d_head_value)
             .transpose(1, 2)
