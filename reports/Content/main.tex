@@ -257,7 +257,7 @@ The most basic application is in the \gls{LR} algorithm. For a more complex exam
     \label{fig:stacking-algo}
 \end{figure}
 
-\textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} and \textcite[][18]{grauerOptionTradeClassification2022} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and the quotes. Hence, current classification rules may not unleash their full potential. A obvious question is, if classifiers, \emph{learnt} on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
+\textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} and \textcite[][18]{grauerOptionTradeClassification2022} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and quotes. This raises the question of whether classifiers trained on price and quote data can adapt to the data and improve upon classical trade classification rules.
 
 The trend towards sophisticated, hybrid rules, combining as many as five base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to stacked ensembles found in machine learning and expresses the need for better classifiers.
 
@@ -272,9 +272,13 @@ problem.
 
 \subsection{Framing as a Supervised Learning Problem}\label{sec:problem-framing}
 
-All trade classification rules from \cref{sec:rule-based-approaches}  perform \emph{discrete classification} and assign a class to the trade. Naturally, a more powerful insight is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives additional insights into the confidence of the prediction.
+Our focus is on supervised classification, where a classifier learns a function mapping between the input and the label, which represents the trade initiator.
 
-Thus, we frame trade signing as a supervised, probabilistic classification task. This is similar to \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis and unsupervised. A probabilistic view enables a richer evaluation, but constraints the selection to probabilistic classifiers. For comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
+All trade classification rules from \cref{sec:rule-based-approaches} perform discrete classification and assign a class to the trade. Naturally, a more powerful insight is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives additional insights into the confidence of the prediction.
+
+Thus, we frame trade signing as a supervised, probabilistic classification task. This is similar to \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis and supervised.
+
+A probabilistic view enables a richer evaluation, but restricts the selection to probabilistic classifiers. For comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
 
 We introduce more notation, which we use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times M}$ and described by a random variable $X$. Any of the $M$ features in $\mathbf{x}$ may be numerical, e.g., the trade price or categorical e.g., the security type. Like before, the target is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $\Pr(X, Y)$. The labelled data set with $N$ i.i.d. samples is denoted by $\mathcal{S} =\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
 
