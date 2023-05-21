@@ -18,7 +18,7 @@ The validity of many economic studies hinges on the ability to properly classify
 - [[@rosenthalModelingTradeDirection2012]] lists fields where trade classification is used and what the impact of wrongly classified trades is.
 - The extent to which inaccurate trade classification biases empirical research depends on whether misclassifications occur randomly or systematically [[@theissenTestAccuracyLee2000]].
 - There is no common sense of who is the initiatiator of a trade. See discussion in [[@odders-whiteOccurrenceConsequencesInaccurate2000]]
-- over time proposed methods applied more filters / got more sophisticated but didn't substantialy improve im some cases. See e. g., [[@finucaneDirectTestMethods2000]] Time to switch to another paradigm and let the data speak?
+- over time proposed methods applied more philtres / got more sophisticated but didn't substantialy improve im some cases. See e. g., [[@finucaneDirectTestMethods2000]] Time to switch to another paradigm and let the data speak?
 - Works that require trade side classification in option markets:
 	- [[@muravyevOrderFlowExpected2016]]
 	- [[@huDoesOptionTrading2014]]

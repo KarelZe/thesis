@@ -1,5 +1,5 @@
 
-title: Modeling Trade Direction
+title: Modelling Trade Direction
 authors: D. W. R. Rosenthal
 year: 2012
 tags : #rosenthal #trade-classification #lr #tick-rule #quote-rule #logistic-regression #ml 
@@ -23,7 +23,7 @@ related:
 
 “A further complication is the delays between publishing times (i.e. timestamps) of trades and quotes; however, classification methods without rigorous delay assumptions are often compared.” ([Rosenthal, 2012, p. 2](zotero://select/library/items/DU2BX4UE)) ([pdf](zotero://open-pdf/library/items/EBGQ4ZWP?page=2&annotation=7WKQ25ET))
 
-“To improve classification accuracy, I incorporate different methods into a model for the likelihood a trade was buyer-initiated. I also allow for joint estimation of a (latent) delay model. Modeling trade classifications is a new approach and one of the unique contributions of this work.” ([Rosenthal, 2012, p. 2](zotero://select/library/items/DU2BX4UE)) ([pdf](zotero://open-pdf/library/items/EBGQ4ZWP?page=2&annotation=Q744AS3L))
+“To improve classification accuracy, I incorporate different methods into a model for the likelihood a trade was buyer-initiated. I also allow for joint estimation of a (latent) delay model. Modelling trade classifications is a new approach and one of the unique contributions of this work.” ([Rosenthal, 2012, p. 2](zotero://select/library/items/DU2BX4UE)) ([pdf](zotero://open-pdf/library/items/EBGQ4ZWP?page=2&annotation=Q744AS3L))
 
 “Trade classification infers which trade participant initiated a trade by being the aggressor, consistent with Odders-White (2000) defining the laterarriving order as the trade initiator. Three approaches to trade classification dominate the literature: tick tests, midpoint tests, and bid/ask tests. Finucane (2000) recommends a tick test: comparing a trade price to the previous (differing) trade price for that stock. A lower previous trade price is taken as evidence the current trade was buy-initiated. Lee and Ready (1991) suggested a midpoint test: comparing a trade price to the lagged midpoint (i.e. average of best bid and ask quote). Trades at prices above (below) the midpoint are classified as buy- (sell-) initiated. Trades at the midpoint are resolved with a tick test. Ellis et al. (2000) suggested a bid/ask test for Nasdaq stocks; Peterson and Sirri (2003) then suggested it for NYSE stocks. Trades at the lagged ask (bid) are classified as buy- (sell-) initiated; other trades are resolved with a tick test. Trades are published with delay relative to quotes. Therefore, midpoint and bid/ask methods require delay assumptions. For midpoint methods, Lee and Ready (1991) use a delay of five seconds; Vergote (2005) suggests” ([Rosenthal, 2012, p. 3](zotero://select/library/items/DU2BX4UE)) ([pdf](zotero://open-pdf/library/items/EBGQ4ZWP?page=3&annotation=6PAZAVLU))
 

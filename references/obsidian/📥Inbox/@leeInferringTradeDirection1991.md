@@ -20,8 +20,8 @@ related:
 - They identify the two problems with the common approach of comparing trade prices with quote prices at the time of trade. First, quotes are often recorded before the trade, that triggered them and second that trades are often inside the spread.
 - To reduce the misclassifications they propose to use an offset of 5 sec. when comparing the trade and the quote. For trades inside the spread they suggest to use the tick test. They demonstrate that the effective spread is often on one side of the quoted spread due to standing order.
 - The tick test is a techniques that infers the trade direction by comparing the trade price aginst the price of preceding trades. Four categories are possible: uptick, downtick, zero-uptick, and zero-downtick. Note that "zero-..." ticks can be problamtic, if trades didn't take place for a long time / are stale.
-- Tick test incorporates less information than quote method, that utilizes posted quotes instead. (found in [[@odders-whiteOccurrenceConsequencesInaccurate2000]])
-- In theory all trades can be classified using the tick test. In practice certain trades are not classifiable due to being reported out-of-sequence or sold with special conditions. 
+- Tick test incorporates less information than quote method, that utilises posted quotes instead. (found in [[@odders-whiteOccurrenceConsequencesInaccurate2000]])
+- In theory all trades can be classified using the tick test. In practise certain trades are not classifiable due to being reported out-of-sequence or sold with special conditions. 
 - Tick test is relatively imprecise when compared with the quote rule. This is esspecially evident if the prevailing quote has changed or if the quote is a long time back.
 - An alternative is the reverse tick test ([[@hasbrouckTradesQuotesInventories1988]]), that compares the trade price against the prices of trades immediately following the trade. If the following price is higher, the reverse tick test classifies the current trade as a sell.
 - I the trade is bracketed by price reversal (price change before the trade is the opposite to the price change after the trade) the reverse tick test and the tick test yield the same results.
@@ -53,7 +53,7 @@ related:
 
 “A trade is classified as a buy if it occurs on an uptick or a zero-uptick;otherwise it is classified as a sell” ([Lee and Ready, 1991, p. 3](zotero://select/library/items/FW283V5Z)) ([pdf](zotero://open-pdf/library/items/SVM9XEPW?page=3&annotation=QC92KQHH))
 
-“In theory, all trades can be classified as either a buy or a sell order by using a tick test.5In practice, certain trades are not classifiable because they are either reported out of sequence or are sold with special conditions attached” ([Lee and Ready, 1991, p. 3](zotero://select/library/items/FW283V5Z)) ([pdf](zotero://open-pdf/library/items/SVM9XEPW?page=3&annotation=96GXIDN8))
+“In theory, all trades can be classified as either a buy or a sell order by using a tick test.5In practise, certain trades are not classifiable because they are either reported out of sequence or are sold with special conditions attached” ([Lee and Ready, 1991, p. 3](zotero://select/library/items/FW283V5Z)) ([pdf](zotero://open-pdf/library/items/SVM9XEPW?page=3&annotation=96GXIDN8))
 
 “The primary limitation of the tick test is its relative imprecision when compared to a quote-based approach, particularly if the prevailing quote has changed or it has been a long time since the last trade.” ([Lee and Ready, 1991, p. 3](zotero://select/library/items/FW283V5Z)) ([pdf](zotero://open-pdf/library/items/SVM9XEPW?page=3&annotation=C2QT5QSA))
 

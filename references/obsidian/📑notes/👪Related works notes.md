@@ -4,7 +4,7 @@
 
 - Some feature sets contain as many as 42 features, some of which a forward looking (cp. [[@ronenMachineLearningTrade2022]] (p. 49)).
 
-- [[@rosenthalModelingTradeDirection2012]] writes that he uses a logistic-link generalized linear model (GLM). Obviously a fancy way of saying (in R wording) that he uses logistic regression. (see here. https://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/R/R-Manual/R-Manual20.html)
+- [[@rosenthalModelingTradeDirection2012]] writes that he uses a logistic-link generalised linear model (GLM). Obviously a fancy way of saying (in R wording) that he uses logistic regression. (see here. https://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/R/R-Manual/R-Manual20.html)
 
 - Parts of this may be due to the are bound by the best performance of their commitee members. Voting classifiers are bound to the of their ensemble members. Voting classifier / ensemble
 
@@ -31,7 +31,7 @@
 
 
 **Machine learning:**
-“The k-nearest neighbor with three predictor variables achieves an average out-of-sample classification accuracy of 71.40%, compared to 63.32% for the linear logistic regression with seven predictor variables.” ([Blazejewski and Coggins, 2005, p. 481](zotero://select/library/items/ULRH88UK)) ([pdf](zotero://open-pdf/library/items/2KMK55IH?page=1&annotation=SKICD63H))
+“The k-nearest neighbour with three predictor variables achieves an average out-of-sample classification accuracy of 71.40%, compared to 63.32% for the linear logistic regression with seven predictor variables.” ([Blazejewski and Coggins, 2005, p. 481](zotero://select/library/items/ULRH88UK)) ([pdf](zotero://open-pdf/library/items/2KMK55IH?page=1&annotation=SKICD63H))
 
 “The result suggests that a non-linear approach may produce a more parsimonious trade sign inference model with a higher out-of-sample classification accuracy.” ([Blazejewski and Coggins, 2005, p. 481](zotero://select/library/items/ULRH88UK)) ([pdf](zotero://open-pdf/library/items/2KMK55IH?page=1&annotation=I9P2NWE9))
 
@@ -39,7 +39,7 @@
 
 “The mean accuracy of the k-NN classifier, where k ¼ 9; is greater than the mean accuracies of the trade continuation and the majority vote classifiers, for all training timescales (12). The total number of models constructed for each stock was 145: 2 3 16 k-NN, 2 16 logistic regression, 1 trade continuation, and 16 majority vote models. ” ([Blazejewski and Coggins, 2005, p. 493](zotero://select/library/items/ULRH88UK)) ([pdf](zotero://open-pdf/library/items/2KMK55IH?page=13&annotation=TTJGZ7EW))
 
-“These results suggest that a non-linear approach may produce a more parsimonious trade sign inference model with a higher out-of-sample classification accuracy. Furthermore, for most of our stocks the classification accuracy of the k-nearest-neighbor ðk ¼ 9Þ with contemporaneous predictor variables is a monotonically increasing function of the training interval length, with 30 days being the best interval.” ([Blazejewski and Coggins, 2005, p. 494](zotero://select/library/items/ULRH88UK)) ([pdf](zotero://open-pdf/library/items/2KMK55IH?page=14&annotation=MCA94DNA))
+“These results suggest that a non-linear approach may produce a more parsimonious trade sign inference model with a higher out-of-sample classification accuracy. Furthermore, for most of our stocks the classification accuracy of the k-nearest-neighbour ðk ¼ 9Þ with contemporaneous predictor variables is a monotonically increasing function of the training interval length, with 30 days being the best interval.” ([Blazejewski and Coggins, 2005, p. 494](zotero://select/library/items/ULRH88UK)) ([pdf](zotero://open-pdf/library/items/2KMK55IH?page=14&annotation=MCA94DNA))
 
 
 **Unused:**

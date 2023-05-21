@@ -1,4 +1,4 @@
-Recall from the chapter [[🍪Selection Of Supervised Approaches]] that categorical data is data, that is divided into groups. In the context of trade classification, the option type is categorical and takes values $\{\text{'C'},\text{'P'}\}$ for calls and puts. Similar to a token, a category, e. g., $\text{'P'}$ in the previous example, must be represented as a multi-dimensional vector to be handled by the Transformer. Even when processed in other types of neural networks, categories need to be converted to real-valued inputs first, in order to optimize parameters with gradient descent.
+Recall from the chapter [[🍪Selection Of Supervised Approaches]] that categorical data is data, that is divided into groups. In the context of trade classification, the option type is categorical and takes values $\{\text{'C'},\text{'P'}\}$ for calls and puts. Similar to a token, a category, e. g., $\text{'P'}$ in the previous example, must be represented as a multi-dimensional vector to be handled by the Transformer. Even when processed in other types of neural networks, categories need to be converted to real-valued inputs first, in order to optimise parameters with gradient descent.
 
 
 To this end, embeddings are non-exclusive to Transformer-based architectures, and can be used in other deep learning-based approaches, and even classical machine learning models, like [[🐈Gradient Boosting]]. Covering these combinations is outside the scope of this work. We refer the reader to [[@gorishniyEmbeddingsNumericalFeatures2022]] for an in-depth comparison. Next, our focus is on two concrete examples of Transformers for tabular data.
@@ -12,20 +12,20 @@ Let SN = {wi} N i=1 be a sequence of N input tokens with wi being the i th eleme
 
 ## Embeddings and Grokking
 
-4 DISCUSSION We have seen that in the datasets we studied, small algorithmic binary operation tables, effects such as double descent or late generalization, and improvements to generalization from interventions like weight decay can be striking. This suggests that these datasets could be a good place to investigate aspects of generalization. For example, we plan to test whether various proposed measures of minima flatness correlate with generalization in our setting. We have also seen that visualizing the embedding spaces of these neural networks can show natural kinds of structure, for example in problems of modular arithmetic the topology of the embeddings tends to be circles or cylinders. We also see that the network tends to idiosyncratically organize the embeddings by various residues. Whilst the properties of these mathematical objects are familiar to us, we speculate that such visualizations could one day be a useful way to gain intuitions about novel mathematical objects. 
+4 DISCUSSION We have seen that in the datasets we studied, small algorithmic binary operation tables, effects such as double descent or late generalisation, and improvements to generalisation from interventions like weight decay can be striking. This suggests that these datasets could be a good place to investigate aspects of generalisation. For example, we plan to test whether various proposed measures of minima flatness correlate with generalisation in our setting. We have also seen that visualising the embedding spaces of these neural networks can show natural kinds of structure, for example in problems of modular arithmetic the topology of the embeddings tends to be circles or cylinders. We also see that the network tends to idiosyncratically organise the embeddings by various residues. Whilst the properties of these mathematical objects are familiar to us, we speculate that such visualisations could one day be a useful way to gain intuitions about novel mathematical objects. 
 
-3.4 QUALITATIVE VISUALIZATION OF EMBEDDINGS In order to gain some insight into networks that generalize, we visualized the matrix of the output layer for the case of modular addition and S5. In Figure 3 we show t-SNE plots of the row vectors. For some networks we find clear reflections of the structure of the underlying mathematical objects in the plots. For example the circular topology of modular addition is shown with a ‘number line’ formed by adding 8 to each element. The structure is more apparent in networks that were optimized with weight decay. https://arxiv.org/pdf/2201.02177.pdf
+3.4 QUALITATIVE visualisation OF EMBEDDINGS In order to gain some insight into networks that generalise, we visualised the matrix of the output layer for the case of modular addition and S5. In Figure 3 we show t-SNE plots of the row vectors. For some networks we find clear reflections of the structure of the underlying mathematical objects in the plots. For example the circular topology of modular addition is shown with a ‘number line’ formed by adding 8 to each element. The structure is more apparent in networks that were optimised with weight decay. https://arxiv.org/pdf/2201.02177.pdf
 
-![[visualization-token-embedding.png]]
+![[visualisation-token-embedding.png]]
 (from [[@powerGrokkingGeneralizationOverfitting2022]])
 
 
-## Visualization
+## Visualisation
 
 ![[Pasted image 20230414105714.png]]
 found in https://www.nature.com/articles/s42256-022-00532-1
 
-![[visualization-of-word-embeddings.png]]
+![[visualisation-of-word-embeddings.png]]
 
 
 ## Difference equivariant / invariant:
@@ -79,9 +79,9 @@ In an embedding, those word points are all taken and rearranged (**projected**, 
 
 ![](https://e2eml.school/images/transformers/embedded_words.png)
 
-A good embedding groups words with similar meanings together. A model that works with an embedding learns patterns in the embedded space. That means that whatever it learns to do with one word automatically gets applied to all the words right next to it. This has the added benefit of reducing the amount of training data needed. Each example gives a little bit of learning that gets applied across a whole neighborhood of words
+A good embedding groups words with similar meanings together. A model that works with an embedding learns patterns in the embedded space. That means that whatever it learns to do with one word automatically gets applied to all the words right next to it. This has the added benefit of reducing the amount of training data needed. Each example gives a little bit of learning that gets applied across a whole neighbourhood of words
 
-A good embedding groups words with similar meanings together. **A model that works with an embedding learns patterns in the embedded space.** That means that whatever it learns to do with one word automatically gets applied to all the words right next to it. This has the added benefit of reducing the amount of training data needed. Each example gives a little bit of learning that gets applied across a whole neighborhood of words.
+A good embedding groups words with similar meanings together. **A model that works with an embedding learns patterns in the embedded space.** That means that whatever it learns to do with one word automatically gets applied to all the words right next to it. This has the added benefit of reducing the amount of training data needed. Each example gives a little bit of learning that gets applied across a whole neighbourhood of words.
 
 ## Notes from Chris Olah
 From https://colah.github.io/posts/2014-07-NLP-RNNs-Representations/:
@@ -97,8 +97,8 @@ $$
 \end{aligned}
 $$
 (Typically, the function is a lookup table, parameterized by a matrix, $\theta$, with a row for each word: $\left.W_\theta\left(w_n\right)=\theta_{n-}\right)$
-$W$ is initialized to have random vectors for each word. It learns to have meaningful vectors in order to perform some task.
-WW is initialized to have random vectors for each word. It learns to have meaningful vectors in order to perform some task.
+$W$ is initialised to have random vectors for each word. It learns to have meaningful vectors in order to perform some task.
+WW is initialised to have random vectors for each word. It learns to have meaningful vectors in order to perform some task.
 
 Word embeddings exhibit an even more remarkable property: analogies between words seem to be encoded in the difference vectors between words. For example, there seems to be a constant male-female difference vector:
 $$
@@ -114,17 +114,17 @@ Example is adapted from [[@mikolovLinguisticRegularitiesContinuous2013]]
 
 ## Notes from Vaswani
 From [[@vaswaniAttentionAllYou2017]] :
-“Similarly to other sequence transduction models, we use learned embeddings to convert the input tokens and output tokens to vectors of dimension dmodel. We also use the usual learned linear transformation and softmax function to convert the decoder output to predicted next-token probabilities.” (Vaswani et al., 2017, p. 5)
+“Similarly to other sequence transduction models, we use learnt embeddings to convert the input tokens and output tokens to vectors of dimension dmodel. We also use the usual learnt linear transformation and softmax function to convert the decoder output to predicted next-token probabilities.” (Vaswani et al., 2017, p. 5)
 
 ## Notes from Rothman
 From [[@rothmanTransformersNaturalLanguage2021]]:
 
 The embedding sub-layer works like other standard *transduction models*. A tokenizer will transform a sentence into tokens.
 
-“The Transformer contains a learned embedding sub-layer. Many embedding methods can be applied to the tokenized input. I chose the skip-gram architecture of the word2vec embedding approach Google made available in 2013 to illustrate the embedding sublayer of the Transformer.” (Rothman, 2021, p. 9)
+“The Transformer contains a learnt embedding sub-layer. Many embedding methods can be applied to the tokenized input. I chose the skip-gram architecture of the word2vec embedding approach Google made available in 2013 to illustrate the embedding sublayer of the Transformer.” (Rothman, 2021, p. 9)
 
-“A skip-gram will focus on a center word in a window of words and predicts context words. For example, if word(i) is the center word in a two-step window, a skipgram model will analyze word(i-2), word(i-1), word(i+1), and word(i+2). Then the window will slide and repeat the process. A skip-gram model generally contains an input layer, weights, a hidden layer, and an output containing the word embeddings of the tokenized input words.” (Rothman, 2021, p. 9)
+“A skip-gram will focus on a centre word in a window of words and predicts context words. For example, if word(i) is the centre word in a two-step window, a skipgram model will analyse word(i-2), word(i-1), word(i+1), and word(i+2). Then the window will slide and repeat the process. A skip-gram model generally contains an input layer, weights, a hidden layer, and an output containing the word embeddings of the tokenized input words.” (Rothman, 2021, p. 9)
 
 “To verify the word embedding produced for these two words, we can use cosine similarity to see if the word embeddings of the words black and brown are similar. Cosine similarity uses Euclidean (L2) norm to create vectors in a unit sphere. The dot product of the vectors we are comparing is the cosine between the points of those two vectors.” (Rothman, 2021, p. 10)
 
-“The Transformer's subsequent layers do not start empty-handed. They have learned word embeddings that already provide information on how the words can be associated. However, a big chunk of information is missing because no additional vector or information indicates a word's position in a sequence.” (Rothman, 2021, p. 10)
+“The Transformer's subsequent layers do not start empty-handed. They have learnt word embeddings that already provide information on how the words can be associated. However, a big chunk of information is missing because no additional vector or information indicates a word's position in a sequence.” (Rothman, 2021, p. 10)

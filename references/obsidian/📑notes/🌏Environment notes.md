@@ -33,7 +33,7 @@ bash: nvcii: command not found...
 [uloak@uc2n513 uloak]$ lspci | grep VGA
 01:00.1 VGA compatible controller: Matrox Electronics Systems Ltd. MGA G200eH3 (rev 02)
 [uloak@uc2n513 uloak]$ lshw -C video
-WARNING: you should run this program as super-user.
+WARNING: you should run this programme as super-user.
   *-display                 
        description: VGA compatible controller
        product: MGA G200eH3
@@ -95,7 +95,7 @@ WARNING: you should run this program as super-user.
        capabilities: bus_master cap_list
        configuration: driver=nvidia latency=0
        resources: iomemory:da00-d9ff iomemory:da80-da7f irq:401 memory:ee000000-eeffffff memory:da000000000-da7ffffffff memory:da800000000-da801ffffff
-WARNING: output may be incomplete or inaccurate, you should run this program as super-user.
+WARNING: output may be incomplete or inaccurate, you should run this programme as super-user.
 ```
 
 
@@ -176,7 +176,7 @@ _ModuleTable_Sz_=2
 SLURM_JOB_UID=365250
 SLURM_JOB_PARTITION=gpu_4
 JUPYTERHUB_DEFAULT_URL=/lab
-SLURM_SCRIPT_CONTEXT=prolog_task
+SLURM_SCRIPT_CONTEXT=prologue_task
 LSDF=/lsdf
 TMOUT=36000
 KIT_FAMILY_JUPYTER_VERSION=2022-03-30

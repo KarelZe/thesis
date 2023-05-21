@@ -12,7 +12,7 @@
 
 Monitor memory usage using.
 ```
-pip install transformers datasets accelerate nvidia-ml-py3
+pip instal transformers datasets accelerate nvidia-ml-py3
 ```
 
 ## Batch size
@@ -23,7 +23,7 @@ pip install transformers datasets accelerate nvidia-ml-py3
 - https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/index.html#dim-quantization
 
 ## Optimizer
-- Optimized implementation of AdamW `adamw_apex_fused` 
+- Optimised implementation of AdamW `adamw_apex_fused` 
 - See: https://github.com/NVIDIA/apex (Integrated into PyTorch already?)
 - Patch of fusedAdamW not merged? https://github.com/pytorch/pytorch/pull/88015/files
 ## Anatomy of Model's Operations
@@ -36,16 +36,16 @@ Transformers architecture includes 3 main groups of operations grouped below by 
     
 2.  **Statistical Normalizations**
     
-    Softmax and layer normalization are less compute-intensive than tensor contractions, and involve one or more **reduction operations**, the result of which is then applied via a map.
+    Softmax and layer normalisation are less compute-intensive than tensor contractions, and involve one or more **reduction operations**, the result of which is then applied via a map.
     
 3.  **Element-wise Operators**
     
     These are the remaining operators: **biases, dropout, activations, and residual connections**. These are the least compute-intensive operations.
     
 
-This knowledge can be helpful to know when analyzing performance bottlenecks.
+This knowledge can be helpful to know when analysing performance bottlenecks.
 
-This summary is derived from [Data Movement Is All You Need: A Case Study on Optimizing Transformers 2020](https://arxiv.org/abs/2007.00072)
+This summary is derived from [Data Movement Is All You Need: A Case Study on Optimising Transformers 2020](https://arxiv.org/abs/2007.00072)
 
 
 ## Multi-GPU training:
@@ -63,11 +63,11 @@ Data parallelism or model parallelism:
 
 
 ## Data Loader
-- Use pinned memory in data loader: https://discuss.pytorch.org/t/when-to-set-pin-memory-to-true/19723/20 and https://developer.nvidia.com/blog/how-optimize-data-transfers-cuda-cc/
+- Use pinned memory in data loader: https://discuss.pytorch.org/t/when-to-set-pin-memory-to-true/19723/20 and https://developer.nvidia.com/blog/how-optimise-data-transfers-cuda-cc/
 - use gpu-accelerated data loaders: https://github.com/NVIDIA-Merlin/dataloader
 
 -   `DataLoader(pin_memory=True, ...)` which ensures that the data gets preloaded into the pinned memory on CPU and typically leads to much faster transfers from CPU to GPU memory.
--   `DataLoader(num_workers=4, ...)` - spawn several workers to pre-load data faster - during training watch the GPU utilization stats and if it’s far from 100% experiment with raising the number of workers. Of course, the problem could be elsewhere so a very big number of workers won’t necessarily lead to a better performance. (copied from https://huggingface.co/docs/transformers/perf_train_gpu_one#dataloader)
+-   `DataLoader(num_workers=4, ...)` - spawn several workers to pre-load data faster - during training watch the GPU utilisation stats and if it’s far from 100% experiment with raising the number of workers. Of course, the problem could be elsewhere so a very big number of workers won’t necessarily lead to a better performance. (copied from https://huggingface.co/docs/transformers/perf_train_gpu_one#dataloader)
 
 ## Profiler
 https://pytorch.org/tutorials/recipes/recipes/profiler_recipe.html

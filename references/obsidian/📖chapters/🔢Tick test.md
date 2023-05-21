@@ -32,7 +32,7 @@ $$
     \end{cases}
   \end{equation}
 $$
-Both the tick test and reverse tick test result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction ([[@leeInferringTradeDirection1991]] 736). In practice, ([[@grauerOptionTradeClassification2022]] 29--32) observe higher accuracies for the reverse tick test on a sample of option trades recorded at the ISE and CBOE. This result contradicts results in the stock market ([[@leeInferringTradeDirection1991]] 737). 
+Both the tick test and reverse tick test result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction ([[@leeInferringTradeDirection1991]] 736). In practise, ([[@grauerOptionTradeClassification2022]] 29--32) observe higher accuracies for the reverse tick test on a sample of option trades recorded at the ISE and CBOE. This result contradicts results in the stock market ([[@leeInferringTradeDirection1991]] 737). 
 
 **Notes:**
 [[🔢Tick test notes]]

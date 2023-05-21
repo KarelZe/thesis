@@ -20,7 +20,7 @@
 - Differentiate into exploration and exploitation. Do this in a structured way.
 - Set up a simple baseline
 - Write why we use a quasi-random search during exploration and Bayesian search during exploitation phase. (see https://github.com/google-research/tuning_playbook)
-- Isolate the optimization of different hyperparameters e. g., optimizer, activation functions etc. during the exploration phase. Take into account nuance parameters. Decompose into smaller problems, that are manageable.
+- Isolate the optimisation of different hyperparameters e. g., optimizer, activation functions etc. during the exploration phase. Take into account nuance parameters. Decompose into smaller problems, that are manageable.
 - Discuss why retraining of the best model could make sense.
 - Keep ideas simple and gradually add complexity and make it visible in the structure of the chapter. Helps with reasoning later. Possible steps could be:
 	- tbd
@@ -36,7 +36,7 @@
 ## Advanced logging 🗞️
 - advance experiment tracking https://www.learnpytorch.io/07_pytorch_experiment_tracking/
 - log gradients and loss using `wandb.watch` as shown here https://www.youtube.com/watch?v=k6p-gqxJfP4 with `wandb.log({"epoch":epoch, "loss":loss}, step)` (nested in `if ((batch_ct +1) % 25) == 0:`) and `wandb.watch(model, criterion, log="all", log_freq=10)`
-- In-depth weights and bias blog post: https://wandb.ai/site/articles/debugging-neural-networks-with-pytorch-and-w-b-using-gradients-and-visualizations
+- In-depth weights and bias blog post: https://wandb.ai/site/articles/debugging-neural-networks-with-pytorch-and-w-b-using-gradients-and-visualisations
 - Mind the double descent effect https://openai.com/blog/deep-double-descent/
 
 ## Learning rate
@@ -67,14 +67,14 @@
 ### Transformer
 - See tips in [[tuningplaybookgithub]]
 - Transformers are much more elaborate to train than gradient boosting approaches. Training of the transformer has been found non-trivial [[@liuUnderstandingDifficultyTraining2020]]
-- Motivate the importance of regularized neural nets with [[@kadraWelltunedSimpleNets2021]] papers. Authors state, that the improvements from regularization of neural nets are very pronounced and highly significant. Discuss which regularization approaches are applied and why.  
+- Motivate the importance of regularised neural nets with [[@kadraWelltunedSimpleNets2021]] papers. Authors state, that the improvements from regularisation of neural nets are very pronounced and highly significant. Discuss which regularisation approaches are applied and why.  
 - Similarly, [[@heBagTricksImage2018]] show how they can improve the performance of neural nets for computer vision through "tricks" like learning rate scheduling.
-- Also see [[@shavittRegularizationLearningNetworks2018]] for regularization in neural networks for tabular data.
+- Also see [[@shavittRegularizationLearningNetworks2018]] for regularisation in neural networks for tabular data.
 - Motivate different activation functions with [[@shazeerGLUVariantsImprove2020]]
 - Search space is adapated from [[@huangTabTransformerTabularData2020]] and [[@gorishniyRevisitingDeepLearning2021]]. We make sure optimal solution is not on the borders of the search space.
 - post norm / pre-norm / lr warm up [[@xiongLayerNormalizationTransformer2020]].  Use of Post-Norm (Hello [[🤖TabTransformer]]) has been deemed outdated in Transformers due to a more fragile training process (see [[@gorishniyRevisitingDeepLearning2021]]). 
 - In case of diverged training, try gradient clipping and/or more warmup steps. (found in [[@popelTrainingTipsTransformer2018]])
-- Use weight decay of 0.1 for a small amount of regularization [[@loshchilovDecoupledWeightDecay2019]].
+- Use weight decay of 0.1 for a small amount of regularisation [[@loshchilovDecoupledWeightDecay2019]].
 - on the compute cost of transformers [[@ivanovDataMovementAll2021]]
 - training tips for Transformer https://www.borealisai.com/research-blogs/tutorial-17-transformers-iii-training/
 - Might use additional tips from here: ([[@liuRoBERTaRobustlyOptimized2019]] and [[@liuUnderstandingDifficultyTraining2020]])
@@ -87,13 +87,13 @@
 - Use weighting scheme for samples. See: https://pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html
 
 
-## Visualizations 🖼️
+## Visualisations 🖼️
 
-![[visualization_of_bleu_over_time.png]]
+![[visualisation_of_bleu_over_time.png]]
 
 ![[bleu_no_of_gpus.png]]
 
-Visualize model parameters:
+Visualise model parameters:
 ![[viz-model-params.png]]
 (from https://arxiv.org/pdf/2005.14165.pdf)
 

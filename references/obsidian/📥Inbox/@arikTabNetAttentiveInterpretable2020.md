@@ -14,7 +14,7 @@ year: 2020
 ## Notes Sebastian Raschka
 - Based on my personal experience, TabNet is the first deep learning architecture for tabular data that gained widespread attention (no pun intended).
 - TabNet is based on a sequential attention mechanism, showing that self-supervised learning with unlabeled data can improve the performance over purely supervised training regimes in tabular settings.
-- Across six synthetic datasets, TabNet outperforms other methods on 3 out of 6 cases. However, XGBoost was omitted, and the tree-based reference method is [extremely randomized trees](https://link.springer.com/article/10.1007/s10994-006-6226-1) rather than random forests.
+- Across six synthetic datasets, TabNet outperforms other methods on 3 out of 6 cases. However, XGBoost was omitted, and the tree-based reference method is [extremely randomised trees](https://link.springer.com/article/10.1007/s10994-006-6226-1) rather than random forests.
 - Across 4 KDD datasets, TabNet ties with CatBoost and XGboost on 1 dataset and performs almost as well as the gradient-boosted tree methods on the remaining three datasets.
 
 ## Notes

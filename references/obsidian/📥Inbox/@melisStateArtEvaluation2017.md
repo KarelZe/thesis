@@ -6,19 +6,19 @@
 *related:*
 - [[@akibaOptunaNextgenerationHyperparameter2019]] (Optuna Bayesian search)
 - [[@heBagTricksImage2018]]
-- [[@turnerBayesianOptimizationSuperior2021]] (comparison of grid and randomized search)
+- [[@turnerBayesianOptimizationSuperior2021]] (comparison of grid and randomised search)
 *review:* https://openreview.net/forum?id=ByJHuTgA-
 *code:* https://github.com/deepmind/lamb
 
 ## Notes 📍
 - Paper by Google.
 - Paper is somewhat a blueprint for tuning hyperparameters in neural networks. It establishes reliable benchmarks that can be benchmarks for later work.
-- Paper is in line with other papers that emphasize replication failures due to poorly controlled variation in hyperparameters.
+- Paper is in line with other papers that emphasise replication failures due to poorly controlled variation in hyperparameters.
 - Controlling hyperparameter variation is possible, but at a considerable **computational cost**.
 - In NLP LSTM architectures can, when properly regularised, outperform more recent architectures such as Recurrent Highway Networks and NAS.
-- Authors emphasize the hyperparameter importance. The dependence on hyperparameters is often not controlled within the experiments and leads to empircally unsound claims.
+- Authors emphasise the hyperparameter importance. The dependence on hyperparameters is often not controlled within the experiments and leads to empircally unsound claims.
 - Tuning is performed using a blck-box hyperparameter tuner called Google Vizier which uses GP bandits and the expected improvement acquisition function. For small datasets tuners are generally more efficient than grid search.
-- Authors could improve their models on two of three datasets through a careful model specification and hyperparameter optimization. Improvement for the RHN architecture are less pronounced as the architecture's authors used regularisation and grid search.
+- Authors could improve their models on two of three datasets through a careful model specification and hyperparameter optimisation. Improvement for the RHN architecture are less pronounced as the architecture's authors used regularisation and grid search.
 - Authors adress the question of overfitting of the tuner. They identify three sources of noise:
 	1. non-deterministic odering of floating-point operations in optimised linear algebra routines
 	2. different initialisation seeds

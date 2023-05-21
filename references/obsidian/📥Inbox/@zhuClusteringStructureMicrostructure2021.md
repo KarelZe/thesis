@@ -21,7 +21,7 @@ For the liquidity, we include different measures of the spreads. For each measur
 The depths of the market are based on the quotes for each stock, as a measure of liquidity and an indicator of price movement direction. The measures related to the depth of the market can be:
 1. The last prevailing ask / bid / ask - bid / |ask - bid $\mid$.
 2. The time weighted values, specifically, $\int \operatorname{ask}_t d t, \int \operatorname{bid}_t d t, \int\left(\operatorname{ask}_t-\operatorname{bid}_t\right) d t, \int\left|\operatorname{ask}_t-\operatorname{bid}_t\right| d t$.
-For each ask (or bid) in the equation above, we can use dollar volume / number of shares / number of shares normalized by Average Daily Trading Volume (ADTV) of the prevailing month. And we can consider the measure for quotes in each exchange or the best quote nation-wide.
+For each ask (or bid) in the equation above, we can use dollar volume / number of shares / number of shares normalised by Average Daily Trading Volume (ADTV) of the prevailing month. And we can consider the measure for quotes in each exchange or the best quote nation-wide.
 
 We also include the imbalance of quotes using a similar expression with that of imbalance of trades. For each 10-second time interval, the equations are:
 $$

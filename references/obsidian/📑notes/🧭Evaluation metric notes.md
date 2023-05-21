@@ -7,7 +7,7 @@ $$
 y=\operatorname{step}(f(\boldsymbol{x}))=\operatorname{step}\left(\boldsymbol{w}^T \boldsymbol{x}+b\right)
 $$
 Predict class 1 for $f(x)>0$ else predict class 0
-Optimization:
+Optimisation:
 Find $w$ such that
 $$
 L_0(\boldsymbol{w})=\sum_i \mathbb{I}\left(\operatorname{step}\left(\boldsymbol{w}^T \boldsymbol{x}+b\right) \neq y_i\right)
@@ -15,7 +15,7 @@ $$
 where $\mathbb{I}$ returns 1 if the argument is true and $\sum$ counts the number of misclassifications
 
 Zero-one loss:
-The simplest loss function is the zero-one loss. It literally counts how many mistakes an hypothesis function h makes on the training set. For every single example it suffers a loss of 1 if it is mispredicted, and 0 otherwise. The normalized zero-one loss returns the fraction of misclassified training samples, also often referred to as the training error. The zero-one loss is often used to evaluate classifiers in multiclass/binary classification settings but rarely useful to guide optimization procedures because the function is non-differentiable and non-continuous. Formally, the zero-one loss can be stated has:
+The simplest loss function is the zero-one loss. It literally counts how many mistakes an hypothesis function h makes on the training set. For every single example it suffers a loss of 1 if it is mispredicted, and 0 otherwise. The normalised zero-one loss returns the fraction of misclassified training samples, also often referred to as the training error. The zero-one loss is often used to evaluate classifiers in multiclass/binary classification settings but rarely useful to guide optimisation procedures because the function is non-differentiable and non-continuous. Formally, the zero-one loss can be stated has:
 $$
 \mathcal{L}_{0 / 1}(h)=\frac{1}{n} \sum_{i=1}^n \delta_{h\left(x_1\right) \neq y_i,}, \text { where } \delta_{h\left(x_1\right) \neq y_i}= \begin{cases}1, & \text { if } h\left(x_i\right) \neq y_i \\ 0, & \text { o.w. }\end{cases}
 $$
@@ -35,7 +35,7 @@ Following a common track in research (Gu et al. (2020) and Grammig et al. (2020)
 - Introduce concept of a confusion matrix. Are all errors equally problematic?
 
 
-We optimize for the accuracy
+We optimise for the accuracy
 
 - extension of feature permutation https://arxiv.org/pdf/1801.01489.pdf
 - nice description incuding alogirhtm https://christophm.github.io/interpretable-ml-book/feature-importance.html

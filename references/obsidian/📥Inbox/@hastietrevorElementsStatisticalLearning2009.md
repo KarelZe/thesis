@@ -33,7 +33,7 @@ $$
 with $\mathbb{1}$ being the indicator function of affilation to a region and $c_m$ being a constant.
 
 In the regression context the **sum of squares** defined as:
-$\sum\left(y_{i}-f\left(x_{i}\right)\right)^{2}$ should be minimized. The best $\hat{c}_{m}$ is just the average of $y_{i}$ in a region $R_{m}$:
+$\sum\left(y_{i}-f\left(x_{i}\right)\right)^{2}$ should be minimised. The best $\hat{c}_{m}$ is just the average of $y_{i}$ in a region $R_{m}$:
 $$
 \hat{c}_{m}=\operatorname{ave}\left(y_{i} \mid x_{i} \in R_{m}\right).
 $$
@@ -107,18 +107,18 @@ Boosting is a way of fitting an additive expansion in a set  of elementary "basi
 $$
 f(x)=\sum_{m=1}^{M} \beta_{m} b\left(x ; \gamma_{m}\right),
 $$
-where $\beta_{m}, m=1,2, \ldots, M$ are the expansion coefficients, and $b(x ; \gamma) \in \mathbb{R}$ are usually simple functions of the multivariate argument $x$, characterized by a set of parameters $\gamma$.
+where $\beta_{m}, m=1,2, \ldots, M$ are the expansion coefficients, and $b(x ; \gamma) \in \mathbb{R}$ are usually simple functions of the multivariate argument $x$, characterised by a set of parameters $\gamma$.
 
 For trees $\gamma$ would be the split variables and split points at internal nodes and predictions at terminal nodes.
 
-Models are fitted by minimizing a loss function averaged over all the training data, such as the squared-error or a likelihood-based loss function:
+Models are fitted by minimising a loss function averaged over all the training data, such as the squared-error or a likelihood-based loss function:
 $$
 \min _{\left\{\beta_{m}, \gamma_{m}\right\}_{1}^{M}} \sum_{i=1}^{N} L\left(y_{i}, \sum_{m=1}^{M} \beta_{m} b\left(x_{i} ; \gamma_{m}\right)\right)
 $$
 
-Optimization is hard, if base learners are different. A simpler variant would be to use the same $b(x_i,y)$
+Optimisation is hard, if base learners are different. A simpler variant would be to use the same $b(x_i,y)$
 
-Alternatively, a **forward stagewise additive modeling** can be used, where new basis functions are sequentially added to the expansion without adjusting the parameters and coefficients to those that have been added.  
+Alternatively, a **forward stagewise additive modelling** can be used, where new basis functions are sequentially added to the expansion without adjusting the parameters and coefficients to those that have been added.  
 
 That is, at each iteration $m$, one solves for the optimal basis function $b\left(x ; \gamma_{m}\right)$ and corresponding coefficient $\beta_{m}$ to add to the current expansion $f_{m-1}(x)$. This produces $f_{m}(x)$, and the process is repeated. Previously added terms are not modified.
 
@@ -147,7 +147,7 @@ Thus a tree can be formally expressed as
 $$
 T(x ; \Theta)=\sum_{j=1}^{J} \gamma_{j} \mathbb{I}\left(x \in R_{j}\right),
 $$
-with parameters $\Theta=\left\{R_{j}, \gamma_{j}\right\}_{1}^{J} . J$ is usually treated as a meta-parameter. The parameters are found by minimizing the empirical risk
+with parameters $\Theta=\left\{R_{j}, \gamma_{j}\right\}_{1}^{J} . J$ is usually treated as a meta-parameter. The parameters are found by minimising the empirical risk
 $$
 \hat{\Theta}=\arg \min _{\Theta} \sum_{j=1}^{J} \sum_{x_{i} \in R_{j}} L\left(y_{i}, \gamma_{j}\right) .
 $$
@@ -158,13 +158,13 @@ Finding the regions $R_j$ is often times difficult. A greedy, top-down recursive
 
 (No notes on classification)
 
-### Numerical Optimization with Gradient Boosting
+### Numerical Optimisation with Gradient Boosting
 
 The loss in using $f(x)$ to predict $y$ on the training data is
 $$
 L(f)=\sum_{i=1}^{N} L\left(y_{i}, f\left(x_{i}\right)\right) .
 $$
-The goal is to minimize $L(f)$ with respect to $f$, where here $f(x)$ is constrained to be a sum of trees. Ignoring this constraint, minimizing can be viewed as a numerical optimization
+The goal is to minimise $L(f)$ with respect to $f$, where here $f(x)$ is constrained to be a sum of trees. Ignoring this constraint, minimising can be viewed as a numerical optimisation
 $$
 \hat{\mathbf{f}}=\arg \min _{\mathbf{f}} L(\mathbf{f}),
 $$
@@ -176,9 +176,9 @@ $$
 A steepest descent approach can be used to calculate the parameter vector $\mathbf{f}$
 
 ### Gradient Boosting
-If minimizing loss on the training data were the only goal, steepest descent would be the preferred strategy. The gradient is trivial to calculate for any differentiable loss function $L(y, f(x))$.
+If minimising loss on the training data were the only goal, steepest descent would be the preferred strategy. The gradient is trivial to calculate for any differentiable loss function $L(y, f(x))$.
 
-However, the gradient $(10.35)$ is defined only at the training data points $x_{i}$, whereas the ultimate goal is to generalize $f_{M}(x)$ to new data not represented in the training set.
+However, the gradient $(10.35)$ is defined only at the training data points $x_{i}$, whereas the ultimate goal is to generalise $f_{M}(x)$ to new data not represented in the training set.
 
 A possible resolution to this dilemma is to induce a tree $T\left(x ; \Theta_{m}\right)$ at the $m$ th iteration whose predictions $\mathbf{t}_{m}$ are as close as possible to the negative gradient. Using squared error to measure closeness, this leads us to
 $$
@@ -203,7 +203,7 @@ $$
 \hat{f}_{\mathrm{rf}}^{B}(x)=\frac{1}{B} \sum_{b=1}^{B} T\left(x ; \Theta_{b}\right)
 $$
 
-with $\Theta_{b}$ being a vector that characterizes the parameters of the  $b$-th Random Forest Tree. (p. 588-589)
+with $\Theta_{b}$ being a vector that characterises the parameters of the  $b$-th Random Forest Tree. (p. 588-589)
 
 **Advantages**
 - Similar performance to boosting
@@ -226,7 +226,7 @@ over all the trees in the forest separately for each variable. (p. 593)
 
 “It is difficult to give a general rule on how to choose the number of observations in each of the three parts, as this depends on the signal-tonoise ratio in the data and the training sample size. A typical split might be 50% for training, and 25% each for validation and testing:” ([Hastie, Trevor et al., 2009, p. 241](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=241&annotation=MLMYR5JW))
 
-“Of course, the main caveat here is “independent,” and bagged trees are not. Figure 8.11 illustrates the power of a consensus vote in a simulated example, where only 30% of the voters have some knowledge. In Chapter 15 we see how random forests improve on bagging by reducing the correlation between the sampled trees. Note that when we bag a model, any simple structure in the model is lost. As an example, a bagged tree is no longer a tree. For interpretation of the model this is clearly a drawback. More stable procedures like nearest neighbors are typically not affected much by bagging. Unfortunately, the unstable models most helped by bagging are unstable because of the emphasis on interpretability, and this is lost in the bagging process.” ([Hastie, Trevor et al., 2009, p. 305](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=305&annotation=4LX84RFV))
+“Of course, the main caveat here is “independent,” and bagged trees are not. Figure 8.11 illustrates the power of a consensus vote in a simulated example, where only 30% of the voters have some knowledge. In Chapter 15 we see how random forests improve on bagging by reducing the correlation between the sampled trees. Note that when we bag a model, any simple structure in the model is lost. As an example, a bagged tree is no longer a tree. For interpretation of the model this is clearly a drawback. More stable procedures like nearest neighbours are typically not affected much by bagging. Unfortunately, the unstable models most helped by bagging are unstable because of the emphasis on interpretability, and this is lost in the bagging process.” ([Hastie, Trevor et al., 2009, p. 305](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=305&annotation=4LX84RFV))
 
 “Tree-based methods partition the feature space into a set of rectangles, and then fit a simple model (like a constant) in each one.” ([Hastie, Trevor et al., 2009, p. 324](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=324&annotation=A27D7VJP))
 
@@ -240,7 +240,7 @@ over all the trees in the forest separately for each variable. (p. 593)
 
 “∑(yi − f (xi))2, it is easy to see that the best ˆ cm is just the average of yi in region Rm: ˆ cm = ave(yi|xi ∈” ([Hastie, Trevor et al., 2009, p. 326](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=326&annotation=NA9G7NDT))
 
-“Now finding the best binary partition in terms of minimum sum of squares is generally computationally infeasible. Hence we proceed with a greedy algorithm. Starting with all of the data, consider a splitting variable j and split point s,” ([Hastie, Trevor et al., 2009, p. 326](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=326&annotation=MIYD4IEF))
+“Now finding the best binary partition in terms of minimum sum of squares is generally computationally unfeasible. Hence we proceed with a greedy algorithm. Starting with all of the data, consider a splitting variable j and split point s,” ([Hastie, Trevor et al., 2009, p. 326](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=326&annotation=MIYD4IEF))
 
 “For each splitting variable, the determination of the split point s can be done very quickly and hence by scanning through all of the inputs, determination of the best pair (j, s) is feasible.” ([Hastie, Trevor et al., 2009, p. 326](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=326&annotation=28H5RAJP))
 
@@ -250,12 +250,12 @@ over all the trees in the forest separately for each variable. (p. 593)
 
 “Then this large tree is pruned using cost-complexity pruning, which we now describe.” ([Hastie, Trevor et al., 2009, p. 327](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=327&annotation=LJVZXUAN))
 
-“Besides the size of the constituent trees, J, the other meta-parameter of gradient boosting is the number of boosting iterations M . Each iteration usually reduces the training risk L(fM ), so that for M large enough this risk can be made arbitrarily small. However, fitting the training data too well can lead to overfitting, which degrades the risk on future predictions. Thus, there is an optimal number M ∗ minimizing future risk that is application dependent. A convenient way to estimate M ∗ is to monitor prediction risk as a function of M on a validation sample. The value of M that minimizes this risk is taken to be an estimate of M ∗. This is analogous to the early stopping strategy often used with neural networks (Section 11.4)” ([Hastie, Trevor et al., 2009, p. 383](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=383&annotation=XPVQIJ7W))
+“Besides the size of the constituent trees, J, the other meta-parameter of gradient boosting is the number of boosting iterations M . Each iteration usually reduces the training risk L(fM ), so that for M large enough this risk can be made arbitrarily small. However, fitting the training data too well can lead to overfitting, which degrades the risk on future predictions. Thus, there is an optimal number M ∗ minimising future risk that is application dependent. A convenient way to estimate M ∗ is to monitor prediction risk as a function of M on a validation sample. The value of M that minimises this risk is taken to be an estimate of M ∗. This is analogous to the early stopping strategy often used with neural networks (Section 11.4)” ([Hastie, Trevor et al., 2009, p. 383](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=383&annotation=XPVQIJ7W))
 
-“10.12.1 Shrinkage Controlling the value of M is not the only possible regularization strategy. As with ridge regression and neural networks, shrinkage techniques can be employed as well (see Sections 3.4.1 and 11.5). The simplest implementation of shrinkage in the context of boosting is to scale the contribution of each tree by a factor 0 < ν < 1 when it is added to the current approximation. That is, line 2(d) of Algorithm 10.3 is replaced by fm(x) = fm−1(x) + ν · J ∑ j=1 γjmI(x ∈ Rjm). (10.41) The parameter ν can be regarded as controlling the learning rate of the boosting procedure. Smaller values of ν (more shrinkage) result in larger training risk for the same number of iterations M . Thus, both ν and M control prediction risk on the training data. However, these parameters d” ([Hastie, Trevor et al., 2009, p. 383](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=383&annotation=EQTQJLT3))
+“10.12.1 Shrinkage Controlling the value of M is not the only possible regularisation strategy. As with ridge regression and neural networks, shrinkage techniques can be employed as well (see Sections 3.4.1 and 11.5). The simplest implementation of shrinkage in the context of boosting is to scale the contribution of each tree by a factor 0 < ν < 1 when it is added to the current approximation. That is, line 2(d) of Algorithm 10.3 is replaced by fm(x) = fm−1(x) + ν · J ∑ j=1 γjmI(x ∈ Rjm). (10.41) The parameter ν can be regarded as controlling the learning rate of the boosting procedure. Smaller values of ν (more shrinkage) result in larger training risk for the same number of iterations M . Thus, both ν and M control prediction risk on the training data. However, these parameters d” ([Hastie, Trevor et al., 2009, p. 383](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=383&annotation=EQTQJLT3))
 
-“10.12 Regularization 365 not operate independently. Smaller values of ν lead to larger values of M for the same training risk, so that there is a tradeoff between them.” ([Hastie, Trevor et al., 2009, p. 384](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=384&annotation=WTWRE2XE))
+“10.12 Regularisation 365 not operate independently. Smaller values of ν lead to larger values of M for the same training risk, so that there is a tradeoff between them.” ([Hastie, Trevor et al., 2009, p. 384](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=384&annotation=WTWRE2XE))
 
-“Empirically it has been found (Friedman, 2001) that smaller values of ν favor better test error, and require correspondingly larger values of M . In fact, the best strategy appears to be to set ν to be very small (ν < 0.1) and then choose M by early stopping.” ([Hastie, Trevor et al., 2009, p. 384](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=384&annotation=DXHCNIPE))
+“Empirically it has been found (Friedman, 2001) that smaller values of ν favour better test error, and require correspondingly larger values of M . In fact, the best strategy appears to be to set ν to be very small (ν < 0.1) and then choose M by early stopping.” ([Hastie, Trevor et al., 2009, p. 384](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=384&annotation=DXHCNIPE))
 
 “We saw in Section 8.7 that bootstrap averaging (bagging) improves the performance of a noisy classifier through averaging. Chapter 15 discusses in some detail the variance-reduction mechanism of this sampling followed by averaging. We can exploit the same device in gradient boosting, both to improve performance and computational efficiency. With stochastic gradient boosting (Friedman, 1999), at each iteration we sample a fraction η of the training observations (without replacement), and grow the next tree using that subsample. The rest of the algorithm is identical. A typical value for η can be 1 2 , although for large N , η can be substantially smaller than 1 2.” ([Hastie, Trevor et al., 2009, p. 384](zotero://select/library/items/FF777NTD)) ([pdf](zotero://open-pdf/library/items/N3FXKVYN?page=384&annotation=LHRLAS5P))
