@@ -23,17 +23,17 @@ git clone https://github.com/KarelZe/thesis.git --depth=1
 # set up consts for wandb + gcp
 nano prod.env
 
-# set up virtual env and install requirements
+# set up virtual env and instal requirements
 cd thesis
 
 python -m venv thesis
 source thesis/bin/activate
-python -m pip install .
+python -m pip instal .
 
 # run training script
-python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/ise_supervised_log_standardized:latest --features=classical-size --pretrain
-2022-11-18 10:25:50,920 - __main__ - INFO - Connecting to weights & biases. Downloading artifacts. 📦
-2022-11-18 10:25:56,180 - __main__ - INFO - Start loading artifacts locally. 🐢
+python src/otc/models/train_model.py --trials=100 --seed=42 --model=gbm --dataset=fbv/thesis/ise_supervised_log_standardised:latest --features=classical-size --pretrain
+2022-11-18 10:25:50,920 - __main__ - INFO - Connecting to weights & biases. Downloading artefacts. 📦
+2022-11-18 10:25:56,180 - __main__ - INFO - Start loading artefacts locally. 🐢
 2022-11-18 10:26:07,562 - __main__ - INFO - Start with study. 🦄
 ...
 ```
@@ -80,10 +80,10 @@ nano slurm-21614924.out
 ## Development
 
 ### Set up git pre-commit hooks 🐙
-Pre-commit hooks are pre-checks to avoid committing error-prone code. The tests are defined in the [`.pre-commit-config.yaml`](https://github.com/KarelZe/thesis/blob/main/.pre-commit-config.yaml). Install them using:
+Pre-commit hooks are pre-cheques to avoid committing error-prone code. The tests are defined in the [`.pre-commit-config.yaml`](https://github.com/KarelZe/thesis/blob/main/.pre-commit-config.yaml). Instal them using:
 ```shell
-pip install .[dev]
-pre-commit install
+pip instal .[dev]
+pre-commit instal
 pre-commit run --all-files
 ```
 ### Run tests🧯

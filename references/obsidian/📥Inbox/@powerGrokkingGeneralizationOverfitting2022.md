@@ -1,4 +1,4 @@
-*title:* Grokking: Generalization Beyond Overfitting on Small Algorithmic Datasets
+*title:* Grokking: Generalisation Beyond Overfitting on Small Algorithmic Datasets
 *authors:* Alethea Power, Yuri Burda, Harri Edwards, Igor Babuschkin, Vedant Misra
 *year:* 2022
 *tags:* 

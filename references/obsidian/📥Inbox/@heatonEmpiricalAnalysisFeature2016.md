@@ -1,4 +1,4 @@
-*title:* An Empirical Analysis of Feature Engineering for Predictive Modeling
+*title:* An Empirical Analysis of Feature Engineering for Predictive Modelling
 *authors:* Jeff Heaton
 *year:* 2016
 *tags:* 

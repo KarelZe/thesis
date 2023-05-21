@@ -13,7 +13,7 @@
 ## Notes 📍
 - Authors propose and test different variants of the $\operatorname{GELU}$ activation in the classical transformer architecture ([[@vaswaniAttentionAllYou2017]]).
 - Their new variants like $\operatorname{FFN}_{\text {GEGLU }}$ lead to better perplexities for the de-noising objective in pre-training and improvements in downstream learning tasks. Activation functions come at no additional complexity. $\operatorname{FFN}_{\text {GEGLU }}$ (based on gelu (gaussian error linear unit)) and $\operatorname{FFN}_{\text {SwiGLU }}$ (based on swish) among the best in terms of accuracy. 
--  The activation function is inherently used in the position-wise feed-forward network (FFN) of the transformer e. g., $\operatorname{FFN}_{\text {GEGLU }}\left(x, W, V, W_2\right)=(\operatorname{GELU}(x W) \otimes x V) W_2$. The FFN itself consists of of two linear layers with an activation function in between. Originally this was $\operatorname{ReLU}$. The FFN takes a vector $x$ (the hidden representation at a particular position in the sequence) and passes it through two learned linear transformations, (represented by the matrices $W_1$ and $W_2$ and bias vectors $b_1$ and $b_2$ ).
+-  The activation function is inherently used in the position-wise feed-forward network (FFN) of the transformer e. g., $\operatorname{FFN}_{\text {GEGLU }}\left(x, W, V, W_2\right)=(\operatorname{GELU}(x W) \otimes x V) W_2$. The FFN itself consists of of two linear layers with an activation function in between. Originally this was $\operatorname{ReLU}$. The FFN takes a vector $x$ (the hidden representation at a particular position in the sequence) and passes it through two learnt linear transformations, (represented by the matrices $W_1$ and $W_2$ and bias vectors $b_1$ and $b_2$ ).
 - All gated Linear Units (GLU) consist of a component-wise product of two linear projections, of which one is first passed through an activation. With sigmoid activation this would be: $\mathrm{GLU}(x, W, V, b, c)=\sigma(x W+b) \otimes(x V+c)$.
 
 ## Annotations 📖
@@ -21,7 +21,7 @@
 
 “We test these variants in the feedforward sublayers of the Transformer  sequence-to-sequence model, and find that some of them yield quality improvements over the typically-used ReLU or GELU activations.” ([Shazeer, 2020, p. 1](zotero://select/library/items/QJWAK9LR)) ([pdf](zotero://open-pdf/library/items/6ZX9BFUF?page=1&annotation=Y6VPNJPP))
 
-“The FFN takes a vector x (the hidden representation at a particular position in the sequence) and passes it through two learned linear transformations, (represented by the matrices W1 and W2 and bias vectors b1 and b2).” ([Shazeer, 2020, p. 1](zotero://select/library/items/QJWAK9LR)) ([pdf](zotero://open-pdf/library/items/6ZX9BFUF?page=1&annotation=Q47E2F3E))
+“The FFN takes a vector x (the hidden representation at a particular position in the sequence) and passes it through two learnt linear transformations, (represented by the matrices W1 and W2 and bias vectors b1 and b2).” ([Shazeer, 2020, p. 1](zotero://select/library/items/QJWAK9LR)) ([pdf](zotero://open-pdf/library/items/6ZX9BFUF?page=1&annotation=Q47E2F3E))
 
 “[Dauphin et al., 2016] introduced Gated Linear Units (GLU), a neural network layer defined as the componentwise product of two linear transformations of the input, one of which is sigmoid-activated.” ([Shazeer, 2020, p. 1](zotero://select/library/items/QJWAK9LR)) ([pdf](zotero://open-pdf/library/items/6ZX9BFUF?page=1&annotation=X743SY7B))
 

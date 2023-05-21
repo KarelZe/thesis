@@ -11,7 +11,7 @@ with $W_{\text {mlp } 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times d_{\mathrm{e}
  
 ([[@vaswaniAttentionAllYou2017]] 9) set the hidden dimension to be two to eight magnitudes of the embedding dimension. The large capacity strengthens the model's ability to retain information but also contributes significantly to the high computational requirements and memory footprint of Transformers ([[@tayEfficientTransformersSurvey2022]]5) and ([[@kitaevReformerEfficientTransformer2020]]1). Both linear transformations are separated by a *Rectified Linear Units* $\operatorname{ReLU}$ ([[@glorotDeepSparseRectifier2011]]318) activation function to add non-linearities to the network.
 
-Like the attention layer, the position-wise FFN is surrounded by residual connections (see ), and followed by layer-normalization (see ). Optionally, dropout ([[@srivastavaDropoutSimpleWay]] 1930) is added to prevent the model from overfitting. 
+Like the attention layer, the position-wise FFN is surrounded by residual connections (see ), and followed by layer-normalisation (see ). Optionally, dropout ([[@srivastavaDropoutSimpleWay]] 1930) is added to prevent the model from overfitting. 
 
 **Notes:**
 [[🎱Position-wise FFN notes]]

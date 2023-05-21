@@ -11,7 +11,7 @@
 
 ## Notes 
 - Cyclical learning rates are an approach to set the learning rate of a neural net without the need to tune the learning rate in multiple experiments. Only setting a min and max bound is required, which can be obtained from a  single model run for a few epochs.
-- The intuition behind CLR is, that an increase in lr might harm in the short term, but lead to better results in the long run due to an improved behaviour when optimizing towards saddle points instead of poor local minima.
+- The intuition behind CLR is, that an increase in lr might harm in the short term, but lead to better results in the long run due to an improved behaviour when optimising towards saddle points instead of poor local minima.
 - The lr cycles between a minimum and a maximum lr rate and then resets after a certain step size. Hence, a triangular like training policy. (see picture below)
 - Adaptive learning rates are similar but fundamentally different from cyclical learning rates. Both can be coupled.
 - paper is predecessor to [[@loshchilovSGDRStochasticGradient2017]]
@@ -34,7 +34,7 @@
 
 “This led to adopting a triangular window (linearly increasing then linearly decreasing), which is illustrated in Figure 2, because it is the simplest function that incorporates this idea. The rest of this paper refers to this as the triangular learning rate policy” ([Smith, 2017, p. 2](zotero://select/library/items/7HMX8QTU)) ([pdf](zotero://open-pdf/library/items/KYLZPI9D?page=2&annotation=YAMDENRP))
 
-“An intuitive understanding of why CLR methods work comes from considering the loss function topology. Dauphin et al. argue that the difficulty in minimizing the loss arises from saddle points rather than poor local minima” ([Smith, 2017, p. 2](zotero://select/library/items/7HMX8QTU)) ([pdf](zotero://open-pdf/library/items/KYLZPI9D?page=2&annotation=4QL9SALK))
+“An intuitive understanding of why CLR methods work comes from considering the loss function topology. Dauphin et al. argue that the difficulty in minimising the loss arises from saddle points rather than poor local minima” ([Smith, 2017, p. 2](zotero://select/library/items/7HMX8QTU)) ([pdf](zotero://open-pdf/library/items/KYLZPI9D?page=2&annotation=4QL9SALK))
 
 “Saddle points have small gradients that slow the learning process. However, increasing the learning rate allows more rapid traversal of saddle point plateaus. A more practical reason as to why CLR works is that, by following the methods in Section 3.3, it is likely the optimum learning rate will be between the bounds and near optimal learning rates will be used throughout training.” ([Smith, 2017, p. 3](zotero://select/library/items/7HMX8QTU)) ([pdf](zotero://open-pdf/library/items/KYLZPI9D?page=3&annotation=J6QT3L6Z))
 

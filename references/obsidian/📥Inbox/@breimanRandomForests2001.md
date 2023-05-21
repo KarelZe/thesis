@@ -25,7 +25,7 @@ A random forest is a classifier consisting of a collection of tree-structured cl
 
 ## Procedure
 
-At each node  a random selection of features is used to determine the split. The question how many features are considered is important (see also [[@hastietrevorElementsStatisticalLearning2009]]). For guidance internal estimates of the generalization error, the classifier strength and the dependence are computed.
+At each node  a random selection of features is used to determine the split. The question how many features are considered is important (see also [[@hastietrevorElementsStatisticalLearning2009]]). For guidance internal estimates of the generalisation error, the classifier strength and the dependence are computed.
 
 
 ## Advantages:

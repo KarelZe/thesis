@@ -2,7 +2,7 @@
 - “Finally we examine the accuracy of the rules conditional on the characteristics of the trades, i.e. separately for the buy and sell side ([[@aitkenIntradayAnalysisProbability1995]], Omrane and Welsh 2016), for trades inside the quote (Ellis et al. 2000)3, and for zero versus non-zero ticks ([[@aitkenIntradayAnalysisProbability1995]], 1996; Theissen, 2001; Omrane and Welch, 2016)” (Frömmel et al., 2021, p. 7)
 - “Furthermore, the most important biases encountered in the literature have been confirmed in this study: Seller-initiated trades perform remarkably better than buyer-initiated trades. The EMO rule, and especially the MEMO rule, offer substantial improvements over LR as they have far more power for classifying trades that occurred inside the quotes. The biggest disadvantage of the TR is its poor performance for zero ticks.” ([[@frommelAccuracyTradeClassification2021]], p. 9)
 
-- analyze the classifier performance based on the $|\cdot|$ proximity of the quotes?
+- analyse the classifier performance based on the $|\cdot|$ proximity of the quotes?
 
 - LR-algorithm (see [[#^370c50]]) require an offset between the trade and quote. How does the offset affect the results? Do I even have the metric at different offsets?
 - Perform binning like in [[@grauerOptionTradeClassification2022]]
@@ -12,7 +12,7 @@
 - Confusion matrix
 - create kde plots to investigate misclassified samples further
 - ![[kde-plot-results.png]]
-- What is called robustnesss checks is also refered as **slice-based evaluation**. The data is separated into subsets and your model's performance on each subset is evaluated. A reason why slice-based evaluation is crucial is Simpson's paradox. A trend can exist in several subgroups, but disappear or reverse when the groups are combined. Slicing could happen based on heuristics, errors or a slice finder (See [[@huyenDesigningMachineLearning]])
+- What is called robustnesss cheques is also refered as **slice-based evaluation**. The data is separated into subsets and your model's performance on each subset is evaluated. A reason why slice-based evaluation is crucial is Simpson's paradox. A trend can exist in several subgroups, but disappear or reverse when the groups are combined. Slicing could happen based on heuristics, errors or a slice finder (See [[@huyenDesigningMachineLearning]])
 ![[rankwise-correlations.png]]
 (found in `@hansenApplicationsMachineLearning`, but also other papers)
 

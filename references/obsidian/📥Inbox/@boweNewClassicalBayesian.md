@@ -17,7 +17,7 @@
 ## Annotations 📖
 “We propose new methods for estimating the effective bid-ask spread and classifying trading intentions without access to quotes.” ([Bowe et al., 2018, p. 1](zotero://select/library/items/74N2TUYU)) ([pdf](zotero://open-pdf/library/items/UBVF223Y?page=1&annotation=8RJZJHED))
 
-“Our state space approach utilizes both classical and Bayesian estimators” ([Bowe et al., 2018, p. 1](zotero://select/library/items/74N2TUYU)) ([pdf](zotero://open-pdf/library/items/UBVF223Y?page=1&annotation=T9EQQZGL))
+“Our state space approach utilises both classical and Bayesian estimators” ([Bowe et al., 2018, p. 1](zotero://select/library/items/74N2TUYU)) ([pdf](zotero://open-pdf/library/items/UBVF223Y?page=1&annotation=T9EQQZGL))
 
 “For illustrative purposes, we apply our approach to an analysis of the trading patterns in the CME’s gold futures contract during a period incorporating uncertainty in financial markets as a result of the UK’s 2016 Brexit referendum.” ([Bowe et al., 2018, p. 1](zotero://select/library/items/74N2TUYU)) ([pdf](zotero://open-pdf/library/items/UBVF223Y?page=1&annotation=VMKUPQMV))
 
@@ -35,7 +35,7 @@
 
 “As Easley, Lopez de Prado, and O’Hara (2016) note, each trade classification rule may demonstrate both strengths and weakness, depending on the underlying market characteristics.” ([Bowe et al., 2018, p. 5](zotero://select/library/items/74N2TUYU)) ([pdf](zotero://open-pdf/library/items/UBVF223Y?page=5&annotation=M6BNM6PI))
 
-“They adopt the perspective of Bayesian statisticians with priors on the unobservable information (here t q ), who are trying to extract trading intentions from observable trading data. Ideally, we would like to specify the data generating processes for both the underlying unobservable variables and subsequently for the observed data, conditional on the realizations of the underlying unobservable data.” ([Bowe et al., 2018, p. 14](zotero://select/library/items/74N2TUYU)) ([pdf](zotero://open-pdf/library/items/UBVF223Y?page=14&annotation=7P4ANNPN))
+“They adopt the perspective of Bayesian statisticians with priors on the unobservable information (here t q ), who are trying to extract trading intentions from observable trading data. Ideally, we would like to specify the data generating processes for both the underlying unobservable variables and subsequently for the observed data, conditional on the realisations of the underlying unobservable data.” ([Bowe et al., 2018, p. 14](zotero://select/library/items/74N2TUYU)) ([pdf](zotero://open-pdf/library/items/UBVF223Y?page=14&annotation=7P4ANNPN))
 
 “They claim that every trade classification algorithm can be regarded as an approximation to this Bayesian approach, and that their bulk volume classification (BVC) methodology is conceptually closer to this ideal than traditional approaches such as the Tick rule, since BVC assigns a probability to a given trade being either a buy or sell.” ([Bowe et al., 2018, p. 14](zotero://select/library/items/74N2TUYU)) ([pdf](zotero://open-pdf/library/items/UBVF223Y?page=14&annotation=P4B8ZSP2))
 

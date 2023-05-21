@@ -1,24 +1,24 @@
 ## Save and Load Data and Models by Hash
-- https://docs.wandb.ai/guides/artifacts/track-external-files
+- https://docs.wandb.ai/guides/artefacts/track-external-files
 
 ```python
 import wandb
 
 run = wandb.init()
 
-artifact = wandb.Artifact('mnist', type='dataset')
+artefact = wandb.Artefact('mnist', type='dataset')
 
-artifact.add_reference('s3://my-bucket/datasets/mnist')
+artefact.add_reference('s3://my-bucket/datasets/mnist')
 
-# Track the artifact and mark it as an input to
+# Track the artefact and mark it as an input to
 
-# this run in one swoop. A new artifact version
+# this run in one swoop. A new artefact version
 
 # is only logged if the files in the bucket changed.
 
-run.use_artifact(artifact)
+run.use_artefact(artefact)
 
-artifact_dir = artifact.download()
+artefact_dir = artefact.download()
 
 # Perform training here...
 ```
@@ -36,11 +36,11 @@ s3_client = boto3.client('s3')
 
 s3_client.upload_file('my_model.h5', 'my-bucket', 'models/cnn/my_model.h5')
 
-model_artifact = wandb.Artifact('cnn', type='model')
+model_artefact = wandb.Artefact('cnn', type='model')
 
-model_artifact.add_reference('s3://my-bucket/models/cnn/')
+model_artefact.add_reference('s3://my-bucket/models/cnn/')
 
-run.log_artifact(model_artifact)
+run.log_artefact(model_artefact)
 ```
 
 ## Optuna Conditional Search Spaces
@@ -64,8 +64,8 @@ wandb_kwargs = {"project": "optuna-wandb-example"}
 
 wandbc = WeightsAndBiasesCallback(metric_name="accuracy", wandb_kwargs=wandb_kwargs)
 
-study = optuna.create_study(direction="maximize")
-study.optimize(objective, n_trials=100, callbacks=[wandbc])
+study = optuna.create_study(direction="maximise")
+study.optimise(objective, n_trials=100, callbacks=[wandbc])
 ```
 
 ## Logging custom metrics
@@ -193,10 +193,10 @@ def objective(trial):
     return x + y
 
 study = optuna.create_study()
-study.optimize(objective, n_trials=10, gc_after_trial=True)
+study.optimise(objective, n_trials=10, gc_after_trial=True)
 
 # `gc_after_trial=True` is more or less identical to the following.
-study.optimize(objective, n_trials=10, callbacks=[lambda study, trial: gc.collect()])
+study.optimise(objective, n_trials=10, callbacks=[lambda study, trial: gc.collect()])
 ```
 
 ### Observe unfinished trials
@@ -250,14 +250,14 @@ save_model(fname, format="cbm", export_parameters=None, pool=None)
 
 ## Optuna CLI
 - see https://optuna.readthedocs.io/en/stable/reference/cli.html
-- see https://neptune.ai/blog/optuna-guide-how-to-monitor-hyper-parameter-optimization-runs
+- see https://neptune.ai/blog/optuna-guide-how-to-monitor-hyper-parameter-optimisation-runs
 
 ```python
 def objective(trial): x = trial.suggest_uniform('x', -10, 10) return (x - 2) ** 2
 ```
 
 ```bash
-$ STUDY_NAME=`optuna create-study --storage sqlite:///example.db` $ optuna study optimize foo.py objective --n-trials=100 --storage sqlite:///example.db --study-name $STUDY_NAME
+$ STUDY_NAME=`optuna create-study --storage sqlite:///example.db` $ optuna study optimise foo.py objective --n-trials=100 --storage sqlite:///example.db --study-name $STUDY_NAME
 ```
 
 ## Save and Load PyTorch Models at Checkpoint

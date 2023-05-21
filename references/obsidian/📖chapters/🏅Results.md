@@ -1,5 +1,5 @@
 
-- Perform an error analysis. For which classes does CatBoost do so poorly? See some ideas here. https://elitedatascience.com/feature-engineering-best-practices
+- Perform an error analysis. For which classes does CatBoost do so poorly? See some ideas here. https://elitedatascience.com/feature-engineering-best-practises
 
 
 
@@ -11,7 +11,7 @@ Table-x reports the accuracies of common trade classification rules over the ent
 
 By extension, we also estimate rules combinations involving overrides from the tradesize rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of FS1. Consistent with the recommendation of ([[@grauerOptionTradeClassification2022]]14), we find that a deep combination of the $\operatorname{tsize}_{\text{ex}} \to \operatorname{quote}_{\text{nbbo}} \to \operatorname{quote}_{\text{ex}} \to \operatorname{depth}_{\text{nbbo}} \to \operatorname{depth}_{\text{ex}} \to \operatorname{rtick}_{\text{all}}$ achieves the highest validation. For brevity, we refer to this hybrid as the gls-GSU method. Much of the performance improvements is owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to percent-68.8359. 
 
-In absence of other suitable baselines, we also the GSU method for FS3, even if it doesn't utilize option-specific features.
+In absence of other suitable baselines, we also the GSU method for FS3, even if it doesn't utilise option-specific features.
 
 Calculate average rank
 
@@ -21,17 +21,17 @@ Calculate average rank
 
 - Think about using ensembles
 - 
-- What are the findings? Find appropriate visualization (e. g., tables, charts)
+- What are the findings? Find appropriate visualisation (e. g., tables, charts)
 -  For each tuned configuration, we run 15 experiments with different random seeds and report the performance on the test set. For some algorithms, we also report the performance of default configurations without hyperparameter tuning. [[@gorishniyRevisitingDeepLearning2021]]
 - divide sample into zero ticks and non-zero ticks and see how the accuracy behaves. This was e. g. done in [[@finucaneDirectTestMethods2000]]. See also this paper for reasoning on zero tick and non-zero tick trades.
 - perform friedman test to compare algorithms. (see [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]])
-- See [[@odders-whiteOccurrenceConsequencesInaccurate2000]] she differentiates between a systematic and non-systematic error and studies the impact on the results in other studies. She uses the terms bias and noise. She also performs several robustness checks to see if the results can be maintained at different trade sizes etc.
+- See [[@odders-whiteOccurrenceConsequencesInaccurate2000]] she differentiates between a systematic and non-systematic error and studies the impact on the results in other studies. She uses the terms bias and noise. She also performs several robustness cheques to see if the results can be maintained at different trade sizes etc.
 - [[@huyenDesigningMachineLearning]] suggest to tet for fairness, calibration, robustness etc. through:
 	- perturbation: change data slightly, add noise etc.
 	- invariance: keep features the same, but change some sensitive information
 	- Directional expectation tests. e. g. does a change in the feature has a logical impact on the prediction e. g. very high bid (**could be interesting!**)
 - adhere to http://www.sigplan.org/Resources/EmpiricalEvaluation/
-- Visualize learned embeddings for categorical data as done in [[@huangTabTransformerTabularData2020]]. 
+- Visualise learnt embeddings for categorical data as done in [[@huangTabTransformerTabularData2020]]. 
 
 
 
@@ -45,6 +45,6 @@ where $O_{i j}$ and $E_{i j}$ are the observed and expected frequencies for cell
 Interesting adversarial examples: https://arxiv.org/pdf/1705.07263.pdf
 
 
-Visualization of tables with columns: https://tex.stackexchange.com/questions/174876/formatting-table-with-siunitx-problem-with-parentheses-and-signs
+Visualisation of tables with columns: https://tex.stackexchange.com/questions/174876/formatting-table-with-siunitx-problem-with-parentheses-and-signs
 
-callibrated probas shouldnt be much of a problem, as we optimize for probabilities directly https://www.cs.cornell.edu/~caruana/niculescu.scldbst.crc.rev4.pdf
+callibrated probas shouldnt be much of a problem, as we optimise for probabilities directly https://www.cs.cornell.edu/~caruana/niculescu.scldbst.crc.rev4.pdf

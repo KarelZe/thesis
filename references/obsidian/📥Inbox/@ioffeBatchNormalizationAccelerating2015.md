@@ -1,4 +1,4 @@
-*title:* Batch normalization: accelerating deep network training by reducing internal covariate shift
+*title:* Batch normalisation: accelerating deep network training by reducing internal covariate shift
 *authors:* Sergey Ioffe, Christian Szegedy
 *year:* 2015
 *tags:* 
