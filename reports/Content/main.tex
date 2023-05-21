@@ -51,13 +51,15 @@ research. Among these, the:
 \emph{Positional view:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite to the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand.
 
 The appropriate view differs by data availability and application context.
-Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is denoted as $\hat{y}$.
+Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is distinguished by $\hat{y}$.
 
-As the trade initiator is commonly not provided with the option datasets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}. The following section introduces basic rules for trade classification. We start with the ubiquitous quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \gls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
+As the trade initiator is commonly not provided with option datasets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}. The following section introduces basic rules for trade classification. We start with the ubiquitous quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \gls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
 \subsection{Basic Rules}\label{sec:basic-rules}
 
-This section presents basic classification rules, that may be used for trade classification independently or integrated into a hybrid algorithm.
+This section presents basic classification rules, that may be used for trade classification independently or integrated into a hybrid
+
+ algorithm.
 
 \subsubsection{Quote Rule}\label{sec:quote-rule}
 
@@ -71,8 +73,6 @@ The quote rule classifies a trade by comparing the trade price against the corre
     \end{cases}
 \end{equation}
 By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing midspread trades including ones based on the subsequent quotes, and contemporaneous, or the subsequent transaction. Yet, the most common approach to overcome this limitation is, coupling the quote rule with other approaches, as done in \cref{sec:hybrid-rules}.
-
-The quote rule requires matching one bid and ask quote with each trade based on a timestamp. Due to the finite resolution of the dataset's timestamps and active markets, multiple quote changes can co-occur at the time of the trade, some of which, may logically be after the trade. As such, it remains unclear which quote to consider in trade classification, and a quote timing technique must be employed. Empirically, the most common choice is to use the last quote in the order of the time increment (e.g., second) before the trade \autocite[][1765]{holdenLiquidityMeasurementProblems2014}.
 
 The quote rule depends on price and quote data, which affects the data efficiency. The reduced dependence on past transaction prices and the focus on quotes has nonetheless positively impacted classification accuracies in option markets, as studies of \textcite[][886]{savickasInferringDirectionOption2003} and \textcite[][3]{grauerOptionTradeClassification2022} suggest. Especially, if trade classification is performed on the \gls{NBBO}.
 
@@ -137,7 +137,7 @@ Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t
 \end{equation}
 As shown in \cref{eq:depth-rule}, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for inferring the trade's initiator. Due to these restrictive conditions in $\mathcal{A}$, the depth rule can sign only a fraction of all trades and must be best stacked with other rules.
 
-Like the quote rule, the depth rule has additional dependencies on quote data. Despite being applied to midpoint trades only, \textcite[][4]{grauerOptionTradeClassification2022} report an improvement in the overall accuracy by \SI{1.2}{\percent} for \gls{CBOE} data and by \SI{0.8}{\percent} for trades from the \gls{ISE} merely through the depth rule. The rule has not yet seen wide adoption.
+Like the quote rule, the depth rule has additional dependencies on quote data. The rule has not yet seen wide adoption.
 
 \subsubsection{Trade Size Rule}\label{sec:trade-size-rule}
 
@@ -206,7 +206,7 @@ In combination, the algorithm primarily signs trades according to the quote rule
         \operatorname{tick}(i, t), & \mathrm{else}.
     \end{cases}
 \end{equation}
-As the algorithm requires both trade and quote data, it is less data-efficient than its subparts. Even if data is readily available, in past option studies the algorithm does not significantly outperform the quote rule and outside the model's tight assumptions the expected accuracy of the tick test is unmet \autocites[][30--32]{grauerOptionTradeClassification2022}[][886]{savickasInferringDirectionOption2003}. Nevertheless, the algorithm is a common choice in option research \autocite[cp.][453]{easleyOptionVolumeStock1998}. It is also the basis for more advanced algorithms, such as the \gls{EMO} rule, which we cover next.
+As the algorithm requires both trade and quote data, it is less data-efficient than its subparts. Even if data is readily available, in past option studies the algorithm does not significantly outperform the quote rule and outside the model's tight assumptions the expected accuracy of the tick test is unmet \autocites[][30--32]{grauerOptionTradeClassification2022}[][886]{savickasInferringDirectionOption2003}. Nevertheless, the algorithm is a common choice in option research \autocite[cp.][453]{easleyOptionVolumeStock1998}. It is also the basis for more advanced algorithms, such as the \gls{EMO} rule, which is next.
 
 \subsubsection{Ellis-Michaely-O'Hara
     Rule}\label{sec:ellis-michaely-ohara-rule}
@@ -241,7 +241,7 @@ Like the previous two algorithms, the \gls{CLNV} method of \textcite[][3809]{cha
     \label{eq:CLNV-rule}
 \end{equation}
 % TODO: sucess rates are sensitive to trade location.
-The algorithm is summarised in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \gls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test could be exchanged for the reverse tick test.
+The algorithm is summarised in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \gls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test can be exchanged for the reverse tick test.
 
 \subsubsection{Stacked Rule}\label{sec:stacked-rule}
 
@@ -257,7 +257,7 @@ The most basic application is in the \gls{LR} algorithm. For a more complex exam
     \label{fig:stacking-algo}
 \end{figure}
 
-\textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} and \textcite[][18]{grauerOptionTradeClassification2022} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and the quotes. Hence, current classification rules may not unleash their full potential. A obvious question is, if classifiers, \emph{learnt} on price and quote data, can adapt to the data and thereby improve over classical trade classification rules.
+\textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} and \textcite[][18]{grauerOptionTradeClassification2022} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and quotes. This raises the question of whether classifiers trained on price and quote data can adapt to the data and improve upon classical trade classification rules.
 
 The trend towards sophisticated, hybrid rules, combining as many as five base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to stacked ensembles found in machine learning and expresses the need for better classifiers.
 
@@ -272,11 +272,15 @@ problem.
 
 \subsection{Framing as a Supervised Learning Problem}\label{sec:problem-framing}
 
-All presented trade classification rules from \cref{sec:rule-based-approaches}  perform \emph{discrete classification} and assign a class to the trade. Naturally, a more powerful insight is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives additional insights into the confidence of the prediction.
+Our focus is on supervised classification, where a classifier learns a function mapping between the input and the label, which represents the trade initiator.
 
-Thus, we frame trade signing as a supervised, probabilistic classification task. This is similar to \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis. A probabilistic view enables a richer evaluation, but constraints our selection to probabilistic classifiers. For comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
+All trade classification rules from \cref{sec:rule-based-approaches} perform discrete classification and assign a class to the trade. Naturally, a more powerful insight is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives additional insights into the confidence of the prediction.
 
-We introduce more notation, which we use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times M}$ and described by a random variable $X$. Any of the $M$ features in $\mathbf{x}$ may be numerical, e.g., the trade price or categorical e.g., the option type. Like before, the target is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $\Pr(X, Y)$. The labelled data set with $N$ i.i.d. samples is denoted by $\mathcal{S} =\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
+Thus, we frame trade signing as a supervised, probabilistic classification task. This is similar to \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis and supervised.
+
+A probabilistic view enables a richer evaluation, but restricts the selection to probabilistic classifiers. For comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
+
+We introduce more notation, which we use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times M}$ and described by a random variable $X$. Any of the $M$ features in $\mathbf{x}$ may be numerical, e.g., the trade price or categorical e.g., the security type. Like before, the target is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $\Pr(X, Y)$. The labelled data set with $N$ i.i.d. samples is denoted by $\mathcal{S} =\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
 
 For our machine learning classifiers, we aim to model $\Pr_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
 \begin{equation}
@@ -299,7 +303,7 @@ In this thesis, we perform a succinct discussion to select a set of supervised c
 
 \emph{performance:} The approach must deliver state-of-the-art performance in tabular classification tasks. Trades are typically provided as tabular datasets, consisting of rows representing instances and columns representing features. The classifier must be well-suited for probabilistic classification on tabular data.
 
-\emph{scalability:}  The approach must scale to datasets with > 10~Mio. samples. Due to the high trading activity and long data history, datasets may comprise millions of samples, so classifiers must be able to handle large quantities of trades.
+\emph{scalability:}  The approach must scale to datasets with > 10~Mio. samples. Due to the high trading activity and long data history, datasets may comprise millions of samples, so classifiers must cope with large quantities of trades.
 
 \emph{extensibility:} The approach must be extendable to train on partially-labelled trades.
 
@@ -307,7 +311,7 @@ Trade classification, as we framed it, fits into supervised learning on tabular 
 
 \textbf{Wide Tree-Based Ensembles}
 
-Traditionally, tree-based ensembles, in particular, \gls{GBRT} have dominated modelling on tabular data concerning predictive performance \autocites[][24--25]{grinsztajnWhyTreebasedModels2022}[][7]{kadraWelltunedSimpleNets2021}[][8]{gorishniyRevisitingDeepLearning2021}. At its core, tree-based ensembles combine the estimates of individual decision trees into an ensemble to obtain a more accurate prediction. For \gls{GBRT} \autocite[][9]{friedmanGreedyFunctionApproximation2001} the ensemble is constructed by sequentially adding small-sized trees into the ensemble that improve upon the error of the previous trees. Conceptually related to gradient-boosted trees are random forests. Random forests \autocite[][6]{breimanRandomForests2001} fuse decision trees with the bagging principle by growing multiple deep decision trees on random subsets of data and aggregating the individual estimates. 
+Traditionally, tree-based ensembles, in particular, \gls{GBRT} have dominated modelling on tabular data concerning predictive performance \autocites[][24--25]{grinsztajnWhyTreebasedModels2022}[][7]{kadraWelltunedSimpleNets2021}[][8]{gorishniyRevisitingDeepLearning2021}. At its core, tree-based ensembles combine the estimates of individual decision trees into an ensemble to obtain a more accurate prediction. For \gls{GBRT} \autocite[][9]{friedmanGreedyFunctionApproximation2001} the ensemble is constructed by sequentially adding small-sized trees into the ensemble that improve upon the error of the previous trees. Conceptually related to \glspl{GBRT} are random forests. Random forests \autocite[][6]{breimanRandomForests2001} fuse decision trees with the bagging principle \autocite[][123]{breimanBaggingPredictors1996} by growing multiple deep decision trees on random subsets of data and aggregating the individual estimates. 
 
 \textcite[][7-9]{grinsztajnWhyTreebasedModels2022} trace back the strong performance of tree-based ensembles in tabular classification tasks to being a non-rotationally-invariant learner and tabular data being non-invariant to rotation. By intuition, rows and columns in a tabular dataset may be arranged in an arbitrary order, but each features carries a distinct meaning, which implies that feature values cannot be simply rotated without affecting the overall meaning. Thus, tabular data is non-invariant by rotation. So are tree-based ensembles, as they attend to each feature separately. This property also strengthens the model's ability to uninformative features \autocite[][8-9]{grinsztajnWhyTreebasedModels2022}.
 
@@ -316,7 +320,7 @@ Traditionally, tree-based ensembles, in particular, \gls{GBRT} have dominated mo
 
 \textbf{Deep Neural Networks}
 
-Neural networks have emerged as powerful models for tabular data with several publications claiming to surpass \glspl{GBRT} in terms of performance. For brevity, we focus on two lines of research: regularised networks and attention-based networks, which have accumulated significant interest in the field. A comprehensive overview of tabular deep learning can be found in \textcite[][1--22]{borisovDeepNeuralNetworks2022}.
+Neural networks have emerged as powerful models for tabular data with several publications claiming to surpass \glspl{GBRT} in terms of performance. For brevity, we focus on two lines of research: regularised networks and attention-based networks, which have accumulated significant interest in the field. A recent overview of tabular deep learning can be found in \textcite[][1--22]{borisovDeepNeuralNetworks2022}.
 
 \emph{Regularised Networks}
 
@@ -324,7 +328,7 @@ Among the simplest neural networks are \glspl{MLP}, which consists of multiple l
 
 \emph{Attention-based Networks}
 
-Another emerging strand of research focuses on neural networks with an attention mechanism. Attention, intuitively, allows to gather information from the immediate context and learn relationships between features or between features and instances. It has been incorporated into various architectures, including the tree-like TabNet \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, and several Transformer-based architectures including TabTransformer \autocite[][2--3]{huangTabTransformerTabularData2020}, Self-Attention and Intersample Attention Transformer \autocite[][4--5]{somepalliSaintImprovedNeural2021}, Non-Parametric Transformer \autocite[][3--4]{kossenSelfAttentionDatapointsGoing2021}, and FT-Transformer \autocite[][4--5]{gorishniyRevisitingDeepLearning2021}.
+Another emerging strand of research focuses on neural networks with an attention mechanism. Attention, intuitively, allows to gather information from the immediate context and learn relationships between features or between features and instances. It is incorporated in various architectures, including the tree-like TabNet \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, and several Transformer-based architectures including TabTransformer \autocite[][2--3]{huangTabTransformerTabularData2020}, Self-Attention and Intersample Attention Transformer \autocite[][4--5]{somepalliSaintImprovedNeural2021}, Non-Parametric Transformer \autocite[][3--4]{kossenSelfAttentionDatapointsGoing2021}, and FT-Transformer \autocite[][4--5]{gorishniyRevisitingDeepLearning2021}.
 
 TabNet \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, fuses the concept of decision trees with attention. Similar to growing a decision tree, several sub-networks are used to process the input in a sequential, hierarchical fashion. Sequential attention, a variant of attention, is used to decide which features to select in each step. The output of TabNet is the aggregate of all sub-networks. Its poor performance in independent comparisons e.g., \textcites[][7]{kadraWelltunedSimpleNets2021}[][7]{gorishniyRevisitingDeepLearning2021}, raises doubts about its usefulness.
 
@@ -375,7 +379,7 @@ Thereby, the feature $k$ and value $s$ are selected in a way, that the squared e
 \end{equation}
 Clearly, growing deeper trees leads to an improvement in the \gls{SSE}. Considering the extreme, where each sample has its region, the tree would achieve a perfect fit in-sample but perform poorly on out-of-sample data. To reduce the sensitivity of the tree to changes in the training data, hence \emph{variance}, size complexity pruning procedures are employed. Likewise, if the decision tree is too simplistic, a high bias contributes to the model's overall expected error. Both extremes are to be avoided.
 
-Ensemble methods, such as \emph{bagging} \autocite[][123]{breimanBaggingPredictors1996} and \emph{boosting} \autocite[][197--227]{schapireStrengthWeakLearnability1990}, decrease the expected error of the decision tree by combining multiple trees in a single model. Both approaches differ in the error term being minimised, which is reflected in the training procedure and the complexity of the ensemble members. More specifically, bagging decreases the variance, whereas boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we focus on \gls{GBRT}, a variant of boosting.
+Ensemble methods decrease the expected error of the decision tree by combining multiple trees in a single model through minimising the bias or variance term or both. Specifically, boosting addresses the bias and variance \autocites[][1672]{schapireBoostingMarginNew1998}[][29]{breimanRandomForests2001}. Next, we focus on \gls{GBRT}, a variant of boosting.
 
 \subsubsection{Gradient Boosting
     Procedure}\label{sec:gradient-boosting-procedure}
@@ -956,12 +960,10 @@ Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autoci
     \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \glsentryshort{ISE} Sample]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
     \label{fig:gbm-train-val-loss-acc}
 \end{figure}
-% https://wandb.ai/fbv/thesis/runs/17malsep?workspace=user-karelze
+
 \cref{fig:ise-gbm-hyperparam-classical} visualises the hyperparameter search space of the \gls{GBRT} on the \gls{ISE} dataset with classical features. We can derive several observations from it. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.42}{\percent} and \SI{64.35}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
 
 \cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The configuration details are documented in (...). The plots reveal several insights. Firstly, the model overfits the training data, as evident from the generalisation gap between training and validation accuracies. To improve generalisation performance, we apply regularisation techniques. Secondly, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction. This behaviour may be explained by the log loss being unbound, where single incorrect predictions can cause the loss to explode.
-
-% Consider the case where the ensemble learns to confidently classify a trade based on the training samples, but the label is different for the validation set (...)
 
 \begin{figure}[ht]
     \centering
@@ -1001,7 +1003,7 @@ The convergence behaviour of our model is similar to that of gradient boosting. 
 \begin{figure}[!ht]
     \centering
     \includegraphics{fttransformer-optimisations-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of FT-Transformer on \gls{ISE} with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to one gradient update. The end of each epoch is marked with a dashed bar. Loss is expected to decrease throughout training and accuracy to increase.}
+    \caption[Training and Validation Accuracy of FT-Transformer on \glsentryshort{ISE} with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to one gradient update. The end of each epoch is marked with a dashed bar. Loss is expected to decrease throughout training and accuracy to increase.}
     \label{fig:fttransformer-optimisations-loss-acc}
 \end{figure}
 % https://wandb.ai/fbv/thesis/runs/2a9iqsn0?workspace=user-karelze
