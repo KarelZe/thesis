@@ -1,11 +1,26 @@
 
-Naturally, one would like to obtain insights into how the models arrived at the prediction and identify features relevant for the prediction. Both aspects can be subsumed under the term *interpretability*. Following, ([[@liptonMythosModelInterpretability2017]]4) interpretability can be reached through model transparency or post-hoc interpretability methods. Transparent models provide interpretability through a transparent mechanism in the model, whereas post-hoc interpretability refers to approaches that extract information from the already learnt model ([[@liptonMythosModelInterpretability2017]] 4--5). 
+Naturally, we aim to gain insights into the prediction process and identify relevant features, which fall under the umbrella of *interpretability*. Following, ([[@liptonMythosModelInterpretability2017]]4) interpretability can be reached through model transparency or post-hoc interpretability methods. Transparent models provide interpretability through a transparent mechanism in the model, whereas post-hoc interpretability refers to approaches that extract information from the already learnt model ([[@liptonMythosModelInterpretability2017]] 4--5). 
 
 Classical trade classification algorithms, as a rule-based approach, are transparent with an easily understandable decision process, and thus provide interpretability ([[@barredoarrietaExplainableArtificialIntelligence2020]]91). Interpretability, however decreases for deep stacked combinations involving a large feature count, such as the gls-GSU method, interactions between base rules become more complex, and the effect of single feature on the final prediction more challenging to interpret. 
 
-The machine-learning classifiers, studied in this work, can be deemed a black box model ([[@barredoarrietaExplainableArtificialIntelligence2020]]90). Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through transparency (see discussion on attention maps),  interpretability across all classifiers can only be reached through a *model-agnostic, post-hoc interpretability techniques*. Thereby, our goal is to identify features that are important for the *correct prediction*. This is fundamentally different from methods like standard gls-SHAP, that attribute *any* prediction to the input features ([[@chenTrueModelTrue2020]]??).
+The machine-learning classifiers, studied in this work, can be deemed a black box model ([[@barredoarrietaExplainableArtificialIntelligence2020]]90). Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through transparency (see discussion on attention maps),  interpretability across all classifiers can only be reached through a *model-agnostic, post-hoc interpretability techniques*.
+
+Thereby, our goal is to understand the contribution of features to the model on a dataset, hence global level.
+
+
+
+Thereby, our goal is learn how much features contribute to the performance of the classifier on a dataset level. This is fundamentally different from methods like standard gls-SHAP, that attribute *any* prediction to the input features ([[@chenTrueModelTrue2020]]??).
+
+
+Recall from cref-[[🪄Feature Engineering]] that features may be encode 
+The redundant encoding can make patterns in the data learnable but complicates attributing predictions to certain features due to substitution effects. We address this concern when determining the feature's importances.
+
 
 Many model-agnostic methods are based on the randomly permuting features values. In this work, we specifically consider the variants *permutation feature importance* ([[@breimanRandomForests2001]]23--24) and partial-dependence plots ([[@friedmanGreedyFunctionApproximation2001]]26--28). Both serve a complementary purpose. Permutation feature importance derives the feature importance from the change in predictive accuracy before and after permuting a feature randomly, whereas partial dependence plots visualise the average change in prediction, if feature values are altered. These are widely adopted and computationally efficient.
+
+The redundant encoding of features in cref-[[🪄Feature Engineering]] makes patterns in the data learnable but complicates attributing predictions to certain features due to substitution effects. We address this concern when determining the feature's importances.
+
+For consistency to cref-[[🧭Evaluation metric]] we use the zero-one loss as a loss function and importances are estimated on the test set. 
 
 ### Permutation feature importance
 
