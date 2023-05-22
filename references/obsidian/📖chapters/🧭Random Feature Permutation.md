@@ -1,12 +1,21 @@
 
 Naturally, we aim to gain insights into the prediction process and identify relevant features, which fall under the umbrella of *interpretability*. Following, ([[@liptonMythosModelInterpretability2017]]4) interpretability can be reached through model transparency or post-hoc interpretability methods. Transparent models provide interpretability through a transparent mechanism in the model, whereas post-hoc interpretability refers to approaches that extract information from the already learnt model ([[@liptonMythosModelInterpretability2017]] 4--5). 
 
-Classical trade classification algorithms, as a rule-based approach, are transparent with an easily understandable decision process, and thus provide interpretability ([[@barredoarrietaExplainableArtificialIntelligence2020]]91). Interpretability, however decreases for deep stacked combinations involving a large feature count, such as the gls-GSU method, interactions between base rules become more complex, and the effect of single feature on the final prediction more challenging to interpret. 
+Classical trade classification algorithms, as a rule-based approach, are transparent with an easily understandable decision process, and thus provide interpretability ([[@barredoarrietaExplainableArtificialIntelligence2020]]91). Interpretability, however decreases for deep stacked combinations involving a large feature count, such as the gls-GSU method, interactions between base rules become more complex, and the effect of single feature on the final prediction more challenging to interpret.-footnote Consider the deep stacked combination from cref ... both the ordering plays a role for ...
 
-The machine-learning classifiers, studied in this work, can be deemed a black box model ([[@barredoarrietaExplainableArtificialIntelligence2020]]90). Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through transparency (see discussion on attention maps),  interpretability across all classifiers can only be reached through a *model-agnostic, post-hoc interpretability techniques*.
+The machine learning classifiers, studied in this work, can be deemed a black box model ([[@barredoarrietaExplainableArtificialIntelligence2020]]90). Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through transparency (see discussion on attention maps), interpretability across all classifiers can only be reached through *model-agnostic, post-hoc interpretability techniques*.
+
+
+
+Estimating feature importances is non-trivial in our work. Features are dependent due to the data generating process with strongly correlated quote and trade prices at the exchange and nation-wide level. The redundant feature encoding (cp. [[🪄Feature Engineering]]) exacerbates this effect. Feature independence, however, is the central assumption of most popular feature importance measures, including gls-SHAP, gls-LIME, or gls-rfpm ([[@aasExplainingIndividualPredictions2021]]2). <mark style="background: #ABF7F7A6;">A violation of this assumption can lead to substitution effects, see ([[@lopezdepradoAdvancesFinancialMachine2018]]) for a detailed discussion in the context of finance. Alternatively see ([[@covertUnderstandingGlobalFeature2020]]4) A violation of this assumption can lead to wrong feature importances with the feature importance of dependent features distributed among dependent features.</mark>
+
+For this reason we estimate feature importances using gls-SAGE, which can account for complex interactions between features and gives the contribution of a feature to the performance of the classifier. gls-SAGE is a global feature importance measure based on 
+
+
 
 Thereby, our goal is to understand the contribution of features to the model on a dataset, hence global level.
 
+Solving for (...) is practically intractable.
 
 
 Thereby, our goal is learn how much features contribute to the performance of the classifier on a dataset level. This is fundamentally different from methods like standard gls-SHAP, that attribute *any* prediction to the input features ([[@chenTrueModelTrue2020]]??).
