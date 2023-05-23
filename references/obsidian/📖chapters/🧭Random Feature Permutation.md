@@ -3,14 +3,21 @@ Naturally, we aim to gain insights into the prediction process and identify rele
 
 Classical trade classification algorithms, as a rule-based approach, are transparent with an easily understandable decision process, and thus provide interpretability ([[@barredoarrietaExplainableArtificialIntelligence2020]]91). Interpretability, however decreases for deep stacked combinations involving a large feature count, such as the gls-GSU method, interactions between base rules become more complex, and the effect of single feature on the final prediction more challenging to interpret.-footnote Consider the deep stacked combination from cref ... both the ordering plays a role for ...
 
-The machine learning classifiers, studied in this work, can be deemed a black box model ([[@barredoarrietaExplainableArtificialIntelligence2020]]90). Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through transparency (see discussion on attention maps), interpretability across all classifiers can only be reached through *model-agnostic, post-hoc interpretability techniques*.
+The machine learning classifiers, studied in this work, can be deemed a black box model ([[@barredoarrietaExplainableArtificialIntelligence2020]]90). Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through transparency, interpretability across all classifiers can only be reached through *model-agnostic, post-hoc interpretability techniques*.
+
+Thereby, our goal is to estimate how much a feature contributes to the performance of the classifier *overall*, which urges for *global* feature attribution measures. The appropriate approach is guided by properties of the data. Features are dependent due to the data generating process with strongly correlated quotes and trade prices at the exchange and nation-wide level. The redundant feature encoding of ratio features exacerbates this effect. Feature independence, however, is the central assumption of most popular feature importance measures, including gls-SHAP, gls-LIME, or gls-rfpm ([[@aasExplainingIndividualPredictions2021]]2). A violation of this constraint, can lead for two perfectly correlated, predictive features to the effect that both are deemed unimportant as the feature importance is distributed between features underestimating the true importance of the feature ([[@covertUnderstandingGlobalFeature2020]], p. 4).
+
+For this reason we estimate feature importances using gls-SAGE, which can account for complex interactions between features and yields global importances. 
+
+**Shapley Additive Global Importance**
+gls-SAGE is an additive feature importance measure based on 
+
+By the means of an additive model 
 
 
+gls-SAGE is a global feature importance measure based on cooperative game theory. 
 
-Estimating feature importances is non-trivial in our work. Features are dependent due to the data generating process with strongly correlated quote and trade prices at the exchange and nation-wide level. The redundant feature encoding (cp. [[🪄Feature Engineering]]) exacerbates this effect. Feature independence, however, is the central assumption of most popular feature importance measures, including gls-SHAP, gls-LIME, or gls-rfpm ([[@aasExplainingIndividualPredictions2021]]2). <mark style="background: #ABF7F7A6;">A violation of this assumption can lead to substitution effects, see ([[@lopezdepradoAdvancesFinancialMachine2018]]) for a detailed discussion in the context of finance. Alternatively see ([[@covertUnderstandingGlobalFeature2020]]4) A violation of this assumption can lead to wrong feature importances with the feature importance of dependent features distributed among dependent features.</mark>
-
-For this reason we estimate feature importances using gls-SAGE, which can account for complex interactions between features and gives the contribution of a feature to the performance of the classifier. gls-SAGE is a global feature importance measure based on 
-
+By the means of a an additive model
 
 
 Thereby, our goal is to understand the contribution of features to the model on a dataset, hence global level.
@@ -27,7 +34,6 @@ The redundant encoding can make patterns in the data learnable but complicates a
 
 Many model-agnostic methods are based on the randomly permuting features values. In this work, we specifically consider the variants *permutation feature importance* ([[@breimanRandomForests2001]]23--24) and partial-dependence plots ([[@friedmanGreedyFunctionApproximation2001]]26--28). Both serve a complementary purpose. Permutation feature importance derives the feature importance from the change in predictive accuracy before and after permuting a feature randomly, whereas partial dependence plots visualise the average change in prediction, if feature values are altered. These are widely adopted and computationally efficient.
 
-The redundant encoding of features in cref-[[🪄Feature Engineering]] makes patterns in the data learnable but complicates attributing predictions to certain features due to substitution effects. We address this concern when determining the feature's importances.
 
 For consistency to cref-[[🧭Evaluation metric]] we use the zero-one loss as a loss function and importances are estimated on the test set. 
 

@@ -268,7 +268,6 @@ problem.
 \addtocontents{toc}{\protect\newpage}
 \section{Supervised Approaches}\label{sec:supervised-approaches}
 
-% TODO: central assumption of supervised learning (smoothness assumption) (p. 5 chapelle)
 
 \subsection{Framing as a Supervised Learning Problem}\label{sec:problem-framing}
 
@@ -284,13 +283,13 @@ We introduce more notation, which we use throughout. Each data instance consists
 
 For our machine learning classifiers, we aim to model $\Pr_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
 \begin{equation}
-    \widehat{\operatorname{Pr}}(y\mid \mathbf{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
+    \widehat{\operatorname{Pr}}(Y=y\mid X=\mathbf{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
     \label{eq:prob-from-point-estimate}
 \end{equation}
 % TODO: It's actually a one-hot vector with the "probabilities
 Consequently, if a trade is predicted as a sell, hence $\hat{y} = -1$, we assign a probability of one for being a sell and a zero probability for being a buy and vice versa. Given the estimated class probabilities, we retrieve the most probable class in $\mathcal{Y}$ as:
 \begin{equation}
-    \hat{y}=\arg\max_{y \in \mathcal{Y}} \widehat{\operatorname{Pr}}(y \mid \mathbf{x}).
+    \hat{y}=\arg\max_{y \in \mathcal{Y}} \widehat{\operatorname{Pr}}(Y=y \mid X=\mathbf{x}).
     \label{eq:class-from-prob}
 \end{equation}
 \cref{eq:prob-from-point-estimate} and \cref{eq:class-from-prob} allow to alternate between a discrete and probabilistic formulation for trade classification rules. Since the class probability estimates are either 0
@@ -577,7 +576,7 @@ Intuitionally, adding the positional encoding leads to a rotation of the \gls{to
 
 Recall from our discussion on token embeddings, that embeddings are not yet context-sensitive. The Transformer relies on an \emph{attention mechanism} to let tokens gather information from other tokens within the sequence and thereby encode the context onto the embeddings.
 
-\textbf{Underlying Concept}
+\textbf{Preliminaries}
 
 Attention can be thought of as a mapping between a query and a set of key-value pairs to an output. In general, the current token is first projected onto a query vector, and all tokens in the context are mapped to key and value vectors. Similar to a soft dictionary lookup, the goal is to retrieve the values from tokens in the context for which the keys are similar to the query and return an aggregate estimate of the values weighted by the similarity of the keys and the query. Naturally, if a token in the context is important for predicting the queried token, indicated by a high similarity, the value of the context token has a large contribution to the output \autocites[][5]{phuongFormalAlgorithmsTransformers2022}[][3]{vaswaniAttentionAllYou2017}.
 
@@ -1228,13 +1227,14 @@ Following, \textcite[][4]{liptonMythosModelInterpretability2017} interpretabilit
 
 Classical trade classification algorithms, as a rule-based classifier, are transparent with an easily understandable decision process and thus provide interpretability \autocite[][91]{barredoarrietaExplainableArtificialIntelligence2020}. Interpretability, however, decreases for deep, stacked combinations involving a large feature count, when interactions between base rules become more complex and the effect of a single feature on the final prediction more challenging to interpret.
 
-The machine-learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through a \emph{model-agnostic, post-hoc interpretability techniques}. Thereby, our goal is to identify features that are important for the \emph{correct prediction}. This is fundamentally different from methods like standard \gls{SHAP}, that attribute \emph{any} prediction to the input features \autocite[][??]{chenTrueModelTrue2020}.
+The machine-learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through \emph{model-agnostic, post-hoc interpretability techniques}.
 
-Many model-agnostic methods are based on (...)
+Thereby, our goal is to estimate how much a feature contributes to the performance of the classifier \emph{overall}, which urges for \emph{global feature attribution measures}. The appropriate approach is guided by the properties of the data. Due to the data-generating process with strongly correlated quotes and trade prices at the exchange and nationwide levels, features are strongly dependent. The redundant feature encoding of ratio features exacerbates this effect. Feature independence, however, is the central assumption of most popular feature importance measures, including \gls{SHAP}, \gls{LIME}, or random feature permutation \autocite[][2]{aasExplainingIndividualPredictions2021}. A violation of this constraint for two perfectly correlated, predictive features can have the effect that both are deemed unimportant as the feature importance is distributed between features underestimating the true importance of the feature \autocite[][4]{covertUnderstandingGlobalFeature2020}.
+
+For this reason, we estimate feature importances using \gls{SAGE}, which can account for complex interactions between features and yields global importances. 
 
 \textbf{Shapley Additive Global Importance}
 
-(...)
 
 \textbf{Attention Maps}
 
