@@ -71,8 +71,6 @@ jSj denotes the number of variables in this subset, and d  1 jSj  is the numb
 
 ![[shap-visualisation.png]]
 
-“SHAP [85]isa model-agnostic approach from XAI that draws its foundations from game theory [128]. The goal of SHAP is to explain a prediction f (x) of an instance x by computing the relative contribution of each feature value to the specific outcome. The explanation function g(.) receives as input a coalition vector z′ ⊂{0, 1}N where N is the number of features in the original instance vector x. The coalition vector represents the presence or absence of each feature in a binary format: an entry of 1 means that the corresponding feature contributes to the explanation, while an entry of 0 means that the feature is considered to have no contribution. We have that the explanation function g(z′) can be decomposed as follows: g(z′) = φ0 + N ∑ i=1 φi zi′,φi ∈ R (5) where: N = number of input features in x, the instance vector g = explanation model z′ = coalition vector such that z′ ⊂{0, 1}N φi = decomposition factor Several methods match the definition in Equation (5), namely LIME [108], DeepLIFT [123]andLayer-wise Relevance Propagation (LRP) [12]. These are all additive feature attribution methods that, as SHAP, attribute an effect (or importance) φi to each predictor (feature), and the sum of these effects, g(z′), approximates the output f (x) of the original model. As an example, consider Fig. 1. The picture displays the relationship between an input vector and the corresponding prediction. Here, the feature values, xi lead to the prediction f (x). SHAP, and the other referred models, work by assigning a decomposition factor φi , to each feature value, which aims to reflect the importance of the feature to that particular prediction. Assuming the four axioms of efficiency, symmetry, dummy and additivity, the previous decomposition has been shown [85]tohave a unique solution known as Shapley value, proposed by Lloyd Shapley [121]incooperative game theory: φi( f , x) = 1 N! ∑ S⊆P \{xi } [ |S|!(N −|S|−1)! ][ f (S ∪{xi}) − f (S) ] (6) where: x = instance vector N = number of input features in x” ([[@baptistaRelationPrognosticsPredictor2022]], p. 8)
-
 
 “When w(S) is the expected reduction in loss over the mean prediction by including XS, i.e., wðSÞ = vf ðSÞ = EfLðE½fðXDÞ; YÞg EfLðfðXDjXS = xSÞ; YÞg, 4j(vf) is the SAGE value for a formal global interpretation.16”  ([[@ningShapleyVariableImportance2022]], p. 3)
 
@@ -84,52 +82,3 @@ jSj denotes the number of variables in this subset, and d  1 jSj  is the numb
 
 Look up what they exactly mean with feature interactions
 
-
-“The two previous categories of methods provide imperfect notions of feature importance because they do not account for feature interactions. For example, two perfectly correlated features with significant predictive power would both be deemed unimportant by a feature ablation study, and two complementary features would have their importance underestimated by univariate models. The third category of methods addresses these issues by considering all feature subsets S ⊆ D. Methods in the third category account for complex feature interactions by modeling v across its entire domain P(D). These methods therefore supersede the two other categories, which either exclude or include individual features. Our method, SAGE, belongs to this category, and we show that SAGE assigns scores by modeling vf optimally via a weighted least squares objective (Section 3.2).” (Covert et al., 2020, p. 4)
-
-
-Naturally, one would like to obtain insights into how the models arrived at the  
-prediction and identify features relevant for the prediction. Both aspects can be  
-subsumed under the term interpretability. Following, Lipton (2017, p. 4) inter-  
-pretability can be reached through model transparency or post-hoc interpretability  
-methods. Transparent models provide interpretability through a transparent mech-  
-anism in the model, whereas post-hoc methods extract information from the already  
-learnt model (Lipton, 2017, pp. 4–5).  
-Classical trade classification algorithms, as a rule-based classifier, are transparent  
-with an easily understandable decision process and thus provide interpretability  
-(Barredo Arrieta et al., 2020, p. 91). Interpretability, however, decreases for deep,  
-stacked combinations involving a large feature count, when interactions between base  
-rules become more complex and the effect of a single feature on the final prediction  
-more challenging to interpret.  
-15The ISE test set consists of 48.60 % of buy trades and 46.13 % of the CBOE test set are buy  
-trades.
-The machine-learning classifiers, studied in this work, can be deemed a black box  
-model (Barredo Arrieta et al., 2020, p. 90). Due to the sheer size of the network  
-or ensemble, interpretability through transparency is impacted. Albeit, the atten-  
-tion mechanism of Transformers provides some interpretability through the atten-  
-tion mechanism, interpretability across all classifiers can only be reached through  
-a model-agnostic, post-hoc interpretability techniques. Thereby, our goal is to iden-  
-tify features that are important for the correct prediction. This is fundamentally  
-different from methods like standard SHapley Additive exPlanations (SHAP), that  
-attribute any prediction to the input features (H. Chen et al., 2020, ??).  
-Many model-agnostic methods are based on (...)  
-Shapley Additive Global Importance  
-(...)  
-Attention Maps  
-In addition to permutation-based methods, Transformer-based models offer some  
-interpretability through their attention mechanism. In recent research a major con-  
-troversy embarked around the question, of whether attention offers explanations to  
-model predictions (cp. Bastings & Filippova, 2020, p. 150; Jain & Wallace, 2019,  
-pp. 5–7; Wiegreffe & Pinter, 2019, p. 9). The debate sparked around opposing  
-definitions of explainability and the consistency of attention scores with other, es-  
-tablished feature-importance measures. Our focus is less on post-hoc explainability  
-of the model, but rather on transparency. Consistent with Wiegreffe and Pinter  
-(2019, p. 8) we view attention scores as a vehicle to model transparency.  
-Recall from our discussion on attention (cp. Section 4.4.4) that the attention matrix  
-stores how much attention a token pays to each of the keys. Thus, feature attri-  
-butions can be derived from attention by visualising features to which the model  
-attends to in an attention map. While attention maps are specific to Transform-  
-ers or other attention-based architectures, rendering them useless for cross-model  
-comparisons, they give additional insights from different attention layers and atten-  
-tion heads of the model on a per-trade and global basis. An example is shown in  
-Figure 15.

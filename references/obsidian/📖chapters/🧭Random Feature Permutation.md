@@ -10,7 +10,9 @@ Thereby, our goal is to estimate how much a feature contributes to the performan
 For this reason we estimate feature importances using gls-SAGE, which can account for complex interactions between features and yields global importances. 
 
 **Shapley Additive Global Importance**
-gls-SAGE is an additive feature importance measure based on 
+gls-SAGE is an additive feature importance measure and based on cooperative game theory.
+
+
 
 By the means of an additive model 
 
