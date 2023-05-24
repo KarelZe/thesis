@@ -31,6 +31,25 @@ The results convincingly demonstrate the potential of machine learning, i.e., of
 In summary, machine learning has been applied successfully in the context of trade classification. No previous work performs, machine learning-based classification in the options markets.
 
 \newpage
+
+\subsection{Research Framework}\label{sec:research-framework}
+
+We present our research framework for trade classification, summarised in \cref{fig:research-framework}. Our approach revolves around two key ideas. First, we utilise \glspl{GBRT} and Transformers for trade classification, chosen in \cref{sec:supervised-approaches} for their expected performance, scalability, and extensibility. Distinctions are made between models trained on singly labelled trades and models trained on both labelled and unlabelled trades simultaneously. Second, classical trade classification rules, such as the \gls{LR}, are realised as a generic classifier leveraging the stacking principle, thereby enabling a coherent evaluation and model interpretation.
+
+\begin{figure}[!ht]
+    \centering
+    {\renewcommand\normalsize{\tiny}
+    \normalsize
+    \input{./Graphs/research-framework.pdf_tex}}
+    \caption[Research Framework]{Research Framework}
+    \label{fig:research-framework}
+\end{figure}
+
+The data preparation process, outlined in \cref{sec:data-and-data-preparation}, encompasses all steps necessary to obtain features to be processed by the classifiers. Model enhancements, training setups, and tuning procedures are detailed in \cref{sec:training-and-tuning}. The predictions of the classifiers are consistently evaluated in terms of accuracy as part of \cref{sec:evaluation}. With the model-agnostic interpretability method \gls{SAGE}, we attribute predictions to features and cross-compare the feature importances of classical trade classification rules and machine learning predictors. In turn, for Transformers attention maps provide additional insights into the model. Lastly, \cref{sec:application} tests all classifiers in the problem of 
+effective spread calculation to demonstrate the effectiveness of our approach.
+
+\newpage
+
 \section{Rule-Based Approaches}\label{sec:rule-based-approaches}
 
 Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction.
@@ -72,10 +91,9 @@ The quote rule classifies a trade by comparing the trade price against the corre
         -1, & \mathrm{if}\ P_{i, t}<M_{i, t}. \\
     \end{cases}
 \end{equation}
-By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing midspread trades including ones based on the subsequent quotes, and contemporaneous, or the subsequent transaction. Yet, the most common approach to overcome this limitation is, coupling the quote rule with other approaches, as done in \cref{sec:hybrid-rules}.
+By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing midspread trades including ones based on the subsequent quotes, and contemporaneous, or the subsequent transaction. Yet, the most common solution to overcome this limitation is, coupling the quote rule with other approaches, as done in \cref{sec:hybrid-rules}.
 
-The quote rule depends on price and quote data, which affects the data efficiency. The reduced dependence on past transaction prices and the focus on quotes has nonetheless positively impacted classification accuracies in option markets, as studies of \textcite[][886]{savickasInferringDirectionOption2003} and \textcite[][3]{grauerOptionTradeClassification2022} suggest. Especially, if trade classification is performed on the \gls{NBBO}.
-
+The quote rule can be estimated at the exchange level or \gls{NBBO}.
 
 \subsubsection{Tick Test}\label{sec:tick-test}
 
@@ -94,9 +112,6 @@ A common alternative to the quote rule is the tick test. Based on the rationale 
 Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy~\footnote{To end recursion at $t=1$, we sign the trade to be buyer-initiated to simplify notation. Other choices are possible, e.g., random assignment or based on another rule. Similarly done for \cref{eq:reverse-tick-test}.}. Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[][735]{leeInferringTradeDirection1991}.
 
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
-
-
-% sometimes dependency on data referred to as level-1 and level-2 (cp. chakrabarty 2015) Level-1 algorithms use only trade price data; level-2 algorithms use both trade and quote data.
 
 The reverse tick test is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
 
@@ -117,9 +132,6 @@ Both tests result in the same classification, if the current trade is bracketed 
 In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades, but both cannot compete with quote-based approaches and calls for more sophisticated approaches.
 
 \subsubsection{Depth Rule}\label{sec:depth-rule}
-
-% TODO: These proxies have in common that they factor in the order book imbalance the relative depth quoted at the best bid and ask prices. If traders care about transaction costs, the relatively wide ask-side spread deters buyers, whereas the tight bid-side spread may attract sellers. There are then more traders submitting market orders at the bid side, and the true effective spread is, on average, smaller than the average midpoint effective spread.
-% TODO: Derive in greater detail why orderbook imbalance makes sense! See my notes from Hagströmer
 
 As \cref{sec:quote-rule} unveils, the tick rule yields significantly lower success rates than the quote rule. For midspread trades, that otherwise cannot be classified by the advantageous quote rule, \textcite[][14]{grauerOptionTradeClassification2022} propose the depth rule as an override.
 
@@ -158,7 +170,6 @@ The trade size rule in \cref{eq:trade-size-rule} classifies based on a match bet
 \subsection{Hybrid Rules}\label{sec:hybrid-rules}
 
 The basic trade classification rules from \cref{sec:basic-rules} can be combined into a hybrid algorithm to enforce universal applicability to all trades and improve the classification performance.
-
 
 \begin{figure}[ht!]
     \hfill
@@ -228,7 +239,7 @@ As such, the \gls{EMO} algorithm extends the tick rule by classifying trades at 
 \subsubsection{Chakrabarty-Li-Nguyen-Van-Ness
     Method}\label{sec:chakarabarty-li-nguyen-van-ness-method}
 
-Like the previous two algorithms, the \gls{CLNV} method of \textcite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the \gls{EMO} rule by a differentiated treatment of trades inside the quotes, which are notoriously hard to classify. The authors segment the bid-ask spread into deciles (ten equal-width bins) and classify trades around the midpoint (\nth{4} to \nth{7} decile) by the tick rule and trades close or outside the quotes are categorised by the tick rule.
+Like the previous two algorithms, the \gls{CLNV} method of \textcite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the \gls{EMO} rule by a differentiated treatment of trades inside the quotes, which are notoriously hard to classify. The authors segment the bid-ask spread into deciles (ten equal-width bins) and classify trades around the midpoint (fourth to seventh decile) by the tick rule and trades close or outside the quotes are categorised by the tick rule.
 \begin{equation}
     \operatorname{clnv} \colon \mathbb{N}^2 \to \mathcal{Y}, \quad
     \operatorname{clnv}(i, t)=
@@ -240,25 +251,17 @@ Like the previous two algorithms, the \gls{CLNV} method of \textcite[][3809]{cha
     \label{eq:CLNV-rule}
 \end{equation}
 
-The algorithm is summarised in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the first to third deciles are classified by the quote rule. Counted from the bid, the first decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \gls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test can be exchanged for the reverse tick test.
+The algorithm is summarised in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the first to third deciles are classified by the quote rule. Counted from the bid, the first decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ third decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \gls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test can be exchanged for the reverse tick test.
 
 \subsubsection{Stacked Rule}\label{sec:stacked-rule}
 
 The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which cannot be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their relative ordering.
 
-% TODO: Murjajev (quote + quote on nbbo)
-The most basic application is in the \gls{LR} algorithm. For a more complex example consider the hybrid rule consisting of $\operatorname{tsize} \to \operatorname{quote} \to \operatorname{tick}$ in \cref{fig:stacking-algo}. An exemplary trade cannot be classified by the primary trade size rule and is signed by the quote rule, which is the first rule in the stack, able to classify the trade. Other trades can be classifiable by the trade size rule, which rules out the classification of the quote and tick rule. Theoretically, stacked rules can grow to great depth with an arbitrary arrangement. In practice, rules may be ordered greedily and new rules added if there are unclassified trades.
-
-\begin{figure}[ht!]
-    \centering
-    \input{./Graphs/stacking-algo.pdf_tex}
-    \caption[Stacked Trade Classification Rules]{Stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured shapes indicate the domain of the base rules in a modified scale. The trade is not classifiable by the trade size rule, as indicated by the arrows outside the rule's domain. The quote rule is applied, as it is the first rule to classify the trade entirely.}
-    \label{fig:stacking-algo}
-\end{figure}
+The most basic application is in the \gls{LR} algorithm, combining $\operatorname{quote} \to \operatorname{tick}$, whereby the quote rule is applied first as indicated by the arrow. For a more complex example consider the hybrid rule consisting of $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ popularized in \textcite[][18]{grauerOptionTradeClassification2022}. We refer to this specific combination as the \gls{GSU} rule. Only a fraction of all trades are classifiable by the trade size rule, which is the primary rule, due to a narrow domain, and classification is deferred to lower rules in the stack, specifically the quote rule at the \gls{NBBO}, which by design has larger coverage. Theoretically, stacked rules can grow to great depth with an arbitrary arrangement. In practice, rules may be ordered greedily and new rules added if there are unclassified trades.
 
 \textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} and \textcite[][18]{grauerOptionTradeClassification2022} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and quotes. This raises the question of whether classifiers trained on price and quote data can adapt to the data and improve upon classical trade classification rules.
 
-The trend towards sophisticated, hybrid rules, combining as many as five base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to stacked ensembles found in machine learning and expresses the need for better classifiers.
+The trend towards sophisticated, hybrid rules, combining as many as six base rules into a single classifier, has conceptual parallels to stacked ensembles found in machine learning and expresses the need for better classifiers.
 
 We provide an overview of state-of-the-art machine learning-based classifiers and start by framing trade classification as a supervised learning
 problem.
@@ -459,7 +462,7 @@ Aside from the feed-forward sub-layer, the decoder contains a sub-layer for mult
 The output of the decoder is finally passed through a linear layer with a softmax activation function to unembed the output and retrieve the probabilities of the next \gls{token} \autocite[][5]{vaswaniAttentionAllYou2017}. Since the output sequence is generated autoregressively, the most probable \gls{token} is fed back as input to the decoder to provide context for the following \glspl{token} until the remaining sequence is generated.
 
 For its original application, machine translation, both the encoder and decoder are used. Yet, the modular design allows adapting Transformers to a wider range of use cases, some of which only require the encoder or decoder. \textcite[][16--17]{raffelExploringLimitsTransfer2020} differentiate these modes: encoder-only architecture, which encodes the input to obtain an enriched representation, decoder-only architectures to generate new \glspl{token} and encoder-decoder models for sequence-to-sequence modelling autoregressively. As our focus is on the probabilistic classification of tabular data, the goal is to learn an enriched representation of the input for classifying the label, here $\gls{y}$, rather than generating new samples. As such, encoder-only Transformers suffice. This insight also guides the structure in the next chapters, which focus on \glspl{embedding} and the inner workings of the encoder.
-%TODO: Graphics contains a typo: W_q in cross attention comes from output sequence. Also fonts are wrong. They should be mathbf. rename to cross-attention?
+
 \begin{landscape}
     \begin{figure}[ht]
         \centering
@@ -761,22 +764,7 @@ In summary, \gls{RTD} can help to learn expressive representations of the input,
 \addtocontents{toc}{\protect\newpage}
 \section{Empirical Study}\label{sec:empirical-study}
 
-In this section, we demonstrate the effectiveness of machine learning for trade classification in an empirical setting. To commence, the research framework is introduced.
-
-\subsection{Research Framework}\label{sec:research-framework}
-
-We present our research framework for trade classification, summarised in \cref{fig:research-framework}. Our approach revolves around two key ideas. First, we utilise \glspl{GBRT} and Transformers for trade classification, chosen in \cref{sec:supervised-approaches} for their expected performance, scalability, and extensibility. Distinctions are made between models trained on singly labelled trades and models trained on both labelled and unlabelled trades simultaneously. Second, classical trade classification rules, such as the \gls{LR}, are realised as a generic classifier leveraging the stacking principle, thereby enabling a coherent evaluation and model interpretation.
-
-\begin{figure}[!ht]
-    \centering
-    {\renewcommand\normalsize{\tiny}
-    \normalsize
-    \input{./Graphs/research-framework.pdf_tex}}
-    \caption[Research Framework]{Research Framework}
-    \label{fig:research-framework}
-\end{figure}
-
-The data preparation process, outlined in \cref{sec:data-and-data-preparation}, encompasses all steps necessary to obtain features to be processed by the classifiers. Model enhancements, training setups, and tuning procedures are detailed in \cref{sec:training-and-tuning}. The predictions of the classifiers are consistently evaluated in terms of accuracy as part of \cref{sec:evaluation}. With the model-agnostic interpretability method \gls{SAGE}, we attribute predictions to features and cross-compare the feature importances of classical trade classification rules and machine learning predictors. In turn, for Transformers attention maps provide additional insights into the model. Lastly, \cref{sec:application} tests all classifiers in the problem of effective spread calculation to demonstrate the effectiveness of our approach.
+In this section, we demonstrate the effectiveness of machine learning for trade classification in an empirical setting. To commence, the construction of datasets is presented.
 
 \subsection{Data and Data Preparation}\label{sec:data-and-data-preparation}
 
