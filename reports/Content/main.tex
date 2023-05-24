@@ -950,8 +950,6 @@ Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autoci
     \label{fig:gbm-train-val-loss-acc}
 \end{figure}
 
-\cref{fig:ise-gbm-hyperparam-classical} visualises the hyperparameter search space of the \gls{GBRT} on the \gls{ISE} dataset with classical features. We can derive several observations from it. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.42}{\percent} and \SI{64.35}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
-
 \cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The configuration details are documented in (...). The plots reveal several insights. Firstly, the model overfits the training data, as evident from the generalisation gap between training and validation accuracies. To improve generalisation performance, we apply regularisation techniques. Secondly, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction. This behaviour may be explained by the log loss being unbound, where single incorrect predictions can cause the loss to explode.
 
 \begin{figure}[ht]
