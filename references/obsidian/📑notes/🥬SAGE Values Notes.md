@@ -45,6 +45,9 @@ For example, there are several ways to quantify or rank the features according t
 **Problems / Properties of SAGE**
 “Similarly, conditional SAGE and conditional SHAP value functions sample the remaining features conditional on the feature of interest and therefore violate sensitivity [25,56,61,109].” (“xxAI - Beyond Explainable AI: International Workshop, Held in Conjunction with ICML 2020, July 18, 2020, Vienna, Austria, Revised and Extended Papers”, 2022, p. 50)
 
+**Value function**
+Shapley values (Lundberg and Lee, 2017) have also become popular tools for assigning “credit” to covariates for any quantity, including predictive performance, or individual predictions. Some implementations of Shapley values exhibit the same permutation structure that we critique here and can be similarly misleading (Slack et al., 2020).
+
 **Difference between conditional / marginal**
 
 **True to the model / true to the data**

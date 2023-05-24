@@ -9,14 +9,18 @@ Thereby, our goal is to estimate how much a feature contributes to the performan
 For this reason we estimate feature importances using gls-SAGE, which can account for complex interactions between features and yields global importances. 
 
 **Shapley Additive Global Importance**
-gls-SAGE is an additive feature importance measure and based on cooperative game theory.
+gls-SAGE is an additive feature importance measure with its foundations in cooperative game theory. As put forth by ([[@lundbergUnifiedApproachInterpreting2017]]3) feature contributions can be estimated through Shapley values (Source Lloyd). Instead of allocating credit in a cooperative game to players, as originally proposed, the problem transfers to assign credit across features based on a value function. Intuitionally, for gls-SAGE, credit is assigned based the contribution to the model's performance, which is different from classical gls-SHAP formulation, where the importance is determined by the contribution to the prediction.
 
-Based on Shapley values. Instead of players / featues
+Shapley values are defined as:
+
+
+
+
 
 Strong mathematical foundation.
 
 
-“2.2. Shapley values for prediction explanation Consider a classical machine learning scenario where a training set { yi , xi }i=1,...,ntrain of size ntrain has been used to train a predictive model f (x) attempting to resemble a response value y as closely as possible. Assume now that we want to explain the prediction from the model f (x∗), for a specific feature vector x = x∗. Štrumbel and Kononenko [9,10]and Lundberg and Lee [11]suggestto do this using Shapley values. By moving from game theory to decomposing an individual prediction into feature contributions, the single prediction takes the place of the payout, and the features take the place of the players. We have that the prediction f (x∗) is decomposed as follows f (x∗) = φ0 + M ∑ j=1 φj ∗, where φ0 = E[ f (x)] and φ j ∗ is the φ j for the prediction x = x∗. That is, the Shapley values explain the difference between the prediction y∗ = f (x∗) and the global average prediction. A model of this form is an additive feature attribution method, and it is the only additive feature attribution method that adhers to the properties listed in Section 2.1 [11]. In Appendix A we discuss why these properties are useful in the prediction explanation setting. To be able to compute the Shapley values in the prediction explanation setting, we need to define the contribution function v(S) for a certain subset S. This function should resemble the value of f (x∗) when we only know the value of the subset S of these features. To quantify this, we follow [11] and use the expected output of the predictive model, conditional on the feature values xS = x∗S of this subset: v(S) = E[ f (x)|xS = x∗S ]. (2) Other measures, such as the conditional median, may also be appropriate. However, the conditional expectation summarizes the whole probability distribution and it is the most common estimator in prediction applications. When viewed as a prediction for f (x∗), it is also the minimizer of the commonly used squared error loss function. We show in Appendix B that if the predictive model is a linear regression model f (x) = β0 + ∑M j=1 β j x j , where all features x j, j = 1, ...,M are independent, then, under (2), the Shapley values take the simple form: φ0 = β0 + M ∑ j=1 β j E[x j], and φ j = β j (x∗j − E[x j]), j = 1,...,M. (3) Note that for ease of notation, we have here and in the rest of the paper dropped the superscript * for the φ j values. Every prediction f (x∗) to be explained will result in different sets of φ j values.” (Aas et al., 2021, p. 4)
+“2.2. Shapley values for prediction explanation Consider a classical machine learning scenario where a training set { yi , xi }i=1,...,ntrain of size ntrain has been used to train a predictive model f (x) attempting to resemble a response value y as closely as possible. Assume now that we want to explain the prediction from the model f (x∗), for a specific feature vector x = x∗. Štrumbel and Kononenko [9,10]and Lundberg and Lee [11]suggest to do this using Shapley values. By moving from game theory to decomposing an individual prediction into feature contributions, the single prediction takes the place of the payout, and the features take the place of the players. We have that the prediction f (x∗) is decomposed as follows f (x∗) = φ0 + M ∑ j=1 φj ∗, where φ0 = E[ f (x)] and φ j ∗ is the φ j for the prediction x = x∗. That is, the Shapley values explain the difference between the prediction y∗ = f (x∗) and the global average prediction. A model of this form is an additive feature attribution method, and it is the only additive feature attribution method that adhers to the properties listed in Section 2.1 [11]. In Appendix A we discuss why these properties are useful in the prediction explanation setting. To be able to compute the Shapley values in the prediction explanation setting, we need to define the contribution function v(S) for a certain subset S. This function should resemble the value of f (x∗) when we only know the value of the subset S of these features. To quantify this, we follow [11] and use the expected output of the predictive model, conditional on the feature values xS = x∗S of this subset: v(S) = E[ f (x)|xS = x∗S ]. (2) Other measures, such as the conditional median, may also be appropriate. However, the conditional expectation summarizes the whole probability distribution and it is the most common estimator in prediction applications. When viewed as a prediction for f (x∗), it is also the minimizer of the commonly used squared error loss function. We show in Appendix B that if the predictive model is a linear regression model f (x) = β0 + ∑M j=1 β j x j , where all features x j, j = 1, ...,M are independent, then, under (2), the Shapley values take the simple form: φ0 = β0 + M ∑ j=1 β j E[x j], and φ j = β j (x∗j − E[x j]), j = 1,...,M. (3) Note that for ease of notation, we have here and in the rest of the paper dropped the superscript * for the φ j values. Every prediction f (x∗) to be explained will result in different sets of φ j values.” (Aas et al., 2021, p. 4)
 
 
 Additive refers 
@@ -34,7 +38,26 @@ where $z^{\prime} \in\{0,1\}^M, M$ is the number of simplified input features, a
 Methods with explanation models matching Definition [] attribute an effect $\phi_i$ to each feature, and summing the effects of all feature attributions approximates the output $f(x)$ of the original model. Many current methods match Definition several of which are discussed below.
 
 *Shapley values*
-Shapley values (Lundberg and Lee, 2017) have also become popular tools for assigning “credit” to covariates for any quantity, including predictive performance, or individual predictions. Some implementations of Shapley values exhibit the same permutation structure that we critique here and can be similarly misleading (Slack et al., 2020).
+
+
+**Shapley values**
+Recall that the function $v_f$ describes the amount of predictive power that a model $f$ derives from subsets of features $S \subseteq D$. We define feature importance via $v_f$ to quantify how critical each feature $X_i$ is for $f$ to make accurate predictions. It is natural to view $v_f$ as a cooperative game, representing the profit (predictive power) when each player (feature) participates (is available to the model). Research in game theory has extensively analyzed credit allocation for cooperative games, so we apply a game theoretic solution known as the Shapley value [35].
+
+Shapley values are the unique credit allocation scheme that satisfies a set of fairness axioms. For any cooperative game $w: \mathcal{P}(D) \mapsto \mathbb{R}$ (such as $v$ or $v_f$ ) we may want the scores $\phi_i(w)$ assigned to each player to satisfy the following desirable properties:
+1. (Efficiency) They sum to the total improvement over the empty set, $\sum_{i=1}^d \phi_i(w)=w(D)-w(\varnothing)$.
+2. (Symmetry) If two players always make equal contributions, or $w(S \cup\{i\})=w(S \cup\{j\})$ for all $S$, then $\phi_i(w)=\phi_j(w)$
+3. (Dummy) If a player makes zero contribution, or $w(S)=w(S \cup\{i\})$ for all $S$, then $\phi_i(w)=0$.
+4. (Monotonicity) If for two games $w$ and $w^{\prime}$ a player always make greater contributions to $w$ than $w^{\prime}$, or $w(S \cup\{i\})-w(S) \geq w^{\prime}(S \cup\{i\})-w^{\prime}(S)$ for all $S$, then $\phi_i(w) \geq \phi_i\left(w^{\prime}\right)$.
+5. (Linearity) The game $w(S)=\sum_{k=1}^n c_k w_k(S)$, which is a linear combination of multiple games $\left(w_1, \ldots, w_n\right)$, has scores given by $\phi_i(w)=\sum_{k=1}^n c_k \phi_i\left(w_k\right)$
+
+The Shapley values $\phi_i(w)$ are the unique credit allocation scheme that satisfies properties 1-5 [35], and they are given by the expression:
+$$
+\phi_i(w)=\frac{1}{d} \sum_{S \subseteq D \backslash\{i\}}\left(\begin{array}{c}
+d-1 \\
+|S|
+\end{array}\right)^{-1}(w(S \cup\{i\})-w(S))
+$$
+
 
 
 **How you calculate Shapley values:**
@@ -55,9 +78,16 @@ $$
 Let us also define the non-distributed gain $\phi_0=v(\emptyset)$, that is, the fixed payoff which is not associated to the actions of any of the players, although this is often zero for coalition games.
 
 By summarizing the right hand sides above, we easily see that they add up to the total worth of the game: $\phi_0+\phi_1+$ $\phi_2+\phi_3=v(\{1,2,3\})$
-The Shapley value has the following desirable properties:
-
+The Shapley value has the following desirable properties
 **How it transfers**
+
+
+“Although Shapley values are an attractive solution for allocating credit among players in coalitional games, our goal is to allocate credit among features x1, . . . , xd in a machine learning model f (x) ∈ R. Machine learning models are not coalitional games by default, so to use Shapley values we must first define a coalitional game v(S) based on the model f (x) (Figure 3a). The coalitional game can be chosen to represent various model behaviors, including the model’s loss for a single sample or for the entire dataset [26], but our focus is the most common choice: explaining the prediction f (xe) for a single sample xe. When explaining a machine learning model, it is natural to view each feature xi as a player in the” (Chen et al., 2022, p. 4)
+
+“coalitional game. However, we then must define what is meant by the presence or absence of each feature. Given our focus on a single explicand xe, the presence of feature i will mean that the model is evaluated with the observed value xe i (Figure 3b). As for the absent features, we next consider how to remove them to properly assess the influence of the present features.” (Chen et al., 2022, p. 5)
+
+
+
 The Shapley values $\phi_i(w)$ are the unique credit allocation scheme that satisfies properties 1-5 [35], and they are given by the expression:
 $$
 \phi_i(w)=\frac{1}{d} \sum_{S \subseteq D \backslash\{i\}}\left(\begin{array}{c}
