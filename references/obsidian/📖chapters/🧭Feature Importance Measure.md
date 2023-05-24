@@ -1,5 +1,6 @@
 
 **Notes:**
-[[🥬SAGE Values]]
+
+[[🥬SAGE values]]
 [[🧭Random Feature Permutation]]
 [[🧭Attention map]]

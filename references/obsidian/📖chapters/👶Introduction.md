@@ -49,3 +49,6 @@ r. The importance of identifying liquidity demanders in studies of financial mar
 
 
 Empirical market microstructure research often requires knowledge about whether a transaction was initiated by a buyer or a seller. Examples include, but are not limited to, accurate calculation of effective spreads (Lightfood et. al. 1999), the identification of the components of the bid-ask spreads using methods based on a trade indicator variable (Huang / Stoll 1997) and the estimation of certain structural microstructure models (e.g. Easley et. al. 1996). (found in [[@theissenTestAccuracyLee2000]])
+
+
+This paper reviews methods based on permuting feature values or otherwise investigating the effect that changing the values of a feature has on predictions. Our message can be simply summarized by When features in the training set exhibit statistical dependence, permute-and-predict methods can be highly misleading when applied to the original model. Permutation methods are some of the oldest, most popular, and computationally convenient means of understanding complex learning algorithms. In this paper, we will focus primarily on three commonlyused techniques:
