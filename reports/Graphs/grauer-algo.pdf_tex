@@ -50,13 +50,13 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,1.04528817)%
+  \begin{picture}(1,1.0465811)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{grauer-algo.pdf}}%
-    \put(0.10003694,0.53811235){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Trade Size \end{tabular}}}}%
-    \put(0.15567127,0.48569199){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Rule\end{tabular}}}}%
-    \put(0.38140538,0.52264405){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Depth Rule\end{tabular}}}}%
-    \put(0.73096325,0.5097538){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Misc\end{tabular}}}}%
+    \put(0.10003694,0.53875885){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Trade Size \end{tabular}}}}%
+    \put(0.15567127,0.48633849){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Rule\end{tabular}}}}%
+    \put(0.35743197,0.52568795){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Depth Rule\end{tabular}}}}%
+    \put(0.6338704,0.52358573){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Miscellaneous\end{tabular}}}}%
   \end{picture}%
 \endgroup%

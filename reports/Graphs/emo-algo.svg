@@ -24,9 +24,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#505050"
      showgrid="false"
-     inkscape:zoom="7.7257532"
-     inkscape:cx="33.912551"
-     inkscape:cy="122.83592"
+     inkscape:zoom="2.7314662"
+     inkscape:cx="83.2886"
+     inkscape:cy="73.586851"
      inkscape:window-width="2560"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -136,8 +136,9 @@
        font-family="cmss12, cmss12_MSFontService, sans-serif"
        font-weight="400"
        font-size="46px"
-       transform="translate(1416.43,842)"
-       id="text1911">Quote Rule</text><text
+       id="text1911"
+       x="1394.2585"
+       y="839.22858">Quote Rule</text><text
        font-family="cmss12, cmss12_MSFontService, sans-serif"
        font-weight="400"
        font-size="50px"
@@ -146,8 +147,9 @@
        font-family="cmss12, cmss12_MSFontService, sans-serif"
        font-weight="400"
        font-size="46px"
-       transform="translate(1423.3,1568)"
-       id="text1919">Quote Rule </text><text
+       id="text1919"
+       x="1401.1285"
+       y="1565.2285">Quote Rule </text><text
        font-family="cmss12, cmss12_MSFontService, sans-serif"
        font-weight="400"
        font-size="50px"
