@@ -38,7 +38,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
     """
 
     epochs_pretrain = 20
-    epochs_finetune = 20
+    epochs_finetune = 1
 
     def __init__(
         self,
