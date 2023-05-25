@@ -957,6 +957,8 @@ We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visua
 
 Our train-test-split assumes that all subsets are drawn from the same distribution, so fitting a classifier on the training set and optimising for the validation set provides good estimates for the test set. To validate this assumption, we use adversarial validation. Specifically, we re-label all training samples with $y=-1$ and all trades of the validation set with $y=1$, train a classifier on a random subset of the composed dataset and predict class conformance. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which ranges between $\left[-1, 1\right]$ and is insensitive to class imbalances.\footnote{Classes are imbalanced, due to the training set being three times the size of the validation set.} Assuming train and validation samples are sampled from the same distribution, the performance estimate is near a random guess, or $\operatorname{MCC} = 0$, Depending on the feature sets, the \gls{MCC} ranges between (...) and (...) suggesting training and validation sets are approximately similar. The next section discusses techniques used in training the classifiers.
 
+\todo{report stats for entire sample and subsamples in the appendix ()}
+
 \subsection{Training and Tuning}\label{sec:training-and-tuning}
 
 Experiments are conducted on shared nodes of the bwHPC cluster, with 10 assigned Intel Xeon Gold 6230 cores at \SI{2.1}{\GHz}, an NVIDIA V100 \SI{32}{\giga\byte}, and \SI{92.160}{\giga\byte} random access memory running Red Hat Enterprise Linux release 8.4. For reproducibility, the implementation and experiment tracking are publicly available\footnote{Code is available at~\url{https://github.com/KarelZe/thesis} Experiments are tracked at \url{https://wandb.ai/fbv/thesis}.}.
@@ -1010,7 +1012,6 @@ We combine these ideas to leverage the improvements for our large-scale studies.
 As derived in \cref{sec:supervised-approaches}, we rely on FT-Transformer of \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule \autocite[][1]{liuUnderstandingDifficultyTraining2020}. We investigate minor modifications to the default FT-Transformer to stabilise training and improve overall performance. The default FT-Transformer trained for 10 epochs on \gls{ISE} dataset with classical features and loss and accuracy is visualised in \cref{fig:fttransformer-optimisations-loss-acc} and the model itself is summarised in (...).
 
 The convergence behaviour of our model is similar to that of gradient boosting. Equally, a significant generalisation gap exists between the training and validation loss. Particularly concerning, the training loss decreases sharply, while the validation loss spuriously improves over its initial estimate. Despite this, validation accuracy improves throughout the entire training cycle. We reason that the network learns to correctly classify trades, indicated by the improved accuracy, but only attains low-confident correct predictions or confident but erroneous predictions which both contribute to a large validation loss. The shape of the flat validation loss and the decreasing training loss suggest that the training set may not be representative of trades in the validation set. This has broader implications on the classifiability of option trades using decision rules from classical trade classification rules for more recent observations. We explore this phenomenon thoroughly as part of our result discussion.
-
 
 \begin{figure}[!ht]
     \centering
@@ -1239,6 +1240,8 @@ where $\operatorname{L}_{\mathrm{0-1}}(\cdot)$ is the 0-1-loss given by:
 Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalise by the number of samples $N$, which gives the normalised 0-1-loss. Notably, the loss is the same for false positives and negatives.
 
 Our datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vice versa have similar associated costs, which makes accuracy an ideal choice as a performance metric.\footnote{The \gls{ISE} test set consists of \SI{48.5973}{\percent} of buy trades and \SI{46.1278}{\percent} of the \gls{CBOE} test set are buy trades.} As the 0-1-loss and in consequence, the accuracy is not differentiable, it cannot be used in optimisation, but as an early stopping criterion to halt training or as an optimisation target in the hyperparameter search. We report the accuracy of the test sets.
+
+\todo{discuss why not report log loss / cross entropy loss.}
 
 \subsubsection{Feature Importance
     Measure}\label{sec:feature-importance-measure}
