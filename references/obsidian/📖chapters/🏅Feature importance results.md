@@ -1,19 +1,29 @@
-- local vs. global attention
-- Visualise attention
-- make models comparable. Find a notion of feature importance that can be shared across models.
- - compare feature importances between approaches like in paper
- - How do they selected features relate to what is being used in classical formulae? (see [[#^ce4ff0]]) Could a hybrid formula be derived from the selection by the algorithm?
- - What is the economic intuition?
-- Use [Captum · Model Interpretability for PyTorch](https://captum.ai/) to learn what the model picks up as a relevant feature.
+**SAGE**
+- emphasize that these are global feature attributions
+- explain definition of feature groups -> Limitation of implementation. Classical classifier sees only a fraction of all features, but features are inherently redundant.
+- configuration
+	- explain how sampling is done? Why is sampling even necessary.
+	- why zero-one loss and why not cross-entropy loss? -> penalize trade classification rules for over-confident predictions
+- visualize in subplots how feature importances align (3x3 (benchmark, gbm, fttransformer), distinguished by feature set)
+- What features are important?
+	- Are there particularly dominant feature groups?
+	- How does it align with literature?
+	- Are features that are important in smaller feature sets also important in larger feature sets?
+	- How does adding more features influence the impact of the other features?
+	- Which ones are unimportant? Do models omit features that perform poorly in the empirical setting?
+	- Are features important that have not been considered yet? Why's that?
+- interpretation
+	- Why are size-related features so important? Can we confirm the limit order theory? 
 
 ![[informative-uniformative-features.png]]
-[[@grinsztajnWhyTreebasedModels2022]]
-Interesting comments: https://openreview.net/forum?id=Fp7__phQszn
-- Most finance papers e. g., [[@finucaneDirectTestMethods2000]] (+ other examples as reported in expose) use logistic regression to find features that affect the classification most. Poor choice due to linearity assumption? How would one handle categorical variables? If I opt to implement logistic regression, also report $\chi^2$.
-- Think about approximating SHAP values on a sample or using some improved implementation like https://github.com/linkedin/FastTreeSHAP
-- Do ablation studies. That is, the removal of one feature shouldn't cause the model to collapse. (idea found in [[@huyenDesigningMachineLearning]])
-- discuss and address correlations of features
+([[@grinsztajnWhyTreebasedModels2022]])
 
+**Attention**
+- emphasize that these are local feature attributions
+- Visualize attention for some trades
+- interpret pattern. How does it align with the feature importances from SAGE?
+
+**Rank correlation between approaches**
 Compare different feature attributions:
 ![[feature_attributions_from_attention.png]]
 (Found in [[@borisovDeepNeuralNetworks2022]])

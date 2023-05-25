@@ -1,4 +1,8 @@
+
+
 Incorporate this: 
+callibrated probas shouldnt be much of a problem, as we optimise for probabilities directly https://www.cs.cornell.edu/~caruana/niculescu.scldbst.crc.rev4.pdf
+
 CatBoost, as well as all standard gradient boosting implementations, builds each new tree to approximate the gradients of the current model. However, all classical boosting algorithms suffer from overfitting caused by the problem of biased pointwise gradient estimates. Gradients used at each step are estimated using the same data points the current model was built on. This leads to a shift of the distribution of estimated gradients in any domain of feature space in comparison with the true distribution of gradients in this domain, which leads to overfitting. The idea of biased gradients was discussed in previous literature [1] [9]. [9] J. H. Friedman. Stochastic gradient boosting. Computational Statistics & Data Analysis, 38(4):367–378, 2002. [1] L. Breiman. Out-of-bag estimation, 1996
 
 

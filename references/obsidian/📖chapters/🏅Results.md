@@ -1,3 +1,17 @@
+## Summary
+- start coarse-grained then report fine-grained results
+- explain why results differ compared to Grauer et al
+- think about reporting classical rules on the entire dataset
+
+![[summarized-results.png]]
+
+
+## Sub-samples
+![[sub-samples.png]]
+
+visualize classical rules over time 
+
+
 
 
 **Classical ISE:**
@@ -91,6 +105,4 @@ where $O_{i j}$ and $E_{i j}$ are the observed and expected frequencies for cell
 Interesting adversarial examples: https://arxiv.org/pdf/1705.07263.pdf
 
 
-Visualisation of tables with columns: https://tex.stackexchange.com/questions/174876/formatting-table-with-siunitx-problem-with-parentheses-and-signs
 
-callibrated probas shouldnt be much of a problem, as we optimise for probabilities directly https://www.cs.cornell.edu/~caruana/niculescu.scldbst.crc.rev4.pdf

@@ -166,7 +166,7 @@ describe if data set is actually used. Write similarily to
 [[🏅Robustness]]
 
 ## Feature Importance
-[[🏅Feature importance results]]
+[[🏅Feature Importance Results]]
 
 ## Ablation Study of Models
 

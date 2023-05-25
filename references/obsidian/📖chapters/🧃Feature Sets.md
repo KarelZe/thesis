@@ -1,6 +1,10 @@
 
 ![[feature-and-feature-set-definition.png]]
 
+![[calculate-stats.png]]
+
+
+![[proximity-to-quote.png]]
 
 **Ideas:**
 -   While the determination of average trade sizes allows further gauging of common and larger trade sizes, the initial order size must also be considered. In electronic markets, and particularly in options, price guidance is given by quotes. Trade initiators rarely trade at these quoted prices (5-20% of options screen volume), and mostly enter limit orders mid-market. The difference between order and trade sizes is twofold. Firstly, a trade initiator may slice an order into suborders to minimise market impact by trading 500 futures or options via 5 orders at 100 contracts. Trade records provide evidence for this practise as the trade executions feature the same counterparty on the trade at identical prices with subsequent, virtually identical timestamps. Secondly, other market participants respond to incoming orders from trade initiators in a competitive fashion with immediate-or-cancel (IOC) orders. The initial order of 500 contracts placed a tick under the best quoted offer may be traded by, for example, 3 market makers sending IOCs in 100, 100 and 300 contracts. (https://www.esma.europa.eu/sites/default/files/esma_mifid_add_fese_replyform_1.docx)

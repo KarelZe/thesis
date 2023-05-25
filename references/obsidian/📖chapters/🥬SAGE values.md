@@ -13,7 +13,7 @@ gls-SAGE is an additive feature importance measure with its foundations in coope
 
 Shapley values are defined as:
 
-
+- Most finance papers e. g., [[@finucaneDirectTestMethods2000]] (+ other examples as reported in expose) use logistic regression to find features that affect the classification most. Poor choice due to linearity assumption? How would one handle categorical variables? If I opt to implement logistic regression, also report $\chi^2$.
 
 
 
