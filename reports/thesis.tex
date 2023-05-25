@@ -72,6 +72,8 @@ width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 
 \newcommand*{\tabindent}{ \hspace{2mm}} % Indentation for tables
 
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}\PackageWarning{TODO:}{#1!}} % Todos
+
 \sisetup{round-mode=places,round-precision=2, group-separator={,},output-decimal-marker={.}, round-pad = false, input-symbols = {(-)}, % separate-uncertainty=false,
 group-minimum-digits=4, % 1,000 instead of 1000
 % table-space-text-pre={(},
