@@ -832,22 +832,19 @@ To establish a common ground, we derive three sets of features from raw data. Th
         \item[*] Notation assumes, that the previous or next trade price is distinguishable.
     \end{TableNotes}
     \begin{longtable}{@{}lllllll@{}}
-        % \multicolumn{3}{c}%
-        % {\tablename\ \thetable\ -- \textit{Continued from previous page}} \\
-        % \hline
-        % Header 1 & Header 2 & Header 3 \\
-        % \hline
-        % \endhead
+        
 
         \caption[Features and Feature Sets]{Features and Feature Sets.}\label{tab:feature-sets}    \\
+        \toprule
+        Feature Name            & Definition                                                                                       & Source               & FS 1 & FS 2 & FS 3 \\ \midrule
+        \endfirsthead
 
+        \multicolumn{6}{l}{\textit{Continued \tablename~\thetable}} \\
         \toprule
         Feature Name            & Definition                                                                                       & Source               & FS 1 & FS 2 & FS 3 \\ \midrule
         \endhead
-        %\endfirsthead
         
         \bottomrule
-
         \endfoot
 
         \insertTableNotes         
@@ -942,7 +939,7 @@ Applying the time-based split, we attribute the first \SI{60}{\percent} of our d
 \begin{figure}[ht]
     \centering
     \includegraphics{train-test-split.pdf}
-    \caption[Training scheme on \glsentryshort{ISE} and \glsentryshort{CBOE} Sample]{Training scheme on \gls{ISE} and \gls{CBOE} sample. The train and validation set are split by time. Shaded area \mysquare{viz-gray} indicates the duration for which the dataset is available.}
+    \caption[Training Scheme on \glsentryshort{ISE} and \glsentryshort{CBOE} Sample]{Training scheme on \gls{ISE} and \gls{CBOE} sample. The train and validation set are split by time. Shaded area \mysquare{viz-gray} indicates the duration for which the dataset is available.}
     \label{fig:train-test-split}
 \end{figure}
 
@@ -968,7 +965,7 @@ Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autoci
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-train-val-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \glsentryshort{ISE} Sample]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBRT} on \glsentryshort{ISE} Sample]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
     \label{fig:gbm-train-val-loss-acc}
 \end{figure}
 
@@ -977,7 +974,7 @@ Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autoci
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-optimisations-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \glsentryshort{ISE} with Optimisations]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBRT} on \glsentryshort{ISE} with Optimisations]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
     \label{fig:gbm-optimisations-loss-acc}
 \end{figure}
 

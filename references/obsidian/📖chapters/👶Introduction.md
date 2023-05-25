@@ -3,17 +3,18 @@
 3. What question do I solve? (SMART)
 4. What contributions do I make?
 
+and is derived from simple heuristics. 
 
 The validity of many economic studies hinges on the ability to properly classify trades as buyer or seller-initiated. ([[@odders-whiteOccurrenceConsequencesInaccurate2000]])
+
+Despite the overall importance for option research, the trade initiator is commonly not provided with
 
 - Works that require trade side classification in option markets:
 	- [[@muravyevOrderFlowExpected2016]]
 	- [[@huDoesOptionTrading2014]]
 	- Possible application of the lee-ready algorithm -> market sideness? ([[@sarkarMarketSidednessInsights2023]])
 
-
 - “Although extant algorithms are adequate to the basic job of sorting trades, our work suggests that a refinement to the extant methods of classifying trades will do even better.” (Ellis et al., 2000, p. 539) -> nice word "extant methods"
-
 
 - trade site classification matters for several reasons, market liquidity measures, short sells, study of bid-ask-spreads.
 - Where is trade side classification applied? Why is it important? Do citation search.
@@ -28,8 +29,6 @@ The validity of many economic studies hinges on the ability to properly classify
 - and its consequences are an important, but understudied, cause for concern.
 - Commonly stock trade classification algorithms are used
 
-
-
 - “Who is buying and who is selling are important elements in determining the information content of trades, the order imbalance and inventory accumulation of liquidity providers, the price impact of large trades, the effective spread, and many other related questions. Unfortunately, commonly available high frequency databases do not provide in? formation on trade direction. Consequently, empirical researchers have relied on trade direction algorithms to classify trades as buyer or seller motivated.” ([[@ellisAccuracyTradeClassification2000]], p. 529)
 - “The Berkeley Options Data Base does not classify trades as buyer-initiated or seller-initiated. This classification must be done using quote and trade information.” ([Easley et al., 1998, p. 453](zotero://select/library/items/593W67XA)) ([pdf](zotero://open-pdf/library/items/ZBEQIUNK?page=23&annotation=GXHQMKIW))
 - “Such indication made directly from the data is nowadays in mostly cases inaccessible, since the majority of public databases including transaction data do not contain information of trade initiators and trade direction.” ([[@nowakAccuracyTradeClassification2020]], p. 65)
@@ -38,9 +37,10 @@ The validity of many economic studies hinges on the ability to properly classify
 - “Much of market microstructure analysis is built on the concept that traders learn from market data. Some of this learning is prosaic, such as inferring buys and sells from trade execution. Other learning is more complex, such as inferring underlying new information from trade executions. In this paper, we investigate the general issue of how to discern underlying information from trading data. We examine the accuracy and efficacy of three methods for classifying trades: the tick rule, the aggregated tick rule, and the bulk volume classification methodology. Our results indicate that the tick rule is a reasonably good classifier of the aggressor side of trading, both for individual trades and in aggregate. Bulk volume is shown to also be reasonably accurate for classifying buy and sell trades, but, unlike the tick-based approaches, it can also provide insight into other proxies for underlying information.” ([Easley et al., 2016, p. 284](zotero://select/library/items/X6ZNZ556)) ([pdf](zotero://open-pdf/library/items/HPC6KBMF?page=16&annotation=VC98DC2N))
 - Despite the second observation, the trade direction of the liquidity demanding side of the order flow remains a popular indicator of informed trading (see, e.g., Bernile et al., 2016; Chordia et al., 2017; Hu, 2014, 2017; Muravyev, 2016) the appropriateness of which is context specific but particularly sensible when informed traders demand immediacy for their transactions in order to gain most from their informational advantage. In these cases, studies rely on the classical classification algorithms, most prominently the Lee and Ready (1991) algorithm, to obtain the indicator of the liquidity demanding side of the transaction, the trade initiator, as do traditional measures of market liquidity (Huang and Stoll, 1996; Fong et al., 2017). (https://dauphine.psl.eu/fileadmin/mediatheque/chaires/fintech/articles/1_UPDATE_Simon_Jurkatis_YFS2019.pdf)
 
-
 The importance of identifying liquidity demanders in studies of financial markets is well established, given that demanding liquidity is known to require the liquidity demander to pay a fee (Grossman and Miller, 1988). Indeed, much work has gone into accurately identifying the initiators of trades (i.e., liquidity demanders) in equity markets (Lee and Ready, 1991)—with Easley, de Prado and O’Hara (2016) accurately inferring trade initiation in modern equity markets. Yet, as will be elaborated in what follows, methods used for assigning trade initiation in equity markets are not sufficiently applicable to OTC markets—and thus, perhaps surprisingly, liquidity demanders (vs. providers) are typically not identified in these markets.
 
 Empirical market microstructure research often requires knowledge about whether a transaction was initiated by a buyer or a seller. Examples include, but are not limited to, accurate calculation of effective spreads (Lightfood et. al. 1999), the identification of the components of the bid-ask spreads using methods based on a trade indicator variable (Huang / Stoll 1997) and the estimation of certain structural microstructure models (e.g. Easley et. al. 1996). (found in [[@theissenTestAccuracyLee2000]])
 
-This paper reviews methods based on permuting feature values or otherwise investigating the effect that changing the values of a feature has on predictions. Our message can be simply summarized by When features in the training set exhibit statistical dependence, permute-and-predict methods can be highly misleading when applied to the original model. Permutation methods are some of the oldest, most popular, and computationally convenient means of understanding complex learning algorithms. In this paper, we will focus primarily on three commonlyused techniques:
+This paper reviews methods based on permuting feature values or otherwise investigating the effect that changing the values of a feature has on predictions. Our message can be simply summarized by When features in the training set exhibit statistical dependence, permute-and-predict methods can be highly misleading when applied to the original model. Permutation methods are some of the oldest, most popular, and computationally convenient means of understanding complex learning algorithms. In this paper, we will focus primarily on three commonly used techniques:
+
+Our contributions are three-fold:
