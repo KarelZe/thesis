@@ -1,6 +1,8 @@
 
 \section{Introduction}\label{sec:introduction}
 
+\todo{Research question, make sure contributions are clear, why it matters, where it is applied.}
+
 \footnote{The authors acknowledge support by the state of Baden-Württemberg through \href{https://www.bwhpc.de/}{bwHPC}.}
 \newpage
 
@@ -13,9 +15,11 @@ While classical trade classification algorithms are extensively tested in the st
 
 \textcite[882--883]{savickasInferringDirectionOption2003} were the first to compare the tick rule, quote rule, the \gls{LR} algorithm and the \gls{EMO} rule for options traded at the \gls{CBOE}. The dataset spans a period from July 3, 1995 -- December 31, 1995 consisting of $869{,}217$ matched trades. The authors report the highest accuracies for the quote rule (\SI{78.98}{\percent}) and find that all rules perform worst when applied to index options. In general, the trade classification rules exhibit significantly lower classification accuracies on options data than with stock data, urging the need for improved classifiers.
 
-The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}. The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale datasets spanning a period from 2005 - 2017~\footnote{We formally define accuracy in \cref{sec:evaluation-metric}.}. Consistently for options traded at the \gls{CBOE} and \gls{ISE} classical rules like the popular \gls{LR}  algorithm only achieve accuracies of \SI{62.03}{\percent} or \SI{62.53}{\percent} and are thus significantly smaller than in the stock market. In line with the research of \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the success rates deteriorate between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The depth rule is an alternative to the tick rule for classifying midspread trades in the \gls{LR}  algorithm and \gls{EMO} rule. It assigns the initiator of the trade based on the depth at the bid or ask. Together with the trade size rule, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing previous rules by more than \SI{10}{\percent}, at the cost of data efficiency.
+The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}. The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale datasets spanning a period from 2005 to 2017~\footnote{We formally define accuracy in \cref{sec:evaluation-metric}.}. Consistently for options traded at the \gls{CBOE} and \gls{ISE} classical rules like the popular \gls{LR}  algorithm only achieve accuracies of \SI{62.03}{\percent} or \SI{62.53}{\percent} and are thus significantly smaller than in the stock market. In line with the research of \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the success rates of classical algorithms deteriorates between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The depth rule is an alternative to the tick rule for classifying midspread trades in the \gls{LR}  algorithm and the \gls{EMO} rule. It assigns the initiator of the trade based on the depth at the bid or ask. Together with the trade size rule, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing previous rules by more than \SI{10}{\percent}.
 
-The work of \textcite[1--39]{grauerOptionTradeClassification2022} is relevant for two reasons. First, the dataset is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
+\todo{Think of better transition e.g., our analysis are based on the same datasets, we take rules as  a benchmark.}
+
+The work of \textcite[1--39]{grauerOptionTradeClassification2022} is relevant for this thesis for two reasons. First, the dataset is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
 
 \subsection{Trade Classification Using Machine Learning}
 \label{sec:trade-classification-using-machine-learning}
@@ -30,7 +34,28 @@ The results convincingly demonstrate the potential of machine learning, i.e., of
 
 In summary, machine learning has been applied successfully in the context of trade classification. No previous work performs, machine learning-based classification in the options markets.
 
+\todo{Pick up research question. redundancy is ok here. We fill this gap and transfer ML to the options market to improve existing rules.}
+
 \newpage
+
+\subsection{Research Framework}\label{sec:research-framework}
+
+We present our research framework for trade classification, summarised in \cref{fig:research-framework}. Our approach revolves around two key ideas. First, we utilise \glspl{GBRT} and Transformers for trade classification, chosen in \cref{sec:supervised-approaches} for their expected performance, scalability, and extensibility. Distinctions are made between models trained on singly labelled trades and models trained on both labelled and unlabelled trades simultaneously. Second, classical trade classification rules, such as the \gls{LR}, are realised as a generic classifier leveraging the stacking principle, thereby enabling a coherent evaluation and model interpretation.
+
+\begin{figure}[!ht]
+    \centering
+    {\renewcommand\normalsize{\tiny}
+    \normalsize
+    \input{./Graphs/research-framework.pdf_tex}}
+    \caption[Research Framework]{Research Framework}
+    \label{fig:research-framework}
+\end{figure}
+
+The data preparation process, outlined in \cref{sec:data-and-data-preparation}, encompasses all steps necessary to obtain features to be processed by the classifiers. Model enhancements, training setups, and tuning procedures are detailed in \cref{sec:training-and-tuning}. The predictions of the classifiers are consistently evaluated in terms of accuracy as part of \cref{sec:evaluation}. With the model-agnostic interpretability method \gls{SAGE}, we attribute predictions to features and cross-compare the feature importances of classical trade classification rules and machine learning predictors. In turn, for Transformers attention maps provide additional insights into the model. Lastly, \cref{sec:application} tests all classifiers in the problem of 
+effective spread calculation to demonstrate the effectiveness of our approach.
+
+\newpage
+
 \section{Rule-Based Approaches}\label{sec:rule-based-approaches}
 
 Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction.
@@ -50,8 +75,12 @@ research. Among these, the:
 
 \emph{Positional view:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite to the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand.
 
+\todo{Quote rule is based on assumption that market maker provides quotes, which is neq to unexecuted limit orders of customers. Positional view refers to open/close dataset, where the indicator is available. Algorithms are applied to intraday data where the types (cust, mm, broker) can not be distinguished}
+
 The appropriate view differs by data availability and application context.
 Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is distinguished by $\hat{y}$.
+
+\todo{Make sure it is clear, why the definitions were introduced. Explain how our definition fits into the construct and why it was chosen. Refer to later chapter.}
 
 As the trade initiator is commonly not provided with option datasets, it must be inferred using trade classification algorithms \autocite[][453]{easleyOptionVolumeStock1998}. The following section introduces basic rules for trade classification. We start with the ubiquitous quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \gls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
@@ -63,6 +92,8 @@ This section presents basic classification rules, that may be used for trade cla
 
 \subsubsection{Quote Rule}\label{sec:quote-rule}
 
+\todo{Add intuition. Classical reasoning is, market maker provides quotes. }
+
 The quote rule classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $\gls{P}_i = \langle P_{i,1},P_{i,2},\dots,P_{i,T}\rangle$ and the corresponding ask at $t$ by $\gls{A}_{i,t}$ and bid by $\gls{B}_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, estimated as $\gls{M}_{i,t} = \tfrac{1}{2}(B_{i,t} + A_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}. Thus, the classification rule on $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} \neq M_{i,t}\right\}$ is given by:
 \begin{equation}
     \operatorname{quote}\colon \mathcal{A} \to \mathcal{Y},\quad
@@ -72,14 +103,17 @@ The quote rule classifies a trade by comparing the trade price against the corre
         -1, & \mathrm{if}\ P_{i, t}<M_{i, t}. \\
     \end{cases}
 \end{equation}
-By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing midspread trades including ones based on the subsequent quotes, and contemporaneous, or the subsequent transaction. Yet, the most common approach to overcome this limitation is, coupling the quote rule with other approaches, as done in \cref{sec:hybrid-rules}.
+By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing midspread trades including ones based on the subsequent quotes, and contemporaneous, or the subsequent transaction. Yet, the most common solution to overcome this limitation is, coupling the quote rule with other approaches, as done in \cref{sec:hybrid-rules}.
 
-The quote rule depends on price and quote data, which affects the data efficiency. The reduced dependence on past transaction prices and the focus on quotes has nonetheless positively impacted classification accuracies in option markets, as studies of \textcite[][886]{savickasInferringDirectionOption2003} and \textcite[][3]{grauerOptionTradeClassification2022} suggest. Especially, if trade classification is performed on the \gls{NBBO}.
+\todo{How are Missing quotes / midspreads handled
+?}
 
+The quote rule can be estimated at the exchange level or \gls{NBBO}.
 
 \subsubsection{Tick Test}\label{sec:tick-test}
 
-% TODO: his method uses the previous trade to gauge whether the current trade is at a higher price (and presumably a buy) or at a lower price (and presumably a sell).
+\todo{Add more intuition. Classical rational, buyer is willing to pay premium or seller is willing to sell at a premum. Thus, trade prices increase etc.}
+
 A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test is defined as:
 \begin{equation}
     \operatorname{tick}\colon \mathbb{N}^2 \to \mathcal{Y},\quad
@@ -93,10 +127,9 @@ A common alternative to the quote rule is the tick test. Based on the rationale 
 \end{equation}
 Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy~\footnote{To end recursion at $t=1$, we sign the trade to be buyer-initiated to simplify notation. Other choices are possible, e.g., random assignment or based on another rule. Similarly done for \cref{eq:reverse-tick-test}.}. Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[][735]{leeInferringTradeDirection1991}.
 
+\todo{End of recursion complicates things. Think of random classification to allign with later or remove it.}
+
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
-
-
-% sometimes dependency on data referred to as level-1 and level-2 (cp. chakrabarty 2015) Level-1 algorithms use only trade price data; level-2 algorithms use both trade and quote data.
 
 The reverse tick test is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
 
@@ -114,14 +147,11 @@ As denoted in \cref{eq:reverse-tick-test}, the trade is classified as seller-ini
 
 Both tests result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}.
 
-In practice, \textcite[][29--32]{grauerOptionTradeClassification2022} observe higher accuracies for the reverse tick test on a sample of option trades, but both cannot compete with quote-based approaches and calls for more sophisticated approaches.
+The performance of the tick rules hinges on the availability of recent trade prices for inference. For infrequently traded assets this can pose a problem, as outdated prices might loose their relevancy for the classification.
 
 \subsubsection{Depth Rule}\label{sec:depth-rule}
 
-% TODO: These proxies have in common that they factor in the order book imbalance the relative depth quoted at the best bid and ask prices. If traders care about transaction costs, the relatively wide ask-side spread deters buyers, whereas the tight bid-side spread may attract sellers. There are then more traders submitting market orders at the bid side, and the true effective spread is, on average, smaller than the average midpoint effective spread.
-% TODO: Derive in greater detail why orderbook imbalance makes sense! See my notes from Hagströmer
-
-As \cref{sec:quote-rule} unveils, the tick rule yields significantly lower success rates than the quote rule. For midspread trades, that otherwise cannot be classified by the advantageous quote rule, \textcite[][14]{grauerOptionTradeClassification2022} propose the depth rule as an override.
+As \cref{sec:quote-rule} discusses, the quote rule necessitates alternative procedures for midspread trades. For midspread trades, that otherwise cannot be classified by the quote rule, \textcite[][14]{grauerOptionTradeClassification2022} propose the depth rule as an override.
 
 The depth rule gauges the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity at one trade side, trades are classified as a buy (sell) for a larger ask (bid) size \autocite[][14]{grauerOptionTradeClassification2022}.
 
@@ -130,19 +160,17 @@ Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t
     \operatorname{depth} \colon \mathcal{A} \to \mathcal{Y},\quad
     \operatorname{depth}(i, t)=
     \begin{cases}
-        1,  & \mathrm{if}\ \tilde{A}_{i,t} > \tilde{B}_{i,t} \land P_{i, t} = M_{i, t}. \\
-        -1, & \mathrm{if}\ \tilde{A}_{i,t} < \tilde{B}_{i,t} \land P_{i, t} = M_{i, t}  \\
+        1,  & \mathrm{if}\ \tilde{A}_{i,t} > \tilde{B}_{i,t}. \\
+        -1, & \mathrm{if}\ \tilde{A}_{i,t} < \tilde{B}_{i,t}\\
     \end{cases}
     \label{eq:depth-rule}
 \end{equation}
 As shown in \cref{eq:depth-rule}, the depth rule classifies midspread trades only, if the ask size is different from the bid size, as the ratio between the ask and bid size is the sole criterion for inferring the trade's initiator. Due to these restrictive conditions in $\mathcal{A}$, the depth rule can sign only a fraction of all trades and must be best stacked with other rules.
 
-Like the quote rule, the depth rule has additional dependencies on quote data. The rule has not yet seen wide adoption.
-
 \subsubsection{Trade Size Rule}\label{sec:trade-size-rule}
 
 % TODO: Think about writing as restriction? https://en.wikipedia.org/wiki/Restriction_(mathematics)
-As \cref{sec:tick-test} derives, quote-based approaches are generally preferred due to their stronger performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. On $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: \tilde{P}_{i,t} = \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \lor \tilde{P}_{i,t} \neq\tilde{A}_{i,t} = \tilde{B}_{i,t} \right\}$ the trade size rule is defined as:
+Generally, quote-based approaches are preferred due to their strong performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. The trade size rule is defined on $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: \tilde{P}_{i,t} = \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \lor \tilde{P}_{i,t} \neq\tilde{A}_{i,t} = \tilde{B}_{i,t} \right\}$ as:
 \begin{equation}
     \operatorname{tsize} \colon \mathcal{A} \to \mathcal{Y},\quad
     \operatorname{tsize}(i, t)=
@@ -152,14 +180,13 @@ As \cref{sec:tick-test} derives, quote-based approaches are generally preferred 
     \end{cases}
     \label{eq:trade-size-rule}
 \end{equation}
-The trade size rule in \cref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{P}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the contemporaneous bid or ask, with a trade size equalling the quoted size \autocite[][13]{grauerOptionTradeClassification2022}. When both the size of the ask and bid correspond with the trade size, the result is ambiguous.
+The trade size rule in \cref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{P}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the contemporaneous bid or ask, with a trade size equalling the quoted size \autocite[][13]{grauerOptionTradeClassification2022}. When both the size of the ask and bid correspond with the trade size or the trade size does not match the quoted sizes, the result is ambiguous.
 
-\textcite[][13]{grauerOptionTradeClassification2022} obtain an accuracy of \SI{79.92}{\percent} for the subset of option trades at the \gls{ISE} (\SI{22.3}{\percent} of all trades) that can be signed using the methodology, which elevates the performance by \SI{11}{\percent} for the entire sample. Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \autocite[][15]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades inside or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces four hybrid algorithms, that combine basic rules into more sophisticated algorithms.
+Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \autocite[][15]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades near or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces four hybrid algorithms, that combine basic rules into more sophisticated algorithms.
 
 \subsection{Hybrid Rules}\label{sec:hybrid-rules}
 
 The basic trade classification rules from \cref{sec:basic-rules} can be combined into a hybrid algorithm to enforce universal applicability to all trades and improve the classification performance.
-
 
 \begin{figure}[ht!]
     \hfill
@@ -178,7 +205,7 @@ The basic trade classification rules from \cref{sec:basic-rules} can be combined
                 \normalsize
                 \input{./Graphs/clnv-algo.pdf_tex}}
     }
-    \subfloat[Hybrid Rule Through Stacking\label{fig:hybrid-grauer}]{
+    \subfloat[Stacked Rule\label{fig:hybrid-grauer}]{
         {\renewcommand\normalsize{\tiny}
                 \normalsize
                 \input{./Graphs/grauer-algo.pdf_tex}}
@@ -191,7 +218,7 @@ The basic trade classification rules from \cref{sec:basic-rules} can be combined
 Popular variants include the \gls{LR} algorithm, the \gls{EMO} rule, and the \gls{CLNV} method. All three algorithms utilise the quote and tick rule to a varying extent, as depicted in \cref{fig:hybrid-lr,fig:hybrid-emo,fig:hybrid-clnv}. Basic rules are selected based on the proximity of the trade price to the quotes. We study all algorithms in detail in \cref{sec:lee-and-ready-algorithm,sec:ellis-michaely-ohara-rule,sec:chakarabarty-li-nguyen-van-ness-method}.
 
 
-As put forth by \textcite[][18]{grauerOptionTradeClassification2022}, basic or hybrid rules can be combined through stacking. One such combination is depicted in \cref{fig:hybrid-grauer}. This approach is notably different from the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the primary rules and their ordering. We cover this approach last.
+As put forth by \textcite[][18]{grauerOptionTradeClassification2022}, basic or hybrid rules can be combined through stacking. One such combination is depicted in \cref{fig:hybrid-grauer}. This approach generalises the aforementioned algorithms, as the applied rule is no longer dependent on the proximity to the quotes, but rather on the classifiability of the trade with the primary rules given by the domains and their ordering. We cover this approach last.
 
 \subsubsection{Lee and Ready Algorithm}\label{sec:lee-and-ready-algorithm}
 
@@ -229,7 +256,7 @@ As such, the \gls{EMO} algorithm extends the tick rule by classifying trades at 
 \subsubsection{Chakrabarty-Li-Nguyen-Van-Ness
     Method}\label{sec:chakarabarty-li-nguyen-van-ness-method}
 
-Like the previous two algorithms, the \gls{CLNV} method of \textcite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the \gls{EMO} rule by a differentiated treatment of trades inside the quotes, which are notoriously hard to classify. The authors segment the bid-ask spread into deciles (ten equal-width bins) and classify trades around the midpoint (\nth{4} to \nth{7} decile) by the tick rule and trades close or outside the quotes are categorised by the tick rule.
+Like the previous two algorithms, the \gls{CLNV} method of \textcite[][3809]{chakrabartyTradeClassificationAlgorithms2012} is a hybrid of the quote and tick rule and extends the \gls{EMO} rule by a differentiated treatment of trades inside the quotes, which are notoriously hard to classify. The authors segment the bid-ask spread into deciles (ten equal-width bins) and classify trades around the midpoint (fourth to seventh decile) by the tick rule and trades close or outside the quotes are categorised by the tick rule.
 \begin{equation}
     \operatorname{clnv} \colon \mathbb{N}^2 \to \mathcal{Y}, \quad
     \operatorname{clnv}(i, t)=
@@ -240,26 +267,18 @@ Like the previous two algorithms, the \gls{CLNV} method of \textcite[][3809]{cha
     \end{cases}
     \label{eq:CLNV-rule}
 \end{equation}
-% TODO: sucess rates are sensitive to trade location.
-The algorithm is summarised in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the \nth{1} to \nth{3} deciles are classified by the quote rule. Counted from the bid, the \nth{1} decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ \nth{3} decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \gls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test can be exchanged for the reverse tick test.
+
+The algorithm is summarised in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile \footnote{The spread is assumed to be positive and evenly divided into ten deciles and the first to third deciles are classified by the quote rule. Counted from the bid, the first decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ third decile. As all trade prices are below the midpoint, they are classified as a sell.}. The classical \gls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test can be exchanged for the reverse tick test.
 
 \subsubsection{Stacked Rule}\label{sec:stacked-rule}
 
-The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which cannot be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their ordering.
+The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][18]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached~\footnote{For a trade, which cannot be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.}. The classification is now dependent on the employed rules but also on their relative ordering.
 
-% TODO: Murjajev (quote + quote on nbbo)
-The most basic application is in the \gls{LR} algorithm. For a more complex example consider the hybrid rule consisting of $\operatorname{tsize} \to \operatorname{quote} \to \operatorname{tick}$ in \cref{fig:stacking-algo}. An exemplary trade cannot be classified by the primary trade size rule and is signed by the quote rule, which is the first rule in the stack, able to classify the trade. Other trades can be classifiable by the trade size rule, which rules out the classification of the quote and tick rule. Theoretically, stacked rules can grow to great depth with an arbitrary arrangement. In practice, rules may be ordered greedily and new rules added if there are unclassified trades.
-
-\begin{figure}[ht!]
-    \centering
-    \input{./Graphs/stacking-algo.pdf_tex}
-    \caption[Stacked Trade Classification Rules]{Stacked rule consisting of the trade size (first) and quote rule (second) as well the tick test (third). Coloured shapes indicate the domain of the base rules in a modified scale. The trade is not classifiable by the trade size rule, as indicated by the arrows outside the rule's domain. The quote rule is applied, as it is the first rule to classify the trade entirely. Own drawing.}
-    \label{fig:stacking-algo}
-\end{figure}
+The most basic application is in the \gls{LR} algorithm, combining $\operatorname{quote} \to \operatorname{tick}$, whereby the quote rule is applied first as indicated by the arrow. For a more complex example consider the hybrid rule consisting of $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ popularized in \textcite[][18]{grauerOptionTradeClassification2022}. We refer to this specific combination as the \gls{GSU} rule. Only a fraction of all trades are classifiable by the trade size rule, which is the primary rule, due to a narrow domain, and classification is deferred to lower rules in the stack, specifically the quote rule at the \gls{NBBO}, which by design has larger coverage. Theoretically, stacked rules can grow to great depth with an arbitrary arrangement. In practice, rules may be ordered greedily and new rules added if there are unclassified trades.
 
 \textcite[][3811]{chakrabartyTradeClassificationAlgorithms2007} and \textcite[][18]{grauerOptionTradeClassification2022} continue the trend for more complex classification rules, leading to a higher fragmented decision surface, and eventually resulting in improved classification accuracy. Since the condition, for the selection of the base rule, is inferred from \emph{static} cut-off points at the decile boundaries of the spread including the midspread and quotes. This raises the question of whether classifiers trained on price and quote data can adapt to the data and improve upon classical trade classification rules.
 
-The trend towards sophisticated, hybrid rules, combining as many as five base rules into a single classifier \autocite[cp.][18]{grauerOptionTradeClassification2022}, has conceptual parallels to stacked ensembles found in machine learning and expresses the need for better classifiers.
+The trend towards sophisticated, hybrid rules, combining as many as six base rules into a single classifier, has conceptual parallels to stacked ensembles found in machine learning and expresses the need for better classifiers.
 
 We provide an overview of state-of-the-art machine learning-based classifiers and start by framing trade classification as a supervised learning
 problem.
@@ -277,25 +296,29 @@ All trade classification rules from \cref{sec:rule-based-approaches} perform dis
 
 Thus, we frame trade signing as a supervised, probabilistic classification task. This is similar to \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis and supervised.
 
-A probabilistic view enables a richer evaluation, but restricts the selection to probabilistic classifiers. For comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
+A probabilistic view enables a richer evaluation but restricts the selection to probabilistic classifiers. For comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
 
-We introduce more notation, which we use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times M}$ and described by a random variable $X$. Any of the $M$ features in $\mathbf{x}$ may be numerical, e.g., the trade price or categorical e.g., the security type. Like before, the target is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $\Pr(X, Y)$. The labelled data set with $N$ i.i.d. samples is denoted by $\mathcal{S} =\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
+We introduce more notation, which we use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times M}$ and described by a random variable $X$. Any of the $M$ features in $\mathbf{x}$ may be numerical, e.g., the trade price or categorical e.g., the security type. Like before, the target is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $\Pr(X, Y)$. The labelled data set with $N$ i.i.d. samples is denoted by $\mathcal{D} =\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
 
-For our machine learning classifiers, we aim to model $\Pr_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, we use a simple classifier instead:
+For our machine learning classifiers, we aim to model $\Pr_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, simple classifier instead:
 \begin{equation}
     \widehat{\operatorname{Pr}}(Y=y\mid X=\mathbf{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
     \label{eq:prob-from-point-estimate}
 \end{equation}
-% TODO: It's actually a one-hot vector with the "probabilities
+
+\todo{verify formula. What happens with unclassified trades?}
+
 Consequently, if a trade is predicted as a sell, hence $\hat{y} = -1$, we assign a probability of one for being a sell and a zero probability for being a buy and vice versa. Given the estimated class probabilities, we retrieve the most probable class in $\mathcal{Y}$ as:
 \begin{equation}
-    \hat{y}=\arg\max_{y \in \mathcal{Y}} \widehat{\operatorname{Pr}}(Y=y \mid X=\mathbf{x}).
+    \hat{y}=\arg\max_{y \in \mathcal{Y}} \operatorname{Pr}(y \mid \mathbf{x}).
     \label{eq:class-from-prob}
 \end{equation}
 \cref{eq:prob-from-point-estimate} and \cref{eq:class-from-prob} allow to alternate between a discrete and probabilistic formulation for trade classification rules. Since the class probability estimates are either 0
 and 1, no insight into the confidence of the prediction is gained. Nonetheless, this approach enables a seamless comparison of classical rules and probabilistic classifiers in machine learning. Next, we discuss state-of-the-art classifiers suitable for trade classification.
 
 \subsection{Selection of Approaches}\label{sec:selection-of-approaches}
+
+\todo{Add end of discussion to bebinning and make sure the why is clear.}
 
 The selection of methods in previous works is arbitrary and guided computational constraints (cp. \cref{sec:related-work}). Additionally, it leaves out advancements in machine learning on tabular data.
 In this thesis, we perform a succinct discussion to select a set of supervised classifiers based on empirical evidence. To guide our discussion, we establish the following requirements a classifier must fullfil:
@@ -327,11 +350,11 @@ Among the simplest neural networks are \glspl{MLP}, which consists of multiple l
 
 \emph{Attention-based Networks}
 
-Another emerging strand of research focuses on neural networks with an attention mechanism. Attention, intuitively, allows to gather information from the immediate context and learn relationships between features or between features and instances. It is incorporated in various architectures, including the tree-like TabNet \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, and several Transformer-based architectures including TabTransformer \autocite[][2--3]{huangTabTransformerTabularData2020}, Self-Attention and Intersample Attention Transformer \autocite[][4--5]{somepalliSaintImprovedNeural2021}, Non-Parametric Transformer \autocite[][3--4]{kossenSelfAttentionDatapointsGoing2021}, and FT-Transformer \autocite[][4--5]{gorishniyRevisitingDeepLearning2021}.
+Another emerging strand of research focuses on neural networks with an attention mechanism. Attention, intuitively, allows gathering information from the immediate context and learn relationships between features or between features and instances. It is incorporated in various architectures, including the tree-like TabNet \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, and several Transformer-based architectures including TabTransformer \autocite[][2--3]{huangTabTransformerTabularData2020}, Self-Attention and Intersample Attention Transformer \autocite[][4--5]{somepalliSaintImprovedNeural2021}, Non-Parametric Transformer \autocite[][3--4]{kossenSelfAttentionDatapointsGoing2021}, and FT-Transformer \autocite[][4--5]{gorishniyRevisitingDeepLearning2021}.
 
 TabNet \autocite[][3--5]{arikTabnetAttentiveInterpretable2020}, fuses the concept of decision trees with attention. Similar to growing a decision tree, several sub-networks are used to process the input in a sequential, hierarchical fashion. Sequential attention, a variant of attention, is used to decide which features to select in each step. The output of TabNet is the aggregate of all sub-networks. Its poor performance in independent comparisons e.g., \textcites[][7]{kadraWelltunedSimpleNets2021}[][7]{gorishniyRevisitingDeepLearning2021}, raises doubts about its usefulness.
 
-The Self-Attention and Intersample Attention Transformer  uses a specialised attention mechanism, the intersample attention, to perform attention over both columns and rows \autocite[][4--5]{somepalliSaintImprovedNeural2021}. Applied to our setting, the model would contextualise information from the trade itself, but also from neighbouring trades, which is an unfair advantage over classical trade classification rules. Similarly, the Non-Parametric Transformer of \textcite[][3--4]{kossenSelfAttentionDatapointsGoing2021} uses the entire data set as a context, which rules out the application in our work.
+The Self-Attention and Intersample Attention Transformer uses a specialised attention mechanism, the intersample attention, to perform attention over both columns and rows \autocite[][4--5]{somepalliSaintImprovedNeural2021}. Applied to our setting, the model would contextualise information from the trade itself, but also from neighbouring trades, which is an unfair advantage over classical trade classification rules. Similarly, the Non-Parametric Transformer of \textcite[][3--4]{kossenSelfAttentionDatapointsGoing2021} uses the entire data set as a context, which rules out the application in our work.
 
 Differently, TabTransformer \autocite[][2--3]{huangTabTransformerTabularData2020} performs attention per sample on categorical features-only. All numerical features are processed in a separate stream, a \gls{MLP}, which breaks correlations between categorical and numerical features \autocite[][2]{somepalliSaintImprovedNeural2021}. Most importantly though, most features in trade datasets are numerical. As such, trade classification would hardly profit from the Transformer architecture, causing the model to collapse to a vanilla \gls{MLP}. A more comprehensive approach is provided by \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} in the form FT-Transformer, that processes both numerical inputs and categorical input in Transformer blocks featuring an attention mechanism. Since it achieved state-of-the-art performance in independent empirical studies, like \textcite[][5]{grinsztajnWhyTreebasedModels2022}, and is non-rotationally invariant, we further consider FT-Transformer in our empirical study. Being based on the Transformer architecture, FT-Transformer naturally scales to large amounts of data and can utilise unlabelled data through self-training procedures.
 
@@ -389,7 +412,7 @@ Gradient boosting iteratively combines oversimplified models, the weak learners,
 By \cref{sec:problem-framing} we perform binary probabilistic classification and by \cref{sec:trade-initiator} we defined the labels to be $y \in \{-1,1\}$. For gradient boosting, instead of modelling the class-conditional probabilities directly, we model the conditional log odds instead, which can be interpreted as the probability of observing class $1$ or a buyer-initiated trade, and covert to class-conditional probabilities as needed.
 
 
-% TODO: better write logloss? Make connexion clearer?
+% TODO: better write logloss? Make connection clearer?
 Following \textcite[][9]{friedmanStochasticGradientBoosting2002} we set the loss function to be the cross-entropy loss, given by:
 \begin{equation}
     L_{\mathrm{BCE}} \colon \mathbb{R}^2 \to \mathbb{R} \quad L_{\mathrm{BCE}}(y, F) = \log(1+\exp(-2yF))
@@ -452,14 +475,14 @@ As the network operates on \glspl{embedding}, rather than strings, the architect
 
 Following the architecture for machine translation of \textcite[][3]{sutskeverSequenceSequenceLearning2014}, the network features two main components: the encoder and the decoder. A sequence of \glspl{token} is first mapped to a sequence of \glspl{embedding} and augmented with positional information. The encoder receives these \glspl{embedding} and creates an enriched representation from it by encoding the context in which the input appears i.e., the surrounding words. The output of the encoder is then fed to the decoder. The decoder takes the embedded target sequence along with parts of the encoded representation of the input, to autoregressively generate the output sequence, i.e., the translation in the target language \gls{token} by \gls{token} \autocite[][3]{vaswaniAttentionAllYou2017}. \cref{fig:transformer-architecture-overview} depicts the complete architecture and serves as a guide through the subsequent sub-chapters.
 
-The encoder consists of $\gls{L}=6$ stacked Transformer blocks \autocite[][6]{vaswaniAttentionAllYou2017}. Each block itself is composed of two sublayers: a multi-head self-attention layer, followed by a position-wise, \gls{feed-forward-network}. Both components serve a distinct purpose in the Transformer. The self-attention mechanism encodes the context in which the input appears onto the \glspl{embedding}, whereas the \gls{feed-forward-network} serves as a long-term memory persisting information outside the immediate context. In the multi-head self-attention mechanism of the encoder, inputs can learn from any \gls{token} of the input sequence, even if a \gls{token} appears causally before the other input. Each of the sublayers is surrounded by skip connections \autocite[][2]{heDeepResidualLearning2015} and followed by layer normalisation \autocite[][4]{baLayerNormalization2016} to facilitate and stabilise training. Stacking multiple Transformer blocks enables the model to learn hierarchical features from the inputs and targets. Applied to language processing, the first layers in the stack extract coarse-grained syntactic features, and subsequent layers learn fine-grained semantic features \autocites[][3651]{jawaharWhatDoesBERT2019}[][4596]{tenneyBERTRediscoversClassical2019}. For tabular data, this translates to frequent feature combinations or infrequent feature interactions.
+The encoder consists of $\gls{L}=6$ stacked Transformer blocks \autocite[][6]{vaswaniAttentionAllYou2017}. Each block itself is composed of two sub-layers: a multi-head self-attention layer, followed by a position-wise, \gls{feed-forward-network}. Both components serve a distinct purpose in the Transformer. The self-attention mechanism encodes the context in which the input appears onto the \glspl{embedding}, whereas the \gls{feed-forward-network} serves as a long-term memory persisting information outside the immediate context. In the multi-head self-attention mechanism of the encoder, inputs can learn from any \gls{token} of the input sequence, even if a \gls{token} appears causally before the other input. Each of the sub-layers is surrounded by skip connections \autocite[][2]{heDeepResidualLearning2015} and followed by layer normalisation \autocite[][4]{baLayerNormalization2016} to facilitate and stabilise training. Stacking multiple Transformer blocks enables the model to learn hierarchical features from the inputs and targets. Applied to language processing, the first layers in the stack extract coarse-grained syntactic features, and subsequent layers learn fine-grained semantic features \autocites[][3651]{jawaharWhatDoesBERT2019}[][4596]{tenneyBERTRediscoversClassical2019}. For tabular data, this translates to frequent feature combinations or infrequent feature interactions.
 
-Aside from the feed-forward sublayer, the decoder contains a sublayer for multi-head self-attention on the output of the encoder, known as cross-attention, and a masked variant of the multi-head self-attention for use on the output sequence. Here, causal masking enforces the autoregressive properties of the decoder.
+Aside from the feed-forward sub-layer, the decoder contains a sub-layer for multi-head self-attention on the output of the encoder, known as cross-attention, and a masked variant of the multi-head self-attention for use on the output sequence. Here, causal masking enforces the autoregressive properties of the decoder.
 
 The output of the decoder is finally passed through a linear layer with a softmax activation function to unembed the output and retrieve the probabilities of the next \gls{token} \autocite[][5]{vaswaniAttentionAllYou2017}. Since the output sequence is generated autoregressively, the most probable \gls{token} is fed back as input to the decoder to provide context for the following \glspl{token} until the remaining sequence is generated.
 
 For its original application, machine translation, both the encoder and decoder are used. Yet, the modular design allows adapting Transformers to a wider range of use cases, some of which only require the encoder or decoder. \textcite[][16--17]{raffelExploringLimitsTransfer2020} differentiate these modes: encoder-only architecture, which encodes the input to obtain an enriched representation, decoder-only architectures to generate new \glspl{token} and encoder-decoder models for sequence-to-sequence modelling autoregressively. As our focus is on the probabilistic classification of tabular data, the goal is to learn an enriched representation of the input for classifying the label, here $\gls{y}$, rather than generating new samples. As such, encoder-only Transformers suffice. This insight also guides the structure in the next chapters, which focus on \glspl{embedding} and the inner workings of the encoder.
-%TODO: Graphics contains a typo: W_q in cross attention comes from output sequence. Also fonts are wrong. They should be mathbf. rename to cross-attention?
+
 \begin{landscape}
     \begin{figure}[ht]
         \centering
@@ -637,13 +660,13 @@ Like the attention layer, the position-wise \gls{FFN} is surrounded by residual 
 
 \subsubsection{Residual Connections and Layer Normalisation}\label{sec:residual-connections-layer-norm}
 
-Recall from earlier chapters, that the encoder stacks multiple Transformer blocks, each of which consists of several sublayers, resulting in a deep network. While depth is inevitable to learn hierarchical representations, the training of such a network is complicated. As neural networks are commonly trained using backpropagation, which relies on the gradient of the error to be propagated through the network starting at the last layer, vanishing or \glspl{exploding-gradient} pose a major difficulty in training deep neural nets \autocite[][1]{heDeepResidualLearning2015}. Without countermeasures, stacking multiple layers in the encoder and decoder of the Transformers impedes the gradient information to flow efficiently through the network and hampers the training behaviour \autocite[][1811]{wangLearningDeepTransformer2019}.
+Recall from earlier chapters, that the encoder stacks multiple Transformer blocks, each of which consists of several sub-layers, resulting in a deep network. While depth is inevitable to learn hierarchical representations, the training of such a network is complicated. As neural networks are commonly trained using backpropagation, which relies on the gradient of the error to be propagated through the network starting at the last layer, vanishing or \glspl{exploding-gradient} pose a major difficulty in training deep neural nets \autocite[][1]{heDeepResidualLearning2015}. Without countermeasures, stacking multiple layers in the encoder and decoder of the Transformers impedes the gradient information to flow efficiently through the network and hampers the training behaviour \autocite[][1811]{wangLearningDeepTransformer2019}.
 
-As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connections around each sublayer, whereby the output of the sublayer is added element-wisely to its input. Intuitively, the residual connexion provides an alternative path for information to flow through the network, since some information can bypass the sublayer and thereby reach deeper layers within the stack. Vanishing or \glspl{exploding-gradient} are also mitigated, as gradients can bypass the sublayer, eventually contributing towards an easier optimisation \autocite[][3591]{liuRethinkingSkipConnection2020}. Residual connections moreover help to preserve the positional embeddings (cp. \cref{sec:positional-encoding}), as the layer's inputs are maintained in the identity mapping. Another technique to improve the training behaviour is layer normalisation.
+As a remedy, \textcite[][3]{vaswaniAttentionAllYou2017} employ residual connections around each sub-layer, whereby the output of the sub-layer is added element-wisely to its input. Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sub-layer and thereby reach deeper layers within the stack. Vanishing or \glspl{exploding-gradient} are also mitigated, as gradients can bypass the sub-layer, eventually contributing towards an easier optimisation \autocite[][3591]{liuRethinkingSkipConnection2020}. Residual connections moreover help to preserve the positional embeddings (cp. \cref{sec:positional-encoding}), as the layer's inputs are maintained in the identity mapping. Another technique to improve the training behaviour is layer normalisation.
 
-\textcite[][3]{vaswaniAttentionAllYou2017} extensively draw on layer normalisation \autocite[][4]{baLayerNormalization2016} after the multi-head attention and feed-forward sublayers. It is used for normalising the activations of the sublayer and to stabilise and accelerate the training of the network \autocite[][2]{baLayerNormalization2016}. The normalisation statistics are calculated separately for every instance, which guarantees scalability across different batch sizes.
+\textcite[][3]{vaswaniAttentionAllYou2017} extensively draw on layer normalisation \autocite[][4]{baLayerNormalization2016} after the multi-head attention and feed-forward sub-layers. It is used for normalising the activations of the sub-layer and to stabilise and accelerate the training of the network \autocite[][2]{baLayerNormalization2016}. The normalisation statistics are calculated separately for every instance, which guarantees scalability across different batch sizes.
 
-Until now it remains unclear, how the layer normalisation intertwines with the sublayers and the residual connections. Transformers are distinguished by the order in which layer normalisation is added into the pre-norm and post-norm Transformer. Post-norm Transformers add layer normalisation to the sublayer \emph{after} adding the input from the residual connections. The arrangement is depicted in \cref{fig:transformer-architecture-overview}. In contrast for pre-norm Transformers, the normalisation is applied \emph{before} the self-attention and feed-forward sublayers and inside the residual connections. Pre-norm requires one additional normalisation layer to pass only well-conditioned outputs from the Transformer block to the successive layers \autocite[][5]{xiongLayerNormalizationTransformer2020}.
+Until now it remains unclear, how the layer normalisation intertwines with the sub-layers and the residual connections. Transformers are distinguished by the order in which layer normalisation is added into the pre-norm and post-norm Transformer. Post-norm Transformers add layer normalisation to the sub-layer \emph{after} adding the input from the residual connections. The arrangement is depicted in \cref{fig:transformer-architecture-overview}. In contrast for pre-norm Transformers, the normalisation is applied \emph{before} the self-attention and feed-forward sub-layers and inside the residual connections. Pre-norm requires one additional normalisation layer to pass only well-conditioned outputs from the Transformer block to the successive layers \autocite[][5]{xiongLayerNormalizationTransformer2020}.
 
 \textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalisation, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of the widespread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. In addition, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in vanishing gradients, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in our discussion on the FT-Transformer.
 
@@ -690,11 +713,13 @@ Semi-supervised methods leverage partially-labelled data by learning an algorith
 
 Applied to trade classification, with semi-supervised methods we implicitly assume that trades with similar features, such as a common trade price and quotes, conform to the same class. The purpose of unlabelled trades is to help efficiently determine the boundary around regions of neighbouring trades resulting in improved generalisation performance. A visualisation of a decision boundary of (semi-)supervised classifier is given in \cref{fig:supervised-semi-supervised}.
 
-The semi-supervised setting requires extending our notation from \cref{sec:problem-framing}, by distinguishing between labelled and unlabelled instances. Like before, $\mathcal{S}=\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$ denotes all labelled trades. Unlabelled datapoints are stored in separate set $\mathcal{U} = \left\{\mathbf{x}_i\right\}_{i=1}^{K}$. Our coverage of semi-supervised approaches includes self-training for gradient boosting and pre-training of Transformers, which we derive from a subsequent discussion.
+The semi-supervised setting requires extending our notation from \cref{sec:problem-framing}, by distinguishing between labelled and unlabelled instances. Like before, $\mathcal{D}=\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$ denotes all labelled trades. Unlabelled datapoints are stored in separate set $\mathcal{U} = \left\{\mathbf{x}_i\right\}_{i=1}^{K}$. Our coverage of semi-supervised approaches includes self-training for gradient boosting and pre-training of Transformers, which we derive from a subsequent discussion.
 
 \subsection{Selection of Approaches}\label{sec:selection-of-approaches-1}
 
 Our goal is to extend gradient-boosted trees and Transformers for the semi-supervised setting to make use of the abundant, unlabelled trade data. We are aimed to make minimally intrusive changes to maintain a fair comparison with the supervised counterparts.
+
+\todo{Put results at the beginning.}
 
 \textbf{Gradient Boosting}
 
@@ -722,9 +747,9 @@ Self-training is a wrapper algorithm around a probabilistic classifier, that inc
 
 Initially, a base classifier is fitted on the labelled data points in a supervised manner. The classifier then assigns labels, so-called pseudo labels, to unlabelled instances. A subset of unlabelled instances with high-confidence predictions is selected, removed from the unlabelled dataset and added to the pseudo-labelled data dataset. A new classifier is then retrained on the labelled and pseudo-labelled instances \autocite[][190--192]{yarowskyUnsupervisedWordSense1995}. The process is repeated for several iterations until an abortion criterion applies, such as the maximum number of iterations is exhausted or when no unlabelled instances are left to label.
 
-Recall from our discussion on gradient-boosted trees in \cref{sec:gradient-boosting-procedure} that we optimised for the cross-entropy loss on the training set. When coupled with self-training in each training iteration the classifier $F$ now jointly minimises the loss over the labelled samples $\mathcal{S}$ and the pseudo-labelled samples $\not{\mathcal{U}}$:
+Recall from our discussion on gradient-boosted trees in \cref{sec:gradient-boosting-procedure} that we optimised for the cross-entropy loss on the training set. When coupled with self-training in each training iteration the classifier $F$ now jointly minimises the loss over the labelled samples $\mathcal{D}$ and the pseudo-labelled samples $\not{\mathcal{U}}$:
 \begin{equation}
-    L_{\mathrm{ST}}=\frac{1}{\left|\mathcal{S}\right|} \sum_{(\mathbf{x}, y) \in \mathcal{S}} L(F(\mathbf{x}), y)+\frac{\epsilon}{\left|\not{\mathcal{U}}\right|} \sum_{(\mathbf{x}, \tilde{y}) \in \not{\mathcal{U}}} L(F(\mathbf{x}), \tilde{y})+\lambda\|F\|^2,
+    L_{\mathrm{ST}}=\frac{1}{\left|\mathcal{D}\right|} \sum_{(\mathbf{x}, y) \in \mathcal{D}} L(F(\mathbf{x}), y)+\frac{\epsilon}{\left|\not{\mathcal{U}}\right|} \sum_{(\mathbf{x}, \tilde{y}) \in \not{\mathcal{U}}} L(F(\mathbf{x}), \tilde{y})+\lambda\|F\|^2,
 \end{equation}
 where $\epsilon$ is a hyperparameter to control the impact of the pseudo-labelled data, $\tilde{y}$ is the pseudo-labelled instance, and $\lambda$ weights the regularisation term \autocite[][4]{aminiSelfTrainingSurvey2023}.
 
@@ -761,20 +786,7 @@ In summary, \gls{RTD} can help to learn expressive representations of the input,
 \addtocontents{toc}{\protect\newpage}
 \section{Empirical Study}\label{sec:empirical-study}
 
-In this section, we demonstrate the effectiveness of machine learning for trade classification in an empirical setting. To commence, the research framework is introduced.
-
-\subsection{Research Framework}\label{sec:research-framework}
-
-We present our research framework for trade classification, summarised in \cref{fig:research-framework}. Our approach revolves around two key ideas. First, we utilise \glspl{GBRT} and Transformers for trade classification, chosen in \cref{sec:supervised-approaches} for their expected performance, scalability, and extensibility. Distinctions are made between models trained on singly labelled trades and models trained on both labelled and unlabelled trades simultaneously. Second, classical trade classification rules, such as the \gls{LR}, are realised as a generic classifier leveraging the stacking principle, thereby enabling a coherent evaluation and model interpretation.
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=14cm]{research-framework}
-    \caption[Research Framework]{Research Framework}
-    \label{fig:research-framework}
-\end{figure}
-
-The data preparation process, outlined in \cref{sec:data-and-data-preparation}, encompasses all steps necessary to obtain features to be processed by the classifiers. Model enhancements, training setups, and tuning procedures are detailed in \cref{sec:training-and-tuning}. The predictions of the classifiers are consistently evaluated in terms of accuracy as part of \cref{sec:evaluation}. With the model-agnostic interpretability method \gls{SAGE}, we attribute predictions to features and cross-compare the feature importances of classical trade classification rules and machine learning predictors. In turn, for Transformers attention maps provide additional insights into the model. Lastly, \cref{sec:application} tests all classifiers in the problem of effective spread calculation to demonstrate the effectiveness of our approach.
+In this section, we demonstrate the effectiveness of machine learning for trade classification in an empirical setting. To commence, the construction of datasets is presented.
 
 \subsection{Data and Data Preparation}\label{sec:data-and-data-preparation}
 
@@ -782,25 +794,25 @@ The following chapter describes the construction of datasets, that suffice the d
 
 \subsubsection{Data Collection}\label{sec:data-collection}
 
-\textbf{Data Sources}
+% \textbf{Data Sources}
 
 Testing the empirical accuracy of our approaches requires option trades where the true initiator is known. To arrive at labelled sample, we combine data from four individual data sources. Our primary source is LiveVol, which records option trades executed at US option exchanges at a transaction level. We limit our focus to option trades executed at the \gls{CBOE} and \gls{ISE}. LiveVol contains both trade and matching quote data. Like most proprietary data sources, it does not distinguish the initiator nor does it include the involved trader types. For the \gls{CBOE} and \gls{ISE} exchange, the \gls{ISE} Open/Close Trade Profile and \gls{CBOE} Open-Close Volume Summary contain the buy and sell volumes for the option series by trader type aggregated on a daily level. A combination of the LiveVol dataset with the open/close data, allows us to infer the trade initiator for a subset of trades. For evaluation and use in some of our machine learning models, we acquire additional underlying and option characteristics from IvyDB's OptionMetrics.
 
-\textbf{Trade Initiator}
+% \textbf{Trade Initiator}
 
 In \cref{sec:trade-initiator} we discussed three views on the trade initiator. As our data sources do not provide the order entry times or order types for both sides of the trade, we define the trade initiator based on the position relative to the market maker, who caters to the liquidity demand. More specifically, we classify customer trades as buyer-initiated if the trade is due to a customer buy order and as seller-initiated for customer sales. As previous literature, e.g., \textcite[][4276]{garleanuDemandBasedOptionPricing2009} suggests that trader types, for example, proprietary traders, have a similar role to market makers by supplying liquidity, we limit our analysis to trades between customers and market makers for which the picture is unambiguous. Our definition is consistent with the in \textcite[][8]{grauerOptionTradeClassification2022}.
 
-\textbf{Sample Construction}
+% \textbf{Sample Construction}
 
 Our sample construction follows \textcite[][7--9]{grauerOptionTradeClassification2022}, fostering comparability between both works. We acquire transaction-level options trade data for all major US exchanges from LiveVol. The dataset is tabular, and each record is time-stamped to the second. For each transaction, the executing exchange, trade price, trade volume, quotes and quote sizes for the exchanges where the option is quoted, as well as the \gls{NBBO} are recorded. This is sufficient to estimate the quote rule, depth rule, and trade size rule. In addition, for tick-based algorithms, we add the previous and subsequent distinguishable trade prices. We can uniquely identify the traded option series from a distinct key consisting of the underlying, expiration date, option type and strike price. Our analysis is conducted on transactions at the \gls{ISE} and \gls{CBOE}. To purge the data of potential errors, we filter out option trades with a trade price equal to or less than zero and eliminate trades with a negative or zero trade volume as well as large trades with a trading volume exceeding \num{10000000} contracts. We further remove cancelled or duplicated trades and eliminate entries with multiple underlying symbols for the same root.
 
-The open/close datasets for the \gls{ISE} and \gls{CBOE} contain the daily buy and sell volumes for the option series by trader type, the trade volume and whether a position was closed or opened. Four trader types are available: customer, professional customer, broker/dealer, and firm proprietary. Customer orders are placed by a retail trader or a member of the exchange on behalf of the customer. Professional customers are distinguished from the former by a high trading activity ($\geq390$ orders per day over one month period). Likewise, trades by a member are classified as proprietary, if executed for their account or broker/dealer if placed for non-members of the exchange \autocite[][2]{nasdaqincFrequentlyAskedQuestions2017}. Trades of customers and professional customers are detailed by trade volume ($\leq 100$; 101--199; $> 199$ contracts). As well as, if a position is newly opened or closed. We first sum buy and sell orders of all trader types and volumes to obtain the daily trading volumes at the \gls{ISE} or \gls{CBOE} per option series and day. Similarly, we calculate the aggregate of the customer buy and sell volumes identified by the account type customer.
+The open/close datasets for the \gls{ISE} and \gls{CBOE} contain the daily buy and sell volumes for the option series by trader type, the trade volume and whether a position was closed or opened. Four trader types are available: customer, professional customer, broker/dealer, and firm proprietary. Customer orders are placed by a retail trader or a member of the exchange on behalf of the customer. Professional customers are distinguished from the former by a high trading activity ($\geq390$ orders per day over one month period). Likewise, trades by a member are classified as proprietary, if executed for their account or broker/dealer if placed for non-members of the exchange \autocite[][2]{nasdaqincFrequentlyAskedQuestions2017}. Trades of customers and professional customers are detailed by trade volume ($\leq 100$; 101--199; $> 199$ contracts). As well as, if a position is newly opened or closed. We first sum buy and sell orders of all trader types and volumes to obtain the daily trading volumes at the \gls{ISE} or \gls{CBOE} per option series and day. Separately for the customer buy and sell volumes, we calculate the daily aggregates identified by the account type customer.
 
-To infer the true label, we exploit that, if there were only customer buy or sell orders, hence the customer buy or sell volume equals the daily trading volume, we can confidently sign all transactions for the option series at the specific date and exchange as either buyer- or seller-initiated. The applicability of our labelling approach is constrained by the existence of non-customer or simultaneous customer buy and sell trades. The so-obtained trade initiator is merged with the LiveVol trades of the exchange based on the unique key for the option series.
+To infer the true label, we exploit that, if there were only customer buy or sell orders, hence the customer buy or sell volume equals the daily trading volume, we can confidently sign all transactions for the option series at the specific date and exchange as either buyer- or seller-initiated. Our labelling approach fails in the presence of non-customer or simultaneous customer buy or sell trades. The so-obtained trade initiator is merged with the LiveVol trades of the exchange based on the unique key for the option series.
 
 For the \gls{ISE} trades, our matched sample spans from 2 May 2005 to 31 May 2017 and includes \num{49203747} trades. The period covers the full history of \gls{ISE} open/close data up to the last date the dataset was available to us. Our matched \gls{CBOE} sample consists of \num{37155412} trades between 1 January 2011 and 31 October 2017. The sample period is governed by a paradigm shift in the construction of the \gls{CBOE} open/close dataset and the most recent trade in our LiveVol subscription.
 
-Following our initial rationale for using semi-supervised methods, we reserve unlabelled trades between 24 October 2012 and 24 October 2013 at the \gls{ISE} for pre- and self-training. We provide further details in \cref{sec:train-test-split}. Since Livevol doesn't distinguish by trader types, this dataset includes both customer and non-customer trades.
+Following our initial rationale for using semi-supervised methods, we reserve unlabelled trades between 24 October 2012 and 24 October 2013 at the \gls{ISE} for pre- and self-training. We provide further details in \cref{sec:train-test-split}. Since LiveVol doesn't distinguish by trader types, this dataset includes both customer and non-customer trades, as well as simultaneous buy and sell trades on the same day.
 
 While our procedure makes the inference of the true trade initiator partly feasible, concerns regarding a selection bias due to the excessive filtering have to be raised. We address these concerns as part of our exploratory data analysis in (...), in which we compare unmerged and merged sub-samples.
 
@@ -872,10 +884,16 @@ To establish a common ground, we derive three sets of features from raw data. Th
         \end{longtable}
 \end{ThreePartTable}
 
+\todo{define and explain option characterstics and add proper caption to table.}
+
 Features and feature sets are documented in \cref{tab:feature-sets}. 
 We aid the models by estimating the change in trade price between the previous and successive distinguishable trades. This is identical to the criterion used in the (reverse) tick rule, but in a non-quantized fashion to enforce a richer decision boundary and to surpass hard cut-off points. Similarly, the proximity of the trade price to the quotes, which is the decisive criterion in the quote rule and hybrids' there-off is added. The feature value ranges from $\left(-\infty,\infty\right)$ and is $-1$ for trades at the bid, 0 for trades at the mid, and 1 for trades at the ask. Quotes and trade prices are also incorporated as-is.
 
-Our second feature set extends the first feature set by the trade size and size of the quotes, required to estimate hybrid rules involving the depth rule and trade size rule. Both rules are state-of-the-art when paired with hybrid algorithms and are thus both benchmark and source of features. We model the depth rule as the ratio between ask and bid sizes and the trade size rule as the ratio between the size of the trade and the quoted bid and ask sizes ranging between $\left[0,1\right]$. Since features are not discretized, we obtain a generic formulation of the trade size rule, where part of the quoted size can remain unfilled. The trade price and midspread required for the depth rule are already encompassed in the first feature set.
+\todo{add reasoning. depth rule and trade size rule yield significant improvements and must be considered state of the art. Thus, extend feature set}
+
+Our second feature set extends the first feature set by the trade size and size of the quotes, required to estimate hybrid rules involving the depth rule and trade size rule. Both rules are state-of-the-art when paired with hybrid algorithms and are thus both benchmark and source of features. We model the depth rule as the ratio between ask and bid sizes and the trade size rule as the ratio between the size of the trade and the quoted bid and ask sizes. Since features are not discretized, we obtain a generic formulation of the trade size rule, where part of the quoted size can remain unfilled. The trade price and midspread required for the depth rule are already encompassed in the first feature set.
+
+\todo{reason dependency on characteristics}
 
 Our largest feature set also incorporates option characteristics, including the strike price, the time to maturity, the moneyness, the option type and issue type as well as the underlying and traded volume of the option series. By providing the model with option-specific features, we make nuances between the underlying, security types, and option types learnable. Additionally, by providing unique identifiers for the option series, we can potentially learn to establish connections between transactions when trade initiators divide a single order into sub-orders.
 
@@ -915,11 +933,11 @@ A comprehensive overview of all feature transformations is given in \cref{app:fe
 
 \subsubsection{Train-Test Split}\label{sec:train-test-split}
 
-Prior classical works assess the performance of classical rules in-sample \autocite[cp.][541]{ellisAccuracyTradeClassification2000} or in an out-of-sample setting \autocites[cp.][7--9]{grauerOptionTradeClassification2022}[][3814--3815]{chakrabartyTradeClassificationAlgorithms2007}. In the presence of tunable hyperparameters in our classifiers, we separate the dataset into \emph{three} disjoint sets. The training set is used to fit the classifier to the data. The validation set is dedicated to tuning the hyperparameters, and the test set is used for unbiased out-of-sample estimates.
+Prior classical works assess the performance of classical rules in-sample \autocite[cp.][541]{ellisAccuracyTradeClassification2000} or in an out-of-sample setting \autocites[cp.][7--9]{grauerOptionTradeClassification2022}[][3814--3815]{chakrabartyTradeClassificationAlgorithms2007}. In the presence of tunable hyperparameters in our classifiers, we separate the \gls{ISE} dataset into \emph{three} disjoint sets. The training set is used to fit the classifier to the data. The validation set is dedicated to tuning the hyperparameters, and the test set is used for unbiased out-of-sample estimates.
 
-Trades in the dataset are ordered by time of execution, and nearby trades exhibit auto-correlation. Exemplary, subsequent trades on the same option series may share a similar trade price and quotes. This imposes constraints on the train-test split, which must ensure that minimal information leaks into the test set through serially-correlated features, leading to an otherwise overestimated model performance.\footnote{We emphasise this aspect, as previous research of \textcite[][14]{ronenMachineLearningTrade2022} is expectedly affected from this issue leading to exaggerated results.} The violation of statistical independence, out rules methods like the $k$-fold cross-validation or random train-test splits, both of which assume samples to be i.i.d. \autocite[][103--105]{lopezdepradoAdvancesFinancialMachine2018}. Differently, our work statically splits into subsets by time, which maintains the temporal ordering and eschews data leakage. Albeit this limits the model's ability to leverage recent information for prediction beyond the training set's cut-off point. We do not explore dynamic training schemes, as they are practically intractable considering the number of model combinations and computational requirements of Transformers and gradient-boosted trees. In absence of an update mechanism, our results can be interpreted as a lower bound.
+Trades in the dataset are ordered by time of execution, and nearby trades exhibit auto-correlation. Exemplary, subsequent trades on the same option series may share a similar trade price and quotes. This imposes constraints on the train-test split, which must ensure that minimal information leaks into the test set through serially-correlated features, leading to an otherwise overestimated model performance.\footnote{We emphasise this aspect, as previous research of \textcite[][14]{ronenMachineLearningTrade2022} is expectedly affected from this issue leading to exaggerated results.} The violation of statistical independence, out rules methods like the $k$-fold cross-validation or random train-test splits, both of which assume samples to be i.i.d. \autocite[][103--105]{lopezdepradoAdvancesFinancialMachine2018}. Differently, our work statically splits into subsets by time, which maintains the temporal ordering and eschews data leakage. Albeit this limits the model's ability to leverage recent information for prediction beyond the training set's cut-off point. We do not explore dynamic training schemes, as they are practically intractable considering the number of model combinations and computational requirements of Transformers and gradient-boosted trees. In the absence of an update mechanism, our results can be interpreted as a lower bound.
 
-Applying the time-based split, we attribute the first \SI{60}{\percent} of our dataset for training and the next \SI{20}{\percent} each for validation and testing. Samples of one day are assigned to either one set to avoid train-test contamination and maintain the temporal ordering. Data within the training set may be shuffled to accelerate training.
+Applying the time-based split, we attribute the first \SI{60}{\percent} of our dataset for training and the next \SI{20}{\percent} each for validation and testing. Days at the split boundary are assigned to either one set to avoid train-test contamination. Data within the training and validation set may be shuffled to accelerate training.
 
 \begin{figure}[ht]
     \centering
@@ -976,7 +994,7 @@ The work of \textcite[][36--38]{grauerOptionTradeClassification2022} suggests a 
 
 \emph{Border Count}
 
-In regression trees of gradient-boosting, split finding is typically approximated through quantization, whereby all numeric features are first discretised into a fixed number of buckets through histogram building, and splits are evaluated at the border of the buckets \autocites[][4]{dorogushCatBoostGradientBoosting}[][2]{keLightGBMHighlyEfficient2017}. To increase the number of split candidates per feature through finer quantization, we raise the border count to \num{254}. Generally, this leads to increased accuracy at the cost of computational efficiency. Yet, in the experiment above, the improvements in validation loss and accuracy are minor compared to the previous changes.
+In regression trees of gradient-boosting, split finding is typically approximated with quantization, whereby all numeric features are first discretised into a fixed number of buckets through histogram building, and splits are evaluated at the border of the buckets \autocites[][4]{dorogushCatBoostGradientBoosting}[][2]{keLightGBMHighlyEfficient2017}. To increase the number of split candidates per feature through finer quantization, we raise the border count to \num{254}. Generally, this leads to increased accuracy at the cost of computational efficiency. Yet, in the experiment above, the improvements in validation loss and accuracy are minor compared to the previous changes.
 
 \emph{Early Stopping and Checkpointing}
 
@@ -1249,7 +1267,7 @@ Recall from our discussion on attention (cp. \cref{sec:attention}) that the atte
     \label{fig:attention-maps}
 \end{figure}
 
-In the tabular domain, various approaches have been investigated in the literature to obtain attention from multiple attention heads and Transformer blocks. \textcite[][18]{somepalliSaintImprovedNeural2021} and \textcite[][11]{borisovDeepNeuralNetworks2022} gather attention maps from the first attention layer only, and \textcite[][11]{borisovDeepNeuralNetworks2022} additionally obtain feature attributions by taking the diagonal of the attention matrix $\mathbf{A}$ or through column-wise summation. In contrast, \textcite[][10]{gorishniyRevisitingDeepLearning2021} leverage all attention matrices by averaging over multiple Transformer blocks, attention heads, and samples to obtain global feature attributions. Given \cref{sec:architectural-overview,sec:attention}, where we emphasised the unique role of attention heads and lower sublayers, both approaches may be myopic, as attention heads may contribute unequally to the result, or as later attention layers are neglected altogether.
+In the tabular domain, various approaches have been investigated in the literature to obtain attention from multiple attention heads and Transformer blocks. \textcite[][18]{somepalliSaintImprovedNeural2021} and \textcite[][11]{borisovDeepNeuralNetworks2022} gather attention maps from the first attention layer only, and \textcite[][11]{borisovDeepNeuralNetworks2022} additionally obtain feature attributions by taking the diagonal of the attention matrix $\mathbf{A}$ or through column-wise summation. In contrast, \textcite[][10]{gorishniyRevisitingDeepLearning2021} leverage all attention matrices by averaging over multiple Transformer blocks, attention heads, and samples to obtain global feature attributions. Given \cref{sec:architectural-overview,sec:attention}, where we emphasised the unique role of attention heads and lower sub-layers, both approaches may be myopic, as attention heads may contribute unequally to the result, or as later attention layers are neglected altogether.
 
 While not explored systematically in the tabular domain yet, the rollout attention method of \textcite[][3]{abnarQuantifyingAttentionFlow2020} combines raw attention from multiple layers through recursive matrix multiplication with the weight matrices from attention layers below, as shown in this Equation:\footnote{Notation from adapted from \textcite[][786]{cheferTransformerInterpretabilityAttention2021}.}
 \begin{equation}
