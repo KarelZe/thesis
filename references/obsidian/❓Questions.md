@@ -1,7 +1,7 @@
 ## Open
 
 ## Closed
-- Ask for comments on theory. -> will comment / excited to read.
+- Ask for comments on theory. -> will comment / excited to read. Received comments @ 23 May.
 - Discuss changes i.e., removal of TabTransformer / change of pre-training routine. -> Changes are ok.
 - Discuss questions from email. -> unsure about previous trade price. Didn't do data pre-processing so can't tell about order.
 - Discuss latest, improved results for CBOE / semi-supervised models. -> Should do model transfer on CBOE data. We discussed leakage. Think about what my conclusion should be.
