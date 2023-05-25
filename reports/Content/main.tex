@@ -8,6 +8,8 @@
 
 \section{Related Work}\label{sec:related-work}
 
+This chapter introduces research on trade classification in option markets and machine learning-based trade classification.
+
 \subsection{Trade Classification in Option Markets}
 \label{sec:trade-classification-in-option-markets}
 
@@ -287,6 +289,7 @@ problem.
 \addtocontents{toc}{\protect\newpage}
 \section{Supervised Approaches}\label{sec:supervised-approaches}
 
+The subsequent chapter frames trade classification as a supervised learning problem and has the primary focus on two learning methods: the tree-based ensemble gradient boosting and the deep learning-based FT-Transformer. We derive their suitability for trade classification through a concise discussion and explore both methods in detail.
 
 \subsection{Framing as a Supervised Learning Problem}\label{sec:problem-framing}
 
@@ -698,6 +701,9 @@ Next, all models are extended for learning on partially-labelled data.
 
 \newpage
 \section{Semi-Supervised Approaches}\label{sec:semi-supervised-approaches}
+
+This chapter expands the scope of trade classification from the supervised setting to the semi-supervised setting and presents suitable extensions.
+
 \subsection{Framing as a Semi-Supervised Learning Problem}\label{sec:problem-framing-2}
 
 The supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the initiator can be inferred through matching procedures (cp. \cref{sec:trade-initiator}), which may bias the selection. Unlabelled trades, though, are abundant and can help improve the generalisation performance of the classifier. This concern is addressed by semi-supervised methods.
@@ -1289,7 +1295,7 @@ In an attempt to explain the decision-making process of multi-modal Transformers
 
 In this approach, the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(l)}=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(l)}$ is calculated to weight the attention head's importance. As previously suggested in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. Like all other presented approaches \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and is therefore computationally efficient.
 
-In the absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all Transformer blocks. The level of agreement between attributions from attention maps and random feature permutation by calculating Spearman's rank correlation between them.
+In the absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. The level of agreement between attributions from attention maps and \gls{SAGE} values by calculating Spearman's rank correlation between them.
 
 \newpage
 \section{Results}\label{sec:results}

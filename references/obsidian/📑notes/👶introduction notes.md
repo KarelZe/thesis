@@ -45,9 +45,9 @@ Our contributions are n-fold:
 - Our paper contributes to at least two strands of literature. First, it is
 - We compare our streaming algorithm to the original... new state-of-the-art in terms of out-of-sample accuracy without additional data requirements. Stable results in out-of-sample test on CBOE dataset. What are results with and without additional data requirements?
 - test gradient-boosting and tabular transformers for the problem of trade classification
+- game theoretic approach to study the effect of features on the prediction
 - new framing as semi-supervised learning problem. Enables to learn on learn on unlabelled and labelled trades simultaneously
 - we test the algorithms for the purpose of estimating effective spreads purpose of calculating effective spreads
-
 
 
 ## Outline
