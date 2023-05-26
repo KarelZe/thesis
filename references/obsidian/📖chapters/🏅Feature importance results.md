@@ -16,14 +16,11 @@
 	- Why are size-related features so important? Can we confirm the limit order theory? 
 
 Results:
-1024 (GSU)
-![[GSU-Importance-1024.png]]
-8192 (GSU) (looks similar to 4196 etc.)
-![[gsu-8192.png]]
+![[results-sage.png]]
+- **Classical Rules** Results align with intuition. Largest improvements come from applying the quote rule (nbbo), which requires quote_best + Trade price, quote (ex) is only applied to a fraction of all trades. The rev tick test is of hardly any importance, as it does not affect classification rules much, nor is it applied often
 
 
-- Results align with intuition. Largest improvements come from applying the quote rule (nbbo), which requires quote_best + Trade price, quote (ex) is only applied to a fraction of all trades. The rev tick test is of hardly any importance, as it does not affect classification rules much, nor is it applied often
-- 
+
 
 
 ![[informative-uniformative-features.png]]
