@@ -1,3 +1,59 @@
+## Summary
+- start coarse-grained then report fine-grained results
+- explain why results differ compared to Grauer et al
+- think about reporting classical rules on the entire dataset
+
+![[summarized-results.png]]
+
+
+## Sub-samples
+![[sub-samples.png]]
+
+visualize classical rules over time 
+
+
+
+
+**Classical ISE:**
+| | | tick(all)         | quote(ex)    | lr(ex)    | emo(ex)   | clnv(ex)  | quote(best)->quote(ex) | trade_size(ex)->quote(best)->quote(ex)->depth(best)->depth(ex)->rev_tick(all) |           |           |
+|-------------------|--------------|-----------|-----------|-----------|------------------------|-------------------------------------------------------------------------------|-----------|-----------|
+| Option Type       | C            | 53.566483 | 56.338657 | 56.416520 | 53.500982              | 54.338435                                                                     | 58.881009 | 66.995000 |
+|                   | P            | 53.086524 | 57.748410 | 57.797980 | 54.118193              | 55.227019                                                                     | 60.772429 | 67.442413 |
+| Security Type     | Index option | 51.543849 | 53.728014 | 53.788502 | 51.280161              | 51.725311                                                                     | 57.797688 | 58.524483 |
+|                   | Others       | 53.255024 | 62.402034 | 62.494080 | 57.510196              | 59.066922                                                                     | 65.242783 | 70.137410 |
+|                   | Stock option | 53.405332 | 54.870101 | 54.923804 | 52.328385              | 53.061654                                                                     | 57.588565 | 66.150581 |
+| Trade Size        | (0,1]        | 52.850289 | 55.288035 | 55.418330 | 51.930230              | 52.957108                                                                     | 58.219535 | 68.780466 |
+|                   | (1,3]        | 52.825320 | 55.312322 | 55.398067 | 51.948962              | 52.864432                                                                     | 58.172238 | 68.845596 |
+|                   | (3,5]        | 52.401723 | 55.723949 | 55.768923 | 52.821732              | 53.604825                                                                     | 58.488028 | 68.958994 |
+|                   | (5,11]       | 53.636487 | 59.893257 | 59.899878 | 57.168629              | 57.977015                                                                     | 62.292800 | 63.295412 |
+|                   | >11          | 55.555200 | 60.714690 | 60.695406 | 57.231189              | 58.461494                                                                     | 63.427558 | 64.547913 |
+| Year              | 2015         | 52.783955 | 54.902913 | 54.892890 | 52.851584              | 53.315622                                                                     | 56.143249 | 63.349227 |
+|                   | 2016         | 53.284415 | 57.571543 | 57.635410 | 54.270965              | 55.222778                                                                     | 59.896339 | 67.117888 |
+|                   | 2017         | 53.665234 | 56.367496 | 56.459133 | 52.986116              | 54.147313                                                                     | 60.676194 | 68.701844 |
+| Time to Maturity  | <= 1         | 53.073395 | 57.301220 | 57.362873 | 54.417911              | 55.223769                                                                     | 60.579671 | 67.111616 |
+|                   | (1-2]        | 53.404881 | 57.744957 | 57.762882 | 53.547187              | 54.776254                                                                     | 60.546956 | 68.117541 |
+|                   | (2-3]        | 53.697592 | 57.086186 | 57.179021 | 52.890993              | 54.140812                                                                     | 59.715752 | 67.886100 |
+|                   | (3-6]        | 53.868526 | 56.015521 | 56.110247 | 52.001021              | 53.348644                                                                     | 57.877722 | 67.452554 |
+|                   | (6-12]       | 54.269323 | 56.418807 | 56.472172 | 51.953456              | 53.581516                                                                     | 57.676192 | 67.470964 |
+|                   | > 12         | 54.883085 | 52.696504 | 52.850764 | 51.198376              | 52.073364                                                                     | 50.941699 | 64.706435 |
+| Moneyness         | <= 0.7       | 54.502433 | 60.341653 | 60.421858 | 58.257767              | 58.981319                                                                     | 61.450529 | 64.113542 |
+|                   | (0.7-0.9]    | 55.491002 | 60.382149 | 60.573694 | 57.566221              | 58.607257                                                                     | 63.633651 | 67.868621 |
+|                   | (0.9-1.1]    | 52.950755 | 57.083316 | 57.112069 | 53.144508              | 54.335962                                                                     | 60.238270 | 68.152214 |
+|                   | (1.1-1.3]    | 51.621348 | 49.939075 | 49.998204 | 49.857566              | 49.670232                                                                     | 50.021966 | 61.661661 |
+|                   | > 1.3        | 52.038059 | 48.723613 | 48.811119 | 50.046064              | 48.785237                                                                     | 48.722381 | 59.973687 |
+| Location to Quote | at mid       | 51.034217 | 49.998387 | 50.611316 | 51.028068              | 51.029882                                                                     | 55.950353 | 65.902387 |
+|                   | inside       | 52.408920 | 57.153707 | 57.153707 | 52.411885              | 53.793190                                                                     | 60.205206 | 64.242773 |
+|                   | at quotes    | 57.728367 | 59.971382 | 59.971382 | 59.970566              | 59.971127                                                                     | 59.969340 | 78.213062 |
+|                   | outside      | 62.363283 | 66.080655 | 65.745152 | 62.316312              | 62.235791                                                                     | 66.610750 | 64.892975 |
+|                   | unknown      | 52.459802 | 50.133425 | 52.500855 | 52.398221              | 52.480328                                                                     | 76.346220 | 76.442012 |
+| All trades        | all          | 53.342427 | 56.996762 | 57.061417 | 53.789110              | 54.753246                                                                     | 59.763967 | 67.203863 |
+
+- Unknown's are these where bid (ex) or ask (ex) is NaN. Grauer et al don't report these separately. They must be included somewhere else.
+- Makes sense that unknowns are close to 50 % for e. g., quote rule (ex). 
+- Stacking adds robustness. It looks suspicious that combinations e. g., quote + quote, GSU reach highest classification accuracies.
+
+
+
 
 % TODO: These proxies have in common that they factor in the order book imbalance the relative depth quoted at the best bid and ask prices. If traders care about transaction costs, the relatively wide ask-side spread deters buyers, whereas the tight bid-side spread may attract sellers. There are then more traders submitting market orders at the bid side, and the true effective spread is, on average, smaller than the average midpoint effective spread.
 
@@ -49,6 +105,4 @@ where $O_{i j}$ and $E_{i j}$ are the observed and expected frequencies for cell
 Interesting adversarial examples: https://arxiv.org/pdf/1705.07263.pdf
 
 
-Visualisation of tables with columns: https://tex.stackexchange.com/questions/174876/formatting-table-with-siunitx-problem-with-parentheses-and-signs
 
-callibrated probas shouldnt be much of a problem, as we optimise for probabilities directly https://www.cs.cornell.edu/~caruana/niculescu.scldbst.crc.rev4.pdf

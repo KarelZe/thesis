@@ -49,5 +49,8 @@ The null hypothesis is that the location of medians in two independent samples a
 % TODO: read: Pinder, S. (2003). An empirical examination of the impact of market microstructure changes on the determinants of option bid–ask spreads. International Review of Financial Analysis, 12(5):563–577.
 
 
+- [[@rosenthalModelingTradeDirection2012]] lists fields where trade classification is used and what the impact of wrongly classified trades is.
+- The extent to which inaccurate trade classification biases empirical research depends on whether misclassifications occur randomly or systematically [[@theissenTestAccuracyLee2000]].
+
 **Notes:**
 [[🍕Application study notes]]

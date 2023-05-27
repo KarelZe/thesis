@@ -8,6 +8,8 @@
 
 \section{Related Work}\label{sec:related-work}
 
+This chapter introduces research on trade classification in option markets and machine learning-based trade classification.
+
 \subsection{Trade Classification in Option Markets}
 \label{sec:trade-classification-in-option-markets}
 
@@ -287,7 +289,7 @@ problem.
 \addtocontents{toc}{\protect\newpage}
 \section{Supervised Approaches}\label{sec:supervised-approaches}
 
-% TODO: central assumption of supervised learning (smoothness assumption) (p. 5 chapelle)
+The subsequent chapter frames trade classification as a supervised learning problem and has the primary focus on two learning methods: the tree-based ensemble gradient boosting and the deep learning-based FT-Transformer. We derive their suitability for trade classification through a concise discussion and explore both methods in detail.
 
 \subsection{Framing as a Supervised Learning Problem}\label{sec:problem-framing}
 
@@ -301,10 +303,9 @@ A probabilistic view enables a richer evaluation but restricts the selection to 
 
 We introduce more notation, which we use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times M}$ and described by a random variable $X$. Any of the $M$ features in $\mathbf{x}$ may be numerical, e.g., the trade price or categorical e.g., the security type. Like before, the target is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $\Pr(X, Y)$. The labelled data set with $N$ i.i.d. samples is denoted by $\mathcal{D} =\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
 
-For our machine learning classifiers, we aim to model $\Pr_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, 
-imple classifier instead:
+For our machine learning classifiers, we aim to model $\Pr_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, simple classifier instead:
 \begin{equation}
-    \operatorname{Pr}(y\mid \mathbf{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
+    \widehat{\operatorname{Pr}}(Y=y\mid X=\mathbf{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
     \label{eq:prob-from-point-estimate}
 \end{equation}
 
@@ -601,7 +602,7 @@ Intuitionally, adding the positional encoding leads to a rotation of the \gls{to
 
 Recall from our discussion on token embeddings, that embeddings are not yet context-sensitive. The Transformer relies on an \emph{attention mechanism} to let tokens gather information from other tokens within the sequence and thereby encode the context onto the embeddings.
 
-\textbf{Underlying Concept}
+\textbf{Preliminaries}
 
 Attention can be thought of as a mapping between a query and a set of key-value pairs to an output. In general, the current token is first projected onto a query vector, and all tokens in the context are mapped to key and value vectors. Similar to a soft dictionary lookup, the goal is to retrieve the values from tokens in the context for which the keys are similar to the query and return an aggregate estimate of the values weighted by the similarity of the keys and the query. Naturally, if a token in the context is important for predicting the queried token, indicated by a high similarity, the value of the context token has a large contribution to the output \autocites[][5]{phuongFormalAlgorithmsTransformers2022}[][3]{vaswaniAttentionAllYou2017}.
 
@@ -700,6 +701,9 @@ Next, all models are extended for learning on partially-labelled data.
 
 \newpage
 \section{Semi-Supervised Approaches}\label{sec:semi-supervised-approaches}
+
+This chapter expands the scope of trade classification from the supervised setting to the semi-supervised setting and presents suitable extensions.
+
 \subsection{Framing as a Semi-Supervised Learning Problem}\label{sec:problem-framing-2}
 
 The supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the initiator can be inferred through matching procedures (cp. \cref{sec:trade-initiator}), which may bias the selection. Unlabelled trades, though, are abundant and can help improve the generalisation performance of the classifier. This concern is addressed by semi-supervised methods.
@@ -834,22 +838,19 @@ To establish a common ground, we derive three sets of features from raw data. Th
         \item[*] Notation assumes, that the previous or next trade price is distinguishable.
     \end{TableNotes}
     \begin{longtable}{@{}lllllll@{}}
-        % \multicolumn{3}{c}%
-        % {\tablename\ \thetable\ -- \textit{Continued from previous page}} \\
-        % \hline
-        % Header 1 & Header 2 & Header 3 \\
-        % \hline
-        % \endhead
+        
 
         \caption[Features and Feature Sets]{Features and Feature Sets.}\label{tab:feature-sets}    \\
+        \toprule
+        Feature Name            & Definition                                                                                       & Source               & FS 1 & FS 2 & FS 3 \\ \midrule
+        \endfirsthead
 
+        \multicolumn{6}{l}{\textit{Continued \tablename~\thetable}} \\
         \toprule
         Feature Name            & Definition                                                                                       & Source               & FS 1 & FS 2 & FS 3 \\ \midrule
         \endhead
-        %\endfirsthead
         
         \bottomrule
-
         \endfoot
 
         \insertTableNotes         
@@ -901,8 +902,6 @@ Our largest feature set also incorporates option characteristics, including the 
 
 Arguably, our models have simultaneous access to the previous and successive trade prices and quotes for both the exchange and the NBBO, which is an advantage over base rules. As we benchmark against various, stacked hybrid rules, the data requirements are comparable. We emphasise this aspect, as it is neglected in previous works \autocites[][485]{blazejewskiLocalNonParametricModel2005}[][48]{ronenMachineLearningTrade2022}[][9]{rosenthalModelingTradeDirection2012}.
 
-The redundant encoding can make patterns in the data learnable but complicates attributing predictions to certain features due to substitution effects. We address this concern when determining the feature's importances.
-
 \textbf{Numerical Features}
 
 Pricing or quote data can often not be fully reconstructed, resulting in missing values across all features. Decision trees and ensembles thereof can inherently handle $\mathtt{[NaN]}$ values by discarding missing values in the splitting procedure \autocite[][150--152]{breimanClassificationRegressionTrees2017} or by incorporating missing values into the splitting criterion \autocite[][951]{twalaGoodMethodsCoping2008}. Transformers require missing values to be imputed beforehand, as a $\mathtt{[NaN]}$ value cannot be propagated through the network. We choose zero imputation for being a single-pass strategy that minimises data leakage and allows gradient-boosted trees and neural networks to separate imputed values from observed ones. With a low degree of missing values, the impact on the final result is minuscule.
@@ -918,11 +917,7 @@ Here, $\lambda$ is the power parameter and determines the specific power functio
 
 Note that, the use of the Box-Cox transform is different from its originated purpose. In feature engineering, the transformation is used in an unsupervised fashion, as the transformation's outcome is not directly used in the model. Also, the transform is applied to the features, rather than the model's residuals \autocite[122]{kuhnFeatureEngineeringSelection2020}.
 To further improve the convergence of our Transformer-based architectures, we normalise all numerical features using $z$-score normalisation to obtain zero mean and unit variance.
-% given by:
-% \begin{equation}
-%     \widehat{\mathbf{X}}=\frac{\mathbf{X}-\mathbf{\mu}}{\mathbf{\sigma}}
-% \end{equation}
-% with mean $\mathbf{\mu} =\frac{1}{N} \sum_{i=1}^N\left(\mathbf{X}\left[i,:\right]\right)$ and standard deviation $\mathbf{\sigma}=\sqrt{\frac{1}{N} \sum_{i=1}^N\left(\mathbf{X}\left[i,:\right]-\mathbf{\mu}\right)^2}$. 
+
 In experimental tests, features derived as ratios, such as the proximity to quotes, pose a particular challenge for training the FT-Transformer. We observe extreme outliers to dominate the gradient update, leading to unstable gradients and poor convergence. We resolve the issue by clipping to a range $[-3,3]$.
 
 Intuitionally, the zero means prevents bias in the direction of the weight update and scaling to unit variance balances the rate at which parameters are updated \autocite[][8]{lecunEfficientBackProp2012}. Normalisation of raw inputs is complementary to batch normalisation, which is used in deeper layers of the Transformer stack and single batches. Following good standards, all statistics are estimated on the imputed training set only. The unlabelled \gls{ISE} training set and the \gls{CBOE} test set share the statistics of the \gls{ISE} labelled training set.
@@ -950,7 +945,7 @@ Applying the time-based split, we attribute the first \SI{60}{\percent} of our d
 \begin{figure}[ht]
     \centering
     \includegraphics{train-test-split.pdf}
-    \caption[Training scheme on \glsentryshort{ISE} and \glsentryshort{CBOE} Sample]{Training scheme on \gls{ISE} and \gls{CBOE} sample. The train and validation set are split by time. Shaded area \mysquare{viz-gray} indicates the duration for which the dataset is available.}
+    \caption[Training Scheme on \glsentryshort{ISE} and \glsentryshort{CBOE} Sample]{Training scheme on \gls{ISE} and \gls{CBOE} sample. The train and validation set are split by time. Shaded area \mysquare{viz-gray} indicates the duration for which the dataset is available.}
     \label{fig:train-test-split}
 \end{figure}
 
@@ -961,6 +956,8 @@ Models are pre-trained on unlabelled samples from the last year of the training 
 We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visualised in \cref{fig:train-test-split}. Our evaluation approach is the most rigorous as it disallows any form of adaptation of the models, thereby ensuring a rigorous evaluation. Unlike transfer learning techniques such as parameter or model transfer, which expectedly improve model performance, we choose to forgo these techniques and demonstrate the effectiveness of our models without any transfer of knowledge. The start date ensures that leakage from the \gls{ISE} set is minimised. \footnote{The datasets contain features, such as the \gls{NBBO}, that are identical for both sets, assuming trades were executed at both exchanges simultaneously. Utilising the full \gls{CBOE} sample could result in exaggerated performance estimates the corresponding \gls{ISE} trade is used in training.}
 
 Our train-test-split assumes that all subsets are drawn from the same distribution, so fitting a classifier on the training set and optimising for the validation set provides good estimates for the test set. To validate this assumption, we use adversarial validation. Specifically, we re-label all training samples with $y=-1$ and all trades of the validation set with $y=1$, train a classifier on a random subset of the composed dataset and predict class conformance. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which ranges between $\left[-1, 1\right]$ and is insensitive to class imbalances.\footnote{Classes are imbalanced, due to the training set being three times the size of the validation set.} Assuming train and validation samples are sampled from the same distribution, the performance estimate is near a random guess, or $\operatorname{MCC} = 0$, Depending on the feature sets, the \gls{MCC} ranges between (...) and (...) suggesting training and validation sets are approximately similar. The next section discusses techniques used in training the classifiers.
+
+\todo{report stats for entire sample and subsamples in the appendix ()}
 
 \subsection{Training and Tuning}\label{sec:training-and-tuning}
 
@@ -976,7 +973,7 @@ Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autoci
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-train-val-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \glsentryshort{ISE} Sample]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBRT} on \glsentryshort{ISE} Sample]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
     \label{fig:gbm-train-val-loss-acc}
 \end{figure}
 
@@ -985,7 +982,7 @@ Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autoci
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-optimisations-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of \glsentryshort{GBM} on \glsentryshort{ISE} with Optimisations]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBRT} on \glsentryshort{ISE} with Optimisations]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
     \label{fig:gbm-optimisations-loss-acc}
 \end{figure}
 
@@ -1015,7 +1012,6 @@ We combine these ideas to leverage the improvements for our large-scale studies.
 As derived in \cref{sec:supervised-approaches}, we rely on FT-Transformer of \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule \autocite[][1]{liuUnderstandingDifficultyTraining2020}. We investigate minor modifications to the default FT-Transformer to stabilise training and improve overall performance. The default FT-Transformer trained for 10 epochs on \gls{ISE} dataset with classical features and loss and accuracy is visualised in \cref{fig:fttransformer-optimisations-loss-acc} and the model itself is summarised in (...).
 
 The convergence behaviour of our model is similar to that of gradient boosting. Equally, a significant generalisation gap exists between the training and validation loss. Particularly concerning, the training loss decreases sharply, while the validation loss spuriously improves over its initial estimate. Despite this, validation accuracy improves throughout the entire training cycle. We reason that the network learns to correctly classify trades, indicated by the improved accuracy, but only attains low-confident correct predictions or confident but erroneous predictions which both contribute to a large validation loss. The shape of the flat validation loss and the decreasing training loss suggest that the training set may not be representative of trades in the validation set. This has broader implications on the classifiability of option trades using decision rules from classical trade classification rules for more recent observations. We explore this phenomenon thoroughly as part of our result discussion.
-
 
 \begin{figure}[!ht]
     \centering
@@ -1245,20 +1241,24 @@ Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for e
 
 Our datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vice versa have similar associated costs, which makes accuracy an ideal choice as a performance metric.\footnote{The \gls{ISE} test set consists of \SI{48.5973}{\percent} of buy trades and \SI{46.1278}{\percent} of the \gls{CBOE} test set are buy trades.} As the 0-1-loss and in consequence, the accuracy is not differentiable, it cannot be used in optimisation, but as an early stopping criterion to halt training or as an optimisation target in the hyperparameter search. We report the accuracy of the test sets.
 
+\todo{discuss why not report log loss / cross entropy loss.}
+
 \subsubsection{Feature Importance
     Measure}\label{sec:feature-importance-measure}
 
-Naturally, one would like to obtain insights into how the models arrived at the prediction and identify features relevant for the prediction. Both aspects can be subsumed under the term \emph{interpretability}. Following, \textcite[][4]{liptonMythosModelInterpretability2017} interpretability can be reached through model transparency or post-hoc interpretability methods. Transparent models provide interpretability through a transparent mechanism in the model, whereas post-hoc methods extract information from the already learnt model \autocite[][4--5]{liptonMythosModelInterpretability2017}.
+Naturally, we aim to gain insights into the prediction process and identify relevant features, which fall under the umbrella of \emph{interpretability}.
+Following, \textcite[][4]{liptonMythosModelInterpretability2017} interpretability can be reached through model transparency or post-hoc interpretability methods. Transparent models provide interpretability through a transparent mechanism in the model, whereas post-hoc methods extract information from the already learnt model \autocite[][4--5]{liptonMythosModelInterpretability2017}.
 
 Classical trade classification algorithms, as a rule-based classifier, are transparent with an easily understandable decision process and thus provide interpretability \autocite[][91]{barredoarrietaExplainableArtificialIntelligence2020}. Interpretability, however, decreases for deep, stacked combinations involving a large feature count, when interactions between base rules become more complex and the effect of a single feature on the final prediction more challenging to interpret.
 
-The machine-learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through a \emph{model-agnostic, post-hoc interpretability techniques}. Thereby, our goal is to identify features that are important for the \emph{correct prediction}. This is fundamentally different from methods like standard \gls{SHAP}, that attribute \emph{any} prediction to the input features \autocite[][??]{chenTrueModelTrue2020}.
+The machine-learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through \emph{model-agnostic, post-hoc interpretability techniques}.
 
-Many model-agnostic methods are based on (...)
+Thereby, our goal is to estimate how much a feature contributes to the performance of the classifier \emph{overall}, which urges for \emph{global feature attribution measures}. The appropriate approach is guided by the properties of the data. Due to the data-generating process with strongly correlated quotes and trade prices at the exchange and nationwide levels, features are strongly dependent. The redundant feature encoding of ratio features exacerbates this effect. Feature independence, however, is the central assumption of most popular feature importance measures, including \gls{SHAP}, \gls{LIME}, or random feature permutation \autocite[][2]{aasExplainingIndividualPredictions2021}. A violation of this constraint for two perfectly correlated, predictive features can have the effect that both are deemed unimportant as the feature importance is distributed between features underestimating the true importance of the feature \autocite[][4]{covertUnderstandingGlobalFeature2020}.
+
+For this reason, we estimate feature importances using \gls{SAGE}, which can account for complex interactions between features and yields global importances. 
 
 \textbf{Shapley Additive Global Importance}
 
-(...)
 
 \textbf{Attention Maps}
 
@@ -1298,14 +1298,70 @@ In an attempt to explain the decision-making process of multi-modal Transformers
 
 In this approach, the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(l)}=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(l)}$ is calculated to weight the attention head's importance. As previously suggested in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. Like all other presented approaches \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and is therefore computationally efficient.
 
-In the absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. Following prior research, feature attributions are also summed over the first attention layer or all Transformer blocks. The level of agreement between attributions from attention maps and random feature permutation by calculating Spearman's rank correlation between them.
+In the absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. The level of agreement between attributions from attention maps and \gls{SAGE} values by calculating Spearman's rank correlation between them.
 
 \newpage
 \section{Results}\label{sec:results}
 
-
 \subsection{Results of Supervised
     Models}\label{sec:results-of-supervised-models}
+
+% \begin{table}
+%         \centering
+%         \caption[master-short]{master-long}
+%         \label{tab:cboe_transfer_test-master-classical}
+%         \begin{tabular}{lSSSSSSS}
+%         \toprule
+%         {} & {Tick (Ex)} & {Quote (Ex)} & {\gls{LR} (Ex)} & {\gls{EMO} (Ex)} & {\gls{CLNV} (Ex)} & {Quote (Best) $\to$ Quote (Ex)} & {\gls{GSU}} \\
+%         \midrule
+%         \multicolumn{1}{l}{Option Type}                                                                                                                                                        \\
+%         \tabindent C & 48.6386 & 61.8605 & 61.5274 & 48.5108 & 53.1980 & 59.7593 & \bfseries 65.0963 \\
+%         \tabindent P & 49.4365 & 62.2855 & 62.0100 & 48.8053 & 53.2937 & 61.1276 & \bfseries 66.4105 \\                                                                      
+%         \cmidrule{1-7}
+%         \multicolumn{1}{l}{Security Type}                                                                                                                                                        \\
+%         \tabindent Index Option & 48.1625 & 53.8752 & 53.6416 & 42.0030 & 43.5518 & 53.3387 & \bfseries 65.7456 \\
+%         \tabindent Others & 48.7365 & 66.0832 & 65.6695 & 50.2498 & 55.1471 & 64.2657 & \bfseries 68.0604 \\
+%         \tabindent Stock Option & 49.1950 & 61.1928 & 60.9229 & 48.6376 & 53.4123 & 59.4683 & \bfseries 64.7064 \\
+%         \cmidrule{1-7}
+%         \multicolumn{1}{l}{Trade Size}                                                                                                                                                        \\
+%         \tabindent (0,1] & 48.8039 & 58.8373 & 58.6298 & 46.8828 & 50.7216 & 56.6566 & \bfseries 63.2595 \\
+%         \tabindent (1,3] & 48.9448 & 62.0334 & 61.7327 & 48.5434 & 52.8834 & 59.3317 & \bfseries 64.1855 \\
+%         \tabindent (3,5] & 48.7100 & 62.4241 & 62.1303 & 48.9953 & 53.4790 & 60.0877 & \bfseries 65.4561 \\
+%         \tabindent (5,11] & 48.8370 & 62.7963 & 62.4460 & 48.7128 & 53.6204 & 60.9859 & \bfseries 65.4738 \\
+%         \tabindent >11 & 49.6791 & 65.3706 & 64.9572 & 50.7667 & 56.4256 & 66.0498 & \bfseries 70.8678 \\
+%         \cmidrule{1-7}
+%         \multicolumn{1}{l}{Year}                                                                                                                                                        \\
+%         \tabindent 2015 & 48.7962 & 63.9554 & 63.5456 & 49.6553 & 54.2843 & 60.8559 & \bfseries 64.0997 \\
+%         \tabindent 2016 & 48.8950 & 62.8512 & 62.5217 & 48.9013 & 53.4273 & 59.8428 & \bfseries 64.3460 \\
+%         \tabindent 2017 & 49.1409 & 60.9673 & 60.6973 & 48.2461 & 52.9145 & 60.8995 & \bfseries 67.3316 \\
+%         \cmidrule{1-7}
+%         \multicolumn{1}{l}{Time To Maturity}                                                                                                                                                        \\
+%         \tabindent <= 1 & 48.9681 & 62.8632 & 62.4864 & 49.3758 & 53.8885 & 61.5021 & \bfseries 65.9826 \\
+%         \tabindent (1-2] & 49.7662 & 62.8410 & 62.6221 & 49.5022 & 54.0575 & 61.6563 & \bfseries 66.5978 \\
+%         \tabindent (2-3] & 48.9832 & 61.8603 & 61.6079 & 47.6567 & 52.6264 & 60.0202 & \bfseries 66.4157 \\
+%         \tabindent (3-6] & 48.7972 & 61.1299 & 60.8658 & 47.1231 & 52.1967 & 58.7646 & \bfseries 65.8335 \\
+%         \tabindent (6-12] & 48.6674 & 60.6878 & 60.5440 & 46.9392 & 51.9522 & 58.3030 & \bfseries 65.0348 \\
+%         \tabindent > 12 & 48.4385 & 54.3230 & 54.2450 & 44.8763 & 48.2958 & 50.4561 & \bfseries 59.2183 \\
+%         \cmidrule{1-7}
+%         \multicolumn{1}{l}{Moneyness}                                                                                                                                                        \\ 
+%        \tabindent <= 0.7 & 49.7225 & 56.2652 & 55.9378 & 47.7972 & 50.8738 & 59.9979 & \bfseries 68.0207 \\
+%         \tabindent (0.7-0.9] & 48.3985 & 60.7275 & 60.3139 & 48.0956 & 52.0827 & 60.4261 & \bfseries 66.2027 \\
+%         \tabindent (0.9-1.1] & 49.2799 & 63.6517 & 63.3631 & 49.1110 & 54.1991 & 61.4061 & \bfseries 66.3599 \\
+%         \tabindent (1.1-1.3] & 47.8749 & 55.8400 & 55.6525 & 46.9308 & 49.9467 & 52.9996 & \bfseries 58.4909 \\
+%         \tabindent > 1.3 & 47.4849 & 53.7090 & 53.4551 & 45.6819 & 47.9778 & 50.8283 & \bfseries 57.3531 \\
+%         \cmidrule{1-7}
+%         \multicolumn{1}{l}{Proximity}                                                                                                                                                        \\
+%         \tabindent At Mid & 45.3192 & 49.9209 & 46.9842 & 45.3807 & 45.3882 & 54.2637 & \bfseries 59.3570 \\
+%         \tabindent Inside & 49.5803 & \bfseries 68.0898 & \bfseries 68.0898 & 50.9957 & 57.0791 & 65.2444 & 65.3122 \\
+%         \tabindent At Quotes & 48.5476 & 38.1581 & 38.1335 & 38.1632 & 38.1332 & 38.1500 & \bfseries 72.3496 \\
+%         \tabindent Outside & 53.0434 & 70.6581 & 69.6276 & 56.8013 & 56.8013 & \bfseries 73.5023 & 71.9222 \\
+%         \tabindent Unknown & 50.3116 & 49.6433 & 50.9347 & 50.9979 & 51.0611 & \bfseries 82.7689 & 82.6876 \\
+%         \cmidrule{1-7}
+%         \multicolumn{1}{l}{All Trades}                                                                                                                                                        \\ 
+%        \tabindent All & 49.0016 & 62.0538 & 61.7470 & 48.6448 & 53.2415 & 60.3818 & \bfseries 65.6942 \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
 
 \textbf{Gradient Boosting}
 
