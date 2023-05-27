@@ -52,6 +52,28 @@ def _all_or_none(values: list[Any]) -> bool:
     return all(x is None for x in values) or all(x is not None for x in values)
 
 
+class CLSHead(nn.Module):
+    """
+    2 Layer MLP projection head
+    """
+
+    def __init__(self, *, d_in: int, d_hidden: int):
+        """
+        tbd
+        """
+        super().__init__()
+        self.first = nn.Linear(d_in, d_hidden)
+        self.out = nn.Linear(d_hidden, 1)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        tbd
+        """
+        x = x[:, 1:]
+        x = self.out(F.relu(self.first(x))).squeeze(2)
+        return x
+
+
 class _TokenInitialization(enum.Enum):
     """
     Implementation of TokenInitialization scheme.

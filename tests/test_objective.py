@@ -160,7 +160,7 @@ class TestObjectives:
             cat_cardinalities=[],
         )
 
-        with patch.object(TransformerClassifier, "epochs", 1):
+        with patch.object(TransformerClassifier, "epochs_finetune", 1):
             study.enqueue_trial(params)
             study.optimize(objective, n_trials=1)
 

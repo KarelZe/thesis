@@ -21,6 +21,7 @@ from torch import nn, optim
 
 from otc.data.dataloader import TabDataLoader
 from otc.data.dataset import TabDataset
+from otc.models.fttransformer import CLSHead
 from otc.optim.early_stopping import EarlyStopping
 from otc.optim.scheduler import CosineWarmupScheduler
 
@@ -36,7 +37,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         _type_: classifier
     """
 
-    epochs = 50
+    epochs_pretrain = 20
+    epochs_finetune = 1
 
     def __init__(
         self,
@@ -46,6 +48,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         dl_params: dict[str, Any],
         callbacks: Any,
         features: list[str] | None = None,
+        pretrain: bool = False,
     ) -> None:
         """
         Initialize the model.
@@ -60,6 +63,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             columns. Required to match columns in feature matrix with label. If no
             feature names are provided for pd.DataFrames, names are taken from
             `X.columns` in `fit()`. Defaults to None.
+            pretrain (bool, optional): Whether to pretrain the model. Defaults to False.
         """
         self.module = module
 
@@ -71,6 +75,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self.dl_params = dl_params
         self.features = features
         self.callbacks = callbacks
+        self.pretrain = pretrain
+        self.classes_ = np.array([-1, 1])
 
     def _more_tags(self) -> dict[str, bool]:
         """
@@ -109,7 +115,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         cp = glob.glob("checkpoints/tf_clf*")
         self.clf.load_state_dict(torch.load(cp[0]))
 
-    def array_to_dataloader(
+    def array_to_dataloader_finetune(
         self,
         X: npt.NDArray | pd.DataFrame,
         y: npt.NDArray | pd.Series,
@@ -141,6 +147,69 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         del data
         return tab_dl
 
+    def _gen_perm(self, X: torch.Tensor) -> torch.Tensor:
+        """
+        Generate index permutation.
+        """
+        if X is None:
+            return None
+        return torch.randint_like(X, X.shape[0], dtype=torch.long)
+
+    def _gen_masks(
+        self, X: torch.Tensor, perm: torch.Tensor, corrupt_probability: float = 0.15
+    ) -> torch.Tensor:
+        """
+        Generate binary mask for detection.
+        """
+        masks = torch.empty_like(X).bernoulli(p=corrupt_probability).bool()
+        new_masks = masks & (X != X[perm, torch.arange(X.shape[1], device=X.device)])
+        return new_masks
+
+    def array_to_dataloader_pretrain(
+        self,
+        X: npt.NDArray | pd.DataFrame,
+        y: npt.NDArray | pd.Series,
+    ) -> TabDataLoader:
+        """
+        Generate dataloader for pretraining.
+        """
+        data = TabDataset(
+            X,
+            y,
+            cat_features=self.module_params["cat_features"],
+            cat_unique_counts=self.module_params["cat_cardinalities"],
+        )
+
+        # split the continuous and categorical features
+        x_cont = data.x_cont
+        x_cat = data.x_cat
+
+        # generate permutations and masks for the features
+        x_cont_perm = self._gen_perm(x_cont)
+        x_cat_perm = self._gen_perm(x_cat) if x_cat is not None else None
+        x_cont_mask = self._gen_masks(x_cont, x_cont_perm)
+        x_cat_mask = (
+            self._gen_masks(x_cat, x_cat_perm) if x_cat_perm is not None else None
+        )
+
+        # apply the permutations and masks to the features
+        x_cont_permuted = torch.gather(x_cont, 0, x_cont_perm)
+        x_cont[x_cont_mask] = x_cont_permuted[x_cont_mask]
+        if x_cat is not None:
+            x_cat_permuted = torch.gather(x_cat, 0, x_cat_perm)
+            x_cat[x_cat_mask] = x_cat_permuted[x_cat_mask]
+
+        # concatenate the masks and create a TabDataLoader
+        masks = (
+            torch.cat([x_cont_mask, x_cat_mask], dim=1)
+            if x_cat_mask is not None
+            else x_cont_mask
+        )
+        tab_dl = TabDataLoader(x_cat, x_cont, masks, **self.dl_params)
+
+        del data
+        return tab_dl
+
     def fit(
         self,
         X: npt.NDArray | pd.DataFrame,
@@ -165,15 +234,165 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         if isinstance(X, pd.DataFrame) and self.features is None:
             self.features = X.columns.tolist()
 
-        check_classification_targets(y)
-
-        X, y = check_X_y(X, y, multi_output=False, accept_sparse=False)
-
         # if no features are provided or inferred, use default
         if not self.features:
             self.features = [str(i) for i in range(X.shape[1])]
 
-        # use insample instead of validation set, if None is passed
+        self.clf = self.module(**self.module_params)
+        target_head = self.clf.transformer.head
+
+        self._stats_pretrain_step = []
+        self._stats_pretrain_epoch = []
+
+        if self.pretrain:
+
+            mask = y == 0
+
+            # isolate unlabelled
+            X_unlabelled = X[mask]
+            y_unlabelled = y[mask]
+
+            # remove unlabelled
+            X = X[~mask]
+            y = y[~mask]
+
+            # convert to dataloader
+            train_loader_pretrain = self.array_to_dataloader_pretrain(
+                X_unlabelled, y_unlabelled
+            )
+            val_loader_pretrain = self.array_to_dataloader_pretrain(
+                X_unlabelled, y_unlabelled
+            )
+
+            # free up memory
+            del X_unlabelled, y_unlabelled
+            gc.collect()
+            torch.cuda.empty_cache()
+
+            # replace head with classification head capacity similar to rubachev
+            self.clf.transformer.head = CLSHead(
+                d_in=self.module_params["d_token"], d_hidden=512
+            )
+            self.clf.to(self.dl_params["device"])
+
+            # half precision, see https://pytorch.org/docs/stable/amp.html
+            scaler = torch.cuda.amp.GradScaler()
+
+            # Specify parameters for which weight decay should be disabled
+            no_decay = ["tokenizer", ".norm", ".bias"]
+
+            # Create a list of parameter groups
+            param_groups = [
+                {
+                    "params": [
+                        p
+                        for n, p in self.clf.named_parameters()
+                        if not any(nd in n for nd in no_decay)
+                    ],
+                    "weight_decay": self.optim_params["weight_decay"],
+                },
+                {
+                    "params": [
+                        p
+                        for n, p in self.clf.named_parameters()
+                        if any(nd in n for nd in no_decay)
+                    ],
+                    "weight_decay": 0.0,
+                },
+            ]
+
+            # Generate the optimizers
+            optimizer = optim.AdamW(
+                param_groups,
+                lr=self.optim_params["lr"],
+            )
+
+            # set up cosine lr scheduler
+            max_steps = self.epochs_pretrain * len(train_loader_pretrain)
+            warmup_steps = int(0.05 * max_steps) + 1  # 5 % of max steps
+            scheduler = CosineWarmupScheduler(
+                optimizer=optimizer, warmup=warmup_steps, max_iters=max_steps
+            )
+
+            criterion = nn.BCEWithLogitsLoss()
+
+            step = 0
+            for epoch in range(self.epochs_pretrain):
+
+                # perform training
+                loss_in_epoch_train = 0
+
+                batch = 0
+
+                for x_cat, x_cont, masks in train_loader_pretrain:
+
+                    self.clf.train()
+                    optimizer.zero_grad()
+
+                    with torch.autocast(device_type="cuda", dtype=torch.float16):
+                        logits = self.clf(x_cat, x_cont)
+                        train_loss = criterion(logits, masks.float())
+
+                    scaler.scale(train_loss).backward()
+                    scaler.step(optimizer)
+                    scaler.update()
+                    scheduler.step()
+
+                    # add the mini-batch training loss to epoch loss
+                    loss_in_epoch_train += train_loss.item()
+
+                    self._stats_pretrain_step.append(
+                        {"train_loss": train_loss.item(), "step": step}
+                    )
+
+                    batch += 1
+                    step += 1
+
+                self.clf.eval()
+                loss_in_epoch_val = 0.0
+                correct = 0
+
+                with torch.no_grad():
+                    for x_cat, x_cont, masks in val_loader_pretrain:
+
+                        # for my implementation
+                        logits = self.clf(x_cat, x_cont)
+                        val_loss = criterion(logits, masks.float())
+
+                        loss_in_epoch_val += val_loss.item()
+
+                        batch += 1
+
+                # loss average over all batches
+                train_loss_all = loss_in_epoch_train / len(train_loader_pretrain)
+                val_loss_all = loss_in_epoch_val / len(val_loader_pretrain)
+
+                self._stats_pretrain_epoch.append(
+                    {
+                        "train_loss": train_loss_all,
+                        "val_loss": val_loss_all,
+                        "step": step,
+                        "epoch": epoch,
+                    }
+                )
+
+                print(f"train loss: {train_loss}")
+                print(f"val loss: {val_loss}")
+
+            # https://discuss.huggingface.co/t/clear-gpu-memory-of-transformers-pipeline/18310/2
+            del train_loader_pretrain, val_loader_pretrain
+            gc.collect()
+            torch.cuda.empty_cache()
+
+        # set target head, if not set
+        self.clf.transformer.head = target_head
+        self.clf.to(self.dl_params["device"])
+
+        # start finetuning beneath
+        check_classification_targets(y)
+        X, y = check_X_y(X, y, multi_output=False, accept_sparse=False)
+
+        # use in-sample instead of validation set, if None is provided
         if eval_set:
             X_val, y_val = eval_set
             X_val, y_val = check_X_y(
@@ -184,33 +403,51 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         # save for accuracy calculation
         len_x_val = len(X_val)
+        weight = np.geomspace(0.001, 1, num=len(y))
 
-        self.classes_ = np.array([-1, 1])
-
-        train_loader = self.array_to_dataloader(X, y)
+        train_loader_finetune = self.array_to_dataloader_finetune(X, y, weight)
         # no weight for validation set / every sample with weight = 1
-        val_loader = self.array_to_dataloader(X_val, y_val)
+        val_loader_finetune = self.array_to_dataloader_finetune(X_val, y_val)
 
         # free up memory
         del X, y, X_val, y_val
         gc.collect()
         torch.cuda.empty_cache()
 
-        self.clf = self.module(**self.module_params)
-
-        # use multiple gpus, if available
-        self.clf = nn.DataParallel(self.clf).to(self.dl_params["device"])
-
         # half precision, see https://pytorch.org/docs/stable/amp.html
         scaler = torch.cuda.amp.GradScaler()
+
+        # Specify parameters for which weight decay should be disabled
+        # https://github.com/Yura52/tabular-dl-revisiting-models/blob/main/bin/ft_transformer.py
+        no_decay = ["tokenizer", ".norm", ".bias"]
+
+        # Create a list of parameter groups
+        param_groups = [
+            {
+                "params": [
+                    p
+                    for n, p in self.clf.named_parameters()
+                    if not any(nd in n for nd in no_decay)
+                ],
+                "weight_decay": self.optim_params["weight_decay"],
+            },
+            {
+                "params": [
+                    p
+                    for n, p in self.clf.named_parameters()
+                    if any(nd in n for nd in no_decay)
+                ],
+                "weight_decay": 0.0,
+            },
+        ]
+
         # Generate the optimizers
         optimizer = optim.AdamW(
-            self.clf.parameters(),
+            param_groups,
             lr=self.optim_params["lr"],
-            weight_decay=self.optim_params["weight_decay"],
         )
 
-        max_steps = self.epochs * len(train_loader)
+        max_steps = self.epochs_finetune * len(train_loader_finetune)
         warmup_steps = int(0.05 * max_steps) + 1  # 5% of max steps
         scheduler = CosineWarmupScheduler(
             optimizer=optimizer, warmup=warmup_steps, max_iters=max_steps
@@ -218,20 +455,19 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         # see https://stackoverflow.com/a/53628783/5755604
         # no sigmoid required; numerically more stable
-        # do not reduce, calculate mean after multiplication with weight
-        criterion = nn.BCEWithLogitsLoss(reduction="mean")
+        criterion = nn.BCEWithLogitsLoss(reduction="none")
 
         # keep track of val loss and do early stopping
         early_stopping = EarlyStopping(patience=10)
 
         step = 0
-        best_accuracy = -1
+        best_accuracy = -1.0
 
         # save stats in classifier
         self._stats_step = []
         self._stats_epoch = []
 
-        for epoch in range(self.epochs):
+        for epoch in range(self.epochs_finetune):
 
             # perform training
             loss_in_epoch_train = 0
@@ -239,7 +475,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             self.clf.train()
 
-            for x_cat, x_cont, _, targets in train_loader:
+            for x_cat, x_cont, weights, targets in train_loader_finetune:
 
                 # reset the gradients back to zero
                 self.clf.train()
@@ -248,15 +484,14 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 # compute the model output and train loss
                 with torch.autocast(device_type="cuda", dtype=torch.float16):
                     logits = self.clf(x_cat, x_cont).flatten()
-                    train_loss = criterion(logits, targets)
+                    intermediate_loss = criterion(logits, targets)
+                    train_loss = torch.sum(weights * intermediate_loss) / torch.sum(
+                        weights
+                    )
 
                 # https://pytorch.org/docs/stable/amp.html
                 # https://discuss.huggingface.co/t/why-is-grad-norm-clipping-done-during-training-by-default/1866
                 scaler.scale(train_loss).backward()
-                # scaler.unscale_(optimizer)
-                # nn.utils.clip_grad_norm_(
-                #     self.clf.parameters(), 5, error_if_nonfinite=False
-                # )
                 scaler.step(optimizer)
                 scaler.update()
 
@@ -278,7 +513,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
             val_batch = 0
             with torch.no_grad():
-                for x_cat, x_cont, _, targets in val_loader:
+                for x_cat, x_cont, weights, targets in val_loader_finetune:
                     logits = self.clf(x_cat, x_cont)
                     logits = logits.flatten()
 
@@ -288,14 +523,17 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                     # loss calculation.
                     # Criterion contains softmax already.
-                    val_loss = criterion(logits, targets)
+                    intermediate_loss = criterion(logits, targets)
+                    val_loss = torch.sum(weights * intermediate_loss) / torch.sum(
+                        weights
+                    )
                     loss_in_epoch_val += val_loss.item()
 
                     # print(f"[{epoch}-{val_batch}] val loss: {val_loss}")
                     val_batch += 1
             # loss average over all batches
-            train_loss_all = loss_in_epoch_train / len(train_loader)
-            val_loss_all = loss_in_epoch_val / len(val_loader)
+            train_loss_all = loss_in_epoch_train / len(train_loader_finetune)
+            val_loss_all = loss_in_epoch_val / len(val_loader_finetune)
             # correct samples / no samples
             val_accuracy = correct / len_x_val
             print(f"train loss: {train_loss_all}")
@@ -317,7 +555,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 best_accuracy = val_accuracy
 
             self.callbacks.on_epoch_end(
-                epoch, self.epochs, train_loss_all, val_loss_all
+                epoch, self.epochs_finetune, train_loss_all, val_loss_all
             )
 
             # return early if val accuracy doesn't improve. Minus to minimize.
@@ -333,12 +571,16 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self._checkpoint_restore()
 
         # https://discuss.huggingface.co/t/clear-gpu-memory-of-transformers-pipeline/18310/2
-        del train_loader, val_loader
+        del train_loader_finetune, val_loader_finetune
         gc.collect()
         torch.cuda.empty_cache()
 
         # is fitted flag
         self.is_fitted_ = True
+
+        # disable random shuffle once fitted
+        self.dl_params.update({"shuffle": False})
+
         return self
 
     def predict(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
@@ -371,7 +613,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         X = check_array(X, accept_sparse=False)
         y = np.zeros(len(X))
 
-        test_loader = self.array_to_dataloader(X, y)
+        test_loader = self.array_to_dataloader_finetune(X, y)
 
         self.clf.eval()
 

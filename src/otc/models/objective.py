@@ -149,15 +149,14 @@ class FTTransformerObjective(Objective):
             pretrain (bool, optional): Whether to pretrain. Defaults to False.
         """
         self._cat_features = [] if not cat_features else cat_features
-        self._cat_cardinalities = (
-            [] if not cat_cardinalities else cat_cardinalities
-        )
+        self._cat_cardinalities = [] if not cat_cardinalities else cat_cardinalities
         self._cont_features: list[int] = [
             x for x in x_train.columns.tolist() if x not in self._cat_features
         ]
 
         self._clf: BaseEstimator
         self._callbacks = CallbackContainer([SaveCallback(), PrintCallback()])
+        self._pretrain = pretrain
 
         super().__init__(x_train, y_train, x_val, y_val, name, pretrain)
 
@@ -227,7 +226,7 @@ class FTTransformerObjective(Objective):
         dl_params: dict[str, Any] = {
             "batch_size": batch_size
             * max(no_devices, 1),  # dataprallel splits batches across devices
-            "shuffle": False,
+            "shuffle": True,  # only used during training
             "device": device,
         }
 
@@ -236,6 +235,7 @@ class FTTransformerObjective(Objective):
             "feature_tokenizer": FeatureTokenizer(**feature_tokenizer_kwargs),  # type: ignore # noqa: E501
             "cat_features": self._cat_features,
             "cat_cardinalities": self._cat_cardinalities,
+            "d_token": d_token,
         }
 
         optim_params = {"lr": lr, "weight_decay": weight_decay}
@@ -246,6 +246,7 @@ class FTTransformerObjective(Objective):
             optim_params=optim_params,
             dl_params=dl_params,
             callbacks=self._callbacks,  # type: ignore # noqa: E501
+            pretrain=self._pretrain,
         )
 
         self._clf.fit(
