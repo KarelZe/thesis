@@ -15,9 +15,9 @@ from pathlib import Path
 from typing import Any
 
 import optuna
+import wandb
 from catboost import CatBoostClassifier
 
-import wandb
 from otc.config.config import settings
 from otc.data.fs import fs
 from otc.models.transformer_classifier import TransformerClassifier

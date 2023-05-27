@@ -1,5 +1,5 @@
 """
-Implementation of FTTraansformer model.
+FT-Transformer.
 
 Adapted from:
 https://github.com/Yura52/rtdl/
@@ -54,12 +54,12 @@ def _all_or_none(values: list[Any]) -> bool:
 
 class CLSHead(nn.Module):
     """
-    2 Layer MLP projection head
+    2 Layer MLP projection head.
     """
 
     def __init__(self, *, d_in: int, d_hidden: int):
         """
-        tbd
+        Initialize the module.
         """
         super().__init__()
         self.first = nn.Linear(d_in, d_hidden)
@@ -67,7 +67,7 @@ class CLSHead(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
-        tbd
+        Forward pass.
         """
         x = x[:, 1:]
         x = self.out(F.relu(self.first(x))).squeeze(2)
