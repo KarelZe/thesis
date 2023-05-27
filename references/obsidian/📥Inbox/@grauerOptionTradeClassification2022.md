@@ -23,14 +23,14 @@ related:
 - Only one similar work (Savickas and Wilson (2003)).” (Grauer et al., 2022, p. 1)
 - “Generally, quote rules outperform tick rules by far.” (Grauer et al., 2022, p. 3)
 - **Novelty:** 💥 “The highest success rate of 63.92% can be achieved by applying the quote rule first to NBBO and then to ISE quotes, and classifying all remaining trades using the reverse tick rule” (Grauer et al., 2022, p. 3)
-- "Authors hypothesize, that weak performance that sophisticated customers placing limit order instead of market orders cause the poor performance"
+- "Authors hypothesise, that weak performance that sophisticated customers placing limit order instead of market orders cause the poor performance"
 
 ## Importance of option trade classifcation
 - “Particularly, the trade direction is required to determine the information content of trades, the order imbalance and inventory accumulation of liquidity providers, the price impact of transactions, and to calculate many liquidity measures.” (Grauer et al., 2022, p. 1)
 
 ## Data and Inference of true trade side
 - “LiveVol provides intraday transaction-level option data for all option trades on all U.S. exchanges.” (Grauer et al., 2022, p. 7)
-- “We filter out option trades with a trading price less than or equal to zero. We also remove trades with negative or zero volume and those whose trading volume exceeds 10 million contracts. Furthermore, we delete entries with multiple underlying symbols for the same root and other duplicates along with any cancelled trades.” (Grauer et al., 2022, p. 7)
+- “We philtre out option trades with a trading price less than or equal to zero. We also remove trades with negative or zero volume and those whose trading volume exceeds 10 million contracts. Furthermore, we delete entries with multiple underlying symbols for the same root and other duplicates along with any cancelled trades.” (Grauer et al., 2022, p. 7)
 - "We end up with eight categories covering buy and sell volumes for each of the four trader types by option series and trading day." (Grauer et al., 2022, p. 7)
 - ISE sample contains twelve-year period from May 2, 2005 to May 31, 2017. (Grauer et al., 2022, p. 7)
 - The matched ISE sample contains 49,203,747 option trades. (Grauer et al., 2022, p. 7)
@@ -55,7 +55,7 @@ related:
 - **Trade size rule:** classify trades for which the trade size is equal to the quoted bid size as customer buys and those with a trade size equal to the ask size as customer sells.
 - “After applying this “trade size rule”, the existing trade classification algorithms are applied to all other trades for which the trade size is not equal to one of the quote sizes (or for which it is equal to both the bid and the ask size). Panel A of Table 4 shows that this modification leads to a substantial improvement between 10.7% and 11.3% in the performance of the quote rule and combined methods and an improvement of 5.6% to 7.3% for the tick tests.” (Grauer et al., 2022, p. 13)
 
-- **Intuition for depth rule:** “We hypothesize that a larger bid or ask quoted size, i.e., a higher depth at the best bid or ask, indicates a higher liquidity similar to a tighter bid or ask quote” (Grauer et al., 2022, p. 14)
+- **Intuition for depth rule:** “We hypothesise that a larger bid or ask quoted size, i.e., a higher depth at the best bid or ask, indicates a higher liquidity similar to a tighter bid or ask quote” (Grauer et al., 2022, p. 14)
 - **Depth rule:** As a consequence, we classify midspread trades as buyer-initiated, if the ask size exceeds the bid size, and as seller-initiated, if the bid size is higher than the ask size.
 - Applying our proposed “depth rule” after using the trade size rule and quote rules improves the performance by around 0.8%.
 - “We show the overall success rates of the classification algorithms using our trade size rule and also calculate the change in the success rates compared to the same algorithms not using the trade size rule in parentheses. The results show that our new rule works best for small to medium-sized trades and even leads to a slight deterioration of the performance for the largest trade sizes.” (Grauer et al., 2022, p. 15)
@@ -73,7 +73,7 @@ related:
 ## Robustness
 - “Finally, to compare the performance of the algorithms over time, we look at the **individual years** of our sample period. To conserve space, we compute average success rates for the different specifications of the quote, tick, LR, reverse LR, EMO, and depth rules.” (Grauer et al., 2022, p. 19)
 - **Low success rate on index options:** “Comparing the classification precision of options written on common stocks, index options, and options written on other underlyings (mainly ETFs), we find **lower success rates** for **index options**, which is consistent with Savickas and Wilson (2003). Interestingly, the improvements due to our trade size rule are particularly high for index options at the CBOE.” (Grauer et al., 2022, p. 20)
-- "Summarizing the results from our robustness checks, we find that in all subsamples and for **all existing trade classification algorithms**, improvements due to the application of our new trade size rule are positive and range between 1% and 23%."(Grauer et al., 2022, p. 20)
+- "Summarising the results from our robustness cheques, we find that in all subsamples and for **all existing trade classification algorithms**, improvements due to the application of our new trade size rule are positive and range between 1% and 23%."(Grauer et al., 2022, p. 20)
 - “Most importantly, in contrast to standard and reverse tick tests, our newly proposed **depth rule leads to a significant improvement** compared to using the quote rule alone, pointing to its superior performance to sign midspread trades that quote rules cannot classify.” (Grauer et al., 2022, p. 21)
 
 ## Conclusion

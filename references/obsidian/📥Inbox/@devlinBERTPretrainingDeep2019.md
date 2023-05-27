@@ -16,7 +16,7 @@
 
 ![[bert-architecture.png]]
 # Annotations#
-The first token of every sequence is always a special classification token ([CLS]). The final hidden state corresponding to this token is used as the aggregate sequence representation for classification tasks. Sentence pairs are packed together into a single sequence. We differentiate the sentences in two ways. First, we separate them with a special token ([SEP]). Second, we add a learned embedding to every token indicating whether it belongs to sentence A or sentence B. As shown in Figure 1, we denote input embedding as E, the final hidden vector of the special [CLS] token as C ∈ RH , and the final hidden vector for the ith input token as Ti ∈ RH .
+The first token of every sequence is always a special classification token ([CLS]). The final hidden state corresponding to this token is used as the aggregate sequence representation for classification tasks. Sentence pairs are packed together into a single sequence. We differentiate the sentences in two ways. First, we separate them with a special token ([SEP]). Second, we add a learnt embedding to every token indicating whether it belongs to sentence A or sentence B. As shown in Figure 1, we denote input embedding as E, the final hidden vector of the special [CLS] token as C ∈ RH , and the final hidden vector for the ith input token as Ti ∈ RH .
 
 “We argue that current techniques restrict the power of the pre-trained representations, especially for the fine-tuning approaches. The major limitation is that standard language models are unidirectional, and this limits the choice of architectures that can be used during pre-training.” ([Devlin et al., 2019, p. 4171](zotero://select/library/items/PA8LRNM4)) ([pdf](zotero://open-pdf/library/items/WVJNKICQ?page=1&annotation=XRLRAYCB))
 
@@ -26,7 +26,7 @@ The first token of every sequence is always a special classification token ([CLS
 
 “We show that pre-trained representations reduce the need for many heavily-engineered taskspecific architectures.” ([Devlin et al., 2019, p. 4172](zotero://select/library/items/PA8LRNM4)) ([pdf](zotero://open-pdf/library/items/WVJNKICQ?page=2&annotation=DYF7MRXG))
 
-“During pre-training, the model is trained on unlabeled data over different pre-training tasks. For finetuning, the BERT model is first initialized with the pre-trained parameters, and all of the parameters are fine-tuned using labeled data from the downstream tasks.” ([Devlin et al., 2019, p. 4173](zotero://select/library/items/PA8LRNM4)) ([pdf](zotero://open-pdf/library/items/WVJNKICQ?page=3&annotation=3PWNNFTN))
+“During pre-training, the model is trained on unlabeled data over different pre-training tasks. For finetuning, the BERT model is first initialised with the pre-trained parameters, and all of the parameters are fine-tuned using labelled data from the downstream tasks.” ([Devlin et al., 2019, p. 4173](zotero://select/library/items/PA8LRNM4)) ([pdf](zotero://open-pdf/library/items/WVJNKICQ?page=3&annotation=3PWNNFTN))
 
 “A distinctive feature of BERT is its unified architecture across different tasks. There is minimal difference between the pre-trained architecture and the final downstream architecture.” ([Devlin et al., 2019, p. 4173](zotero://select/library/items/PA8LRNM4)) ([pdf](zotero://open-pdf/library/items/WVJNKICQ?page=3&annotation=MEXCVUI3))
 

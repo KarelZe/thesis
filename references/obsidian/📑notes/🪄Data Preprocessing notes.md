@@ -3,7 +3,7 @@
 - To inform our models which features are categorical, we pass the index the index of categorical features and the their cardinality to the models.
 - Discuss cardinality of categoricals.
 - strict assumption as we have out-of-vocabulary tokens e. g., unseen symbols like "TSLA".  (see done differently here https://keras.io/examples/structured_data/tabtransformer/)
-- Idea: Instead of assign an unknown token it could help assign to map the token to random vector. https://stackoverflow.com/questions/45495190/initializing-out-of-vocabulary-oov-tokens
+- Idea: Instead of assign an unknown token it could help assign to map the token to random vector. https://stackoverflow.com/questions/45495190/initialising-out-of-vocabulary-oov-tokens
 - Idea: reduce the least frequent root symbols.
 - Apply an idea similar to sentence piece. Here, the number of words in vocabulary is fixed https://github.com/google/sentencepiece. See repo for paper / algorithm.
 - For explosion in parameters also see [[@tunstallNaturalLanguageProcessing2022]]. Could apply their reasoning (calculate no. of parameters) for my work. 
@@ -13,8 +13,8 @@
 	- https://en.wikipedia.org/wiki/Additive_smoothing
 
 
-**Filter:**
-- What preprocessing have been applied. Minimal set of filters. See [[@grauerOptionTradeClassification2022]].
+**Philtre:**
+- What preprocessing have been applied. Minimal set of philtres. See [[@grauerOptionTradeClassification2022]].
 
 **Class imbalances:**
 - Data set is slightly imbalanced. Would not treat, as difference is only minor and makes it harder. Could make my final decision based on [[@japkowiczClassImbalanceProblem2002]] [[@johnsonSurveyDeepLearning2019]]. Some nice background is also in [[@huyenDesigningMachineLearning]]

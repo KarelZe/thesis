@@ -15,7 +15,7 @@ See [here.](https://uc2-jupyter.scc.kit.edu/)
 https://github.com/runpod/containers
 - https://www.runpod.io/blog/how-to-achieve-true-ssh-on-runpod
 - https://wiki.bwhpc.de/e/BwUniCluster2.0/Containers
-- Images that should work: https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch
+- Images that should work: https://catalogue .ngc.nvidia.com/orgs/nvidia/containers/pytorch
 
 ```shell
 docker image build -t first-try . 

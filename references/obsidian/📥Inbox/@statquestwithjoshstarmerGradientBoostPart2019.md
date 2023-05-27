@@ -24,7 +24,7 @@ related:
 $x_i$s characteristcs, $y_i$s predicted values.
 - loss function evaluates, how well we predict the target variable
 - loss function is squared residual$\frac{1}{2} (observed-predicted)^2$. Motivation of using the fraction in front is that it scales only linearly, when applying the change rule only the minus in front remains.
-- In the first step we initialize th emodel with a constant value. $\gamma$ refers to the predicted value. We start with a predicted value, taht minimizes the sum of squared residuals.
+- In the first step we initialise th emodel with a constant value. $\gamma$ refers to the predicted value. We start with a predicted value, taht minimises the sum of squared residuals.
 - We first take the derivative with respect to predicted for each observation, set equal to zero and solve. We end up with average of observed weights. Initial predicted value is average and just a leaf.
 - We make $M$ trees. $m$ refers to the $m$-th tree.
 - Compute $r_{i m}=-\left[\frac{\partial L\left(y_{i}, F\left(x_{i}\right)\right)}{\partial F\left(x_{i}\right)}\right]_{F(x)=F_{m-1}(x)}$ for $i=1, \ldots, n$ this is equal to (Observed-predicted), as the derivative is given by -1 * (observed-predicted) or because of linear scaling -0.5 * (observed -predicted). In the first iteration we plug in the mean for the residual. Using the formula we calculate all residuals. $r_{i,m}$s are called pseudoresiduals.

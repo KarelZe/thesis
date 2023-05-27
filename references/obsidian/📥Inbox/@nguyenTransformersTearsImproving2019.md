@@ -1,4 +1,4 @@
-*title:* Transformers without Tears: Improving the Normalization of Self-Attention
+*title:* Transformers without Tears: Improving the Normalisation of Self-Attention
 *authors:* Toan Q. Nguyen, Julian Salazar
 *year:* 2019
 *tags:* #transformer #layernorm #residual-connections 
@@ -18,4 +18,4 @@
 
 “We conjecture this has caused past convergence failures (Popel and Bojar, 2018; Shazeer and Stern, 2018), with LAYERNORMs in the residual path acting similarly to λi 6= 1; furthermore, warmup was needed to let LAYERNORM safely adjust scale during early parts of training.” ([Nguyen and Salazar, 2019, p. 2](zotero://select/library/items/EDLX35I6)) ([pdf](zotero://open-pdf/library/items/2PAADYR7?page=2&annotation=RQP4GPTS))
 
-“Inspired by He et al. (2016b), we apply LAYERNORM immediately before each sublayer (PRENORM): x\`+1 = x\` + F\`(LAYERNORM(x\`)). (3) This is cited as a stabilizer for Transformer training (Chen et al., 2018; Wang et al., 2019) and is already implemented in popular toolkits (Vaswani et al., 2018; Ott et al., 2019; Hieber et al., 2018), though not necessarily used by their default recipes. Wang et al. (2019) make a similar argument to motivate the success of PRENORM in training very deep Transformers. Note that one must append an additional normalization after both encoder and decoder so their outputs are appropriately scaled.” ([Nguyen and Salazar, 2019, p. 2](zotero://select/library/items/EDLX35I6)) ([pdf](zotero://open-pdf/library/items/2PAADYR7?page=2&annotation=HGX5V3N6))
+“Inspired by He et al. (2016b), we apply LAYERNORM immediately before each sublayer (PRENORM): x\`+1 = x\` + F\`(LAYERNORM(x\`)). (3) This is cited as a stabiliser for Transformer training (Chen et al., 2018; Wang et al., 2019) and is already implemented in popular toolkits (Vaswani et al., 2018; Ott et al., 2019; Hieber et al., 2018), though not necessarily used by their default recipes. Wang et al. (2019) make a similar argument to motivate the success of PRENORM in training very deep Transformers. Note that one must append an additional normalisation after both encoder and decoder so their outputs are appropriately scaled.” ([Nguyen and Salazar, 2019, p. 2](zotero://select/library/items/EDLX35I6)) ([pdf](zotero://open-pdf/library/items/2PAADYR7?page=2&annotation=HGX5V3N6))

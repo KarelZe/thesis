@@ -1,4 +1,4 @@
-*title:* Unsupervised Word Sense Disambiguation Rivaling Supervised Methods
+*title:* Unsupervised Word Sense Disambiguation Rivalling Supervised Methods
 *authors:* David Yarowsky
 *year:* 1994
 *tags:* #semi-supervised #classifier #supervised-learning #probabilistic-classification 
@@ -10,7 +10,7 @@
 ## Notes📍
 - Works with any supervised, probabilistic classification algorithm.
 - Some data is initially labelled and the remainder (typically 85-98 %) remains unlabeled.
-- It's a wrapper algorithm, that is hard to analyze. (found in [[@tanhaSemisupervisedSelftrainingDecision2017]])
+- It's a wrapper algorithm, that is hard to analyse. (found in [[@tanhaSemisupervisedSelftrainingDecision2017]])
 - Steps:
 	1. Train a supervised classifier on labelled data. Apply the classifier to the entire sample. Add examples to the training set, where the predicted class probability is above a threshold. Hence, we obtain pseudo labels.
 	2. Repeat iteratively. Teh training set will tend to grow, while the residual will tend to shrink.
@@ -35,13 +35,13 @@
 
 “Apply the resulting classifier to the entire sample set. Take those members in the residual that are tagged as SENSE-A or SENSE-B with probability above a certain threshold, and add those examples to the growing seed sets.” ([Yarowsky, 1995, p. 192](zotero://select/library/items/RUPT7G2Y)) ([pdf](zotero://open-pdf/library/items/BJB2UFED?page=4&annotation=2JZLN84D))
 
-“Optionally, the one-sense-per-discourse constraint is then used both to filter and augment this addition.” ([Yarowsky, 1995, p. 192](zotero://select/library/items/RUPT7G2Y)) ([pdf](zotero://open-pdf/library/items/BJB2UFED?page=4&annotation=4NMNNSI6))
+“Optionally, the one-sense-per-discourse constraint is then used both to philtre and augment this addition.” ([Yarowsky, 1995, p. 192](zotero://select/library/items/RUPT7G2Y)) ([pdf](zotero://open-pdf/library/items/BJB2UFED?page=4&annotation=4NMNNSI6))
 
 “When the training parameters are held constant, the algorithm will converge on a stable residual set.” ([Yarowsky, 1995, p. 192](zotero://select/library/items/RUPT7G2Y)) ([pdf](zotero://open-pdf/library/items/BJB2UFED?page=4&annotation=ITD7FHRK))
 
 “Repeat Step 3 iteratively. The training sets (e.g. SENSE-A seeds plus newly added examples) will tend to grow, while the residual will tend to shrink” ([Yarowsky, 1995, p. 192](zotero://select/library/items/RUPT7G2Y)) ([pdf](zotero://open-pdf/library/items/BJB2UFED?page=4&annotation=8WXE69Z4))
 
-“The classification procedure learned from the final supervised training step may now be applied to new data, and used to annotate the original untagged corpus with sense tags and probabilities.” ([Yarowsky, 1995, p. 193](zotero://select/library/items/RUPT7G2Y)) ([pdf](zotero://open-pdf/library/items/BJB2UFED?page=5&annotation=HNWDELQY))
+“The classification procedure learnt from the final supervised training step may now be applied to new data, and used to annotate the original untagged corpus with sense tags and probabilities.” ([Yarowsky, 1995, p. 193](zotero://select/library/items/RUPT7G2Y)) ([pdf](zotero://open-pdf/library/items/BJB2UFED?page=5&annotation=HNWDELQY))
 
 “Also, for an unsupervised algorithm it works surprisingly well, directly outperforming Schiitze's unsupervised algorithm 96.7 % to 92.2 %, on a test of the same 4 words. More impressively, it achieves nearly the same performance as the supervised algorithm given identical training contexts (95.5 % 19” ([Yarowsky, 1995, p. 195](zotero://select/library/items/RUPT7G2Y)) ([pdf](zotero://open-pdf/library/items/BJB2UFED?page=7&annotation=FRKWZ93T))
 

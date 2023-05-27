@@ -4,7 +4,7 @@ As a remedy, ([[@vaswaniAttentionAllYou2017]]3) add residual connections ([[@heD
 $$
 \boldsymbol{X} = \boldsymbol{X} + \operatorname{sub\_layer}\left(\boldsymbol{X}\right).
 $$
-Intuitively, the residual connection provides an alternative path for information to flow through the network, since some information can bypass the sub-layer and hence reach deeper layers within the stack. Also, exploding or vanishing gradients are mitigated, as gradients can bypass the sub-layer, eventually contributing towards an easier optimization ([[@liuRethinkingSkipConnection2020]]3591).  Residual connections moreover help to preserve the positional embeddings (see chapter [[🧵Positional Embedding]]), as the layer's inputs are maintained in the identity mapping.
+Intuitively, the residual connexion provides an alternative path for information to flow through the network, since some information can bypass the sub-layer and hence reach deeper layers within the stack. Also, exploding or vanishing gradients are mitigated, as gradients can bypass the sub-layer, eventually contributing towards an easier optimisation ([[@liuRethinkingSkipConnection2020]]3591).  Residual connections moreover help to preserve the positional embeddings (see chapter [[🧵Positional Embedding]]), as the layer's inputs are maintained in the identity mapping.
 
 **Notes:**
 [[🔗residual connections notes]]

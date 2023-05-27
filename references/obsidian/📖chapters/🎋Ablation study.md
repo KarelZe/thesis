@@ -1,1 +1,1 @@
-tbd
+- Do ablation studies. That is, the removal of one feature shouldn't cause the model to collapse. (idea found in [[@huyenDesigningMachineLearning]])

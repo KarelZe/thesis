@@ -1,0 +1,87 @@
+%% Creator: Inkscape 1.2.2 (732a01da63, 2022-12-09), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'research-framework.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{396.84274292bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.5173744)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{research-framework.pdf}}%
+    \put(0.02722765,0.2321276){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}OptionMetrics\end{tabular}}}}%
+    \put(0.03614029,0.20898283){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Option Data\end{tabular}}}}%
+    \put(0.05761144,0.42108007){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}LiveVol\end{tabular}}}}%
+    \put(0.04293423,0.3979353){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Trade Data\end{tabular}}}}%
+    \put(0.01948336,0.32698325){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}ISE Open/Close\end{tabular}}}}%
+    \put(0.03402994,0.30383848){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Trade Profile\end{tabular}}}}%
+    \put(0.83871059,0.28107313){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}SAGE Values\end{tabular}}}}%
+    \put(0.82141653,0.11071237){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Effective Spread\end{tabular}}}}%
+    \put(0.84108574,0.08756758){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Calculation\end{tabular}}}}%
+    \put(0.827142,0.22264205){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Attention Maps\end{tabular}}}}%
+    \put(0.85194486,0.40666202){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Accuracy\end{tabular}}}}%
+    \put(0.59473049,0.10881525){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Lee \& Ready\end{tabular}}}}%
+    \put(0.31838957,0.32505512){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Data Pre-Processing\end{tabular}}}}%
+    \put(0.17003901,0.3243118){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Data Collection\end{tabular}}}}%
+    \put(0.5684858,0.40855913){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Gradient Boosting\end{tabular}}}}%
+    \put(0.56806465,0.35695764){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Gradient Boosting \end{tabular}}}}%
+    \put(0.56920294,0.33191575){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}With Self-Training\end{tabular}}}}%
+    \put(0.80401998,0.33077749){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Feature Importance \end{tabular}}}}%
+    \put(0.8042211,0.45446927){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Metrics \end{tabular}}}}%
+    \put(0.59481395,0.28259081){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Transformer\end{tabular}}}}%
+    \put(0.59430173,0.22795395){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Transformer \end{tabular}}}}%
+    \put(0.57441619,0.20480918){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}With Pre-Training\end{tabular}}}}%
+    \put(0.63581434,0.05228129){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}…\end{tabular}}}}%
+    \put(0.5546445,0.15131059){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Classical\end{tabular}}}}%
+    \put(0.55568791,0.45598695){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Machine Learning\end{tabular}}}}%
+    \put(0.79854114,0.14979288){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Application Study\end{tabular}}}}%
+    \put(0.01415578,0.48823788){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Data and Data \end{tabular}}}}%
+    \put(0.79462928,0.49582633){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Evaluation\end{tabular}}}}%
+    \put(0.54003668,0.49582633){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Training and Tuning\end{tabular}}}}%
+  \end{picture}%
+\endgroup%

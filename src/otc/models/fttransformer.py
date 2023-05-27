@@ -536,18 +536,6 @@ class MultiheadAttention(nn.Module):
             .reshape(batch_size * self.n_heads, n_tokens, d_head)
         )
 
-#     def save_attn_gradients(self, attn_gradients):
-#         self.attn_gradients = attn_gradients
-
-#     def get_attn_gradients(self):
-#         return self.attn_gradients
-
-#     def get_attn(self):
-#         return self.attn
-
-#     def save_attn(self, attn):
-#         self.attn = attn
-
     def forward(
         self,
         x_q: torch.Tensor,
@@ -588,10 +576,6 @@ class MultiheadAttention(nn.Module):
         k = self._reshape(k)
         attention_logits = q @ k.transpose(1, 2) / math.sqrt(d_head_key)
         attention_probs = F.softmax(attention_logits, dim=-1)
-
-        # https://github.com/hila-chefer/Transformer-Explainability/blob/c3e578f76b954e8528afeaaee26de3f07e3fe559/BERT_explainability/modules/BERT/BERT.py#L348
-        # self.save_attn(attention_probs)
-        # attention_probs.register_hook(self.save_attn_gradients)
 
         if self.dropout is not None:
             attention_probs = self.dropout(attention_probs)

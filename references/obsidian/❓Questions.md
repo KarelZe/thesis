@@ -1,7 +1,7 @@
 ## Open
 
 ## Closed
-- Ask for comments on theory. -> will comment / excited to read.
+- Ask for comments on theory. -> will comment / excited to read. Received comments @ 23 May.
 - Discuss changes i.e., removal of TabTransformer / change of pre-training routine. -> Changes are ok.
 - Discuss questions from email. -> unsure about previous trade price. Didn't do data pre-processing so can't tell about order.
 - Discuss latest, improved results for CBOE / semi-supervised models. -> Should do model transfer on CBOE data. We discussed leakage. Think about what my conclusion should be.
@@ -13,7 +13,7 @@
 - Do summary statistics in Panel A.2 and B.2 only include customer orders only or all account types? -> All trades, customers, professional customers, broker / dealers...
 - There are some inconsistencies in the reported results compared to Tables 3 and 4 in Grauer et al.
     - reported accuracy for the quote rule (ISE, NBBO) might be implausible. (Table 4 / panel A) -> Fixed in updated version of paper.
-    - Also, deviations for depth rule + reverse LR (NBBO, ISE) are relatively large (ca. 0.5). Is it possible to get some unaggregated results to compare the classification? -> Depth rule works other than described. They do not filter for midspread trades, but apply the rule after the quote rule, which should theoretically only leave back trades at midpoint. Also depth rule is actually applied twice first to nbbo. First quote rule NBBO, then depth rule NBBO, then quote rule, then depth rule ex, finally rev tick test.
+    - Also, deviations for depth rule + reverse LR (NBBO, ISE) are relatively large (ca. 0.5). Is it possible to get some unaggregated results to compare the classification? -> Depth rule works other than described. They do not philtre for midspread trades, but apply the rule after the quote rule, which should theoretically only leave back trades at midpoint. Also depth rule is actually applied twice first to nbbo. First quote rule NBBO, then depth rule NBBO, then quote rule, then depth rule ex, finally rev tick test.
     - How can the tick rule classify all trades? (Table 3) In my sample, the previous price is among the most frequent missing values. Thus, I assign the trade initiator randomly quite frequently. -> Provided some samples for further analysis.
 - When do I obtain the remaining data? Note, there are practically only 6 weeks left. -> Beginning next week.
 - Ask about the scope of related work. Currently, trade classification in option markets (i) and trade classification with machine learning (ii).  -> LGTM, also avoids that the work gets out-of-hand.
@@ -26,12 +26,12 @@
 - Ask if the glossary is ok. -> Never seen before, but ok.
 - I'm currently struggling to obtain cluster resources with GPUs through SLURM or Jupyter. Some nodes are down and my jobs seem to have low priority. 
 - Regarding the theoretical background, what can I assume to be common knowledge regarding ML e. g., backpropagation, feed-forward network, or bias?
-- I tried to feature engineer the largest dataset (incl. quotes from all exchanges) but ran into out-of-memory errors even on the largest cluster instances and with careful garbage collection. I'll no longer use date features, due to the missing economical foundations and marginal performance improvements (see https://wandb.ai/fbv/thesis/runs/2xvaz9dl). Thus, I'd stick to the 3 smaller ones (classical, yours, yours + option features). Did you study the feature set for the upcoming paper? -> It's ok. Just consider the remaining feature sets. Feature set definition is now ok.
+- I tried to feature engineer the largest dataset (incl. quotes from all exchanges) but ran into out-of-memory errors even on the largest cluster instances and with careful rubbish collection. I'll no longer use date features, due to the missing economical foundations and marginal performance improvements (see https://wandb.ai/fbv/thesis/runs/2xvaz9dl). Thus, I'd stick to the 3 smaller ones (classical, yours, yours + option features). Did you study the feature set for the forthcoming paper? -> It's ok. Just consider the remaining feature sets. Feature set definition is now ok.
 - Regarding the theoretical background, what can I assume to be common knowledge regarding ML e. g., backpropagation, feed-forward network, or bias? -> Everything should be understandable with basic ml knowledge. Intuition should be clear.
 - Ask what the `day_vol` feature is. Found no metadata for it. -> It's the daily volume per option series. 
 - Discuss correlated features in feature importance calculation. -> Open. I Still need to find a solution.
 - Ask for feedback regarding the TOC. Indicate where I deviate from my initial expose (i. e., swap TabNet for FTTransformer due to slow training and no implementation of Rosenthal's rule due to low importance. Added ablation study, simulation, and list of algorithms). -> ok, but might be to fine-grained. Use bold text instead of chapters.
-- I marked TabNet as optional in my TOC, due to the very slow training/convergence. Architecture is hard to optimize, as e. g., some gradients are hand-crafted and no approximations are available. Similar expected performance. -> Change is ok.
+- I marked TabNet as optional in my TOC, due to the very slow training/convergence. Architecture is hard to optimise, as e. g., some gradients are hand-crafted and no approximations are available. Similar expected performance. -> Change is ok.
 - Was able to improve the test accuracy of the gradient-boosting approach to 72.84 % (ca. 6 % above SOTA) on the test set. Would this be sufficient for the thesis? It's hard to squeeze out more accuracy from these few features. -> Figures are ok.
 - Discuss the idea of describing all rules as algorithms for preciseness. -> Ok, but not just. Add text as well.
 - Request final dataset e. g., CBOE data for comparison and unlabelled dataset for implementing and testing pre-training routines. -> Will provide. Might take some time.
@@ -41,7 +41,7 @@
 - Do you have a preference regarding eda? I would do it on the training set only, then check if engineered features work on validation set. I currently use the whole data set but plan to switch (see [here](https://github.com/KarelZe/thesis/blob/feature-engineering/notebooks/3.0a-mb-data_preprocessing_explanatory_data_analysis.ipynb)).  Different views possible (see e. g., [here](https://stats.stackexchange.com/questions/424263/should-exploratory-data-analysis-include-validation-set)). -> Training set only.
 
 - How did you define "others" in table 9? Using special codes? -> From data on underlying. Will receive the additional feature.
-- Could I please get the current stock price for moneyness to integrate them in my robustness checks? -> Yes, will receive the additional feature.
+- Could I please get the current stock price for moneyness to integrate them in my robustness cheques? -> Yes, will receive the additional feature.
 - Symbol / root is somewhat problematic, as some are only in the train set or test set. Could still use root and rely on embedding or use special codes as features. Might be wise to use a more generic feature like sector instead.
 - What are the expectations I have to meet in order to reach $\geq 1.3$?
 - Any feedback to TOC / expose / first results? -> *It's ok.*

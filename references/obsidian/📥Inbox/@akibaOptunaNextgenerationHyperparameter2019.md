@@ -1,5 +1,5 @@
 
-title: Optuna: a next-generation hyperparameter optimization framework
+title: Optuna: a next-generation hyperparameter optimisation framework
 authors: Takuya Akiba, Shotaro Sano, Toshihiko Yanase, Takeru Ohta, Masanori Koyama
 year: 2018
 tags :  #hyperparameter-tuning

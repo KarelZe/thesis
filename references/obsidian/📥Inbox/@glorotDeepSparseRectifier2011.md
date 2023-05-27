@@ -17,7 +17,7 @@ year: 2011
 - computations are cheap as now exponential function is required (p. 318)
 
 ## Disadvantages:
-- hard saturation at 0 may hurt optimization by blocking gradient back-propagation
-- Another problem could arise due to the unbounded behavior of the activations; one may thus want to use a regularizer to
+- hard saturation at 0 may hurt optimisation by blocking gradient back-propagation
+- Another problem could arise due to the unbounded behaviour of the activations; one may thus want to use a regularizer to
 prevent potential numerical problems.
 - Finally, rectifier networks are subject to illconditioning of the parametrization. Biases and weights can be scaled in different (and consistent) ways while preserving the same overall network function.

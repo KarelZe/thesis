@@ -3,7 +3,7 @@ Over
 
 
 ## Previous attempt
-One approach that aims to reduce the bias, is *gradient boosting*, which was popularized by [[@friedmanGreedyFunctionApproximation2001]]. *Gradient Boosting* is different from the afore-mentioned approach, as it sequentially adds the approximations of several over-simplified models (so-called *weak-lerners*) to an ensemble estimate. Shallow trees are commonly used as weak learners [[@friedmanGreedyFunctionApproximation2001]]. Due to the sequential ensemble building, the construction of the tree is only dependent on the trees previously built. 
+One approach that aims to reduce the bias, is *gradient boosting*, which was popularised by [[@friedmanGreedyFunctionApproximation2001]]. *Gradient Boosting* is different from the afore-mentioned approach, as it sequentially adds the approximations of several over-simplified models (so-called *weak-lerners*) to an ensemble estimate. Shallow trees are commonly used as weak learners [[@friedmanGreedyFunctionApproximation2001]]. Due to the sequential ensemble building, the construction of the tree is only dependent on the trees previously built. 
 
 Recall from section [[🎄Decision Trees]] that a tree can be expressed as
 
@@ -18,14 +18,14 @@ $$
 
 Here, $M$ sets the number of iterations or trees being built. Instead of fitting trees directly to the data, as with Bagging, the model in the $m$-th iteration is fitted to the residuals of the previous model. The previously built trees are not altered, but required for later trees.
 
-At each iteration one seeks to find the optimal parameter set $\Theta_{m}=\left\{R_{j m}, \gamma_{j m}\right\}_{1}^{J_{m}}$ for the $m$ th iteration, that minimizes the loss between the true estimate and the estimate from the current model $f_{m-1}\left(x_{i}\right)$ and the newly added tree, updating the residuals:
+At each iteration one seeks to find the optimal parameter set $\Theta_{m}=\left\{R_{j m}, \gamma_{j m}\right\}_{1}^{J_{m}}$ for the $m$ th iteration, that minimises the loss between the true estimate and the estimate from the current model $f_{m-1}\left(x_{i}\right)$ and the newly added tree, updating the residuals:
 
 $$
 \hat{\Theta}_{m}=\arg \min _{\Theta_{m}} \sum_{i=1}^{N} L\left(y_{i}, f_{m-1}\left(x_{i}\right)+T\left(x_{i} ; \Theta_{m}\right)\right).
 $$
 <mark style="background: #FFB86CA6;">The tree being added, is selected greedily, thereby considering only the improvement in the current iteration and neglecting the impact on the full grown ensemble. (for citation on "greedy" see [[@prokhorenkovaCatBoostUnbiasedBoosting2018]])</mark>
 
-A common loss function for regression is the *squared error loss*, which can be solved for analytically by taking the derivative and setting it equal to zero. The predictions of a tree $T\left(x_{i} ; \Theta_{m}\right)$, that yield the maximum decrease of equation (...) are similar to the components of the *negative gradient descent*. The major drawback is however, that gradient is only defined for data points $x_i$ seen during training, contradicting the creation of a generalizing model $f_{M}(x)$. A more robust approach can be found in *gradient boosting*.
+A common loss function for regression is the *squared error loss*, which can be solved for analytically by taking the derivative and setting it equal to zero. The predictions of a tree $T\left(x_{i} ; \Theta_{m}\right)$, that yield the maximum decrease of equation (...) are similar to the components of the *negative gradient descent*. The major drawback is however, that gradient is only defined for data points $x_i$ seen during training, contradicting the creation of a generalising model $f_{M}(x)$. A more robust approach can be found in *gradient boosting*.
 
 Focusing only on the update step, which is executed $m = 1,\cdots, M$-times, *gradient boosting* starts by calculating the negative gradient of the loss between the observed value for the $i$-th sample and its current predicted value:
 $$
@@ -33,14 +33,14 @@ r_{i m}=-\left[\frac{\partial L\left(y_{i}, f\left(x_{i}\right)\right)}{\partial
 $$
 The components of the negative gradient are referred to as *pseudo residuals*.
 
-Subsequently, a regression tree is then fit on these pseudo residuals. The $m$-th regression tree contains $J$ terminal regions denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. The predicted estimate $\gamma_{j,m}$ for the $j$-th region is obtained by minimizing e. g. the squared loss:
+Subsequently, a regression tree is then fit on these pseudo residuals. The $m$-th regression tree contains $J$ terminal regions denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. The predicted estimate $\gamma_{j,m}$ for the $j$-th region is obtained by minimising e. g. the squared loss:
 
 $$
 \gamma_{j m}=\arg \min _{\gamma} \sum_{x_{i} \in R_{j m}} \mathcal{L}\left(y_{i}, f_{m-1}\left(x_{i}\right)+\gamma\right)
 $$
 <mark style="background: #FFB8EBA6;">TODO: Where does weighting of the loss function comes into play? See [[@prokhorenkovaCatBoostUnbiasedBoosting2018]] paper. Also see https://catboost.ai/en/docs/concepts/loss-functions-classification#Logit </mark>
 
-In addition to imposing constraints on the individual trees,  the boosted ensemble can also be regularized by extending the loss (Eq. (...)) for a penalty term.  
+In addition to imposing constraints on the individual trees,  the boosted ensemble can also be regularised by extending the loss (Eq. (...)) for a penalty term.  
 
 <mark style="background: #FFB8EBA6;">TODO: See [[@chenXGBoostScalableTree2016]] for detailed explanation. Idea can also be found in [[@friedmanAdditiveLogisticRegression2000]]. Also [[@hastietrevorElementsStatisticalLearning2009]] (p. 617) could be interesting. </mark>
 
@@ -115,7 +115,7 @@ $$
 Generally, the meaning of a score $f(x)$ is encapsulated in a positive loss function $l(y, f(x))$ that represents the cost of predicting $f(x)$ when the true target value is $y$. Specific examples are the squared loss $l(y, f(x))=(y-f(x))^2$ for regression problems and the $\operatorname{logistic} \operatorname{loss} l(y, f(x))=\log (1+\exp (-y f(x)))$ for classification problems. However, we only assume that $l$ is twice differentiable and convex in its second argument. (found here[[@boleyBetterShortGreedy2021]]; do not cite but like their presentation)
 
 
-**Gradient Boosting with Uncertainity:🐈** Gradient boosting is a powerful machine learning technique especially useful on tasks containing heterogeneous features. It iteratively combines weak models, such as decision trees, to obtain more accurate predictions. Formally, given a dataset $\mathcal{D}$ and a loss function $L: \mathbb{R}^2 \rightarrow \mathbb{R}$, the gradient boosting algorithm (Friedman, 2001) iteratively constructs a model $F: X \rightarrow \mathbb{R}$ to minimize the empirical risk $\mathcal{L}(F \mid \mathcal{D})=\mathbb{E}_{\mathcal{D}}[L(F(\boldsymbol{x}), y)]$. At each iteration $t$ the model is updated as:
+**Gradient Boosting with Uncertainity:🐈** Gradient boosting is a powerful machine learning technique especially useful on tasks containing heterogeneous features. It iteratively combines weak models, such as decision trees, to obtain more accurate predictions. Formally, given a dataset $\mathcal{D}$ and a loss function $L: \mathbb{R}^2 \rightarrow \mathbb{R}$, the gradient boosting algorithm (Friedman, 2001) iteratively constructs a model $F: X \rightarrow \mathbb{R}$ to minimise the empirical risk $\mathcal{L}(F \mid \mathcal{D})=\mathbb{E}_{\mathcal{D}}[L(F(\boldsymbol{x}), y)]$. At each iteration $t$ the model is updated as:
 $$
 F^{(t)}(\boldsymbol{x})=F^{(t-1)}(\boldsymbol{x})+\epsilon h^{(t)}(\boldsymbol{x})
 $$
@@ -126,8 +126,8 @@ $$
 A weak learner $h^{(t)}$ is associated with parameters $\phi^{(t)} \in \mathbb{R}^d$. We write $h^{(t)}\left(\boldsymbol{x}, \boldsymbol{\phi}^{(t)}\right)$ to reflect this dependence. The set of weak learners $\mathcal{H}$ often consists of shallow decision trees, which are models that recursively partition the feature space into disjoint regions called leaves. Each leaf $R_j$ of the tree is assigned to a value, which is the estimated response $y$ in the corresponding region. We can write $h\left(\boldsymbol{x}, \boldsymbol{\phi}^{(t)}\right)=\sum_{j=1}^d \phi_j^{(t)} \mathbf{1}_{\left\{\boldsymbol{x} \in R_j\right\}}$, so the decision tree is a linear function of $\boldsymbol{\phi}^{(t)}$. The final GBDT model $F$ is a sum of decision trees (7) and the parameters of the full model are denoted by $\boldsymbol{\theta}$. ([[@malininUncertaintyGradientBoosting2021]] do not cite but like the presentation)
 
 **CatBoost: 🐈** 
-Assume we observe a dataset of examples $\mathcal{D}=\left\{\left(\mathbf{x}_k, y_k\right)\right\}_{k=1 . . n}$, where $\mathbf{x}_k=\left(x_k^1, \ldots, x_k^m\right)$ is a random vector of $m$ features and $y_k \in \mathbb{R}$ is a target, which can be either binary or a numerical response. Examples $\left(\mathbf{x}_k, y_k\right)$ are independent and identically distributed according to some unknown distribution $P(\cdot, \cdot)$. The goal of a learning task is to train a function $F: \mathbb{R}^m \rightarrow \mathbb{R}$ which minimizes the expected loss $\mathcal{L}(F):=\mathbb{E} L(y, F(\mathbf{x}))$. Here $L(\cdot, \cdot)$ is a smooth loss function and $(\mathbf{x}, y)$ is a test example sampled from $P$ independently of the training set $\mathcal{D}$.
-A gradient boosting procedure [12] builds iteratively a sequence of approximations $F^t: \mathbb{R}^m \rightarrow \mathbb{R}$, $t=0,1, \ldots$ in a greedy fashion. Namely, $F^t$ is obtained from the previous approximation $F^{t-1}$ in an additive manner: $F^t=F^{t-1}+\alpha h^t$, where $\alpha$ is a step size and function $h^t: \mathbb{R}^m \rightarrow \mathbb{R}$ (a base predictor) is chosen from a family of functions $H$ in order to minimize the expected loss:
+Assume we observe a dataset of examples $\mathcal{D}=\left\{\left(\mathbf{x}_k, y_k\right)\right\}_{k=1 . . n}$, where $\mathbf{x}_k=\left(x_k^1, \ldots, x_k^m\right)$ is a random vector of $m$ features and $y_k \in \mathbb{R}$ is a target, which can be either binary or a numerical response. Examples $\left(\mathbf{x}_k, y_k\right)$ are independent and identically distributed according to some unknown distribution $P(\cdot, \cdot)$. The goal of a learning task is to train a function $F: \mathbb{R}^m \rightarrow \mathbb{R}$ which minimises the expected loss $\mathcal{L}(F):=\mathbb{E} L(y, F(\mathbf{x}))$. Here $L(\cdot, \cdot)$ is a smooth loss function and $(\mathbf{x}, y)$ is a test example sampled from $P$ independently of the training set $\mathcal{D}$.
+A gradient boosting procedure [12] builds iteratively a sequence of approximations $F^t: \mathbb{R}^m \rightarrow \mathbb{R}$, $t=0,1, \ldots$ in a greedy fashion. Namely, $F^t$ is obtained from the previous approximation $F^{t-1}$ in an additive manner: $F^t=F^{t-1}+\alpha h^t$, where $\alpha$ is a step size and function $h^t: \mathbb{R}^m \rightarrow \mathbb{R}$ (a base predictor) is chosen from a family of functions $H$ in order to minimise the expected loss:
 $$
 h^t=\underset{h \in H}{\arg \min } \mathcal{L}\left(F^{t-1}+h\right)=\underset{h \in H}{\arg \min } \mathbb{E} L\left(y, F^{t-1}(\mathbf{x})+h(\mathbf{x})\right)
 $$
@@ -164,9 +164,9 @@ z=\frac{\partial L\left(y, F_i\right)}{\partial F_i}=\frac{\partial(y-p)^2}{\par
 $$
 In order words, the gradient is the signed error from our example with a factor of 2 . Note that constant factors do not matter because of the shrinkage. Note that this equivalence is only true for regression problems with squared error loss. For other supervised learning problems (for example, classification, ranking, regression with percentile loss), there is no equivalence between the gradient and a signed error.
 
-## Leaf and structure optimization with Newton's method step
+## Leaf and structure optimisation with Newton's method step
 
-Newton's method is an optimization method like gradient descent. However, unlike the gradient descent that only uses the gradient of the function to optimize, Newton's method uses both the gradient (first derivative) and the second derivative of the function for optimization.
+Newton's method is an optimisation method like gradient descent. However, unlike the gradient descent that only uses the gradient of the function to optimise, Newton's method uses both the gradient (first derivative) and the second derivative of the function for optimisation.
 A step of gradient descent is as follows:
 $$
 x_{i+1}=x_i-\frac{d f}{d x}\left(x_i\right)=x_i-f^{\prime}\left(x_i\right)
@@ -194,7 +194,7 @@ Where:
 This operation repeats until a stopping criterion is met, such as a maximum number of iterations or if the (strong) model begins to overfit as measured on a separate validation dataset.
 Let's illustrate gradient boosting on a simple regression dataset where:
 - The objective is to predict $y$ from $x$.
-- The strong model is initialized to be a zero constant: $F_0(x)=0$.
+- The strong model is initialised to be a zero constant: $F_0(x)=0$.
 
 ## Some inspiration
 
@@ -262,7 +262,7 @@ Start by making an initial prediction:
 
 (how to arrive at formulation of )
 
-Start with naive prediction / initialize model with majority class (?) in terms of log odds? z. B. log(2/1) log(yes / no)
+Start with naive prediction / initialise model with majority class (?) in terms of log odds? z. B. log(2/1) log(yes / no)
 ![[Pasted image 20230421100927.png]]
 (0.5 is constant from above ) (ybar is the average label over all classes)
 ![[Pasted image 20230421102232.png]]
@@ -299,7 +299,7 @@ Next, update the model = add tree
 The final prediction is given in terms of log-odds. To obtain class probabilities, we can use logistic function?
 ![[Pasted image 20230421104723.png]]
 
-for integration of regularization term see: https://arxiv.org/pdf/2001.07248.pdf
+for integration of regularisation term see: https://arxiv.org/pdf/2001.07248.pdf
 
 ![[Pasted image 20230421145319.png]]
 ![[Pasted image 20230421145359.png]]

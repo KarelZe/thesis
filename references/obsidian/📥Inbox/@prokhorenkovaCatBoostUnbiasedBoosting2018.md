@@ -13,7 +13,7 @@ related:
 Gradient boosting is essentially a process of constructing an ensemble predictor by performing gradient descent in a functional space. (p. 1)
 
 ## Problems of Gradient boosting
-- A prediction model $F$ obtained after several steps of boosting relies on the targets of all training examples, this can leads to a model shift for a training example and hence to a prediction shift of the learned model.
+- A prediction model $F$ obtained after several steps of boosting relies on the targets of all training examples, this can leads to a model shift for a training example and hence to a prediction shift of the learnt model.
 - Prior approaches used for handling categories is converting categories to their target statistics. A target statistic is a statistical model itself, it can also cause target leakage and a prediction shift.
 
 ## Novelty
@@ -37,7 +37,7 @@ They cite [[@hastietrevorElementsStatisticalLearning2009]] and [[@breimanClassif
 
 ## Gradient Boosting
 
-A gradient boosting procedure builds iteratively a sequence of approximations $F^{t}: \mathbb{R}^{m} \rightarrow \mathbb{R}$, $t=0,1, \ldots$ in a greedy fashion. Namely, $F^{t}$ is obtained from the previous approximation $F^{t-1}$ in an additive manner: $F^{t}=F^{t-1}+\alpha h^{t}$, where $\alpha$ is a step size and function $h^{t}: \mathbb{R}^{m} \rightarrow \mathbb{R}$ (a base predictor) is chosen from a family of functions $H$ in order to minimize the expected loss:
+A gradient boosting procedure builds iteratively a sequence of approximations $F^{t}: \mathbb{R}^{m} \rightarrow \mathbb{R}$, $t=0,1, \ldots$ in a greedy fashion. Namely, $F^{t}$ is obtained from the previous approximation $F^{t-1}$ in an additive manner: $F^{t}=F^{t-1}+\alpha h^{t}$, where $\alpha$ is a step size and function $h^{t}: \mathbb{R}^{m} \rightarrow \mathbb{R}$ (a base predictor) is chosen from a family of functions $H$ in order to minimise the expected loss:
 $$
 h^{t}=\underset{h \in H}{\arg \min } \mathcal{L}\left(F^{t-1}+h\right)=\underset{h \in H}{\arg \min } \mathbb{E} L\left(y, F^{t-1}(\mathrm{x})+h(\mathrm{x})\right) .
 $$

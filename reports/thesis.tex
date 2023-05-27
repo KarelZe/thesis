@@ -72,6 +72,8 @@ width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 
 \newcommand*{\tabindent}{ \hspace{2mm}} % Indentation for tables
 
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}\PackageWarning{TODO:}{#1!}} % Todos
+
 \sisetup{round-mode=places,round-precision=2, group-separator={,},output-decimal-marker={.}, round-pad = false, input-symbols = {(-)}, % separate-uncertainty=false,
 group-minimum-digits=4, % 1,000 instead of 1000
 % table-space-text-pre={(},
@@ -113,12 +115,12 @@ output-exponent-marker=\ensuremath{\mathrm{e}}
 \newcommand{\postalcode}{76133} % Enter your postal code.
 \newcommand{\city}{Karlsruhe} % Enter your city/town.
 \newcommand{\email}{markus.bilz@student.kit.edu} % Enter your email address.
-\newcommand{\typeofthesis}{Master's Thesis} % specify the type of thesis: Seminar Thesis, Bachelor Thesis, Master Thesis
+\newcommand{\typeofthesis}{Master Thesis} % specify the type of thesis: Seminar Thesis, Bachelor Thesis, Master Thesis
 
 %--------------------------------- Information in xmpdata ---------------------------------
 % definition from macro doesn't seem to work.
 \begin{filecontents*}[overwrite]{\jobname.xmpdata}
-\Title{Forget About the Rules: Improving Option Trade Classification With Machine Learning}
+\Title{Improving Option Trade Classification With Machine Learning}
 \Author{Markus Bilz}
 \Language{en-GB}
 \Keywords{trade-classification\sep machine-learning\sep transformer}
@@ -129,7 +131,7 @@ output-exponent-marker=\ensuremath{\mathrm{e}}
  /Title (\titleofthesis)
  /Author (\name)
  /Subject (Trade Classification using machine learning)
- /Keywords (trade-classification machine-learning transformer) 
+ /Keywords (trade-classification machine-learning transformer gradient-boosting) 
 }
 
 % --------------------------------- Definition of hyperlinks ---------------------------------
@@ -144,45 +146,6 @@ citecolor=darkblue,
 urlcolor=black,
 bookmarksopen
 }
-
-
-
-% --------------------------------- Algorithm ---------------------------------
-% load before cref https://tex.stackexchange.com/a/393202/169093
-\usepackage[linesnumbered, ruled]{algorithm2e}
-
-% change algorithm font size
-\SetAlFnt{\normalsize}
-
-% change algorithm caption style
-\newcommand{\xAlCapSty}[1]{\small\sffamily\bfseries#1}
-\SetAlCapSty{xAlCapSty}
-
-\SetAlCapSkip{1em}
-\SetKwInput{KwParam}{Parameters}
-\SetKwInput{KwHyper}{Hyperparameters}
-
-% comment style (algorithms)
-\newcommand{\xCommentSty}[1]{\ttfamily\textcolor{blue}{#1}}
-\SetCommentSty{xCommentSty}
-
-% change line number style
-\newcommand\mynlfont[1]{\sffamily\textcolor{gray}{#1}}
-\SetNlSty{mynlfont}{}{}
-
- % add the line numbers
-\LinesNumbered
-
-% comments right justified
-\SetSideCommentRight
-
-% don't print semicolon
-\DontPrintSemicolon
-
-% ruled algorithm
-\RestyleAlgo{algoruled}
-
-
 
 \usepackage[capitalise, noabbrev]{cleveref} % Enables the use of \cref{} to refer to figures, etc. with Fig.
 \creflabelformat{equation}{#2#1#3} % omit round brackets
@@ -215,9 +178,10 @@ bookmarksopen
 \newacronym{EMO}{EMO}{Ellis-Michaely-O’Hara}
 \newacronym{FFN}{FFN}{feed-forward network}
 \newacronym{ISE}{ISE}{International Securities Exchange}
-\newacronym{GBM}{GBM}{gradient boosting machine}
+\newacronym{GBRT}{GBRT}{gradient-boosted regression tree}
 \newacronym{GPU}{GPU}{graphics processing unit}
 \newacronym{GSU}{GSU}{Grauer-Schuster-Uhrig-Homburg}
+\newacronym{LIME}{LIME}{Local Interpretable Model-agnostic Explanations}
 \newacronym{LR}{LR}{Lee-Ready}
 \newacronym{MCC}{MCC}{Matthews correlation coefficient}
 \newacronym{MLP}{MLP}{multi-layer perceptron}
@@ -322,5 +286,10 @@ For tabular data, a token corresponds to a column in the data set.}}
 \newpage
 \appendix % Enumerates appendix with letters.
 \include{Content/Appendix}
+
+% Declaration 
+\newpage
+\thispagestyle{empty}
+\include{Content/Declaration_Thesis}
 
 \end{document}

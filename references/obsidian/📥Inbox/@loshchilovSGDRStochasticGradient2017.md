@@ -9,7 +9,7 @@
 - [[@smithCyclicalLearningRates2017]] (very similar idea, proposed cyclic annealing)
 
 ## Notes 
-- In the paper the authors extend the idea of cyclical learning rate in deep learning by [[@smithCyclicalLearningRates2017]] with warm restarts. That is the old lr $\eta_t$ is increased while the old $\boldsymbol{x}_t$ is used for initialization.
+- In the paper the authors extend the idea of cyclical learning rate in deep learning by [[@smithCyclicalLearningRates2017]] with warm restarts. That is the old lr $\eta_t$ is increased while the old $\boldsymbol{x}_t$ is used for initialisation.
 - Cyclic annealing given by:  Within the $i$-th run, we decay the learning rate with a cosine annealing for each batch as follows:
 	$$
 	\eta_t=\eta_{\min }^i+\frac{1}{2}\left(\eta_{\max }^i-\eta_{\min }^i\right)\left(1+\cos \left(\frac{T_{c u r}}{T_i} \pi\right)\right),
@@ -20,9 +20,9 @@
 
 ## Annotations
 
-“The commonly used procedure to optimize f is to iteratively adjust xt ∈ IRn (the parameter vector at time step t) using gradient information ∇ft(xt) obtained on a relatively small t-th batch of b datapoints. The Stochastic Gradient Descent (SGD) procedure then becomes an extension of the Gradient Descent (GD) to stochastic optimization of f as follows: xt+1 = xt − ηt∇ft(xt), (1) where ηt is a learning rate. One would like to consider second-order information xt+1 = xt − ηtH−1 t ∇ft(xt), (2) but this is often infeasible since the computation and storage of the inverse Hessian H−1 t is intractable for large n.” ([Loshchilov and Hutter, 2017, p. 1](zotero://select/library/items/A5HB9Q9U)) ([pdf](zotero://open-pdf/library/items/Z4YVX9A3?page=1&annotation=W4UJT5N4))
+“The commonly used procedure to optimise f is to iteratively adjust xt ∈ IRn (the parameter vector at time step t) using gradient information ∇ft(xt) obtained on a relatively small t-th batch of b datapoints. The Stochastic Gradient Descent (SGD) procedure then becomes an extension of the Gradient Descent (GD) to stochastic optimisation of f as follows: xt+1 = xt − ηt∇ft(xt), (1) where ηt is a learning rate. One would like to consider second-order information xt+1 = xt − ηtH−1 t ∇ft(xt), (2) but this is often unfeasible since the computation and storage of the inverse Hessian H−1 t is intractable for large n.” ([Loshchilov and Hutter, 2017, p. 1](zotero://select/library/items/A5HB9Q9U)) ([pdf](zotero://open-pdf/library/items/Z4YVX9A3?page=1&annotation=W4UJT5N4))
 
-“In this paper, we propose to periodically simulate warm restarts of SGD, where in each restart the learning rate is initialized to some value and is scheduled to decrease.” ([Loshchilov and Hutter, 2017, p. 2](zotero://select/library/items/A5HB9Q9U)) ([pdf](zotero://open-pdf/library/items/Z4YVX9A3?page=2&annotation=N9LWU5DW))
+“In this paper, we propose to periodically simulate warm restarts of SGD, where in each restart the learning rate is initialised to some value and is scheduled to decrease.” ([Loshchilov and Hutter, 2017, p. 2](zotero://select/library/items/A5HB9Q9U)) ([pdf](zotero://open-pdf/library/items/Z4YVX9A3?page=2&annotation=N9LWU5DW))
 
 “Our empirical results suggest that SGD with warm restarts requires 2× to 4× fewer epochs than the currently-used learning rate schedule schemes to achieve comparable or even better results.” ([Loshchilov and Hutter, 2017, p. 2](zotero://select/library/items/A5HB9Q9U)) ([pdf](zotero://open-pdf/library/items/Z4YVX9A3?page=2&annotation=LZ5V9CUQ))
 

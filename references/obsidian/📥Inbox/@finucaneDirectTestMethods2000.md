@@ -9,9 +9,9 @@ related:
 
 ## Notes
 - Author implements tick and quote rule as well as LR algorithm and assess the performance on the TORQ data set.
-- **Problems of LR:** LR can not handle the simultanous arrival of market buy and sell orders. Thus, one side will always be wrongly classified. Equally, crossed limit orders are not handled correctly as both sides iniate a trade independent of each other.
+- **Problems of LR:** LR can not handle the simultaneous arrival of market buy and sell orders. Thus, one side will always be wrongly classified. Equally, crossed limit orders are not handled correctly as both sides iniate a trade independent of each other.
 - Interesting observations in their results:
-	- One fourth of all trades are no market orders
+	- One quarter of all trades are no market orders
 	- Relative location to the quoted spread is relevant for the accuracy. The accuracy deterioriates for mid-spread trades.
 	- Trick rule is only slightly worse than the LR algorithm at quoted bid and ask.
 	- For both tick rule and LR algorithm's accuracy is not 100 % accurate for trades at the bid or ask.
@@ -38,7 +38,7 @@ related:
 
 “The data for this study is extracted from the NYSE's TORQ (trades, orders, quotes) database. The TORQ database covers a representative sample of 144 firms for the three-month period November 1990 through January 1991” ([Finucane, 2000, p. 559](zotero://select/library/items/KKJY6E7W)) ([pdf](zotero://open-pdf/library/items/RQ8KUGBP?page=8&annotation=V7KYTW6Y))
 
-“Contrary to what is typically assumed, nearly one-fourth of all trades do not occur as the result of the arrival of market order” ([Finucane, 2000, p. 560](zotero://select/library/items/KKJY6E7W)) ([pdf](zotero://open-pdf/library/items/RQ8KUGBP?page=9&annotation=FUNQXPXK))
+“Contrary to what is typically assumed, nearly one-quarter of all trades do not occur as the result of the arrival of market order” ([Finucane, 2000, p. 560](zotero://select/library/items/KKJY6E7W)) ([pdf](zotero://open-pdf/library/items/RQ8KUGBP?page=9&annotation=FUNQXPXK))
 
 “An analysis of the 75.2% of the trades that do contain market orders shows that the orders on the opposite side of the trade are nearly equally split between system side limit orders and crowd side market order” ([Finucane, 2000, p. 560](zotero://select/library/items/KKJY6E7W)) ([pdf](zotero://open-pdf/library/items/RQ8KUGBP?page=9&annotation=YKL8ITYZ))
 
@@ -60,4 +60,4 @@ related:
 
 “Table 5 contains the maximum likelihood coefficient estimates and asso? ciated x2-statistics for the two models, together with estimates of the marginal change in the probability of correctly classifying an observation for a one unit change in each independent variable.” ([Finucane, 2000, p. 566](zotero://select/library/items/KKJY6E7W)) ([pdf](zotero://open-pdf/library/items/RQ8KUGBP?page=15&annotation=MH5DIL3R))
 
-“show that efforts to filter data in an attempt to increase classification accuracy may further exacerbate these biases. Somewhat surprisingly, although the classification error rates are slightly smaller for LR's method than for the tick test, the biases for estimated effective spreads and signed volume are smaller for the tick test than for LR's method. These findings sug? gest that researchers using the tick test to classify trades will achieve results that are close to the results that can be achieved using quote-based methods and, in at least some applications, the tick test may provide more accurate measures than quote-based methods.” ([Finucane, 2000, p. 574](zotero://select/library/items/KKJY6E7W)) ([pdf](zotero://open-pdf/library/items/RQ8KUGBP?page=23&annotation=GZHPZHDJ))
+“show that efforts to philtre data in an attempt to increase classification accuracy may further exacerbate these biases. Somewhat surprisingly, although the classification error rates are slightly smaller for LR's method than for the tick test, the biases for estimated effective spreads and signed volume are smaller for the tick test than for LR's method. These findings sug? gest that researchers using the tick test to classify trades will achieve results that are close to the results that can be achieved using quote-based methods and, in at least some applications, the tick test may provide more accurate measures than quote-based methods.” ([Finucane, 2000, p. 574](zotero://select/library/items/KKJY6E7W)) ([pdf](zotero://open-pdf/library/items/RQ8KUGBP?page=23&annotation=GZHPZHDJ))

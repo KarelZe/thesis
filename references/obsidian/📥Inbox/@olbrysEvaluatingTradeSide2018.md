@@ -11,14 +11,14 @@ related:
 - [[@chakrabartyTradeClassificationAlgorithms2007]]
 
 ## Notes
-- None. Apart from an overview over trade classification algorithms and the formulas with consistent notation the document is of lower quality.
+- None. Apart from an overview over trade classification algorithms and the formulae with consistent notation the document is of lower quality.
 
 ## Annotations
 “Trade side classification algorithms enable us to assign the side that initiates a transaction and to distinguish between the so-called buyer- and seller-initiated trades.” ([Olbrys and Mursztyn, 2018, p. 1](zotero://select/library/items/GH7N94E4)) ([pdf](zotero://open-pdf/library/items/HI224NPR?page=1&annotation=IUVYRLUQ))
 
 “The main motivation for this study is growing interest in market liquidity, dimensions of liquidity, and commonality in liquidity that has emerged in the literature over the recent years.” ([Olbrys and Mursztyn, 2018, p. 2](zotero://select/library/items/GH7N94E4)) ([pdf](zotero://open-pdf/library/items/HI224NPR?page=2&annotation=6JL9LWQ2))
 
-“Moreover, to calculate several liquidity/illiquidity proxies using intraday data, it is essential to recognize the side initiating the transaction and to distinguish between the so-called buyer- and seller-initiated trades.” ([Olbrys and Mursztyn, 2018, p. 2](zotero://select/library/items/GH7N94E4)) ([pdf](zotero://open-pdf/library/items/HI224NPR?page=2&annotation=KAQJC4JI))
+“Moreover, to calculate several liquidity/illiquidity proxies using intraday data, it is essential to recognise the side initiating the transaction and to distinguish between the so-called buyer- and seller-initiated trades.” ([Olbrys and Mursztyn, 2018, p. 2](zotero://select/library/items/GH7N94E4)) ([pdf](zotero://open-pdf/library/items/HI224NPR?page=2&annotation=KAQJC4JI))
 
 “The literature provides many alternative measures of stock market liquidity/illiquidity based on intraday data (e.g. Chordia et al, 2002, 2005; Goyenko et al, 2009; Ranaldo, 2001; Stoll, 2000; von Wyss, 2004; Nowak, 2017; Olbryś and Mursztyn, 2017a).” ([Olbrys and Mursztyn, 2018, p. 2](zotero://select/library/items/GH7N94E4)) ([pdf](zotero://open-pdf/library/items/HI224NPR?page=2&annotation=5KARI4KK))
 

@@ -15,15 +15,15 @@
 
 ## Annotations 📖
 
-“Yet, this widespread practice has no theoretical grounding. Here we show that for almost all imputation functions, an impute-then-regress procedure with a powerful learner is Bayes optimal.” ([Le Morvan et al., 2021, p. 1](zotero://select/library/items/U5TTSA2S)) ([pdf](zotero://open-pdf/library/items/XAHMRU4X?page=1&annotation=DN4MMQYN))
+“Yet, this widespread practise has no theoretical grounding. Here we show that for almost all imputation functions, an impute-then-regress procedure with a powerful learner is Bayes optimal.” ([Le Morvan et al., 2021, p. 1](zotero://select/library/items/U5TTSA2S)) ([pdf](zotero://open-pdf/library/items/XAHMRU4X?page=1&annotation=DN4MMQYN))
 
 “regression function will generally be discontinuous, which makes it hard to learn. Crafting instead the imputation so as to leave the regression function unchanged simply shifts the problem to learning discontinuous imputations.” ([Le Morvan et al., 2021, p. 1](zotero://select/library/items/U5TTSA2S)) ([pdf](zotero://open-pdf/library/items/XAHMRU4X?page=1&annotation=PCER8YFT))
 
 “en simple data-generating mechanisms lead to complex decision rules. To date, there are few supervised-learning models natively suited for partially-observed data. A notable 35th Conference on Neural Information Processing Systems (NeurIPS 2021)” ([Le Morvan et al., 2021, p. 1](zotero://select/library/items/U5TTSA2S)) ([pdf](zotero://open-pdf/library/items/XAHMRU4X?page=1&annotation=ZVHKCFYD))
 
-“exception is found with tree-based models [[@twalaGoodMethodsCoping2008]], widely used in data-science practice.” ([Le Morvan et al., 2021, p. 2](zotero://select/library/items/U5TTSA2S)) ([pdf](zotero://open-pdf/library/items/XAHMRU4X?page=2&annotation=YKLJHH8C))
+“exception is found with tree-based models [[@twalaGoodMethodsCoping2008]], widely used in data-science practise.” ([Le Morvan et al., 2021, p. 2](zotero://select/library/items/U5TTSA2S)) ([pdf](zotero://open-pdf/library/items/XAHMRU4X?page=2&annotation=YKLJHH8C))
 
-“The most common practice however remains by far to use off-the-shelf methods first for imputation of missing values and second for supervised-learning on the resulting completed data.” ([Le Morvan et al., 2021, p. 2](zotero://select/library/items/U5TTSA2S)) ([pdf](zotero://open-pdf/library/items/XAHMRU4X?page=2&annotation=EQNKWHAD))
+“The most common practise however remains by far to use off-the-shelf methods first for imputation of missing values and second for supervised-learning on the resulting completed data.” ([Le Morvan et al., 2021, p. 2](zotero://select/library/items/U5TTSA2S)) ([pdf](zotero://open-pdf/library/items/XAHMRU4X?page=2&annotation=EQNKWHAD))
 
 “We contribute a systematic analysis of Impute-the-Regress procedures in a general setting: non-linear response function and any missingness mechanism (no MAR assumptions). We show that:” ([Le Morvan et al., 2021, p. 2](zotero://select/library/items/U5TTSA2S)) ([pdf](zotero://open-pdf/library/items/XAHMRU4X?page=2&annotation=QL7X9VCQ))
 

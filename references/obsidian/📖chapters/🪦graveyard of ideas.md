@@ -23,7 +23,7 @@ where:
 When $\varphi$ is non-zero, the entire waveform appears to be shifted in time by the amount $\varphi / \omega$ seconds. A negative value represents a delay, and a positive value represents an advance.
 %%
 
-where $x$ is the raw input and $x_{\sin}$ and $x_{\cos}$ are the cyclical features. This cyclic continuous encoding, has the effect of preserving temporal proximity, as shown in Figure [[#^278944]]. As visualized for dates, the month's ultimo and the next month's first are close to each other in the individual features and on the unit circle. [^3]
+where $x$ is the raw input and $x_{\sin}$ and $x_{\cos}$ are the cyclical features. This cyclic continuous encoding, has the effect of preserving temporal proximity, as shown in Figure [[#^278944]]. As visualised for dates, the month's ultimo and the next month's first are close to each other in the individual features and on the unit circle. [^3]
 
 ![[positional_encoding.png]]
 (found here similarly: https://www.researchgate.net/figure/A-unit-circle-example-of-frequency-encoding-of-spatial-data-using-the-Fourier-series-a_fig2_313829438) ^278944
@@ -39,7 +39,7 @@ This is similar to the work of ([[@easleyDiscerningInformationTrade2016]] 272), 
 See [[@jurkatisInferringTradeDirections2022]].
 Effective spread calculation. See e. g., [[@ellisAccuracyTradeClassification2000]].
 
-“To give the improvement in classification accuracy more economic meaning, I apply the trade classification methods to the estimation of transaction costs. The transaction costs in turn are used in a portfolio optimization exercise. The results show that an investor with a mean-variance utility function would be willing to forgo up to 33 bps on yearly returns to use the proposed algorithm to estimate transaction costs instead of the LR algorithm.” ([[@jurkatisInferringTradeDirections2022]], 2022, p. 7)
+“To give the improvement in classification accuracy more economic meaning, I apply the trade classification methods to the estimation of transaction costs. The transaction costs in turn are used in a portfolio optimisation exercise. The results show that an investor with a mean-variance utility function would be willing to forgo up to 33 bps on yearly returns to use the proposed algorithm to estimate transaction costs instead of the LR algorithm.” ([[@jurkatisInferringTradeDirections2022]], 2022, p. 7)
 
 ## Transformer
 
@@ -59,36 +59,36 @@ In large-scale experiments ([[@huangTabTransformerTabularData2020]]5--6) can sho
 | TRADE_PRICE           | tick rule                    | See [[@leeInferringTradeDirection1991]]                                                                                     | x                | x                  | x                  | log         |
 | price_ex_lag          | tick rule                    | See above.                                                                                                                  | x                | x                  | x                  | log         |
 | price_all_lag         | tick rule                    | See above.                                                                                                                  | x                | x                  | x                  | log         |
-| chg_ex_lag            | tick rule                    | See above.                                                                                                                  | x                | x                  | x                  | standardize |
-| chg_all_lag           | tick rule                    | See above.                                                                                                                  | x                | x                  | x                  | standardize |
+| chg_ex_lag            | tick rule                    | See above.                                                                                                                  | x                | x                  | x                  | standardise |
+| chg_all_lag           | tick rule                    | See above.                                                                                                                  | x                | x                  | x                  | standardise |
 | price_ex_lead         | reverse tick rule            | See above.                                                                                                                  | x                | x                  | x                  | log         |
 | price_all_lead        | reverse tick rule            | See above.                                                                                                                  | x                | x                  | x                  | log         |
-| chg_ex_lead           | reverse tick rule            | See above.                                                                                                                  | x                | x                  | x                  | standardize |
-| chg_all_lead          | reverse tick rule            | See above.                                                                                                                  | x                | x                  | x                  | standardize |
+| chg_ex_lead           | reverse tick rule            | See above.                                                                                                                  | x                | x                  | x                  | standardise |
+| chg_all_lead          | reverse tick rule            | See above.                                                                                                                  | x                | x                  | x                  | standardise |
 | BEST_BID              | quote rule                   | See above.                                                                                                                  | x                | x                  | x                  | log         |
 | bid_ex                | quote rule                   | See above.                                                                                                                  | x                | x                  | x                  | log         |
 | BEST_ASK              | quote rule                   | See above.                                                                                                                  | x                | x                  | x                  | log         |
 | mid_ex                | mid quote 🆕                  | See above.                                                                                                                  |                  |                    |                    | log         |
 | mid_best              | mid quote 🆕                  | See above.                                                                                                                  |                  |                    |                    | log         |
 | ask_ex                | quote rule                   | See [[@leeInferringTradeDirection1991]]                                                                                     | x                | x                  | x                  | log         |
-| bid_ask_ratio_ex      | Ratio of ask and bid 🆕       | ?                                                                                                                           |                  | x                  | x                  | standardize |
-| spread_ex             | Absolute spread 🆕            | ?                                                                                                                           |                  |                    |                    | standardize |
-| spread_best           | Absolute spread 🆕            | ?                                                                                                                           |                  |                    |                    | standardize |
-| price_rel_nbb         | Tradeprice rel to nbb 🆕      | Relates trade exchange with nation-wide best.                                                                               |                  | x                  | x                  | standardize |
-| price_rel_nbo         | Tradeprice rel to nbo 🆕      | See above.                                                                                                                  |                  | x                  | x                  | standardize |
-| prox_ex               | EMO / CLNV                   | Most important predictor in [[@ellisAccuracyTradeClassification2000]] and [[@chakrabartyTradeClassificationAlgorithms2012]] | x                | x                  | x                  | standardize |
-| prox_best             | EMO / CLNV                   | See above.                                                                                                                  | x                | x                  | x                  | standardize |
-| bid_ask_size_ratio_ex | Depth rule                   | See [[@grauerOptionTradeClassification2022]]                                                                                |                  | x                  | x                  | standardize |
-| bid_size_ex           | Depth rule / Trade size rule | See above.                                                                                                                  |                  | x                  | x                  | standardize |
-| ask_size_ex           | Depth rule / Trade size rule | See above.                                                                                                                  |                  | x                  | x                  | standardize |
-| rel_bid_size_ex       | Trade size rule              | See above.                                                                                                                  |                  | x                  | x                  | standardize |
-| rel_ask_size_ex       | Trade size rule              | See above.                                                                                                                  |                  | x                  | x                  | standardize |
-| TRADE_SIZE            | Trade size rule              | See above.                                                                                                                  |                  | x                  | x                  | standardize |
+| bid_ask_ratio_ex      | Ratio of ask and bid 🆕       | ?                                                                                                                           |                  | x                  | x                  | standardise |
+| spread_ex             | Absolute spread 🆕            | ?                                                                                                                           |                  |                    |                    | standardise |
+| spread_best           | Absolute spread 🆕            | ?                                                                                                                           |                  |                    |                    | standardise |
+| price_rel_nbb         | Tradeprice rel to nbb 🆕      | Relates trade exchange with nation-wide best.                                                                               |                  | x                  | x                  | standardise |
+| price_rel_nbo         | Tradeprice rel to nbo 🆕      | See above.                                                                                                                  |                  | x                  | x                  | standardise |
+| prox_ex               | EMO / CLNV                   | Most important predictor in [[@ellisAccuracyTradeClassification2000]] and [[@chakrabartyTradeClassificationAlgorithms2012]] | x                | x                  | x                  | standardise |
+| prox_best             | EMO / CLNV                   | See above.                                                                                                                  | x                | x                  | x                  | standardise |
+| bid_ask_size_ratio_ex | Depth rule                   | See [[@grauerOptionTradeClassification2022]]                                                                                |                  | x                  | x                  | standardise |
+| bid_size_ex           | Depth rule / Trade size rule | See above.                                                                                                                  |                  | x                  | x                  | standardise |
+| ask_size_ex           | Depth rule / Trade size rule | See above.                                                                                                                  |                  | x                  | x                  | standardise |
+| rel_bid_size_ex       | Trade size rule              | See above.                                                                                                                  |                  | x                  | x                  | standardise |
+| rel_ask_size_ex       | Trade size rule              | See above.                                                                                                                  |                  | x                  | x                  | standardise |
+| TRADE_SIZE            | Trade size rule              | See above.                                                                                                                  |                  | x                  | x                  | standardise |
 | STR_PRC               | option                       | ?                                                                                                                           |                  |                    | x                  | log         |
 | day_vol               | option                       | ?                                                                                                                           |                  |                    | x                  | log         |
 | bin_root              | option 🦺(many `UNKWN`)       | ?                                                                                                                           |                  |                    | x                  | binarize    |
-| time_to_maturity      | option                       | ?                                                                                                                           |                  |                    | x                  | standardize |
-| moneyness             | option                       | ?                                                                                                                           |                  |                    | x                  | standardize |
+| time_to_maturity      | option                       | ?                                                                                                                           |                  |                    | x                  | standardise |
+| moneyness             | option                       | ?                                                                                                                           |                  |                    | x                  | standardise |
 | bin_option_type       | option                       | ?                                                                                                                           |                  |                    | x                  | binarize    |
 | bin_issue_type        | option                       | See [[@ronenMachineLearningTrade2022]]. Learn temporal patterns. Data is ordered by time.                                   |                  |                    | x                  | binarize    |
 | date_month_sin        | date                         | See above.                                                                                                                  |                  |                    | x                  | pos enc     |
@@ -104,7 +104,7 @@ In large-scale experiments ([[@huangTabTransformerTabularData2020]]5--6) can sho
 ## LR algorithm
 The algorithm is derived from an analysis of stock trades inside the quotes ([[@leeInferringTradeDirection1991]] 742). 
 
-## Residual Connections
+## Residual connections
 
 
 ## Positional Embedding
@@ -116,7 +116,7 @@ and ([[@gevaTransformerFeedforwardLayers2021]]).
 
 Later variants (see e. g., [[@devlinBERTPretrainingDeep2019]] or [[@radfordImprovingLanguageUnderstanding]]) commonly replace the $\operatorname{ReLU}$ with the *Gaussian Error Linear Units* $\operatorname{GELU}$ ([[@hendrycksGaussianErrorLinear2020]], p. 2) activation, which has empirically proven to improve the performance and convergence behaviour of Transformers ([[@narangTransformerModificationsTransfer2021]], p. 16; and [[@shazeerGLUVariantsImprove2020]] p. 4).
 
-Like the [[🅰️Attention]] sub-layer, the feed-forward sub-layer is surrounded by residual connections ([[@heDeepResidualLearning2015]]) and followed by a layer-normalization ([[@baLayerNormalization2016]] (p. 4)) layer. 
+Like the [[🅰️Attention]] sub-layer, the feed-forward sub-layer is surrounded by residual connections ([[@heDeepResidualLearning2015]]) and followed by a layer-normalisation ([[@baLayerNormalization2016]] (p. 4)) layer. 
 
 
 ### Normality
@@ -128,7 +128,7 @@ Test log-normality visually with qq-plots (https://stackoverflow.com/questions/4
 <mark style="background: #FF5582A6;">There are controversies(Note zero imputation can be problematic for neural nets, as shown in [[@yiWhyNotUse2020]] paper)</mark>
 <mark style="background: #FF5582A6;">- For imputation look into [[@perez-lebelBenchmarkingMissingvaluesApproaches2022]]
 - [[@josseConsistencySupervisedLearning2020]] also compare different imputation methods and handling approaches of missing values in tree-based methods.
-- for visualizations and approaches see [[@zhengFeatureEngineeringMachine]] and [[@butcherFeatureEngineeringSelection2020]]</mark>
+- for visualisations and approaches see [[@zhengFeatureEngineeringMachine]] and [[@butcherFeatureEngineeringSelection2020]]</mark>
 <mark style="background: #FF5582A6;">- [[@yiWhyNotUse2020]] and [[@smiejaProcessingMissingData2018]] contain various references to papers to impute missing data in neural networks. 
 - add no missing indicator to keep the number of parameters small.
 </mark>
@@ -137,7 +137,7 @@ Test log-normality visually with qq-plots (https://stackoverflow.com/questions/4
 
 
 
- %%we normalize all continous features into a range of $[-1,1]$ using formula [[#^5d5445]]:
+ %%we normalise all continous features into a range of $[-1,1]$ using formula [[#^5d5445]]:
 
 $$
 x^{\prime}=-1+\frac{2(x-\min (x))}{\max (x)-\min (x)} \tag{1}
@@ -152,15 +152,15 @@ $$
 - TODO: Why do we perform feature scaling at all?
 - TODO: Try out robust scaler, as data contains outliers. Robust scaler uses the median which is robust to outliers and iqr for scaling. 
 - TODO: Try out different IQR thresholds and report impact. Similarily done here: https://machinelearningmastery.com/robust-scaler-transforms-for-machine-learning/
-- We scale / normalize features to a $\left[-1,1\right]$  scale using statistics estimated on the training set to avoid data leakage. This is also recommended in [[@huyenDesigningMachineLearning]]. Interestingly, she also writes that empirically the interval $\left[-1,1\right]$ works better than $\left[0,1\right]$. Also read about this on stackoverflow for neural networks, which has to do with gradient calculation.
+- We scale / normalise features to a $\left[-1,1\right]$  scale using statistics estimated on the training set to avoid data leakage. This is also recommended in [[@huyenDesigningMachineLearning]]. Interestingly, she also writes that empirically the interval $\left[-1,1\right]$ works better than $\left[0,1\right]$. Also read about this on stackoverflow for neural networks, which has to do with gradient calculation.
 - Scale to an arbitrary range $\left[a,b\right]$ using the formula from [[@huyenDesigningMachineLearning]]:
 $$
 x^{\prime}=a+\frac{(x-\min (x))(b-a)}{\max (x)-\min (x)}
 $$
 - Feature scaling theoretically shouldn't be relevant for gradient boosting due to the way gbms select split points / not based on distributions. Also in my tests it didn't make much of a difference for gbms but for transformers. (see https://github.com/KarelZe/thesis/blob/main/notebooks/3.0b-mb-comparsion-transformations.ipynb) 
 - [[@ronenMachineLearningTrade2022]] performed no feature scaling.
-- [[@borisovDeepNeuralNetworks2022]] standardize numerical features and apply ordinal encoding to categorical features, but pass to the model which ones are categorical features. 
-- [[@gorishniyRevisitingDeepLearning2021]] (p. 6) use quantile transformation, which is similar to the robust scaler, see https://scikit-learn.org/stable/auto_examples/preprocessing/plot_all_scaling.html#sphx-glr-auto-examples-preprocessing-plot-all-scaling-pyf) Note that [[@grinsztajnWhyTreebasedModels2022]] only applied quantile transformations to all features, thus not utilize special implementations for categorical variables.
+- [[@borisovDeepNeuralNetworks2022]] standardise numerical features and apply ordinal encoding to categorical features, but pass to the model which ones are categorical features. 
+- [[@gorishniyRevisitingDeepLearning2021]] (p. 6) use quantile transformation, which is similar to the robust scaler, see https://scikit-learn.org/stable/auto_examples/preprocessing/plot_all_scaling.html#sphx-glr-auto-examples-preprocessing-plot-all-scaling-pyf) Note that [[@grinsztajnWhyTreebasedModels2022]] only applied quantile transformations to all features, thus not utilise special implementations for categorical variables.
 
 # Random Forests
 
@@ -199,9 +199,9 @@ Structurally, a FFN consists of an input layer, one or more hidden layer and out
 $$
 \begin{aligned} \mathbf{H} &=\sigma\left(\mathbf{X} \mathbf{W}^{(1)}+\mathbf{b}^{(1)}\right) \\ \mathbf{O} &=\mathbf{H} \mathbf{W}^{(2)}+\mathbf{b}^{(2)} \end{aligned}
 $$
-As seen above, an affine transformation is applied to the input, followed activation function $\sigma(\cdot)$, that decides whether a neuron in the hidden layer is activated. The final prediction is then obtained  after another affine transformation the output layer. Here, the parameter set consists of $\boldsymbol{\theta} = \left \{\mathbf{W}^{(1)}, \mathbf{b}^{(1)},\mathbf{W}^{(2)}, \mathbf{b}^{(2)} \right\}$.
+As seen above, an affine transformation is applied to the input, followed activation function $\sigma(\cdot)$, that decides whether a neurone in the hidden layer is activated. The final prediction is then obtained  after another affine transformation the output layer. Here, the parameter set consists of $\boldsymbol{\theta} = \left \{\mathbf{W}^{(1)}, \mathbf{b}^{(1)},\mathbf{W}^{(2)}, \mathbf{b}^{(2)} \right\}$.
 
-To learn the function approximation, FFNs are trained using backpropagation by adjusting the parameters $\boldsymbol{\theta}$ of each layer to minimize a loss function $\mathcal{L}(\cdot)$. As backpropagation requires the calculation of the gradient, both the activation and loss functions have to be differentiable.
+To learn the function approximation, FFNs are trained using backpropagation by adjusting the parameters $\boldsymbol{\theta}$ of each layer to minimise a loss function $\mathcal{L}(\cdot)$. As backpropagation requires the calculation of the gradient, both the activation and loss functions have to be differentiable.
 
 ReLU is a common choice. It's non-linear and defined as the element-wise maximum between the input $\boldsymbol{x}$ and $0$:
 
@@ -212,8 +212,58 @@ $$
 The usage of ReLU as activation function is desirable for a number of reasons. First, it can be computated efficiently as no exponential function is required. Secondly, it solves the vanishing gradient problem present in other activation functions [[@glorotDeepSparseRectifier2011]].
 
 Networks with a single hidden layer can approximate any arbitrary function given enough data and network capacity [[@hornikMultilayerFeedforwardNetworks1989]].  
-In practice, similiar effects can be achieved by stacking several hidden layers and thereby deepening the network, while being more compact [[@zhangDiveDeepLearning2021]].
+In practise, similiar effects can be achieved by stacking several hidden layers and thereby deepening the network, while being more compact [[@zhangDiveDeepLearning2021]].
 
-Deep neural nets combine several hidden layers by feeding the previous hidden layer's output into the subsequent hidden layer. Assuming a $\operatorname{ReLU}(\cdot)$ activation function, the stacking for a network with two hidden layers can be formalized as: $\boldsymbol{H}^{(1)}=\operatorname{ReLU}_{1}\left(\boldsymbol{X W}^{(1)}+\boldsymbol{b}^{(1)}\right)$ and $\boldsymbol{H}^{(2)}=\operatorname{ReLU}_{2}\left(\mathbf{H}^{(1)} \mathbf{W}^{(2)}+\mathbf{b}^{(2)}\right)$.
+Deep neural nets combine several hidden layers by feeding the previous hidden layer's output into the subsequent hidden layer. Assuming a $\operatorname{ReLU}(\cdot)$ activation function, the stacking for a network with two hidden layers can be formalised as: $\boldsymbol{H}^{(1)}=\operatorname{ReLU}_{1}\left(\boldsymbol{X W}^{(1)}+\boldsymbol{b}^{(1)}\right)$ and $\boldsymbol{H}^{(2)}=\operatorname{ReLU}_{2}\left(\mathbf{H}^{(1)} \mathbf{W}^{(2)}+\mathbf{b}^{(2)}\right)$.
 
 Feed forward networks are restricted to information flowing through the network in a forward manner. To also incorporate feedback from the output, we introduce Recursive Neural Nets as part of section (...).
+
+## Intro
+Moved to [[🥬SAGE values]].
+
+Many model-agnostic methods are based on the randomly permuting features values. In this work, we specifically consider the variants *permutation feature importance* ([[@breimanRandomForests2001]]23--24) and partial-dependence plots ([[@friedmanGreedyFunctionApproximation2001]]26--28). Both serve a complementary purpose. Permutation feature importance derives the feature importance from the change in predictive accuracy before and after permuting a feature randomly, whereas partial dependence plots visualise the average change in prediction, if feature values are altered. These are widely adopted and computationally efficient.
+
+### Permutation feature importance
+Permutation feature importance derives the importance from the mean decrease in accuracy before and after permuting a feature randomly. Expectedly, permuting features breaks the association with the target. Thus, the permutation of important features leads to a sharp decrease in accuracy, whereas unimportant features leave the accuracy unaffected. 
+The importance measure was originally proposed ([[@breimanRandomForests2001]]23--24) for random forests, and has later been extended by ([[@fisherAllModelsAre]]??) into a model-agnostic feature importance measure. 
+
+Given our feature matrix $\mathbf{X}$, we can define a second permuted version, $\mathbf{X}^{\pi,j}$, where the $j$-th feature is randomly permuted by $\pi$. Using $L(y_i, h(\mathbf{x}_i))$ for predicting $y_i$ from $h(\mathbf{x}_{i})$, the importance of $j$-th feature is given by:
+$$
+\operatorname{VI}^{\pi}_{j} = \sum_{i=1}^{N} L(y_{i}, h(\mathbf{x}_{i}^{\pi,j})) - L(y_{i}, h(\mathbf{x}_{i})),
+$$
+which is the increase in loss, i.e., accuracy, before and after permutation ([[@hookerUnrestrictedPermutationForces2021]]82). While ([[@breimanRandomForests2001]]23--24) uses a single permutation, ([[@fisherAllModelsAre]]??) consider multiple, random permutations. By definition, random feature importance only yields global feature importances, as the measure is aggregated from all $N$ samples.
+
+### Extending permutation feature importance ✅
+Random feature permutation has the desirable properties of being easy to interpret, computationally efficient and model-agnostic. Like other feature importance measures, including SHAP or LIME, it assumes independence between features ([[@aasExplainingIndividualPredictions2021]]2). 
+
+As defined in cref-eq-random-feature-permutation, every feature is permuted independently from other features which artificially breaks correlations between features and creates unrealistic feature combinations. Consider, for example, the apparent correlation between the ask, bid price and trade price. Permuting only the ask, could result in strongly negative or extremely large spreads, whereas bid and trade price remain unchanged. In effect, the presence of correlated features, leads to an overestimate of the importance of correlated features ([[@stroblConditionalVariableImportance2008]]3). 
+
+Vice versa, can the presence of a correlated features decrease the importance of the associated feature, as the feature importance now distributed across the features, thereby underestimating the true importance of the features. This effects all features, where information is encoded redundantly, such as the bid-ask ratio. (footnote-for an extended discussion of substitution effects on feature importance in the financial domain see ([[@lopezdepradoAdvancesFinancialMachine2018]]114--118).
+
+To alleviate the bias from correlated / depenedent, we group dependent features and estimate the feature importance on the group-level. Arranging all features in a tree-like hierarchy gives us the freedom to derive feature importances at different levels, enabling cross-comparisons between classical rules and machine learning based classifiers, as grouping of raw and derived features makes the implementation of classical rules transparent. (footnote: Consider the implementation of the tick rule. Here, the implementation could use the feature price lag (ex) or calculate the price change from the trade price and price lag (ex). If not grouped, feature importances would be attributed to either the derived feature or raw features causing difficulties in comparison with machine learning classifiers, which have access to all three features simultaneously. Grouping all three features resolves this issue at the cost of interpretability.). Other than the classical permutation importance from cref-eq-random-feature-permutation, all features sharing the same parent node are permuted together. We define the following dependency structure:
+
+```mermaid
+
+graph TB 
+A((1))-->B((2))
+A-->C((3))
+A-->D((4))
+B-->E((5)) 
+B-->F((6))
+B-->G((7))
+C-->H((8))
+D-->I((9))
+D-->J((10))
+```
+Groupings are created to be mutually exclusive and based on the dependency structure of classical trade classification algorithms. The computational demand is comparable to classical feature permutation, as grouping results in fewer permutations, but the analysis may be repeated on several sub-levels. 
+
+To this end, we want to emphasise, that our approach is different from ([[@ronenMachineLearningTrade2022]]52) as we do not estimate the improvement from adding new features, but keep the feature sets fixed-sized and permute them.
+
+### Partial dependence plots
+Related to the concept of random feature permutation are partial dependence plots by ([[@friedmanGreedyFunctionApproximation2001]] 26--28) visualise the dependency between a single (or multiple) feature and the effect on the traget value as the feature value is adjusted / after marginalising out all other features. Let $\mathbf{X}^{x,j}$ be a matrix, where the $j$-th feature value is replaced by $x$ and all other features are unaltered, partial feature dependence function:
+$$
+\operatorname{PD}_{j}(x) = \frac{1}{N} \sum_{i=1}^{N} f(\mathbf{x}^{x,j}_{i}),
+$$
+now gives the marginal average over all other features ([[@hookerUnrestrictedPermutationForces2021]]81). By iterating over a grid of (observed) $x$, we obtain the partial dependence plot for the feature.
+
+Like random feature permutation, partial dependence plots are a global feature importance measure, unable to capture dependencies between features and visualisation is constrained to two dimensions or features at once ([[@hastietrevorElementsStatisticalLearning2009]] p. 388). Despite these limitation, partial dependence plots to help us verify the assumed relationships in classical rules, such as the the linear relationship in the tick rule, with the learnt relationships in our classifier.

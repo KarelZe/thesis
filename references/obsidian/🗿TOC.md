@@ -1,61 +1,28 @@
 - [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
-- Guide on visualizations https://www.nature.com/articles/s41467-020-19160-7
+- Guide on visualisations https://www.nature.com/articles/s41467-020-19160-7
 - Guide on storytelling with data https://www.practicedataviz.com/pdv-evd-mvp#PDV-EVD-mvp-g
-- For visualization see: https://www.data-to-viz.com
+- For visualisation see: https://www.data-to-viz.com
 - see  `writing-a-good-introduction.pdf`
 - Prepare final pdf https://github.com/google-research/arxiv-latex-cleaner
-- Adhere to best practices http://www.sigplan.org/Resources/EmpiricalEvaluation/
-- use colors in formulas🎨. See [[@patrignaniWhyShouldAnyone2021]]
-- https://www.molecularecologist.com/2020/04/23/simple-tools-for-mastering-color-in-scientific-figures/
+- Adhere to best practises http://www.sigplan.org/Resources/EmpiricalEvaluation/
+- use colours in formulae🎨. See [[@patrignaniWhyShouldAnyone2021]]
+- https://www.molecularecologist.com/2020/04/23/simple-tools-for-mastering-colour-in-scientific-figures/
 - look into [[@lonesHowAvoidMachine2022]]
 - https://brushingupscience.com/2016/03/26/figures-need-attention-to-detail/
 - https://tex.stackexchange.com/questions/23193/siunitx-how-can-i-avoid-adding-decimal-zeroes
 
-```latex
-\documentclass{scrbook}
-
-\usepackage[round-mode=places, round-integer-to-decimal, round-precision=2,
-    table-format = 1.2, 
-    table-number-alignment=center,
-    round-integer-to-decimal,
-    output-decimal-marker={,}
-    ]{siunitx} 
-\usepackage{booktabs}
-
-\begin{document}
-
-\begin{table}
-\centering
-\sisetup{table-format=1.3, round-precision=3, table-comparator=true, round-integer-to-decimal=false}
-\begin{tabular}{S[round-mode=places]S[round-mode=off]}
-\toprule
-{``Places''} & {``Off''}\\
-\midrule
-  5,2   &   5,2   \\
-  0,246 &   0,246 \\
- <0,002 &  <0,002 \\
- <0,002 &  <0,002 \\
-  0,007 &   0,007 \\
-  0,42  &   0,42  \\
-  6,9   &   6,9   \\
-390     & 390     \\
-\bottomrule
-\end{tabular}
-\end{table}
-\end{document}
-```
 # Title
 Forget About the Rules: Improving Trade Side Classification With Machine Learning
 
 # Introduction
 
-[[👶Introduction]]
+[[👶introduction notes]]
 
 # 👨‍👩‍👧‍👦 Related Work 🟢
 [[👪Related Work]]
 # 🔗Rule-Based Approaches
 
-The following section introduces common rules for signing option trades. We start by introducing the prevailing quote and tick rule and continue with the recently introduced depth and trade size rule. In section [[#^a043d0]] we combine hybrids thereoff. We draw a connection to ensemble learning.
+The following section introduces common rules for signing option trades. We start by introducing the prevailing quote and tick rule and continue with the recently introduced depth and trade size rule. In section [[#^a043d0]] we combine hybrids thereoff. We draw a connexion to ensemble learning.
 
 ## Basic Rules
 
@@ -109,7 +76,7 @@ In our attempt to compare shallow with deep architectures for trade classificati
 
 ### Positional Encoding
 
-### Residual Connections
+### Residual connections
 
 ### Layer Norm
 
@@ -199,7 +166,7 @@ describe if data set is actually used. Write similarily to
 [[🏅Robustness]]
 
 ## Feature Importance
-[[🏅Feature importance results]]
+[[🏅Feature Importance Results]]
 
 ## Ablation Study of Models
 

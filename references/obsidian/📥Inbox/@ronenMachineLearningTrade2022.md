@@ -12,10 +12,10 @@ related:
 
 ## Notes
 ### Problems
-- Neural net is rather deep 15 layers. (?) Important hyperparameters (e. g., learning rate) or configurations (e. g., capacity) are unknown. Also, its not known if neural nets were regularized, which is important. (see e. g., [[@kadraWelltunedSimpleNets2021]])
+- Neural net is rather deep 15 layers. (?) Important hyperparameters (e. g., learning rate) or configurations (e. g., capacity) are unknown. Also, its not known if neural nets were regularised, which is important. (see e. g., [[@kadraWelltunedSimpleNets2021]])
 - Similarily for RF only the number of trees is known, not how it was set.
 - Hyperparam search is unclear. No validation set used? -> Tuned on test set?
-- Standardization / normalization of data is unclear -> is known to hinder to hinder learning in neural networks.
+- Standardisation / normalisation of data is unclear -> is known to hinder to hinder learning in neural networks.
 - They do not handle imbalancies in the data.
 - Unclear which algorithm posed practical problems to handle the amount of data.
 - At time of reading its inclear if one should perform a 70-30 random split, as they did. Read on bulk classification (e. g. [[@chakrabartyEvaluatingTradeClassification2015]]). Shouldn't surrounding trades inform other trades? It's unclear what is meant by 10-fold-cv is not significantly dfferent. Split is obviously not maintained for the equity data, where 2/3s are used for training and the remainder for testing.
@@ -25,7 +25,7 @@ related:
 - Authors apply machine learning methods to understand improve trade direction classification. Algorithms include decision trees, discriminant anlysis, logistic regression, SVMs, $k$ nearest neighbour, and neural networks.
 - They conduct their study in the bond and equity market.
 - They train both bulked and single observation versions.
-- They emphasize the importance of optimizing the feature set and study the performance of trading rules under different market conditions e. g., trading frequencies.
+- They emphasise the importance of optimising the feature set and study the performance of trading rules under different market conditions e. g., trading frequencies.
 - **Important findings:**
 	- ML models at least matches or improves upon the accuracy of classical rules in the bond and stock market.
 	- The random forest trained on additional features improves over the tick rule by 8.3 % in the bond market. Thus, they conlcude random forest is superior.
@@ -51,11 +51,11 @@ related:
 	- ITCH (stocks) from December 9, 2013 - December 13, 2013.  Sample consists of roughly 1.4 million non-cross trades.
 ## Annotations
 
-“As trade initiation information is generally not provided in most intraday transaction databases, trade direction is often inferred from local price and/or quote behavior,” ([Ronen et al., 2022, p. 2](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=3&annotation=Q46E2CX6))
+“As trade initiation information is generally not provided in most intraday transaction databases, trade direction is often inferred from local price and/or quote behaviour,” ([Ronen et al., 2022, p. 2](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=3&annotation=Q46E2CX6))
 
 “The efficacy of these rules has been hotly debated, and their relative accuracy in different markets has been studied extensively.” ([Ronen et al., 2022, p. 2](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=3&annotation=ZNCJC95A))
 
-“Our paper contributes to the market microstructure literature by examining the applicability of machine learning methods to better understand and improve trade direction classification. In particular, we introduce a machine learning model that outperforms traditional classifiers. Moreover, we illustrate the importance of optimizing the feature set in correctly classifying trade direction and provide new insights on the efficacy of trading rules in different market conditions.” ([Ronen et al., 2022, p. 3](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=4&annotation=GHNUUP4C))
+“Our paper contributes to the market microstructure literature by examining the applicability of machine learning methods to better understand and improve trade direction classification. In particular, we introduce a machine learning model that outperforms traditional classifiers. Moreover, we illustrate the importance of optimising the feature set in correctly classifying trade direction and provide new insights on the efficacy of trading rules in different market conditions.” ([Ronen et al., 2022, p. 3](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=4&annotation=GHNUUP4C))
 
 “but also allows us to discover market characteristics that may affect our understanding of existing trade classification rules in general which may extend to other markets” ([Ronen et al., 2022, p. 4](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=5&annotation=XF3X4DIZ))
 
@@ -89,7 +89,7 @@ related:
 
 “We employ five days of trade data from the TotalView-ITCH database provided by Nasdaq (December 9, 2013-December 13, 2013) for 1,984 NASDAQ stocks (1,493,298 non-cross trades). Our ITCH data include signed orders and trades, time-stamped to the nanosecond. For each trade, we capture ticker, price, size, timestamp, and the buy/sell trade flag.” ([Ronen et al., 2022, p. 13](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=14&annotation=LV5YH7UN))
 
-“We consider several algorithms including Decision Trees, Discriminant Analysis, Logistic Regression, Support Vector Machines, k-Nearest Neighbor and a Neural Network (NN)” ([Ronen et al., 2022, p. 13](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=14&annotation=QNRVPD62))
+“We consider several algorithms including Decision Trees, Discriminant Analysis, Logistic Regression, Support Vector Machines, k-Nearest Neighbour and a Neural Network (NN)” ([Ronen et al., 2022, p. 13](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=14&annotation=QNRVPD62))
 
 “Some 10The imbalance in the number of buys versus sells in our sample is likely not a concern, since we do not train the model on this sub-sample. 11Since we aggregate ITCH trades to the millisecond, approximately 14% of ITCH trades are discarded in this matching procedure. An alternative matching procedure is considered, in which we compare each ITCH trade with the next or last available millisecond and retain an additional 13.5% of trades, which yields stronger results regarding the dominance of our RF model, rendering our choice the conservative one. 13 Electronic copy available at: https://ssrn.com/abstract=421331” ([Ronen et al., 2022, p. 13](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=14&annotation=AQ75C8E2))
 
@@ -101,7 +101,7 @@ related:
 
 “The algorithms we employ do not efficiently incorporate lagged information. Therefore we include relevant lagged data in each observation.” ([Ronen et al., 2022, p. 15](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=16&annotation=7AIG6L33))
 
-“We apply the classification algorithms to seven feature sets labeled {1} - {7} described below and shown in Table 4.” ([Ronen et al., 2022, p. 15](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=16&annotation=Q7FPD7RH))
+“We apply the classification algorithms to seven feature sets labelled {1} - {7} described below and shown in Table 4.” ([Ronen et al., 2022, p. 15](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=16&annotation=Q7FPD7RH))
 
 “Our first task is to invoke a number of popular classification algorithms and evaluate their efficacy in fifteen rolling windows of three years each. In each window we use 70% of the data to train the classifier and then measure the out-of-bag prediction accuracy on the remaining 30% of the observations.14” ([Ronen et al., 2022, p. 16](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=17&annotation=M7VJSUMN))
 
@@ -115,7 +115,7 @@ related:
 
 “We now examine how well the models shown in Table 5 hold up out-of-sample” ([Ronen et al., 2022, p. 17](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=18&annotation=XG5RJJ6P))
 
-“Compared to out-of-bag accuracy levels shown in Table 5, the out of sample prediction rates are mildly lower, although the ordinal properties across model accuracy rates remains similar. RF{4} still outperforms NN{4}, LG{4}, and TR. Since RF{4} and RF{5} are effectively equally accurate, and since RF{5} is more universally applicable in both the bond and stock markets, we focus on RF{5} and de-emphasize RF{4} going forward.” ([Ronen et al., 2022, p. 17](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=18&annotation=BD523LTG))
+“Compared to out-of-bag accuracy levels shown in Table 5, the out of sample prediction rates are mildly lower, although the ordinal properties across model accuracy rates remains similar. RF{4} still outperforms NN{4}, LG{4}, and TR. Since RF{4} and RF{5} are effectively equally accurate, and since RF{5} is more universally applicable in both the bond and stock markets, we focus on RF{5} and de-emphasise RF{4} going forward.” ([Ronen et al., 2022, p. 17](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=18&annotation=BD523LTG))
 
 “Table 7 reports the incremental out-of-sample prediction accuracy provided by each of the feature sets described in Table 4.” ([Ronen et al., 2022, p. 18](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=19&annotation=5LYGRNEC))
 
@@ -133,13 +133,13 @@ related:
 
 “The corresponding accuracy rates for RF{5}, LR, and TR are 74.6%, 74.0%, and 74.3%, respectively.31” ([Ronen et al., 2022, p. 30](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=31&annotation=CA24IS54))
 
-“The combined results from our study, which spans a large range of trading frequencies, including high latency trades in the corporate bond markets (when interpreted alongside those in earlier papers) reveal that most classifiers’ accuracy is maximized when the number of daily trades is highest (with several local maxima in the equity market), when trade is fast, and when trade sizes are smaller.” ([Ronen et al., 2022, p. 31](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=32&annotation=G9RIFRB5))
+“The combined results from our study, which spans a large range of trading frequencies, including high latency trades in the corporate bond markets (when interpreted alongside those in earlier papers) reveal that most classifiers’ accuracy is maximised when the number of daily trades is highest (with several local maxima in the equity market), when trade is fast, and when trade sizes are smaller.” ([Ronen et al., 2022, p. 31](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=32&annotation=G9RIFRB5))
 
 “Our finding that trade frequency is positively related to RF{7} accuracy across all ranges is notable in light of recent literature on new trade classification algorithms (Easley et al. (2016), Panayides et al. (2019), Chakrabarty et al. (2015), and Carrion and Kolay (2021)), which generally suggest that as markets become increasingly faster (more trades per unit time), existing algorithms perform worse, exacerbating the need for new, more effective ones, that are more compatible with these faster markets. Thus, one clear advantage of the machine learning algorithm we propose is that it performs better as the number of trades increases” ([Ronen et al., 2022, p. 31](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=32&annotation=QGHPFQBU))
 
 “Overall, the results in Table 13 as well as those in Section 4 reveal that RF{5} and RF{7} outperform LR and TR across all samples and for different types of trades” ([Ronen et al., 2022, p. 32](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=33&annotation=T2428C88))
 
-“As an alternative to the ITCH trained RF{7}, we also test the ability of the TRACEtrained RF{5} to classify equity market trades and find that its accuracy in the ITCH data is an unimpressive 61.2%, trailing that of TR (71.7%). While it is disappointing that we could not train the model in one market and predict well in another, we harvested useful insights from the TRACE dataset regarding the relative efficacy of different machine learning and traditional trade direction classifiers. The TRACE trained models led us to RF{5} and ultimately RF{7} in the equity market. Despite the lackluster transfer efficacy of cross-market trained models, we can report that machine learning does improve accuracy when trained on in-market data.” ([Ronen et al., 2022, p. 32](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=33&annotation=5RTZ8ZW3))
+“As an alternative to the ITCH trained RF{7}, we also test the ability of the TRACEtrained RF{5} to classify equity market trades and find that its accuracy in the ITCH data is an unimpressive 61.2%, trailing that of TR (71.7%). While it is disappointing that we could not train the model in one market and predict well in another, we harvested useful insights from the TRACE dataset regarding the relative efficacy of different machine learning and traditional trade direction classifiers. The TRACE trained models led us to RF{5} and ultimately RF{7} in the equity market. Despite the lacklustre transfer efficacy of cross-market trained models, we can report that machine learning does improve accuracy when trained on in-market data.” ([Ronen et al., 2022, p. 32](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=33&annotation=5RTZ8ZW3))
 
 “One caveat is that machine learning and other data driven methods achieve limited success with incomplete data. Since equity markets are fragmented, even if researchers obtain full sets of data, the inability to ensure correct sequencing of trades due to fragmentation and high frequency trading in the current equity markets presents problems for constructing machine learning models.” ([Ronen et al., 2022, p. 32](zotero://select/library/items/9BA47YWD)) ([pdf](zotero://open-pdf/library/items/SK56ALN9?page=33&annotation=TCH89IX7))
 

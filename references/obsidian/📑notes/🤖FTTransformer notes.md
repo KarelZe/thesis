@@ -1,5 +1,5 @@
 
-## Visualization
+## Visualisation
 
 ![[mashup-tokenizer-fttransformer.png]]
 (by [[@devlinBERTPretrainingDeep2019]] (p. 4185) and [[@gorishniyRevisitingDeepLearning2021]] (p. 4)) ^23bb5c
@@ -8,7 +8,7 @@
 
 In the official implementation of [[@gorishniyRevisitingDeepLearning2021]], the $\texttt{[CLS]}$ token is appended to the tensor at the end. Recall from the chapter [🅰️Attention]] that order is preserved. Also, the tensor is expanded, thus final column is repeated to provide an initial embedding for the $\texttt{[CLS]}$ token. For the explanation in this work, we stick to the formulation in the paper. 
 
-In contrast to the TabTransformer, where all contextualized embeddings contribute to the prediction, the output probabilities are only derived from the final hidden state of a single, specialized token, the $\texttt{[CLS]}$ token.
+In contrast to the TabTransformer, where all contextualised embeddings contribute to the prediction, the output probabilities are only derived from the final hidden state of a single, specialised token, the $\texttt{[CLS]}$ token.
 
 ## Other
 
@@ -39,6 +39,6 @@ encoder of  [[@vaswaniAttentionAllYou2017]] () and BERT ([[@devlinBERTPretrainin
 
 
 also found in (... see citations in [[@gorishniyEmbeddingsNumericalFeatures2022]], e.g., [[@somepalliSaintImprovedNeural2021]], [[@guoEmbeddingLearningFramework2021]] etc.) (poor paper by https://openreview.net/attachment?id=SJlyta4YPS&name=original_pdf), (see also [[@wangTransTabLearningTransferable]]. 
-“propose to include column names into the tabular modeling. As a result, TransTab treats any tabular data as the composition of three elements: text (for categorical & textual cells and column names), continuous values (for numerical cells), and boolean values (for binary cells) .” ([Wang and Sun, p. 4](zotero://select/library/items/38EXIFQ9)) ([pdf](zotero://open-pdf/library/items/C9P6BQ9N?page=4&annotation=2L6GMYKW)))
+“propose to include column names into the tabular modelling. As a result, TransTab treats any tabular data as the composition of three elements: text (for categorical & textual cells and column names), continuous values (for numerical cells), and boolean values (for binary cells) .” ([Wang and Sun, p. 4](zotero://select/library/items/38EXIFQ9)) ([pdf](zotero://open-pdf/library/items/C9P6BQ9N?page=4&annotation=2L6GMYKW)))
 
 They learn embeddings for continuous, categorical and binary data and include the column headings) a recent work of a 

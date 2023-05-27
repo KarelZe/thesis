@@ -44,7 +44,7 @@ The $\left\{\mathcal{L}^{(B)}\right\}$ are replicate data sets drawn from the bo
 4. For $\left(y_{n}, \boldsymbol{x}_{n}\right) \in \mathcal{T}$, the bagged predictor is $\hat{y}_{n}=a v_{k} \phi_{k}\left(\boldsymbol{x}_{n}\right)$, and the squared error $e_{B}(\mathcal{L}, \mathcal{T})$ is $a v_{n}\left(y_{n}-\hat{y}_{n}\right)^{2}$ (average?)
 5. The random division of the data into $\mathcal{L}$ and $\mathcal{T}$ is repeated multiple times and the errors averaged to give $\bar{e}_{S}, \bar{e}_{B}$. (p. 128)
 
-**Summary**: Random splits into train and test set. A bootstrap sample is used to build trees, which gets then pruned. The bagged predictor is the average of the predictors learned on the bootstrap samples.
+**Summary**: Random splits into train and test set. A bootstrap sample is used to build trees, which gets then pruned. The bagged predictor is the average of the predictors learnt on the bootstrap samples.
 
 ## Discussion
 
