@@ -966,8 +966,6 @@ Experiments are conducted on shared nodes of the bwHPC cluster, with 10 assigned
 \subsubsection{Training of Supervised
     Models}\label{sec:training-of-supervised-models}
 
-While different algorithmic implementations exist for Bayesian optimisation, we choose the optuna library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters. We maximise the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $50$ trials per combination of the model and feature set. To compensate for varying computational costs between the classifiers, we set an additional time budget of 12 hours. The best combination of each is tested out-of-sample in \cref{sec:results}.
-
 Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autocite[][5--6]{prokhorenkovaCatBoostUnbiasedBoosting2018} because of its efficient implementation on \glspl{GPU} and native support for categorical variables. However, as discussed in \cref{sec:gradient-boosting-procedure}, we expect the chosen library to have minimal impact on performance.
 
 \begin{figure}[ht]
@@ -1091,7 +1089,7 @@ All of our machine-learning models feature a set of tunable hyperparameters. The
 
 We perform a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function \autocite[][2]{shahriariTakingHumanOut2016}. Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in more promising trials.
 
-While different algorithmic implementations exist for Bayesian optimisation, we choose the \emph{Optuna} library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters. We maximise the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $\num{50}$ trials per feature set for the \gls{GBRT} and $\num{10}$ trials for the FT-Transformer. The best combination of each is tested out-of-sample in \cref{sec:results}.
+While different algorithmic implementations exist for Bayesian optimisation, we choose the \emph{Optuna} library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters.\footnote{Implementation of the tree-parzen estimator searches the first 10 trials randomly before the completed trials affect the sampling.} We maximise the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $\num{50}$ trials per feature set for the \gls{GBRT} and $\num{10}$ trials for the FT-Transformer. The best combination of each is tested out-of-sample in \cref{sec:results}.
 
 \textbf{Hyperparameter Search Space}
 
