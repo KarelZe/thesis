@@ -1,4 +1,10 @@
 
+## Results over time
+
+![[results-over-time-ise.png]]
+![[accuracies-over-time-ise.png]]
+(time series look rather similar)
+
 
 - Do full analysis first, then look into sub samples
 - “In light of this evidence, I recommend that researchers partition their transaction samples along the dimensions investigated in the paper and examine the impact on the results of their studies. If the "ndings are consistent across partitions, then researchers can be reasonably con"dent that their results are robust to misclassi"cation bias. On the other hand, if the results change along these dimensions without any clear explanation given the focus of the research, this suggests that misclassi"cation may be a problem. In this case, at a minimum, di!erences across partitions should be discussed along with the overall results.” ([[@odders-whiteOccurrenceConsequencesInaccurate2000]], 2000, p. 280)
