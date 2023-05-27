@@ -14,11 +14,11 @@ from pathlib import Path
 import click
 import optuna
 import pandas as pd
+import wandb
 import yaml
 from optuna.exceptions import ExperimentalWarning
 from optuna.integration.wandb import WeightsAndBiasesCallback
 
-import wandb
 from otc.config.config import settings
 from otc.features.build_features import (
     features_categorical,

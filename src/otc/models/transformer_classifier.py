@@ -210,7 +210,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         del data
         return tab_dl
 
-    def fit(
+    def fit(  # noqa: C901
         self,
         X: npt.NDArray | pd.DataFrame,
         y: npt.NDArray | pd.Series,
@@ -331,7 +331,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                     with torch.autocast(device_type="cuda", dtype=torch.float16):
                         logits = self.clf(x_cat, x_cont)
-                        train_loss = criterion(logits, masks.float())
+                        train_loss = criterion(logits, masks.float())  # type: ignore[union-attr] # noqa: E501
 
                     scaler.scale(train_loss).backward()
                     scaler.step(optimizer)
@@ -357,7 +357,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                         # for my implementation
                         logits = self.clf(x_cat, x_cont)
-                        val_loss = criterion(logits, masks.float())
+                        val_loss = criterion(logits, masks.float())  # type: ignore[union-attr] # noqa: E501
 
                         loss_in_epoch_val += val_loss.item()
 
