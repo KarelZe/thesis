@@ -26,9 +26,6 @@ The hyperparameter search space for Transformers with a pre-training objective i
 The search space for the semi-supervised variant is identical to the supervised gradient boosting.
 
 
-![[Pasted image 20230428111917.png]]
-
-
 **Gradient Boosting**
 Figure-Xa) visualises the hyperparameter search space of the gls-gbm on the gls-ise dataset with classical features. We can derive several observations from it. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between (...) and (...) for different trials. Second, the best hyperparameter combination, marked in (), achieves a validation accuracy of sunitx-percent. As it lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is stable and reasonable for further analysis.
 
@@ -41,6 +38,9 @@ The results for the gls-gbm in combination with self-training are similar and vi
 (...)
 - where does depth come from?
 - Why just two iterations
+
+**Transformer with Pre-Training**
+To conserve space we only report the . Overall, the.  A visualisation of the search space for semi-supervised methods can be found  
 
 **Classical rules**
 Akin to selecting the machine learning classifiers, we determine our classical baselines on the gls-ise validation set. This prevents overfitting the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the gls-cboe sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and gls-lr algorithm, due to their widespread adoption in literature.
