@@ -4,6 +4,7 @@
 - start coarse-grained then report fine-grained results
 - explain why results differ compared to Grauer et al
 - think about reporting classical rules on the entire dataset
+- report train, validation and test accuracies also over time (mark in graph where beginning and ned)
 
 ![[summarized-results.png]]
 

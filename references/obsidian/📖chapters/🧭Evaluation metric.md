@@ -41,5 +41,7 @@ It is a measure of uncertainty ([you may call it entropy](https://towardsdatasci
 **_Log Loss it useful to compare models not only on their output but on their probabilistic outcome._**
 https://medium.com/@fzammito/whats-considered-a-good-log-loss-in-machine-learning-a529d400632d
 
+Application in kaggle challenge https://www.kaggle.com/competitions/telstra-recruiting-network/overview/evaluation
+
 **Notes:**
 [[🧭Evaluation metric notes]]

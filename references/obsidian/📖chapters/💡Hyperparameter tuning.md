@@ -45,7 +45,13 @@ To conserve space we only report the . Overall, the.  A visualisation of the sea
 **Classical rules**
 Akin to selecting the machine learning classifiers, we determine our classical baselines on the gls-ise validation set. This prevents overfitting the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the gls-cboe sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and gls-lr algorithm, due to their widespread adoption in literature.
 
+<mark style="background: #CACFD9A6;">(by drawing on the stacking principle)</mark>
 While optimising the combination of trade classification rules through Bayesian search is theoretically feasible, we found no out-performance over hybrid rules reported in literature \footnote{We performed a Bayesian search with 50 trials for trade classification rules, stacking up to five rules. Experiment available under: \url{https://wandb.ai/fbv/thesis}}.  Thus, \cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set.
+
+![[table-classical-rules.png]]
+(two more columns for Grauer combination)
+
+Do like $\operatorname{Categorical}\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$
 
 
 
