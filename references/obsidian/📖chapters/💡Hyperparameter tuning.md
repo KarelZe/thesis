@@ -51,7 +51,7 @@ While optimising the combination of trade classification rules through Bayesian 
 ![[table-classical-rules.png]]
 (two more columns for Grauer combination)
 
-Do like $\operatorname{Categorical}\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$
+Do like $\operatorname{Categorical}\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ or even simpler $\left[\ldots\right]$ done so in Grinzsjastin (p. 23)  
 
 
 
