@@ -1,6 +1,7 @@
 \documentclass[oneside,a4paper,12pt]{article} % Specifies the page format and font size.
 
 
+
 % -------------------------------------- Integration of packages --------------------------------------
 % Literature and language
 \usepackage[english]{babel}
@@ -243,6 +244,9 @@ bookmarksopen
 For tabular data, a token corresponds to a column in the data set.}}
 \newglossaryentry{exploding-gradient}{name={exploding gradient},plural={exploding gradients},description={Exploding gradients is a problem encountered in training deep neural networks with backpropagation. Error gradients can accumulate, and result in very large parameter updates and unstable training of the network. The opposite is the vanishing gradient problem, whereby gradients become successively smaller during backpropagation, resulting in no or small parameter updates of the network. In both cases, the network does not converge.}}
 
+% compile only locally
+\includeonly{Content/training-tuning}
+
 % ----------------------------------- Start of document -----------------------------------
 \begin{document}
 \setcounter{page}{2} % Cover pages and title page are not numbered. Start numbering from page 2.
@@ -271,7 +275,16 @@ For tabular data, a token corresponds to a column in the data set.}}
 % Main text section
 \newpage
 \setcounter{page}{1}\renewcommand{\thepage}{\arabic{page}} % Sets the numbering to Arabic.
-\include{Content/main}
+
+\include{Content/introduction}
+\include{Content/related-work}
+\include{Content/rule-approaches}
+\include{Content/supervised-approaches}
+\include{Content/semisupervised-approaches}
+\include{Content/data-preprocessing}
+\include{Content/training-tuning}
+\include{Content/evaluation}
+\include{Content/end}
 
 % Bibliography
 \newpage
