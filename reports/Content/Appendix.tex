@@ -1,8 +1,29 @@
 \section{Appendix}
 
 \crefalias{section}{appsec}
-
 \newpage
+
+\subsection{Literature on Trade Classification Using Machine Learning}
+\label{app:literature-ml-tc}
+
+\begin{landscape}
+    \begin{table}[ht]
+        \centering
+        \caption[Literature on Trade Classification Using Machine Learning.]{Literature on trade classification using machine learning. Improvement is the out-of-sample performance over the best baselines if multiple baselines are reported. Data requirements may not be identical to these of classical rules.}
+        \label{tab:literature-trade-classification-ml}
+        \begin{tabular}{@{}p{3cm}p{3cm}lp{4cm}p{4cm}l@{}}
+            \toprule
+            Research                                                      & Data                              & Sample Period            & Method                                                                                                 & Baseline                                             & Improvement              \\ \midrule
+            \autocite[][15]{rosenthalModelingTradeDirection2012}          & \gls{NASDAQ}                      &                          & Logistic regression                                                                                    & \gls{EMO} rule, \gls{LR} rule,\newline and tick rule         & max. \SI{2.2}{\percent}  \\ \cmidrule{2-6}
+                                                                          & \gls{NYSE}                        & 03/12/2004 -- 31/12/2004 & Logistic regression                                                                                    & \gls{EMO} rule, \gls{LR} rule,\newline and tick rule         & max. \SI{1.1}{\percent}  \\\cmidrule{1-6}
+            \autocite[][489--494]{blazejewskiLocalNonParametricModel2005} & Australian Stock\newline Exchange & 11/11/2002 -- 27/08/2003 & $k$ nearest neighbour, \newline logistic regression,\newline trade continuation,\newline majority vote &                                                      &                          \\ \cmidrule{1-6}
+            \autocite[][49--57]{ronenMachineLearningTrade2022}            & \gls{TRACE}                       & 01/07/2002 -- 31/12/2019 & Logistic regression, decision tree,\newline neural network, and random forests                         & \gls{LR} rule and tick rule,\newline and \gls{BVC} algorithm & max. \SI{13.3}{\percent} \\ \cmidrule{2-6}
+                                                                          & \gls{NASDAQ}                      & 09/12/2013 -- 13/12/2013 & Logistic regression, decision tree,\newline neural network, and random forests                         & \gls{LR} rule, tick rule,\newline and \gls{BVC} algorithm    & max. \SI{3.3}{\percent}  \\ \bottomrule
+        \end{tabular}
+    \end{table}
+\end{landscape}
+
+
 \subsection{Power-Transforms of Features}
 \label{app:power-transforms-of-features}
 
