@@ -159,17 +159,30 @@ As documented in \cref{tab:hyperparameter-space-gbm}, we tune five hyperparamete
 
 \cref{fig:ise-gbm-hyperparam-classical} visualises the hyperparameter search space of the \gls{GBRT} on the \gls{ISE} dataset with classical features, from which we can derive several observations from. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.429}{\percent} and \SI{64.378}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
 
-\begin{landscape}
-    % \thispagestyle{empty} % disable footers etc to make best use of space
-    \begin{figure}[!ht]
-        \hfill
-        \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[width=0.3\textwidth]{1gzk7msy-hyperparam-search-space.pdf}}
-        \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[width=0.3\textwidth]{3vntumoi-hyperparam-search-space.pdf}}
-        \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 3\label{fig:ise-gbm-hyperparam-ml}]{\addtocounter{subfigure}{2}\includegraphics[width=0.3\textwidth]{2t5zo50f-hyperparam-search-space.pdf}}
-        \caption[Hyperparameter Search Space of \glsentryshort{GBRT} on \glsentryshort{ISE} Validation Set]{Hyperparameter Search Space of \gls{GBRT} on \gls{ISE} Validation Set}
-        \label{fig:ise-gbm-hyperparam}
-    \end{figure}
-\end{landscape}
+% \begin{landscape}
+%     % \thispagestyle{empty} % disable footers etc to make best use of space
+%     \begin{figure}[!ht]
+%         \hfill
+%         \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[width=0.3\textwidth]{1gzk7msy-hyperparam-search-space.pdf}}
+%         \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[width=0.3\textwidth]{3vntumoi-hyperparam-search-space.pdf}}
+%         \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 3\label{fig:ise-gbm-hyperparam-ml}]{\addtocounter{subfigure}{2}\includegraphics[width=0.3\textwidth]{2t5zo50f-hyperparam-search-space.pdf}}
+%         \caption[Hyperparameter Search Space of \glsentryshort{GBRT} on \glsentryshort{ISE} Validation Set]{Hyperparameter Search Space of \gls{GBRT} on \gls{ISE} Validation Set}
+%         \label{fig:ise-gbm-hyperparam}
+%     \end{figure}
+% \end{landscape}
+
+\begin{figure}[!b]
+    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[width=0.6\textwidth]{1gzk7msy-hyperparam-search-space.pdf}}
+\end{figure}
+\clearpage
+\begin{figure}[ht]
+    \addtocounter{figure}{-1}
+    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[width=0.6\textwidth]{3vntumoi-hyperparam-search-space.pdf}}
+    \vfill
+    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 3\label{fig:ise-gbm-hyperparam-ml}]{\addtocounter{subfigure}{2}\includegraphics[width=0.6\textwidth]{2t5zo50f-hyperparam-search-space.pdf}}
+    \caption[]{Hyperparameter Search Space of \gls{GBRT} on \gls{ISE} Validation Set}
+    \label{fig:ise-gbm-hyperparam}
+\end{figure}
 
 In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \gls{GBRT} trained on classical-size features. The loss surface is smooth with large connected regions. As the best solution achieving \SI{75.03504680858162}{\percent} accuracy lies within a splayed region of dense sampling, it is a good choice for further analysis. Consistent with the loss surface of \cref{fig:ise-gbm-hyperparam-classical}, the trees are grown to the maximum depth and a high learning rate, indicating the need for complex ensemble members highly corrective to previous predictions. Part of this could be due to the low signal-to-noise ratio in financial data.
 
@@ -198,7 +211,7 @@ The search space for the semi-supervised variant is identical to the supervised 
 
 \begin{table}[H]
     \centering
-    \caption[Search Solutions of Gradient Boosting With Self-Training]{Search solutions of gradient boosting with self-training. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials each. Arrows indicate the change compared to the supervised variant. }
+    \caption[Search Solutions of Gradient Boosting With Self-Training]{Search solutions of gradient boosting with self-training. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials each. Arrows indicate the change compared to the supervised counterpart.}
     \label{tab:solutions-GBRT-self-training}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
@@ -212,14 +225,11 @@ The search space for the semi-supervised variant is identical to the supervised 
     \end{tabular}
 \end{table}
 
-
-
-
-\todo{Comment results.}
+Matching the supervised results, semi-supervised ensembles exhaust the maximum tree depth and combine trees with a coarse learning rate. By parameter importance, both are most influential on the final result. Again, this is an indication that the trade data is not easily separable, requiring multiple features and splits. The found hyperparameters for $\ell_2$ leaf regularisation, random strength and bagging are balanced. Overall, the best validation accuracies are slightly inferior to the supervised variant. 
 
 \textbf{Transformer}
 
-The search space for the FT-Transformer is almost identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)) and reported in \cref{tab:hyperparameter-space-2}. We vary the layer count and the embedding dimension, which directly affect the capacity of the network. Layers refer to the number of Transformer blocks in the encoder stack. The dimension of numerical and continuous embeddings $d_e$ is at \num{256} at maximum, which is half the dimension used in the author's work. We make this sacrifice, due to being computation-bound by the size of the dataset. Dropout \autocite[][1930]{srivastavaDropoutSimpleWay} in the attention module and the \gls{FFN} is used to prevent overfitting the training data. As discussed in \cref{sec:training-of-supervised-models}, we treat the weight decay term in the weight update rule of the AdamW optimizer as a hyperparameter, with larger values for \lambda~enforcing a stronger shrinkage of weights and thereby reducing overfitting.
+The search space for the FT-Transformer is identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)) with minor deviations and reported in \cref{tab:hyperparameter-space-2}. We vary the layer count and the embedding dimension, which directly affect the capacity of the network. Layers refer to the number of Transformer blocks in the encoder stack. The dimension of numerical and continuous embeddings $d_e$ is at \num{256} at maximum, which is half the dimension used in the author's work. We make this sacrifice, due to being computation-bound by the size of the dataset. Dropout \autocite[][1930]{srivastavaDropoutSimpleWay} in the attention module and the \gls{FFN} is used to prevent overfitting the training data. As discussed in \cref{sec:training-of-supervised-models}, we treat the weight decay term in the weight update rule of the AdamW optimizer as a hyperparameter, with larger values for \lambda~enforcing a stronger shrinkage of weights and thereby reducing overfitting.
 
 \begin{table}[H]
     \centering
@@ -237,17 +247,19 @@ The search space for the FT-Transformer is almost identical to \textcite[][18]{g
     \end{tabular}
 \end{table}
 
-\begin{landscape}
-    % \thispagestyle{empty} % disable footers etc to make best use of space
-    \begin{figure}[!ht]
-        \hfill
-        \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set 1\label{fig:ise-transformer-hyperparam-classical}]{\includegraphics[width=0.3\textwidth]{3jpe46s1-hyperparam-search-space.pdf}}
-        \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set 2\label{fig:ise-transformer-hyperparam-classical-size}]{\includegraphics[width=0.3\textwidth]{1qx3ul4j-hyperparam-search-space.pdf}}
-        \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set 3\label{fig:ise-transformer-hyperparam-ml}]{\addtocounter{subfigure}{2}\includegraphics[width=0.3\textwidth]{2h81aiow-hyperparam-search-space.pdf}}
-        \caption[Hyperparameter Search Space of FT-Transformer on \glsentryshort{ISE} Validation Set]{Hyperparameter Search Space of FT-Transformer on \gls{ISE} Validation Set}
-        \label{fig:ise-transformer-hyperparam}
-    \end{figure}
-\end{landscape}
+\begin{figure}[!b]
+    \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set 1\label{fig:ise-transformer-hyperparam-classical}]{\includegraphics[width=0.6\linewidth]{3jpe46s1-hyperparam-search-space.pdf}}
+    \vfill
+    \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set 2\label{fig:ise-transformer-hyperparam-classical-size}]{\includegraphics[width=0.6\linewidth]{1qx3ul4j-hyperparam-search-space.pdf}}
+\end{figure}
+\clearpage
+\begin{figure}[ht]
+    \addtocounter{figure}{-1}
+    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 3\label{fig:ise-transformer-hyperparam-ml}]{\includegraphics[ width=0.6\linewidth]{2h81aiow-hyperparam-search-space.pdf}}
+    \caption[Hyperparameter Search Space of FT-Transformer on \glsentryshort{ISE} Validation Set]{Hyperparameter Search Space of FT-Transformer on \gls{ISE} Validation Set}
+    \label{fig:ise-transformer-hyperparam}
+\end{figure}
+
 
 \begin{table}[H]
     \centering
@@ -267,7 +279,7 @@ The search space for the FT-Transformer is almost identical to \textcite[][18]{g
     \end{tabular}
 \end{table}
 
-\todo{Comment results.}
+Due to the pseudo-random sampling during the first trials of Bayesian search combined with the reduced number of trials for the Transformer studies, the tested hyperparameter combinations are identical for all feature sets. Universally,
 
 \textbf{Transformer With Pre-Training}
 
@@ -293,17 +305,17 @@ The hyperparameter search space for Transformers with a pre-training objective i
 
 Results are tabulated in \cref{tab:solutions-transformer-pretraining}. Visualisations of the hyperparameter search space are available online.\footnote{\emph{FS 1:} \url{https://wandb.ai/fbv/thesis/runs/tbd}, \emph{FS 2:} \url{https://wandb.ai/fbv/thesis/runs/tbd}, and \emph{FS 3:} \url{https://wandb.ai/fbv/thesis/runs/tbd}}
 
+\todo{Comment results.}
+
 \textbf{Classical Rules}
 
 Akin to selecting the machine learning classifiers, we determine our classical baselines on the \gls{ISE} validation set. This prevents \gls{overfitting} the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the \gls{CBOE} sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and \gls{LR} algorithm, due to their widespread adoption in literature.
 
-\todo{Rewrite to hyperparameter space, report found solution, report grauer solution, report validation accuracies}
-
-
 \begin{table}[H]
     \centering
     \sisetup{table-number-alignment=left}
-    \caption[Hyperparameter Search Space of Trade Classification Rules]{Hyperparameter search space of trade classification rules}
+    \caption[Hyperparameter Search Space of Trade Classification Rules]{Hyperparameter search space of trade classification rules. We perform \num{50} trials for each feature set.}
+    \label{tab:hyperparameter-space-classical}
     \begin{tabular}{@{}lll@{}}
         \toprule
         Hyperparameter & Distribution FS 1                                                       & Distribution FS 2/3                                                                                                 \\ \midrule
@@ -315,9 +327,9 @@ Akin to selecting the machine learning classifiers, we determine our classical b
     \end{tabular}
 \end{table}
 
-Optimising hybrids of trade classification rules through Bayesian search is theoretically feasible, but we found no outperformance over hybrid rules already reported in the literature.\footnote{We performed a Bayesian search with $50$ trials for trade classification rules, stacking up to five rules. Experiment available under: \url{https://wandb.ai/fbv/thesis}.} Thus, \cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set. The tick test applied to trade prices at the trading venue performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving the tick rule over all exchanges ($\operatorname{tick}_{\mathrm{all}}$). From all classical rules, a double-combination of the quote rule ($\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$), where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE}, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly used in the literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
+Optimising hybrids of trade classification rules through Bayesian search is experimentally feasible by stacking rules of \cref{sec:rule-based-approaches} and treating the rules as a tunable hyperparameter as done in \cref{tab:hyperparameter-space-classical}. We consider all quote-based rules applied to quotes of the exchange and \gls{NBBO}, and price-based rules at the exchange and inter-exchange level indicated by subscript $\text{ex}$, $\text{all}$ or $\text{nbbo}$. To model simple rules, consisting of a single or few rules, we add an identity mapping, $\operatorname{Id}$, that defers classification to later rules in the stack. A caveat of this approach is that sampled combinations may not be economically meaningful e.g., applying depth rule after tick rule, or not affect classification at all e.g., quote rule after tick rule, assuming complete data.
 
-\todo{Pick up in the text, that the combination is the one we previously referred to as the GSU method. Say it is more difficult benchmark, than my found solution}
+After all, we find no outperformance over hybrid rules already reported in the literature. Thus, \cref{tab:solutions-classical-rules} reports additionally to our own combinations the accuracies of rules from \textcite[][14]{grauerOptionTradeClassification2022} on the \gls{ISE} validation set. We subsequently use their combinations, as these provide a more challenging benchmark. The overall lower performance of our combinations can be traced back to spending most of the search budget on non-meaningful combinations. A conditional search space based on economic intuition or human-in-the-loop sampling could account for this.
 
 \begin{table}[H]
     \centering
@@ -326,18 +338,19 @@ Optimising hybrids of trade classification rules through Bayesian search is theo
     \begin{tabular}{@{}lllll@{}}
         \toprule
         Hyperparameter            & FS 1 & FS 2/3 & Grauer FS 1 & Grauer FS2/3 \\ \midrule
-        Layer 1                   &      &        &             &              \\
-        Layer 2                   &      &        &             &              \\
-        Layer 3                   &      &        &             &              \\
-        Layer 4                   &      &        &             &              \\
-        Layer 5                   &      &        &             &              \\ \midrule
-        Validation Accuracy in \% &      &        &             &              \\ \bottomrule
+        Layer 1                   &      &        &  $\operatorname{quote}_{\mathrm{nbbo}}$           &              \\
+        Layer 2                   &      &        & $\operatorname{quote}_{\mathrm{ex}}$            &              \\
+        Layer 3                   &      &        & $\operatorname{Id}$           &              \\
+        Layer 4                   &      &        &  $\operatorname{Id}$           &              \\
+        Layer 5                   &      &        & $\operatorname{Id}$            &              \\ \midrule
+        Validation Accuracy in \% &      &        &            &              \\ \bottomrule
     \end{tabular}
 \end{table}
 
-\todo{check if best combination is quote(nbbo) quote(ex) rev-tick}
+From all classical rules, a double-combination of the quote rule ($\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$), where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE}, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly used in the literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
 
-By extension, we also estimate rule combinations involving overrides from the trade size rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ achieves the highest validation accuracy. For brevity, we refer to this specific combination as the \gls{GSU} method. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for the second feature set.
+For the second feature set involving size-related rules, we consider rules that involve the trade size or depth rule. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ achieves the highest validation accuracy. Like before, we refer to this specific combination as the \gls{GSU} method. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for the second feature set.
+% By extension, we also estimate rule combinations involving overrides from the trade size rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. The tick test applied to trade prices at the trading venue performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving the tick rule over all exchanges ($\operatorname{tick}_{\mathrm{all}}$).
 
 In the absence of other baselines, we repeatedly compare against \gls{GSU} method as a baseline for the third feature set, even if it doesn't involve option-specific features.
 
