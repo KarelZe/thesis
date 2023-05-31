@@ -129,6 +129,8 @@ To incorporate unlabelled trades into the training procedure, we combine gradien
 
 All of our machine-learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[][5]{grinsztajnWhyTreebasedModels2022}, emphasise the need for tuning routines, as the test performance of the FT-Transformer and \glspl{GBRT} largely fluctuates with the hyperparameter configuration. For a fair comparison, we employ an exhaustive hyperparameter search, to find a suitable hyperparameter configuration for each of our models.
 
+Classical rules have no hyperparameters per se, but the best hybrid rules can be attained through hyperparameter search.
+
 \textbf{Bayesian Search}
 
 We perform a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function \autocite[][2]{shahriariTakingHumanOut2016}. Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in more promising trials.
@@ -197,7 +199,9 @@ The loss surface of the \gls{GBRT} trained on the feature set including option f
 
 \textbf{Gradient Boosting With Self-Training}
 
-The search space for the semi-supervised variant is identical to the supervised gradient boosting. To conserve space, we only report the tabulated results in \cref{tab:solutions-GBRT-self-training}. Visualisations are available online.\footnote{\todo{Research links}}
+The search space for the semi-supervised variant is identical to the supervised gradient boosting. To conserve space, we only report the tabulated results in \cref{tab:solutions-GBRT-self-training}. Visualisations are available online.\footnote{\emph{FS 1:} \url{https://wandb.ai/fbv/thesis/runs/37lymmzc}\newline
+    \emph{FS 2:} \url{https://wandb.ai/fbv/thesis/runs/324v3uv5} \newline
+    \emph{FS 3:} \url{https://wandb.ai/fbv/thesis/runs/t55nd8r0}}
 
 \begin{table}[H]
     \centering
@@ -254,19 +258,19 @@ The search space for the FT-Transformer is almost identical to \textcite[][18]{g
 
 \begin{table}[H]
     \centering
-    \sisetup{table-text-alignment=left}
+    \sisetup{table-text-alignment=right}
     \caption[Solutions of Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{10} trials each. A discussion of these results is provided below.}
     \label{tab:solutions-transformer}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyperparameter                       & Distribution                                        & {FS 1} & {FS 2} & {FS 3} \\ \midrule
-        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    &        &        &        \\
-        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                &        &        &        \\
-        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &        &        &        \\
-        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &        &        &        \\
-        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ &        &        &        \\
-        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ &        &        &        \\ \midrule
-        Validation Accuracy in \%            &                                                     & {0.0}  & {0.0}  & {0.0}  \\ \bottomrule
+        Hyperparameter                       & Distribution                                        & {FS 1}              & {FS 2}              & {FS 3}              \\ \midrule
+        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    & 4                   & 4                   & 4                   \\
+        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                & 248                 & 248                 & 248                 \\
+        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.04424625102595975 & 0.04424625102595975 & 0.04424625102595975 \\
+        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.0979914312095726  & 0.0979914312095726  & 0.0979914312095726  \\
+        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ & \num{1e-6}          & \num{1e-6}          & \num{1e-6}          \\
+        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ & \num{6e-5}          & \num{6e-5}          & \num{6e-5}          \\ \midrule
+        Validation Accuracy in \%            &                                                     & 64.69               & 75.42               & 77.17               \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -274,7 +278,9 @@ The search space for the FT-Transformer is almost identical to \textcite[][18]{g
 
 The hyperparameter search space for Transformers with a pre-training objective is identical to that shown in \cref{tab:hyperparameter-space-2}. Following \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}, we share the learning rate and weight decay between the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
 
-Results are tabulated in \cref{tab:solutions-transformer-pretraining}. Visualisations of the hyperparameter search space are available online.\footnote{\todo{Add link to visualisations.}}
+Results are tabulated in \cref{tab:solutions-transformer-pretraining}. Visualisations of the hyperparameter search space are available online.\footnote{\emph{FS 1:} \url{https://wandb.ai/fbv/thesis/runs/tbd}\newline
+    \emph{FS 2:} \url{https://wandb.ai/fbv/thesis/runs/tbd} \newline
+    \emph{FS 3:} \url{https://wandb.ai/fbv/thesis/runs/tbd}}
 
 \begin{table}[H]
     \centering
@@ -309,34 +315,32 @@ Akin to selecting the machine learning classifiers, we determine our classical b
         \toprule
         Hyperparameter & Distribution FS 1                                                       & Distribution FS 2/3                                                                                                 \\ \midrule
         Layer 1        & $\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ & $\left[\operatorname{depth}, \operatorname{tsize}, \operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ \\
-        Layer 2        &                                                                         &                                                                                                                     \\
-        Layer 3        &                                                                         &                                                                                                                     \\
-        Layer 4        &                                                                         &                                                                                                                     \\
-        Layer 5        &                                                                         &                                                                                                                     \\ \bottomrule
+        Layer 2        & $\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ & $\left[\operatorname{depth}, \operatorname{tsize}, \operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ \\
+        Layer 3        & $\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ & $\left[\operatorname{depth}, \operatorname{tsize}, \operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ \\
+        Layer 4        & $\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ & $\left[\operatorname{depth}, \operatorname{tsize}, \operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ \\
+        Layer 5        & $\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ & $\left[\operatorname{depth}, \operatorname{tsize}, \operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ \\ \bottomrule
     \end{tabular}
 \end{table}
 
-\todo{link to concrete experiment}
-
 Optimising hybrids of trade classification rules through Bayesian search is theoretically feasible, but we found no outperformance over hybrid rules already reported in the literature.\footnote{We performed a Bayesian search with $50$ trials for trade classification rules, stacking up to five rules. Experiment available under: \url{https://wandb.ai/fbv/thesis}.} Thus, \cref{tab:ise-classical-hyperparam-classical-size} reports the accuracies of common trade classification rules on the \gls{ISE} validation set. The tick test applied to trade prices at the trading venue performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving the tick rule over all exchanges ($\operatorname{tick}_{\mathrm{all}}$). From all classical rules, a double-combination of the quote rule ($\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$), where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE}, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly used in the literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
 
-\todo{Pick up in text, that the combination is the one we previously referred to as the GSU method. Say it is more difficult benchmark, than my found solution}
+\todo{Pick up in the text, that the combination is the one we previously referred to as the GSU method. Say it is more difficult benchmark, than my found solution}
 
 \begin{table}[H]
     \centering
     \caption[Hyperparameter Search Space of Trade Classification Rule]{Hyperparameter search space of trade classification rule.}
     \label{tab:solutions-classical-rules}
     \begin{tabular}{@{}lllll@{}}
-    \toprule
-    Hyperparameter            & FS 1 & FS 2/3 & Grauer FS 1 & Grauer FS2/3 \\ \midrule
-    Layer 1                   &      &        &             &              \\
-    Layer 2                   &      &        &             &              \\
-    Layer 3                   &      &        &             &              \\
-    Layer 4                   &      &        &             &              \\
-    Layer 5                   &      &        &             &              \\ \midrule
-    Validation Accuracy in \% &      &        &             &              \\ \bottomrule
+        \toprule
+        Hyperparameter            & FS 1 & FS 2/3 & Grauer FS 1 & Grauer FS2/3 \\ \midrule
+        Layer 1                   &      &        &             &              \\
+        Layer 2                   &      &        &             &              \\
+        Layer 3                   &      &        &             &              \\
+        Layer 4                   &      &        &             &              \\
+        Layer 5                   &      &        &             &              \\ \midrule
+        Validation Accuracy in \% &      &        &             &              \\ \bottomrule
     \end{tabular}
-    \end{table}
+\end{table}
 
 \todo{check if best combination is quote(nbbo) quote(ex) rev-tick}
 By extension, we also estimate rule combinations involving overrides from the trade size rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ achieves the highest validation accuracy. For brevity, we refer to this specific combination as the \gls{GSU} method. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for the second feature set.
