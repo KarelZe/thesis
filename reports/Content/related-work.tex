@@ -11,9 +11,7 @@ While classical trade classification algorithms are extensively tested in the st
 
 The most exhaustive study is the one of \textcite[1--39]{grauerOptionTradeClassification2022}. The authors test the accuracy of the classical quote rule and tick rule, and hybrids thereof on two large-scale datasets spanning a period from 2005 to 2017~\footnote{We formally define accuracy in \cref{sec:evaluation-metric}.}. Consistently for options traded at the \gls{CBOE} and \gls{ISE} classical rules like the popular \gls{LR}  algorithm only achieve accuracies of \SI{62.03}{\percent} or \SI{62.53}{\percent} and are thus significantly smaller than in the stock market. In line with the research of \textcite[886]{savickasInferringDirectionOption2003}, the reported accuracies are inversely proportional to the rule's reliance on past transaction prices. In particular, the tick rule performs worst with accuracies marginally different from a random guess. Overall, the success rates of classical algorithms deteriorates between both studies and over time. As a remedy, \textcite[14--17]{grauerOptionTradeClassification2022} introduce two additional rules based on the trade and quote sizes. The depth rule is an alternative to the tick rule for classifying midspread trades in the \gls{LR}  algorithm and the \gls{EMO} rule. It assigns the initiator of the trade based on the depth at the bid or ask. Together with the trade size rule, their second rule, which classifies trades with a trade size matching the size of the bid or ask quote, can substantially improve the performance of classical algorithms. The ensemble of rules achieves an accuracy between \SI{73}{\percent} and \SI{75}{\percent} surpassing previous rules by more than \SI{10}{\percent}.
 
-\todo{Think of better transition e.g., our analysis are based on the same datasets, we take rules as  a benchmark.}
-
-The work of \textcite[1--39]{grauerOptionTradeClassification2022} is relevant for this thesis for two reasons. First, the dataset is identical to ours, which enables a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark.
+The work of \textcite[1--39]{grauerOptionTradeClassification2022} is relevant for this thesis for two reasons. First, their analysis, like ours, is based on the same datasets, allowing for a fair comparison between classical rules and machine learning-based predictors. Second, their stacked combinations of the trade size rule, depth rule, and common trade classification algorithms achieve state-of-the-art performance in option trade classification and are thus a rigorous benchmark for our methods.
 
 \subsection{Trade Classification Using Machine Learning}
 \label{sec:trade-classification-using-machine-learning}
@@ -33,16 +31,20 @@ In summary, machine learning has been applied successfully in the context of tra
 
 \subsection{Research Framework}\label{sec:research-framework}
 
-We present our research framework for trade classification, summarised in \cref{fig:research-framework}. Our approach revolves around two key ideas. First, we utilise \glspl{GBRT} and Transformers for trade classification, chosen in \cref{sec:supervised-approaches} for their expected performance, scalability, and extensibility. Distinctions are made between models trained on singly labelled trades and models trained on both labelled and unlabelled trades simultaneously. Second, classical trade classification rules, such as the \gls{LR}, are realised as a generic classifier leveraging the stacking principle, thereby enabling a coherent evaluation and model interpretation.
+The selection of machine learning methods in previous works is arbitrary and guided by computational constraints. Additionally, it leaves out advancements in machine learning. To address these limitations, we propose a comprehensive research framework for trade classification, outlined in \cref{fig:research-framework}. 
+
+Our approach revolves around two key ideas. First, we leverage \glspl{GBRT} and Transformers for trade classification. These methods are selected in \cref{sec:supervised-approaches} for their expected performance, scalability, and extensibility. We consider scenarios, where the true trade initiator is known for the entity of trades or partially known. Second, classical trade classification rules, such as the \gls{LR}, are realised as a generic classifier using a stacking principle describe in \cref{sec:stacked-rule}. This allows for a consistent evaluation and model interpretation, eventually bridging the gap between classical trade classification rules and machine learning-based predictors.
 
 \begin{figure}[!ht]
     \centering
     {\renewcommand\normalsize{\tiny}
         \normalsize
         \input{./Graphs/research-framework.pdf_tex}}
-    \caption[Research Framework]{Research Framework}
     \label{fig:research-framework}
 \end{figure}
 
-The data preparation process, outlined in \cref{sec:data-and-data-preparation}, encompasses all steps necessary to obtain features to be processed by the classifiers. Model enhancements, training setups, and tuning procedures are detailed in \cref{sec:training-and-tuning}. The predictions of the classifiers are consistently evaluated in terms of accuracy as part of \cref{sec:evaluation}. With the model-agnostic interpretability method \gls{SAGE}, we attribute predictions to features and cross-compare the feature importances of classical trade classification rules and machine learning predictors. In turn, for Transformers attention maps provide additional insights into the model. Lastly, \cref{sec:application} tests all classifiers in the problem of
-effective spread calculation to demonstrate the effectiveness of our approach.
+To assess the efficiency of our approach, we conduct a comprehensive empirical study. In preparation, the data preparation process, outlined in \cref{sec:data-and-data-preparation}, encompasses all steps necessary to obtain features to be processed by the classifiers. Model enhancements, training setups, and tuning procedures are detailed in \cref{sec:training-and-tuning}. 
+
+The predictions of the classifiers are consistently evaluated in terms of accuracy as part of \cref{sec:evaluation}. With the model-agnostic interpretability method \gls{SAGE}, we study the reliance of the model to features and cross-compare the feature importances of classical trade classification rules and machine learning predictors. In turn, attention maps from Transformers offer model-specific insights.
+
+Finally, \cref{sec:application} tests all classifiers in the problem of effective spread calculation to demonstrate the effectiveness of our approach.
