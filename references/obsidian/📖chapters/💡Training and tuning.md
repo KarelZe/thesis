@@ -24,7 +24,7 @@ https://stats.stackexchange.com/questions/258166/good-accuracy-despite-high-loss
 - If the model becomes over-confident in its predictions, a single false prediction will increase the loss unproportionally compared to the (minor) drop in accuracy. An over-confident model can have good accuracy but bad loss. I’d assume over-confidence equals over-fitting.
 - It’s because accuracy and loss (cross-entropy) measure two different things. Cross-entropy loss awards lower loss to predictions which are closer to the class label. The accuracy, on the other hand, is a binary true/false for a particular sample. That is, Loss here is a _continuous variable_ i.e. it’s best when predictions are close to 1 (for true labels) and close to 0 (for false ones). While accuracy is kind of discrete. It’s evident from the above figure.
 - Given two models: one with high accuracy and high loss and other with low accuracy and low loss, which one would you choose? Here, the question you need to ask yourself before looking at accuracy _or_ loss is **What do you care about: Loss or Accuracy?** If the answer is loss, then choose the model having lower loss, and if the answer is accuracy, choose the model with high accuracy.
-
+- map log loss onto time axis. What happens with loss over time? -> Maybe discuss in grand scale context
 
 ![[predicted-probas.png]]
 ![[distribution-cross-entropy-loss.png]]

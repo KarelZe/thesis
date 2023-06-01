@@ -17,6 +17,10 @@ Our implementation of gradient-boosted trees is based on CatBoost \autocite[][5-
 \cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The configuration details are documented in (...). The plots reveal several insights. Firstly, the model overfits the training data, as evident from the generalisation gap between training and validation accuracies. To improve generalisation performance, we apply regularisation techniques. Secondly, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This loss-accuracy discrepancy suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction. 
 
 This behaviour may be explained by the log loss being unbound, where single incorrect predictions can cause the loss to explode. We verify this assumption by plotting the distribution of loss at different ensemble sizes. We observe ... 
+\todo{We recall the existing HSIC estimator V-HSIC in Section 3.1, and its Nyström approximation for two compo-
+nents in Section 3.2. We present our proposed Nyström
+approximation for more than two components in Section 4.}
+
 
 \todo{Explain why logloss is so high}
 \begin{figure}[ht]
@@ -341,6 +345,8 @@ Akin to selecting the machine learning classifiers, we determine our classical b
 \end{table}
 
 Optimising hybrids of trade classification rules through Bayesian search is experimentally feasible by stacking rules of \cref{sec:rule-based-approaches} and treating the rules as a tunable hyperparameter as done in \cref{tab:hyperparameter-space-classical}. We consider all quote-based rules applied to quotes of the exchange and \gls{NBBO}, and price-based rules at the exchange and inter-exchange level indicated by subscript $\text{ex}$, $\text{all}$ or $\text{nbbo}$. To model simple rules, consisting of a single or few rules, we add an identity mapping, $\operatorname{Id}$, that defers classification to later rules in the stack. A caveat of this approach is that sampled combinations may not be economically meaningful e.g., applying depth rule after tick rule, or not affect classification at all e.g., quote rule after tick rule, assuming complete data.
+
+\todo{Adjacent prices and quotes}
 
 After all, we find no outperformance over hybrid rules already reported in the literature. Thus, \cref{tab:solutions-classical-rules} reports additionally to our own combinations the accuracies of rules from \textcite[][14]{grauerOptionTradeClassification2022} on the \gls{ISE} validation set. We subsequently use their combinations, as these provide a more challenging benchmark. The overall lower performance of our combinations can be traced back to spending most of the search budget on non-meaningful combinations. A conditional search space based on economic intuition or human-in-the-loop sampling could account for this.
 
