@@ -56,6 +56,7 @@ class TestObjectives:
             "layer_3": "nan_ex",
             "layer_4": "nan_ex",
             "layer_5": "nan_ex",
+            "layer_6": "nan_ex",
         }
 
         study = optuna.create_study(direction="maximize")
