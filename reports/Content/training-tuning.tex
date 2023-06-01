@@ -5,7 +5,7 @@ Experiments are conducted on shared nodes of the bwHPC cluster, with 10 assigned
 \subsubsection{Training of Supervised
     Models}\label{sec:training-of-supervised-models}
 
-Our implementation of gradient-boosted trees is based on CatBoost \autocite[][5--6]{prokhorenkovaCatBoostUnbiasedBoosting2018} because of its efficient implementation on \glspl{GPU} and native support for categorical variables. However, as discussed in \cref{sec:gradient-boosting-procedure}, we expect the chosen library to have minimal impact on performance.
+Our implementation of \glspl{GBRT} is based on CatBoost \autocite[][5--6]{prokhorenkovaCatBoostUnbiasedBoosting2018} because of its efficient implementation on \glspl{GPU} and native support for categorical variables. However, as discussed in \cref{sec:gradient-boosting-procedure}, we expect the chosen library to have minimal impact on performance.
 
 \begin{figure}[ht]
     \centering
@@ -14,15 +14,21 @@ Our implementation of gradient-boosted trees is based on CatBoost \autocite[][5-
     \label{fig:gbm-train-val-loss-acc}
 \end{figure}
 
-\cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The configuration details are documented in (...). The plots reveal several insights. Firstly, the model overfits the training data, as evident from the generalisation gap between training and validation accuracies. To improve generalisation performance, we apply regularisation techniques. Secondly, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This loss-accuracy discrepancy suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction. 
+\cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The plots reveal several insights. 
 
-This behaviour may be explained by the log loss being unbound, where single incorrect predictions can cause the loss to explode. We verify this assumption by plotting the distribution of loss at different ensemble sizes. We observe ... 
-\todo{We recall the existing HSIC estimator V-HSIC in Section 3.1, and its Nyström approximation for two compo-
-nents in Section 3.2. We present our proposed Nyström
-approximation for more than two components in Section 4.}
+Firstly, the model overfits the training data, as evident from the generalisation gap between training and validation accuracies. To improve generalisation performance, we apply regularisation techniques. 
 
+Secondly, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This discrepancy suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction. 
 
-\todo{Explain why logloss is so high}
+\begin{figure}[ht]
+    \centering
+    \includegraphics{gbm-loss-distribution.pdf}
+    \caption[Sample-Wise Log Loss of \glsentryshort{GBRT} on \glsentryshort{ISE} Sample]{Sample-wise log loss of \glsentryshort{GBRT} on \glsentryshort{ISE} sample as equi-width histogram. Loss is estimated on the classical feature set. In general, log loss improves for larger ensembles, as indicated by the increased number of samples accumulating around zero but few predictions contribute to the loss unproportionally causing the log loss to stagnate on average.}
+    \label{fig:gbm-loss-distribution}
+\end{figure}
+
+This behaviour can be explained by the log loss being unbound, where single incorrect predictions can cause the loss to explode. We verify this assumption by plotting the distribution of the sample-wise log loss in \cref{fig:gbm-loss-distribution}. As visible, loss per sample decreases for larger ensembles, at the same time few predictions contribute to the loss unproportionally, causing the average validation loss to stagnate.
+
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-optimisations-loss-acc.pdf}
@@ -31,7 +37,7 @@ approximation for more than two components in Section 4.}
 \end{figure}
 
 % TODO: Cite e.g., Dahl et. al (tuningplaybookgithub) who recommend such a procedure?
-We leverage several architectural changes to further improve performance and mitigate overfitting in gradient boosting, as shown in \cref{fig:gbm-optimisations-loss-acc}, where the effects on validation accuracy and log loss over the default configuration are visualised. Following standard practice, e.g., \textcite{tuningplaybookgithub}, all other parameters are kept at their default values, while a single parameter is varied to derive the plots. Although this approach ignores parameter interactions, it still can provide guidance for the optimal training configuration. We train on the ISE training set with classical features and report metrics on the validation set.
+We leverage several architectural changes to reduce the loss, further improve performance and mitigate overfitting in gradient boosting, as shown in \cref{fig:gbm-optimisations-loss-acc}, where the effects on validation accuracy and log loss over the default configuration are visualised. Following standard practice, e.g., \textcite{tuningplaybookgithub}, all other parameters are kept at their default values, while a single parameter is varied to derive the plots. Although this approach ignores parameter interactions, it still can provide guidance for the optimal training configuration. We train on the ISE training set with classical features and report metrics on the validation set.
 
 \emph{Growth Strategy}
 
@@ -39,7 +45,7 @@ To improve performance, we switch to a leaf-wise growth strategy, following \tex
 
 \emph{Sample Weighting}
 
-The work of \textcite[][36--38]{grauerOptionTradeClassification2022} suggests a strong temporal shift in the data, with the performance of classical trade classification rules deteriorating over time.  As a result, the predictability of features derived from these rules diminishes over time, and patterns learnt from old observations become less relevant for predicting test samples. To address this, we introduce a sample weighting scheme that assigns higher weights to recent training samples and gradually decays weights over time, which we incorporate into the log loss. Validation and test samples are equally weighted. Sample weighting proves to be essential for achieving high validation performance, and it positively impacts the accuracy and confidence in the prediction.
+The work of \textcite[][36--38]{grauerOptionTradeClassification2022} suggests a strong temporal shift in the data, with the performance of classical trade classification rules deteriorating over time.  As a result, the predictability of features derived from these rules diminishes over time, and patterns learnt from old observations become less relevant for predicting test samples. To address this, we introduce a sample weighting scheme that assigns higher weights to recent training samples and gradually decays weights over time, which we incorporate into the log loss. Validation and test samples are equally weighted. Sample weighting proves to be essential for achieving high validation performance, and it positively impacts the accuracy and confidence in the prediction mitigating the problem from above.
 
 \emph{Border Count}
 
