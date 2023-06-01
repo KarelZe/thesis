@@ -31,16 +31,21 @@ In summary, machine learning has been applied successfully in the context of tra
 
 \subsection{Research Framework}\label{sec:research-framework}
 
-We present our research framework for trade classification, summarised in \cref{fig:research-framework}. Our approach revolves around two key ideas. First, we utilise \glspl{GBRT} and Transformers for trade classification, chosen in \cref{sec:supervised-approaches} for their expected performance, scalability, and extensibility. Distinctions are made between models trained on singly labelled trades and models trained on both labelled and unlabelled trades simultaneously. Second, classical trade classification rules, such as the \gls{LR}, are realised as a generic classifier leveraging the stacking principle, thereby enabling a coherent evaluation and model interpretation.
+The selection of machine learning methods in previous works is arbitrary and guided by computational constraints. Additionally, it leaves out advancements in machine learning. To address these limitations, we propose a comprehensive research framework for trade classification, outlined in \cref{fig:research-framework}. 
+
+Our approach revolves around two key ideas. First, we leverage \glspl{GBRT} and Transformers for trade classification. These methods are selected in \cref{sec:supervised-approaches} for their expected performance, scalability, and extensibility. We consider scenarios, where the true trade initiator is known for the entity of trades or partially known. Second, classical trade classification rules, such as the \gls{LR}, are realised as a generic classifier using a stacking principle describe in \cref{sec:stacked-rule}. This allows for a consistent evaluation and model interpretation, eventually bridging the gap between classical trade classification rules and machine learning-based predictors.
 
 \begin{figure}[!ht]
     \centering
     {\renewcommand\normalsize{\tiny}
         \normalsize
         \input{./Graphs/research-framework.pdf_tex}}
-    \caption[Research Framework]{Research Framework}
+    \caption[Research Framework]{Research Framework.}
     \label{fig:research-framework}
 \end{figure}
 
-The data preparation process, outlined in \cref{sec:data-and-data-preparation}, encompasses all steps necessary to obtain features to be processed by the classifiers. Model enhancements, training setups, and tuning procedures are detailed in \cref{sec:training-and-tuning}. The predictions of the classifiers are consistently evaluated in terms of accuracy as part of \cref{sec:evaluation}. With the model-agnostic interpretability method \gls{SAGE}, we attribute predictions to features and cross-compare the feature importances of classical trade classification rules and machine learning predictors. In turn, for Transformers attention maps provide additional insights into the model. Lastly, \cref{sec:application} tests all classifiers in the problem of
-effective spread calculation to demonstrate the effectiveness of our approach.
+To assess the efficiency of our approach, we conduct a comprehensive empirical study. In preparation, the data preparation process, outlined in \cref{sec:data-and-data-preparation}, encompasses all steps necessary to obtain features to be processed by the classifiers. Model enhancements, training setups, and tuning procedures are detailed in \cref{sec:training-and-tuning}. 
+
+The predictions of the classifiers are consistently evaluated in terms of accuracy as part of \cref{sec:evaluation}. With the model-agnostic interpretability method \gls{SAGE}, we study the reliance of the model to features and cross-compare the feature importances of classical trade classification rules and machine learning predictors. In turn, attention maps from Transformers offer model-specific insights.
+
+Finally, \cref{sec:application} tests all classifiers in the problem of effective spread calculation to demonstrate the effectiveness of our approach.
