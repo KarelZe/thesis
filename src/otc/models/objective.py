@@ -22,6 +22,8 @@ from torch import nn
 from otc.models.activation import ReGLU
 from otc.models.callback import CallbackContainer, PrintCallback, SaveCallback
 from otc.models.classical_classifier import ClassicalClassifier
+from otc.features.build_features import features_classical_size
+
 from otc.models.fttransformer import FeatureTokenizer, FTTransformer, Transformer
 from otc.models.selftraining import SelfTrainingClassifier
 from otc.models.transformer_classifier import TransformerClassifier
@@ -156,7 +158,6 @@ class FTTransformerObjective(Objective):
 
         self._clf: BaseEstimator
         self._callbacks = CallbackContainer([SaveCallback(), PrintCallback()])
-        self._pretrain = pretrain
 
         super().__init__(x_train, y_train, x_val, y_val, name, pretrain)
 
@@ -226,7 +227,7 @@ class FTTransformerObjective(Objective):
         dl_params: dict[str, Any] = {
             "batch_size": batch_size
             * max(no_devices, 1),  # dataprallel splits batches across devices
-            "shuffle": True,  # only used during training
+            "shuffle": False,
             "device": device,
         }
 
@@ -235,7 +236,6 @@ class FTTransformerObjective(Objective):
             "feature_tokenizer": FeatureTokenizer(**feature_tokenizer_kwargs),  # type: ignore # noqa: E501
             "cat_features": self._cat_features,
             "cat_cardinalities": self._cat_cardinalities,
-            "d_token": d_token,
         }
 
         optim_params = {"lr": lr, "weight_decay": weight_decay}
@@ -246,7 +246,6 @@ class FTTransformerObjective(Objective):
             optim_params=optim_params,
             dl_params=dl_params,
             callbacks=self._callbacks,  # type: ignore # noqa: E501
-            pretrain=self._pretrain,
         )
 
         self._clf.fit(
@@ -321,8 +320,6 @@ class ClassicalObjective(Objective):
             ("clnv", "ex"),
             ("rev_clnv", "best"),
             ("rev_clnv", "ex"),
-            ("trade_size", "ex"),
-            ("depth", "ex"),
             ("nan", "ex"),
         ]
 
@@ -345,10 +342,14 @@ class ClassicalObjective(Objective):
             "clnv_ex",
             "rev_clnv_best",
             "rev_clnv_ex",
-            "trade_size_ex",
-            "depth_ex",
             "nan_ex",
         ]
+
+        # size (ml) features
+        if set(features_classical_size).issubset(self.x_train.columns.tolist()):
+            values.extend([("trade_size", "ex"), ("depth", "ex")])
+            indices.extend(["trade_size_ex", "depth_ex"])
+
         mapping = dict(zip(indices, values))
 
         index_layer_1 = trial.suggest_categorical("layer_1", indices)
@@ -361,8 +362,10 @@ class ClassicalObjective(Objective):
         layer_4 = mapping[index_layer_4]
         index_layer_5 = trial.suggest_categorical("layer_5", indices)
         layer_5 = mapping[index_layer_5]
+        index_layer_6 = trial.suggest_categorical("layer_6", indices)
+        layer_6 = mapping[index_layer_6]
 
-        layers = [layer_1, layer_2, layer_3, layer_4, layer_5]
+        layers = [layer_1, layer_2, layer_3, layer_4, layer_5, layer_6]
         self._clf = ClassicalClassifier(
             layers=layers,
             random_state=set_seed(),
