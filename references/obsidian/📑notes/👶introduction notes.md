@@ -1,4 +1,20 @@
 ## Motivation
+- [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
+
+**General sentence first / Layman's terms**
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction.
+
+Determining whether a trade is buyer or seller-initiated is ubiquitous for many problems in option research. Typical applications include the study of option demand \autocite{garleanuDemandBasedOptionPricing2009} or the informational content of option trading \autocites{huDoesOptionTrading2014}{panInformationOptionVolume2006}. Despite the overall importance for empirical research, the true initiator of the trade is often missing in option data sets and must be inferred using trade classification algorithms \autocite{easleyOptionVolumeStock1998}.
+
+Among the most prevailing variants to sign option trades are the tick rule, quote rule \autocite{hasbrouckTradesQuotesInventories1988}, and hybrids thereof such as the \gls{LR} algorithm \autocite{leeInferringTradeDirection1991}, the \gls{EMO} algorithm \autocite{ellisAccuracyTradeClassification2000}, and the \gls{CLNV} method \autocite{chakrabartyTradeClassificationAlgorithms2007}. These algorithms have initially been proposed and tested for the stock market.
+
+The work of \textcites{grauerOptionTradeClassification2022}{savickasInferringDirectionOption2003} raises concerns about the applicability of standard trade signing algorithms to the option market due to deteriorating classification accuracies. Against this backdrop, the question is, can an alternative, machine learning-based classifier improve upon standard trade classification rules?
+
+Approaching this concern with machine learning is a logical choice due to the ability to deal with high-dimensional data and learn arbitrary decision functions. Thus, we benchmark wide tree-based ensembles and deep neural networks against standard trade classification rules. The analysis is conducted on a data set of option trades recorded at the \gls{CBOE} and \gls{ISE}.
+
+
+
+Unfortunately, most data sets do not identify trade direction. Methods have, however, been proposed that allow trade direction to be inferred from adjacent prices and quotes. The accuracy of these methods and the implica? tions for microstructure research are still unresolved issues in large part because trade direction is unobservable in most financial data sets ([[@finucaneDirectTestMethods2000]])
 
 **What is the problem?**
 - The validity of many economic studies hinges on the ability to properly classify trades as buyer or seller-initiated. ([[@odders-whiteOccurrenceConsequencesInaccurate2000]])
@@ -49,10 +65,21 @@ Our contributions are n-fold:
 - new framing as semi-supervised learning problem. Enables to learn on learn on unlabelled and labelled trades simultaneously
 - we test the algorithms for the purpose of estimating effective spreads purpose of calculating effective spreads
 
+**Examples**
+Impressed by the superiority of tree-based models on tabular data, we strive to understand which inductive biases make them well-suited for these data. By transforming tabular datasets to modify the performances of different models, we uncover differing biases of tree-based models and deep learning algorithms which partly explain their different performances: neural networks struggle to learn irregular patterns of the target function, and their rotation invariance hurt their performance, in particular when handling the numerous uninformative features present in tabular data. Our contributions are as follow: 1. We create a new benchmark for tabular data, with a precise methodology for choosing and preprocessing a large number of representative datasets. We share these datasets through OpenML [Vanschoren et al., 2014], which makes them easy to use. 2. We extensively compare deep learning models and tree-based models on generic tabular datasets in multiple settings, accounting for the cost of choosing hyperparameters. We also share the raw results of our random searches, which will enable researchers to cheaply test new algorithms for a fixed hyperparameter optimization budget. 3. We investigate empirically why tree-based models outperform deep learning, by finding data transformations which narrow or widen their performance gap. This highlights desirable biases for tabular data learning, which
+
+**Examples:**
+applications in biomarker detection [Climente-González et al., 2019] and wind power prediction [Bouche et al., 2022], clustering [Song et al., 2007, Climente-González et al., 2019], and causal discovery [Mooij et al., 2016, Pfister et al., 2018, Chakraborty and Zhang, 2019, Schölkopf et al., 2021]. Various estimators for HSIC and other dependence measures exist in the literature, out of which we summarize the most closely related ones to our work in Table 1. The classical V-statistic based HSIC estimator (V-HSIC; Gretton et al. [2005], Quadrianto et al. [2009], Pfister et al. [2018]) is powerful but its runtime increases quadratically with the number of samples, which limits it applicability in largescale settings. To tackle this severe computational bottleneck, approximations of HSIC (N-HSIC, RFF-HSIC) have been proposed [Zhang et al., 2017], relying on the Nyström [Williams and Seeger, 2001] and the random Fourier feature (RFF; Rahimi and Recht [2007]) method, respectively. However, these estimators (i) are limited to two components, (ii) their extension to more than two components is not straightforward, and (iii) they lack theoretical guarantees. The RFF-based approach is further restricted to finitedimensional Euclidean domains and to translation-invariant kernels. The normalized finite set independence criterion (NFSIC; Jitkrittum et al. [2017]) replaces the RKHS norm of HSIC with an L2 one which allows the construction of linear-time estimators. However, NFSIC is also limited to two components, requires R d -valued input, and analytic kernels [Chwialkowski et al., 2015]. A novel complementary approach is the kernel partial correlation coefficient (KPCC; [Huang et al., 2022]) but when applied to kernel-enriched domains its runtime complexity is cubic in the sample size. The restriction of existing HSIC approximations to two components is a severe limitation in recent applications like causal discovery which require independence tests capable of handling more than two components. Furthermore, the emergence of large-scale data sets necessitates algorithms that scale well in the sample size. To alleviate these bottlenecks, we make the following contributions.
+
+We propose Nyström M-HSIC, an efficient HSIC estimator, which can handle more than two components and has runtime O ´ Mn13 ` Mn1n ¯ , where n denotes the number of samples, n 1 ! n stands for the number of Nyström points, and M is the number of random variables whose independence is measured. 2. We provide theoretical guarantees for Nyström MHSIC: we prove that our estimator converges with rate O ` n ´1{2 ˘ for n 1 „ ? n, which matches the convergence of the quadratic-time estimator. 3. We perform an extensive suite of experiments to demonstrate the efficiency of Nyström M-HSIC. These applications include dependency testing of media annotations
 
 ## Outline
-- The remainder of this paper is organized as follows:
+The remainder of this paper is organized as follows. Cref-[[👪Related Work]] reviews publications on trade classification in option markets and using machine learning, thereby underpinning our research framework. Cref-[[🍪Selection Of Supervised Approaches]] discusses and introduces supervised methods for trade classification. Then, cref- [[🍪Selection Of Semisupervised Approaches]] extends the previously selected algorithms for the semi-supervised case. We test the models in cref-[[🌏Dataset]] in an empirical setting. In cref-[[🍕Application study]]  we apply our models to the problem of effective spread estimation. Finally, cref-foo concludes.
 
+
+
+**Examples:**
+In Sec. 2 we cover related work. Sec. 3 gives a short description of our benchmark methodology, including datasets, data processing, and hyper-parameter tuning. Then, Sec. 4 shows our raw results on deep learning and tree-based models after an extensive random search. Finally, Sec. 5 provides the results of an empirical study which exhibit desirable implicit biases of tabular datasets.
 
 **Examples:**
 Chapter 2 introduces the related work. In Chapter 3, we present the theoretical basis for the design of our algorithm. Chapter 4 details the algorithm design and the resulting trade-offs. We evaluate our algorithm in Chapter 5 and conclude in Chapter 6. The Appendix provides extra information about the effect of various parameter settings.
@@ -73,3 +100,13 @@ The remainder of this paper is organized as follows. Section 2 gives a literatur
 Afterwards, Section 4 identifies parameters that govern decisions in Demand
 Response programs to pioneer a mathematical problem such that Demand Response decisions of retailers are optimized. Finally, Section 5 evaluates the
 decisions derived by the model in a simulation based on historic data and analyzes their financial benefits.
+
+**Examples:**
+The paper is structured as follows. Our notations are introduced in Section 2. The existing Nyström-based HSIC approximation for two components is reviewed in Section 3. Our proposed method, which is capable of handling M ě 2 components, is presented in Section 4 together with its theoretical guarantees. In Section 5 we demonstrate the applicability of Nyström M-HSIC. All the proofs of our results are available in the supplementary material.
+
+**Examples**
+The rest of this paper is structured as follows. In Section 2, we describe the option data and sample selection process when matching LiveVol and Open/Close data and the methodology to infer the true side of a trade. Section 3 compares the performance of the common stock trade classification algorithms when applied to option trades on the ISE and introduces two new rules that strongly improve the classification success of existing methods. In Section 4, we test our new rules out-of-sample on the CBOE and the GEMX data. Section 5 provides sample splits along various dimensions and a time-series analysis of the improvements from our new rules. Section 6 applies our new trade classification algorithms to test the predictability of future stock returns based on option order imbalances. Finally, Section 7 concludes the paper.
+
+
+
+We recall the existing HSIC estimator V-HSIC in Section 3.1, and its Nyström approximation for two compo- nents in Section 3.2. We present our proposed Nyström approximation for more than two components in Section 4.

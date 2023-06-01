@@ -19,11 +19,10 @@ from catboost.utils import get_gpu_device_count
 from sklearn.base import BaseEstimator
 from torch import nn
 
+from otc.features.build_features import features_classical_size
 from otc.models.activation import ReGLU
 from otc.models.callback import CallbackContainer, PrintCallback, SaveCallback
 from otc.models.classical_classifier import ClassicalClassifier
-from otc.features.build_features import features_classical_size
-
 from otc.models.fttransformer import FeatureTokenizer, FTTransformer, Transformer
 from otc.models.selftraining import SelfTrainingClassifier
 from otc.models.transformer_classifier import TransformerClassifier
