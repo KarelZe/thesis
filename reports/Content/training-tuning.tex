@@ -5,7 +5,7 @@ Experiments are conducted on shared nodes of the bwHPC cluster, with 10 assigned
 \subsubsection{Training of Supervised
     Models}\label{sec:training-of-supervised-models}
 
-Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autocite[][5--6]{prokhorenkovaCatBoostUnbiasedBoosting2018} because of its efficient implementation on \glspl{GPU} and native support for categorical variables. However, as discussed in \cref{sec:gradient-boosting-procedure}, we expect the chosen library to have minimal impact on performance.
+Our implementation of gradient-boosted trees is based on CatBoost \autocite[][5--6]{prokhorenkovaCatBoostUnbiasedBoosting2018} because of its efficient implementation on \glspl{GPU} and native support for categorical variables. However, as discussed in \cref{sec:gradient-boosting-procedure}, we expect the chosen library to have minimal impact on performance.
 
 \begin{figure}[ht]
     \centering
@@ -14,7 +14,10 @@ Our implementation of gradient-boosted trees is based on \emph{CatBoost} \autoci
     \label{fig:gbm-train-val-loss-acc}
 \end{figure}
 
-\cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The configuration details are documented in (...). The plots reveal several insights. Firstly, the model overfits the training data, as evident from the generalisation gap between training and validation accuracies. To improve generalisation performance, we apply regularisation techniques. Secondly, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction. This behaviour may be explained by the log loss being unbound, where single incorrect predictions can cause the loss to explode.
+\cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The configuration details are documented in (...). The plots reveal several insights. Firstly, the model overfits the training data, as evident from the generalisation gap between training and validation accuracies. To improve generalisation performance, we apply regularisation techniques. Secondly, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This loss-accuracy discrepancy suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction. 
+
+This behaviour may be explained by the log loss being unbound, where single incorrect predictions can cause the loss to explode. We verify this assumption by plotting the distribution of loss at different ensemble sizes. We observe ... 
+
 \todo{Explain why logloss is so high}
 \begin{figure}[ht]
     \centering

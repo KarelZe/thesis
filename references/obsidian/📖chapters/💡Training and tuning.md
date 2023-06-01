@@ -14,9 +14,29 @@ Our implementation of gradient-boosted trees is based on *CatBoost* ([[@prokhore
 ![[gbm-log-loss-accuracy.png]]
 (One iteration equals one tree added to the ensemble. )
 
+What is the connection between accuracy and log loss?
+- how do the graphics relate? (histograms with no aggregation and mean of log-loss)
+- few totally off predictions are acceptable as long as general accuracy improves
+- log loss / accuracy discripancy
+https://stats.stackexchange.com/questions/258166/good-accuracy-despite-high-loss-value
+- **Cross-entropy loss awards lower loss to predictions which are closer to the class label.** **The accuracy, on the other hand, is a binary true/false for a particular sample**. That is, Loss here is a continuous variable i.e. it's best when predictions are close to 1 (for true labels) and close to 0 (for false ones).
+- 1) Predictions are getting near to the target values. Loss values would improve, accuracy would remain the same. The model is getting more robust and better.
+- If the model becomes over-confident in its predictions, a single false prediction will increase the loss unproportionally compared to the (minor) drop in accuracy. An over-confident model can have good accuracy but bad loss. I’d assume over-confidence equals over-fitting.
+- It’s because accuracy and loss (cross-entropy) measure two different things. Cross-entropy loss awards lower loss to predictions which are closer to the class label. The accuracy, on the other hand, is a binary true/false for a particular sample. That is, Loss here is a _continuous variable_ i.e. it’s best when predictions are close to 1 (for true labels) and close to 0 (for false ones). While accuracy is kind of discrete. It’s evident from the above figure.
+- Given two models: one with high accuracy and high loss and other with low accuracy and low loss, which one would you choose? Here, the question you need to ask yourself before looking at accuracy _or_ loss is **What do you care about: Loss or Accuracy?** If the answer is loss, then choose the model having lower loss, and if the answer is accuracy, choose the model with high accuracy.
+
+
+![[predicted-probas.png]]
+![[distribution-cross-entropy-loss.png]]
+
+
+- https://stats.stackexchange.com/questions/258166/good-accuracy-despite-high-loss-value
+
 Use to motivate?💡
 <mark style="background: #FFB8EBA6;">- Write why we use a quasi-random search during exploration and Bayesian search during exploitation phase. (see https://github.com/google-research/tuning_playbook)
 - Isolate the optimisation of different hyperparameters e. g., optimizer, activation functions etc. during the exploration phase. Take into account nuance parameters. Decompose into smaller problems, that are manageable.</mark>
+
+
 
 gap between training and validation loss💡Though there is some gap between training and validation performance, the gap grows only minimally with model size and training time, suggesting that most of the gap comes from a difference in difficulty rather than overfitting (From gpt-3 paper)
 
