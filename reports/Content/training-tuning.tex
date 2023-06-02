@@ -186,12 +186,12 @@ As documented in \cref{tab:hyperparameter-space-gbm}, we tune five hyperparamete
 
 \begin{figure}[!h]
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[width=0.6\textwidth]{1gzk7msy-hyperparam-search-space.pdf}}
+    \vfill
+    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\addtocounter{subfigure}{1}\includegraphics[width=0.6\textwidth]{3vntumoi-hyperparam-search-space.pdf}}
 \end{figure}
 \clearpage
 \begin{figure}[!ht]
     \addtocounter{figure}{-1}
-    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\addtocounter{subfigure}{1}\includegraphics[width=0.6\textwidth]{3vntumoi-hyperparam-search-space.pdf}}
-    \vfill
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 3\label{fig:ise-gbm-hyperparam-ml}]{\includegraphics[width=0.6\textwidth]{2t5zo50f-hyperparam-search-space.pdf}}
     \caption[]{Hyperparameter Search Space of \gls{GBRT} on \gls{ISE} Validation Set}
     \label{fig:ise-gbm-hyperparam}
@@ -220,7 +220,7 @@ The loss surface of the \gls{GBRT} trained on the feature set including option f
 
 \textbf{Gradient Boosting With Self-Training}
 
-The search space for the semi-supervised variant is identical to the supervised gradient boosting. To conserve space, we only report the tabulated results in \cref{tab:solutions-GBRT-self-training}. Visualisations of the hyperparameter search space are available online.\footnote{\emph{FS 1:} \url{https://wandb.ai/fbv/thesis/runs/37lymmzc}, \emph{FS 2:} \url{https://wandb.ai/fbv/thesis/runs/324v3uv5}, and \emph{FS 3:} \url{https://wandb.ai/fbv/thesis/runs/t55nd8r0}}
+The search space for the semi-supervised variant is identical to the supervised gradient boosting. To conserve space, we only report the tabulated results in \cref{tab:solutions-GBRT-self-training}. Visualisations of the hyperparameter search space are available online.\footnote{FS 1: \url{https://wandb.ai/fbv/thesis/runs/37lymmzc}\newline FS 2: \url{https://wandb.ai/fbv/thesis/runs/324v3uv5}\newline FS 3: \url{https://wandb.ai/fbv/thesis/runs/t55nd8r0}}
 
 \begin{table}[H]
     \centering
@@ -266,12 +266,12 @@ Due to the pseudo-random sampling during the first trials of Bayesian search com
 
 \begin{figure}[!h]
     \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set 1\label{fig:ise-transformer-hyperparam-classical}]{\includegraphics[width=0.6\linewidth]{3jpe46s1-hyperparam-search-space.pdf}}
+    \vfill
+    \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set 2\label{fig:ise-transformer-hyperparam-classical-size}]{\addtocounter{subfigure}{1}\includegraphics[width=0.6\linewidth]{1qx3ul4j-hyperparam-search-space.pdf}}
 \end{figure}
 \clearpage
 \begin{figure}[!ht]
     \addtocounter{figure}{-1}
-    \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set 2\label{fig:ise-transformer-hyperparam-classical-size}]{\addtocounter{subfigure}{1}\includegraphics[width=0.6\linewidth]{1qx3ul4j-hyperparam-search-space.pdf}}
-    \vfill
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 3\label{fig:ise-transformer-hyperparam-ml}]{\includegraphics[width=0.6\linewidth]{2h81aiow-hyperparam-search-space.pdf}}
     \caption[Hyperparameter Search Space of FT-Transformer on \glsentryshort{ISE} Validation Set]{Hyperparameter Search Space of FT-Transformer on \gls{ISE} Validation Set}
     \label{fig:ise-transformer-hyperparam}
@@ -325,58 +325,28 @@ The hyperparameter search space for Transformers with a pre-training objective i
     \end{tabular}
 \end{table}
 
-Results are tabulated in \cref{tab:solutions-transformer-pretraining}. Visualisations of the hyperparameter search space are available online.\footnote{\emph{FS 1:} \url{https://wandb.ai/fbv/thesis/runs/tbd}, \emph{FS 2:} \url{https://wandb.ai/fbv/thesis/runs/tbd}, and \emph{FS 3:} \url{https://wandb.ai/fbv/thesis/runs/tbd}}
+Results are tabulated in \cref{tab:solutions-transformer-pretraining}. Visualisations of the hyperparameter search space are available online.\footnote{FS 1: \url{https://wandb.ai/fbv/thesis/runs/tbd} \newline FS 2: \url{https://wandb.ai/fbv/thesis/runs/tbd} \newline FS 3: \url{https://wandb.ai/fbv/thesis/runs/tbd}}
 
 \todo{Comment results.}
 
 \textbf{Classical Rules}
 
-Akin to selecting the machine learning classifiers, we determine our classical baselines on the \gls{ISE} validation set. This prevents \gls{overfitting} the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the \gls{CBOE} sample. Entirely for reference, we also report accuracies of the tick rule, quote rule, and \gls{LR} algorithm, due to their widespread adoption in literature.
+Akin to selecting the machine learning classifiers, we select our classical baselines on the \gls{ISE} validation set. This prevents \gls{overfitting} the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the \gls{CBOE} sample. 
 
-\begin{table}[H]
-    \centering
-    \sisetup{table-number-alignment=left}
-    \caption[Hyperparameter Search Space of Trade Classification Rules]{Hyperparameter search space of trade classification rules.}
-    \label{tab:hyperparameter-space-classical}
-    \begin{tabular}{@{}lll@{}}
-        \toprule
-        Hyperparameter & Distribution FS 1                                                       & Distribution FS 2/3                                                                                                 \\ \midrule
-        Layer 1        & $\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ & $\left[\operatorname{depth}, \operatorname{tsize}, \operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ \\
-        Layer 2        & $\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ & $\left[\operatorname{depth}, \operatorname{tsize}, \operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ \\
-        Layer 3        & $\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ & $\left[\operatorname{depth}, \operatorname{tsize}, \operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ \\
-        Layer 4        & $\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ & $\left[\operatorname{depth}, \operatorname{tsize}, \operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ \\
-        Layer 5        & $\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ & $\left[\operatorname{depth}, \operatorname{tsize}, \operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ \\
-        Layer 6        & $\left[\operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ & $\left[\operatorname{depth}, \operatorname{tsize}, \operatorname{tick}_{\text{ex}},\ldots,\operatorname{Id}\right]$ \\ \bottomrule
-    \end{tabular}
-\end{table}
 
-Optimising hybrids of trade classification rules through Bayesian search is experimentally feasible by stacking rules of \cref{sec:rule-based-approaches} and treating the rules as a tunable hyperparameter as done in \cref{tab:hyperparameter-space-classical}. We consider all rules learned on adjacent quotes of the exchange and \gls{NBBO} level or adjecent prices at the exchange and inter-exchange level indicated by subscript $\text{ex}$, $\text{all}$ or $\text{nbbo}$. To model simple rules, consisting of a single or few rules, we add an identity mapping, $\operatorname{Id}$, that defers classification to later rules in the stack. A caveat of this approach is that sampled combinations may not be economically meaningful e.g., applying depth rule after tick rule, or not effective e.g., quote rule after tick rule, assuming complete data.
+Optimising hybrids of trade classification rules through Bayesian search is experimentally feasible by the stacking paradigm of \cref{sec:rule-based-approaches} and by treating the rules as a tunable hyperparameter. We consider all rules from \cref{sec:rule-based-approaches} learned on adjacent quotes of the exchange and \gls{NBBO} level or adjacent prices at the exchange and inter-exchange level and stack up to six rules. To model simple rules, consisting of a single or few rules, we add an identity mapping, $\operatorname{Id}$, that defers classification to later rules in the stack. A caveat of this approach is that sampled combinations may not be economically meaningful e.g., applying depth rule after tick rule, or not effective e.g., quote rule after tick rule, assuming complete data. Despite being unexplored, a conditional search space or human-in-the-loop sampling could account for this.
 
-After all, we find no outperformance over hybrid rules already reported in the literature. Thus, \cref{tab:solutions-classical-rules} reports additionally to our combinations the accuracies of rules from \textcite[][14]{grauerOptionTradeClassification2022} on the \gls{ISE} validation set. We subsequently use their combinations, as these provide a more challenging benchmark. The lower performance for some of our combinations can be traced back to spending most of the search budget on non-meaningful combinations. A conditional search space based on economic intuition or human-in-the-loop sampling could account for this.
+After all, we find no outperformance over hybrid rules already reported in the literature, as documented online.\footnote{For FS 1 our best combination of $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ (simplified) reaches a validation accuracy of \SI{58.76225138074204}{\percent} equalling the solution of \textcite[][13]{grauerOptionTradeClassification2022}. For FS 2/3 the best search solution is $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{rtick}_{\mathrm{all}}$ (simplified) with \SI{68.53130707534115}{\percent} accuracy. The combination of \textcite[][15]{grauerOptionTradeClassification2022} reaches with $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ an accuracy of \SI{68.83590892498269}{\percent}. See \url{https://wandb.ai/fbv/thesis/runs/339j16i4} and \url{https://wandb.ai/fbv/thesis/runs/359ee3rp} for details. Experiments are run with \num{500} trials each.} Our combinations match or trail the accuracies of rules from \textcite[][13--15]{grauerOptionTradeClassification2022} on the \gls{ISE} validation set. Subsequently, we adopt their combinations as our benchmark, considering them to be the most challenging.
 
-\begin{table}[H]
-    \centering
-    \caption[Search Solutions of Trade Classification Rule]{Search solutions of trade classification rule. We perform \num{500} trials for each feature set. Literature solutions adapted from \textcite[][13--15]{grauerOptionTradeClassification2022}. Own solutions are simplified for duplicate rules or ineffective rules.}
-    \label{tab:solutions-classical-rules}
-    \begin{tabular}{@{}lllp{2.7cm}p{2.7cm}@{}}
-        \toprule
-        Hyperparameter            & FS 1                                   & FS 2/3                                 & FS 1 \autocite[][13]{grauerOptionTradeClassification2022} & FS2/3 \autocite[][15]{grauerOptionTradeClassification2022} \\ \midrule
-        Layer 1                   & $\operatorname{quote}_{\mathrm{nbbo}}$ & $\operatorname{tsize}_{\mathrm{ex}}$   & $\operatorname{quote}_{\mathrm{nbbo}}$                    & $\operatorname{tsize}_{\mathrm{ex}}$                       \\
-        Layer 2                   & $\operatorname{quote}_{\mathrm{ex}}$   & $\operatorname{depth}_{\mathrm{ex}}$   & $\operatorname{quote}_{\mathrm{ex}}$                      & $\operatorname{quote}_{\mathrm{nbbo}}$                     \\
-        Layer 3                   & $\operatorname{rtick}_{\mathrm{all}}$  & $\operatorname{quote}_{\mathrm{nbbo}}$ & $\operatorname{rtick}_{\mathrm{all}}$                     & $\operatorname{quote}_{\mathrm{ex}}$                       \\
-        Layer 4                   & $\operatorname{Id}$                    & $\operatorname{rtick}_{\mathrm{all}}$  & $\operatorname{Id}$                                       & $\operatorname{depth}_{\mathrm{nbbo}}$                     \\
-        Layer 5                   & $\operatorname{Id}$                    & $\operatorname{Id}$                    & $\operatorname{Id}$                                       & $\operatorname{depth}_{\mathrm{ex}}$                       \\
-        Layer 6                   & $\operatorname{Id}$                    & $\operatorname{Id}$                    & $\operatorname{Id}$                                       & $\operatorname{rtick}_{\mathrm{all}}$                      \\ \midrule
-        Validation Accuracy in \% & \num{58.76225138074204}                & \num{68.53130707534115}                & \num{58.76222086766775}                                   & \num{68.83590892498269}                                    \\ \bottomrule
-    \end{tabular}
-\end{table}
-
-From all classical rules, a combination of the quote rule, $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$, where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE} followed by the reverse tick rule, performs best. The rule can be estimated using features from feature set one, which qualifies it as a benchmark. Also, it is commonly used in the literature, as previously by \textcite[][]{muravyevOptionsTradingCosts2020}.
+From all classical rules, a combination of the quote rule, $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$, where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE} followed by the reverse tick rule at inter-exchange level, performs best reaching a validation accuracy of \SI{58.76225138074204}{\percent}. The rule can be estimated using features from feature set one, which qualifies it as a benchmark.
 
 For the second feature set involving size-related rules, we consider rules that involve the trade size or depth rule. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ achieves the highest validation accuracy. Like before, we refer to this specific combination as the \gls{GSU} method. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{68.8359}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for the second feature set.
+
 % By extension, we also estimate rule combinations involving overrides from the trade size rule ($\operatorname{tsize}$) and the depth rule ($\operatorname{depth}$) on the top-performing baselines of feature set one. The tick test applied to trade prices at the trading venue performs worst with an accuracy below a random guess. Against this backdrop, we estimate all hybrid rules involving the tick rule over all exchanges ($\operatorname{tick}_{\mathrm{all}}$).
 
 In the absence of other baselines, we repeatedly compare against \gls{GSU} method as a baseline for the third feature set, even if it doesn't involve option-specific features.
+
+Entirely for reference, we also report accuracies of the tick rule, quote rule, \gls{EMO} rule, and \gls{LR} algorithm, due to their widespread adoption in literature.
 
 In the direct comparison between the validation accuracies of classical rules and our classifiers, the validation accuracies of classical rules considerably underperform the learnt classifier. \cref{sec:results} discusses if the results hold for the test sets. But before we do so, we present the metrics used
 for evaluation.
