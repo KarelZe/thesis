@@ -1,25 +1,4 @@
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction.  Common applications include the study of option demand ([[@garleanuDemandBasedOptionPricing2009]]), the informational content of option trading ([[@huDoesOptionTrading2014]]) and ([[@panInformationOptionVolume2006]]) or todo-(pin...) or todo-(effective spread...). 
-
-Despite the clear importance for empirical research, the true initiator of the trade is frequently missing in option data sets and must be inferred using trade classification algorithms ([[@easleyOptionVolumeStock1998]]453). In consequence, the correctness of the studies hinges with the algorithm's ability to correctly identify the trade initiator.  
-
-Among the most prevailing variants to sign trades are the tick rule ([[@hasbrouckTradesQuotesInventories1988]]), quote rule, and hybrids thereof such as the gls-LR algorithm ([[@LeeInferringTradeDirection1991]]), the gls-EMO algorithm ([[@ellisAccuracyTradeClassification2000]]), and the gls-CLNV method [[@chakrabartyTradeClassificationAlgorithms2007]]. These algorithms have initially been proposed and tested for the stock market. 
-
-For option markets, the works of ([[@grauerOptionTradeClassification2022]]) and ([[@savickasInferringDirectionOption2003]]) raise concerns about the transferability of standard trade signing rules due to deteriorating classification accuracies and systematic miss-classification of trades.  todo-Trade classification in option markets is a particularly difficult testing ground for the
-
-The recent work of ([[@grauerOptionTradeClassification2022]]13--16) partly alleviate the concern by proposing explicit overrides for specific trade types and by combining multiple heuristics into deep-stacked rules, achieving state-of-the-art performance in option trade classification. Whil 
-is still unresolved, 
-
-while their initiative 
-Yet, we know little about how the interplay between different news events affects informed option traders’ strategies.
-Methods have become more sophisticated resulting in more complex decision boundaries
-
-In this thesis.... Instead of manually crafting new heuristics, our approach focuses on learning trade classification directly from the data itself, utilizing state-of-the-art machine learning methods to infer the trade initiator. Approaching this concern with machine learning is a logical choice, given its capability to handle high-dimensional trade data and learn complex decision functions. 
-
-Against this backdrop, the question is, can an alternative, machine learning-based classifier improve upon standard trade classification rules in terms of accuracy?
-
-Our paper contributes
-
-Unfortunately, most data sets do not identify trade direction. Methods have, however, been proposed that allow trade direction to be inferred from adjacent prices and quotes. The accuracy of these methods and the implica? tions for microstructure research are still unresolved issues in large part because trade direction is unobservable in most financial data sets ([[@finucaneDirectTestMethods2000]])
+Our paper contributes....
 
 **What is the problem?**
 - The validity of many economic studies hinges on the ability to properly classify trades as buyer or seller-initiated. ([[@odders-whiteOccurrenceConsequencesInaccurate2000]])
