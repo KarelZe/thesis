@@ -1,20 +1,4 @@
-## Motivation
-- [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
-
-**General sentence first / Layman's terms**
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction.
-
-Determining whether a trade is buyer or seller-initiated is ubiquitous for many problems in option research. Typical applications include the study of option demand \autocite{garleanuDemandBasedOptionPricing2009} or the informational content of option trading \autocites{huDoesOptionTrading2014}{panInformationOptionVolume2006}. Despite the overall importance for empirical research, the true initiator of the trade is often missing in option data sets and must be inferred using trade classification algorithms \autocite{easleyOptionVolumeStock1998}.
-
-Among the most prevailing variants to sign option trades are the tick rule, quote rule \autocite{hasbrouckTradesQuotesInventories1988}, and hybrids thereof such as the \gls{LR} algorithm \autocite{leeInferringTradeDirection1991}, the \gls{EMO} algorithm \autocite{ellisAccuracyTradeClassification2000}, and the \gls{CLNV} method \autocite{chakrabartyTradeClassificationAlgorithms2007}. These algorithms have initially been proposed and tested for the stock market.
-
-The work of \textcites{grauerOptionTradeClassification2022}{savickasInferringDirectionOption2003} raises concerns about the applicability of standard trade signing algorithms to the option market due to deteriorating classification accuracies. Against this backdrop, the question is, can an alternative, machine learning-based classifier improve upon standard trade classification rules?
-
-Approaching this concern with machine learning is a logical choice due to the ability to deal with high-dimensional data and learn arbitrary decision functions. Thus, we benchmark wide tree-based ensembles and deep neural networks against standard trade classification rules. The analysis is conducted on a data set of option trades recorded at the \gls{CBOE} and \gls{ISE}.
-
-
-
-Unfortunately, most data sets do not identify trade direction. Methods have, however, been proposed that allow trade direction to be inferred from adjacent prices and quotes. The accuracy of these methods and the implica? tions for microstructure research are still unresolved issues in large part because trade direction is unobservable in most financial data sets ([[@finucaneDirectTestMethods2000]])
+Our paper contributes....
 
 **What is the problem?**
 - The validity of many economic studies hinges on the ability to properly classify trades as buyer or seller-initiated. ([[@odders-whiteOccurrenceConsequencesInaccurate2000]])
