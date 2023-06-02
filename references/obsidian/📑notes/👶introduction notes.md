@@ -1,18 +1,23 @@
-## Motivation
-- [nature-summary-paragraph.pdf](https://www.nature.com/documents/nature-summary-paragraph.pdf)
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction.  Common applications include the study of option demand ([[@garleanuDemandBasedOptionPricing2009]]), the informational content of option trading ([[@huDoesOptionTrading2014]]) and ([[@panInformationOptionVolume2006]]) or todo-(pin...) or todo-(effective spread...). 
 
-**General sentence first / Layman's terms**
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction.
+Despite the clear importance for empirical research, the true initiator of the trade is frequently missing in option data sets and must be inferred using trade classification algorithms ([[@easleyOptionVolumeStock1998]]453). In consequence, the correctness of the studies hinges with the algorithm's ability to correctly identify the trade initiator.  
 
-Determining whether a trade is buyer or seller-initiated is ubiquitous for many problems in option research. Typical applications include the study of option demand \autocite{garleanuDemandBasedOptionPricing2009} or the informational content of option trading \autocites{huDoesOptionTrading2014}{panInformationOptionVolume2006}. Despite the overall importance for empirical research, the true initiator of the trade is often missing in option data sets and must be inferred using trade classification algorithms \autocite{easleyOptionVolumeStock1998}.
+Among the most prevailing variants to sign trades are the tick rule ([[@hasbrouckTradesQuotesInventories1988]]), quote rule, and hybrids thereof such as the gls-LR algorithm ([[@LeeInferringTradeDirection1991]]), the gls-EMO algorithm ([[@ellisAccuracyTradeClassification2000]]), and the gls-CLNV method [[@chakrabartyTradeClassificationAlgorithms2007]]. These algorithms have initially been proposed and tested for the stock market. 
 
-Among the most prevailing variants to sign option trades are the tick rule, quote rule \autocite{hasbrouckTradesQuotesInventories1988}, and hybrids thereof such as the \gls{LR} algorithm \autocite{leeInferringTradeDirection1991}, the \gls{EMO} algorithm \autocite{ellisAccuracyTradeClassification2000}, and the \gls{CLNV} method \autocite{chakrabartyTradeClassificationAlgorithms2007}. These algorithms have initially been proposed and tested for the stock market.
+For option markets, the works of ([[@grauerOptionTradeClassification2022]]) and ([[@savickasInferringDirectionOption2003]]) raise concerns about the transferability of standard trade signing rules due to deteriorating classification accuracies and systematic miss-classification of trades.  todo-Trade classification in option markets is a particularly difficult testing ground for the
 
-The work of \textcites{grauerOptionTradeClassification2022}{savickasInferringDirectionOption2003} raises concerns about the applicability of standard trade signing algorithms to the option market due to deteriorating classification accuracies. Against this backdrop, the question is, can an alternative, machine learning-based classifier improve upon standard trade classification rules?
+The recent work of ([[@grauerOptionTradeClassification2022]]13--16) partly alleviate the concern by proposing explicit overrides for specific trade types and by combining multiple heuristics into deep-stacked rules, achieving state-of-the-art performance in option trade classification. Whil 
+is still unresolved, 
 
-Approaching this concern with machine learning is a logical choice due to the ability to deal with high-dimensional data and learn arbitrary decision functions. Thus, we benchmark wide tree-based ensembles and deep neural networks against standard trade classification rules. The analysis is conducted on a data set of option trades recorded at the \gls{CBOE} and \gls{ISE}.
+while their initiative 
+Yet, we know little about how the interplay between different news events affects informed option traders’ strategies.
+Methods have become more sophisticated resulting in more complex decision boundaries
 
+In this thesis.... Instead of manually crafting new heuristics, our approach focuses on learning trade classification directly from the data itself, utilizing state-of-the-art machine learning methods to infer the trade initiator. Approaching this concern with machine learning is a logical choice, given its capability to handle high-dimensional trade data and learn complex decision functions. 
 
+Against this backdrop, the question is, can an alternative, machine learning-based classifier improve upon standard trade classification rules in terms of accuracy?
+
+Our paper contributes
 
 Unfortunately, most data sets do not identify trade direction. Methods have, however, been proposed that allow trade direction to be inferred from adjacent prices and quotes. The accuracy of these methods and the implica? tions for microstructure research are still unresolved issues in large part because trade direction is unobservable in most financial data sets ([[@finucaneDirectTestMethods2000]])
 
