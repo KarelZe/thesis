@@ -1,5 +1,5 @@
 """
-FT-Transformer.
+Implementation of FTTraansformer model.
 
 Adapted from:
 https://github.com/Yura52/rtdl/
@@ -50,28 +50,6 @@ def _all_or_none(values: list[Any]) -> bool:
         bool: truth value.
     """
     return all(x is None for x in values) or all(x is not None for x in values)
-
-
-class CLSHead(nn.Module):
-    """
-    2 Layer MLP projection head.
-    """
-
-    def __init__(self, *, d_in: int, d_hidden: int):
-        """
-        Initialize the module.
-        """
-        super().__init__()
-        self.first = nn.Linear(d_in, d_hidden)
-        self.out = nn.Linear(d_hidden, 1)
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """
-        Forward pass.
-        """
-        x = x[:, 1:]
-        x = self.out(F.relu(self.first(x))).squeeze(2)
-        return x
 
 
 class _TokenInitialization(enum.Enum):
@@ -576,11 +554,9 @@ class MultiheadAttention(nn.Module):
         k = self._reshape(k)
         attention_logits = q @ k.transpose(1, 2) / math.sqrt(d_head_key)
         attention_probs = F.softmax(attention_logits, dim=-1)
-
         if self.dropout is not None:
             attention_probs = self.dropout(attention_probs)
         x = attention_probs @ self._reshape(v)
-
         x = (
             x.reshape(batch_size, self.n_heads, n_q_tokens, d_head_value)
             .transpose(1, 2)
@@ -742,12 +718,12 @@ class Transformer(nn.Module):
             prenormalization (bool): flag to use prenormalization.
             first_prenormalization (bool): flag to use prenormalization in the first
             layer.
-            last_layer_query_idx (None | list[int] | slice): query index for the
+            last_layer_query_idx (Union[None, List[int], slice]): query index for the
             last layer.
-            n_tokens (int | None): number of tokens.
-            kv_compression_ratio (float | None): compression ratio for the key and
+            n_tokens (Optional[int]): number of tokens.
+            kv_compression_ratio (Optional[float]): compression ratio for the key and
             values.
-            kv_compression_sharing (str | None): strategy for sharing the key and
+            kv_compression_sharing (Optional[str]): strategy for sharing the key and
             values of compression.
             head_activation (Callable[..., nn.Module]): activation function in the
             attention head.
