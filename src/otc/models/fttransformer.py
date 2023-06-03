@@ -481,6 +481,11 @@ class MultiheadAttention(nn.Module):
         self.n_heads = n_heads
         self.dropout = nn.Dropout(dropout) if dropout else None
 
+        self.attention_probs = None
+        self.attention_probs_grad = None
+        self.attn_gradients = None
+        self.attn = None
+
         for m in [self.W_q, self.W_k, self.W_v]:
             # the "xavier" branch tries to follow torch.nn.MultiheadAttention;
             # the second condition checks if W_v plays the role of W_out; the latter one
@@ -495,6 +500,30 @@ class MultiheadAttention(nn.Module):
                 nn.init.zeros_(m.bias)
         if self.W_out is not None:
             nn.init.zeros_(self.W_out.bias)
+
+    def save_attn(self, attn):
+        """
+        save attention probabilities tensor.
+        """
+        self.attn = attn
+
+    def get_attn(self)-> torch.Tensor:
+        """
+        get attention probabilites tensor.
+        """
+        return self.attn
+
+    def save_attn_gradients(self, attn_gradients):
+        """
+        save attention gradients tensor.
+        """
+        self.attn_gradients = attn_gradients
+
+    def get_attn_gradients(self)-> torch.Tensor:
+        """
+        get attention gradients tensor.
+        """
+        return self.attn_gradients
 
     def _reshape(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -556,6 +585,11 @@ class MultiheadAttention(nn.Module):
         attention_probs = F.softmax(attention_logits, dim=-1)
         if self.dropout is not None:
             attention_probs = self.dropout(attention_probs)
+        
+        self.save_attn(attention_probs)
+        attention_probs.register_hook(self.save_attn_gradients)
+        
+        
         x = attention_probs @ self._reshape(v)
         x = (
             x.reshape(batch_size, self.n_heads, n_q_tokens, d_head_value)
@@ -564,6 +598,7 @@ class MultiheadAttention(nn.Module):
         )
         if self.W_out is not None:
             x = self.W_out(x)
+        
         return x, {
             "attention_logits": attention_logits,
             "attention_probs": attention_probs,
