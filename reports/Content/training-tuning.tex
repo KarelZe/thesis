@@ -72,9 +72,6 @@ The convergence behaviour of our model is similar to that of gradient boosting. 
 
 \todo{loss starts at roughly $\log(\frac{1}{2})$. The probability of overserving one class is approximately $p=0.5$}
 
-% https://wandb.ai/fbv/thesis/runs/2a9iqsn0?workspace=user-karelze
-The loss surface of the \gls{GBRT} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.98}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not \emph{per-se} improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles.
-
 \textbf{Solutions For FT-Transformer}
 
 \emph{Activation Function}
@@ -123,7 +120,7 @@ In summary, we extend the training setup of \textcite[][6]{gorishniyRevisitingDe
 Classical trade classification rules serve as a benchmark in our work. We implement them as a classifier that combines arbitrary trade classification rules through stacking, as covered in \cref{sec:semi-supervised-approaches}.
 
 % FIXME: They write that they classify randomly, but they don't do so.
-In cases where classification is not feasible due to missing data or the rules' definition itself, we resort to a random classification, which achieves an average accuracy of \SI{50}{\percent}. In this regard, we deviate from \textcite[][29--32]{grauerOptionTradeClassification2022}, who consider unclassified trades as falsely classified, resulting in a resulting in \SI{0}{\percent} accuracy. In our context, such a procedure would bias towards machine learning classifiers, which we avidly avoid.
+In cases where classification is not feasible due to missing data or the rules' definition itself, we resort to a random classification, which achieves an average accuracy of \SI{50}{\percent}. In this regard, we deviate from \textcite[][29--32]{grauerOptionTradeClassification2022}, who consider unclassified trades as falsely classified, in \SI{0}{\percent} accuracy. In our context, such a procedure would bias towards machine learning classifiers, which we avidly avoid.
 
 \subsubsection{Training of Semi-Supervised
     Models}\label{sec:training-of-semi-supervised-models}
