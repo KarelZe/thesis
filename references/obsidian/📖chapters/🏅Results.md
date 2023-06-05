@@ -1,4 +1,33 @@
 
+We report accuracies for train, validation set and test set and entire set
+
+
+On aggregate level (per set)
+
+Over time, plot influential effects o
+
+
+tick rule exchange level
+quote rule exchange level
+tick rule all level
+quote rule nbbo level
+lr
+emo
+clnv
+quote rule quote rule rev tick
+grauer method
+
+What are the base 
+rules
+
+![[accuracies_classical.png]]
+
+![[Pasted image 20230604095829.png]]
+
+
+For example, if the 50,000 transactions misclassi"ed by the Lee and Ready method constitute a representative cross-section of the entire sample, then the misclassi"cation will simply add noise to the data. In this case, the 85% accuracy rate is quite good. If, on the other hand, the Lee and Ready method systematically misclassi"es certain types of transactions, a bias could result.
+
+We report the accurac
 
 ## Summary
 - start coarse-grained then report fine-grained results
