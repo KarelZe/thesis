@@ -12,8 +12,6 @@
         {}                                                                                                                    & {Coverage in \%}  & \multicolumn{4}{c}{Accuracy in \%}                                                             \\ \cmidrule(lr){2-2} \cmidrule(lr){3-6}
         {Classifier}                                                                                           & {All}             & {Train}                            & {Val}             & {Test}            & {All}             \\\midrule
         %        {Trade Classification Rule}                                                                                           & {\makecell{{\gls{ISE} Train}                               \\ {10/05 -- 10/13}}} & {\makecell{{\gls{ISE} Val}\\{10/13 -- 11/15}}} & {\makecell{{\gls{ISE} Test}\\{11/15 -- 5/17}}} & {All}             \\\midrule
-        $\operatorname{tick}_{\mathrm{all}}$                                                                                  & 97.8500           & 52.8954                            & 54.5403           & 53.3412           & 53.3134           \\
-        $\operatorname{rtick}_{\mathrm{all}}$                                                                                 & 96.7000           & 55.9539                            & 54.4020           & 53.9891           & 55.2500           \\ \midrule
         $\operatorname{tick}_{\mathrm{ex}}$                                                                                   & 91.5800           & 49.1842                            & 50.5441           & 50.2394           & 49.6674           \\
         $\operatorname{rtick}_{\mathrm{ex}}$                                                                                  & 90.3500           & 52.1701                            & 50.3068           & 50.5258           & 51.4682           \\
         $\operatorname{quote}_{\mathrm{ex}}$                                                                                  & 94.6900           & 66.2659                            & 57.5174           & 56.9997           & 62.6606           \\
@@ -23,6 +21,8 @@
         $\operatorname{remo}_{\mathrm{ex}}$                                                                                   & 98.9500           & 57.1490                            & 53.6360           & 54.1495           & 55.8459           \\
         $\operatorname{clnv}_{\mathrm{ex}}$                                                                                   & 98.7000           & 60.1181                            & 55.2305           & 54.7502           & 58.0656           \\
         $\operatorname{rclnv}_{\mathrm{ex}}$                                                                                  & 95.0000           & 60.8498                            & 55.3888           & 55.0784           & 58.6019           \\ \midrule
+        $\operatorname{tick}_{\mathrm{all}}$                                                                                  & 97.8500           & 52.8954                            & 54.5403           & 53.3412           & 53.3134           \\
+        $\operatorname{rtick}_{\mathrm{all}}$                                                                                 & 96.7000           & 55.9539                            & 54.4020           & 53.9891           & 55.2500           \\ \midrule
         $\operatorname{quote}_{\mathrm{nbbo}}$                                                                                & 99.8900           & 66.8153                            & 58.5520           & 59.5565           & 63.7093           \\
         $\operatorname{lr}_{\mathrm{nbbo}}$                                                                                   & 99.7900           & 66.6404                            & 58.5902           & 59.6145           & 63.6236           \\
         $\operatorname{rlr}_{\mathrm{nbbo}}$                                                                                  & 98.7200           & 66.8250                            & 58.6446           & 59.6458           & 63.7515           \\
@@ -35,6 +35,11 @@
         \bottomrule
     \end{tabular}
 \end{table}
+
+Different filling procedure
+handling of non-positive spreads
+Different implementation of depth rule.
+
 
 \todo{Add results of classical rules over entire data set and test set.}
 
@@ -56,8 +61,6 @@
         \toprule
         {}                                                                                                                    & {Coverage in \%}  & \multicolumn{3}{c}{Accuracy in \%}                                         \\ \cmidrule(lr){2-2}\cmidrule(lr){3-5}
         {Classifier}                                                                                           & {All}             & {Pre-Test}                         & {Test}            & {All}             \\\midrule
-        $\operatorname{tick}_{\mathrm{all}}$                                                                                  & 97.210            & 51.4199                            & 50.4403           & 51.0827           \\
-        $\operatorname{rtick}_{\mathrm{all}}$                                                                                 & 96.030            & 54.2521                            & 52.7056           & 53.7197           \\ \midrule
         $\operatorname{tick}_{\mathrm{ex}}$                                                                                   & 91.450            & 48.6156                            & 48.9969           & 48.7469           \\
         $\operatorname{rtick}_{\mathrm{ex}}$                                                                                  & 90.280            & 51.0857                            & 50.5432           & 50.8989           \\
         $\operatorname{quote}_{\mathrm{ex}}$                                                                                  & 94.460            & 62.6691                            & 62.0558           & 62.4580           \\
@@ -67,6 +70,8 @@
         $\operatorname{remo}_{\mathrm{ex}}$                                                                                   & 97.320            & 49.8883                            & 49.9529           & 49.9105           \\
         $\operatorname{clnv}_{\mathrm{ex}}$                                                                                   & 98.440            & 54.2644                            & 53.2492           & 53.9149           \\
         $\operatorname{rclnv}_{\mathrm{ex}}$                                                                                  & 94.040            & 55.1506                            & 54.5686           & 54.9502           \\\midrule
+        $\operatorname{tick}_{\mathrm{all}}$                                                                                  & 97.210            & 51.4199                            & 50.4403           & 51.0827           \\
+        $\operatorname{rtick}_{\mathrm{all}}$                                                                                 & 96.030            & 54.2521                            & 52.7056           & 53.7197           \\ \midrule
         $\operatorname{quote}_{\mathrm{nbbo}}$                                                                                & 94.770            & 61.3146                            & 59.7952           & 60.7915           \\
         $\operatorname{lr}_{\mathrm{nbbo}}$                                                                                   & 99.870            & 61.0947                            & 59.5427           & 60.5604           \\
         $\operatorname{rlr}_{\mathrm{nbbo}}$                                                                                  & 99.710            & 61.2959                            & 59.7516           & 60.7643           \\
@@ -79,12 +84,17 @@
     \end{tabular}
 \end{table}
 
+\todo{Our focus is on ... rules.}
+
+
 \begin{figure}[ht]
     \centering
     \includegraphics{classical-accuracies-over-time.pdf}
     \caption[tbd]{tbd.}
     \label{fig:classical-accuracies-over-time}
 \end{figure}
+
+\todo{rename in figure to gsu. Comment what dashed bars mean.}
 
 \subsection{Results of Supervised
     Models}\label{sec:results-of-supervised-models}
@@ -168,6 +178,8 @@
 \textbf{FT-Transformer With Pretraining}
 
 \subsection{Robustness of Results}\label{sec:robustness-checks}
+
+
 
 \subsection{Feature Importance}\label{sec:feature-importance}
 
