@@ -38,9 +38,8 @@ allowed_func_str = (
 
 allowed_subsets = ("all", "ex", "best")
 
-
 class ClassicalClassifier(ClassifierMixin, BaseEstimator):
-    """
+       """
     ClassicalClassifier implements several trade classification rules.
 
     Including:
