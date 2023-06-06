@@ -8,15 +8,13 @@ Our results are approximately similar to ([[@grauerOptionTradeClassification2022
 
 From all rules, tick-based algorithms perform worst when applied to trade prices at the trading venue with accuracies of a random guess, percentage-49.67 or percentage-51.47.  For comparison, a simple majority vote would achieve percentage-51.40 accuracy. The application to trade prices at the inter-exchange level marginally improves over a random / dummy classification, achieving accuracies of percentage-55.25 for the reversed tick test. Due to the poor performance, of tick-based algorithms at the exchange level, we estimate all hybrids with $\operatorname{tick}_{\mathrm{all}}$ or $\operatorname{rtick}_{\mathrm{all}}$.
 
+![[classical-ise-results.png]]
+
 Quote-based algorithms, outperform tick-based algorithms delivering accuracy up to percentage-63.71, when estimated on the gls-NBBO. The superiority of quote-based algorithms in option trade classification has previously been documented in ([[@savickasInferringDirectionOption2003]]) and ([[@grauerOptionTradeClassification2022]]). 
 
 The performance of hybrids, such as the gls-LR algorithm, hinges with the reliance on the tick test. Thus, the gls-emo rules and to a lesser extent the gls-clnv rules perform worst, achieving accuracies between percentage-55.42 and percentage-57.57. In turn, variants of the gls-LR, which uses the quote rule for most trades, is among the best performing algorithms. By extension, $\operatorname{gsu}_{\mathrm{small}}$ further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$.
 
 Notably, the combination of ([[@grauerOptionTradeClassification2022]]33) including overrides from the trade size and depth rules performs best, achieving percentage-67.20 accuracy on the gls-ise test set and percentage-75.03 on the entire dataset. Yet, the performance deteriorates most sharply between sets.
-
-We also document the accuracies on the gls-cboe dataset in cref-table. Identical to 
-
-Aside from these high-level observations, we focus three findings in greater detail. 
 
 **Finding 1: Accuracy of tick-based algorithms is downward-biased by missingness**
 - grauer et al trace back low accuracy of tick-based algorithms to illiquidity in option markets. 
@@ -39,7 +37,11 @@ Aside from these high-level observations, we focus three findings in greater det
 - performance fluctuates / diminishes over time and is affected by fee structure (see argument in [[@grauerOptionTradeClassification2022]])
 - track down fee structure changes with patterns in time series.
 
-![[Pasted image 20230606072531.png]]
+
+Aside from these high-level observations, we focus three findings in greater detail. 
+
+We repeat the analysis on the gls-cboe dataset in cref-table-cboe and observe a similar ranking to cref-table-ise. Overall, the performance of classical trade classification rules further diminishes strengthening the need for alternative classifiers. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the gls-ise sample, the quote rule estimated on the gls-NBBO, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a lower performance than the quote rule applied to gls-CBOE quotes. Parts of this is due to the fact, that  $\operatorname{quote}_{\mathrm{nbbo}}$ achieves a considerably lower coverage of percentage-94.77 compared to percentage-99.89 in the gls-ise sample, with fewer trades classified by the fallback criterion. In a filtered common sample, where trades are classified by both rules, performance is approximately similar. Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best. footnote-(Performance on gls-cboe, can be improved, if the order of quote rules is reversed. For full combinatoric coverage see ([[@grauerOptionTradeClassification2022]]33).  To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from cref-[[💡Hyperparameter Tuning]].) On the test subsample, performance improvements from the trade size and depth rule are considerably smaller than in the gls-ISE dataset. 
+
 ![[Pasted image 20230606072617.png]]
 
 

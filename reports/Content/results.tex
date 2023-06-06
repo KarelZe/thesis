@@ -6,11 +6,11 @@ This chapter compares the results of rule-based trade classification with machin
 
 We now estimate the accuracy of classical trade classification rules on the \gls{ISE} and \gls{CBOE} sample. We consider the tick and quote rule, as well as the \gls{LR} algorithm, \gls{EMO} rule and \gls{CLNV} method in their classical and reversed formulation. Additionally, we consider two stacked combinations of \textcite[][12--14]{grauerOptionTradeClassification2022} due to their state-of-the-art performance on the validation set, as derived in \cref{sec:hyperparameter-tuning}. Namely, $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ and $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ or in short $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$.
 
-We report in \cref{tab:ise_supervised_all-master} accuracies for the entire data set and separate subsets spanning the periods of train, validation, and test set as defined in \cref{sec:train-test-split}. Doing so, enables comparisons with previous works, but also provide meaningful estimates on the test set relevant for benchmarking purposes.
+We report in \cref{tab:ise_supervised_all-master} accuracies for the entire data set and separate subsets spanning the periods of train, validation, and test set as defined in \cref{sec:train-test-split}. Doing so enables comparisons with previous works, but also provides meaningful estimates on the test set relevant for benchmarking purposes.
 
 Our results are approximately similar to \textcite[][29--33]{grauerOptionTradeClassification2022}. Minor deviations exist, which can be pinned down to differences in handling of unclassified trades and non-positive spreads, as well as divergent implementations of the depth rule.\footnote{Correspondence with the author.}
 
-From all rules, tick-based algorithms perform worst when applied to trade prices at the trading venue with accuracies of a random guess, \SI{49.67}{\percent} or \SI{51.47}{\percent}.  For comparison, a simple majority vote would achieve \SI{51.40}{\percent} accuracy. The application to trade prices at the inter-exchange level marginally improves over a random/majority classification, achieving accuracies of \SI{55.25}{\percent}  for the reversed tick test. Due to the poor performance, of tick-based algorithms at the exchange level, we estimate all hybrids with $\operatorname{tick}_{\mathrm{all}}$ or $\operatorname{rtick}_{\mathrm{all}}$.
+From all rules, tick-based algorithms perform worst when applied to trade prices at the trading venue with accuracies of a random guess, \SI{49.67}{\percent} or \SI{51.47}{\percent}. For comparison, a simple majority vote achieves \SI{51.40}{\percent} accuracy. The tick test performs best when estimated on the consecutive trade prices, and additionally, when estimated at the inter-exchange level marginally improves over a random classification, achieving accuracies of \SI{55.25}{\percent} for the reversed tick test. Due to the poor performance, of tick-based algorithms at the exchange level, we estimate all hybrids with $\operatorname{tick}_{\mathrm{all}}$ or $\operatorname{rtick}_{\mathrm{all}}$.
 
 \begin{table}[ht]
     \centering
@@ -46,13 +46,30 @@ From all rules, tick-based algorithms perform worst when applied to trade prices
 
 \todo{How can the coverage of the gsu method be smaller than quote nbbo alone?}
 
-Quote-based algorithms, outperform tick-based algorithms delivering accuracy up to \SI{63.71}{\percent}, when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
+Quote-based algorithms outperform tick-based algorithms delivering accuracy up to \SI{63.71}{\percent}, when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
 
-The performance of hybrids, such as the \gls{LR} algorithm, hinges with the reliance on the tick test. Thus, the \gls{EMO} rules and to a lesser extent the \gls{CLNV} rules perform worst, achieving accuracies between \SI{55.42}{\percent} and \SI{57.57}{\percent}. In turn, variants of the \gls{LR}, which uses the quote rule for most trades, is among the best performing algorithms. By extension, $\operatorname{gsu}_{\mathrm{small}}$ further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$.
+The performance of hybrids, such as the \gls{LR} algorithm, hinges on the reliance on the tick test. Thus, the \gls{EMO} rules and to a lesser extent the \gls{CLNV} rules perform worst, achieving accuracies between \SI{55.42}{\percent} and \SI{57.57}{\percent}. In turn, variants of the \gls{LR}, which uses the quote rule for most trades, are among the best-performing algorithms. By extension, $\operatorname{gsu}_{\mathrm{small}}$ further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$.
 
-Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][33]{grauerOptionTradeClassification2022} including overrides from the trade size and depth rules performs best, achieving \SI{67.20}{\percent} accuracy on the \gls{ISE} test set and \SI{75.03}{\percent} on the entire dataset. Yet, the performance deteriorates most sharply between sets.
+Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][33]{grauerOptionTradeClassification2022} including overrides from the trade size and depth rules performs best, achieving \SI{67.20}{\percent} accuracy on the \gls{ISE} test set and \SI{75.03}{\percent} on the entire dataset. Yet, the performance deteriorates most sharply between sets, as visualised in \cref{fig:classical-accuracies-over-time}.
 
-\begin{table}
+\begin{figure}[ht]
+    \centering
+    \includegraphics{classical-accuracies-over-time.pdf}
+    \caption[tbd]{tbd.}
+    \label{fig:classical-accuracies-over-time}
+\end{figure}
+
+\todo{Comment what dashed bars mean.}
+
+Aside from these high-level observations, we focus on three findings in greater detail. 
+
+\textbf{Finding 1: Accuracy of Tick-Based Algorithms Is Downward-Biased by Missingness}
+
+\textbf{Finding 2: Accuracy Comes From Depth}
+
+\textbf{Finding 3: Fee Structures Affect Accuracy Over Time}
+
+\begin{table}[ht]
     \centering
     \caption[tbd]{tbd cboe}
     \label{tab:cboe_supervised_all-master-cboe}
@@ -83,16 +100,9 @@ Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][3
     \end{tabular}
 \end{table}
 
+We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe_supervised_all-master-cboe} and observe a similar ranking to \cref{tab:ise_supervised_all-master}. Overall, the performance of classical trade classification rules further diminishes strengthening the need for alternative classifiers. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the \gls{ISE} sample, the quote rule estimated on the \gls{NBBO}, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a lower performance than the quote rule applied to \gls{CBOE} quotes. Parts of this is due to the fact, that  $\operatorname{quote}_{\mathrm{nbbo}}$ achieves a considerably lower coverage of \SI{94.77}{\percent} compared to \SI{99.89}{\percent} in the \gls{ISE} sample, with fewer trades classified by the fallback criterion. In a filtered common sample, where trades are classified by both rules, performance is approximately similar. Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best, the strong outperformance does not carry over to the test set \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[][33]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
 
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics{classical-accuracies-over-time.pdf}
-    \caption[tbd]{tbd.}
-    \label{fig:classical-accuracies-over-time}
-\end{figure}
-
-\todo{rename in figure to gsu. Comment what dashed bars mean.}
+\todo{Doesn't this contradict the hidden order idea of Grauer?}
 
 \subsection{Results of Supervised
     Models}\label{sec:results-of-supervised-models}
@@ -360,6 +370,7 @@ Our models establish a new state-of-the-art for classification on the \gls{ISE} 
 
 \todo{When the analysis was repeated using only the Lee and Radhakrishna subsample, the results were equally as strong or stronger, with two exceptions. Using their subsample, time between transactions is no longer a statistically signi"cant determinant of misclassi"cation and large trades are misclassi"ed slightly more frequently than small trades (odderswhite)}
 \todo{Our focus is on ... rules.}
+\todo{Improvements are particularily high for trades that are notourisly hard to classify by classical trade classification algorithms.}
 
 \subsection{Feature Importance}\label{sec:feature-importance}
 
