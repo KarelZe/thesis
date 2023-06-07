@@ -1,3 +1,41 @@
+## Trade Classification Rules
+
+We now estimate the accuracy of classical trade classification rules on the gls-ise and gls-cboe sample. We estimate the performance of the tick and quote rule, as well as the gls-LR algorithm, gls-EMO rule and gls-CLNV method in their classical and reversed formulation. Additionally, we consider two stacked combinations of ([[@grauerOptionTradeClassification2022]]) due to their state-of-the-art-performance on the validation set, as derived in cref-[[💡Hyperparameter Tuning]]. Namely, $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ and $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ or in short $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$. 
+
+We report in cref-table-ise accuracies for the entire data set and separate subsets spanning the periods of train, validation, and test set. Doing so, allows us to compare against previous works, but also provide meaningful estimates on the test set relevant for benchmarking purposes. 
+
+Our results are approximately similar to ([[@grauerOptionTradeClassification2022]]29-33). Minor deviations exist, which can linked to differences in handling of unclassified trades and non-positive spreads, as well divergent implementations of the depth rule.-footnote(Correspondence with the author.)
+
+From all rules, tick-based algorithms perform worst when applied to trade prices at the trading venue with accuracies of a random guess, percentage-49.67 or percentage-51.47.  For comparison, a simple majority vote would achieve percentage-51.40 accuracy. The application to trade prices at the inter-exchange level marginally improves over a random / dummy classification, achieving accuracies of percentage-55.25 for the reversed tick test. Due to the poor performance, of tick-based algorithms at the exchange level, we estimate all hybrids with $\operatorname{tick}_{\mathrm{all}}$ or $\operatorname{rtick}_{\mathrm{all}}$.
+
+![[classical-ise-results.png]]
+
+Quote-based algorithms, outperform tick-based algorithms delivering accuracy up to percentage-63.71, when estimated on the gls-NBBO. The superiority of quote-based algorithms in option trade classification has previously been documented in ([[@savickasInferringDirectionOption2003]]) and ([[@grauerOptionTradeClassification2022]]). 
+
+The performance of hybrids, such as the gls-LR algorithm, hinges with the reliance on the tick test. Thus, the gls-emo rules and to a lesser extent the gls-clnv rules perform worst, achieving accuracies between percentage-55.42 and percentage-57.57. In turn, variants of the gls-LR, which uses the quote rule for most trades, is among the best performing algorithms. By extension, $\operatorname{gsu}_{\mathrm{small}}$ further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$.
+
+Notably, the combination of ([[@grauerOptionTradeClassification2022]]33) including overrides from the trade size and depth rules performs best, achieving percentage-67.20 accuracy on the gls-ise test set and percentage-75.03 on the entire dataset. Yet, the performance deteriorates most sharply between sets.
+
+**Finding 1: Accuracy of tick-based algorithms is downward-biased by missingness**
+- grauer et al trace back low accuracy of tick-based algorithms to illiquidity in option markets. 
+- We do not have the time to previous trades. One would expect higher performance for more frequently traded options. Results of Grauer doe not indicate such a behaviour.
+- Theoretical coverage reported in Grauer matches. Practically, coverage is much smaller due to minimal filter set. 
+- Simple experiment filter only for trades that can be classified by all trade classification rules
+- Thus, we conclude tick-based algorithms are downward-biased
+- Practically, coverage is much smaller e. g., negative / zero spreads, missingness of quotes etc. 
+- missingness as key driver to performance
+- Plot missing trade prices and quotes over time.
+- contemplate the results
+- quote nbbo is far smaller for cboe then for ise. could this be the reason why the order reverses?
+
+**Finding 2: Accuracy comes from depth**
+- building on finding 1, depth enables strong models, as classification is not performed using fallback criterion
+- visualize which layer was used in classification
+- inverse experiment. What happens if we work on filtered trades only? How does this affect the accuracy of hybrids? 
+
+**Finding 3: Fee structures affect accuracy over time**
+- performance fluctuates / diminishes over time and is affected by fee structure (see argument in [[@grauerOptionTradeClassification2022]])
+- track down fee structure changes with patterns in time series.
 
 We report accuracies for train, validation set and test set and entire set
 
@@ -29,16 +67,22 @@ For example, if the 50,000 transactions misclassi"ed by the Lee and Ready method
 
 We report the accurac
 
-## Summary
-- start coarse-grained then report fine-grained results
-- explain why results differ compared to Grauer et al
-- think about reporting classical rules on the entire dataset
-- report train, validation and test accuracies also over time (mark in graph where beginning and ned)
+Aside from these high-level observations, we focus three findings in greater detail. 
+
+We repeat the analysis on the gls-cboe dataset in cref-table-cboe and observe a similar ranking to cref-table-ise. Overall, the performance of classical trade classification rules further diminishes strengthening the need for alternative classifiers. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the gls-ise sample, the quote rule estimated on the gls-NBBO, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a lower performance than the quote rule applied to gls-CBOE quotes. Parts of this is due to the fact, that  $\operatorname{quote}_{\mathrm{nbbo}}$ achieves a considerably lower coverage of percentage-94.77 compared to percentage-99.89 in the gls-ise sample, with fewer trades classified by the fallback criterion. In a filtered common sample, where trades are classified by both rules, performance is approximately similar. Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best. footnote-(Performance on gls-cboe, can be improved, if the order of quote rules is reversed. For full combinatoric coverage see ([[@grauerOptionTradeClassification2022]]33).  To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from cref-[[💡Hyperparameter Tuning]].) On the test subsample, performance improvements from the trade size and depth rule are considerably smaller than in the gls-ISE dataset. 
+
+![[Pasted image 20230606072617.png]]
+
+
+![[accuracies_classical.png]]
+
+For example, if the 50,000 transactions misclassi"ed by the Lee and Ready method constitute a representative cross-section of the entire sample, then the misclassi"cation will simply add noise to the data. In this case, the 85% accuracy rate is quite good. If, on the other hand, the Lee and Ready method systematically misclassi"es certain types of transactions, a bias could result.
+
 
 ![[summarized-results.png]]
 
 
-
+Our remaining analysis is focused on the test set.
 
 
 ## Sub-samples
@@ -48,55 +92,15 @@ visualize classical rules over time
 
 
 
-
-**Classical ISE:**
-| | | tick(all)         | quote(ex)    | lr(ex)    | emo(ex)   | clnv(ex)  | quote(best)->quote(ex) | trade_size(ex)->quote(best)->quote(ex)->depth(best)->depth(ex)->rev_tick(all) |           |           |
-|-------------------|--------------|-----------|-----------|-----------|------------------------|-------------------------------------------------------------------------------|-----------|-----------|
-| Option Type       | C            | 53.566483 | 56.338657 | 56.416520 | 53.500982              | 54.338435                                                                     | 58.881009 | 66.995000 |
-|                   | P            | 53.086524 | 57.748410 | 57.797980 | 54.118193              | 55.227019                                                                     | 60.772429 | 67.442413 |
-| Security Type     | Index option | 51.543849 | 53.728014 | 53.788502 | 51.280161              | 51.725311                                                                     | 57.797688 | 58.524483 |
-|                   | Others       | 53.255024 | 62.402034 | 62.494080 | 57.510196              | 59.066922                                                                     | 65.242783 | 70.137410 |
-|                   | Stock option | 53.405332 | 54.870101 | 54.923804 | 52.328385              | 53.061654                                                                     | 57.588565 | 66.150581 |
-| Trade Size        | (0,1]        | 52.850289 | 55.288035 | 55.418330 | 51.930230              | 52.957108                                                                     | 58.219535 | 68.780466 |
-|                   | (1,3]        | 52.825320 | 55.312322 | 55.398067 | 51.948962              | 52.864432                                                                     | 58.172238 | 68.845596 |
-|                   | (3,5]        | 52.401723 | 55.723949 | 55.768923 | 52.821732              | 53.604825                                                                     | 58.488028 | 68.958994 |
-|                   | (5,11]       | 53.636487 | 59.893257 | 59.899878 | 57.168629              | 57.977015                                                                     | 62.292800 | 63.295412 |
-|                   | >11          | 55.555200 | 60.714690 | 60.695406 | 57.231189              | 58.461494                                                                     | 63.427558 | 64.547913 |
-| Year              | 2015         | 52.783955 | 54.902913 | 54.892890 | 52.851584              | 53.315622                                                                     | 56.143249 | 63.349227 |
-|                   | 2016         | 53.284415 | 57.571543 | 57.635410 | 54.270965              | 55.222778                                                                     | 59.896339 | 67.117888 |
-|                   | 2017         | 53.665234 | 56.367496 | 56.459133 | 52.986116              | 54.147313                                                                     | 60.676194 | 68.701844 |
-| Time to Maturity  | <= 1         | 53.073395 | 57.301220 | 57.362873 | 54.417911              | 55.223769                                                                     | 60.579671 | 67.111616 |
-|                   | (1-2]        | 53.404881 | 57.744957 | 57.762882 | 53.547187              | 54.776254                                                                     | 60.546956 | 68.117541 |
-|                   | (2-3]        | 53.697592 | 57.086186 | 57.179021 | 52.890993              | 54.140812                                                                     | 59.715752 | 67.886100 |
-|                   | (3-6]        | 53.868526 | 56.015521 | 56.110247 | 52.001021              | 53.348644                                                                     | 57.877722 | 67.452554 |
-|                   | (6-12]       | 54.269323 | 56.418807 | 56.472172 | 51.953456              | 53.581516                                                                     | 57.676192 | 67.470964 |
-|                   | > 12         | 54.883085 | 52.696504 | 52.850764 | 51.198376              | 52.073364                                                                     | 50.941699 | 64.706435 |
-| Moneyness         | <= 0.7       | 54.502433 | 60.341653 | 60.421858 | 58.257767              | 58.981319                                                                     | 61.450529 | 64.113542 |
-|                   | (0.7-0.9]    | 55.491002 | 60.382149 | 60.573694 | 57.566221              | 58.607257                                                                     | 63.633651 | 67.868621 |
-|                   | (0.9-1.1]    | 52.950755 | 57.083316 | 57.112069 | 53.144508              | 54.335962                                                                     | 60.238270 | 68.152214 |
-|                   | (1.1-1.3]    | 51.621348 | 49.939075 | 49.998204 | 49.857566              | 49.670232                                                                     | 50.021966 | 61.661661 |
-|                   | > 1.3        | 52.038059 | 48.723613 | 48.811119 | 50.046064              | 48.785237                                                                     | 48.722381 | 59.973687 |
-| Location to Quote | at mid       | 51.034217 | 49.998387 | 50.611316 | 51.028068              | 51.029882                                                                     | 55.950353 | 65.902387 |
-|                   | inside       | 52.408920 | 57.153707 | 57.153707 | 52.411885              | 53.793190                                                                     | 60.205206 | 64.242773 |
-|                   | at quotes    | 57.728367 | 59.971382 | 59.971382 | 59.970566              | 59.971127                                                                     | 59.969340 | 78.213062 |
-|                   | outside      | 62.363283 | 66.080655 | 65.745152 | 62.316312              | 62.235791                                                                     | 66.610750 | 64.892975 |
-|                   | unknown      | 52.459802 | 50.133425 | 52.500855 | 52.398221              | 52.480328                                                                     | 76.346220 | 76.442012 |
-| All trades        | all          | 53.342427 | 56.996762 | 57.061417 | 53.789110              | 54.753246                                                                     | 59.763967 | 67.203863 |
-
 - Unknown's are these where bid (ex) or ask (ex) is NaN. Grauer et al don't report these separately. They must be included somewhere else.
 - Makes sense that unknowns are close to 50 % for e. g., quote rule (ex). 
 - Stacking adds robustness. It looks suspicious that combinations e. g., quote + quote, GSU reach highest classification accuracies.
-
-
-
 
 % TODO: These proxies have in common that they factor in the order book imbalance the relative depth quoted at the best bid and ask prices. If traders care about transaction costs, the relatively wide ask-side spread deters buyers, whereas the tight bid-side spread may attract sellers. There are then more traders submitting market orders at the bid side, and the true effective spread is, on average, smaller than the average midpoint effective spread.
 
 % TODO: Derive in greater detail why orderbook imbalance makes sense! See my notes from Hagströmer
 
 - Perform an error analysis. For which classes does CatBoost do so poorly? See some ideas here. https://elitedatascience.com/feature-engineering-best-practises
-
-
 
 Akin to selecting the machine learning classifiers, we determine our classical baselines on the gls-ISE validation set. This guarantees a challenging baselines, while maintaining consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the gls-CBOE sample. Solely for reference, we also report accuracies of the gls-tick, gls-quote, gls-lr, due to their widespread adoption in finance.
 
@@ -114,7 +118,6 @@ Calculate average rank
 ![[performance-degradations.png]]
 
 
-- Think about using ensembles
 - 
 - What are the findings? Find appropriate visualisation (e. g., tables, charts)
 -  For each tuned configuration, we run 15 experiments with different random seeds and report the performance on the test set. For some algorithms, we also report the performance of default configurations without hyperparameter tuning. [[@gorishniyRevisitingDeepLearning2021]]

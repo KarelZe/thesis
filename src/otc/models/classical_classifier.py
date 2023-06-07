@@ -14,12 +14,7 @@ import pandas as pd
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.utils import check_random_state
 from sklearn.utils.multiclass import check_classification_targets
-from sklearn.utils.validation import (
-    _check_sample_weight,
-    check_array,
-    check_is_fitted,
-    check_X_y,
-)
+from sklearn.utils.validation import _check_sample_weight, check_is_fitted, check_X_y
 
 allowed_func_str = (
     "tick",
@@ -236,8 +231,8 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Returns:
             pd.Series: boolean series with result.
         """
-        at_ask = self.X_["TRADE_PRICE"] == self.X_[f"ask_{subset}"]
-        at_bid = self.X_["TRADE_PRICE"] == self.X_[f"bid_{subset}"]
+        at_ask = np.isclose(self.X_["TRADE_PRICE"], self.X_[f"ask_{subset}"], atol=1e-4)
+        at_bid = np.isclose(self.X_["TRADE_PRICE"], self.X_[f"bid_{subset}"], atol=1e-4)
         return at_ask ^ at_bid
 
     def _is_at_upper_xor_lower_quantile(
@@ -365,10 +360,18 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Returns:
             npt.NDArray: result of the trade size rule. Can be np.NaN.
         """
-        bid_eq_ask = self.X_["ask_size_ex"] == self.X_["bid_size_ex"]
+        bid_eq_ask = np.isclose(
+            self.X_["ask_size_ex"], self.X_["bid_size_ex"], atol=1e-4
+        )
 
-        ts_eq_bid = (self.X_["TRADE_SIZE"] == self.X_["bid_size_ex"]) & -bid_eq_ask
-        ts_eq_ask = (self.X_["TRADE_SIZE"] == self.X_["ask_size_ex"]) & -bid_eq_ask
+        ts_eq_bid = (
+            np.isclose(self.X_["TRADE_SIZE"], self.X_["bid_size_ex"], atol=1e-4)
+            & ~bid_eq_ask
+        )
+        ts_eq_ask = (
+            np.isclose(self.X_["TRADE_SIZE"], self.X_["ask_size_ex"], atol=1e-4)
+            & ~bid_eq_ask
+        )
 
         return np.where(ts_eq_bid, 1, np.where(ts_eq_ask, -1, np.nan))
 
@@ -386,7 +389,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
         Returns:
             npt.NDArray: result of depth rule. Can be np.NaN.
         """
-        at_mid = self._mid(subset) == self.X_["TRADE_PRICE"]
+        at_mid = np.isclose(self._mid(subset), self.X_["TRADE_PRICE"], atol=1e-4)
 
         return np.where(
             at_mid & (self.X_["ask_size_ex"] > self.X_["bid_size_ex"]),
@@ -503,7 +506,7 @@ class ClassicalClassifier(ClassifierMixin, BaseEstimator):
 
         rs = check_random_state(self.random_state)
 
-        X = check_array(X, accept_sparse=False, force_all_finite=False)
+        # X = check_array(X, accept_sparse=False, force_all_finite=False)
 
         self.X_ = pd.DataFrame(data=X, columns=self.columns_)
 

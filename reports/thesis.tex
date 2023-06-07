@@ -47,6 +47,8 @@ triangle,isosceles triangle stretches,shape border rotate=90,minimum
 width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 
 \newcommand{\bestcircle}{\tikz{\node[circle,draw=darkgray, fill=white, line width=0.5pt, minimum width=0.2cm,minimum height=0.2cm, inner sep=0pt, draw opacity=.2] at (0,0){};}}
+\newcommand{\myline}{\tikz{\draw[dashed, gray, line width=0.5pt] (0,0) -- (0,0.3);}}
+
 % Tables and Graphs
 \usepackage{makecell} %Connected rows
 \usepackage{booktabs} % Improves the design of the tables
@@ -139,6 +141,7 @@ output-exponent-marker=\ensuremath{\mathrm{e}}
 % --------------------------------- Definition of hyperlinks ---------------------------------
 % Hyperreferences
 \usepackage{hyperref}
+\urlstyle{tt} % typewriter font for urls
 \definecolor{darkblue}{rgb}{0,0,.5}
 \hypersetup{
  pdfstartview={FitH},
