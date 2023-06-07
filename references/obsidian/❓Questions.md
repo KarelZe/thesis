@@ -1,4 +1,6 @@
 ## Open
+- Opinions on including robustness checks of classical rules?
+- Look up table for `ROOT`?
 
 ## Closed
 - Ask for comments on theory. -> will comment / excited to read. Received comments @ 23 May.

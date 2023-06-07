@@ -16,6 +16,8 @@ The performance of hybrids, such as the gls-LR algorithm, hinges with the relian
 
 Notably, the combination of ([[@grauerOptionTradeClassification2022]]33) including overrides from the trade size and depth rules performs best, achieving percentage-67.20 accuracy on the gls-ise test set and percentage-75.03 on the entire dataset. Yet, the performance deteriorates most sharply between sets.
 
+![[accuracies_classical.png]]
+
 **Finding 1: Accuracy of tick-based algorithms is downward-biased by missingness**
 - grauer et al trace back low accuracy of tick-based algorithms to illiquidity in option markets. 
 - We do not have the time to previous trades. One would expect higher performance for more frequently traded options. Results of Grauer doe not indicate such a behaviour.
@@ -40,28 +42,6 @@ Notably, the combination of ([[@grauerOptionTradeClassification2022]]33) includi
 We report accuracies for train, validation set and test set and entire set
 
 
-On aggregate level (per set)
-
-Over time, plot influential effects o
-
-
-tick rule exchange level
-quote rule exchange level
-tick rule all level
-quote rule nbbo level
-lr
-emo
-clnv
-quote rule quote rule rev tick
-grauer method
-
-What are the base 
-rules
-
-![[accuracies_classical.png]]
-
-![[Pasted image 20230604095829.png]]
-
 
 For example, if the 50,000 transactions misclassi"ed by the Lee and Ready method constitute a representative cross-section of the entire sample, then the misclassi"cation will simply add noise to the data. In this case, the 85% accuracy rate is quite good. If, on the other hand, the Lee and Ready method systematically misclassi"es certain types of transactions, a bias could result.
 
@@ -70,11 +50,6 @@ We report the accurac
 Aside from these high-level observations, we focus three findings in greater detail. 
 
 We repeat the analysis on the gls-cboe dataset in cref-table-cboe and observe a similar ranking to cref-table-ise. Overall, the performance of classical trade classification rules further diminishes strengthening the need for alternative classifiers. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the gls-ise sample, the quote rule estimated on the gls-NBBO, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a lower performance than the quote rule applied to gls-CBOE quotes. Parts of this is due to the fact, that  $\operatorname{quote}_{\mathrm{nbbo}}$ achieves a considerably lower coverage of percentage-94.77 compared to percentage-99.89 in the gls-ise sample, with fewer trades classified by the fallback criterion. In a filtered common sample, where trades are classified by both rules, performance is approximately similar. Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best. footnote-(Performance on gls-cboe, can be improved, if the order of quote rules is reversed. For full combinatoric coverage see ([[@grauerOptionTradeClassification2022]]33).  To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from cref-[[💡Hyperparameter Tuning]].) On the test subsample, performance improvements from the trade size and depth rule are considerably smaller than in the gls-ISE dataset. 
-
-![[Pasted image 20230606072617.png]]
-
-
-![[accuracies_classical.png]]
 
 For example, if the 50,000 transactions misclassi"ed by the Lee and Ready method constitute a representative cross-section of the entire sample, then the misclassi"cation will simply add noise to the data. In this case, the 85% accuracy rate is quite good. If, on the other hand, the Lee and Ready method systematically misclassi"es certain types of transactions, a bias could result.
 
