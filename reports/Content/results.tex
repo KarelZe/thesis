@@ -14,43 +14,41 @@ From all rules, the tick rule performs worst when applied to trade prices at the
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Rule-Based Approaches On \glsentryshort{ISE}]{This table shows the accuracy of common trade classification rules and their variations for option trades on \gls{ISE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. Best rule in \textbf{bold}.}
+    \caption[Accuracies of Rule-Based Approaches On \glsentryshort{ISE}]{This table shows the accuracy of common trade classification rules and their variations for option trades on \gls{ISE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in \textbf{bold}.}
     \label{tab:ise_supervised_all-master}
     \begin{tabular}{@{}lSSSSS@{}}
         \toprule
         {}                                     & {Coverage in \%}  & \multicolumn{4}{c}{Accuracy in \%}                                                             \\ \cmidrule(lr){2-2} \cmidrule(lr){3-6}
-        {Trade Classification Rule}            & {All}             & {Train}                   & {Val}  & {Test}  & {All}             \\\midrule
-        $\operatorname{tick}_{\mathrm{ex}}$    & 91.5800           & 49.1842                            & 50.5441           & 50.2394           & 49.6674           \\
-        $\operatorname{rtick}_{\mathrm{ex}}$   & 90.3500           & 52.1701                            & 50.3068           & 50.5258           & 51.4682           \\
-        $\operatorname{quote}_{\mathrm{ex}}$   & 94.6900           & 66.2659                            & 57.5174           & 56.9997           & 62.6606           \\
-        $\operatorname{lr}_{\mathrm{ex}}$      & 99.8800           & 66.1320                            & 57.5550           & 57.0623           & 62.6004           \\
-        $\operatorname{rlr}_{\mathrm{ex}}$     & 99.7200           & 66.3858                            & 57.6456           & 57.1372           & 62.7857           \\
-        $\operatorname{emo}_{\mathrm{ex}}$     & 98.7300           & 56.5416                            & 53.7133           & 53.7864           & 55.4243           \\
-        $\operatorname{remo}_{\mathrm{ex}}$    & 98.9500           & 57.1490                            & 53.6360           & 54.1495           & 55.8459           \\
-        $\operatorname{clnv}_{\mathrm{ex}}$    & 98.7000           & 60.1181                            & 55.2305           & 54.7502           & 58.0656           \\
-        $\operatorname{rclnv}_{\mathrm{ex}}$   & 95.0000           & 60.8498                            & 55.3888           & 55.0784           & 58.6019           \\ \midrule
-        $\operatorname{tick}_{\mathrm{all}}$   & 97.8500           & 52.8954                            & 54.5403           & 53.3412           & 53.3134           \\
-        $\operatorname{rtick}_{\mathrm{all}}$  & 96.7000           & 55.9539                            & 54.4020           & 53.9891           & 55.2500           \\ \midrule
-        $\operatorname{quote}_{\mathrm{nbbo}}$ & 99.8900           & 66.8153                            & 58.5520           & 59.5565           & 63.7093           \\
-        $\operatorname{lr}_{\mathrm{nbbo}}$    & 99.7900           & 66.6404                            & 58.5902           & 59.6145           & 63.6236           \\
-        $\operatorname{rlr}_{\mathrm{nbbo}}$   & 98.7200           & 66.8250                            & 58.6446           & 59.6458           & 63.7515           \\
-        $\operatorname{emo}_{\mathrm{nbbo}}$   & 98.3900           & 58.2850                            & 54.8106           & 55.9278           & 57.1183           \\
-        $\operatorname{remo}_{\mathrm{nbbo}}$  & 98.9000           & 58.9415                            & 54.8198           & 56.2168           & 57.5718           \\
-        $\operatorname{clnv}_{\mathrm{nbbo}}$  & 98.9000           & 61.5439                            & 56.3371           & 57.0753           & 59.6079           \\
-        $\operatorname{rclnv}_{\mathrm{nbbo}}$ & 98.7000           & 62.2628                            & 56.5928           & 57.4307           & 60.1614           \\ \midrule
-        $\operatorname{gsu}_{\mathrm{small}}$  & 99.8400           & 66.7098                            & 58.7642           & 59.8383           & 63.7449           \\
-        $\operatorname{gsu}_{\mathrm{large}}$  & \bfseries 100.000 & \bfseries 79.7126                  & \bfseries 68.8358 & \bfseries 67.2039 & \bfseries 75.0322 \\
+        {Trade Classification Rule}            & {All}             & {Train}                            & {Val}             & {Test}            & {All}             \\\midrule
+        $\operatorname{tick}_{\mathrm{ex}}$    & 91.5794           & 49.1842                 & 50.5441 & 50.2394 & 49.6674 \\
+        $\operatorname{rtick}_{\mathrm{ex}}$   & 90.3529           & 52.1701                 & 50.3068 & 50.5258 & 51.4682 \\
+        $\operatorname{quote}_{\mathrm{ex}}$   & 91.1158           & 66.2807                 & 57.5355 & 57.0079 & 62.6747 \\
+        $\operatorname{lr}_{\mathrm{ex}}$      & 99.8020           & 66.0269                 & 57.6103 & 57.1019 & 62.5564 \\
+        $\operatorname{rlr}_{\mathrm{ex}}$     & 99.6690           & 66.3908                 & 57.7091 & 57.2014 & 62.8143 \\
+        $\operatorname{emo}_{\mathrm{ex}}$     & 98.7285           & 56.5416                 & 53.7133 & 53.7864 & 55.4243 \\
+        $\operatorname{remo}_{\mathrm{ex}}$    & 98.2749           & 57.1490                 & 53.6360 & 54.1495 & 55.8459 \\
+        $\operatorname{clnv}_{\mathrm{ex}}$    & 98.9537           & 60.1181                 & 55.2305 & 54.7502 & 58.0656 \\
+        $\operatorname{rclnv}_{\mathrm{ex}}$   & 98.6967           & 60.8498                 & 55.3888 & 55.0784 & 58.6019 \\ \midrule
+        $\operatorname{tick}_{\mathrm{all}}$   & 97.8543           & 52.8954                 & 54.5403 & 53.3412 & 53.3134 \\
+        $\operatorname{rtick}_{\mathrm{all}}$  & 96.7020           & 55.9539                 & 54.4020 & 53.9891 & 55.2500 \\ \midrule
+        $\operatorname{quote}_{\mathrm{nbbo}}$ & 91.7324           & 66.8290                 & 58.5665 & 59.5656 & 63.7223 \\
+        $\operatorname{lr}_{\mathrm{nbbo}}$    & 99.8084           & 66.5295                 & 58.6137 & 59.6227 & 63.5635 \\
+        $\operatorname{rlr}_{\mathrm{nbbo}}$   & 99.7292           & 66.8227                 & 58.7145 & 59.7062 & 63.7762 \\
+        $\operatorname{emo}_{\mathrm{nbbo}}$   & 98.7186           & 58.2850                 & 54.8106 & 55.9278 & 57.1183 \\
+        $\operatorname{remo}_{\mathrm{nbbo}}$  & 98.3939           & 58.9415                 & 54.8198 & 56.2168 & 57.5718 \\
+        $\operatorname{clnv}_{\mathrm{nbbo}}$  & 98.8975           & 61.5439                 & 56.3371 & 57.0753 & 59.6079 \\
+        $\operatorname{rclnv}_{\mathrm{nbbo}}$ & 98.7000           & 62.2628                 & 56.5928 & 57.4307 & 60.1614 \\ \midrule
+        $\operatorname{gsu}_{\mathrm{small}}$  & 99.7918           & 66.8171                 & 58.9378 & 60.0508 & 63.8865 \\
+        $\operatorname{gsu}_{\mathrm{large}}$  & \bfseries 99.9943 & \bfseries 80.1647                 & \bfseries 69.3726 & \bfseries 67.6112 & \bfseries 75.4922 \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-\todo{How can the coverage of the gsu method be smaller than quote nbbo alone?}
-
-Quote-based algorithms outperform tick-based algorithms delivering accuracy up to \SI{63.71}{\percent}, when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
+Quote-based algorithms outperform tick-based algorithms delivering accuracy up to \SI{63.72}{\percent}, when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
 
 The performance of hybrids, such as the \gls{LR} algorithm, hinges on the reliance on the tick test. Thus, the \gls{EMO} rules and to a lesser extent the \gls{CLNV} rules perform worst, achieving accuracies between \SI{55.42}{\percent} and \SI{57.57}{\percent}. In turn, variants of the \gls{LR}, which uses the quote rule for most trades, are among the best-performing algorithms. By extension, $\operatorname{gsu}_{\mathrm{small}}$ further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$.
 
-Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][33]{grauerOptionTradeClassification2022} including overrides from the trade size and depth rules performs best, achieving \SI{67.20}{\percent} accuracy on the \gls{ISE} test set and \SI{75.03}{\percent} on the entire dataset. Yet, the performance deteriorates most sharply between sets, as visualised in \cref{fig:classical-accuracies-over-time}.
+Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][33]{grauerOptionTradeClassification2022} including overrides from the trade size and depth rules performs best, achieving \SI{67.61}{\percent} accuracy on the \gls{ISE} test set and \SI{75.49}{\percent} on the entire dataset. Yet, the performance deteriorates most sharply between sets, as visualised in \cref{fig:classical-accuracies-over-time}.
 
 \begin{figure}[ht]
     \centering
@@ -61,7 +59,7 @@ Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][3
 
 Aside from these high-level observations, we focus on three findings in greater detail.
 
-\textbf{Finding 1: Accuracy of Tick-Based Algorithms Is Downward-Biased by Missingness}
+\textbf{Finding 1: Accuracy of Basic Rules Is Downward-Biased by Missingness}
 
 \textbf{Finding 2: Accuracy Comes From Depth}
 
@@ -69,76 +67,40 @@ Aside from these high-level observations, we focus on three findings in greater 
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Rule-Based Approaches On \glsentryshort{CBOE}]{This table shows the accuracy of common trade classification rules and their variations for option trades on \gls{CBOE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. Best rule in \textbf{bold}.}
+    \caption[Accuracies of Rule-Based Approaches On \glsentryshort{CBOE}]{This table shows the accuracy of common trade classification rules and their variations for option trades on \gls{CBOE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in \textbf{bold}.}
     \label{tab:cboe_supervised_all-master-cboe}
     \begin{tabular}{lSSSS}
         \toprule
         {}                                     & {Coverage in \%}  & \multicolumn{3}{c}{Accuracy in \%}                                         \\ \cmidrule(lr){2-2}\cmidrule(lr){3-5}
-        {Trade Classification Rule}            & {All}             & {Pre-Test}                   & {Test}  & {All}             \\\midrule
-        $\operatorname{tick}_{\mathrm{ex}}$    & 91.450            & 48.6156                            & 48.9969           & 48.7469           \\
-        $\operatorname{rtick}_{\mathrm{ex}}$   & 90.280            & 51.0857                            & 50.5432           & 50.8989           \\
-        $\operatorname{quote}_{\mathrm{ex}}$   & 94.460            & 62.6691                            & 62.0558           & 62.4580           \\
-        $\operatorname{lr}_{\mathrm{ex}}$      & 99.850            & 62.4250                            & 61.7483           & 62.1921           \\
-        $\operatorname{rlr}_{\mathrm{ex}}$     & 99.530            & 62.7111                            & 62.0071           & 62.4687           \\
-        $\operatorname{emo}_{\mathrm{ex}}$     & 97.960            & 49.3923                            & 48.6489           & 49.1364           \\
-        $\operatorname{remo}_{\mathrm{ex}}$    & 97.320            & 49.8883                            & 49.9529           & 49.9105           \\
-        $\operatorname{clnv}_{\mathrm{ex}}$    & 98.440            & 54.2644                            & 53.2492           & 53.9149           \\
-        $\operatorname{rclnv}_{\mathrm{ex}}$   & 94.040            & 55.1506                            & 54.5686           & 54.9502           \\\midrule
-        $\operatorname{tick}_{\mathrm{all}}$   & 97.210            & 51.4199                            & 50.4403           & 51.0827           \\
-        $\operatorname{rtick}_{\mathrm{all}}$  & 96.030            & 54.2521                            & 52.7056           & 53.7197           \\ \midrule
-        $\operatorname{quote}_{\mathrm{nbbo}}$ & 94.770            & 61.3146                            & 59.7952           & 60.7915           \\
-        $\operatorname{lr}_{\mathrm{nbbo}}$    & 99.870            & 61.0947                            & 59.5427           & 60.5604           \\
-        $\operatorname{rlr}_{\mathrm{nbbo}}$   & 99.710            & 61.2959                            & 59.7516           & 60.7643           \\
-        $\operatorname{emo}_{\mathrm{nbbo}}$   & 98.120            & 51.6420                            & 51.6299           & 51.6378           \\
-        $\operatorname{remo}_{\mathrm{nbbo}}$  & 97.780            & 52.4847                            & 53.0735           & 52.6874           \\
-        $\operatorname{clnv}_{\mathrm{nbbo}}$  & 98.540            & 55.3058                            & 54.1294           & 54.9008           \\
-        $\operatorname{rclnv}_{\mathrm{nbbo}}$ & 98.350            & 56.3217                            & 55.4032           & 56.0055           \\\midrule
-        $\operatorname{gsu}_{\mathrm{small}}$  & 99.780            & 61.6223                            & 60.3459           & 61.1829           \\
-        $\operatorname{gsu}_{\mathrm{large}}$  & \bfseries 100.000 & \bfseries 73.8949                  & \bfseries 65.6943 & \bfseries 71.0717 \\\bottomrule
+        {Trade Classification Rule}            & {All}             & {Pre-Test}                         & {Test}            & {All}             \\\midrule
+        $\operatorname{tick}_{\mathrm{ex}}$    & 91.4507           & 48.6156                            & 48.9969           & 48.7469           \\
+        $\operatorname{rtick}_{\mathrm{ex}}$   & 90.2769           & 51.0857                            & 50.5432           & 50.8989           \\
+        $\operatorname{quote}_{\mathrm{ex}}$   & 90.5150           & 62.6661                            & 62.0689           & 62.4605           \\
+        $\operatorname{lr}_{\mathrm{ex}}$      & 99.7455           & 62.3106                            & 61.5831           & 62.0602           \\
+        $\operatorname{rlr}_{\mathrm{ex}}$     & 99.4584           & 62.7035                            & 61.9898           & 62.4578           \\
+        $\operatorname{emo}_{\mathrm{ex}}$     & 97.9601           & 49.3923                            & 48.6489           & 49.1364           \\
+        $\operatorname{remo}_{\mathrm{ex}}$    & 97.3242           & 49.8883                            & 49.9529           & 49.9105           \\
+        $\operatorname{clnv}_{\mathrm{ex}}$    & 98.4350           & 54.2644                            & 53.2492           & 53.9149           \\
+        $\operatorname{rclnv}_{\mathrm{ex}}$   & 98.0358           & 55.1506                            & 54.5686           & 54.9502           \\\midrule
+        $\operatorname{tick}_{\mathrm{all}}$   & 97.2135           & 51.4199                            & 50.4403           & 51.0827           \\
+        $\operatorname{rtick}_{\mathrm{all}}$  & 96.0292           & 54.2521                            & 52.7056           & 53.7197           \\ \midrule
+        $\operatorname{quote}_{\mathrm{nbbo}}$ & 91.1772           & 61.3222                            & 59.8123           & 60.8024           \\
+        $\operatorname{lr}_{\mathrm{nbbo}}$    & 99.7705           & 60.9503                            & 59.3730           & 60.4073           \\
+        $\operatorname{rlr}_{\mathrm{nbbo}}$   & 99.6335           & 61.3095                            & 59.7608           & 60.7764           \\
+        $\operatorname{emo}_{\mathrm{nbbo}}$   & 98.7186           & 51.6420                            & 51.6299           & 51.6378           \\
+        $\operatorname{remo}_{\mathrm{nbbo}}$  & 98.3939           & 52.4847                            & 53.0736           & 52.6874           \\
+        $\operatorname{clnv}_{\mathrm{nbbo}}$  & 98.8975           & 55.3058                            & 54.1294           & 54.9008           \\
+        $\operatorname{rclnv}_{\mathrm{nbbo}}$ & 98.7000           & 56.3217                            & 55.4032           & 56.0055           \\\midrule
+        $\operatorname{gsu}_{\mathrm{small}}$  & 99.7918           & 61.8938                            & 60.7464           & 61.4988           \\
+        $\operatorname{gsu}_{\mathrm{large}}$  & \bfseries 99.9943 & \bfseries 74.6511                  & \bfseries 66.5176 & \bfseries 71.8510 \\\bottomrule
     \end{tabular}
 \end{table}
 
-We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe_supervised_all-master-cboe} and observe a similar ranking to \cref{tab:ise_supervised_all-master}. Overall, the performance of classical trade classification rules further diminishes strengthening the need for alternative classifiers. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the \gls{ISE} sample, the quote rule estimated on the \gls{NBBO}, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a lower performance than the quote rule applied to \gls{CBOE} quotes. Parts of this is due to the fact, that  $\operatorname{quote}_{\mathrm{nbbo}}$ achieves a considerably lower coverage of \SI{94.77}{\percent} compared to \SI{99.89}{\percent} in the \gls{ISE} sample, with fewer trades classified by the fallback criterion. In a filtered common sample, where trades are classified by both rules, performance is approximately similar. Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best, the strong outperformance does not carry over to the test set \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[][33]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
+We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe_supervised_all-master-cboe} and observe a similar ranking to \cref{tab:ise_supervised_all-master}. Overall, the performance of classical trade classification rules further diminishes strengthening the need for alternative classifiers. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the \gls{ISE} sample, the quote rule estimated on the \gls{NBBO}, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a lower performance than the quote rule applied to \gls{CBOE} quotes. 
+% Parts of this is due to the fact, that  $\operatorname{quote}_{\mathrm{nbbo}}$ achieves a considerably lower coverage of \SI{94.77}{\percent} compared to \SI{99.89}{\percent} in the \gls{ISE} sample, with fewer trades classified by the fallback criterion. In a filtered common sample, where trades are classified by both rules, performance is approximately similar. 
+Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best, the strong outperformance does not carry over to the test set \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[][33]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
 
 \todo{Doesn't this contradict the hidden order idea of Grauer?}
-
-\begin{table}[H]
-    \centering
-    \caption[tbd]{tbd cboe}
-    \label{tab:cboe_supervised_all-master-cboe}
-    \begin{tabular}{lSSSS}
-        \toprule
-        {}                                                                                                                    & {Coverage in \%}  & \multicolumn{3}{c}{Accuracy in \%}                                         \\ \cmidrule(lr){2-2}\cmidrule(lr){3-5}
-        {Trade Classification Rule}                                                                                           & {All}             & {Pre-Test}                         & {Test}            & {All}             \\\midrule
-        $\operatorname{tick}_{\mathrm{all}}$                                                                                  & 97.210            & 51.4199                            & 50.4403           & 51.0827           \\
-        $\operatorname{rtick}_{\mathrm{all}}$                                                                                 & 96.030            & 54.2521                            & 52.7056           & 53.7197           \\ \midrule
-        $\operatorname{tick}_{\mathrm{ex}}$                                                                                   & 91.450            & 48.6156                            & 48.9969           & 48.7469           \\
-        $\operatorname{rtick}_{\mathrm{ex}}$                                                                                  & 90.280            & 51.0857                            & 50.5432           & 50.8989           \\
-        $\operatorname{quote}_{\mathrm{ex}}$                                                                                  & 94.460            & 62.6691                            & 62.0558           & 62.4580           \\
-        $\operatorname{lr}_{\mathrm{ex}}$                                                                                     & 99.850            & 62.4250                            & 61.7483           & 62.1921           \\
-        $\operatorname{rlr}_{\mathrm{ex}}$                                                                                    & 99.530            & 62.7111                            & 62.0071           & 62.4687           \\
-        $\operatorname{emo}_{\mathrm{ex}}$                                                                                    & 97.960            & 49.3923                            & 48.6489           & 49.1364           \\
-        $\operatorname{remo}_{\mathrm{ex}}$                                                                                   & 97.320            & 49.8883                            & 49.9529           & 49.9105           \\
-        $\operatorname{clnv}_{\mathrm{ex}}$                                                                                   & 98.440            & 54.2644                            & 53.2492           & 53.9149           \\
-        $\operatorname{rclnv}_{\mathrm{ex}}$                                                                                  & 94.040            & 55.1506                            & 54.5686           & 54.9502           \\\midrule
-        $\operatorname{quote}_{\mathrm{nbbo}}$                                                                                & 94.770            & 61.3146                            & 59.7952           & 60.7915           \\
-        $\operatorname{lr}_{\mathrm{nbbo}}$                                                                                   & 99.870            & 61.0947                            & 59.5427           & 60.5604           \\
-        $\operatorname{rlr}_{\mathrm{nbbo}}$                                                                                  & 99.710            & 61.2959                            & 59.7516           & 60.7643           \\
-        $\operatorname{emo}_{\mathrm{nbbo}}$                                                                                  & 98.120            & 51.6420                            & 51.6299           & 51.6378           \\
-        $\operatorname{remo}_{\mathrm{nbbo}}$                                                                                 & 97.780            & 52.4847                            & 53.0735           & 52.6874           \\
-        $\operatorname{clnv}_{\mathrm{nbbo}}$                                                                                 & 98.540            & 55.3058                            & 54.1294           & 54.9008           \\
-        $\operatorname{rclnv}_{\mathrm{nbbo}}$                                                                                & 98.350            & 56.3217                            & 55.4032           & 56.0055           \\\midrule
-        $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ & 99.780            & 61.6223                            & 60.3459           & 61.1829           \\
-        $\operatorname{gsu}$                                                                                                  & \bfseries 100.000 & \bfseries 73.8949                  & \bfseries 65.6943 & \bfseries 71.0717 \\\bottomrule
-    \end{tabular}
-\end{table}
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics{classical-accuracies-over-time.pdf}
-    \caption[tbd]{tbd.}
-    \label{fig:classical-accuracies-over-time}
-\end{figure}
 
 \subsection{Results of Supervised
     Models}\label{sec:results-of-supervised-models}
