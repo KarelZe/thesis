@@ -102,6 +102,44 @@ We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe_supervised_al
 
 \todo{Doesn't this contradict the hidden order idea of Grauer?}
 
+\begin{table}[H]
+    \centering
+    \caption[tbd]{tbd cboe}
+    \label{tab:cboe_supervised_all-master-cboe}
+    \begin{tabular}{lSSSS}
+        \toprule
+        {}                                                                                                                    & {Coverage in \%}  & \multicolumn{3}{c}{Accuracy in \%}                                         \\ \cmidrule(lr){2-2}\cmidrule(lr){3-5}
+        {Trade Classification Rule}                                                                                           & {All}             & {Pre-Test}                         & {Test}            & {All}             \\\midrule
+        $\operatorname{tick}_{\mathrm{all}}$                                                                                  & 97.210            & 51.4199                            & 50.4403           & 51.0827           \\
+        $\operatorname{rtick}_{\mathrm{all}}$                                                                                 & 96.030            & 54.2521                            & 52.7056           & 53.7197           \\ \midrule
+        $\operatorname{tick}_{\mathrm{ex}}$                                                                                   & 91.450            & 48.6156                            & 48.9969           & 48.7469           \\
+        $\operatorname{rtick}_{\mathrm{ex}}$                                                                                  & 90.280            & 51.0857                            & 50.5432           & 50.8989           \\
+        $\operatorname{quote}_{\mathrm{ex}}$                                                                                  & 94.460            & 62.6691                            & 62.0558           & 62.4580           \\
+        $\operatorname{lr}_{\mathrm{ex}}$                                                                                     & 99.850            & 62.4250                            & 61.7483           & 62.1921           \\
+        $\operatorname{rlr}_{\mathrm{ex}}$                                                                                    & 99.530            & 62.7111                            & 62.0071           & 62.4687           \\
+        $\operatorname{emo}_{\mathrm{ex}}$                                                                                    & 97.960            & 49.3923                            & 48.6489           & 49.1364           \\
+        $\operatorname{remo}_{\mathrm{ex}}$                                                                                   & 97.320            & 49.8883                            & 49.9529           & 49.9105           \\
+        $\operatorname{clnv}_{\mathrm{ex}}$                                                                                   & 98.440            & 54.2644                            & 53.2492           & 53.9149           \\
+        $\operatorname{rclnv}_{\mathrm{ex}}$                                                                                  & 94.040            & 55.1506                            & 54.5686           & 54.9502           \\\midrule
+        $\operatorname{quote}_{\mathrm{nbbo}}$                                                                                & 94.770            & 61.3146                            & 59.7952           & 60.7915           \\
+        $\operatorname{lr}_{\mathrm{nbbo}}$                                                                                   & 99.870            & 61.0947                            & 59.5427           & 60.5604           \\
+        $\operatorname{rlr}_{\mathrm{nbbo}}$                                                                                  & 99.710            & 61.2959                            & 59.7516           & 60.7643           \\
+        $\operatorname{emo}_{\mathrm{nbbo}}$                                                                                  & 98.120            & 51.6420                            & 51.6299           & 51.6378           \\
+        $\operatorname{remo}_{\mathrm{nbbo}}$                                                                                 & 97.780            & 52.4847                            & 53.0735           & 52.6874           \\
+        $\operatorname{clnv}_{\mathrm{nbbo}}$                                                                                 & 98.540            & 55.3058                            & 54.1294           & 54.9008           \\
+        $\operatorname{rclnv}_{\mathrm{nbbo}}$                                                                                & 98.350            & 56.3217                            & 55.4032           & 56.0055           \\\midrule
+        $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ & 99.780            & 61.6223                            & 60.3459           & 61.1829           \\
+        $\operatorname{gsu}$                                                                                                  & \bfseries 100.000 & \bfseries 73.8949                  & \bfseries 65.6943 & \bfseries 71.0717 \\\bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{classical-accuracies-over-time.pdf}
+    \caption[tbd]{tbd.}
+    \label{fig:classical-accuracies-over-time}
+\end{figure}
+
 \subsection{Results of Supervised
     Models}\label{sec:results-of-supervised-models}
 
