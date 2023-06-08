@@ -6,3 +6,5 @@ es it mean? Point out limitations and e. g., managerial implications or future i
 - Ceveat is that we don't know the true labels, but rather subsets. Could be biased?
 
 “The established methods, most notably the algorithms of Lee and Ready (1991) (LR), Ellis et al. (2000) (EMO), and Chakrabarty et al. (2007) (CLNV), classify trades based on the proximity of the transaction price to the quotes in effect at the time of the trade. This is problematic due to the increased frequency of order submission and cancellation. With several quote changes taking place at the time of the trade, it is not clear which quotes to select for the decision rule of the algorithm.” (Jurkatis, 2022, p. 6)
+
+To put these results in perspective, our best model using additional trade size and option features improves over the frequently employed tick rule, quote rule, and gls-lr algorithm by more than (74.12 - 57.10) on the gls-ISE sample. 

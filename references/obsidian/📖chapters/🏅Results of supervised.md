@@ -1,8 +1,57 @@
-
+Next we test the performance of our supervised models. We take the best configurations from cref-[[💡Hyperparameter Tuning]], trained and tuned on the gls-ISE trade data, and evaluate their performance on the gls-ise and and gls-cboe test sets. Cref-tab-accuracies-supervised summarizes our results and compares the so-obtained results with state-of-the art algorithms from the literature.
 
 ![[results-supervised.png]]
+Accuracies of Supervised Approaches On \glsentryshort{CBOE} and \glsentryshort{ISE}. This table reports the accuracy of glspl-gbrt and Transformers for the three different feature sets on the gls-ise and gls-cboe dataset. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For feature set classical, $\operatorname{gsu}_{\mathrm{small}}$ is the benchmark and otherwise $\operatorname{gsu}_{\mathrm{large}}$. Models are trained on the gls-ISE training set. The best classifier per dataset is in **bold**. 
+
+Both model architectures consistently outperform their respective benchmarks on the \gls{ISE} and \gls{CBOE} datasets, achieving state-of the art performance in option trade classification assuming equal data requirements. Thereby, Transformers dominate the gls-ise sample when trained on quotes and trade prices reaching percentage-63.78 and percentage 66.18 on the gls-cboe sample outperforming previous approaches by percentage-3.73 and percentage-5.44.  Additional trade size features push the accuracy to percentage-72.85 for the gls-ise sample and percentage-72.15 for the gls-cboe sample. Gradient boosting outperforms all other approaches when trained on additional option features. While absolute improvements in accuracy are modest on the smallest feature set over $\operatorname{gsu}_{\mathrm{small}}$, improvements are more substantial for larger feature sets ranging between percentage-4.73  to percentage-7.86 over $\operatorname{gsu}_{\mathrm{large}}$. Specifically, the addition of trade size-related features positively contribute to the performance. The results can be further improved by allowing for retraining on the validation set. Results are documented in the appendix. Relative to related works performing trade classification using machine learning, the improvements are strong, as a direct comparison with appendix-table reveals.
+
+Expectedly, performance differences between gradient boosting and transformers are marginal on the same feature sets. This result is consistent with ([[@grinsztajnWhyTreebasedModels2022]]) and ([[@gorishniyEmbeddingsNumericalFeatures2022]]), who conclude for tabular modelling, that neither Transformers or gls-gbrt are universally superior. Counter-intuitively, performance improvements are highest for the gls-cboe dataset, despite the models being trained on gls-ise data. Part of this is due to a weaker benchmark performance, but also due to a considerably stronger accuracy of classifiers on the smallest and mid-sized feature set. This result is counter-intuitive, as one would expect a degradation between sets, assuming exchange-specific trading patterns and require exploration in greater detail.
+
+**Finding 4: Fee-Structures Affect Classifier Performance**
+tbd
+
+Similar to ([[@odders-whiteOccurrenceConsequencesInaccurate2000]] 267) we further break down the results by calculating confusion matrices as visualized cref-ise-confusion and cref-cboe-confusion.
+
+![[confusion-matrix-ise.png]]
+(ise)
+![[confusion-matrix-cboe.png]]
+(cboe)
+
+The confusion
+
+This allows more detailed analysis than simply observing the proportion of correct classifications (accuracy). Accuracy will yield misleading results if the data set is unbalanced; that is, when the numbers of observations in different classes vary greatly.
+
+Additianlly roc-curves and comparing classifiers with the McNemar test. 
+In pair-wise comparisions,
+
+Table 2 contains a comparison of the true classi"cation (buy or sell) with the classi"cation from each of the three algorithms. Based purely on the percentage FINMAR=38=KGM=VVC 266 E.R. Odders-White / Journal of Financial Markets 3 (2000) 259}28
+
+Table 2 Performance of the algorithms The table below contains a comparison of the true classi"cation (buy or sell) to the classi"cation from the quote (Panel A), the tick (Panel B), and the Lee and Ready algorithms (Panel C). A description of these methods is contained in Section 2 of the text. Each entry contains the number and percentage of transactions in the sample that fall into the respective category. Analyses are based only on transactions for which the true initiator can be determined. Method and classi"cation True buy True sell Number Percent Number Percent Panel A: Quote method vs. true classixcation Quote method: Buy 127,827 40.15 14,997 4.71 Quote method: Sell 13,893 4.36 110,870 34.82 Quote method: Unclassi"ed 26,308 8.26 24,469 7.69 Panel B: Tick method vs. true classixcation Tick method: Buy 134,649 42.29 34,662 10.89 Tick method: Sell 33,379 10.48 115,674 36.33 Panel C: Lee and Ready method vs. true classixcation Lee and Ready method: Buy 144,348 45.34 24,183 7.60 Lee and Ready method: Sell 23,680 7.44 126,153 39.63 of transactions classi"ed correctly, the Lee and Ready method (Panel C) is the most accurate.
+
+Our results document a strong performance of supervised classifiers for the task of option trade classification, but leave open whether the performance is consistent across sub samples. Following common track in literature we employ robustness checks for all models in cref-[[🏅Robustness]]. 
+
+Next, we further break down the results by calculating 
+
+The configuration of this model is listed in the bottom line of Table 3
+To put these results in perspective, our best model using additional trade size and option features improves over the frequently employed tick rule, quote rule, and gls-lr algorithm by more than (74.12 - 57.10) on the gls-ISE sample. 
+
+Expectedly,
+
+
+
+The results can be further improved by allowing for retraining / training on cboe. Document results in the appendix.
+
+Both supervised models establish a new state-of-the-art
+
+
+Following 
+
+In Table 3 rows (B), we observe that reducing the attention key size dk hurts model quality. This suggests that determining compatibility is not easy and that a more sophisticated compatibility function than dot product may be beneficial. We further observe in rows (C) and (D) that, as expected, bigger models are better, and dropout is very helpful in avoiding over-fitting. In row (E) we replace our sinusoidal positional encoding with learned positional embeddings [9], and observe nearly identical results to the base model.
+
+We test the subspace update strategies on our real-world data sets and calculate the baseline using GMD with M = 1000. The size of the sliding window depends on the data set and is given in the respective figure. To calculate the contrast, we run M MC simulations. For the evaluation of the Random Strategy, we set p = 1 D . The expected number of updated subspaces is then E(|Rt |) = 1 and thus comparable to the other strategies. Setting p to a larger value is computationally more expensive because more subspaces are updated, giving the Random Strategy an advantage. For the -Greedy Strategy, we set  = 0.5. For the SBTS Strategy, we set  = 0.5 and γ = 0.99. Appendix 6.2.2 and Appendix 6.2.3 show more parameter settings. Appendix 6.2.4 shows the results of the CBTS Strategy, which we omit here because of its poor performance.
 
 Next we perform (coarse grained to finegrained)
+- similar to odders-white calculate confusion matrix
 - look into accuracy first. Provide detailled breakdown later.
 - roc curves
 - then move to confusion matrix and McNemar’s test then provide detailled breakdown of results in robustness chapter.
@@ -25,7 +74,6 @@ Recall from
 
 The results can be further improved by allowing for retraining / training on cboe. Document results in the appendix.
 
-Table 1 Panel A (May sample) shows the success rate of our algorithm and other algorithms. Overall, our algorithm outperforms all three competing rules – the LR, tick, and EMO – with improvements of 2.10%, 0.72% and 1.12% over the LR, EMO and tick rules respectively.7 Panel B (May sample) of the same table indicates that our algorithm has a substantial improvement over other algorithms.
 
 
 https://machinelearningmastery.com/mcnemars-test-for-machine-learning/
