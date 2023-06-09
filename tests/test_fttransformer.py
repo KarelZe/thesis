@@ -58,7 +58,6 @@ class TestFTTransformer(NeuralNetTestsMixin):
         self.expected_outputs = (
             torch.randint(0, 1, (self.batch_size, 1)).float().to(device)
         )
-        self.expected_outputs.requires_grad_(True)
 
         # https://github.com/Yura52/rtdl/blob/main/rtdl/modules.py
 
