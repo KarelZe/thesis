@@ -1,3 +1,7 @@
+**Attention Maps:**
+
+![[attention_maps_ise.png]]
+
 **SAGE**
 ```python
     fg_classical = {
