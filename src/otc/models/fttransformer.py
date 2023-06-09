@@ -523,27 +523,33 @@ class MultiheadAttention(nn.Module):
         if self.W_out is not None:
             nn.init.zeros_(self.W_out.bias)
 
-    def save_attn(self, attn):
+    def save_attn(self, attn: torch) -> None:
         """
-        save attention probabilities tensor.
+        Save attention probabilities tensor.
+
+        Args:
+            attn (torch): attention probabilities.
         """
         self.attn = attn
 
     def get_attn(self) -> torch.Tensor:
         """
-        get attention probabilites tensor.
+        Get attention probabilites tensor.
         """
         return self.attn
 
-    def save_attn_gradients(self, attn_gradients):
+    def save_attn_gradients(self, attn_gradients: torch.Tensor) -> None:
         """
-        save attention gradients tensor.
+        Save attention gradients tensor.
+
+        Args:
+            attn_gradients (torch.Tensor): attention gradients.
         """
         self.attn_gradients = attn_gradients
 
     def get_attn_gradients(self) -> torch.Tensor:
         """
-        get attention gradients tensor.
+        Get attention gradients tensor.
         """
         return self.attn_gradients
 
@@ -609,7 +615,8 @@ class MultiheadAttention(nn.Module):
             attention_probs = self.dropout(attention_probs)
 
         self.save_attn(attention_probs)
-        attention_probs.register_hook(self.save_attn_gradients)
+        if attention_probs.requires_grad:
+            attention_probs.register_hook(self.save_attn_gradients)
 
         x = attention_probs @ self._reshape(v)
         x = (
