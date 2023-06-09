@@ -6,7 +6,7 @@ This chapter compares the results of rule-based trade classification with machin
 
 We now estimate the accuracy of classical trade classification rules on the \gls{ISE} and \gls{CBOE} sample. We consider the tick and quote rule, as well as the \gls{LR} algorithm, \gls{EMO} rule and \gls{CLNV} method in their classical and reversed formulation. Additionally, we consider two stacked combinations of \textcite[][12--14]{grauerOptionTradeClassification2022} due to their state-of-the-art performance on the validation set, as derived in \cref{sec:hyperparameter-tuning}. Namely, $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ and $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ or in short $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$.
 
-We report in \cref{tab:ise_supervised_all-master} accuracies for the entire data set and separate subsets spanning the periods of train, validation, and test set as defined in \cref{sec:train-test-split}. Doing so enables comparisons with previous works, but also provides meaningful estimates on the test set relevant for benchmarking purposes.
+We report in \cref{tab:ise-classical} accuracies for the entire data set and separate subsets spanning the periods of train, validation, and test set as defined in \cref{sec:train-test-split}. Doing so enables comparisons with previous works, but also provides meaningful estimates on the test set relevant for benchmarking purposes.
 
 Our results are approximately similar to \textcite[][29--33]{grauerOptionTradeClassification2022}. Minor deviations exist, which can be pinned down to differences in handling of unclassified trades and non-positive spreads, as well as divergent implementations of the depth rule.\footnote{Correspondence with the author.}
 
@@ -15,11 +15,11 @@ From all rules, the tick rule performs worst when applied to trade prices at the
 \begin{table}[ht]
     \centering
     \caption[Accuracies of Rule-Based Approaches On \glsentryshort{ISE}]{This table shows the accuracy of common trade classification rules and their variations for option trades on \gls{ISE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in \textbf{bold}.}
-    \label{tab:ise_supervised_all-master}
+    \label{tab:ise-classical}
     \begin{tabular}{@{}lSSSSS@{}}
         \toprule
         {}                                     & {Coverage in \%}  & \multicolumn{4}{c}{Accuracy in \%}                                                             \\ \cmidrule(lr){2-2} \cmidrule(lr){3-6}
-        {Classification Rule}            & {All}             & {Train}                            & {Val}             & {Test}            & {All}             \\\midrule
+        {Classification Rule}                  & {All}             & {Train}                            & {Val}             & {Test}            & {All}             \\\midrule
         $\operatorname{tick}_{\mathrm{ex}}$    & 91.5794           & 49.1842                            & 50.5441           & 50.2394           & 49.6674           \\
         $\operatorname{rtick}_{\mathrm{ex}}$   & 90.3529           & 52.1701                            & 50.3068           & 50.5258           & 51.4682           \\
         $\operatorname{quote}_{\mathrm{ex}}$   & 91.1158           & 66.2807                            & 57.5355           & 57.0079           & 62.6747           \\
@@ -60,19 +60,22 @@ Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][3
 Aside from these high-level observations, we focus on three findings in greater detail.
 
 \textbf{Finding 1: Accuracy of Basic Rules Is Downward-Biased by Missingness}
+\todo{Add finding}
 
 \textbf{Finding 2: Accuracy Comes From Depth}
+\todo{Add finding}
 
 \textbf{Finding 3: Fee Structures Affect Accuracy Over Time}
+\todo{Add finding}
 
 \begin{table}[ht]
     \centering
     \caption[Accuracies of Rule-Based Approaches On \glsentryshort{CBOE}]{This table shows the accuracy of common trade classification rules and their variations for option trades on \gls{CBOE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in \textbf{bold}.}
-    \label{tab:cboe_supervised_all-master-cboe}
+    \label{tab:cboe-classical}
     \begin{tabular}{lSSSS}
         \toprule
         {}                                     & {Coverage in \%}  & \multicolumn{3}{c}{Accuracy in \%}                                         \\ \cmidrule(lr){2-2}\cmidrule(lr){3-5}
-        {Classification Rule}            & {All}             & {Pre-Test}                         & {Test}            & {All}             \\\midrule
+        {Classification Rule}                  & {All}             & {Pre-Test}                         & {Test}            & {All}             \\\midrule
         $\operatorname{tick}_{\mathrm{ex}}$    & 91.4507           & 48.6156                            & 48.9969           & 48.7469           \\
         $\operatorname{rtick}_{\mathrm{ex}}$   & 90.2769           & 51.0857                            & 50.5432           & 50.8989           \\
         $\operatorname{quote}_{\mathrm{ex}}$   & 90.5150           & 62.6661                            & 62.0689           & 62.4605           \\
@@ -96,7 +99,7 @@ Aside from these high-level observations, we focus on three findings in greater 
     \end{tabular}
 \end{table}
 
-We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe_supervised_all-master-cboe} and observe a similar ranking to \cref{tab:ise_supervised_all-master}. Overall, the performance of classical trade classification rules further diminishes or remains at a low level strengthening the need for alternative classifiers. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the \gls{ISE} sample, the quote rule estimated on the \gls{NBBO}, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a lower performance than the quote rule applied to \gls{CBOE} quotes.
+We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe-classical} and observe a similar ranking to \cref{tab:ise-classical}. Overall, the performance of classical trade classification rules further diminishes or remains at a low level strengthening the need for alternative classifiers. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the \gls{ISE} sample, the quote rule estimated on the \gls{NBBO}, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a lower performance than the quote rule applied to \gls{CBOE} quotes.
 % Parts of this is due to the fact, that  $\operatorname{quote}_{\mathrm{nbbo}}$ achieves a considerably lower coverage of \SI{94.77}{\percent} compared to \SI{99.89}{\percent} in the \gls{ISE} sample, with fewer trades classified by the fallback criterion. In a filtered common sample, where trades are classified by both rules, performance is approximately similar. 
 Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best, the strong outperformance does not carry over to the test set as depicted \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[][33]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
 
@@ -111,43 +114,52 @@ Next, we test the performance of our supervised models. We take the best configu
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Supervised Approaches On \glsentryshort{CBOE} and \glsentryshort{ISE}]{This table reports the accuracy of \glspl{GBRT} and Transformers for different feature sets on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For feature set classical, $\operatorname{gsu}_{\mathrm{small}}$ is the benchmark and otherwise $\operatorname{gsu}_{\mathrm{large}}$. Models are trained on the \gls{ISE} training set. The best classifier per dataset is in \textbf{bold}.}
+    \caption[Accuracies of Supervised Approaches On \glsentryshort{CBOE} and \glsentryshort{ISE} Dataset]{This table reports the accuracy of supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For feature set classical, $\operatorname{gsu}_{\mathrm{small}}$ is the benchmark and otherwise $\operatorname{gsu}_{\mathrm{large}}$. Models are trained on the \gls{ISE} training set. The best classifier per dataset is in \textbf{bold}.}
     \label{tab:results-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
                    &             & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                                                 \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
-        Data Set   & Classifier  & {Acc. in \%}                     & {+/-}                                & {Acc. in \%}                  & {+/-}             & {Acc. in \%}        & {+/-}             \\ \midrule
+        Dataset    & Classifier  & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}              & {Acc. in \%}        & {+/-}              \\ \midrule
         \gls{ISE}  & \gls{GBRT}  & 63.668637                        & 3.620000                              & 72.343640                     & 4.730000           & \bfseries 74.120496 & \bfseries 6.510000 \\
                    & Transformer & \bfseries 63.783020              & \bfseries 3.730000                    & \bfseries 72.581107           & \bfseries 4.970000 & 73.921795           & 6.310000           \\ \addlinespace
         \gls{CBOE} & \gls{GBRT}  & 66.002029                        & 5.260000                              & 71.951794                     & 5.430000           & \bfseries 74.375033 & \bfseries 7.860000 \\
-                   & Transformer & \bfseries 66.182348               & \bfseries 5.440000                    & \bfseries 72.153338           & \bfseries 5.640000 & 74.278318           & 7.760000           \\ \bottomrule
+                   & Transformer & \bfseries 66.182348              & \bfseries 5.440000                    & \bfseries 72.153338           & \bfseries 5.640000 & 74.278318           & 7.760000           \\ \bottomrule
     \end{tabular}
 \end{table}
 
-Both model architectures consistently outperform their respective benchmarks on the \gls{ISE} and \gls{CBOE} datasets, achieving state-of-the-art performance in option trade classification with comparable data requirements. Thereby, Transformers dominate the \gls{ISE} sample when trained on trade prices and quotes reaching \SI{63.783020}{\percent}  in accuracy and \SI{66.18}{\percent} on the \gls{CBOE} sample outperforming previous approaches by \SI{3.730000}{\percent} and \SI{5.440000}{\percent}. Additional trade size features improve the accuracy to \SI{72.581107}{\percent} for the \gls{ISE} sample and \SI{72.153338}{\percent} for the \gls{CBOE} sample. Gradient boosting outperforms all other approaches when trained on additional option features. 
+Both model architectures consistently outperform their respective benchmarks on the \gls{ISE} and \gls{CBOE} datasets, achieving state-of-the-art performance in option trade classification with comparable data requirements. Thereby, Transformers dominate the \gls{ISE} sample when trained on trade prices and quotes reaching \SI{63.783020}{\percent}  in accuracy and \SI{66.18}{\percent} on the \gls{CBOE} sample outperforming previous approaches by \SI{3.730000}{\percent} and \SI{5.440000}{\percent}. Additional trade size features improve the accuracy to \SI{72.581107}{\percent} for the \gls{ISE} sample and \SI{72.153338}{\percent} for the \gls{CBOE} sample. Gradient boosting outperforms all other approaches when trained on additional option features.
 
 While absolute improvements in accuracy over $\operatorname{gsu}_{\mathrm{small}}$ are modest on the smallest feature set, improvements are more substantial for larger feature sets ranging between \SI{4.730000}{\percent} to \SI{7.860000}{\percent} over $\operatorname{gsu}_{\mathrm{large}}$. Specifically, the addition of trade size-related features positively contributes to the performance. The results can be further improved through retraining on the validation set, as documented in \cref{app:results-of-supervised-models-with-re-training}. In favour of conservative estimates, our models in the main text do not use this technique.
 
-Expectedly, performance differences between gradient boosting and Transformers are minor. This result is consistent with \textcites{grinsztajnWhyTreebasedModels2022}{gorishniyRevisitingDeepLearning2021}, who conclude for tabular modelling, that neither Transformers or \gls{GBRT} are universally superior. 
+Expectedly, performance differences between gradient boosting and Transformers are minor. This result is consistent with \textcites{grinsztajnWhyTreebasedModels2022}{gorishniyRevisitingDeepLearning2021}, who conclude for tabular modelling, that neither Transformers or \gls{GBRT} are universally superior.
 
 Counter-intuitively, performance improvements are highest for the \gls{CBOE} dataset, despite the models being trained on \gls{ISE} data. Part of this is due to a weaker benchmark performance, but also due to a considerably stronger accuracy of classifiers on the smallest and mid-sized feature sets. One would expect a degradation between sets, assuming exchange-specific trading patterns and requiring exploration in greater detail.
 
-\begin{figure}[!h]
-    \subfloat[tbd\label{fig:confusion-matrix-supervised-cboe}]{\includegraphics[width=0.8\textwidth]{confusion_matrix_cboe.pdf}}
-    \vfill
-    \subfloat[tbd\label{fig:confusion-matrix-supervised-ise}]{\includegraphics[width=0.8\textwidth]{confusion_matrix_ise.pdf}}
-    \caption[]{Confusion Matrices Of Supervised Classifiers}
-    \label{fig:confusion-matrix-supervised-ise-cboe}
-\end{figure}
+% \begin{figure}[!h]
+%     \subfloat[tbd\label{fig:confusion-matrix-supervised-cboe}]{\includegraphics[width=0.8\textwidth]{confusion_matrix_cboe.pdf}}
+%     \vfill
+%     \subfloat[tbd\label{fig:confusion-matrix-supervised-ise}]{\includegraphics[width=0.8\textwidth]{confusion_matrix_ise.pdf}}
+%     \caption[]{Confusion Matrices Of Supervised Classifiers}
+%     \label{fig:confusion-matrix-supervised-ise-cboe}
+% \end{figure}
 
 \subsection{Results of Semi-Supervised
     Models}\label{sec:results-of-semi-supervised-models}
 
-
-
-\textbf{Gradient Boosting With Self-Training}
-
-\textbf{FT-Transformer With Pretraining}
+\begin{table}[ht]
+    \centering
+    \caption[Accuracies of Semi-Supervised Approaches On \glsentryshort{CBOE} and \glsentryshort{ISE} Dataset]{This table reports the accuracy of semi-supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For feature set classical, $\operatorname{gsu}_{\mathrm{small}}$ is the benchmark and otherwise $\operatorname{gsu}_{\mathrm{large}}$. Models are trained on the \gls{ISE} training set. The best classifier per dataset is in \textbf{bold}.}
+    \label{tab:results-semi-supervised-ise-cboe}
+    \begin{tabular}{@{}llSSSSSS@{}}
+        \toprule
+                   &             & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
+        Dataset    & Classifier  & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-} & {Acc. in \%} & {+/-} \\ \midrule
+        \gls{ISE}  & \gls{GBRT}  & 63.397514 & 3.350000 & 72.156489 & 4.550000 & 73.536644 & 5.930000 \\
+                   & Transformer &                                  &                                       &                               &       &              &       \\ \addlinespace
+        \gls{CBOE} & \gls{GBRT}  & 66.189454 & 5.440000 & 71.922680 & 5.410000 & 73.953322 & 7.440000 \\
+                   & Transformer &                                  &                                       &                               &       &              &       \\ \bottomrule
+    \end{tabular}
+\end{table}
 
 \subsection{Robustness of Results}\label{sec:robustness-checks}
 
@@ -163,7 +175,7 @@ Counter-intuitively, performance improvements are highest for the \gls{CBOE} dat
     \begin{tabular}{lSSSSSS@{}}
         \toprule
         {}                       & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-        {}                       & {Acc. in \%}                     & {+/-}                                & {Acc. in \%}                  & {+/-}    & {Acc. in \%} & {+/-}    \\\midrule
+        {}                       & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                           \\
         \tabindent  C            & 62.890486                        & 3.720000                              & 71.884647                     & 4.480000  & 73.647971    & 6.240000  \\
         \tabindent  P            & 64.557394                        & 3.500000                              & 72.867874                     & 5.020000  & 74.660185    & 6.820000  \\
@@ -222,7 +234,7 @@ Counter-intuitively, performance improvements are highest for the \gls{CBOE} dat
     \begin{tabular}{lSSSSSS@{}}
         \toprule
         {}                      & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-        {}                      & {Acc. in \%}                     & {+/-}                                & {Acc. in \%}                  & {+/-}    & {Acc. in \%} & {+/-}    \\\midrule
+        {}                      & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                          \\
         \tabindent C            & 65.505083                        & 5.370000                              & 71.707057                     & 5.770000  & 74.283388    & 8.350000  \\
         \tabindent P            & 66.597419                        & 5.120000                              & 72.245014                     & 5.030000  & 74.484832    & 7.270000  \\
@@ -282,7 +294,7 @@ Counter-intuitively, performance improvements are highest for the \gls{CBOE} dat
     \begin{tabular}{lSSSSSS@{}}
         \toprule
         {}                      & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-        {}                      & {Acc. in \%}                     & {+/-}                                & {Acc. in \%}                  & {+/-}    & {Acc. in \%} & {+/-}    \\\midrule
+        {}                      & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                          \\
         \tabindent C            & 62.991514                        & 3.820000                              & 72.099064                     & 4.690000  & 73.484904    & 6.080000  \\
         \tabindent P            & 64.687031                        & 3.630000                              & 73.131667                     & 5.290000  & 74.420786    & 6.580000  \\
@@ -339,7 +351,7 @@ Counter-intuitively, performance improvements are highest for the \gls{CBOE} dat
     \begin{tabular}{lSSSSSS@{}}
         \toprule
         {}                      & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                       \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-        {}                      & {Acc. in \%}                     & {+/-}                                & {Acc. in \%}                  & {+/-}   & {Acc. in \%} & {+/-}    \\\midrule
+        {}                      & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}    & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                         \\
         \tabindent C            & 65.628907                        & 5.490000                              & 71.945453                     & 6.010000 & 74.579113    & 8.640000  \\
         \tabindent P            & 66.845425                        & 5.370000                              & 72.402406                     & 5.190000 & 73.917935    & 6.700000  \\
@@ -395,6 +407,8 @@ Counter-intuitively, performance improvements are highest for the \gls{CBOE} dat
 
 \subsection{Feature Importance}\label{sec:feature-importance}
 
+\textbf{Sage Values}
+
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{sage-importances.pdf}
@@ -402,15 +416,24 @@ Counter-intuitively, performance improvements are highest for the \gls{CBOE} dat
     \label{fig:sage-importances}
 \end{figure}
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics{categorical-embeddings.pdf}
-    \caption[Categorical Embeddings of Underlyings]{Categorical embeddings of underlyings. The plot depicts the projected embedding of Microsoft ($\mathtt{MSFT}$) and its most similar embeddings. The similarity is highest for Intel ($\mathtt{INTC}$), Oracle ($\mathtt{ORCL}$), Nokia ($\mathtt{NOK}$), and Cisco ($\mathtt{CSCO}$). Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. The nine most similar embeddings by cosine similarity in the original space are coloured and annotated.}
+\textbf{Attention Maps}
+
+\textbf{Categorical Embeddings}
+
+\begin{figure}[!ht]
+    \subfloat[Most Similar Embeddings to $\mathtt{SPY}$\label{fig:cat-embeddings-spy}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_SPY.pdf}}
+    \vfill
+    \subfloat[Most Similar Embeddings to $\mathtt{JPM}$\label{fig:fig:cat-embeddings-jpm}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_JPM.pdf}}
+    \vfill
+    % \subfloat[Most Similar Embeddings to $\mathtt{XOM}$\label{fig:fig:cat-embeddings-xom}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_XOM.pdf}}
+    % Exxon Mobil Corporation ($\mathtt{XOM}$)    
+    \caption[Categorical Embeddings of Selected Underlyings]{Categorical embeddings of selected underlyings. The plot depicts the projected embedding of SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) and their most similar embeddings. Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. The ten most similar embeddings by cosine similarity in the original space are coloured and annotated. Distance in projected space is not relevant.}
     \label{fig:categorical-embeddings}
 \end{figure}
 
-\todo{Add more examples. Maybe also one with seldom class.
+\todo{Add more examples. Link to online visualisation \url{https://docs.wandb.ai/guides/app/features/panels/weave/embedding-projector}
 }
+
 
 
 
