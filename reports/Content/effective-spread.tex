@@ -1,28 +1,32 @@
 \begin{threeparttable}
-    \begin{tabular}{@{}lSSSS@{}}
+    \begin{tabular}{llSSSS@{}}
         \toprule
-        {}                                   & \multicolumn{2}{c}{Effective Spread at \gls{ISE}} & \multicolumn{2}{c}{Effective Spread at \gls{CBOE}}                              \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}
-        {Classifier}                         & {in \$}                                      & {in \%}                                       & {in \$}  & {in \%}         \\ \midrule
-        $\operatorname{tick}_{\mathrm{ex}}$  & 99.99                                        & 99.99 \tnote{*}                               & 99.99    & 99.99 \tnote{*} \\
-        $\operatorname{quote}_{\mathrm{ex}}$ &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        $\operatorname{lr}_{\mathrm{ex}}$    &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        $\operatorname{emo}_{\mathrm{ex}}$   &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        $\operatorname{clnv}_{\mathrm{ex}}$  &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        $\operatorname{gsu}$                 &                                              & \tnote{*}                                     &          & \tnote{*}       \\ \midrule
-        \gls{GBRT} (FS1)                     &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        \gls{GBRT} (FS2)                     &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        \gls{GBRT} (FS3)                     &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        FT-Transformer (FS1)                 &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        FT-Transformer (FS2)                 &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        FT-Transformer (FS3)                 &                                              & \tnote{*}                                     &          & \tnote{*}       \\ \midrule
-        \gls{GBRT} (Semi) (FS1)              &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        \gls{GBRT} (Semi) (FS2)              &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        \gls{GBRT} (Semi) (FS3)              &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        FT-Transformer (Semi) (FS1)          &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        FT-Transformer (Semi) (FS2)          &                                              & \tnote{*}                                     &          & \tnote{*}       \\
-        FT-Transformer (Semi) (FS3)          &                                              & \tnote{*}                                     &          & \tnote{*}       \\ \midrule
-        True Effective Spread                & 0.492556                                     & 3.715891                                      & 1.221870 & 2.512159        \\ \bottomrule
-        %Quoted Spread                      &                          &                                     \\ \midrule
+        {}                                               & {}   & \multicolumn{2}{c}{Effective Spread at \gls{ISE}} & \multicolumn{2}{c}{Effective Spread at \gls{CBOE}}                              \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6}
+        {Classifier}                                     & {FS} & {in \$}                                           & {in \%}                                            & {in \$}  & {in \%}         \\ \midrule
+        \multicolumn{6}{l}{Rule-Based}                                                                                                                                                                \\
+        \tabindent $\operatorname{tick}_{\mathrm{ex}}$   & 1    & 99.99                                             & 99.99 \tnote{*}                                    & 99.99    & 99.99 \tnote{*} \\
+        \tabindent $\operatorname{quote}_{\mathrm{ex}}$  & 1    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent $\operatorname{lr}_{\mathrm{ex}}$     & 1    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent $\operatorname{emo}_{\mathrm{ex}}$    & 1    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent $\operatorname{clnv}_{\mathrm{ex}}$   & 1    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent $\operatorname{gsu}_{\mathrm{small}}$ & 2    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent $\operatorname{gsu}_{\mathrm{large}}$ & 2    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\ \midrule
+        \multicolumn{6}{l}{Supervised}                                                                                                                                                                \\
+        \tabindent \gls{GBRT}                            & 1    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent  FT-Transformer                       & 1    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent \gls{GBRT}                            & 2    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent  FT-Transformer                       & 2    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent \gls{GBRT}                            & 3    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent  FT-Transformer                       & 3    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\ \midrule
+        \multicolumn{6}{l}{Semi-Supervised}                                                                                                                                                           \\
+        \tabindent \gls{GBRT}                            & 1    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent  FT-Transformer                       & 1    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent \gls{GBRT}                            & 2    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent  FT-Transformer                       & 2    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent \gls{GBRT}                            & 3    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\
+        \tabindent  FT-Transformer                       & 3    &                                                   & \tnote{*}                                          &          & \tnote{*}       \\ \midrule
+        True Effective Spread                            &      & 0.492556                                          & 3.715891                                           & 1.221870 & 2.512159        \\ \bottomrule
+        % Quoted Spread                                    &      &                                                   &                                                    &          &                 \\ \bottomrule
     \end{tabular}
     \begin{tablenotes}\footnotesize
         \item[*] $p \leq 0.01$.

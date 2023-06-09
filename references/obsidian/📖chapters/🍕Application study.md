@@ -1,3 +1,5 @@
+We only retain stocks with at least 10 call (put) option contracts per day and exclude options in the highest effective spread percentile to avoid biases by illiquid option trading
+
 ## Setup
 Albeit the classification accuracy is a reasonable measure for comparing classifiers, one cannot immediately infer how changes in accuracy e. g., an improvement by $1{}\%$, affect the application domains. In an attempt to make our results tangible, we apply all algorithms to estimate trading cost, a problem we previously identified to be reliant on correct trade classification (cp. [[👶Introduction]]) and a common testing ground for trade classification rules (cp. [[@ellisAccuracyTradeClassification2000]]541) and ([[@finucaneDirectTestMethods2000]]569)  and ([[@petersonEvaluationBiasesExecution2003]]271--278) and ([[@savickasInferringDirectionOption2003]]896--897).
 
