@@ -465,13 +465,15 @@ The subsequent section estimates both the nominal and relative effective spread 
 
 The actual and the estimated effective spreads, as well as the quoted spread, are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimated the effective spreads on a subset of rules for option trades at the \gls{CBOE}, which can be compared against.
 
-\begin{table}[H]
+\begin{table}[ht]
     \centering
     \input{Content/effective-spread.tex}
     \caption{Effective Spreads Estimates of Trade Classification Rules and Classifiers}
     \label{tab:effective-spread}
 \end{table}
 
+\todo{write what is problematic acout the tick rule (random guess)}
+\todo{Similar magnitude to \textcite{savickasInferringDirectionOption2003}}
 \todo{mean! of dollar spread and relative spread, no filters / implicitly non-negative spread}
 
 Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal. The null hypothesis of equal medians is rejected for $p \leq 0.01$.
