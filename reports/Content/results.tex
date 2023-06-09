@@ -107,12 +107,12 @@ Next, we test the supervised classifiers on the \gls{ISE}/\gls{CBOE} test sets, 
 \subsection{Results of Supervised
     Models}\label{sec:results-of-supervised-models}
 
-Next, we test the performance of our supervised models. We take the best configurations from \cref{sec:hyperparameter-tuning}, trained and tuned on the \gls{ISE} trade data, and evaluate their performance on the \gls{ISE} and \gls{CBOE} test sets. \cref{tab:results-gbm-ise-cboe} summarizes the results and benchmarks against state-of-the-art solutions from the literature.
+Next, we test the performance of our supervised models. We take the best configurations from \cref{sec:hyperparameter-tuning}, trained and tuned on the \gls{ISE} trade data, and evaluate their performance on the \gls{ISE} and \gls{CBOE} test sets. \cref{tab:results-supervised-ise-cboe} summarizes the results and benchmarks against state-of-the-art solutions from the literature.
 
 \begin{table}[ht]
     \centering
     \caption[Accuracies of Supervised Approaches On \glsentryshort{CBOE} and \glsentryshort{ISE}]{This table reports the accuracy of \glspl{GBRT} and Transformers for different feature sets on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For feature set classical, $\operatorname{gsu}_{\mathrm{small}}$ is the benchmark and otherwise $\operatorname{gsu}_{\mathrm{large}}$. Models are trained on the \gls{ISE} training set. The best classifier per dataset is in \textbf{bold}.}
-    \label{tab:results-gbm-ise-cboe}
+    \label{tab:results-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
                    &             & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                                                 \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
@@ -126,7 +126,7 @@ Next, we test the performance of our supervised models. We take the best configu
 
 Both model architectures consistently outperform their respective benchmarks on the \gls{ISE} and \gls{CBOE} datasets, achieving state-of-the-art performance in option trade classification with comparable data requirements. Thereby, Transformers dominate the \gls{ISE} sample when trained on trade prices and quotes reaching \SI{63.783020}{\percent}  in accuracy and \SI{66.18}{\percent} on the \gls{CBOE} sample outperforming previous approaches by \SI{3.730000}{\percent} and \SI{5.440000}{\percent}. Additional trade size features improve the accuracy to \SI{72.581107}{\percent} for the \gls{ISE} sample and \SI{72.153338}{\percent} for the \gls{CBOE} sample. Gradient boosting outperforms all other approaches when trained on additional option features. 
 
-While absolute improvements in accuracy over $\operatorname{gsu}_{\mathrm{small}}$ are modest on the smallest feature set, improvements are more substantial for larger feature sets ranging between \SI{4.730000}{\percent} to \SI{7.860000}{\percent} over $\operatorname{gsu}_{\mathrm{large}}$. Specifically, the addition of trade size-related features positively contributes to the performance. The results can be further improved by allowing for retraining on the validation set, as documented in (...). Relative to related works performing trade classification using machine learning, the improvements are strong, as a comparison against \cref{app:literature-ml-tc} reveals.
+While absolute improvements in accuracy over $\operatorname{gsu}_{\mathrm{small}}$ are modest on the smallest feature set, improvements are more substantial for larger feature sets ranging between \SI{4.730000}{\percent} to \SI{7.860000}{\percent} over $\operatorname{gsu}_{\mathrm{large}}$. Specifically, the addition of trade size-related features positively contributes to the performance. The results can be further improved by allowing for retraining on the validation set, as documented in \cref{tab:results-supervised-retraining-ise-cboe}.
 
 Expectedly, performance differences between gradient boosting and Transformers are minor. This result is consistent with \textcites{grinsztajnWhyTreebasedModels2022}{gorishniyRevisitingDeepLearning2021}, who conclude for tabular modelling, that neither Transformers or \gls{GBRT} are universally superior. 
 
