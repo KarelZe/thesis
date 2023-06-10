@@ -10,12 +10,43 @@ Expectedly, performance differences between gradient boosting and transformers a
 **Finding 4: Fee-Structures Affect Classifier Performance**
 tbd
 
-Similar to ([[@odders-whiteOccurrenceConsequencesInaccurate2000]] 267) we further break down the results by calculating confusion matrices as visualized cref-ise-confusion and cref-cboe-confusion.
+Following ([[@odders-whiteOccurrenceConsequencesInaccurate2000]] 267) we construct confusion matrices to investigate 
+
+Next, we estimate 
+
+After performing the test and finding a significant result, it may be useful to report an effect statistical measure in order to quantify the finding. For example, a natural choice would be to report the odds ratios, or the contingency table itself, although both of these assume a sophisticated reader.
+
+Similar to ([[@odders-whiteOccurrenceConsequencesInaccurate2000]] 267) we further break down the results by calculating confusion matrices as visualized cref-ise-confusion and cref-cboe-confusion. Based on the 
+
+and estimate McNemar's
+
+This allows more detailed analysis than simply observing the proportion of correct classifications (accuracy). Accuracy will yield misleading results if the data set is unbalanced; that is, when the numbers of observations in different classes vary greatly.
 
 ![[confusion-matrix-ise.png]]
 (ise)
 ![[confusion-matrix-cboe.png]]
 (cboe)
+
+
+- The recommendation of the McNemar’s test for models that are expensive to train, which suits large deep learning models.
+- How to transform prediction results from two classifiers into a contingency table and how the table is used to calculate the statistic in the McNemar’s test.
+- How to calculate the McNemar’s test in Python and interpret and report the result.
+
+Specifically, Dietterich’s study was concerned with the evaluation of different statistical hypothesis tests, some operating upon the results from resampling methods. The concern of the study was low [Type I error](https://en.wikipedia.org/wiki/Type_I_and_type_II_errors), that is, the statistical test reporting an effect when in fact no effect was present (false positive).
+
+Statistical tests that can compare models based on a single test set is an important consideration for modern machine learning, specifically in the field of deep learning.
+
+The default assumption, or null hypothesis, of the test is that the two cases disagree to the same amount. If the null hypothesis is rejected, it suggests that there is evidence to suggest that the cases disagree in different ways, that the disagreements are skewed.
+
+Given the selection of a significance level, the p-value calculated by the test can be interpreted as follows:
+
+- **p > alpha**: fail to reject H0, no difference in the disagreement (e.g. treatment had no effect).
+- **p <= alpha**: reject H0, significant difference in the disagreement (e.g. treatment had an effect).
+
+We can summarize this as follows:
+
+- **Fail to Reject Null Hypothesis**: Classifiers have a similar proportion of errors on the test set.
+- **Reject Null Hypothesis**: Classifiers have a different proportion of errors on the test set.
 
 The confusion
 
@@ -41,7 +72,7 @@ Expectedly,
 
 The results can be further improved by allowing for retraining / training on cboe. Document results in the appendix.
 
-Both supervised models establish a new state-of-the-art
+In summary, our supervised methods establish a new state-of-the-art in option trade classification. Our approach achieves full coverage and outperforms all previously reported classification rules in terms of accuracy. We perform additional robustness checks in cref-robustness to verify performance is not biased towards specific sub-samples. 
 
 
 Following 
@@ -84,11 +115,6 @@ Employ Friedman test
 To assess significance of the above results, we ran 3 statistical tests: the Friedman test [34, 35], the Nemenyi test [36], and the 1-sided Wilcoxon signed-rank test [37], all described in Demšar [38]. The Friedman test compares the mean ranks of several algorithms run on several datasets. The null hypothesis assumes that all algorithms are equivalent, i.e., their rank should be equal. Table A2 shows that the null hypothesis is rejected, with P-values much less than the 0.05 level for the sizes 2,500, 10,000, and 25,000. This indicates that ≥1 algorithm has significantly different performances from 1 other on these sizes.
 
 
-
-
-
-**FT-Transformer (10 % of  Data / 10 Trials)**
-![[FT-Transformer.png]]
 
 
 Things get a bit more complicated when you want to use statistical tests to compare more than two models, since doing multiple pairwise tests is a bit like using the test set multiple times — it can lead to overly-optimistic interpretations of significance. Basically, each time you carry out a comparison between two models using a statistical test, there’s a probability that it will discover significant differences where there aren’t any. This is represented by the confidence level of the test, usually set at 95%: meaning that 1 in 20 times it will give you a false positive. For a single comparison, this may be a level of uncertainty you can live with. However, it accumulates. That is, if you do 20 pairwise tests with a confidence level of 95%, one of them is likely to give you the wrong answer. This is known as the multiplicity effect, and is an example of a broader issue in data science known as data dredging or p-hacking — see [Head et al., 2015]. To address this problem, you can apply a correction for multiple tests. The most common approach is the Bonferroni correction, a very simple method that lowers the significance threshold based on the number of tests that are being carried out — see [Salzberg, 1997] for a gentle introduction. However, there are numerous other approaches, and there is also some debate about when and where these corrections should be applied; for an 1 accessible overview, see [Streiner, 2015]. (from [[@lonesHowAvoidMachine2022]])
