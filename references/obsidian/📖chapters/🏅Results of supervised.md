@@ -5,7 +5,61 @@ Accuracies of Supervised Approaches On \glsentryshort{CBOE} and \glsentryshort{I
 
 Both model architectures consistently outperform their respective benchmarks on the \gls{ISE} and \gls{CBOE} datasets, achieving state-of the art performance in option trade classification assuming equal data requirements. Thereby, Transformers dominate the gls-ise sample when trained on quotes and trade prices reaching percentage-63.78 and percentage 66.18 on the gls-cboe sample outperforming previous approaches by percentage-3.73 and percentage-5.44.  Additional trade size features push the accuracy to percentage-72.85 for the gls-ise sample and percentage-72.15 for the gls-cboe sample. Gradient boosting outperforms all other approaches when trained on additional option features. While absolute improvements in accuracy are modest on the smallest feature set over $\operatorname{gsu}_{\mathrm{small}}$, improvements are more substantial for larger feature sets ranging between percentage-4.73  to percentage-7.86 over $\operatorname{gsu}_{\mathrm{large}}$. Specifically, the addition of trade size-related features positively contribute to the performance. The results can be further improved by allowing for retraining on the validation set. Results are documented in the appendix. Relative to related works performing trade classification using machine learning, the improvements are strong, as a direct comparison with appendix-table reveals.
 
-Expectedly, performance differences between gradient boosting and transformers are marginal on the same feature sets. This result is consistent with ([[@grinsztajnWhyTreebasedModels2022]]) and ([[@gorishniyEmbeddingsNumericalFeatures2022]]), who conclude for tabular modelling, that neither Transformers or gls-gbrt are universally superior. Counter-intuitively, performance improvements are highest for the gls-cboe dataset, despite the models being trained on gls-ise data. Part of this is due to a weaker benchmark performance, but also due to a considerably stronger accuracy of classifiers on the smallest and mid-sized feature set. This result is counter-intuitive, as one would expect a degradation between sets, assuming exchange-specific trading patterns and require exploration in greater detail.
+Expectedly, performance differences between gradient boosting and transformers are marginal on the same feature sets. This result is consistent with ([[@grinsztajnWhyTreebasedModels2022]]) and ([[@gorishniyEmbeddingsNumericalFeatures2022]]), who conclude for tabular modelling, that neither Transformers or gls-gbrt are universally superior.
+
+https://sebastianraschka.com/blog/2018/model-evaluation-selection-part4.html
+
+## Comparing Two Models with the McNemar Test [#](https://sebastianraschka.com/blog/2018/model-evaluation-selection-part4.html#comparing-two-models-with-the-mcnemar-test) [](https://sebastianraschka.com/blog/2018/model-evaluation-selection-part4.html#comparing-two-models-with-the-mcnemar-test)
+
+So, instead of using the “difference of proportions” test, Dietterich (Dietterich, 1998) found that the McNemar test is to be preferred. The McNemar test, introduced by Quinn McNemar in 1947 (McNemar 1947), is a non-parametric statistical test for paired comparisons that can be applied to compare the performance of two machine learning classifiers.
+
+Often, McNemar’s test is also referred to as “within-subjects chi-squared test,” and it is applied to paired nominal data based on a version of 2x2 confusion matrix (sometimes also referred to as _2x2 contingency table_) that compares the predictions of two models to each other (not be confused with the typical confusion matrices encountered in machine learning, which are listing false positive, true positive, false negative, and true negative counts of a single model). The layout of the 2x2 confusion matrix suitable for McNemar’s test is shown in the following figure:
+
+![McNemar Table Layout](https://sebastianraschka.com/images/blog/2018/model-evaluation-selection-part4/mcnemar-table-layout.png)
+
+Given such a 2x2 confusion matrix as shown in the previous figure, we can compute the accuracy of a _Model 1_ via (A+B)/(A+B+C+D)(�+�)/(�+�+�+�), where A+B+C+D�+�+�+� is the total number of test examples n�. Similarly, we can compute the accuracy of Model 2 as (A+C)/n(�+�)/�. The most interesting numbers in this table are in cells B and C, though, as A and D merely count the number of samples where both _Model 1_ and _Model 2_ made correct or wrong predictions, respectively. Cells B and C (the off-diagonal entries), however, tell us how the models differ. To illustrate this point, let us take a look at the following example:
+
+![McNemar Table Layout](https://sebastianraschka.com/images/blog/2018/model-evaluation-selection-part4/mcnemar-table-example1.png)
+
+In both subpanels, A and B, the accuracy of _Model 1_ and _Model 2_ are 99.6% and 99.7%, respectively.
+
+- Model 1 accuracy subpanel A: (9959+11)/10000×100%=99.7%(9959+11)/10000×100%=99.7%
+- Model 1 accuracy subpanel B: (9945+25)/10000×100%=99.7%(9945+25)/10000×100%=99.7%
+- Model 2 accuracy subpanel A: (9959+1)/10000×100%=99.6%(9959+1)/10000×100%=99.6%
+- Model 2 accuracy subpanel B: (9945+15)/10000×100%=99.6%(9945+15)/10000×100%=99.6%
+
+Now, in subpanel A, we can see that _Model 1_ got 11 predictions right that _Model 2_ got wrong. Vice versa, _Model 2_ got one prediction right that _Model 1_ got wrong. Thus, based on this 11:1 ratio, we may conclude, based on our intuition, that _Model 1_ performs substantially better than _Model 2_. However, in subpanel B, the _Model 1_:_Model 2_ ratio is 25:15, which is less conclusive about which model is the better one to choose. This is a good example where McNemar’s test can come in handy.
+
+In McNemar’s Test, we formulate the null hypothesis that the probabilities p(B)�(�) and p(C)�(�) – where B� and C� refer to the confusion matrix cells introduced in an earlier figure – are the same, or in simplified terms: None of the two models performs better than the other. Thus, we might consider the alternative hypothesis that the performances of the two models are not equal.
+
+The McNemar test statistic (“chi-squared”) can be computed as follows:
+
+χ2=(B−C)2B+C.�2=(�−�)2�+�.
+
+After setting a significance threshold, for example, α=0.05�=0.05, we can compute a p-value – assuming that the null hypothesis is true, the p-value is the probability of observing the given empirical (or a larger) χ2�2-squared value. If the p-value is lower than our chosen significance level, we can reject the null hypothesis that the two models’ performances are equal.
+
+Since the McNemar test statistic, χ2�2, follows a χ2�2 distribution with one degree of freedom (assuming the null hypothesis and relatively large numbers in cells B and C, say > 25), we can now use our favorite software package to “look up” the (1-tail) probability via the χ2�2 probability distribution with one degree of freedom.
+
+If we did this for scenario B in the previous figure (χ2=2.5�2=2.5), we would obtain a p-value of 0.1138, which is larger than our significance threshold, and thus, we cannot reject the null hypothesis. Now, if we computed the p-value for scenario A (χ2=8.3�2=8.3), we would obtain a p-value of 0.0039, which is below the set significance threshold (α=0.05�=0.05) and leads to the rejection of the null hypothesis; we can conclude that the models’ performances are different (for instance, _Model 1_ performs better than _Model 2_).
+
+Approximately one year after Quinn McNemar published the McNemar Test (McNemar 1947), Allen L. Edwards (Edwards 1948) proposed a continuity corrected version, which is the more commonly used variant today:
+
+χ2=(|B−C|−1)2B+C.�2=(|�−�|−1)2�+�.
+
+In particular, Edwards wrote:
+
+> This correction will have the apparent result of reducing the absolute value of the difference, [B - C], by unity.
+
+According to Edwards, this continuity correction increases the usefulness and accuracy of McNemar’s test if we are dealing with discrete frequencies and the data is evaluated regarding the chi-squared distribution.
+
+A function for using McNemar’s test is implemented in MLxtend (Raschka, 2018): [http://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar/](http://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar/).
+
+
+
+
+
+
+Counter-intuitively, performance improvements are highest for the gls-cboe dataset, despite the models being trained on gls-ise data. Part of this is due to a weaker benchmark performance, but also due to a considerably stronger accuracy of classifiers on the smallest and mid-sized feature set. This result is counter-intuitive, as one would expect a degradation between sets, assuming exchange-specific trading patterns and require exploration in greater detail.
 
 **Finding 4: Fee-Structures Affect Classifier Performance**
 tbd
