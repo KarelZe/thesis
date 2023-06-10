@@ -161,6 +161,8 @@ Contrary to the expectation, performance improvements are highest for the \gls{C
     \end{tabular}
 \end{table}
 
+\todo{Accuracy is not the sole criterion. Depends on whether error is systematic or not. Thus, we do application study. See reasoning in \textcite{theissenTestAccuracyLee2000}}
+
 \subsection{Robustness of Results}\label{sec:robustness-checks}
 
 \todo{Again, results are not 100 \% comparaable due to grouping.}
@@ -168,7 +170,7 @@ Contrary to the expectation, performance improvements are highest for the \gls{C
 
 \textbf{Gradient Boosting}
 
-\begin{table}[ht]
+\begin{table}[!ht]
     \centering
     \caption[short-diff-ise-supervised-test-gbm]{long-diff-ise-supervised-test-gbm}
     \label{tab:diff-ise_supervised_test}
@@ -227,7 +229,7 @@ Contrary to the expectation, performance improvements are highest for the \gls{C
 
 
 
-\begin{table}[ht]
+\begin{table}[!ht]
     \centering
     \caption[short-diff-cboe-transfer-test]{long-diff-cboe-gbm-tbd}
     \label{tab:diff-cboe_transfer-gbm}
@@ -287,7 +289,7 @@ Contrary to the expectation, performance improvements are highest for the \gls{C
 
 \textbf{FT-Transformer}
 
-\begin{table}[ht]
+\begin{table}[!ht]
     \centering
     \caption[short-diff-ise-supervised-test-fttransformer]{long-diff-ise-supervised-test-fttransformer}
     \label{tab:diff-ise_supervised-test}
@@ -344,7 +346,7 @@ Contrary to the expectation, performance improvements are highest for the \gls{C
     \end{tabular}
 \end{table}
 
-\begin{table}[ht]
+\begin{table}[!ht]
     \centering
     \caption[short-diff-cboe-transfer-test-fttransformer]{long-diff-cboe-transfer-test-fttransformer}
     \label{tab:diff-cboe_transfer_test}
@@ -453,30 +455,28 @@ One of the most widely adopted measures for trading costs is the effective sprea
 
 Like before, $i$ indexes the security and $t$ the point in time. Here, $D_{i,t}$ is the trade direction, which is either $1$ for customer buy orders and $-1$ for sell orders. If the trade initiator is known, we set $D_{i,t} = y_{i,t}$ and $D_{i,t}=\hat{y}_{it}$, if inferred from a rule or classifier. As the fundamental value $V_{i,t}$ is unobserved at the time of the trade, we follow a common track in research and use the midpoint of the prevailing quotes as an observable proxy.\footnote{An alternative treatment for options is discussed in \textcite[][4975--4976]{muravyevOptionsTradingCosts2020} Our focus is on the midspread, as it is the most common proxy for the value.} This is also a natural choice, under the assumption that, on average, the spread is symmetric and centred around the true fundamental value \autocite[][1018]{leeMarketIntegrationPrice1993}. We multiply the so-obtained half-spread by $\times 2$ to obtain the effective spread, which represents the cost for a round trip trade involving a buy and sell excluding commissions.
 
-Apparent from \cref{eq:effective-spread}, poor estimates for the predicted trade direction, lead to an under or overestimated effective spread, and hence to a skewed trade cost estimate. Only for trades at the midspread, the predicted trade direction is irrelevant, since the effective spread is zero. By comparing the true effective spread from the estimated, we can derive the economic significance. For convenience, we also calculate the \emph{relative effective spread} as
+Apparent from \cref{eq:effective-spread}, poor estimates for the predicted trade direction, lead to an under or overestimated effective spread, and hence to a skewed trade cost estimate. Only for trades at the midspread, the predicted trade direction is irrelevant, since the effective spread is zero. By comparing the true effective spread from the estimated, we can derive the economic significance. A classifier correctly classifying every trade, achieves an effective spread estimate equal to the true spread. For a random classifier, the effective spread is around zero, as misclassification estimates the spread with the opposite sign, which offsets with correct, random estimates for other trades.
+
+For convenience, we also calculate the \emph{relative effective spread} as
 \begin{equation}
     {PS}_{i,t} = S_{i,t} / V_{i,t}.
 \end{equation}
-% FIXME: check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does chakrabarty 2007 p. 3819?
-The subsequent section estimates both the nominal and relative effective spread for our test sets, as well as the quoted spread.
+
+\todo{check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does chakrabarty 2007 p. 3819?}
+
+The subsequent section estimates both the nominal and relative effective spread for our test sets. Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal. The null hypothesis of equal medians is rejected for $p \leq 0.01$.
 
 \textbf{Results}
 
-The actual and the estimated effective spreads, as well as the quoted spread, are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimated the effective spreads on a subset of rules for option trades at the \gls{CBOE}, which can be compared against.
+The actual and the estimated effective spreads are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimated the effective spreads of rules on a older subset of option trades at the \gls{CBOE}, which can be compared against. Our results match theirs in magnitude.
 
-\begin{table}[ht]
+\begin{table}[!ht]
     \centering
     \input{Content/effective-spread.tex}
     \caption{Effective Spreads Estimates of Trade Classification Rules and Classifiers}
     \label{tab:effective-spread}
 \end{table}
 
-\todo{write what is problematic acout the tick rule (random guess)}
-\todo{Similar magnitude to \textcite{savickasInferringDirectionOption2003}}
-\todo{mean! of dollar spread and relative spread, no filters / implicitly non-negative spread}
+In summary, quote-based algorithms like the quote rule and the \gls{LR} algorithm severely overestimate the effective spread. The overestimate is less severe for the \gls{CLNV} algorithm due to stronger dependency on the tick rule. The tick rule itself, achieves estimates closest to the true effective spread, which is \num[round-mode=places, round-precision=3]{0.004926} and \num[round-mode=places, round-precision=3]{0.012219} for the \gls{ISE} and \gls{CBOE} sample respectively. As primarily tick-based algorithms, like the tick rule or \gls{EMO} rule, perform like a random classifier in our samples, we conclude that the close estimate are an artefact to randomness, not due to superior predictive power. This observation is in line with \textcite[][897]{savickasInferringDirectionOption2003}, who make a similar point for the \gls{EMO} rule on \gls{CBOE} trades. For rule-based algorithms $\operatorname{gsu}_{\mathrm{large}}$ provides reasonable estimates of the effective spread, while achieving high classification accuracy. From our machine learning-based classifiers the FT-Transformer or \gls{GBRT} trained on FS 3 provides estimates clostest to the true effective spread, in particular on the \gls{CBOE} sample. The null hypothesis of equal medians is rejected.
 
-Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal. The null hypothesis of equal medians is rejected for $p \leq 0.01$.
-
-\todo{Seems to be standard procedure to exclude some trades due to illiquidity. Could heal the problem with very large spreads \url{https://derivate.fbv.kit.edu/download/Eberbach_Uhrig-Homburg_Yu_2021.pdf}}
-
-% TODO: Discuss results. See Zettelkasten.
+Based on these results, we conclude, that  $\operatorname{gsu}_{\mathrm{large}}$ provides the best estimate of the effective spread, if the true label is absent. For labelled data, Transformer or gradient boosting-based approaches can provide even better estimates. In turn, the de facto standard, \gls{LR} algorithm, might bias research.
