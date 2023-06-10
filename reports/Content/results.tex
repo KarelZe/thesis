@@ -133,7 +133,7 @@ While absolute improvements in accuracy over $\operatorname{gsu}_{\mathrm{small}
 
 Expectedly, performance differences between gradient boosting and Transformers are minor. This result is consistent with \textcites{grinsztajnWhyTreebasedModels2022}{gorishniyRevisitingDeepLearning2021}, who conclude for tabular modelling, that neither Transformers or \gls{GBRT} are universally superior.
 
-Counter-intuitively, performance improvements are highest for the \gls{CBOE} dataset, despite the models being trained on \gls{ISE} data. Part of this is due to a weaker benchmark performance, but also due to a considerably stronger accuracy of classifiers on the smallest and mid-sized feature sets. One would expect a degradation between sets, assuming exchange-specific trading patterns and requiring exploration in greater detail.
+Contrary to the expectation, performance improvements are highest for the \gls{CBOE} dataset, despite the models being trained on \gls{ISE} data. Part of this is due to a weaker benchmark performance, but also due to a considerably stronger accuracy of classifiers on the smallest and mid-sized feature sets. One would expect a degradation between sets, assuming exchange-specific trading patterns and requiring exploration in greater detail.
 
 % \begin{figure}[!h]
 %     \subfloat[tbd\label{fig:confusion-matrix-supervised-cboe}]{\includegraphics[width=0.8\textwidth]{confusion_matrix_cboe.pdf}}
@@ -420,22 +420,21 @@ Counter-intuitively, performance improvements are highest for the \gls{CBOE} dat
 
 \textbf{Categorical Embeddings}
 
+For the Transformer we know from \cref{sec:token-embeddings}, that embeddings can capture similarities by arranging related objects closer in embedding space. Visualising the learnt embeddings gives additional insights into the model.
+
+The embeddings are queried from the feature tokenizer in FT-Transformer. The similarity between embeddings is measured by cosine distance in embedding space. The high-dimensional embeddings are then projected into 2D space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. As straightforward to interpret, we restrict our analysis to the underlying, but note, that it applies to any numerical and categorical embeddings. 
+
+Figure \cref{fig:categorical-embeddings} illustrates the embeddings exemplary for SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$).\footnote{As our analysis is condensed to two underlyings, we encourage the reader to use our interactive visualisation for further exploration. Accessible here \url{https://wandb.ai/fbv/thesis/runs/3cirr6nk}.} For SPY \todo{Graphically, ... wait for list of underlyings. What was not input to the model?}. For JPM \todo{Visually performs ... wait for list of underlyings}
+
 \begin{figure}[!ht]
     \subfloat[Most Similar Embeddings to $\mathtt{SPY}$\label{fig:cat-embeddings-spy}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_SPY.pdf}}
     \vfill
-    \subfloat[Most Similar Embeddings to $\mathtt{JPM}$\label{fig:fig:cat-embeddings-jpm}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_JPM.pdf}}
-    % \vfill
-    % \subfloat[Most Similar Embeddings to $\mathtt{XOM}$\label{fig:fig:cat-embeddings-xom}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_XOM.pdf}}
-    % Exxon Mobil Corporation ($\mathtt{XOM}$)    
-    \caption[Categorical Embeddings of Selected Underlyings]{Categorical embeddings of selected underlyings. The plot depicts the projected embedding of SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) and their most similar embeddings. Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. The ten most similar embeddings by cosine similarity in the original space are coloured and annotated. Model trained on \gls{ISE} data.}
+    \subfloat[Most Similar Embeddings to $\mathtt{JPM}$\label{fig:fig:cat-embeddings-jpm}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_JPM.pdf}}   
+    \caption[Categorical Embeddings of Selected Underlyings]{Categorical embeddings of selected underlyings. The plot depicts the projected embedding of SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) and their most similar embeddings. Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. The ten most similar embeddings by cosine similarity in the original space are coloured and annotated. The model is trained on \gls{ISE} data.}
     \label{fig:categorical-embeddings}
 \end{figure}
 
-\todo{Add more examples. Link to online visualisation \url{https://wandb.ai/fbv/thesis/runs/3cirr6nk}. Visually, bla performs best.
-}
-
-
-
+However, we want to stress the limitations. Both underlyings are among the most frequently traded in our dataset. For infrequent underlyings, embedding are likely close to their random initialisation and hence not meaningful, as no parameter updates take place. The described problem transfers to handling rare vocabulary items, intensively studied in the context of natural language processing. \todo{Add relevant literature?}
 
 \newpage
 \section{Application in Transaction Cost Estimation}\label{sec:application}
