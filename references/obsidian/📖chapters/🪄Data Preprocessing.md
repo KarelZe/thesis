@@ -1,4 +1,6 @@
 
+As discussed by Frazzini and Pedersen (2012), investors prefer buying options to shortselling because short positions are associated with large margin requirements, whereas the long positions limit the potential loss to minus 100%. We follow the existing literature (see for instance Pan and Poteshman (2006) or Ge, Lin, and Pearson (2016)) and assume that buyer-initiated option trades are more informative than seller-initiated option trades. Correspondingly, the last variation we use to check the robustness of our main results is order imbalance of call options before positive earnings surprises and the order imbalance of put options before negative earnings surprises:24 (https://derivate.fbv.kit.edu/download/Eberbach_Uhrig-Homburg_Yu_2021.pdf)
+
 **Notes:**
 [[🪄Data Preprocessing notes]]
 
