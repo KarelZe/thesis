@@ -210,6 +210,30 @@ The results do not support the hypothesis, that adding unlabelled trades into th
 
 \todo{formulate finding}
 
+\begin{table}[!h]
+    \centering
+    \sisetup{table-number-alignment=right, table-format=7.0}
+    \caption[Contingency Tables of Semi-Supervised Classifiers On \glsentryshort{CBOE} and \glsentryshort{ISE} Dataset]{This table contains the contingency tables of the semi-supervised classifiers on the \gls{CBOE} and \gls{ISE} test set for feature set classical, classical-size, and option. Cells sum the number of trades, correctly/falsely classified by both classifiers or one. Additionally, McNemar's test statistic $\chi^2$ and the associated $p$-value are reported.}
+    \label{tab:contigency-semi-supervised-classifiers}
+    \begin{tabular}{@{}llSSSSSS@{}}
+        \toprule
+                                                                          &           & \multicolumn{2}{c}{{FS Classical}} & \multicolumn{2}{c}{{FS Classical-Size}} & \multicolumn{2}{c}{{FS Option}}                         \\
+        \cmidrule(l){3-4}\cmidrule(l){5-6}\cmidrule(l){7-8}
+        \multicolumn{2}{l}{{$\downarrow$ Trans.$\rightarrow$ \gls{GBRT}}} & {Correct} & {Wrong}                            & {Correct}                               & {Wrong}                         & {Correct} & {Wrong}   \\
+        \midrule
+        \gls{ISE}                                                         & Correct   &                                    &                                         &                                 &           &         & \\
+                                                                          & Wrong     &                                    &                                         &                                 &           &         & \\         \addlinespace
+                                                                          &           & \multicolumn{2}{l}{{$\chi^2$=}}    & \multicolumn{2}{l}{{$\chi^2$=}}         & \multicolumn{2}{l}{{$\chi^2$}=}                         \\
+                                                                          &           & \multicolumn{2}{l}{{$p$-val.=}}    & \multicolumn{2}{l}{{$p$-val.=}}         & \multicolumn{2}{l}{{$p$-val.}=}                         \\
+        \midrule
+        \gls{CBOE}                                                        & Correct   &                                    &                                         &                                 &           &         & \\
+                                                                          & Wrong     &                                    &                                         &                                 &           &         & \\         \addlinespace
+                                                                          &           & \multicolumn{2}{l}{{$\chi^2$=}}    & \multicolumn{2}{l}{{$\chi^2$=}}         & \multicolumn{2}{l}{{$\chi^2$=}}                         \\
+                                                                          &           & \multicolumn{2}{l}{{$p$-val.=}}    & \multicolumn{2}{l}{{$p$-val.=}}         & \multicolumn{2}{l}{{$p$-val.=}}                         \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
 To summarize, despite the significantly higher training costs, semi-supervised variants do not provide better generalisation performance than supervised approaches. We subsequently evaluate if semi-supervised learning improves robustness, if not performance.
 
 
