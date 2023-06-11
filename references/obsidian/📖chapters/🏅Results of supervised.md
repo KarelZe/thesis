@@ -3,9 +3,24 @@ Next we test the performance of our supervised models. We take the best configur
 ![[results-supervised.png]]
 Accuracies of Supervised Approaches On \glsentryshort{CBOE} and \glsentryshort{ISE}. This table reports the accuracy of glspl-gbrt and Transformers for the three different feature sets on the gls-ise and gls-cboe dataset. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For feature set classical, $\operatorname{gsu}_{\mathrm{small}}$ is the benchmark and otherwise $\operatorname{gsu}_{\mathrm{large}}$. Models are trained on the gls-ISE training set. The best classifier per dataset is in **bold**. 
 
-Both model architectures consistently outperform their respective benchmarks on the \gls{ISE} and \gls{CBOE} datasets, achieving state-of the art performance in option trade classification assuming equal data requirements. Thereby, Transformers dominate the gls-ise sample when trained on quotes and trade prices reaching percentage-63.78 and percentage 66.18 on the gls-cboe sample outperforming previous approaches by percentage-3.73 and percentage-5.44.  Additional trade size features push the accuracy to percentage-72.85 for the gls-ise sample and percentage-72.15 for the gls-cboe sample. Gradient boosting outperforms all other approaches when trained on additional option features. While absolute improvements in accuracy are modest on the smallest feature set over $\operatorname{gsu}_{\mathrm{small}}$, improvements are more substantial for larger feature sets ranging between percentage-4.73  to percentage-7.86 over $\operatorname{gsu}_{\mathrm{large}}$. Specifically, the addition of trade size-related features positively contribute to the performance. The results can be further improved by allowing for retraining on the validation set. Results are documented in the appendix. Relative to related works performing trade classification using machine learning, the improvements are strong, as a direct comparison with appendix-table reveals.
+**Finding 3: Supervised Learning outperforms Rule-Based Classifier**
 
-Expectedly, performance differences between gradient boosting and transformers are marginal on the same feature sets. This result is consistent with ([[@grinsztajnWhyTreebasedModels2022]]) and ([[@gorishniyEmbeddingsNumericalFeatures2022]]), who conclude for tabular modelling, that neither Transformers or gls-gbrt are universally superior.
+Both model architectures consistently outperform their respective benchmarks on the \gls{ISE} and \gls{CBOE} datasets, achieving state-of the art performance in option trade classification assuming equal data requirements. Thereby, Transformers dominate the gls-ise sample when trained on quotes and trade prices reaching percentage-63.78 and percentage 66.18 on the gls-cboe sample outperforming previous approaches by percentage-3.73 and percentage-5.44.  Additional trade size features push the accuracy to percentage-72.85 for the gls-ise sample and percentage-72.15 for the gls-cboe sample. Gradient boosting outperforms all other approaches when trained on additional option features. While absolute improvements in accuracy are modest on the smallest feature set over $\operatorname{gsu}_{\mathrm{small}}$, improvements are more substantial for larger feature sets ranging between percentage-4.73  to percentage-7.86 over $\operatorname{gsu}_{\mathrm{large}}$. Specifically, the addition of trade size-related features positively contribute to the performance. The results can be further improved by allowing for retraining on the validation set. Results are documented in the appendix. Relative to related works performing trade classification using machine learning, the improvements are strong, as a direct comparison with appendix-table reveals.
+  
+Visually, the performance differences between gradient boosting and transformers on the same feature sets are minor, consistent with previous studies ([[@grinsztajnWhyTreebasedModels2022]]) and ([@gorishniyEmbeddingsNumericalFeatures2022]]). These studies conclude, generally for tabular modelling, that neither Transformers nor gls-gbrt are universally superior. To formally test, whether differences between both classifiers are significant, we construct contingency tables and pair-wise compare predictions using McNemar's test ([[@mcnemarNoteSamplingError1947]]153--157). We formulate the null hypothesis that both classifiers disagree by the same amount.
+The procedure is different to ([[@odders-whiteOccurrenceConsequencesInaccurate2000]] 267), who uses contingency tables of rule-based methods and true labels. Here, contingency tables are used to pair-wise compare the predictions of gls-gbrt against Transformers. We study the distribution against the true label as part of our robustness checks.
+
+**Finding 4: None of the supervised classifiers performs better?**
+
+Based on table-contingency, we can conclude.
+
+table-with contingency tables and p values statistic
+footnote-what is link to accuracy 
+
+todo-Discuss results
+
+
+---
 
 https://sebastianraschka.com/blog/2018/model-evaluation-selection-part4.html
 
@@ -64,7 +79,7 @@ Counter-intuitively, performance improvements are highest for the gls-cboe datas
 **Finding 4: Fee-Structures Affect Classifier Performance**
 tbd
 
-Following ([[@odders-whiteOccurrenceConsequencesInaccurate2000]] 267) we construct confusion matrices to investigate 
+
 
 Next, we estimate 
 
@@ -104,7 +119,6 @@ We can summarize this as follows:
 
 The confusion
 
-This allows more detailed analysis than simply observing the proportion of correct classifications (accuracy). Accuracy will yield misleading results if the data set is unbalanced; that is, when the numbers of observations in different classes vary greatly.
 
 Additianlly roc-curves and comparing classifiers with the McNemar test. 
 In pair-wise comparisions,

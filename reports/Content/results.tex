@@ -133,7 +133,30 @@ While absolute improvements in accuracy over $\operatorname{gsu}_{\mathrm{small}
 
 The results can be enhanced through retraining on the validation set improving accuracies to \SI{76.162269}{\percent}, as documented in \cref{app:results-of-supervised-models-with-re-training}. In favour of conservative estimates, our models in the main text do not use this technique.
 
-Expectedly, performance differences between gradient boosting and Transformers are minor. This result is consistent with \textcites{grinsztajnWhyTreebasedModels2022}{gorishniyRevisitingDeepLearning2021}, who conclude for tabular modelling, that neither Transformers or \gls{GBRT} are universally superior.
+Visually, the performance differences between gradient boosting and transformers on the same feature sets are minor, consistent with previous studies \textcites{grinsztajnWhyTreebasedModels2022}{gorishniyRevisitingDeepLearning2021}. These studies conclude, generally for tabular modelling, that neither Transformers nor \gls{GBRT} are universally superior. 
+
+
+To formally test, whether differences between both classifiers are significant, we construct contingency tables and pair-wise compare predictions using McNemar's test \autocite[][153--157]{mcnemarNoteSamplingError1947}. We formulate the null hypothesis that both classifiers disagree by the same amount.
+The procedure is different to \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000}, who uses contingency tables of rule-based methods and true labels. Here, contingency tables are used to pair-wise compare the predictions of \gls{GBRT} against Transformers. We study the performance against the true label as part of our robustness checks.
+
+\begin{table}[!h]
+    \centering
+    \caption{tbd}
+    \label{tab:contigency-supervised-classifiers}
+    \begin{tabular}{@{}lllllllll@{}}
+        \toprule
+                   &            &         & \multicolumn{6}{l}{Transformer}                                                                                                               \\ \cmidrule(l){4-9}
+                   &            &         & \multicolumn{2}{c}{FS Classical}     & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                  \\ \cmidrule(l){4-5}\cmidrule(l){6-7}\cmidrule(l){8-9}
+                   &            &         & Correct                              & Wrong                                 & Correct                              & Wrong & Correct & Wrong \\ \midrule
+        \gls{GBRT} & \gls{ISE}  & Correct &                                      &                                       &                                      &       &                 \\
+                   &            & Wrong   &                                      &                                       &                                      &       &                 \\ % \cmidrule(l){4-5}\cmidrule(l){6-7}\cmidrule(l){8-9}
+                   &            &         & \multicolumn{2}{c}{$\chi$, $p$-val.} & \multicolumn{2}{c}{$\chi$, $p$-val.}  & \multicolumn{2}{c}{$\chi$, $p$-val.}                           \\ \addlinespace
+                   & \gls{CBOE} & Correct &                                      &                                       &                                      &       &         &       \\
+                   &            & Wrong   &                                      &                                       &                                      &       &         &       \\ % \cmidrule(l){4-5}\cmidrule(l){6-7}\cmidrule(l){8-9}
+                   &            &         & \multicolumn{2}{c}{$\chi$, $p$-val.} & \multicolumn{2}{c}{$\chi$, $p$-val.}  & \multicolumn{2}{c}{$\chi$, $p$-val.}                           \\ \bottomrule
+    \end{tabular}
+\end{table}
+
 
 Contrary to the expectation, performance improvements are highest for the \gls{CBOE} dataset, despite the models being trained on \gls{ISE} data. Part of this is due to a weaker benchmark performance, but also due to a considerably stronger accuracy of classifiers on the smallest and mid-sized feature sets. One would expect a degradation between sets, assuming exchange-specific trading patterns and requiring exploration in greater detail.
 
@@ -147,12 +170,12 @@ Contrary to the expectation, performance improvements are highest for the \gls{C
 %     \label{fig:confusion-matrix-supervised-ise}
 % \end{figure}
 
-In summary, our supervised methods establish a new state-of-the-art in option trade classification. Our approach achieves full coverage and outperforms all previously reported classification rules in terms of accuracy. We perform robustness checks in \cref{sec:robustness-checks} to verify performance is consistent across sub-samples. 
+In summary, our supervised methods establish a new state-of-the-art in option trade classification. Our approach achieves full coverage and outperforms all previously reported classification rules in terms of accuracy. We perform robustness checks in \cref{sec:robustness-checks} to verify performance is consistent across sub-samples.
 
 \subsection{Results of Semi-Supervised
     Models}\label{sec:results-of-semi-supervised-models}
 
-We compare the performance of pre-trained Transformers and self-trained gradient-boosting on the \gls{ISE} and \gls{CBOE} test set. Results are reported in \cref{tab:results-semi-supervised-ise-cboe}. 
+We compare the performance of pre-trained Transformers and self-trained gradient-boosting on the \gls{ISE} and \gls{CBOE} test set. Results are reported in \cref{tab:results-semi-supervised-ise-cboe}.
 
 \begin{table}[ht]
     \centering
@@ -160,12 +183,12 @@ We compare the performance of pre-trained Transformers and self-trained gradient
     \label{tab:results-semi-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
-                   &             & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
-        Dataset    & Classifier  & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-} & {Acc. in \%} & {+/-} \\ \midrule
-        \gls{ISE}  & \gls{GBRT}  & 63.397514 & 3.350000 & 72.156489 & 4.550000 & 73.536644 & 5.930000 \\
-                   & Transformer &                                  &                                       &                               &       &              &       \\ \addlinespace
-        \gls{CBOE} & \gls{GBRT}  & 66.189454 & 5.440000 & 71.922680 & 5.410000 & 73.953322 & 7.440000 \\
-                   & Transformer &                                  &                                       &                               &       &              &       \\ \bottomrule
+                   &             & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                      \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
+        Dataset    & Classifier  & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}    & {Acc. in \%} & {+/-}    \\ \midrule
+        \gls{ISE}  & \gls{GBRT}  & 63.397514                        & 3.350000                              & 72.156489                     & 4.550000 & 73.536644    & 5.930000 \\
+                   & Transformer &                                  &                                       &                               &          &              &          \\ \addlinespace
+        \gls{CBOE} & \gls{GBRT}  & 66.189454                        & 5.440000                              & 71.922680                     & 5.410000 & 73.953322    & 7.440000 \\
+                   & Transformer &                                  &                                       &                               &          &              &          \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -441,14 +464,14 @@ To summarize, despite the significantly higher training costs, semi-supervised v
 
 For the Transformer we know from \cref{sec:token-embeddings}, that embeddings can capture similarities by arranging related objects closer in embedding space. Visualising the learnt embeddings gives insights into the model.
 
-The embeddings are queried from the feature tokenizer in FT-Transformer. The similarity between embeddings is measured by cosine distance in embedding space. The high-dimensional embeddings are then projected into 2D space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. As straightforward to interpret, we focus our analysis on the underlying, but note, that it applies to any numerical and categorical embeddings. 
+The embeddings are queried from the feature tokenizer in FT-Transformer. The similarity between embeddings is measured by cosine distance in embedding space. The high-dimensional embeddings are then projected into 2D space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. As straightforward to interpret, we focus our analysis on the underlying, but note, that it applies to any numerical and categorical embeddings.
 
 Figure \cref{fig:categorical-embeddings} illustrates the embeddings exemplary for SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$).\footnote{As our analysis is condensed to two underlyings, we encourage the reader to use our interactive visualisation for further exploration. Accessible here \url{https://wandb.ai/fbv/thesis/runs/3cirr6nk}.} For SPY \todo{Graphically, ... wait for list of underlyings. What was not input to the model?}. For JPM \todo{Visually performs ... wait for the list of underlyings}
 
 \begin{figure}[!ht]
     \subfloat[Most Similar Embeddings to $\mathtt{SPY}$\label{fig:cat-embeddings-spy}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_SPY.pdf}}
     \vfill
-    \subfloat[Most Similar Embeddings to $\mathtt{JPM}$\label{fig:fig:cat-embeddings-jpm}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_JPM.pdf}}   
+    \subfloat[Most Similar Embeddings to $\mathtt{JPM}$\label{fig:fig:cat-embeddings-jpm}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_JPM.pdf}}
     \caption[Categorical Embeddings of Selected Underlyings]{Categorical embeddings of selected underlyings. The plot depicts the projected embedding of SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) and their most similar embeddings. Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. The ten most similar embeddings by cosine similarity in the original space are coloured and annotated. The model is trained on \gls{ISE} data.}
     \label{fig:categorical-embeddings}
 \end{figure}
@@ -493,7 +516,7 @@ The actual and the estimated effective spreads for the test sets are shown in th
     \label{tab:effective-spread}
 \end{table}
 
-In summary, quote-based algorithms like the quote rule and the \gls{LR} algorithm severely overestimate the effective spread. The overestimate is less severe for the \gls{CLNV} algorithm due to stronger dependency on the tick rule. The tick rule itself achieves estimates closest to the true effective spread, which is \num[round-mode=places, round-precision=3]{0.004926} and \num[round-mode=places, round-precision=3]{0.012219} for the \gls{ISE} and \gls{CBOE} sample respectively. As primarily tick-based algorithms, like the tick rule or \gls{EMO} rule, perform like a random classifier in our samples, we conclude that the close estimate is an artefact to randomness, not due to superior predictive power. This observation is in line with \textcite[][897]{savickasInferringDirectionOption2003}, who make a similar argument for the \gls{EMO} rule on \gls{CBOE} trades. For rule-based algorithms $\operatorname{gsu}_{\mathrm{large}}$ provides reasonable estimates of the effective spread while achieving high classification accuracy. 
+In summary, quote-based algorithms like the quote rule and the \gls{LR} algorithm severely overestimate the effective spread. The overestimate is less severe for the \gls{CLNV} algorithm due to stronger dependency on the tick rule. The tick rule itself achieves estimates closest to the true effective spread, which is \num[round-mode=places, round-precision=3]{0.004926} and \num[round-mode=places, round-precision=3]{0.012219} for the \gls{ISE} and \gls{CBOE} sample respectively. As primarily tick-based algorithms, like the tick rule or \gls{EMO} rule, perform like a random classifier in our samples, we conclude that the close estimate is an artefact to randomness, not due to superior predictive power. This observation is in line with \textcite[][897]{savickasInferringDirectionOption2003}, who make a similar argument for the \gls{EMO} rule on \gls{CBOE} trades. For rule-based algorithms $\operatorname{gsu}_{\mathrm{large}}$ provides reasonable estimates of the effective spread while achieving high classification accuracy.
 
 From our machine learning-based classifiers the FT-Transformer or \gls{GBRT} trained on FS 3 provides estimates closest to the true effective spread, in particular on the \gls{CBOE} sample. The null hypothesis of equal medians is rejected.
 
