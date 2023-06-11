@@ -18,7 +18,9 @@ table-with contingency tables and p values statistic
 footnote-what is link to accuracy 
 
 todo-Discuss results
+Null hypothesis: A and B have the same error rate.
 
+![[mcnemar-ise.png]]
 
 ---
 
