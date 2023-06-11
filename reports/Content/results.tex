@@ -60,12 +60,15 @@ Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][3
 Aside from these high-level observations, we focus on three findings in greater detail.
 
 \textbf{Finding 1: Accuracy of Basic Rules Is Downward-Biased by Missingness}
+
 \todo{Add finding}
 
 \textbf{Finding 2: Accuracy Comes From Depth}
+
 \todo{Add finding}
 
 \textbf{Finding 3: Fee Structures Affect Accuracy Over Time}
+
 \todo{Add finding}
 
 \begin{table}[ht]
@@ -103,14 +106,14 @@ We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe-classical} an
 % Parts of this is due to the fact, that  $\operatorname{quote}_{\mathrm{nbbo}}$ achieves a considerably lower coverage of \SI{94.77}{\percent} compared to \SI{99.89}{\percent} in the \gls{ISE} sample, with fewer trades classified by the fallback criterion. In a filtered common sample, where trades are classified by both rules, performance is approximately similar. 
 Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best, the strong outperformance does not carry over to the test set as depicted \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[][33]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
 
-\todo{Doesn't this contradict the hidden order idea of Grauer?}
+\todo{Doesn't this contradict the hidden order idea of Grauer? Why are accuracies lower?}
 
 Next, we test the supervised classifiers on the \gls{ISE}/\gls{CBOE} test sets, which prove to be a challenging test ground for rule-based classifiers as our results from above indicate.
 
 \subsection{Results of Supervised
     Models}\label{sec:results-of-supervised-models}
 
-Next, we test the performance of our supervised models. We take the best configurations from \cref{sec:hyperparameter-tuning}, trained and tuned on the \gls{ISE} trade data, and evaluate their performance on the \gls{ISE} and \gls{CBOE} test sets. \cref{tab:results-supervised-ise-cboe} summarizes the results and benchmarks against state-of-the-art solutions from the literature.
+We test the performance of our supervised models. We take the best configurations from \cref{sec:hyperparameter-tuning}, trained and tuned on the \gls{ISE} trade data, and evaluate their performance on the \gls{ISE} and \gls{CBOE} test sets. \cref{tab:results-supervised-ise-cboe} summarizes the results and benchmarks against state-of-the-art solutions from the literature.
 
 \begin{table}[ht]
     \centering
@@ -133,16 +136,16 @@ While absolute improvements in accuracy over $\operatorname{gsu}_{\mathrm{small}
 
 The results can be enhanced through retraining on the validation set improving accuracies to \SI{76.162269}{\percent}, as documented in \cref{app:results-of-supervised-models-with-re-training}. In favour of conservative estimates, our models in the main text do not use this technique.
 
-Visually, the performance differences between gradient boosting and transformers on the same feature sets are minor, consistent with previous studies \textcites{grinsztajnWhyTreebasedModels2022}{gorishniyRevisitingDeepLearning2021}. These studies conclude, generally for tabular modelling, that neither Transformers nor \gls{GBRT} are universally superior.
+Visually, the performance differences between gradient boosting and transformers on the same feature sets are minor, consistent with previous studies \autocites{grinsztajnWhyTreebasedModels2022}{gorishniyRevisitingDeepLearning2021}. These studies conclude, generally for tabular modelling, that neither Transformers nor \gls{GBRT} are universally superior.
 
 
-To formally test, whether differences between both classifiers are significant, we construct contingency tables and pair-wise compare predictions using McNemar's test \autocite[][153--157]{mcnemarNoteSamplingError1947}. We formulate the null hypothesis that both classifiers disagree by the same amount.
-The procedure is different to \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000}, who uses contingency tables of rule-based methods and true labels. Here, contingency tables are used to pair-wise compare the predictions of \gls{GBRT} against Transformers. We study the performance against the true label as part of our robustness checks.
+To formally test, whether differences between both classifiers are significant, we construct contingency tables and pair-wise compare predictions using McNemar's test \autocite[][153--157]{mcnemarNoteSamplingError1947}. We formulate the null hypothesis that both classifiers have the same error rate.
+Conceptually similar \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000}, uses contingency tables of rule-based methods and true labels. Here, contingency tables are used to pair-wise compare the predictions of \gls{GBRT} against Transformers. We study the performance against the true label as part of the robustness checks.
 
 \begin{table}[!h]
     \centering
     \sisetup{table-number-alignment=right, table-format=7.0}
-    \caption{tbd}
+    \caption[Contingency Tables of Supervised Classifiers On \glsentryshort{CBOE} and \glsentryshort{ISE} Dataset]{This table contains the contingency tables of the supervised classifiers on the \gls{CBOE} and \gls{ISE} test set for feature set classical, classical-size, and option. Cells sum the number of trades, correctly/falsely classified by both classifiers or one. Additionally, McNemar's test statistic $\chi^2$ and the associated $p$-value are reported.}
     \label{tab:contigency-supervised-classifiers}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
@@ -151,23 +154,23 @@ The procedure is different to \textcite[][267]{odders-whiteOccurrenceConsequence
         \multicolumn{2}{l}{{$\downarrow$ Trans.$\rightarrow$ \gls{GBRT}}} & {Correct} & {Wrong}                                                     & {Correct}                                                    & {Wrong}                                                     & {Correct} & {Wrong}           \\
         \midrule
         \gls{ISE}                                                         & Correct   & 5904530                                                     & 374201                                                       & 6790958                                                     & 343265    & 6722730 & 586719  \\
-                                                                          & Wrong     & 385481                                                      & 3197364                                                      & 366683                                                      & 366683    & 567124  & 1985003 \\         \addlinespace
+                                                                          & Wrong     & 385481                                                      & 3197364                                                      & 366683                                                      & 2360670   & 567124  & 1985003 \\         \addlinespace
                                                                           &           & \multicolumn{2}{l}{{$\chi^2$=\num{167.4593329840644}}}      & \multicolumn{2}{l}{{$\chi^2$=\num{772.3888073492707}}}       & \multicolumn{2}{l}{{$\chi^2$}=\num{332.73576734443077}}                                     \\
                                                                           &           & \multicolumn{2}{l}{{$p$-val.=\num{2.6552012527789754e-38}}} & \multicolumn{2}{l}{{$p$-val.=\num{5.437047807508087e-170}}}  & \multicolumn{2}{l}{{$p$-val.}=\num{2.4374791750246844e-74}}                                 \\
         \midrule
         \gls{CBOE}                                                        & Correct   & 8085066                                                     & 357404                                                       & 8701205                                                     & 502313    & 8746656 & 766824  \\
-                                                                          & Wrong     & 380469                                                      & 3968289                                                      & 528093                                                      & 3059617   & 754453  & 523295  \\         \addlinespace
+                                                                          & Wrong     & 380469                                                      & 3968289                                                      & 528093                                                      & 3059617   & 754453  & 2523295 \\         \addlinespace
                                                                           &           & \multicolumn{2}{l}{{$\chi^2$=\num{720.9209389691722}}}      & \multicolumn{2}{l}{{$\chi^2$=\num{644.9465948373747}}}       & \multicolumn{2}{l}{{$\chi^2$=\num{100.58450893558503}}}                                     \\
                                                                           &           & \multicolumn{2}{l}{{$p$-val.=\num{8.441178009879888e-159}}} & \multicolumn{2}{l}{{$p$-val.=\num{2.8062978547775803e-142}}} & \multicolumn{2}{l}{{$p$-val.=\num{1.1345159386344345e-23}}}                                 \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-\todo{Comment results. Add footnote how numbers relate to table before.}
+Based on the contingency tables in \cref{tab:contigency-supervised-classifiers}, we observe that both models share a large portion of trades, for which both classifiers agree.\footnote{Through summation of correct classifications of one classifier divided by the matrix sum, one obtains the accuracy from \cref{tab:results-supervised-ise-cboe}. Consider the first entry, e.g., $(\num{5904530}+\num{374201}) / (\num{5904530} + \num{374201} + \num{385481} + \num{3197364}) \approx \num{0.63668637}$.} For larger feature sets, the share of trades correctly classified by one classifier grows, while the number of jointly correctly classified trades plateaus. This can be an indication, that both models learn specific patterns and excel in different trades. The performance differences between classifiers are statistically significant for at the \SI{1}{\percent}. The null hypothesis can be rejected.
 
-Contrary to the expectation, performance improvements are highest for the \gls{CBOE} dataset, despite the models being trained on \gls{ISE} data. Part of this is due to a weaker benchmark performance, but also due to a considerably stronger accuracy of classifiers on the smallest and mid-sized feature sets. One would expect a degradation between sets, assuming exchange-specific trading patterns and requiring exploration in greater detail.
+Contrary to the expectation, the performance improvements are highest for the \gls{CBOE} dataset, despite the models being trained on \gls{ISE} data. Part of this is due to a weaker benchmark performance, but also due to the stronger accuracy of classifiers on the smallest and mid-sized feature sets. One would expect a degradation between sets, assuming exchange-specific trading patterns and requiring exploration in greater detail.
 
-\textbf{Finding 4: Fee-Structures Affect Classifier Performance}
+\textbf{Finding 4: Foo Affect Classifier Performance}
 
 \todo{Formulate finding.}
 
@@ -520,7 +523,7 @@ For convenience, we also calculate the \emph{relative effective spread} as
 \end{equation}
 % \todo{check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does chakrabarty 2007 p. 3819?}
 
-The subsequent section estimates both the nominal and relative effective spread. Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal. The null hypothesis of equal medians is rejected for $p \leq 0.01$.
+The subsequent section estimates both the nominal and relative effective spread. Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal. The null hypothesis of equal medians is rejected at the \SI{1}{\percent} level.
 
 \textbf{Results}
 
