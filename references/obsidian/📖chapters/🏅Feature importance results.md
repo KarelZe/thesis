@@ -11,8 +11,7 @@ Figure cref-jpm illustrates the embeddings exemplary for $\mathtt{SPY}$ and $\ma
 However, we want to stress the limitations. Both underlyings are among the most frequently traded in our dataset. For infrequent underlyings, embedding are likely close to their random initialisation and hence not meaningful, as no parameter updates takes place. The described problem transfers to handling rare vocabulary items, intensively studied in the context of natural language processing.
 
 **Attention Maps:**
-
-![[attention_maps_ise.png]]
+![[attention-maps.png]]
 
 **SAGE**
 ```python
