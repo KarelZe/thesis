@@ -15,23 +15,54 @@ While these results indicate that the model is capable to learn some meaningful 
 
 ![[embeddings-spy-jpm.png]]
 
+https://github.com/jessevig/bertviz/blob/master/bertviz/head_view.py
+
+
+
 **Attention Maps:**
+
+“The self-attention mechanism links each of the tokens to the [CLS] token. The strength of this attention link can be intuitively considered as an indicator of the contribution of each token to the classification. While this is intuitive, given the term “attention”, the attention values reflect only one aspect of the Transformer network or even of the selfattention head” (Chefer et al., 2021, p. 789)
+
+Following our reasoning in cref-[[🧭Feature Importance Measure]], we estimate attention maps with the approach of  ([[@cheferTransformerInterpretabilityAttention2021]]) and interpret them qualitatively. Attention maps are local interpretability measures, providing interpretability on the trade level. For visualisation purposes we focus on a small subsets of trades, where performance is particularly strong and  select a random subsets of $16$ mid spread trades and $16$ trades at the quotes from the gls-ise test set. The attention map are visualised in cref-attention-maps. 
+![[attention-maps.png]]
+Each column represents a single trade. Following the standard rationale all x-axis indicates the trade, y-axis denotes the features
+
+We not that, graphically, the trade price and quotes at the exchange level are most important, and are also used most frequently. 
+
+Derived features, such as the proximity to quotes, or the change in trade price, are hardly important 
+
+we focus on a small subset of trades at the  mid and quotes
+
+Analogous to rule
+
+
+
+**Attention**
+- emphasize that these are local feature attributions
+- Visualize attention for some trades
+- interpret pattern. How does it align with the feature importances from SAGE?
+
+
 waht model attends to
 Attention has a clear interpretation as (...) We follow the approach of ([[@cheferTransformerInterpretabilityAttention2021]]) to derive attention maps.
+
+As the 
+
+
+
+The use 
+
+![[dependency-attention.png]]
 
 ![[attention-visualisation.png]]
 
 - https://github.com/jessevig/bertviz
 - https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/visualization/attention.py
 
-![[attention-maps.png]]
-
 Engineered features like the proximity to quotes, has low importance. The
 
 Figure-attention-maps is the weighted average over all attention blocks and heads, which is a reasonable choice on the network level. Attached to the observation, that attention heads learn different patterns, we . i. e. if the pattern learned by attention heads maps to known trade classification rules or yet undiscovered algorithms.
 
-
-While the maps has similarities 
 
 Based on these visualisations we cannot reason about how features are used inside the Transformer e.g., if 
 
@@ -48,6 +79,9 @@ Again we exclude the $\mathtt{[CLS]}$ token, as it accumulates f
 Beyond these simple visualisations, 
 
 The results are 
+
+----
+
 
 
 **SAGE**
@@ -93,6 +127,9 @@ The results are
 
 Results:
 ![[results-sage.png]]
+
+
+
 - **Classical Rules** Results align with intuition. Largest improvements come from applying the quote rule (nbbo), which requires quote_best + Trade price, quote (ex) is only applied to a fraction of all trades. The rev tick test is of hardly any importance, as it does not affect classification rules much, nor is it applied often
 
 
@@ -105,10 +142,7 @@ Results:
 ![[informative-uniformative-features.png]]
 ([[@grinsztajnWhyTreebasedModels2022]])
 
-**Attention**
-- emphasize that these are local feature attributions
-- Visualize attention for some trades
-- interpret pattern. How does it align with the feature importances from SAGE?
+
 
 **Rank correlation between approaches**
 Compare different feature attributions:

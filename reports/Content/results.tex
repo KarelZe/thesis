@@ -503,9 +503,9 @@ To summarize, despite the significantly higher training costs, semi-supervised v
 %     \label{fig:attention-maps-ise}
 % \end{figure}
 
-\textbf{Embeddings Visualisation}
+\textbf{Embedding Visualisation}
 
-For the Transformer we know from \cref{sec:token-embeddings}, that embeddings can capture similarities by arranging related objects closer in embedding space. Visualising the learnt embeddings gives insights into the model.
+For the Transformer we know from \cref{sec:token-embeddings}, that embeddings can capture similarities by arranging related objects closer in embedding space. Visualising the learnt embeddings enables insights into the model.
 
 The embeddings are queried from the feature tokenizer in FT-Transformer. The similarity between embeddings is measured by cosine distance in embedding space. The high-dimensional embeddings are then projected into 2D space using $t$-SNE \autocite[][2587]{vandermaatenVisualizingDataUsing2008}. As straightforward to interpret, we focus our analysis on the root, but note, that it applies to any numerical and categorical embeddings.
 
@@ -523,7 +523,7 @@ For SPDR S\&P 500 ETF ($\mathtt{SPY}$) in \cref{fig:cat-embeddings-spy}, similar
 
 Regarding JPMorgan Chase \& Co. ($\mathtt{JPM}$) in \cref{fig:cat-embeddings-jpm}, the most similar embedding is the of Bank of America ($\mathtt{BAC}$). Other similar embeddings include financial service providers like Amerigroup ($\mathtt{XGZ}$) and Janus Henderson Group ($\mathtt{ZPR}$). These results suggest that the model learned to group US financials, even without sector information provided. However, this argumentation does not apply to other related embeddings such as the Apollo Group ($\mathtt{OKO}$) or United Parcel Service of America ($\mathtt{YUP}$). % Autodesk Inc. ($\mathtt{ADQ}$) , Centex Corp. ($\mathtt{YYV}$), United Parcel Service of America ($\mathtt{YUP}$), Wild Oats Markets ($\mathtt{ZAC}$), SPDR S\&P 500 ETF ($\mathtt{SUE}$), and SPDR Dow Jones Industrial Average ($\mathtt{DIA}$).
 
-While these results indicate that the model can learn meaningful representations of underlyings, we must acknowledge its limitations. Both underlyings are frequently traded in our dataset, which may lead to meaningful embeddings. For infrequent underlyings, embeddings are likely to be close to their random initialisation and lack meaningful patterns due to limited parameter updates. This issue is analogous to handling rare vocabulary items found in natural language processing. As the underlying plays a subordinate role in classification, this caveat is accepted.
+While these exemplary results indicate that the model can learn meaningful representations of underlyings, we must acknowledge its limitations. Both underlyings are frequently traded in our dataset, which may lead to meaningful embeddings. For infrequent underlyings, embeddings are likely to be close to their random initialisation and lack meaningful patterns due to limited parameter updates and missing context. This issue is analogous to handling rare vocabulary items found in natural language processing. As the underlying plays a subordinate role in classification, this caveat is accepted.
 
 \clearpage
 
