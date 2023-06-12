@@ -519,7 +519,7 @@ Figure \cref{fig:categorical-embeddings} illustrates the embeddings exemplary fo
     \label{fig:categorical-embeddings}
 \end{figure}
 
-However, we want to stress the limitations. Both underlyings are among the most frequently traded in our dataset. For infrequent underlyings, embedding are likely close to their random initialisation and hence not meaningful, as no parameter updates take place. The raised problem transfers to handling rare vocabulary items, intensively studied in the context of natural language processing. \todo{Add relevant literature?}
+However, we want to stress the limitations. Both underlyings are among the most frequently traded in our dataset. For infrequent underlyings, embeddings are likely close to their random initialisation and hence not meaningful, as no parameter updates take place. The raised problem transfers to handling rare vocabulary items, intensively studied in the context of natural language processing. \todo{Add relevant literature?}
 
 \clearpage
 
@@ -547,7 +547,7 @@ For convenience, we also calculate the \emph{relative effective spread} as
 \end{equation}
 % \todo{check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does chakrabarty 2007 p. 3819?}
 
-The subsequent section estimates both the nominal and relative effective spread. Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal. The null hypothesis of equal medians is rejected at the \SI{1}{\percent} level.
+The subsequent section estimates both the nominal and relative effective spread. Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal.
 
 \textbf{Results}
 
@@ -556,12 +556,12 @@ The actual and the estimated effective spreads for the test sets are shown in th
 \begin{table}[!ht]
     \centering
     \input{Content/effective-spread.tex}
-    \caption{Effective Spreads Estimates of Trade Classification Rules and Classifiers}
+    \caption[Effective Spreads Estimates of Trade Classification Rules and Classifiers]{Effective spreads estimates of trade classification rules and classifiers. Results are calculated on \gls{ISE} and \gls{CBOE} test set and averaged over all trades within the samples. Classifiers match the configuration of \cref{sec:hyperparameter-tuning}.}
     \label{tab:effective-spread}
 \end{table}
 
-In summary, quote-based algorithms like the quote rule and the \gls{LR} algorithm severely overestimate the effective spread. The overestimate is less severe for the \gls{CLNV} algorithm due to stronger dependency on the tick rule. The tick rule itself achieves estimates closest to the true effective spread, which is \num[round-mode=places, round-precision=3]{0.004926} and \num[round-mode=places, round-precision=3]{0.012219} for the \gls{ISE} and \gls{CBOE} sample respectively. As primarily tick-based algorithms, like the tick rule or \gls{EMO} rule, perform like a random classifier in our samples, we conclude that the close estimate is an artefact to randomness, not due to superior predictive power. This observation is in line with \textcite[][897]{savickasInferringDirectionOption2003}, who make a similar argument for the \gls{EMO} rule on \gls{CBOE} trades. For rule-based algorithms $\operatorname{gsu}_{\mathrm{large}}$ provides reasonable estimates of the effective spread while achieving high classification accuracy.
+In summary, quote-based algorithms like the quote rule and the \gls{LR} algorithm severely overestimate the effective spread. The overestimate is less severe for the \gls{CLNV} algorithm due to stronger dependency on the tick rule. The tick rule itself achieves estimates closest to the true effective spread, which is \num[round-mode=places, round-precision=3]{0.004926} and \num[round-mode=places, round-precision=3]{0.012219} for the \gls{ISE} and \gls{CBOE} sample respectively. As primarily tick-based algorithms, like the tick rule or \gls{EMO} rule, act as a random classifier in our samples, we conclude that the close estimate is an artefact to randomness, not due to superior predictive power. This observation is in line with \textcite[][897]{savickasInferringDirectionOption2003}, who make a similar argument for the \gls{EMO} rule on \gls{CBOE} trades. For rule-based algorithms $\operatorname{gsu}_{\mathrm{large}}$ provides reasonable estimates of the effective spread while achieving high classification accuracy.
 
-From our machine learning-based classifiers the FT-Transformer or \gls{GBRT} trained on FS 3 provides estimates closest to the true effective spread, in particular on the \gls{CBOE} sample. The null hypothesis of equal medians is rejected.
+From our machine learning-based classifiers the FT-Transformer or \gls{GBRT} trained on FS 3 provides estimates closest to the true effective spread, in particular on the \gls{CBOE} sample. The null hypothesis of equal medians is rejected at the \SI{1}{\percent} level for all classifiers.
 
-Thus, $\operatorname{gsu}_{\mathrm{large}}$ provides the best estimate of the effective spread if the true labels are absent. For labelled data, Transformer or gradient boosting-based approaches can provide more accurate estimates. The de facto standard, the \gls{LR} algorithm, fails to deliver accurate estimates and may bias empirical research.
+Thus, $\operatorname{gsu}_{\mathrm{large}}$ provides the best estimate of the effective spread if the true labels are absent. For labelled data, Transformer or gradient boosting-based approaches can provide more accurate estimates. The de facto standard, the \gls{LR} algorithm, fails to deliver accurate estimates and may bias research.
