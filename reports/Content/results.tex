@@ -494,32 +494,36 @@ To summarize, despite the significantly higher training costs, semi-supervised v
     \label{fig:sage-importances}
 \end{figure}
 
-\textbf{Attention Maps}
+\textbf{Attention Visualisation}
 
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=1\textwidth]{attention_maps_ise_quotes_mid.pdf}
-    \caption[tbd]{tbd}
-    \label{fig:attention-maps-ise}
-\end{figure}
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=1\textwidth]{attention_maps_ise_quotes_mid.pdf}
+%     \caption[tbd]{tbd}
+%     \label{fig:attention-maps-ise}
+% \end{figure}
 
-\textbf{Categorical Embeddings}
+\textbf{Embeddings Visualisation}
 
 For the Transformer we know from \cref{sec:token-embeddings}, that embeddings can capture similarities by arranging related objects closer in embedding space. Visualising the learnt embeddings gives insights into the model.
 
-The embeddings are queried from the feature tokenizer in FT-Transformer. The similarity between embeddings is measured by cosine distance in embedding space. The high-dimensional embeddings are then projected into 2D space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. As straightforward to interpret, we focus our analysis on the underlying, but note, that it applies to any numerical and categorical embeddings.
+The embeddings are queried from the feature tokenizer in FT-Transformer. The similarity between embeddings is measured by cosine distance in embedding space. The high-dimensional embeddings are then projected into 2D space using $t$-SNE \autocite[][2587]{vandermaatenVisualizingDataUsing2008}. As straightforward to interpret, we focus our analysis on the root, but note, that it applies to any numerical and categorical embeddings.
 
-Figure \cref{fig:categorical-embeddings} illustrates the embeddings exemplary for SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$).\footnote{As our analysis is condensed to two underlyings, we encourage the reader to use our interactive visualisation for further exploration. Accessible here \url{https://wandb.ai/fbv/thesis/runs/3cirr6nk}.} For SPY \todo{Graphically, ... wait for list of underlyings. What was not input to the model?}. For JPM \todo{Visually performs ... wait for the list of underlyings}
+\cref{fig:categorical-embeddings} illustrates the embeddings exemplary for SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) which can be \emph{qualitatively} interpreted.\footnote{As our analysis is condensed to two randomly chosen examples, we encourage the reader to use our interactive visualisation for further exploration. Accessible here \url{https://wandb.ai/fbv/thesis/runs/3cirr6nk}.} 
 
 \begin{figure}[h!]
     \subfloat[Most Similar Embeddings to $\mathtt{SPY}$\label{fig:cat-embeddings-spy}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_SPY.pdf}}
     \vfill
-    \subfloat[Most Similar Embeddings to $\mathtt{JPM}$\label{fig:fig:cat-embeddings-jpm}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_JPM.pdf}}
-    \caption[Categorical Embeddings of Selected Underlyings]{Categorical embeddings of selected underlyings. The plot depicts the projected embedding of SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) and their most similar embeddings. Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. The ten most similar embeddings by cosine similarity in the original space are coloured and annotated. The model is trained on \gls{ISE} data.}
+    \subfloat[Most Similar Embeddings to $\mathtt{JPM}$\label{fig:cat-embeddings-jpm}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_JPM.pdf}}
+    \caption[Embeddings of Selected Underlyings]{Embeddings of selected underlyings. The plot depicts the projected embedding of SPDR S\&P 500 ETF ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) and their most similar embeddings. Embeddings are projected into 2D-space using $t$-SNE \autocite[][2587]{vandermaatenVisualizingDataUsing2008}. The ten most similar embeddings by cosine distance in the original space are coloured and annotated. The model is trained on \gls{ISE} data.}
     \label{fig:categorical-embeddings}
 \end{figure}
 
-However, we want to stress the limitations. Both underlyings are among the most frequently traded in our dataset. For infrequent underlyings, embeddings are likely close to their random initialisation and hence not meaningful, as no parameter updates take place. The raised problem transfers to handling rare vocabulary items, intensively studied in the context of natural language processing. \todo{Add relevant literature?}
+For SPDR S\&P 500 ETF ($\mathtt{SPY}$) in \cref{fig:cat-embeddings-spy}, similar embeddings include iShares Russell 2000 ($\mathtt{IWM}$), iShares Russel 2000 ($\mathtt{WYV}$), SPDR S\&P 500 ETF ($\mathtt{OBV}$), and Direxion shares ETF ($\mathtt{XDT}$). This aligns with the intuition that these \glspl{ETF} track identical or related indices. The model distinguishes \glspl{ETF} from other securities based on the feature issue type. Additional similar embeddings consist of Citigroup Inc. ($\mathtt{WRV}$), Kohl's Corp. ($\mathtt{OSS}$), Google Inc. ($\mathtt{YTM}$), and Intel Corp. ($\mathtt{INTC}$), which are long-term index constituents.
+
+Regarding JPMorgan Chase \& Co. ($\mathtt{JPM}$) in \cref{fig:cat-embeddings-jpm}, the most similar embedding is the of Bank of America ($\mathtt{BAC}$). Other similar embeddings include financial service providers like Amerigroup ($\mathtt{XGZ}$) and Janus Henderson Group ($\mathtt{ZPR}$). These results suggest that the model learned to group US financials, even without sector information provided. However, this argumentation does not apply to other related embeddings such as the Apollo Group ($\mathtt{OKO}$) or United Parcel Service of America ($\mathtt{YUP}$). % Autodesk Inc. ($\mathtt{ADQ}$) , Centex Corp. ($\mathtt{YYV}$), United Parcel Service of America ($\mathtt{YUP}$), Wild Oats Markets ($\mathtt{ZAC}$), SPDR S\&P 500 ETF ($\mathtt{SUE}$), and SPDR Dow Jones Industrial Average ($\mathtt{DIA}$).
+
+While these results indicate that the model can learn meaningful representations of underlyings, we must acknowledge its limitations. Both underlyings are frequently traded in our dataset, which may lead to meaningful embeddings. For infrequent underlyings, embeddings are likely to be close to their random initialisation and lack meaningful patterns due to limited parameter updates. This issue is analogous to handling rare vocabulary items found in natural language processing. As the underlying plays a subordinate role in classification, this caveat is accepted.
 
 \clearpage
 
