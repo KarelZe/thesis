@@ -50,9 +50,22 @@ As the
 
 
 
-The use 
+Many of the attention heads exhibit behaviour that seems related to the structure of the sentence. We give two such examples above, from two different heads from the encoder self-attention at layer 5 of 6. The heads clearly learned to perform different tasks.
 
-![[dependency-attention.png]]
+
+
+
+![[layer_3_head_0.png]]
+(layer 3, head 0)
+![[layer_3_head_4.png]]
+(layer 3, head 4)
+![[layer_3_head_8.png]]
+(layer 3, head 8)
+Similar to ([[@vaswaniAttentionAllYou2017]]15)
+
+
+Many of the attention heads exhibit behaviour that seems related to the structure of the sentence. We give two such examples above, from two different heads from the encoder self-attention at layer 5 of 6. The heads clearly learned to perform different tasks.
+
 
 ![[attention-visualisation.png]]
 
@@ -80,8 +93,11 @@ Beyond these simple visualisations,
 
 The results are 
 
+
+
 ----
 
+Visualisation of embeddings and attention is Transformer-specific. 
 
 
 **SAGE**
@@ -128,23 +144,5 @@ The results are
 Results:
 ![[results-sage.png]]
 
-
-
 - **Classical Rules** Results align with intuition. Largest improvements come from applying the quote rule (nbbo), which requires quote_best + Trade price, quote (ex) is only applied to a fraction of all trades. The rev tick test is of hardly any importance, as it does not affect classification rules much, nor is it applied often
 
-
-
-**Token Embeddings:**
-(see graphs)
-
-
-
-![[informative-uniformative-features.png]]
-([[@grinsztajnWhyTreebasedModels2022]])
-
-
-
-**Rank correlation between approaches**
-Compare different feature attributions:
-![[feature_attributions_from_attention.png]]
-(Found in [[@borisovDeepNeuralNetworks2022]])
