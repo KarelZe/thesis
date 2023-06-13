@@ -31,7 +31,7 @@ We exclude the CLS  token as it accumulates most feature importances. Darkness o
 
 Visually, the trade price and quotes at the exchange or inter-exchange level are most important and most frequently used. This aligns with our intuition, as these features are core to the quote rule and numerous hybrid algorithms. Also, quote-based algorithms are among the best performing in our dataset. Aside from the trade price, features required to estimate the tick rule attain only low attention scores. Considering the devastating performance of tick-based algorithms in option trade classification, this is expected. Features from the depth and trade size rule, such as the trade size, are used selectively. For classification of trades at the quotes, option-specific feature like the issue type, moneyness, time to maturity, or daily trading volume of the option series receive relatively high attention scores. Overall, derived features, like the proximity to quotes, attain only low attention scores, which can be indication that the Transformer can synthesise the feature from the *raw* bid, ask and trade price itself.
 
-The model assigns the highest attention scores to features found in the quote rule and hybrids there-off. Due to the existing link to rule-based trade classification, it is tempting to explore, if the fine-grained patterns learned by specific attention heads translate to existing trade classification rules i. e., if specific tokens attend to features that are jointly used in rule-based classification. This information is sacrificed when aggregating over multiple attention heads and layers, as done for cref-fig, but readily available from individual attention heads. To further analyse this aspect, we adapt the approach of ([[@clarkWhatDoesBERT2019]]4) to our setting. Figure cref-fig depicts the result for selected attention heads involved in classifying a trade *at the quote*. All num-32 attention heads are visualised in the appendix.
+The model assigns the highest attention scores to features found in the quote rule and hybrids there-off. Due to the existing link to rule-based trade classification, it is tempting to explore, if the fine-grained patterns learned by specific attention heads translate to existing trade classification rules i. e., if specific tokens attend to features that are jointly used in rule-based classification. This information is sacrificed when aggregating over multiple attention heads and layers, as done for cref-fig, but readily available from individual attention heads. To further analyse this aspect, we adapt the approach of ([[@clarkWhatDoesBERT2019]]4) to our setting. 
 
 ![[layer_3_head_0.png]]
 (layer 3, head 0)
@@ -40,89 +40,7 @@ The model assigns the highest attention scores to features found in the quote ru
 ![[layer_3_head_8.png]]
 (layer 3, head 8)
 
-For earlier . This maps to our 
-
-Overall the first layers, 
-
-Figure 5 shows some examples of the attention behaviour.
-
-All 64 attention heads 
-
-For a given attention head and word, we take whichever other word receives the most attention weight as that model’s prediction
-However, we do find that certain attention heads specialize to specific dependency relations, some
-While the similarity between machinelearned attention weights and human-defined syntactic relations are striking, we note these are relations for which attention heads do particularly well on. There are many relations for which BERT only slightly improves over the simple baseline, so we would not say individual attention heads capture dependency structure as a whole. We think it would be interesting future work to extend our
-
-Similar to ([[@vaswaniAttentionAllYou2017]]15) (Based on code of [[@clarkWhatDoesBERT2019]]) (change order(left to right))
-
-Figure 5: BERT attention heads that correspond to linguistic phenomena. In the example attention maps, the darkness of a line indicates the strength of the attention weight. All attention to/from red words is colored red; these colors are there to highlight certain parts of the attention heads’ behaviors. For Head 9-6, we don’t show attention to [SEP] for clarity. Despite not being explicitly trained on these tasks, BERT’s attention heads perform remarkably well, illustrating how syntax-sensitive behavior can emerge from self-supervised training alone.
-
-Figure 5 shows some examples of the attention behavior. While the similarity between machinelearned attention weights and human-defined syntactic relations are striking, we note these are relations for which attention heads do particularly well on. There are many relations for which BERT only slightly improves over the simple baseline, so we would not say individual attention heads capture dependency structure as a whole. We think it would be interesting future work to extend our analysis to see if the relations well-captured by attention are similar or different for other languages.
-
-
-Many of the attention heads exhibit behaviour that seems related to the structure of the sentence. We give two such examples above, from two different heads from the encoder self-attention at layer 5 of 6. The heads clearly learned to perform different tasks.
-
-All 32 heads (4 L x 8 head) are documented in the appendix. On a high level, we
-
-As the attention maps contain the weighted attributions over multiple layers and attention heads, it is even more  
-
-In summary, feature attributions a related to the quote rule, as well as option-specific features. Due to the parallels to the Aside from the weighted attributions over all attention heads, it is 
-In the Transformer . Naturally, a more insightful is, how these features contribute in the attention mechanism, and if 
-
-To further analyse twe adapt the approach of ([[@clarkWhatDoesBERT2019]]4) to our setting. 
-
-By design, this approach is bound to 
-
-The tuple denotes the layer and attention head.
-
-As the used 
-
-
-Visually, the Greedy Selection performs better than the No Update Strategy but worse than the random selection. The bandit learning algorithm lies close to the random strategy and is slightly worse than the -greedy strategy for the given parameters
-
-
-Even 
-To better understand how each of the features relate, we adapt the approach of ([[@clarkWhatDoesBERT2019]]) to our setting. 
-
-As expected  
-
-Furthermore, some 
-
-All 32 heads (4 L x 8 head) are documented in the appendix. On a high level, we
-
-“The self-attention mechanism links each of the tokens to the [CLS] token. The strength of this attention link can be intuitively considered as an indicator of the contribution of each token to the classification. While this is intuitive, given the term “attention”, the attention values reflect only one aspect of the Transformer network or even of the selfattention head” (Chefer et al., 2021, p. 789)
-
-or a given attention head and word, we take whichever other word receives the most attention weight as that model’s prediction3
-
-times achieving high accuracy and substantially outperforming the fixed-offset baseline. We find that for all relations in Table 1 except pobj, the dependent attends to the head word rather than the other way around, likely because each dependent has exactly one head but heads have multiple dependents. We also note heads can disagree with standard annotation conventions while still performing syntactic behavior. For example, head 7- 6 marks ’s as the dependent for the poss relation, while gold-standard labels mark the complement of an ’s as the dependent (the accuracy in Table 1 counts ’s as correct). Such disagreements highlight how these syntactic behaviors in BERT are learned as a by-product of self-supervised training, not by copying a human design
-
-
-
-Derived features, such as the proximity to quotes, or the change in trade price, are hardly important 
-
-we focus on a small subset of trades at the  mid and quotes
-
-Different to rule based approaches is the use of option specific features like time to maturity, strike price or issue type
-
-Analogous to rule
-
-
-
-**Attention**
-- emphasize that these are local feature attributions
-- Visualize attention for some trades
-- interpret pattern. How does it align with the feature importances from SAGE?
-
-
-waht model attends to
-Attention has a clear interpretation as (...) We follow the approach of ([[@cheferTransformerInterpretabilityAttention2021]]) to derive attention maps.
-
-As the 
-
-Different to trade classification using, that sequentially combine trade classification rules, attention heads within the same layer operate in parallel
-
-Many of the attention heads exhibit behaviour that seems related to the structure of the sentence. We give two such examples above, from two different heads from the encoder self-attention at layer 5 of 6. The heads clearly learned to perform different tasks.
-
-
+Figure cref-fig show three examples of attention heads involved in classifying a trade *at the quote*. The remaining attention heads are visualised in cref-appendix. Each subplots depicts the features to which the classification token ($\mathtt{[CLS]}$) attends to. The attention weight determines the intensity of the line between the two. Referring to the results from the appendix, we note that attention heads learn diverse patterns, as most heads attend to different tokens at once learning different relations. For earlier layers in the network, the classification tokens gathers from multiple tokens with non-obvious patterns, whereas for the final self-attention layers, attention heads specialise in relations that seems related to rule-based trade classification. In Fig-a) the classification token gathers simultaneously from multiple price / size-related features similar to the trade size rule. Fig-b depicts a neighbouring classification head that focuses solely on the change in trade price similar to the tick rule. Finally, fig-c) is an alike to the gls-LR algorithm with additional dependencies on the time to maturity. For other attention heads it remains open what purpose they serve in the network. While the similarity is striking, it requires a more rigorous analysis. It would be interesting for future work to extend this analysis, as it potentially enables to uncover new rule-based approaches as well as better understand Transformer-based trade classification as a whole.
 
 
 ![[attention-visualisation.png]]

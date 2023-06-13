@@ -487,7 +487,9 @@ To summarize, despite the significantly higher training costs, semi-supervised v
 
 \textbf{Attention Visualisation}
 
-Drawing on theory in \cref{sec:feature-importance-measure}, we employ the methodology of \textcite[][2--4]{cheferTransformerInterpretabilityAttention2021} to generate attention maps, which we then \emph{qualitatively} interpret. These attention maps offer transparency at the \emph{trade level}. To aid visualization, we focus on a subsets of trades, where the performance of Transformers is particularly strong and select \num{16} mid-spread trades and \num{16} trades at the quotes from the \gls{ISE} test set. The resulting attention maps are shown in \cref{fig:attention-maps-ise}.
+Drawing on theory in \cref{sec:feature-importance-measure}, we employ the methodology of \textcite[][2--4]{cheferTransformerInterpretabilityAttention2021} to generate attention maps, which we then \emph{qualitatively} interpret. 
+
+These attention maps offer transparency at the \emph{trade level}. To aid visualization, we focus on subsets of trades, where the performance of Transformers is particularly strong and select \num{16} mid-spread trades and \num{16} trades at the quotes from the \gls{ISE} test set. The resulting attention maps are shown in \cref{fig:attention-maps-ise}.
 
 \begin{figure}[h!]
     \centering
@@ -506,11 +508,11 @@ The model assigns the highest attention scores to features found in the quote ru
     \subfloat[Trade Size Rule-like Head (4,1)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth, height=7cm]{example-image-b}}
     \hfill
     \subfloat[\glsentryshort{LR}-Like Head (4,8)\label{fig:head-lr}]{\includegraphics[width=0.3\textwidth, height=7cm]{example-image-c}}
-    \caption[Attention Heads That Correspond To Trade Classification Rules]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualised for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data.}
+    \caption[Attention Heads That Correspond To Trade Classification Rules]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualised for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualisations based on code by \textcite[][4]{clarkWhatDoesBERT2019}.}
     \label{fig:rule-like-attention-heads}
 \end{figure}
 
-\cref{fig:rule-like-attention-heads} depicts the result for selected attention heads involved in classifying a trade at the quote.
+\cref{fig:rule-like-attention-heads} depicts the result for selected attention heads involved in classifying a trade at the quote. The remaining attention heads are visualised in \todo{Create appendix}. Each subplot depicts the features to which the classification token $\mathtt{[CLS]}$ attends too. The attention weight determines the intensity of the line between the two. Referring to the results from the appendix, we note that attention heads learn diverse patterns, as most heads attend to different tokens at once learning different relations. For earlier layers in the network, the classification tokens gather from multiple tokens with non-obvious patterns, whereas for the final self-attention layers, attention heads specialise in relations that seem related to rule-based trade classification. In \cref{fig:head-tick} the classification token gathers simultaneously from multiple size-related features similar to the trade size rule. \cref{fig:head-tsize} depicts a neighbouring classification head that focuses solely on the change in trade price similar to the tick rule. Finally, \cref{fig:head-lr} is a alike to the \gls{LR} algorithm with additional dependencies on the time to maturity. For other attention heads the purpose they serve in the network remains open. While the similarity is striking, we advocate for a rigorous analysis. It would be interesting for future work to extend this analysis, as it potentially enables uncovering new rule-based approaches and understanding Transformer-based trade classification more detailedly.
 
 \textbf{Embedding Visualisation}
 
