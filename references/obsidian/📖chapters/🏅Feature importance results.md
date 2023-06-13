@@ -61,7 +61,11 @@ Many of the attention heads exhibit behaviour that seems related to the structur
 (layer 3, head 4)
 ![[layer_3_head_8.png]]
 (layer 3, head 8)
-Similar to ([[@vaswaniAttentionAllYou2017]]15)
+Similar to ([[@vaswaniAttentionAllYou2017]]15) (Based on code of [[@clarkWhatDoesBERT2019]]) (change order(left to right))
+
+Figure 5: BERT attention heads that correspond to linguistic phenomena. In the example attention maps, the darkness of a line indicates the strength of the attention weight. All attention to/from red words is colored red; these colors are there to highlight certain parts of the attention heads’ behaviors. For Head 9-6, we don’t show attention to [SEP] for clarity. Despite not being explicitly trained on these tasks, BERT’s attention heads perform remarkably well, illustrating how syntax-sensitive behavior can emerge from self-supervised training alone.
+
+Figure 5 shows some examples of the attention behavior. While the similarity between machinelearned attention weights and human-defined syntactic relations are striking, we note these are relations for which attention heads do particularly well on. There are many relations for which BERT only slightly improves over the simple baseline, so we would not say individual attention heads capture dependency structure as a whole. We think it would be interesting future work to extend our analysis to see if the relations well-captured by attention are similar or different for other languages.
 
 
 Many of the attention heads exhibit behaviour that seems related to the structure of the sentence. We give two such examples above, from two different heads from the encoder self-attention at layer 5 of 6. The heads clearly learned to perform different tasks.
@@ -93,6 +97,7 @@ Beyond these simple visualisations,
 
 The results are 
 
+We have proposed a series of analysis methods for understanding the attention mechanisms of models and applied them to BERT. While most recent work on model analysis for NLP has focused on probing vector representations or model outputs, we have shown that a substantial amount of linguistic knowledge can be found not only in the hidden states, but also in the attention maps. We think probing attention maps complements these other model analysis techniques, and should be part of the toolkit used by researchers to understand what neural networks learn about language.
 
 
 ----
