@@ -234,18 +234,18 @@ The results do not support the hypothesis, that adding unlabelled trades into th
     \end{tabular}
 \end{table}
 
-To summarize, despite the significantly higher training costs, semi-supervised variants do not provide better generalisation performance than supervised approaches. We subsequently evaluate if semi-supervised learning improves robustness, if not performance.
+To summarize, despite the significantly higher training costs, semi-supervised variants do not provide better generalisation performance than supervised approaches. We subsequently evaluate if semi-supervised learning improves robustness if not performance.
 
 
 \subsection{Robustness of Results}\label{sec:robustness-checks}
 
-To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, as well as proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[][47]{grauerOptionTradeClassification2022} as well as  \textcite[][890--892]{savickasInferringDirectionOption2003}, enhancing comparability across different works.\footnote{Dispite all efforts, when comparing with \textcite[][47--52]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.}
+To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, as well as proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[][47]{grauerOptionTradeClassification2022} as well as  \textcite[][890--892]{savickasInferringDirectionOption2003}, strengthening comparability across different works.\footnote{Despite all efforts, when comparing with \textcite[][47--52]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.}
 
 \textbf{Gradient Boosting}
 
 \begin{table}[ht!]
     \centering
-    \caption[short-diff-ise-supervised-test-gbm]{long-diff-ise-supervised-test-gbm}
+    \caption[Robustness Checks For Gradient-Boosting On \glsentryshort{ISE}]{This table presents accuracies of \glspl{GBRT} across various sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
     \label{tab:diff-ise_supervised_test}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -304,7 +304,7 @@ To assess the robustness of our algorithms, we partition the test sets into sub-
 
 \begin{table}[h!]
     \centering
-    \caption[short-diff-cboe-transfer-test]{long-diff-cboe-gbm-tbd}
+    \caption[Robustness Checks For Gradient-Boosting On \glsentryshort{CBOE}]{This table presents accuracies of \glspl{GBRT} across various sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
     \label{tab:diff-cboe_transfer-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -326,7 +326,7 @@ To assess the robustness of our algorithms, we partition the test sets into sub-
         \tabindent(5,11]        & 66.577620                        & 5.150000                              & 71.566680                     & 5.170000  & 74.143799    & 7.750000  \\
         \tabindent >11          & 71.136074                        & 4.750000                              & 74.549126                     & 2.830000  & 76.765762    & 5.050000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{Year}                                                                                                                                                  \\                                                                                                                                        \\
+        \multicolumn{7}{l}{Year}                                                                                                                                                  \\
         \tabindent 2015         & 65.689585                        & 4.460000                              & 71.445193                     & 6.400000  & 74.317847    & 9.270000  \\
         \tabindent 2016         & 65.579978                        & 5.350000                              & 71.638148                     & 6.430000  & 74.178699    & 8.970000  \\
         \tabindent 2017         & 66.491658                        & 5.250000                              & 72.349451                     & 4.250000  & 74.591947    & 6.500000  \\
@@ -364,7 +364,7 @@ To assess the robustness of our algorithms, we partition the test sets into sub-
 
 \begin{table}[h!]
     \centering
-    \caption[short-diff-ise-supervised-test-fttransformer]{long-diff-ise-supervised-test-fttransformer}
+    \caption[Robustness Checks For FT-Transformer On \glsentryshort{ISE}]{This table presents accuracies of the FT-Transformer across various sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
     \label{tab:diff-ise_supervised-test}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -421,7 +421,7 @@ To assess the robustness of our algorithms, we partition the test sets into sub-
 
 \begin{table}[h!]
     \centering
-    \caption[short-diff-cboe-transfer-test-fttransformer]{long-diff-cboe-transfer-test-fttransformer}
+    \caption[Robustness Checks For FT-Transformer On \glsentryshort{CBOE}]{This table presents accuracies of the FT-Transformer across various sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
     \label{tab:diff-cboe_transfer_test}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -486,7 +486,7 @@ To assess the robustness of our algorithms, we partition the test sets into sub-
 
 \textbf{Attention Visualisation}
 
-Drawing on theory in \cref{sec:feature-importance-measure}, we employ the methodology of \textcite[][2--4]{cheferTransformerInterpretabilityAttention2021} to generate attention maps, which we then \emph{qualitatively} interpret. 
+Drawing on theory in \cref{sec:feature-importance-measure}, we employ the methodology of \textcite[][2--4]{cheferTransformerInterpretabilityAttention2021} to generate attention maps, which we then \emph{qualitatively} interpret.
 
 These attention maps offer transparency at the \emph{trade level}. To aid visualization, we focus on subsets of trades, where the performance of Transformers is particularly strong and select \num{16} mid-spread trades and \num{16} trades at the quotes from the \gls{ISE} test set. The resulting attention maps are shown in \cref{fig:attention-maps-ise}.
 
@@ -519,7 +519,7 @@ For the Transformer we know from \cref{sec:token-embeddings}, that embeddings ca
 
 The embeddings are queried from the feature tokenizer in FT-Transformer. The similarity between embeddings is measured by cosine distance in embedding space. The high-dimensional embeddings are then projected into 2D space using $t$-SNE \autocite[][2587]{vandermaatenVisualizingDataUsing2008}. As straightforward to interpret, we focus our analysis on the root, but note, that it applies to any numerical and categorical embeddings.
 
-\cref{fig:categorical-embeddings} illustrates the embeddings exemplary for SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) which can be \emph{qualitatively} interpreted.\footnote{As our analysis is condensed to two randomly chosen examples, we encourage the reader to use our interactive visualisation for further exploration. Accessible here \url{https://wandb.ai/fbv/thesis/runs/3cirr6nk}.} 
+\cref{fig:categorical-embeddings} illustrates the embeddings exemplary for SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) which can be \emph{qualitatively} interpreted.\footnote{As our analysis is condensed to two randomly chosen examples, we encourage the reader to use our interactive visualisation for further exploration. Accessible here \url{https://wandb.ai/fbv/thesis/runs/3cirr6nk}.}
 
 \begin{figure}[h!]
     \subfloat[Most Similar Embeddings to $\mathtt{SPY}$\label{fig:cat-embeddings-spy}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_SPY.pdf}}

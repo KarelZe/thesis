@@ -1,6 +1,6 @@
 To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, as well as proximity to quotes. Comparable robustness checks have been previously conducted in ([[@grauerOptionTradeClassification2022]]47) as well as  ([[@savickasInferringDirectionOption2003]]890--892) , enhancing comparability across different works.
 
-Our results are tabulated cref-tab-14-17, separately for gls-gbrt and Transformers as well as exchanges. Improvements over the respective benchmark are documented in every odd column. Like before, we compare against, $\operatorname{gsu}_{\mathrm{small}}$ for feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets. 
+Our results are tabulated cref-tab-14-17, separately for gls-gbrt and Transformers as well as exchanges. 
 
 Performance improvement of glspl-gbrt are consistent for calls and puts across all feature sets and exchanges. Depending on the security type of the underlying gsl-gbrt attains the largest improvements for long maturities and deep in the money options, as 
 (hier fehlt noch was)
