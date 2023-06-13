@@ -21,17 +21,51 @@ https://github.com/jessevig/bertviz/blob/master/bertviz/head_view.py
 
 **Attention Maps:**
 
+Drawing on theory in cref-[[🧭Feature Importance Measure]], we employ the methodology of ([[@cheferTransformerInterpretabilityAttention2021]]2--4) to generate attention maps, which we then qualitatively interpret. These attention maps offer transparency at the *trade level*. To aid visualization, we focus to a subsets of trades, where performance of Transformers is particularly strong and select num-16 mid spread trades and num-16 trades at the quotes from the gls-ise test set. The resulting attention map for the Transformer trained on FS 3 are shown in cref-attention-maps. 
+
+![[attention-maps.png]]
+Each column represents a single trade. Following the standard rationale all x-axis indicates the trade, y-axis denotes the features.
+We exclude the CLS  token as it accumulates most feature importances. Darkness of pixel represents strength of attention score.
+
+Visually, the trade price and quotes at the exchange or inter-exchange level are most important and most frequently used. This aligns with our intuition, as these features are core to the quote rule and numerous hybrid algorithms. Also, quote-based algorithms are among the best performing in our dataset. Aside from the trade price, features required to estimate the tick rule attain only low attention scores. Considering the devastating performance of tick-based algorithms in option trade classification, this is expected. Features from the depth and trade size rule, such as the trade size, are used selectively. For classification of trades at the quotes, option-specific feature like the issue type, moneyness, time to maturity, or daily trading volume of the option series receive relatively high attention scores. Overall, derived features, like the proximity to quotes, attain only low attention scores, which can be indication that the Transformer can synthesise the feature from the *raw* bid, ask and trade price itself.
+
+In summary, feature attributions a related to the quote rule, as well as option-specific features. Due to the parallels to the Aside from the weighted attributions over all attention heads, it is 
+In the Transformer . Naturally, a more insightful is, how these features contribute in the attention mechanism, and if 
+
+To further analyse twe adapt the approach of ([[@clarkWhatDoesBERT2019]]4) to our setting. 
+
+By design, this approach is bound to 
+
+The tuple denotes the layer and attention head.
+
+As the used 
+
+
+Visually, the Greedy Selection performs better than the No Update Strategy but worse than the random selection. The bandit learning algorithm lies close to the random strategy and is slightly worse than the -greedy strategy for the given parameters
+
+
+Even 
+To better understand how each of the features relate, we adapt the approach of ([[@clarkWhatDoesBERT2019]]) to our setting. 
+
+As expected  
+
+Furthermore, some 
+
+All 32 heads (4 L x 8 head) are documented in the appendix. On a high level, we
+
 “The self-attention mechanism links each of the tokens to the [CLS] token. The strength of this attention link can be intuitively considered as an indicator of the contribution of each token to the classification. While this is intuitive, given the term “attention”, the attention values reflect only one aspect of the Transformer network or even of the selfattention head” (Chefer et al., 2021, p. 789)
 
-Following our reasoning in cref-[[🧭Feature Importance Measure]], we estimate attention maps with the approach of  ([[@cheferTransformerInterpretabilityAttention2021]]) and interpret them qualitatively. Attention maps are local interpretability measures, providing interpretability on the trade level. For visualisation purposes we focus on a small subsets of trades, where performance is particularly strong and  select a random subsets of $16$ mid spread trades and $16$ trades at the quotes from the gls-ise test set. The attention map are visualised in cref-attention-maps. 
-![[attention-maps.png]]
-Each column represents a single trade. Following the standard rationale all x-axis indicates the trade, y-axis denotes the features
+or a given attention head and word, we take whichever other word receives the most attention weight as that model’s prediction3
 
-We not that, graphically, the trade price and quotes at the exchange level are most important, and are also used most frequently. 
+times achieving high accuracy and substantially outperforming the fixed-offset baseline. We find that for all relations in Table 1 except pobj, the dependent attends to the head word rather than the other way around, likely because each dependent has exactly one head but heads have multiple dependents. We also note heads can disagree with standard annotation conventions while still performing syntactic behavior. For example, head 7- 6 marks ’s as the dependent for the poss relation, while gold-standard labels mark the complement of an ’s as the dependent (the accuracy in Table 1 counts ’s as correct). Such disagreements highlight how these syntactic behaviors in BERT are learned as a by-product of self-supervised training, not by copying a human design
+
+
 
 Derived features, such as the proximity to quotes, or the change in trade price, are hardly important 
 
 we focus on a small subset of trades at the  mid and quotes
+
+Different to rule based approaches is the use of option specific features like time to maturity, strike price or issue type
 
 Analogous to rule
 
@@ -48,10 +82,9 @@ Attention has a clear interpretation as (...) We follow the approach of ([[@chef
 
 As the 
 
-
+Different to trade classification using, that sequentially combine trade classification rules, attention heads within the same layer operate in parallel
 
 Many of the attention heads exhibit behaviour that seems related to the structure of the sentence. We give two such examples above, from two different heads from the encoder self-attention at layer 5 of 6. The heads clearly learned to perform different tasks.
-
 
 
 

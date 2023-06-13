@@ -180,7 +180,7 @@ Contrary to the expectation, the performance improvements are highest for the \g
 %     \label{fig:confusion-matrix-supervised-ise}
 % \end{figure}
 
-In summary, our supervised methods establish a new state-of-the-art in option trade classification. Our approach achieves full coverage and outperforms all previously reported classification rules in terms of accuracy. We perform robustness checks in \cref{sec:robustness-checks} to verify performance is consistent across sub-samples.
+In summary, our supervised methods establish a new state-of-the-art in option trade classification. Our approach achieves full coverage and outperforms all previously reported classification rules in terms of accuracy. We perform additional robustness checks in \cref{sec:robustness-checks} to verify performance is consistent across sub-samples.
 
 \subsection{Results of Semi-Supervised
     Models}\label{sec:results-of-semi-supervised-models}
@@ -496,12 +496,17 @@ To summarize, despite the significantly higher training costs, semi-supervised v
 
 \textbf{Attention Visualisation}
 
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=1\textwidth]{attention_maps_ise_quotes_mid.pdf}
-%     \caption[tbd]{tbd}
-%     \label{fig:attention-maps-ise}
-% \end{figure}
+Drawing on theory in \cref{sec:feature-importance-measure}, we employ the methodology of \textcite[][2--4]{cheferTransformerInterpretabilityAttention2021} to generate attention maps, which we then qualitatively interpret. These attention maps offer transparency at the \emph{trade level}. To aid visualization, we focus on a subsets of trades, where the performance of Transformers is particularly strong and select \num{16} mid-spread trades and \num{16} trades at the quotes from the \gls{ISE} test set. The resulting attention maps are shown in \cref{fig:attention-maps-ise}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{attention_maps_ise_quotes_mid.pdf}
+    \caption[tbd]{tbd}
+    \label{fig:attention-maps-ise}
+\end{figure}
+
+Visually, the trade price and quotes at the exchange or inter-exchange level are important and frequently used. This aligns with theory, as these features are core to the quote rule and numerous hybrid algorithms. Also, quote-based algorithms are among the best performing in our dataset. Aside from the trade price, features required to estimate the tick rule attain only spurious attributions. Considering the devastating performance of tick-based algorithms in option trade classification, this is unsurprising. Features from the depth and trade size rule, such as the trade size, are used selectively for trades at the quotes. In this subset, option-specific features like the issue type, moneyness, time to maturity, or daily trading volume of the option series receive relatively high attention scores.  Overall, engineered features, like the proximity to quotes, attain low attention scores, which suggests that the Transformer itself can synthesise the feature from the \emph{raw} bid, ask, and trade price.
+
 
 \textbf{Embedding Visualisation}
 
