@@ -24,10 +24,46 @@ https://github.com/jessevig/bertviz/blob/master/bertviz/head_view.py
 Drawing on theory in cref-[[🧭Feature Importance Measure]], we employ the methodology of ([[@cheferTransformerInterpretabilityAttention2021]]2--4) to generate attention maps, which we then qualitatively interpret. These attention maps offer transparency at the *trade level*. To aid visualization, we focus to a subsets of trades, where performance of Transformers is particularly strong and select num-16 mid spread trades and num-16 trades at the quotes from the gls-ise test set. The resulting attention map for the Transformer trained on FS 3 are shown in cref-attention-maps. 
 
 ![[attention-maps.png]]
+
+Attention Maps of Transformer Trained on ISE data set
 Each column represents a single trade. Following the standard rationale all x-axis indicates the trade, y-axis denotes the features.
 We exclude the CLS  token as it accumulates most feature importances. Darkness of pixel represents strength of attention score.
 
 Visually, the trade price and quotes at the exchange or inter-exchange level are most important and most frequently used. This aligns with our intuition, as these features are core to the quote rule and numerous hybrid algorithms. Also, quote-based algorithms are among the best performing in our dataset. Aside from the trade price, features required to estimate the tick rule attain only low attention scores. Considering the devastating performance of tick-based algorithms in option trade classification, this is expected. Features from the depth and trade size rule, such as the trade size, are used selectively. For classification of trades at the quotes, option-specific feature like the issue type, moneyness, time to maturity, or daily trading volume of the option series receive relatively high attention scores. Overall, derived features, like the proximity to quotes, attain only low attention scores, which can be indication that the Transformer can synthesise the feature from the *raw* bid, ask and trade price itself.
+
+The model assigns the highest attention scores to features found in the quote rule and hybrids there-off. Due to the existing link to rule-based trade classification, it is tempting to explore, if the fine-grained patterns learned by specific attention heads translate to existing trade classification rules i. e., if specific tokens attend to features that are jointly used in rule-based classification. This information is sacrificed when aggregating over multiple attention heads and layers, as done for cref-fig, but readily available from individual attention heads. To further analyse this aspect, we adapt the approach of ([[@clarkWhatDoesBERT2019]]4) to our setting. Figure cref-fig depicts the result for selected attention heads involved in classifying a trade *at the quote*. All num-32 attention heads are visualised in the appendix.
+
+![[layer_3_head_0.png]]
+(layer 3, head 0)
+![[layer_3_head_4.png]]
+(layer 3, head 4)
+![[layer_3_head_8.png]]
+(layer 3, head 8)
+
+For earlier . This maps to our 
+
+Overall the first layers, 
+
+Figure 5 shows some examples of the attention behaviour.
+
+All 64 attention heads 
+
+For a given attention head and word, we take whichever other word receives the most attention weight as that model’s prediction
+However, we do find that certain attention heads specialize to specific dependency relations, some
+While the similarity between machinelearned attention weights and human-defined syntactic relations are striking, we note these are relations for which attention heads do particularly well on. There are many relations for which BERT only slightly improves over the simple baseline, so we would not say individual attention heads capture dependency structure as a whole. We think it would be interesting future work to extend our
+
+Similar to ([[@vaswaniAttentionAllYou2017]]15) (Based on code of [[@clarkWhatDoesBERT2019]]) (change order(left to right))
+
+Figure 5: BERT attention heads that correspond to linguistic phenomena. In the example attention maps, the darkness of a line indicates the strength of the attention weight. All attention to/from red words is colored red; these colors are there to highlight certain parts of the attention heads’ behaviors. For Head 9-6, we don’t show attention to [SEP] for clarity. Despite not being explicitly trained on these tasks, BERT’s attention heads perform remarkably well, illustrating how syntax-sensitive behavior can emerge from self-supervised training alone.
+
+Figure 5 shows some examples of the attention behavior. While the similarity between machinelearned attention weights and human-defined syntactic relations are striking, we note these are relations for which attention heads do particularly well on. There are many relations for which BERT only slightly improves over the simple baseline, so we would not say individual attention heads capture dependency structure as a whole. We think it would be interesting future work to extend our analysis to see if the relations well-captured by attention are similar or different for other languages.
+
+
+Many of the attention heads exhibit behaviour that seems related to the structure of the sentence. We give two such examples above, from two different heads from the encoder self-attention at layer 5 of 6. The heads clearly learned to perform different tasks.
+
+All 32 heads (4 L x 8 head) are documented in the appendix. On a high level, we
+
+As the attention maps contain the weighted attributions over multiple layers and attention heads, it is even more  
 
 In summary, feature attributions a related to the quote rule, as well as option-specific features. Due to the parallels to the Aside from the weighted attributions over all attention heads, it is 
 In the Transformer . Naturally, a more insightful is, how these features contribute in the attention mechanism, and if 
@@ -87,21 +123,6 @@ Different to trade classification using, that sequentially combine trade classif
 Many of the attention heads exhibit behaviour that seems related to the structure of the sentence. We give two such examples above, from two different heads from the encoder self-attention at layer 5 of 6. The heads clearly learned to perform different tasks.
 
 
-
-![[layer_3_head_0.png]]
-(layer 3, head 0)
-![[layer_3_head_4.png]]
-(layer 3, head 4)
-![[layer_3_head_8.png]]
-(layer 3, head 8)
-Similar to ([[@vaswaniAttentionAllYou2017]]15) (Based on code of [[@clarkWhatDoesBERT2019]]) (change order(left to right))
-
-Figure 5: BERT attention heads that correspond to linguistic phenomena. In the example attention maps, the darkness of a line indicates the strength of the attention weight. All attention to/from red words is colored red; these colors are there to highlight certain parts of the attention heads’ behaviors. For Head 9-6, we don’t show attention to [SEP] for clarity. Despite not being explicitly trained on these tasks, BERT’s attention heads perform remarkably well, illustrating how syntax-sensitive behavior can emerge from self-supervised training alone.
-
-Figure 5 shows some examples of the attention behavior. While the similarity between machinelearned attention weights and human-defined syntactic relations are striking, we note these are relations for which attention heads do particularly well on. There are many relations for which BERT only slightly improves over the simple baseline, so we would not say individual attention heads capture dependency structure as a whole. We think it would be interesting future work to extend our analysis to see if the relations well-captured by attention are similar or different for other languages.
-
-
-Many of the attention heads exhibit behaviour that seems related to the structure of the sentence. We give two such examples above, from two different heads from the encoder self-attention at layer 5 of 6. The heads clearly learned to perform different tasks.
 
 
 ![[attention-visualisation.png]]
