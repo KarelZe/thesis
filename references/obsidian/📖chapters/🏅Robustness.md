@@ -1,6 +1,44 @@
+To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, as well as proximity to quotes. Comparable robustness checks have been previously conducted in ([[@grauerOptionTradeClassification2022]]47) as well as  ([[@savickasInferringDirectionOption2003]]890--892) , enhancing comparability across different works.
+
+Our results are tabulated cref-tab-14-17, separately for gls-gbrt and Transformers as well as exchanges. Improvements over the respective benchmark are documented in every odd column. Like before, we compare against, $\operatorname{gsu}_{\mathrm{small}}$ for feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets. 
+
+Performance improvement of glspl-gbrt are consistent for calls and puts across all feature sets and exchanges. Depending on the security type of the underlying gsl-gbrt attains the largest improvements for long maturities and deep in the money options, as 
+(hier fehlt noch was)
+
+Performance is stable across different trade sizes and across time. Likewise the improvements in accuracy are comparable for different maturities and moneyness ratios. Aligning with rule-based approaches, accuracies tend to be lower for option trades with long maturities and deep in-the-money options.
+(walum?)
+
+
+Notably, Transformers 
+
+
+Improvements 
+
+Similarily, for Transformers we observe that impro
+
+
+Classification is generally more accurate outside the spread than at or inside the quote; this differs from Ellis et al.’s (2000) and Peterson and Sirri’s (2003) finding lower accuracy outside the spread. As mentioned previously, this difference may be due to omitting negotiated trades.
+Classification is generally more accurate outside the spread than at or inside the quote; this differs from Ellis et al.’s (2000) and Peterson and Sirri’s (2003) finding lower accuracy outside the spread. As mentioned previously, this difference may be due to omitting negotiated trades.
+
+TODO: Again, results are not 100 % comparaable due to grouping. TODO: Com-
+pare improvements with other works. Improvments much greater than ronen et a
+
+TODO: When the analysis was repeated using only the Lee and Radhakrishna sub-
+sample, the results were equally as strong or stronger, with two exceptions. Using
+their subsample, time between transactions is no longer a statistically signi”cant
+determinant of misclassi”cation and large trades are misclassi”ed slightly more fre-
+quently than small trades (odderswhite) TODO: Our focus is on ... rules. TODO:
+Improvements are particularily high for trades that are notourisly hard to classify
+by classical trade classification algorithms.
+24Dispite the commonalities, when comparing with Grauer et al. (2022, pp. 47–52), one has to
+be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group
+similar algorithms.
 
 2.3.6 How to Write the Results  Content of the Results’ Section  Presentation and description (interpretation) of the data (only the new, own results)  Use of Past tense  Representative data, not repetitive data  How to handle data  One or only little data = text  Repetitive determinations = tables or graphs 14  Strive for clarity  Short, clear, simple  Avoid redundancy  no repetition in words, if results are apparent in figures and tables.  Our Recommendations: This chapter “Results” can be written concisely and simply if the data are presented by tables and graphs. One dataset has to be presented either by a table or a graph, not a table and a graph! If specific values need to be presented you should use the table form; if e.g. different variants should be compared, the reader often gets a better overview by looking at figures. Figures could also be helpful, if a large amount of data should be summarized. As far as “How to design effective graphs/figures and tables?” is concerned, look in journals specific to your topic or follow the advice given by Day and Gastel (2012) in the respective chapter in their book.
 
+To verify the superior performance of our new rules when applied in different situations, we perform a battery of sample splits and analyze their performance over time. Following Savickas and Wilson (2003), we analyze sample splits based on option characteristics such as option and security type, time to maturity, and moneyness. Because the tick rule might be more problematic if there is a long time period between trades, we perform a sample split based on the time between trades. To conserve space, we compute average success rates for the different specifications of the quote, tick, LR, reverse LR, EMO, and depth rules (see footnote 9).
+
+Comparing options with different maturities and moneyness, we find that our trade size rule achieves the highest improvements when applied to options with long maturities and deep-out-ofthe money options. When we look at the performance of the original algorithms, not applying our trade size rule, i.e., subtracting the improvement in parentheses from the rule’s performance, we find that the original rules perform particularly poor for those options. Therefore, our new trade size rule resolves this weakness of the existing trade classification algorithms and leads to the highest improvement where it is most needed. The results on the sample splits regarding the time between trades confirm that tick rules have problems classifying trades when there is a long time between two consecutive trades. For example, in the ISE and CBOE samples, the performance advantage of the quote rules over the tick rules is about 10% for the lowest quintile and increases to on average about 15% for the three quintiles with the longest time between trades. Interestingly, after a critical threshold of the time between trades is exceeded, the performance difference no longer increases.
 
 ## Results over time
 
@@ -48,3 +86,7 @@
 
 
 “Trade size may also affect the accuracy of trade classification rules. Odders-White (2000) finds that the success rate is higher for large trades than for small trades while Ellis et al. (2000) find that large trades are more frequently misclassified than small trades” (Chakrabarty et al., 2007, p. 3814)
+
+To further challenge our hypothesis and to validate the improvement by our new trade size rule, we conduct two subsample analyses. First, we evaluate the performance of our trade size rule separately for different locations of trade prices relative to the bid and ask quotes at the ISE. The results in Panel B of Table 5 show that the new rule works best for trades occurring at the ask or bid quote and improves the success to classify at-quote trades by up to 21%. Contrary, the trade size rule even deteriorates the performance to correctly classify outside-quote trades compared to the traditional trade classification approaches by up to 4.5%. These results are also in line with our hypothesis that market makers fill limit orders from customers at the limit price, set by the customer. Contrary, if the trade price is outside the bid-ask spread, this is an indication that a customer wanted to trade against a standing limit order of a market maker, but the size of the market maker’s quote was not sufficient, leading to a further price deterioration. As a second subsample analysis, we evaluate the performance separately for various trade size categories. Figure 1 shows average success rates for the different specifications of the quote, tick, LR, reverse LR, EMO, and depth rules after the trade size rule has been applied for different trade 8OptionMetrics recently started offering a product (“IvyDB Signed Volume”) that provides buying and selling volume information. Their classification is also based on the LR algorithm (see OptionMetrics (2020)). 15 Electronic copy available at: https://ssrn.com/abstract=409847
+
+size bins.9 The cutoffs for the bins are calculated as quintiles and are measured in number of contracts. We show the overall success rates of the classification algorithms using our trade size rule and also calculate the change in the success rates compared to the same algorithms not using the trade size rule. The results show that our new rule works best for small to medium-sized trades and even leads to a slight deterioration of the performance for the largest trade sizes. This finding is in line with the hypothesis that limit orders placed by customers are more likely to be smaller trades. In contrast, large trades for which the trade size is equal to the quote size are more likely to be market orders in which customers want to trade the full depth of the market maker’s bid or ask quote. Given the results of the two subsample analyses, it would be possible to further improve the methodology of applying the trade size rule. In additional results, which are not tabulated to conserve space, we find that not applying the new rule for very large trades and for trades outside the bid-ask spread leads to small additional improvements of up to 0.4%.10 Due to the additional complexity, which is prone to a potential over-fitting regarding the cutoff between small and large trades, and also due to the results from the out-of-sample tests that show mixed results for these additional refinements, we recommend to apply our two new rules to all trades.

@@ -44,7 +44,7 @@ From all rules, the tick rule performs worst when applied to trade prices at the
     \end{tabular}
 \end{table}
 
-Quote-based algorithms outperform tick-based algorithms delivering accuracy up to \SI{63.72}{\percent}, when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
+Quote-based algorithms outperform tick-based algorithms delivering accuracy up to \SI{63.72}{\percent}, when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites[][891]{savickasInferringDirectionOption2003}[][3]{grauerOptionTradeClassification2022}.
 
 The performance of hybrids, such as the \gls{LR} algorithm, hinges on the reliance on the tick test. Thus, the \gls{EMO} rules and to a lesser extent the \gls{CLNV} rules perform worst, achieving accuracies between \SI{55.42}{\percent} and \SI{57.57}{\percent}. In turn, variants of the \gls{LR}, which uses the quote rule for most trades, are among the best-performing algorithms. By extension, $\operatorname{gsu}_{\mathrm{small}}$ further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$.
 
@@ -61,7 +61,7 @@ Aside from these high-level observations, we focus on three findings in greater 
 
 \textbf{Finding 1: Accuracy of Basic Rules Is Downward-Biased by Missingness}
 
-\todo{Add finding}
+\todo{Add finding. See e. g., olbrys}
 
 \textbf{Finding 2: Accuracy Comes From Depth}
 
@@ -239,8 +239,7 @@ To summarize, despite the significantly higher training costs, semi-supervised v
 
 \subsection{Robustness of Results}\label{sec:robustness-checks}
 
-\todo{Again, results are not 100 \% comparaable due to grouping.}
-\todo{Compare improvements with other works. Improvments much greater than ronen et al. }
+To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, as well as proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[][47]{grauerOptionTradeClassification2022} as well as  \textcite[][890--892]{savickasInferringDirectionOption2003}, enhancing comparability across different works.\footnote{Dispite all efforts, when comparing with \textcite[][47--52]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.}
 
 \textbf{Gradient Boosting}
 
