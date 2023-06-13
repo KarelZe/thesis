@@ -1,4 +1,7 @@
 
+2.3.6 How to Write the Results  Content of the Results’ Section  Presentation and description (interpretation) of the data (only the new, own results)  Use of Past tense  Representative data, not repetitive data  How to handle data  One or only little data = text  Repetitive determinations = tables or graphs 14  Strive for clarity  Short, clear, simple  Avoid redundancy  no repetition in words, if results are apparent in figures and tables.  Our Recommendations: This chapter “Results” can be written concisely and simply if the data are presented by tables and graphs. One dataset has to be presented either by a table or a graph, not a table and a graph! If specific values need to be presented you should use the table form; if e.g. different variants should be compared, the reader often gets a better overview by looking at figures. Figures could also be helpful, if a large amount of data should be summarized. As far as “How to design effective graphs/figures and tables?” is concerned, look in journals specific to your topic or follow the advice given by Day and Gastel (2012) in the respective chapter in their book.
+
+
 ## Results over time
 
 ![[results-over-time-ise.png]]
