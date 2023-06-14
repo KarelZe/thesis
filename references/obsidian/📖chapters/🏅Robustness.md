@@ -1,12 +1,34 @@
-To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, as well as proximity to quotes. Comparable robustness checks have been previously conducted in ([[@grauerOptionTradeClassification2022]]47) as well as  ([[@savickasInferringDirectionOption2003]]890--892) , enhancing comparability across different works.
+Following the recommendations of ([[@odders-whiteOccurrenceConsequencesInaccurate2000]], 2000, p. 280) To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, as well as proximity to the quotes. Comparable robustness checks have been previously conducted in ([[@grauerOptionTradeClassification2022]]47) as well as  ([[@savickasInferringDirectionOption2003]]890--892), enhancing comparability between works.
 
 Our results are tabulated cref-tab-14-17, separately for gls-gbrt and Transformers as well as exchanges. 
 
-Performance improvement of glspl-gbrt are consistent for calls and puts across all feature sets and exchanges. Depending on the security type of the underlying gsl-gbrt attains the largest improvements for long maturities and deep in the money options, as 
-(hier fehlt noch was)
+Performance improvement of glspl-gbrt are consistent for calls and puts across all feature sets and exchanges. Conditional on the security type of the underlying, gsl-gbrt achieves the largest improvements for index options in the gls-cboe sample, but perform slightly worse than rule-based approaches on the gls-ise set. On both datasets, accuracies are lowest for index options, which corroborates with literature on rule-based classification.
 
-Performance is stable across different trade sizes and across time. Likewise the improvements in accuracy are comparable for different maturities and moneyness ratios. Aligning with rule-based approaches, accuracies tend to be lower for option trades with long maturities and deep in-the-money options.
-(walum?)
+The performance is stable for different trade sizes and over time. Similarly, accuracy improvements are comparable for different maturities and moneyness ratios. Aligning with rule-based approaches, accuracies are lowest for option trades with long maturities and deep in-the-money options, as reported in ([[@grauerOptionTradeClassification2022]]22). 
+
+glspl-GBRT achieve particularly strong results for trades at the quotes or if quote data at the exchange level is incomplete. In these subsets, improvements reach up to percentage-16.01 in the gls-cboe and thus tighten the gap between trades inside or at the quotes. Consistent across all feature sets and exchanges, glspl-GBRT fail to improve upon classical rules for trades outside the spread, underperforming the benchmark by up to percent--5.43. This. We attribute the discrepancies to ()...
+
+Opposing to
+
+([[@savickasInferringDirectionOption2003]]894) document a high missclassification error for rule-based approaches on trades outside the quotes. Controversly, ()
+**Transfomer**
+- results are smoother?
+We 
+
+Similar
+Controversely to grauer
+
+Classification is generally more accurate outside the spread than at or inside the quote; this differs from Ellis et al.’s (2000) and Peterson and Sirri’s (2003) finding lower accuracy outside the spread. As mentioned previously, this difference may be due to omitting negotiated trades.
+
+Again, our results corroborate with the empirical literature. Third and finally, we find a substantial underperformance of the tick rule for zero tick trades, which is 9.33 percentage points lower than for non-zero ticks, compared to only 3.67 percentage points for the quote based rules.
+
+Finally, we observe, tah
+Gradient-boosting performs best, , while
+
+The performance of the tick test is only slightly worse than the performance of LR's method. Table 4's final column lends additional support to this result. When the sample is limited to trades occurring on zero ticks, but trades on quote changes, mid-spread trades, and crosses are excluded, the tick test and LR's method both correctly identify at least 95% of the trades.
+
+
+The results are displayed in Table 5. First, we confirm the asymmetry in buyer and sellerinitiated trades found by Aitkin and Frino (1996) and Omrane and Welsh (2016), with sellerinitiated trades performing remarkably better than buyer-initiated trades (the average difference is 7.46% for all TCR compared to 9.49% in Omrane and Welsh 2016). Second, for all quote-based rules we find lower accuracy for trades inside the quotes. Again, our results corroborate with the empirical literature. Third and finally, we find a substantial underperformance of the tick rule for zero tick trades, which is 9.33 percentage points lower than for non-zero ticks, compared to only 3.67 percentage points for the quote based rules.
 
 
 Notably, Transformers 
@@ -17,11 +39,8 @@ Improvements
 Similarily, for Transformers we observe that impro
 
 
-Classification is generally more accurate outside the spread than at or inside the quote; this differs from Ellis et al.’s (2000) and Peterson and Sirri’s (2003) finding lower accuracy outside the spread. As mentioned previously, this difference may be due to omitting negotiated trades.
-Classification is generally more accurate outside the spread than at or inside the quote; this differs from Ellis et al.’s (2000) and Peterson and Sirri’s (2003) finding lower accuracy outside the spread. As mentioned previously, this difference may be due to omitting negotiated trades.
 
-TODO: Again, results are not 100 % comparaable due to grouping. TODO: Com-
-pare improvements with other works. Improvments much greater than ronen et a
+
 
 TODO: When the analysis was repeated using only the Lee and Radhakrishna sub-
 sample, the results were equally as strong or stronger, with two exceptions. Using
@@ -30,15 +49,9 @@ determinant of misclassi”cation and large trades are misclassi”ed slightly m
 quently than small trades (odderswhite) TODO: Our focus is on ... rules. TODO:
 Improvements are particularily high for trades that are notourisly hard to classify
 by classical trade classification algorithms.
-24Dispite the commonalities, when comparing with Grauer et al. (2022, pp. 47–52), one has to
-be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group
-similar algorithms.
 
 2.3.6 How to Write the Results  Content of the Results’ Section  Presentation and description (interpretation) of the data (only the new, own results)  Use of Past tense  Representative data, not repetitive data  How to handle data  One or only little data = text  Repetitive determinations = tables or graphs 14  Strive for clarity  Short, clear, simple  Avoid redundancy  no repetition in words, if results are apparent in figures and tables.  Our Recommendations: This chapter “Results” can be written concisely and simply if the data are presented by tables and graphs. One dataset has to be presented either by a table or a graph, not a table and a graph! If specific values need to be presented you should use the table form; if e.g. different variants should be compared, the reader often gets a better overview by looking at figures. Figures could also be helpful, if a large amount of data should be summarized. As far as “How to design effective graphs/figures and tables?” is concerned, look in journals specific to your topic or follow the advice given by Day and Gastel (2012) in the respective chapter in their book.
 
-To verify the superior performance of our new rules when applied in different situations, we perform a battery of sample splits and analyze their performance over time. Following Savickas and Wilson (2003), we analyze sample splits based on option characteristics such as option and security type, time to maturity, and moneyness. Because the tick rule might be more problematic if there is a long time period between trades, we perform a sample split based on the time between trades. To conserve space, we compute average success rates for the different specifications of the quote, tick, LR, reverse LR, EMO, and depth rules (see footnote 9).
-
-Comparing options with different maturities and moneyness, we find that our trade size rule achieves the highest improvements when applied to options with long maturities and deep-out-ofthe money options. When we look at the performance of the original algorithms, not applying our trade size rule, i.e., subtracting the improvement in parentheses from the rule’s performance, we find that the original rules perform particularly poor for those options. Therefore, our new trade size rule resolves this weakness of the existing trade classification algorithms and leads to the highest improvement where it is most needed. The results on the sample splits regarding the time between trades confirm that tick rules have problems classifying trades when there is a long time between two consecutive trades. For example, in the ISE and CBOE samples, the performance advantage of the quote rules over the tick rules is about 10% for the lowest quintile and increases to on average about 15% for the three quintiles with the longest time between trades. Interestingly, after a critical threshold of the time between trades is exceeded, the performance difference no longer increases.
 
 ## Results over time
 
@@ -57,7 +70,7 @@ Comparing options with different maturities and moneyness, we find that our trad
 - analyse the classifier performance based on the $|\cdot|$ proximity of the quotes?
 
 - LR-algorithm (see [[#^370c50]]) require an offset between the trade and quote. How does the offset affect the results? Do I even have the metric at different offsets?
-- Perform binning like in [[@grauerOptionTradeClassification2022]]
+]]
 - Are probabilities a good indicator reliability e. g., do high probablities lead to high accuracy.
 - Are there certain types of options that perform esspecially poor?
 - Confusion matrix

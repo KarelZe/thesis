@@ -4,7 +4,7 @@ This chapter compares the results of rule-based trade classification with machin
 
 \subsection{Results of Rule-Based Approaches}\label{sec:result-of-rule-based-approaches}
 
-We now estimate the accuracy of classical trade classification rules on the \gls{ISE} and \gls{CBOE} sample. We consider the tick and quote rule, as well as the \gls{LR} algorithm, \gls{EMO} rule and \gls{CLNV} method in their classical and reversed formulation. Additionally, we consider two stacked combinations of \textcite[][12--14]{grauerOptionTradeClassification2022} due to their state-of-the-art performance on the validation set, as derived in \cref{sec:hyperparameter-tuning}. Namely, $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ and $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ or in short $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$.
+We now estimate the accuracy of classical trade classification rules on the \gls{ISE} and \gls{CBOE} samples. We consider the tick and quote rule, as well as the \gls{LR} algorithm, \gls{EMO} rule and \gls{CLNV} method in their classical and reversed formulation. Additionally, we consider two stacked combinations of \textcite[][12--14]{grauerOptionTradeClassification2022} due to their state-of-the-art performance on the validation set, as derived in \cref{sec:hyperparameter-tuning}. Namely, $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ and $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ or in short $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$.
 
 We report in \cref{tab:ise-classical} accuracies for the entire data set and separate subsets spanning the periods of train, validation, and test set as defined in \cref{sec:train-test-split}. Doing so enables comparisons with previous works, but also provides meaningful estimates on the test set relevant for benchmarking purposes.
 
@@ -44,7 +44,7 @@ From all rules, the tick rule performs worst when applied to trade prices at the
     \end{tabular}
 \end{table}
 
-Quote-based algorithms outperform tick-based algorithms delivering accuracy up to \SI{63.72}{\percent}, when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites[][891]{savickasInferringDirectionOption2003}[][3]{grauerOptionTradeClassification2022}.
+Quote-based algorithms outperform tick-based algorithms delivering accuracy up to \SI{63.72}{\percent} when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites[][891]{savickasInferringDirectionOption2003}[][3]{grauerOptionTradeClassification2022}.
 
 The performance of hybrids, such as the \gls{LR} algorithm, hinges on the reliance on the tick test. Thus, the \gls{EMO} rules and to a lesser extent the \gls{CLNV} rules perform worst, achieving accuracies between \SI{55.42}{\percent} and \SI{57.57}{\percent}. In turn, variants of the \gls{LR}, which uses the quote rule for most trades, are among the best-performing algorithms. By extension, $\operatorname{gsu}_{\mathrm{small}}$ further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$.
 
@@ -204,7 +204,7 @@ We compare the performance of pre-trained Transformers and self-trained gradient
 
 Identical to the supervised case, our models consistently outperform their respective benchmarks. Gradient boosting with self-training surpasses $\operatorname{gsu}_{\mathrm{small}}$ by \SI{3.350000}{\percent} on \gls{ISE} and \SI{5.440000}{\percent} on \gls{CBOE} in accuracy. Improvements for larger feature sets over $\operatorname{gsu}_{\mathrm{large}}$ are marginally lower to the supervised model and range between \SI{4.550000}{\percent} and \SI{7.440000}{\percent}.
 
-The results do not support the hypothesis, that adding unlabelled trades into the training corpus improves generalisation performance of the classifier. We explore this finding in detail.
+The results do not support the hypothesis, that adding unlabelled trades into the training corpus improves the generalisation performance of the classifier. We explore this finding in detail.
 
 \textbf{Finding 5: Unlabelled Trades Provide Poor Guidance}
 
@@ -241,12 +241,20 @@ To summarize, despite the significantly higher training costs, semi-supervised v
 
 To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, as well as proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[][47]{grauerOptionTradeClassification2022} as well as  \textcite[][890--892]{savickasInferringDirectionOption2003}, strengthening comparability across different works.\footnote{Despite all efforts, when comparing with \textcite[][47--52]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.}
 
+Our results are tabulated \cref{tab:diff-ise-gbm,tab:diff-cboe-gbm,tab:diff-ise-transformer,tab:diff-cboe-transformer}, separately for \glspl{GBRT} and Transformers as well as exchanges. 
+
 \textbf{Gradient Boosting}
+
+Performance improvement of \glspl{GBRT} are consistent for calls and puts across all feature sets and exchanges. Conditional on the security type of the underlying, \gls{GBRT} achieves the largest improvements for index options in the \gls{CBOE} sample, but perform slightly worse than rule-based approaches on the \gls{ISE} set. On both datasets, accuracies are lowest for index options, which corroborates with the literature on rule-based classification.
+
+The performance is stable for different trade sizes and over time. Similarly, accuracy improvements are comparable for different maturities and moneyness ratios. Aligning with rule-based approaches, accuracies are lowest for option trades with long maturities and deep in-the-money options, as reported in \textcite[][22]{grauerOptionTradeClassification2022}.
+
+\gls{GBRT} achieve particularly strong results for trades at the quotes or if quote data at the exchange level is incomplete. In these subsets, improvements reach up to \SI{16.01}{\percent} in the \gls{CBOE} and thus tighten the gap between trades inside or at the quotes. Consistent across all feature sets and exchanges, \glspl{GBRT}  fail to improve upon classical rules for trades outside the spread, underperforming the benchmark by up to \SI{-5.43}{\percent}. 
 
 \begin{table}[ht!]
     \centering
     \caption[Robustness Checks For Gradient-Boosting On \glsentryshort{ISE}]{This table presents accuracies of \glspl{GBRT} across various sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
-    \label{tab:diff-ise_supervised_test}
+    \label{tab:diff-ise-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
         {}                       & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
@@ -305,7 +313,7 @@ To assess the robustness of our algorithms, we partition the test sets into sub-
 \begin{table}[h!]
     \centering
     \caption[Robustness Checks For Gradient-Boosting On \glsentryshort{CBOE}]{This table presents accuracies of \glspl{GBRT} across various sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
-    \label{tab:diff-cboe_transfer-gbm}
+    \label{tab:diff-cboe-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
         {}                      & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
@@ -365,7 +373,7 @@ To assess the robustness of our algorithms, we partition the test sets into sub-
 \begin{table}[h!]
     \centering
     \caption[Robustness Checks For FT-Transformer On \glsentryshort{ISE}]{This table presents accuracies of the FT-Transformer across various sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
-    \label{tab:diff-ise_supervised-test}
+    \label{tab:diff-ise-transformer}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
         {}                      & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
@@ -422,7 +430,7 @@ To assess the robustness of our algorithms, we partition the test sets into sub-
 \begin{table}[h!]
     \centering
     \caption[Robustness Checks For FT-Transformer On \glsentryshort{CBOE}]{This table presents accuracies of the FT-Transformer across various sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
-    \label{tab:diff-cboe_transfer_test}
+    \label{tab:diff-cboe-transformer}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
         {}                      & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                       \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
@@ -476,9 +484,6 @@ To assess the robustness of our algorithms, we partition the test sets into sub-
     \end{tabular}
 \end{table}
 
-\todo{When the analysis was repeated using only the Lee and Radhakrishna subsample, the results were equally as strong or stronger, with two exceptions. Using their subsample, time between transactions is no longer a statistically signi"cant determinant of misclassi"cation and large trades are misclassi"ed slightly more frequently than small trades (odderswhite)}
-\todo{Our focus is on ... rules.}
-\todo{Improvements are particularily high for trades that are notourisly hard to classify by classical trade classification algorithms.}
 
 \clearpage
 
@@ -493,7 +498,7 @@ These attention maps offer transparency at the \emph{trade level}. To aid visual
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\textwidth]{attention_maps_ise_quotes_mid.pdf}
-    \caption[Attention Maps of Transformer Trained on \glsentryshort{ISE} Data Set]{Attention maps of Transformer trained on \gls{ISE} data with FS 3. The left plot contains attention weights of \num{16} trades at the quotes and the right plot of \num{16} mid-spread trades. Each column represents a trade and each row a specific feature. The intensity of the pixel represents the importance. $\mathtt{[CLS]}$ token excluded, as suggested in \textcite[][4]{cheferGenericAttentionmodelExplainability2021}.}
+    \caption[Attention Maps of Transformer Trained on \glsentryshort{ISE} Data Set]{Attention maps of Transformer trained on \gls{ISE} data with FS 3. The left plot contains attention weights of \num{16} trades at the quotes and the right plot of \num{16} mid-spread trades. Each column represents a trade and each row a feature. The intensity of the pixel represents the importance. $\mathtt{[CLS]}$ token excluded, as suggested in \textcite[][4]{cheferGenericAttentionmodelExplainability2021}.}
     \label{fig:attention-maps-ise}
 \end{figure}
 
@@ -529,11 +534,11 @@ The embeddings are queried from the feature tokenizer in FT-Transformer. The sim
     \label{fig:categorical-embeddings}
 \end{figure}
 
-For SPDR S\&P 500 ETF ($\mathtt{SPY}$) in \cref{fig:cat-embeddings-spy}, similar embeddings include iShares Russell 2000 ($\mathtt{IWM}$), iShares Russel 2000 ($\mathtt{WYV}$), SPDR S\&P 500 ETF ($\mathtt{OBV}$), and Direxion shares ETF ($\mathtt{XDT}$). This aligns with the intuition that these \glspl{ETF} track identical or related indices. The model distinguishes \glspl{ETF} from other securities based on the feature issue type. Additional similar embeddings consist of Citigroup Inc. ($\mathtt{WRV}$), Kohl's Corp. ($\mathtt{OSS}$), Google Inc. ($\mathtt{YTM}$), and Intel Corp. ($\mathtt{INTC}$), which are long-term index constituents.
+For SPDR S\&P 500 ETF ($\mathtt{SPY}$) in \cref{fig:cat-embeddings-spy}, similar embeddings include iShares Russell 2000 ($\mathtt{IWM}$), iShares Russel 2000 ($\mathtt{WYV}$), SPDR S\&P 500 ETF ($\mathtt{OBV}$), and Direxion shares ETF ($\mathtt{XDT}$). This aligns with the intuition that \glspl{ETF} track identical or related indices. The model distinguishes \glspl{ETF} from other securities based on the feature issue type. Additional similar embeddings consist of Citigroup Inc. ($\mathtt{WRV}$), Kohl's Corp. ($\mathtt{OSS}$), Google Inc. ($\mathtt{YTM}$), and Intel Corp. ($\mathtt{INTC}$), which are long-term index constituents.
 
 Regarding JPMorgan Chase \& Co. ($\mathtt{JPM}$) in \cref{fig:cat-embeddings-jpm}, the most similar embedding is the of Bank of America ($\mathtt{BAC}$). Other similar embeddings include financial service providers like Amerigroup ($\mathtt{XGZ}$) and Janus Henderson Group ($\mathtt{ZPR}$). These results suggest that the model learned to group US financials, even without sector information provided. However, this argumentation does not apply to other related embeddings such as the Apollo Group ($\mathtt{OKO}$) or United Parcel Service of America ($\mathtt{YUP}$). % Autodesk Inc. ($\mathtt{ADQ}$) , Centex Corp. ($\mathtt{YYV}$), United Parcel Service of America ($\mathtt{YUP}$), Wild Oats Markets ($\mathtt{ZAC}$), SPDR S\&P 500 ETF ($\mathtt{SUE}$), and SPDR Dow Jones Industrial Average ($\mathtt{DIA}$).
 
-While these exemplary results indicate that the model can learn meaningful representations of underlyings, we must acknowledge its limitations. Both underlyings are frequently traded in our dataset, which may lead to meaningful embeddings. For infrequent underlyings, embeddings are likely to be close to their random initialisation and lack meaningful patterns due to limited parameter updates and missing context. This issue is analogous to handling rare vocabulary items found in natural language processing. As the underlying plays a subordinate role in classification, this caveat is accepted.
+While these exemplary results indicate that the model can learn meaningful representations of the underlying, we must acknowledge its limitations. Both underlyings are frequently traded in our dataset, which may lead to meaningful embeddings. For infrequent underlyings, embeddings are likely to be close to their random initialisation and lack meaningful patterns due to limited parameter updates and missing context. This issue is analogous to handling rare vocabulary items found in natural language processing. As the underlying plays a subordinate role in classification, this caveat is accepted.
 
 \textbf{Sage Values}
 
@@ -552,7 +557,7 @@ While these exemplary results indicate that the model can learn meaningful repre
 
 \textbf{Preliminaries}
 
-% TODO: Add why it is important. See Stoll, Huang, Roll (zettelkasten)
+\todo{Add why it is important. See Stoll, Huang, Roll (zettelkasten)}
 
 Albeit the classification accuracy is a reasonable measure for comparing classifiers, one cannot immediately infer how changes in accuracy e.~g., an improvement by \SI{1}{\percent}, affect the application domains. In an attempt to make our results tangible, we apply all algorithms to estimate trading cost, a problem we previously identified to be reliant on correct trade classification (cp. \cref{sec:introduction}) and a common testing ground for trade classification rules \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][569]{finucaneDirectTestMethods2000}[][271--278]{petersonEvaluationBiasesExecution2003}[][896--897]{savickasInferringDirectionOption2003}.
 
@@ -570,7 +575,7 @@ For convenience, we also calculate the \emph{relative effective spread} as
 \begin{equation}
     {PS}_{i,t} = S_{i,t} / V_{i,t}.
 \end{equation}
-% \todo{check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does chakrabarty 2007 p. 3819?}
+\todo{check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does Chakrabarty 2007 p. 3819?}
 
 The subsequent section estimates both the nominal and relative effective spread. Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal.
 

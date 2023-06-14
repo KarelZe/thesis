@@ -36,8 +36,7 @@ This behaviour can be explained by the log loss being unbound, where single inco
     \label{fig:gbm-optimisations-loss-acc}
 \end{figure}
 
-% TODO: Cite e.g., Dahl et. al (tuningplaybookgithub) who recommend such a procedure?
-We leverage several architectural changes to reduce the loss, further improve performance and mitigate overfitting in gradient boosting, as shown in \cref{fig:gbm-optimisations-loss-acc}, where the effects on validation accuracy and log loss over the default configuration are visualised. Following standard practice, e.g., \textcite{tuningplaybookgithub}, all other parameters are kept at their default values, while a single parameter is varied to derive the plots. Although this approach ignores parameter interactions, it still can provide guidance for the optimal training configuration. We train on the ISE training set with classical features and report metrics on the validation set.
+We leverage several architectural changes to reduce the loss, further improve performance and mitigate overfitting in gradient boosting, as shown in \cref{fig:gbm-optimisations-loss-acc}, where the effects on validation accuracy and log loss over the default configuration are visualised. Following standard practice, e.g., \textcite{tuningplaybookgithub}, all other parameters are kept at their default values, while a single parameter is varied to derive the plots. Although this approach ignores parameter interactions, it still can guide the optimal training configuration. We train on the ISE training set with classical features and report metrics on the validation set.
 
 \emph{Growth Strategy}
 
@@ -49,7 +48,7 @@ The work of \textcite[][36--38]{grauerOptionTradeClassification2022} suggests a 
 
 \emph{Border Count}
 
-In regression trees of gradient-boosting, split finding is typically approximated with quantization, whereby all numeric features are first discretised into a fixed number of buckets through histogram building, and splits are evaluated at the border of the buckets \autocites[][4]{dorogushCatBoostGradientBoosting}[][2]{keLightGBMHighlyEfficient2017}. To increase the number of split candidates per feature through finer quantization, we raise the border count to \num{254}. Generally, this leads to increased accuracy at the cost of computational efficiency. Yet, in the experiment above, the improvements in validation loss and accuracy are minor compared to the previous changes.
+In regression trees of gradient-boosting, the split finding is typically approximated with quantization, whereby all numeric features are first discretised into a fixed number of buckets through histogram building, and splits are evaluated at the border of the buckets \autocites[][4]{dorogushCatBoostGradientBoosting}[][2]{keLightGBMHighlyEfficient2017}. To increase the number of split candidates per feature through finer quantization, we raise the border count to \num{254}. Generally, this leads to increased accuracy at the cost of computational efficiency. Yet, in the experiment above, the improvements in validation loss and accuracy are minor compared to the previous changes.
 
 \emph{Early Stopping and Checkpointing}
 
@@ -59,7 +58,7 @@ We combine these ideas to leverage the improvements for our large-scale studies.
 
 \textbf{Transformer}
 
-As derived in \cref{sec:supervised-approaches}, we rely on FT-Transformer of \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule \autocite[][1]{liuUnderstandingDifficultyTraining2020}. We investigate minor modifications to the default FT-Transformer to stabilise training and improve overall performance. The default FT-Transformer trained for 10 epochs on \gls{ISE} dataset with classical features and loss and accuracy is visualised in \cref{fig:fttransformer-optimisations-loss-acc} and the model itself is summarised in (...).
+As derived in \cref{sec:supervised-approaches}, we rely on the FT-Transformer of \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule \autocite[][1]{liuUnderstandingDifficultyTraining2020}. We investigate minor modifications to the default FT-Transformer to stabilise training and improve overall performance. The default FT-Transformer trained for 10 epochs on \gls{ISE} dataset with classical features and loss and accuracy is visualised in \cref{fig:fttransformer-optimisations-loss-acc} and the model itself is summarised in (...).
 
 The convergence behaviour of our model is similar to that of gradient boosting. Equally, a significant generalisation gap exists between the training and validation loss. Particularly concerning, the training loss decreases sharply, while the validation loss spuriously improves over its initial estimate. Despite this, validation accuracy improves throughout the entire training cycle. We reason that the network learns to correctly classify trades, indicated by the improved accuracy, but only attains low-confident correct predictions or confident but erroneous predictions which both contribute to a large validation loss. The shape of the flat validation loss and the decreasing training loss suggest that the training set may not be representative of trades in the validation set. This has broader implications on the classifiability of option trades using decision rules from classical trade classification rules for more recent observations. We explore this phenomenon thoroughly as part of our result discussion.
 
@@ -84,7 +83,7 @@ We apply the concept of sample weighting from \gls{GBRT} to Transformers. Specif
 
 \emph{Label Smoothing}
 
-A major problem in classification with neural networks is, that the network becomes over-confident in predicting training samples but perform poorly on unseen data. In \cref{fig:fttransformer-optimisations-loss-acc} the effect is evident, as the increased confidence in the prediction on the training set does not transfer to the validation set. To regularise the network, we experiment with label smoothing \autocite[][2823]{szegedyRethinkingInceptionArchitecture2016} by training on soft labels with an uncertainty constant of $\epsilon$. Instead of assigning hard class probabilities of 0 or 1, we assume that true labels in the training set are correct with $1-\epsilon$ probability and incorrect otherwise. For $\epsilon=\num{0.1}$, a trade with the true label $-1$ is assumed to be \SI{90}{\percent} seller-initiated and \SI{10}{\percent} buyer-initiated. While we observe that label smoothing improves the validation loss and reduces the generalisation gap, we find that it has a negligible effect on validation accuracy and therefore abandon this approach.
+A major problem in classification with neural networks is, that the network becomes over-confident in predicting training samples but performs poorly on unseen data. In \cref{fig:fttransformer-optimisations-loss-acc} the effect is evident, as the increased confidence in the prediction on the training set does not transfer to the validation set. To regularise the network, we experiment with label smoothing \autocite[][2823]{szegedyRethinkingInceptionArchitecture2016} by training on soft labels with an uncertainty constant of $\epsilon$. Instead of assigning hard class probabilities of 0 or 1, we assume that true labels in the training set are correct with $1-\epsilon$ probability and incorrect otherwise. For $\epsilon=\num{0.1}$, a trade with the true label $-1$ is assumed to be \SI{90}{\percent} seller-initiated and \SI{10}{\percent} buyer-initiated. While we observe that label smoothing improves the validation loss and reduces the generalisation gap, we find that it has a negligible effect on validation accuracy and therefore abandon this approach.
 
 \emph{Learning Rate Schedule}
 
@@ -120,7 +119,6 @@ In summary, we extend the training setup of \textcite[][6]{gorishniyRevisitingDe
 Classical trade classification rules serve as a benchmark in our work. We implement them as a classifier that combines arbitrary trade classification rules through stacking, as covered in \cref{sec:semi-supervised-approaches}.
 
 In cases where classification is not feasible due to missing data or the rules' definition itself, we resort to a random classification, which achieves an average accuracy of \SI{50}{\percent}. The approach is adopted from \textcite[][887]{savickasInferringDirectionOption2003}. 
-% In this regard, we deviate from \textcite[][29--32]{grauerOptionTradeClassification2022}, who consider unclassified trades as falsely classified, in \SI{0}{\percent} accuracy. In our context, such a procedure would bias towards machine learning classifiers, which we avidly avoid.
 
 \subsubsection{Training of Semi-Supervised
     Models}\label{sec:training-of-semi-supervised-models}
@@ -168,18 +166,6 @@ Our search space is reported in \cref{tab:hyperparameter-space-gbm}, which is al
 As documented in \cref{tab:hyperparameter-space-gbm}, we tune five hyperparameters for gradient boosting. The first is the depth, which determines the number of levels in each tree. Other than \textcite[][]{gorishniyRevisitingDeepLearning2021}, we increase the upper bound to twelve to allow for more complex ensemble members. Acknowledging the research of \textcite[][14]{friedmanGreedyFunctionApproximation2001} that the learning rate \eta~and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop extending the ensemble based on the early stopping criterion. Random strength, bagging temperature, and $\ell_2$ leaf regularisation are measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness in the selected splits. In a similar vein, the algorithm introduces randomness on the sample level through Bayesian bootstrap. The hyperparameter controls the distribution used for sampling, and implicitly the aggressiveness of bagging. Finally, $\ell_2$ leaf regularisation adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularisation.
 
 \cref{fig:ise-gbm-hyperparam-classical} visualises the hyperparameter search space of the \gls{GBRT} on the \gls{ISE} dataset with classical features, from which we can derive several observations from. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.429}{\percent} and \SI{64.378}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
-
-% \begin{landscape}
-%     % \thispagestyle{empty} % disable footers etc to make best use of space
-%     \begin{figure}[!ht]
-%         \hfill
-%         \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[width=0.3\textwidth]{1gzk7msy-hyperparam-search-space.pdf}}
-%         \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 2\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[width=0.3\textwidth]{3vntumoi-hyperparam-search-space.pdf}}
-%         \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 3\label{fig:ise-gbm-hyperparam-ml}]{\addtocounter{subfigure}{2}\includegraphics[width=0.3\textwidth]{2t5zo50f-hyperparam-search-space.pdf}}
-%         \caption[Hyperparameter Search Space of \glsentryshort{GBRT} on \glsentryshort{ISE} Validation Set]{Hyperparameter Search Space of \gls{GBRT} on \gls{ISE} Validation Set}
-%         \label{fig:ise-gbm-hyperparam}
-%     \end{figure}
-% \end{landscape}
 
 \begin{figure}[!h]
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set 1\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[width=0.6\textwidth]{1gzk7msy-hyperparam-search-space.pdf}}

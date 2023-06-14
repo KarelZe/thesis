@@ -109,7 +109,7 @@ As shown in \cref{eq:depth-rule}, the depth rule classifies midspread trades onl
 
 \subsubsection{Trade Size Rule}\label{sec:trade-size-rule}
 
-% TODO: Think about writing as restriction? https://en.wikipedia.org/wiki/Restriction_(mathematics)
+\todo{Think about writing as restriction? \url{https://en.wikipedia.org/wiki/Restriction_(mathematics)}}
 Generally, quote-based approaches are preferred due to their strong performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. The trade size rule is defined on $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: \tilde{P}_{i,t} = \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \lor \tilde{P}_{i,t} \neq\tilde{A}_{i,t} = \tilde{B}_{i,t} \right\}$ as:
 \begin{equation}
     \operatorname{tsize} \colon \mathcal{A} \to \mathcal{Y},\quad
