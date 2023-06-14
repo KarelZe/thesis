@@ -48,11 +48,11 @@ The work of \textcite[][36--38]{grauerOptionTradeClassification2022} suggests a 
 
 \emph{Border Count}
 
-In regression trees of gradient-boosting, the split finding is typically approximated with quantization, whereby all numeric features are first discretised into a fixed number of buckets through histogram building, and splits are evaluated at the border of the buckets \autocites[][4]{dorogushCatBoostGradientBoosting}[][2]{keLightGBMHighlyEfficient2017}. To increase the number of split candidates per feature through finer quantization, we raise the border count to \num{254}. Generally, this leads to increased accuracy at the cost of computational efficiency. Yet, in the experiment above, the improvements in validation loss and accuracy are minor compared to the previous changes.
+In regression trees of gradient-boosting, the split finding is typically approximated with quantization, whereby all numeric features are first discretised into a fixed number of buckets through histogram building, and splits are evaluated at the border of the buckets \autocite[][2]{keLightGBMHighlyEfficient2017}. To increase the number of split candidates, we raise the border count to \num{254}. Generally, this leads to increased accuracy at the cost of computational efficiency. Yet, in the experiment above, the improvements in validation loss and accuracy are minor compared to the previous modifications.
 
 \emph{Early Stopping and Checkpointing}
 
-To reduce overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for 100 iterations. The ensemble is then cut back to achieve the highest validation accuracy, and the maximum size of the ensemble may not be fully exhausted. In the experiment above, early stopping does not apply, as validation accuracy continues to improve for larger ensembles. We employ additional measures to address overfitting but treat them as a tunable hyperparameter, with more details provided in \cref{sec:hyperparameter-tuning}.
+To reduce overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for \num{100} iterations. The ensemble is then cut back to achieve the highest validation accuracy. In the experiment above, early stopping does not apply, as validation accuracy continuous to improve for larger ensembles. We employ additional measures to address overfitting but treat them as a tunable hyperparameter, with further details provided in \cref{sec:hyperparameter-tuning}.
 
 We combine these ideas to leverage the improvements for our large-scale studies.
 
@@ -68,8 +68,6 @@ The convergence behaviour of our model is similar to that of gradient boosting. 
     \caption[Training and Validation Accuracy of FT-Transformer on \glsentryshort{ISE} with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to one gradient update. The end of each epoch is marked with a dashed bar. Loss is expected to decrease throughout training and accuracy to increase.}
     \label{fig:fttransformer-optimisations-loss-acc}
 \end{figure}
-
-\todo{loss starts at roughly $\log(\frac{1}{2})$. The probability of overserving one class is approximately $p=0.5$}
 
 \textbf{Solutions For FT-Transformer}
 
@@ -129,7 +127,7 @@ To incorporate unlabelled trades into the training procedure, we combine gradien
 
 \textbf{Transformer with Pre-Training}
 
-(...)
+\todo{Summarize changes.}
 
 \subsubsection{Hyperparameter Tuning}\label{sec:hyperparameter-tuning}
 
