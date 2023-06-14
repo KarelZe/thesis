@@ -6,23 +6,63 @@ Performance improvement of glspl-gbrt are consistent for calls and puts across a
 
 The performance is stable for different trade sizes and over time. Similarly, accuracy improvements are comparable for different maturities and moneyness ratios. Aligning with rule-based approaches, accuracies are lowest for option trades with long maturities and deep in-the-money options, as reported in ([[@grauerOptionTradeClassification2022]]22). 
 
-glspl-GBRT achieve particularly strong results for trades at the quotes or if quote data at the exchange level is incomplete. In these subsets, improvements reach up to percentage-16.01 in the gls-cboe and thus tighten the gap between trades inside or at the quotes. Consistent across all feature sets and exchanges, glspl-GBRT fail to improve upon classical rules for trades outside the spread, underperforming the benchmark by up to percent--5.43. This. We attribute the discrepancies to ()...
+glspl-GBRT achieve particularly strong results for trades at the quotes or if quote data at the exchange level is incomplete. In these subsets, improvements reach up to percentage-16.01 in the gls-cboe and thus tighten the gap between trades inside or at the quotes. Consistent across all feature sets and exchanges, glspl-GBRT fail to improve upon classical rules for trades outside the spread, underperforming the benchmark by percent--0.89 to percent--5.43. We identify the relatively stronger performance of quote-based classification on these trades as a reason that poses major challenges. 
+
+In line with ([[@grauerOptionTradeClassification2022]]41--44) we observe a strong performance of the benchmark outside the quotes, This. While we also observe a In our test samples, also the benchmarks deteriorate for trades outside the spread, whereas for We attribute the discrepancies to ()... (piece in)
 
 Opposing to
 
 ([[@savickasInferringDirectionOption2003]]894) document a high missclassification error for rule-based approaches on trades outside the quotes. Controversly, ()
 
+In summary, the results do not indicate a misclassification bias
 
-**Transfomer**
+**Transformer**
+Performance results of Transformers are robust across all tested dimensions. The accuracy is approximately equal for calls and puts. We observe, that benchmark performance of puts is consistently higher in our sub samples, which is contrasts the finding of ([[@grauerOptionTradeClassification2022]]22). 
 
+Similar to glspl-gbrt, the FT-Transformer slightly underperforms the benchmark for index options in the gls-ISE sample. Even though the effect reverses on the gls-cboe set, accuracies for index options are considerably lower than for any other underlying. Thus, we can contemplate / extend the finding of ([[@grauerOptionTradeClassification2022]]22) and ([[@savickasInferringDirectionOption2003]]9) that index options are notoriously difficult to classify to machine learning-based approaches. 
+
+Classification is more accurate for options with near-maturity or deep-in-the-money options. In this sense, our finding contradicts the observation of  ([[@savickasInferringDirectionOption2003]]891) made for rule-based classification. Again, we observe that the addition of option-specific features, e. g. maturity or moneyness smooths out differences between maturity and moneyness levels.
+
+Finally, the FT-Transformers perform best on trades at the quotes, but fails to meet benchmark performance for trades outside the spread. Notably, the FT-Transformer trained on ise data achieves the substantial improvements on trades at the quotes, despite that the some of the benchmarks contain explicit overrides from the trade size rule.
+
+In summary, our tests show that the strong results are stable across multiple dimensions and between exchanges, which makes supervised classifiers a superior choice for trade classification. 
+
+
+
+
+Classification is generally more accurate outside the spread than at or inside the quote; this differs from Ellis et al.’s (2000) and Peterson and Sirri’s (2003) finding lower accuracy outside the spread. As mentioned previously, this difference may be due to omitting negotiated trades.
+
+
+
+Specifically, higher for put this contradicts grauer
+
+
+Performance is stable across time. 
+
+Performance diminishes for deep-in-the-money options and options with long maturity for feature set classical and classical-size. The addition of option-specific features, however, leads to largest improvements for these options,
+
+Perforamance improvements are particularilly strong strong for midspread trades and trades at the quotes
+
+This property is particularily appealing
+
+A sample split by the option types shows no misclassification bias for Transformers.
+
+The Transformer results are robust for calls and puts. 
+
+Improvements in accuracy are balanced between calls and puts for Transformers. 
+
+This reverses
 
 - results are smoother?
-We 
+
+
+
+While performance improvements for trades at the quotes are particularly strong, Transformers do not consistently outperform their benchmarks for trades outside the spread. Overall, we observe smoothing
 
 Similar
 Controversely to grauer
 
-Classification is generally more accurate outside the spread than at or inside the quote; this differs from Ellis et al.’s (2000) and Peterson and Sirri’s (2003) finding lower accuracy outside the spread. As mentioned previously, this difference may be due to omitting negotiated trades.
+
 
 Again, our results corroborate with the empirical literature. Third and finally, we find a substantial underperformance of the tick rule for zero tick trades, which is 9.33 percentage points lower than for non-zero ticks, compared to only 3.67 percentage points for the quote based rules.
 
