@@ -507,11 +507,11 @@ Visually, the trade price and quotes at the exchange or inter-exchange level are
 The model assigns the highest attention scores to features found in the quote rule and hybrids' there-off. Due to the possible link to rule-based trade classification, it is tempting to explore, if the fine-grained patterns learned by specific attention heads translate to existing trade classification rules i.e., if specific tokens attend to features that are jointly used in rule-based classification. This information is sacrificed when aggregating over multiple attention heads and layers, as done for \cref{fig:attention-maps-ise}, but readily available from individual attention heads. To further analyse this aspect, we adapt the approach of \textcite[][4]{clarkWhatDoesBERT2019} to our setting.
 
 \begin{figure}[h!]
-    \subfloat[Tick Rule-like Head (4,5)\label{fig:head-tick}]{\includegraphics[width=0.3\textwidth, height=7cm]{example-image-a}}
+    \subfloat[Tick Rule-like Head (4,5)\label{fig:head-tick}]{\includegraphics[width=0.3\textwidth]{attention_head_5_layer_4_ise_quotes_mid.pdf}}
     \hfill
-    \subfloat[Trade Size Rule-like Head (4,1)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth, height=7cm]{example-image-b}}
+    \subfloat[Trade Size Rule-like Head (4,1)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth]{attention_head_1_layer_4_ise_quotes_mid.pdf}}
     \hfill
-    \subfloat[\glsentryshort{LR}-Like Head (4,8)\label{fig:head-lr}]{\includegraphics[width=0.3\textwidth, height=7cm]{example-image-c}}
+    \subfloat[\glsentryshort{LR}-Like Head (4,8)\label{fig:head-lr}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_4_ise_quotes_mid.pdf}}
     \caption[Attention Heads That Correspond To Trade Classification Rules]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualised for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualisations based on code by \textcite[][4]{clarkWhatDoesBERT2019}.}
     \label{fig:rule-like-attention-heads}
 \end{figure}

@@ -11,7 +11,11 @@ glspl-GBRT achieve particularly strong results for trades at the quotes or if qu
 Opposing to
 
 ([[@savickasInferringDirectionOption2003]]894) document a high missclassification error for rule-based approaches on trades outside the quotes. Controversly, ()
+
+
 **Transfomer**
+
+
 - results are smoother?
 We 
 
