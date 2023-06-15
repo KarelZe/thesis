@@ -265,9 +265,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 eval_set if eval_set is not None else (X_unlabelled, y_unlabelled)
             )
 
-            val_loader_pretrain = self.array_to_dataloader_pretrain(
-                X_unlabelled, y_unlabelled
-            )
+            val_loader_pretrain = self.array_to_dataloader_pretrain(X_val, y_val)
 
             # free up memory
             del X_unlabelled, y_unlabelled
