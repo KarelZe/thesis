@@ -75,12 +75,6 @@ FEATURE_SETS = {
 @click.option(
     "--pretrain/--no-pretrain", default=False, help="Flag to activate pretraining."
 )
-@click.option(
-    "--sample",
-    type=click.FloatRange(0, 1),
-    default=1,
-    help="Sampling factor applied to train and validation set.",
-)
 def main(
     trials: int,
     seed: int,
@@ -89,7 +83,6 @@ def main(
     id: str,
     dataset: str,
     pretrain: bool,
-    sample: float,
 ) -> None:
     """
     Start study.
@@ -102,7 +95,6 @@ def main(
         id (str): id of study.
         dataset (str): name of data set.
         pretrain (bool): whether to pretrain model.
-        sample (float): sampling factor.
     """
     logger = logging.getLogger(__name__)
     warnings.filterwarnings("ignore", category=ExperimentalWarning)
@@ -171,19 +163,6 @@ def main(
     y_val = x_val["buy_sell"]
     x_val.drop(columns=["buy_sell"], inplace=True)
 
-    if sample < 1.0:
-        # sample down train data
-        x_train = x_train.sample(frac=sample, random_state=set_seed(seed)).reset_index(
-            drop=True
-        )
-        y_train = y_train.iloc[x_train.index]
-
-        # sample down validation data
-        x_val = x_val.sample(frac=sample, random_state=set_seed(seed)).reset_index(
-            drop=True
-        )
-        y_val = y_val.iloc[x_val.index]
-
     # pretrain training activated
     has_label = (y_train != 0).all()
     if pretrain and has_label:
@@ -251,7 +230,7 @@ def main(
             "dataset": dataset,
             "seed": seed,
             "pretrain": pretrain,
-            "sample": sample,
+            "sample": 1.0,
         }
     )
 
