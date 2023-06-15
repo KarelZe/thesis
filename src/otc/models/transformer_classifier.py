@@ -15,8 +15,7 @@ import numpy.typing as npt
 import pandas as pd
 import torch
 from sklearn.base import BaseEstimator, ClassifierMixin
-from sklearn.utils.multiclass import check_classification_targets
-from sklearn.utils.validation import check_array, check_is_fitted, check_X_y
+from sklearn.utils.validation import check_array, check_is_fitted
 from torch import nn, optim
 
 from otc.data.dataloader import TabDataLoader
@@ -37,8 +36,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         _type_: classifier
     """
 
-    epochs_pretrain = 20
-    epochs_finetune = 1
+    epochs_pretrain = 2
+    epochs_finetune = 2
 
     def __init__(
         self,
@@ -260,6 +259,12 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             train_loader_pretrain = self.array_to_dataloader_pretrain(
                 X_unlabelled, y_unlabelled
             )
+
+            # use in-sample instead of validation set, if None is provided
+            X_val, y_val = (
+                eval_set if eval_set is not None else (X_unlabelled, y_unlabelled)
+            )
+
             val_loader_pretrain = self.array_to_dataloader_pretrain(
                 X_unlabelled, y_unlabelled
             )
@@ -314,9 +319,15 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 optimizer=optimizer, warmup=warmup_steps, max_iters=max_steps
             )
 
-            criterion = nn.BCEWithLogitsLoss()
+            # keep track of val loss and do early stopping
+            early_stopping = EarlyStopping(patience=10)
+
+            # mean bce with logits loss
+            criterion = nn.BCEWithLogitsLoss(reduction="mean")
 
             step = 0
+            best_accuracy = -1.0
+
             for epoch in range(self.epochs_pretrain):
 
                 # perform training
@@ -324,14 +335,14 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                 batch = 0
 
-                for x_cat, x_cont, masks in train_loader_pretrain:
+                for x_cat, x_cont, mask in train_loader_pretrain:
 
                     self.clf.train()
                     optimizer.zero_grad()
 
                     with torch.autocast(device_type="cuda", dtype=torch.float16):
                         logits = self.clf(x_cat, x_cont)
-                        train_loss = criterion(logits, masks.float())  # type: ignore[union-attr] # noqa: E501
+                        train_loss = criterion(logits, mask.float())  # type: ignore[union-attr] # noqa: E501
 
                     scaler.scale(train_loss).backward()
                     scaler.step(optimizer)
@@ -353,31 +364,45 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 correct = 0
 
                 with torch.no_grad():
-                    for x_cat, x_cont, masks in val_loader_pretrain:
+                    for x_cat, x_cont, mask in val_loader_pretrain:
 
                         # for my implementation
                         logits = self.clf(x_cat, x_cont)
-                        val_loss = criterion(logits, masks.float())  # type: ignore[union-attr] # noqa: E501
-
+                        val_loss = criterion(logits, mask.float())  # type: ignore[union-attr] # noqa: E501
                         loss_in_epoch_val += val_loss.item()
+
+                        # accuracy
+                        # adapted from here, but over columns + rows https://github.com/puhsu/tabular-dl-pretrain-objectives/blob/3f503d197867c341b4133efcafd3243eb5bb93de/bin/mask.py#L440 # noqa: E501
+                        hard_predictions = torch.zeros_like(logits, dtype=torch.long)
+                        hard_predictions[logits > 0] = 1
+                        # sum columns and rows
+                        correct += (hard_predictions.bool() == mask).sum()
 
                         batch += 1
 
                 # loss average over all batches
                 train_loss_all = loss_in_epoch_train / len(train_loader_pretrain)
                 val_loss_all = loss_in_epoch_val / len(val_loader_pretrain)
+                # correct / (rows * columns)
+                val_accuracy = correct / (X_val.shape[0] * X_val.shape[1])
+
+                print(f"train loss: {train_loss}")
+                print(f"val loss: {val_loss}")
+                print(f"val accuracy: {val_accuracy}")
 
                 self._stats_pretrain_epoch.append(
                     {
                         "train_loss": train_loss_all,
                         "val_loss": val_loss_all,
+                        "val_accuracy": val_accuracy,
                         "step": step,
                         "epoch": epoch,
                     }
                 )
 
-                print(f"train loss: {train_loss}")
-                print(f"val loss: {val_loss}")
+                if best_accuracy < val_accuracy:
+                    self._checkpoint_write()
+                    best_accuracy = val_accuracy
 
             # https://discuss.huggingface.co/t/clear-gpu-memory-of-transformers-pipeline/18310/2
             del train_loader_pretrain, val_loader_pretrain
@@ -389,17 +414,9 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self.clf.to(self.dl_params["device"])
 
         # start finetuning beneath
-        check_classification_targets(y)
-        X, y = check_X_y(X, y, multi_output=False, accept_sparse=False)
 
         # use in-sample instead of validation set, if None is provided
-        if eval_set:
-            X_val, y_val = eval_set
-            X_val, y_val = check_X_y(
-                X_val, y_val, multi_output=False, accept_sparse=False
-            )
-        else:
-            X_val, y_val = X, y
+        X_val, y_val = eval_set if eval_set is not None else (X, y)
 
         # save for accuracy calculation
         len_x_val = len(X_val)
@@ -529,8 +546,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                     )
                     loss_in_epoch_val += val_loss.item()
 
-                    # print(f"[{epoch}-{val_batch}] val loss: {val_loss}")
                     val_batch += 1
+
             # loss average over all batches
             train_loss_all = loss_in_epoch_train / len(train_loader_finetune)
             val_loss_all = loss_in_epoch_val / len(val_loader_finetune)
