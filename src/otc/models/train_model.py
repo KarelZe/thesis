@@ -75,12 +75,6 @@ FEATURE_SETS = {
 @click.option(
     "--pretrain/--no-pretrain", default=False, help="Flag to activate pretraining."
 )
-@click.option(
-    "--sample",
-    type=click.FloatRange(0, 1),
-    default=1,
-    help="Sampling factor applied to train and validation set.",
-)
 def main(
     trials: int,
     seed: int,
