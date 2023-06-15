@@ -36,8 +36,8 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         _type_: classifier
     """
 
-    epochs_pretrain = 2
-    epochs_finetune = 2
+    epochs_pretrain = 20
+    epochs_finetune = 20
 
     def __init__(
         self,
@@ -245,6 +245,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         if self.pretrain:
 
+            print("start pre-training...")
             mask = y == 0
 
             # isolate unlabelled
@@ -412,6 +413,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self.clf.to(self.dl_params["device"])
 
         # start finetuning beneath
+        print("start finetuning...")
 
         # use in-sample instead of validation set, if None is provided
         X_val, y_val = eval_set if eval_set is not None else (X, y)
