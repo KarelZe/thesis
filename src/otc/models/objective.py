@@ -236,6 +236,7 @@ class FTTransformerObjective(Objective):
             "feature_tokenizer": FeatureTokenizer(**feature_tokenizer_kwargs),  # type: ignore # noqa: E501
             "cat_features": self._cat_features,
             "cat_cardinalities": self._cat_cardinalities,
+            "d_token": d_token,
         }
 
         optim_params = {"lr": lr, "weight_decay": weight_decay}
