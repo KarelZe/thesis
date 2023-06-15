@@ -99,3 +99,28 @@ The rest of this paper is structured as follows. In Section 2, we describe the o
 
 
 We recall the existing HSIC estimator V-HSIC in Section 3.1, and its Nyström approximation for two compo- nents in Section 3.2. We present our proposed Nyström approximation for more than two components in Section 4.
+
+
+In this work, we revisit the question: Given a fixed FLOPs budget,1 how should one trade-off model
+size and the number of training tokens? To answer this question, we model the final pre-training loss2
+𝐿(𝑁, 𝐷) as a function of the number of model parameters 𝑁, and the number of training tokens, 𝐷.
+Since the computational budget 𝐶 is a deterministic function FLOPs(𝑁, 𝐷) of the number of seen
+training tokens and model parameters, we are interested in minimizing 𝐿 under the constraint
+FLOPs(𝑁, 𝐷) = 𝐶:
+𝑁𝑜𝑝𝑡 (𝐶), 𝐷𝑜𝑝𝑡 (𝐶) = argmin
+𝑁,𝐷 s.t. FLOPs(𝑁,𝐷)=𝐶
+𝐿(𝑁, 𝐷). (1)
+The functions 𝑁𝑜𝑝𝑡 (𝐶), and 𝐷𝑜𝑝𝑡 (𝐶) describe the optimal allocation of a computational budget 𝐶. We
+empirically estimate these functions based on the losses of over 400 models, ranging from under 70M
+to over 16B parameters, and trained on 5B to over 400B tokens – with each model configuration
+trained for several different training horizons. Our approach leads to considerably different results
+than that of Kaplan et al. (2020). We highlight our results in Figure 1 and how our approaches differ
+in Section 2.
+Based on our estimated compute-optimal frontier, we predict that for the compute budget used
+to train Gopher, an optimal model should be 4 times smaller, while being training on 4 times more
+tokens. We verify this by training a more compute-optimal 70B model, called Chinchilla, on 1.4 trillion
+tokens. Not only does Chinchilla outperform its much larger counterpart, Gopher, but its reduced
+model size reduces inference cost considerably and greatly facilitates downstream uses on smaller
+hardware. The energy cost of a large language model is amortized through its usage for inference an
+fine-tuning. The benefits of a more optimally trained smaller model, therefore, extend beyond the
+immediate benefits of its improved performance.
