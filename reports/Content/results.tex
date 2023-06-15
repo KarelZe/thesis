@@ -375,11 +375,11 @@ Performance results of Transformers are robust across all tested dimensions. The
 
 Similar to \glspl{GBRT}, the FT-Transformer slightly underperforms the benchmark for index options in the \gls{ISE} sample. Even though the effect reverses on the \gls{CBOE} set, accuracies for index options are lower than the of any other underlying. Hence, we can extend the finding of \textcites[][22]{grauerOptionTradeClassification2022}[][9]{savickasInferringDirectionOption2003} that index options are notoriously difficult to classify to machine learning-based approaches.
 
-Classification is more accurate for options with near-maturity or deep-in-the-money options. In this sense, our finding contradicts the observation of \textcite[][891]{savickasInferringDirectionOption2003} made for rule-based classification. Again, we observe that the addition of option-specific features, such as maturity or moneyness smooths out differences across maturity and moneyness levels.
+Classification is more accurate for options with near-maturity or deep-in-the-money options. In this sense, our finding contradicts the observation of \textcite[][891]{savickasInferringDirectionOption2003} made for rule-based classification. Again, we document that the addition of option-specific features, such as maturity or moneyness smooths out differences across maturity and moneyness levels.
 
-Lastly, the FT-Transformers perform well on trades at the quotes. When trained on \gls{ISE} data it achieves substantial improvements on trades at the quotes, despite that some of the benchmarks contain explicit overrides from the trade size rule. Nevertheless, they fail to meet benchmark performance for trades outside the spread.
+Lastly, the FT-Transformers perform well on trades at the quotes. When trained on \gls{ISE} data it achieves substantial improvements on trades at the quotes, despite that some of the benchmarks contain explicit overrides from the trade size rule. Vice versa, the FT-Transformer fails to meet benchmark performance for trades outside the spread.
 
-In summary, our tests demonstrate that the strong results are stable across multiple dimensions and between exchanges, making supervised classifiers a superior choice for trade classification.
+In summary, our tests demonstrate that the strong results are stable across multiple dimensions and between exchanges.
 
 \begin{table}[h!]
     \centering
