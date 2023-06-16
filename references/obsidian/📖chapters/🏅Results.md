@@ -58,4 +58,19 @@ By extension, we also estimate rules combinations involving overrides from the t
 In absence of other suitable baselines, we also the GSU method for FS3, even if it doesn't utilise option-specific features.
 
 
+**Tsize (alone) (ISE)**
+![[Pasted image 20230616153144.png]]
 
+
+
+Tsize (alone) (CBOE)
+
+![[Pasted image 20230616153642.png]]
+
+
+Accuracy Depth Ex (ISE)
+
+![[Pasted image 20230616153235.png]]
+
+Accuracy Depth EX (CBOE)
+![[Pasted image 20230616153750.png]]

@@ -57,21 +57,7 @@ Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][3
     \label{fig:classical-accuracies-over-time}
 \end{figure}
 
-Aside from these high-level observations, we focus on three findings in greater detail.
-
-\textbf{Finding 1: Accuracy of Basic Rules Is Downward-Biased by Missingness}
-
-\todo{Add finding. See e. g., olbrys}
-
-\textbf{Finding 2: Accuracy Comes From Depth}
-
-\todo{Add finding}
-
-\textbf{Finding 3: Fee Structures Affect Accuracy Over Time}
-
-\todo{Add finding}
-
-\begin{table}[ht]
+\begin{table}[h]
     \centering
     \caption[Accuracies of Rule-Based Approaches On \glsentryshort{CBOE}]{This table shows the accuracy of common trade classification rules and their variations for option trades on \gls{CBOE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in bold.}
     \label{tab:cboe-classical}
@@ -106,7 +92,33 @@ We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe-classical} an
 % Parts of this is due to the fact, that  $\operatorname{quote}_{\mathrm{nbbo}}$ achieves a considerably lower coverage of \SI{94.77}{\percent} compared to \SI{99.89}{\percent} in the \gls{ISE} sample, with fewer trades classified by the fallback criterion. In a filtered common sample, where trades are classified by both rules, performance is approximately similar. 
 Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best, the strong outperformance does not carry over to the test set as depicted \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[][33]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
 
-\todo{Doesn't this contradict the hidden order idea of Grauer? Why are accuracies lower?}
+Aside from these high-level observations, we focus on two findings in greater detail.
+
+\textbf{Finding 1: Accuracy of Basic Rules Is Downward-Biased by Coverage}
+
+From \cref{tab:ise-classical} we see, that practically all rule-based approaches leave trades unclassified. This is due to conceptual constraints in the rule itself, but also a result of missing data, which equally affects rules with theoretical full coverage. The latter is important here.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics{coverage-over-time.pdf}
+    \caption[Coverage Of Rule-Based Classifiers On \glsentryshort{ISE} and \glsentryshort{CBOE} Over Time]{Accuracy of rule-based classifiers on \gls{ISE} and \gls{CBOE} sample over time.}
+    \label{fig:classical-coverage-over-time}
+\end{figure}
+
+As shown in \cref{fig:classical-coverage-over-time} coverage decreases qualitatively for selected classification rules over time. It is particularly low when the trade initiator is inferred from the \gls{NBBO}. For studies like ours or the of \textcites{grauerOptionTradeClassification2022}[][887]{savickasInferringDirectionOption2003}, which apply minimal filtering, the high degree of unclassified trades for some rules can (downward) bias the results. The recent approaches of \textcite[][18--19]{grauerOptionTradeClassification2022} circumvent the issue, as they leverage multiple data sources and rules through stacking. In an imperfect data regime, we conclude, that stacking can increase coverage and at best performance.
+
+\textbf{Finding 2: Accuracy of Trade Size Rule Is High And Highly Variant}
+
+Much of the performance gains between $\operatorname{gsu}_{\mathrm{large}}$ over $\operatorname{gsu}_{\mathrm{small}}$ in \cref{fig:classical-accuracies-over-time} can be attributed to the trade size rule. We extend the analysis of \textcite[][19]{grauerOptionTradeClassification2022} and isolate the performance of the trade size rule and visualise the average accuracy over time in \cref{fig:accuracies-over-time-tsize}.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics{accuracies-over-time-tsize.pdf}
+    \caption[Accuracy Over Trade Size Rule On \glsentryshort{ISE} and \glsentryshort{CBOE} Over Time]{Accuracy of trade size rule on \gls{ISE} and \gls{CBOE} sample over time.}
+    \label{fig:accuracies-over-time-tsize}
+\end{figure}
+
+For the subset of trades it is applicable to, the rule is outperforming all other rule-based classifiers by a large margin. At the same time, it also has the highest variance in accuracy over time. Thus, it remains unclear, under which circumstances the rule works reliably.
 
 Next, we test the supervised classifiers on the \gls{ISE}/\gls{CBOE} test sets, which prove to be a challenging test ground for rule-based classifiers as our results from above indicate.
 
