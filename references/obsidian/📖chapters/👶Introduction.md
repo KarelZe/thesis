@@ -35,6 +35,16 @@ results and contains suggestions for future research.
 **Notes:**
 [[👶introduction notes]]
 
+You should go with a so called “Feynman's method”.  
+He described in one of his interviews, that he would read scientific papers in a following fashion:
+
+- Read the abstract.
+- Try to predict what are the results and conclusions of the paper.
+- Go ahead to “Conclusions” section — check whether your prediction stands.
+- If your prediction was successful don't bother reading the rest of the paper, go to the next one.
+- If the outcome surprised you, then read the whole paper and carefully study the methods.
+- Profit!
+
 
 
 

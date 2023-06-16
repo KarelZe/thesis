@@ -1,5 +1,5 @@
 
-\addtocontents{toc}{\protect\newpage}
+% \addtocontents{toc}{\protect\newpage}
 \section{Supervised Approaches}\label{sec:supervised-approaches}
 
 The subsequent chapter frames trade classification as a supervised learning problem and has the primary focus on two learning methods: the tree-based ensemble gradient boosting and the deep learning-based FT-Transformer. We derive their suitability for trade classification through a concise discussion and explore both methods in detail.
@@ -127,7 +127,7 @@ Gradient boosting iteratively combines oversimplified models, the weak learners,
 By \cref{sec:problem-framing} we perform binary probabilistic classification and by \cref{sec:trade-initiator} we defined the labels to be $y \in \{-1,1\}$. For gradient boosting, instead of modelling the class-conditional probabilities directly, we model the conditional log odds instead, which can be interpreted as the probability of observing class $1$ or a buyer-initiated trade, and covert to class-conditional probabilities as needed.
 
 
-% TODO: better write logloss? Make connection clearer?
+\todo{better write logloss? Make connection clearer?}
 Following \textcite[][9]{friedmanStochasticGradientBoosting2002} we set the loss function to be the cross-entropy loss, given by:
 \begin{equation}
     L_{\mathrm{BCE}} \colon \mathbb{R}^2 \to \mathbb{R} \quad L_{\mathrm{BCE}}(y, F) = \log(1+\exp(-2yF))
@@ -149,14 +149,14 @@ Expectedly, $F_0(\mathbf{x})$ is a poor estimate, capturing hardly any regularit
 \begin{equation}
     r_i=-\left[\frac{\partial L_{\mathrm{BCE}}\left(y_i, F\left(\mathbf{x}_i\right)\right)}{\partial F\left(\mathbf{x}_i\right)}\right]_{F(\mathbf{x})=F_{m-1}(\mathbf{x})}=2 y_i /\left(1+\exp \left(2 y_i F_{m-1}\left(\mathbf{x}_i\right)\right)\right).
 \end{equation}
-% TODO: yields the maximum decrease are similar to the components of the negative gradient descent. However, the  major drawback is tha tthe gradient is only defined for data points x_i seen during training, contradicting the creation of a generalising model. 
+\todo{yields the maximum decrease are similar to the components of the negative gradient descent. However, the  major drawback is tha tthe gradient is only defined for data points xi seen during training, contradicting the creation of a generalising model.}
 Typically, regression trees (cp. \cref{sec:decision-tree}) are chosen as weak learners since they are computationally cheap and can produce continuous estimates for the residual. The $m$-th regression tree contains $J$ terminal regions, denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. We search for an estimate $\gamma_{j,m}$ for the terminal node $R_{jm}$ that minimises the cross-entropy over all samples within the node:
 \begin{equation}
     \gamma_{j m}=\arg \min _\gamma \sum_{\mathbf{x}_i \in R_{j m}} \log \left(1+\exp \left(-2 y_i\left(F_{m-1}\left(\mathbf{x}_i\right)+\gamma\right)\right)\right)
     \label{eq:region-estimate-gbm}
 \end{equation}
-% TODO: Fill in footnote
-\cref{eq:region-estimate-gbm} cannot be solved in closed form and is typically approached by the Newton-Raphson method with a second-order approximation of the loss~\footnote{Compare the second-order Taylor polynomial given by (...).}:
+
+\cref{eq:region-estimate-gbm} cannot be solved in closed form and is typically approached by the Newton-Raphson method with a second-order approximation of the loss~\footnote{Compare the second-order Taylor polynomial given by \todo{complete?}.}:
 \begin{equation}
     \gamma_{j m}=\sum_{\mathbf{x}_i \in R_{j m}} r_i / \sum_{\mathbf{x}_i \in R_{j m}}\left|r_i\right|\left(2-\left|r_i\right|\right)
 \end{equation}
@@ -213,7 +213,8 @@ For its original application, machine translation, both the encoder and decoder 
 
 As explained previously, Transformers operate on sequences of numeric vector representations, the \emph{token embeddings}. The classical Transformer was trained on \emph{word embeddings}. Nevertheless, \gls{token} embeddings are generic and arbitrary inputs that can be embedded and then processed by the Transformer. In the spirit of \textcite[][5]{vaswaniAttentionAllYou2017}, we first explore word embeddings for textual data, before adapting embeddings to the tabular domain.
 
-% TODO: write down, how sequence of token ids is constructed.
+\todo{write down, how sequence of token ids is constructed.}
+
 \textbf{Embeddings For Textual Data}
 
 To obtain \gls{token} embeddings from the raw input sequences i.e., a sentence, the sequence is first split into constituent vocabulary elements, the \emph{tokens}. All known \glspl{token} are stored in a vocabulary. The vocabulary $V$ consists of $N_{V}=|V|$ elements and maps \glspl{token} onto their unique integer keys, referred to as \emph{token-ids} \autocite[][3]{phuongFormalAlgorithmsTransformers2022}. Apart from \glspl{token} in the training corpus, the vocabulary may include special \glspl{token}, like the $\mathtt{[UNK]}$ \gls{token} to handle out-of-vocabulary items or $\mathtt{[CLS]}$ \gls{token} for storing an aggregate representation of the sequence for classification \autocite[cp.][4]{devlinBERTPretrainingDeep2019}.
@@ -240,7 +241,6 @@ are likely to be close in embedding space with cosine-similarity of $\approx 1$ 
 
 As this work is concerned with the classification of tabular data, the aforementioned concepts must be evolved. Differently from textual data, where all tokens come from the same vocabulary and a homogeneous embedding procedure suffices, tabular data is flexible regarding the columns, their data type, and their semantics. Only a shared meaning across rows can be assumed. For instance, every sample in a trade dataset may contain the previous trade price, yet the meaning of the trade price is different from other columns, urging the need for heterogeneous embeddings. Additionally, columns may be categorical or numerical.
 
-% TODO: Explain how a sample maps / row in a dataset maps to a sequence. Maps to...
 \textbf{Embeddings For Numerical Data}
 
 Transformer networks can handle numerical features, such as the trade price, by mapping the scalar value to a high-dimensional embedding vector and process sequences thereof \autocite[][3]{gorishniyEmbeddingsNumericalFeatures2022}. In the simplest case, a learnt linear projection is utilised to obtain the embedding. Linear embeddings of numerical features were previously explored in \textcites[][3]{kossenSelfAttentionDatapointsGoing2021}[][4]{somepalliSaintImprovedNeural2021}[][4]{gorishniyRevisitingDeepLearning2021}.
@@ -271,7 +271,7 @@ Despite these advantages, high-cardinal features present a challenge for embeddi
 
 \textbf{Link To Positional Encoding and Attention}
 
-% TODO: verify invariant property. Not sure if I got it right.
+\todo{verify invariant property. Not sure if I got it right.}
 Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position \autocite[][3744]{leeSetTransformerFramework2019}. Positional information must be induced into the model to preserve the ordering (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualised in the self-attention mechanism (cp. \cref{sec:attention}).
 
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
@@ -405,7 +405,7 @@ Recall from our discussion on self-attention (cp. \cref{sec:attention}), that ea
     P=\operatorname{Linear}\left(\operatorname{ReLU}\left(\operatorname{LayerNorm}\left(\mathbf{S}\left[:,0\right]\right)\right)\right).
     \label{eq:bert-ft}
 \end{equation}
-% TODO: Add softmax, think about ReLU, change linear layer to Weight matrix?
+\todo{Add softmax, think about ReLU, change linear layer to Weight matrix?}
 
 \textcite[][8]{gorishniyRevisitingDeepLearning2021} achieve state-of-the-art performance through numerical and categorical embeddings. Embedding both categorical and numerical inputs enables the Transformer to attend to all other features, but at considerable computational cost, that may only be justified by higher classification accuracies.
 

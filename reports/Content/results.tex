@@ -4,7 +4,7 @@ This chapter compares the results of rule-based trade classification with machin
 
 \subsection{Results of Rule-Based Approaches}\label{sec:result-of-rule-based-approaches}
 
-We now estimate the accuracy of classical trade classification rules on the \gls{ISE} and \gls{CBOE} sample. We consider the tick and quote rule, as well as the \gls{LR} algorithm, \gls{EMO} rule and \gls{CLNV} method in their classical and reversed formulation. Additionally, we consider two stacked combinations of \textcite[][12--14]{grauerOptionTradeClassification2022} due to their state-of-the-art performance on the validation set, as derived in \cref{sec:hyperparameter-tuning}. Namely, $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ and $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ or in short $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$.
+We now estimate the accuracy of classical trade classification rules on the \gls{ISE} and \gls{CBOE} samples. We consider the tick and quote rule, as well as the \gls{LR} algorithm, \gls{EMO} rule and \gls{CLNV} method in their classical and reversed formulation. Additionally, we consider two stacked combinations of \textcite[][12--14]{grauerOptionTradeClassification2022} due to their state-of-the-art performance on the validation set, as derived in \cref{sec:hyperparameter-tuning}. Namely, $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ and $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ or in short $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$.
 
 We report in \cref{tab:ise-classical} accuracies for the entire data set and separate subsets spanning the periods of train, validation, and test set as defined in \cref{sec:train-test-split}. Doing so enables comparisons with previous works, but also provides meaningful estimates on the test set relevant for benchmarking purposes.
 
@@ -44,7 +44,7 @@ From all rules, the tick rule performs worst when applied to trade prices at the
     \end{tabular}
 \end{table}
 
-Quote-based algorithms outperform tick-based algorithms delivering accuracy up to \SI{63.72}{\percent}, when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
+Quote-based algorithms outperform tick-based algorithms delivering accuracy up to \SI{63.72}{\percent} when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites[][891]{savickasInferringDirectionOption2003}[][3]{grauerOptionTradeClassification2022}.
 
 The performance of hybrids, such as the \gls{LR} algorithm, hinges on the reliance on the tick test. Thus, the \gls{EMO} rules and to a lesser extent the \gls{CLNV} rules perform worst, achieving accuracies between \SI{55.42}{\percent} and \SI{57.57}{\percent}. In turn, variants of the \gls{LR}, which uses the quote rule for most trades, are among the best-performing algorithms. By extension, $\operatorname{gsu}_{\mathrm{small}}$ further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$.
 
@@ -61,7 +61,7 @@ Aside from these high-level observations, we focus on three findings in greater 
 
 \textbf{Finding 1: Accuracy of Basic Rules Is Downward-Biased by Missingness}
 
-\todo{Add finding}
+\todo{Add finding. See e. g., olbrys}
 
 \textbf{Finding 2: Accuracy Comes From Depth}
 
@@ -121,12 +121,12 @@ We test the performance of our supervised models. We take the best configuration
     \label{tab:results-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
-                   &             & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                                                 \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
-        Dataset    & Classifier  & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}              & {Acc. in \%}        & {+/-}              \\ \midrule
-        \gls{ISE}  & \gls{GBRT}  & 63.668637                        & 3.620000                              & 72.343640                     & 4.730000           & \bfseries 74.120496 & \bfseries 6.510000 \\
-                   & Transformer & \bfseries 63.783020              & \bfseries 3.730000                    & \bfseries 72.581107           & \bfseries 4.970000 & 73.921795           & 6.310000           \\ \addlinespace
-        \gls{CBOE} & \gls{GBRT}  & 66.002029                        & 5.260000                              & 71.951794                     & 5.430000           & \bfseries 74.375033 & \bfseries 7.860000 \\
-                   & Transformer & \bfseries 66.182348              & \bfseries 5.440000                    & \bfseries 72.153338           & \bfseries 5.640000 & 74.278318           & 7.760000           \\ \bottomrule
+                   &             & \multicolumn{2}{c}{\gls{FS} Classical} & \multicolumn{2}{c}{\gls{FS} Classical-Size} & \multicolumn{2}{c}{\gls{FS} Option}                                                                 \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
+        Dataset    & Classifier  & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}              & {Acc. in \%}        & {+/-}              \\ \midrule
+        \gls{ISE}  & \gls{GBRT}  & 63.668637                              & 3.620000                                    & 72.343640                           & 4.730000           & \bfseries 74.120496 & \bfseries 6.510000 \\
+                   & Transformer & \bfseries 63.783020                    & \bfseries 3.730000                          & \bfseries 72.581107                 & \bfseries 4.970000 & 73.921795           & 6.310000           \\ \addlinespace
+        \gls{CBOE} & \gls{GBRT}  & 66.002029                              & 5.260000                                    & 71.951794                           & 5.430000           & \bfseries 74.375033 & \bfseries 7.860000 \\
+                   & Transformer & \bfseries 66.182348                    & \bfseries 5.440000                          & \bfseries 72.153338                 & \bfseries 5.640000 & 74.278318           & 7.760000           \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -138,9 +138,8 @@ The results can be enhanced through retraining on the validation set improving a
 
 Visually, the performance differences between gradient boosting and transformers on the same feature sets are minor, consistent with previous studies \autocites{grinsztajnWhyTreebasedModels2022}{gorishniyRevisitingDeepLearning2021}. These studies conclude, generally for tabular modelling, that neither Transformers nor \gls{GBRT} are universally superior.
 
-
 To formally test, whether differences between both classifiers are significant, we construct contingency tables and pair-wise compare predictions using McNemar's test \autocite[][153--157]{mcnemarNoteSamplingError1947}. We formulate the null hypothesis that both classifiers have the same error rate.
-Conceptually similar \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000}, uses contingency tables of rule-based methods and true labels. Here, contingency tables are used to pair-wise compare the predictions of \gls{GBRT} against Transformers. We study the performance against the true label as part of the robustness checks.
+Conceptually similar \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000}, uses contingency tables of rule-based methods and true labels. Here, contingency tables are used to pair-wise compare the predictions of \gls{GBRT} against Transformers.
 
 \begin{table}[!h]
     \centering
@@ -149,7 +148,7 @@ Conceptually similar \textcite[][267]{odders-whiteOccurrenceConsequencesInaccura
     \label{tab:contigency-supervised-classifiers}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
-                                                                          &           & \multicolumn{2}{c}{{FS Classical}}                          & \multicolumn{2}{c}{{FS Classical-Size}}                      & \multicolumn{2}{c}{{FS Option}}                                                             \\
+                                                                          &           & \multicolumn{2}{c}{{\gls{FS} Classical}}                    & \multicolumn{2}{c}{{\gls{FS} Classical-Size}}                & \multicolumn{2}{c}{{\gls{FS} Option}}                                                       \\
         \cmidrule(l){3-4}\cmidrule(l){5-6}\cmidrule(l){7-8}
         \multicolumn{2}{l}{{$\downarrow$ Trans.$\rightarrow$ \gls{GBRT}}} & {Correct} & {Wrong}                                                     & {Correct}                                                    & {Wrong}                                                     & {Correct} & {Wrong}           \\
         \midrule
@@ -180,7 +179,7 @@ Contrary to the expectation, the performance improvements are highest for the \g
 %     \label{fig:confusion-matrix-supervised-ise}
 % \end{figure}
 
-In summary, our supervised methods establish a new state-of-the-art in option trade classification. Our approach achieves full coverage and outperforms all previously reported classification rules in terms of accuracy. We perform robustness checks in \cref{sec:robustness-checks} to verify performance is consistent across sub-samples.
+In summary, our supervised methods establish a new state-of-the-art in option trade classification. Our approach achieves full coverage and outperforms all previously reported classification rules in terms of accuracy. We perform additional robustness checks in \cref{sec:robustness-checks} to verify performance is consistent across sub-samples.
 
 \subsection{Results of Semi-Supervised
     Models}\label{sec:results-of-semi-supervised-models}
@@ -193,22 +192,22 @@ We compare the performance of pre-trained Transformers and self-trained gradient
     \label{tab:results-semi-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
-                   &             & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                      \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
-        Dataset    & Classifier  & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}    & {Acc. in \%} & {+/-}    \\ \midrule
-        \gls{ISE}  & \gls{GBRT}  & 63.397514                        & 3.350000                              & 72.156489                     & 4.550000 & 73.536644    & 5.930000 \\
-                   & Transformer &                                  &                                       &                               &          &              &          \\ \addlinespace
-        \gls{CBOE} & \gls{GBRT}  & 66.189454                        & 5.440000                              & 71.922680                     & 5.410000 & 73.953322    & 7.440000 \\
-                   & Transformer &                                  &                                       &                               &          &              &          \\ \bottomrule
+                   &             & \multicolumn{2}{c}{\gls{FS} Classical} & \multicolumn{2}{c}{\gls{FS} Classical-Size} & \multicolumn{2}{c}{\gls{FS} Option}                                      \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
+        Dataset    & Classifier  & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}    & {Acc. in \%} & {+/-}    \\ \midrule
+        \gls{ISE}  & \gls{GBRT}  & 63.397514                              & 3.350000                                    & 72.156489                           & 4.550000 & 73.536644    & 5.930000 \\
+                   & Transformer &                                        &                                             &                                     &          &              &          \\ \addlinespace
+        \gls{CBOE} & \gls{GBRT}  & 66.189454                              & 5.440000                                    & 71.922680                           & 5.410000 & 73.953322    & 7.440000 \\
+                   & Transformer &                                        &                                             &                                     &          &              &          \\ \bottomrule
     \end{tabular}
 \end{table}
 
 Identical to the supervised case, our models consistently outperform their respective benchmarks. Gradient boosting with self-training surpasses $\operatorname{gsu}_{\mathrm{small}}$ by \SI{3.350000}{\percent} on \gls{ISE} and \SI{5.440000}{\percent} on \gls{CBOE} in accuracy. Improvements for larger feature sets over $\operatorname{gsu}_{\mathrm{large}}$ are marginally lower to the supervised model and range between \SI{4.550000}{\percent} and \SI{7.440000}{\percent}.
 
-The results do not support the hypothesis, that adding unlabelled trades into the training corpus improves generalisation performance of the classifier. We explore this finding in detail.
+The results do not support the hypothesis, that adding unlabelled trades into the training corpus improves the generalisation performance of the classifier. We explore this finding in detail.
 
-\textbf{Finding 5: Unlabelled Trades Provide Poor Guidance}
+% \textbf{Finding 5: Unlabelled Trades Provide Poor Guidance}
 
-\todo{formulate finding}
+\todo{formulate finding, once Transformer results are ready.}
 
 \begin{table}[!h]
     \centering
@@ -217,86 +216,93 @@ The results do not support the hypothesis, that adding unlabelled trades into th
     \label{tab:contigency-semi-supervised-classifiers}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
-                                                                          &           & \multicolumn{2}{c}{{FS Classical}} & \multicolumn{2}{c}{{FS Classical-Size}} & \multicolumn{2}{c}{{FS Option}}                         \\
+                                                                          &           & \multicolumn{2}{c}{{\gls{FS} Classical}} & \multicolumn{2}{c}{{\gls{FS} Classical-Size}} & \multicolumn{2}{c}{{\gls{FS} Option}}                         \\
         \cmidrule(l){3-4}\cmidrule(l){5-6}\cmidrule(l){7-8}
-        \multicolumn{2}{l}{{$\downarrow$ Trans.$\rightarrow$ \gls{GBRT}}} & {Correct} & {Wrong}                            & {Correct}                               & {Wrong}                         & {Correct} & {Wrong}   \\
+        \multicolumn{2}{l}{{$\downarrow$ Trans.$\rightarrow$ \gls{GBRT}}} & {Correct} & {Wrong}                                  & {Correct}                                     & {Wrong}                               & {Correct} & {Wrong}   \\
         \midrule
-        \gls{ISE}                                                         & Correct   &                                    &                                         &                                 &           &         & \\
-                                                                          & Wrong     &                                    &                                         &                                 &           &         & \\         \addlinespace
-                                                                          &           & \multicolumn{2}{l}{{$\chi^2$=}}    & \multicolumn{2}{l}{{$\chi^2$=}}         & \multicolumn{2}{l}{{$\chi^2$}=}                         \\
-                                                                          &           & \multicolumn{2}{l}{{$p$-val.=}}    & \multicolumn{2}{l}{{$p$-val.=}}         & \multicolumn{2}{l}{{$p$-val.}=}                         \\
+        \gls{ISE}                                                         & Correct   &                                          &                                               &                                       &           &         & \\
+                                                                          & Wrong     &                                          &                                               &                                       &           &         & \\         \addlinespace
+                                                                          &           & \multicolumn{2}{l}{{$\chi^2$=}}          & \multicolumn{2}{l}{{$\chi^2$=}}               & \multicolumn{2}{l}{{$\chi^2$}=}                               \\
+                                                                          &           & \multicolumn{2}{l}{{$p$-val.=}}          & \multicolumn{2}{l}{{$p$-val.=}}               & \multicolumn{2}{l}{{$p$-val.}=}                               \\
         \midrule
-        \gls{CBOE}                                                        & Correct   &                                    &                                         &                                 &           &         & \\
-                                                                          & Wrong     &                                    &                                         &                                 &           &         & \\         \addlinespace
-                                                                          &           & \multicolumn{2}{l}{{$\chi^2$=}}    & \multicolumn{2}{l}{{$\chi^2$=}}         & \multicolumn{2}{l}{{$\chi^2$=}}                         \\
-                                                                          &           & \multicolumn{2}{l}{{$p$-val.=}}    & \multicolumn{2}{l}{{$p$-val.=}}         & \multicolumn{2}{l}{{$p$-val.=}}                         \\
+        \gls{CBOE}                                                        & Correct   &                                          &                                               &                                       &           &         & \\
+                                                                          & Wrong     &                                          &                                               &                                       &           &         & \\         \addlinespace
+                                                                          &           & \multicolumn{2}{l}{{$\chi^2$=}}          & \multicolumn{2}{l}{{$\chi^2$=}}               & \multicolumn{2}{l}{{$\chi^2$=}}                               \\
+                                                                          &           & \multicolumn{2}{l}{{$p$-val.=}}          & \multicolumn{2}{l}{{$p$-val.=}}               & \multicolumn{2}{l}{{$p$-val.=}}                               \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-To summarize, despite the significantly higher training costs, semi-supervised variants do not provide better generalisation performance than supervised approaches. We subsequently evaluate if semi-supervised learning improves robustness, if not performance.
+To summarize, despite the significantly higher training costs, semi-supervised variants do not provide better generalisation performance than supervised approaches. We subsequently evaluate if semi-supervised learning improves robustness if not performance.
 
 
 \subsection{Robustness of Results}\label{sec:robustness-checks}
 
-\todo{Again, results are not 100 \% comparaable due to grouping.}
-\todo{Compare improvements with other works. Improvments much greater than ronen et al. }
+To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, as well as proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[][47]{grauerOptionTradeClassification2022} as well as  \textcite[][890--892]{savickasInferringDirectionOption2003}, strengthening comparability across different works.\footnote{Despite all efforts, when comparing with \textcite[][47--52]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.}
+
+Our results are tabulated \cref{tab:diff-ise-gbm,tab:diff-cboe-gbm,tab:diff-ise-transformer,tab:diff-cboe-transformer,tab:diff-ise-gbm-semi,tab:diff-cboe-gbm-semi}, separately for \glspl{GBRT} and Transformers as well as exchanges.
 
 \textbf{Gradient Boosting}
 
+Performance improvements of \glspl{GBRT} are consistent for calls and puts across all feature sets and exchanges. Conditional on the security type of the underlying, \gls{GBRT} achieves the largest improvements for index options in the \gls{CBOE} sample, but perform slightly worse than rule-based approaches on the \gls{ISE} set. On both datasets, accuracies are lowest for index options, which corroborates with the literature on rule-based classification.
+
+The performance is stable for different trade sizes and over time. Similarly, accuracy improvements are comparable for different maturities and moneyness ratios. Aligning with rule-based approaches, accuracies are lowest for option trades with long maturities and deep in-the-money options, as reported in \textcite[][22]{grauerOptionTradeClassification2022}. The addition of option-specific features has annealing effects on accuracies by moneyness ratios and maturities.
+
+\gls{GBRT} achieve particularly strong results for trades at the quotes or if quote data at the exchange level is absent. In these subsets, improvements reach up to \SI{16.01}{\percent} in the \gls{CBOE} and thus tighten the gap between trades inside or at the quotes. Consistent across all feature sets and exchanges, \glspl{GBRT} fail to improve upon classical rules for trades outside the spread, underperforming the benchmark \SI{-0.89}{\percent} to \SI{-5.43}{\percent}. We identify the strong performance of quote-based classification on these trades as a reason, that poses major challenges.
+
 \begin{table}[ht!]
     \centering
-    \caption[short-diff-ise-supervised-test-gbm]{long-diff-ise-supervised-test-gbm}
-    \label{tab:diff-ise_supervised_test}
+    \caption[Robustness Checks For Gradient-Boosting On \glsentryshort{ISE}]{This table presents accuracies of \glspl{GBRT} across various sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \label{tab:diff-ise-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
-        {}                       & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-        {}                       & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
-        \multicolumn{7}{l}{ Option Type}                                                                                                                                           \\
-        \tabindent  C            & 62.890486                        & 3.720000                              & 71.884647                     & 4.480000  & 73.647971    & 6.240000  \\
-        \tabindent  P            & 64.557394                        & 3.500000                              & 72.867874                     & 5.020000  & 74.660185    & 6.820000  \\
+        {}                           & \multicolumn{2}{c}{\gls{FS} Classical} & \multicolumn{2}{c}{\gls{FS} Classical-Size} & \multicolumn{2}{c}{\gls{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                           & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
+        \multicolumn{7}{l}{ Option Type}                                                                                                                                                                 \\
+        \tabindent  C                & 62.890486                              & 3.720000                                    & 71.884647                           & 4.480000  & 73.647971    & 6.240000  \\
+        \tabindent  P                & 64.557394                              & 3.500000                                    & 72.867874                           & 5.020000  & 74.660185    & 6.820000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Security Type}                                                                                                                                         \\
-        \tabindent  Index option & 56.345043                        & -1.460000                             & 57.474458                     & -1.020000 & 58.649239    & 0.150000  \\
-        \tabindent Others        & 68.399095                        & 2.870000                              & 76.369535                     & 5.790000  & 77.590573    & 7.010000  \\
-        \tabindent Stock Option  & 61.877752                        & 4.000000                              & 70.946999                     & 4.400000  & 72.956919    & 6.410000  \\
+        \multicolumn{7}{l}{ Security Type}                                                                                                                                                               \\
+        \tabindent  Index option     & 56.345043                              & -1.460000                                   & 57.474458                           & -1.020000 & 58.649239    & 0.150000  \\
+        \tabindent Others            & 68.399095                              & 2.870000                                    & 76.369535                           & 5.790000  & 77.590573    & 7.010000  \\
+        \tabindent Stock Option      & 61.877752                              & 4.000000                                    & 70.946999                           & 4.400000  & 72.956919    & 6.410000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Trade Size}                                                                                                                                            \\
-        \tabindent (0,1]         & 61.892029                        & 3.350000                              & 72.564793                     & 3.390000  & 74.245655    & 5.070000  \\
-        \tabindent  (1,3]        & 62.473959                        & 4.020000                              & 72.965377                     & 3.680000  & 74.857610    & 5.570000  \\
-        \tabindent  (3,5]        & 62.696932                        & 3.890000                              & 72.755628                     & 3.360000  & 74.647279    & 5.250000  \\
-        \tabindent  (5,11]       & 65.928967                        & 3.380000                              & 71.752039                     & 8.080000  & 73.450299    & 9.780000  \\
-        \tabindent  >11          & 67.310266                        & 3.640000                              & 71.337373                     & 6.380000  & 73.145472    & 8.190000  \\
+        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                  \\
+        \tabindent 1 contract        & 61.892029                              & 3.350000                                    & 72.564793                           & 3.390000  & 74.245655    & 5.070000  \\
+        \tabindent  (1,3] contracts  & 62.473959                              & 4.020000                                    & 72.965377                           & 3.680000  & 74.857610    & 5.570000  \\
+        \tabindent  (3,5] contracts  & 62.696932                              & 3.890000                                    & 72.755628                           & 3.360000  & 74.647279    & 5.250000  \\
+        \tabindent  (5,11] contracts & 65.928967                              & 3.380000                                    & 71.752039                           & 8.080000  & 73.450299    & 9.780000  \\
+        \tabindent  >11 contracts    & 67.310266                              & 3.640000                                    & 71.337373                           & 6.380000  & 73.145472    & 8.190000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Year}                                                                                                                                                  \\
-        \tabindent 2015          & 60.446922                        & 4.050000                              & 69.000296                     & 5.210000  & 71.512360    & 7.730000  \\
-        \tabindent  2016         & 63.736474                        & 3.560000                              & 72.555638                     & 5.030000  & 74.290527    & 6.770000  \\
-        \tabindent  2017         & 64.596306                        & 3.610000                              & 72.977560                     & 3.870000  & 74.604216    & 5.500000  \\
+        \multicolumn{7}{l}{ Year}                                                                                                                                                                        \\
+        \tabindent 2015              & 60.446922                              & 4.050000                                    & 69.000296                           & 5.210000  & 71.512360    & 7.730000  \\
+        \tabindent  2016             & 63.736474                              & 3.560000                                    & 72.555638                           & 5.030000  & 74.290527    & 6.770000  \\
+        \tabindent  2017             & 64.596306                              & 3.610000                                    & 72.977560                           & 3.870000  & 74.604216    & 5.500000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                      \\
-        \tabindent  <= 1         & 64.458297                        & 3.580000                              & 72.756774                     & 5.240000  & 74.604553    & 7.090000  \\
-        \tabindent  (1-2]        & 64.612677                        & 3.800000                              & 72.869099                     & 4.300000  & 73.947396    & 5.370000  \\
-        \tabindent (2-3]         & 63.015912                        & 3.110000                              & 71.743691                     & 3.460000  & 72.997282    & 4.710000  \\
-        \tabindent  (3-6]        & 61.788369                        & 3.640000                              & 71.288086                     & 3.430000  & 72.750293    & 4.890000  \\
-        \tabindent  (6-12]       & 61.911555                        & 3.990000                              & 71.199996                     & 3.310000  & 73.130453    & 5.240000  \\
-        \tabindent  > 12         & 55.126547                        & 3.830000                              & 68.572852                     & 3.540000  & 72.004951    & 6.980000  \\
+        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                                            \\
+        \tabindent  <= 1 month       & 64.458297                              & 3.580000                                    & 72.756774                           & 5.240000  & 74.604553    & 7.090000  \\
+        \tabindent  (1-2] months     & 64.612677                              & 3.800000                                    & 72.869099                           & 4.300000  & 73.947396    & 5.370000  \\
+        \tabindent (2-3] months      & 63.015912                              & 3.110000                                    & 71.743691                           & 3.460000  & 72.997282    & 4.710000  \\
+        \tabindent  (3-6] months     & 61.788369                              & 3.640000                                    & 71.288086                           & 3.430000  & 72.750293    & 4.890000  \\
+        \tabindent  (6-12] months    & 61.911555                              & 3.990000                                    & 71.199996                           & 3.310000  & 73.130453    & 5.240000  \\
+        \tabindent  > 12 months      & 55.126547                              & 3.830000                                    & 68.572852                           & 3.540000  & 72.004951    & 6.980000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Moneyness}                                                                                                                                             \\
-        \tabindent  <= 0.7       & 65.531247                        & 3.790000                              & 71.917341                     & 7.520000  & 72.307517    & 7.910000  \\
-        \tabindent  (0.7-0.9]    & 67.642270                        & 3.670000                              & 74.254665                     & 5.960000  & 75.433765    & 7.140000  \\
-        \tabindent  (0.9-1.1]    & 64.059687                        & 3.530000                              & 72.975308                     & 4.400000  & 74.457482    & 5.880000  \\
-        \tabindent  (1.1-1.3]    & 54.294722                        & 4.040000                              & 66.220667                     & 4.190000  & 70.375579    & 8.350000  \\
-        \tabindent  > 1.3        & 52.623795                        & 3.770000                              & 63.075529                     & 2.870000  & 70.489510    & 10.280000 \\
+        \multicolumn{7}{l}{ Moneyness}                                                                                                                                                                   \\
+        \tabindent  <= 0.7           & 65.531247                              & 3.790000                                    & 71.917341                           & 7.520000  & 72.307517    & 7.910000  \\
+        \tabindent  (0.7-0.9]        & 67.642270                              & 3.670000                                    & 74.254665                           & 5.960000  & 75.433765    & 7.140000  \\
+        \tabindent  (0.9-1.1]        & 64.059687                              & 3.530000                                    & 72.975308                           & 4.400000  & 74.457482    & 5.880000  \\
+        \tabindent  (1.1-1.3]        & 54.294722                              & 4.040000                                    & 66.220667                           & 4.190000  & 70.375579    & 8.350000  \\
+        \tabindent  > 1.3            & 52.623795                              & 3.770000                                    & 63.075529                           & 2.870000  & 70.489510    & 10.280000 \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                   \\
-        \tabindent  At Mid       & 62.644890                        & 5.490000                              & 72.164951                     & 4.020000  & 74.685118    & 6.540000  \\
-        \tabindent  Inside       & 62.605233                        & 2.160000                              & 68.301819                     & 3.800000  & 70.295127    & 5.790000  \\
-        \tabindent  At Quotes    & 67.828443                        & 7.860000                              & 86.667541                     & 8.450000  & 87.313763    & 9.100000  \\
-        \tabindent  Outside      & 61.350064                        & -5.430000                             & 61.846608                     & -3.070000 & 64.034087    & -0.890000 \\
-        \tabindent  Unknown      & 78.638385                        & 2.230000                              & 78.275744                     & 1.870000  & 78.816285    & 2.410000  \\
+        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                         \\
+        \tabindent  At Mid           & 62.644890                              & 5.490000                                    & 72.164951                           & 4.020000  & 74.685118    & 6.540000  \\
+        \tabindent  Inside           & 62.605233                              & 2.160000                                    & 68.301819                           & 3.800000  & 70.295127    & 5.790000  \\
+        \tabindent  At Quotes        & 67.828443                              & 7.860000                                    & 86.667541                           & 8.450000  & 87.313763    & 9.100000  \\
+        \tabindent  Outside          & 61.350064                              & -5.430000                                   & 61.846608                           & -3.070000 & 64.034087    & -0.890000 \\
+        \tabindent  Unknown          & 78.638385                              & 2.230000                                    & 78.275744                           & 1.870000  & 78.816285    & 2.410000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ All}                                                                                                                                                   \\
-        \tabindent  All          & 63.668637                        & 3.620000                              & 72.343640                     & 4.730000  & 74.120496    & 6.510000  \\
+        \multicolumn{7}{l}{ All}                                                                                                                                                                         \\
+        \tabindent  All              & 63.668637                              & 3.620000                                    & 72.343640                           & 4.730000  & 74.120496    & 6.510000  \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -305,185 +311,371 @@ To summarize, despite the significantly higher training costs, semi-supervised v
 
 \begin{table}[h!]
     \centering
-    \caption[short-diff-cboe-transfer-test]{long-diff-cboe-gbm-tbd}
-    \label{tab:diff-cboe_transfer-gbm}
+    \caption[Robustness Checks For Gradient-Boosting On \glsentryshort{CBOE}]{This table presents accuracies of \glspl{GBRT} across various sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \label{tab:diff-cboe-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
-        {}                      & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-        {}                      & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
-        \multicolumn{7}{l}{ Option Type}                                                                                                                                          \\
-        \tabindent C            & 65.505083                        & 5.370000                              & 71.707057                     & 5.770000  & 74.283388    & 8.350000  \\
-        \tabindent P            & 66.597419                        & 5.120000                              & 72.245014                     & 5.030000  & 74.484832    & 7.270000  \\
+        {}                         & \multicolumn{2}{c}{\gls{FS} Classical} & \multicolumn{2}{c}{\gls{FS} Classical-Size} & \multicolumn{2}{c}{\gls{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                         & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
+        \multicolumn{7}{l}{ Option Type}                                                                                                                                                               \\
+        \tabindent C               & 65.505083                              & 5.370000                                    & 71.707057                           & 5.770000  & 74.283388    & 8.350000  \\
+        \tabindent P               & 66.597419                              & 5.120000                                    & 72.245014                           & 5.030000  & 74.484832    & 7.270000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{Security Type}                                                                                                                                         \\
-        \tabindent Index Option & 60.365562                        & 7.070000                              & 67.298912                     & 0.850000  & 72.394792    & 5.940000  \\
-        \tabindent Others       & 69.054857                        & 4.420000                              & 74.137168                     & 5.210000  & 75.534837    & 6.610000  \\
-        \tabindent Stock Option & 65.293961                        & 5.420000                              & 71.506273                     & 5.980000  & 74.089988    & 8.570000  \\
+        \multicolumn{7}{l}{Security Type}                                                                                                                                                              \\
+        \tabindent Index Option    & 60.365562                              & 7.070000                                    & 67.298912                           & 0.850000  & 72.394792    & 5.940000  \\
+        \tabindent Others          & 69.054857                              & 4.420000                                    & 74.137168                           & 5.210000  & 75.534837    & 6.610000  \\
+        \tabindent Stock Option    & 65.293961                              & 5.420000                                    & 71.506273                           & 5.980000  & 74.089988    & 8.570000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Trade Size}                                                                                                                                           \\
-        \tabindent (0,1]        & 62.831155                        & 5.860000                              & 70.756340                     & 6.780000  & 73.423543    & 9.450000  \\
-        \tabindent (1,3]        & 64.895723                        & 5.200000                              & 71.318816                     & 6.330000  & 73.634574    & 8.640000  \\
-        \tabindent (3,5]        & 65.549362                        & 5.060000                              & 71.956770                     & 5.620000  & 74.174579    & 7.840000  \\
-        \tabindent(5,11]        & 66.577620                        & 5.150000                              & 71.566680                     & 5.170000  & 74.143799    & 7.750000  \\
-        \tabindent >11          & 71.136074                        & 4.750000                              & 74.549126                     & 2.830000  & 76.765762    & 5.050000  \\
+        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                \\
+        \tabindent 1 contract      & 62.831155                              & 5.860000                                    & 70.756340                           & 6.780000  & 73.423543    & 9.450000  \\
+        \tabindent (1,3] contracts & 64.895723                              & 5.200000                                    & 71.318816                           & 6.330000  & 73.634574    & 8.640000  \\
+        \tabindent (3,5] contracts & 65.549362                              & 5.060000                                    & 71.956770                           & 5.620000  & 74.174579    & 7.840000  \\
+        \tabindent(5,11] contracts & 66.577620                              & 5.150000                                    & 71.566680                           & 5.170000  & 74.143799    & 7.750000  \\
+        \tabindent >11 contracts   & 71.136074                              & 4.750000                                    & 74.549126                           & 2.830000  & 76.765762    & 5.050000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{Year}                                                                                                                                                  \\                                                                                                                                        \\
-        \tabindent 2015         & 65.689585                        & 4.460000                              & 71.445193                     & 6.400000  & 74.317847    & 9.270000  \\
-        \tabindent 2016         & 65.579978                        & 5.350000                              & 71.638148                     & 6.430000  & 74.178699    & 8.970000  \\
-        \tabindent 2017         & 66.491658                        & 5.250000                              & 72.349451                     & 4.250000  & 74.591947    & 6.500000  \\
+        \multicolumn{7}{l}{Year}                                                                                                                                                                       \\
+        \tabindent 2015            & 65.689585                              & 4.460000                                    & 71.445193                           & 6.400000  & 74.317847    & 9.270000  \\
+        \tabindent 2016            & 65.579978                              & 5.350000                                    & 71.638148                           & 6.430000  & 74.178699    & 8.970000  \\
+        \tabindent 2017            & 66.491658                              & 5.250000                                    & 72.349451                           & 4.250000  & 74.591947    & 6.500000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                     \\
-        \tabindent <= 1         & 66.863272                        & 4.940000                              & 72.005520                     & 5.140000  & 74.272153    & 7.410000  \\
-        \tabindent (1-2]        & 67.553775                        & 5.590000                              & 72.584599                     & 5.170000  & 75.237684    & 7.820000  \\
-        \tabindent (2-3]        & 66.061857                        & 5.770000                              & 72.349461                     & 5.110000  & 74.713903    & 7.480000  \\
-        \tabindent (3-6]        & 65.007308                        & 5.950000                              & 72.855935                     & 6.220000  & 75.086134    & 8.450000  \\
-        \tabindent (6-12]       & 64.184403                        & 5.600000                              & 71.908786                     & 6.200000  & 74.389885    & 8.690000  \\
-        \tabindent > 12         & 56.065976                        & 5.380000                              & 66.802260                     & 7.160000  & 71.092148    & 11.450000 \\
+        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                                          \\
+        \tabindent <= 1 month      & 66.863272                              & 4.940000                                    & 72.005520                           & 5.140000  & 74.272153    & 7.410000  \\
+        \tabindent (1-2] months    & 67.553775                              & 5.590000                                    & 72.584599                           & 5.170000  & 75.237684    & 7.820000  \\
+        \tabindent (2-3] months    & 66.061857                              & 5.770000                                    & 72.349461                           & 5.110000  & 74.713903    & 7.480000  \\
+        \tabindent (3-6] months    & 65.007308                              & 5.950000                                    & 72.855935                           & 6.220000  & 75.086134    & 8.450000  \\
+        \tabindent (6-12] months   & 64.184403                              & 5.600000                                    & 71.908786                           & 6.200000  & 74.389885    & 8.690000  \\
+        \tabindent > 12 months     & 56.065976                              & 5.380000                                    & 66.802260                           & 7.160000  & 71.092148    & 11.450000 \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Moneyness}                                                                                                                                            \\
-        \tabindent <= 0.7       & 65.722320                        & 5.400000                              & 72.842929                     & 3.880000  & 75.645703    & 6.680000  \\
-        \tabindent (0.7-0.9]    & 66.272446                        & 5.460000                              & 72.187575                     & 5.130000  & 74.768887    & 7.710000  \\
-        \tabindent (0.9-1.1]    & 66.977290                        & 5.190000                              & 72.619255                     & 5.420000  & 74.739508    & 7.540000  \\
-        \tabindent (1.1-1.3]    & 58.197013                        & 5.020000                              & 66.153817                     & 7.100000  & 69.833429    & 10.780000 \\
-        \tabindent > 1.3        & 56.958403                        & 5.890000                              & 64.569317                     & 6.580000  & 70.478616    & 12.490000 \\
+        \multicolumn{7}{l}{ Moneyness}                                                                                                                                                                 \\
+        \tabindent <= 0.7          & 65.722320                              & 5.400000                                    & 72.842929                           & 3.880000  & 75.645703    & 6.680000  \\
+        \tabindent (0.7-0.9]       & 66.272446                              & 5.460000                                    & 72.187575                           & 5.130000  & 74.768887    & 7.710000  \\
+        \tabindent (0.9-1.1]       & 66.977290                              & 5.190000                                    & 72.619255                           & 5.420000  & 74.739508    & 7.540000  \\
+        \tabindent (1.1-1.3]       & 58.197013                              & 5.020000                                    & 66.153817                           & 7.100000  & 69.833429    & 10.780000 \\
+        \tabindent > 1.3           & 56.958403                              & 5.890000                                    & 64.569317                           & 6.580000  & 70.478616    & 12.490000 \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                  \\
-        \tabindent At Mid       & 60.688727                        & 6.950000                              & 67.528635                     & 4.080000  & 69.104800    & 5.660000  \\
-        \tabindent Inside       & 68.822448                        & 3.030000                              & 71.987785                     & 6.150000  & 73.698272    & 7.860000  \\
-        \tabindent At Quotes    & 54.187224                        & 16.010000                             & 74.756821                     & 2.410000  & 81.426352    & 9.080000  \\
-        \tabindent Outside      & 70.719978                        & -4.200000                             & 70.369607                     & -1.560000 & 69.648255    & -2.280000 \\
-        \tabindent Unknown      & 83.771336                        & 1.110000                              & 83.608778                     & 0.950000  & 84.213854    & 1.550000  \\
+        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                       \\
+        \tabindent At Mid          & 60.688727                              & 6.950000                                    & 67.528635                           & 4.080000  & 69.104800    & 5.660000  \\
+        \tabindent Inside          & 68.822448                              & 3.030000                                    & 71.987785                           & 6.150000  & 73.698272    & 7.860000  \\
+        \tabindent At Quotes       & 54.187224                              & 16.010000                                   & 74.756821                           & 2.410000  & 81.426352    & 9.080000  \\
+        \tabindent Outside         & 70.719978                              & -4.200000                                   & 70.369607                           & -1.560000 & 69.648255    & -2.280000 \\
+        \tabindent Unknown         & 83.771336                              & 1.110000                                    & 83.608778                           & 0.950000  & 84.213854    & 1.550000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ All}                                                                                                                                                  \\
-        \tabindent All          & 66.002029                        & 5.260000                              & 71.951794                     & 5.430000  & 74.375033    & 7.860000  \\
+        \multicolumn{7}{l}{ All}                                                                                                                                                                       \\
+        \tabindent All             & 66.002029                              & 5.260000                                    & 71.951794                           & 5.430000  & 74.375033    & 7.860000  \\
         \bottomrule
     \end{tabular}
 \end{table}
 
+\clearpage
 
 \textbf{FT-Transformer}
 
+Performance results of Transformers are robust across all tested dimensions. The accuracy is approximately equal for calls and puts. We observe, that the benchmark performance of puts is consistently higher in our sub-samples, which contrasts the finding of \textcite[][22]{grauerOptionTradeClassification2022}.
+
+Similar to \glspl{GBRT}, the FT-Transformer slightly underperforms the benchmark for index options in the \gls{ISE} sample. Even though the effect reverses on the \gls{CBOE} set, accuracies for index options are lower than the of any other underlying. Hence, we can extend the finding of \textcites[][22]{grauerOptionTradeClassification2022}[][9]{savickasInferringDirectionOption2003} that index options are notoriously difficult to classify to machine learning-based approaches.
+
+Classification is more accurate for options with near-maturity or deep-in-the-money options. In this sense, our finding contradicts the observation of \textcite[][891]{savickasInferringDirectionOption2003} made for rule-based classification. Again, we document that the addition of option-specific features, such as maturity or moneyness smooths out differences across maturity and moneyness levels.
+
+Lastly, the FT-Transformers perform well on trades at the quotes. When trained on \gls{ISE} data it greatly outperforms for trades at the quotes, despite that some of the benchmarks contain explicit overrides from the trade size rule. Vice versa, the FT-Transformer fails to meet benchmark performance for trades outside the spread.
+
 \begin{table}[h!]
     \centering
-    \caption[short-diff-ise-supervised-test-fttransformer]{long-diff-ise-supervised-test-fttransformer}
-    \label{tab:diff-ise_supervised-test}
+    \caption[Robustness Checks For FT-Transformer On \glsentryshort{ISE}]{This table presents accuracies of the FT-Transformer across various sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \label{tab:diff-ise-transformer}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
-        {}                      & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-        {}                      & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
-        \multicolumn{7}{l}{ Option Type}                                                                                                                                          \\
-        \tabindent C            & 62.991514                        & 3.820000                              & 72.099064                     & 4.690000  & 73.484904    & 6.080000  \\
-        \tabindent P            & 64.687031                        & 3.630000                              & 73.131667                     & 5.290000  & 74.420786    & 6.580000  \\
+        {}                          & \multicolumn{2}{c}{\gls{FS} Classical} & \multicolumn{2}{c}{\gls{FS} Classical-Size} & \multicolumn{2}{c}{\gls{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                          & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
+        \multicolumn{7}{l}{ Option Type}                                                                                                                                                                \\
+        \tabindent C                & 62.991514                              & 3.820000                                    & 72.099064                           & 4.690000  & 73.484904    & 6.080000  \\
+        \tabindent P                & 64.687031                              & 3.630000                                    & 73.131667                           & 5.290000  & 74.420786    & 6.580000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Security Type}                                                                                                                                        \\
-        \tabindent Index option & 56.519890                        & -1.290000                             & 58.457380                     & -0.040000 & 58.641678    & 0.140000  \\
-        \tabindent Others       & 68.443599                        & 2.920000                              & 76.549050                     & 5.970000  & 77.590109    & 7.010000  \\
-        \tabindent Stock option & 62.019384                        & 4.140000                              & 71.196166                     & 4.650000  & 72.674763    & 6.120000  \\
+        \multicolumn{7}{l}{ Security Type}                                                                                                                                                              \\
+        \tabindent Index option     & 56.519890                              & -1.290000                                   & 58.457380                           & -0.040000 & 58.641678    & 0.140000  \\
+        \tabindent Others           & 68.443599                              & 2.920000                                    & 76.549050                           & 5.970000  & 77.590109    & 7.010000  \\
+        \tabindent Stock option     & 62.019384                              & 4.140000                                    & 71.196166                           & 4.650000  & 72.674763    & 6.120000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Trade Size}                                                                                                                                           \\
-        \tabindent (0,1]        & 62.127137                        & 3.590000                              & 72.877007                     & 3.710000  & 73.967386    & 4.800000  \\
-        \tabindent (1,3]        & 62.654716                        & 4.200000                              & 73.321548                     & 4.040000  & 74.721308    & 5.440000  \\
-        \tabindent (3,5]        & 62.839285                        & 4.030000                              & 73.161769                     & 3.770000  & 74.715927    & 5.320000  \\
-        \tabindent (5,11]       & 65.756057                        & 3.200000                              & 71.877263                     & 8.210000  & 73.441354    & 9.770000  \\
-        \tabindent >11          & 67.380602                        & 3.710000                              & 71.237293                     & 6.280000  & 72.584805    & 7.630000  \\
+        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                 \\
+        \tabindent 1 contract       & 62.127137                              & 3.590000                                    & 72.877007                           & 3.710000  & 73.967386    & 4.800000  \\
+        \tabindent (1,3] contracts  & 62.654716                              & 4.200000                                    & 73.321548                           & 4.040000  & 74.721308    & 5.440000  \\
+        \tabindent (3,5] contracts  & 62.839285                              & 4.030000                                    & 73.161769                           & 3.770000  & 74.715927    & 5.320000  \\
+        \tabindent (5,11] contracts & 65.756057                              & 3.200000                                    & 71.877263                           & 8.210000  & 73.441354    & 9.770000  \\
+        \tabindent >11 contracts    & 67.380602                              & 3.710000                                    & 71.237293                           & 6.280000  & 72.584805    & 7.630000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Year}                                                                                                                                                 \\
-        \tabindent 2015         & 60.620179                        & 4.220000                              & 69.609946                     & 5.820000  & 71.861077    & 8.070000  \\
-        \tabindent 2016         & 63.851905                        & 3.680000                              & 72.798245                     & 5.270000  & 74.138951    & 6.620000  \\
-        \tabindent 2017         & 64.688426                        & 3.700000                              & 73.077731                     & 3.970000  & 74.111711    & 5.010000  \\
+        \multicolumn{7}{l}{ Year}                                                                                                                                                                       \\
+        \tabindent 2015             & 60.620179                              & 4.220000                                    & 69.609946                           & 5.820000  & 71.861077    & 8.070000  \\
+        \tabindent 2016             & 63.851905                              & 3.680000                                    & 72.798245                           & 5.270000  & 74.138951    & 6.620000  \\
+        \tabindent 2017             & 64.688426                              & 3.700000                                    & 73.077731                           & 3.970000  & 74.111711    & 5.010000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                     \\
-        \tabindent <= 1         & 64.546416                        & 3.670000                              & 72.976628                     & 5.460000  & 74.450445    & 6.930000  \\
-        \tabindent (1-2]        & 64.736461                        & 3.930000                              & 73.043470                     & 4.470000  & 73.692560    & 5.120000  \\
-        \tabindent(2-3]         & 63.152545                        & 3.250000                              & 72.063690                     & 3.780000  & 72.896064    & 4.610000  \\
-        \tabindent (3-6]        & 61.887659                        & 3.740000                              & 71.531191                     & 3.670000  & 72.287641    & 4.420000  \\
-        \tabindent (6-12]       & 62.021518                        & 4.100000                              & 71.325950                     & 3.430000  & 72.466903    & 4.570000  \\
-        \tabindent > 12         & 55.669126                        & 4.380000                              & 69.313656                     & 4.290000  & 72.282466    & 7.250000  \\
+        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                                           \\
+        \tabindent <= 1 month       & 64.546416                              & 3.670000                                    & 72.976628                           & 5.460000  & 74.450445    & 6.930000  \\
+        \tabindent (1-2] months     & 64.736461                              & 3.930000                                    & 73.043470                           & 4.470000  & 73.692560    & 5.120000  \\
+        \tabindent(2-3] months      & 63.152545                              & 3.250000                                    & 72.063690                           & 3.780000  & 72.896064    & 4.610000  \\
+        \tabindent (3-6] months     & 61.887659                              & 3.740000                                    & 71.531191                           & 3.670000  & 72.287641    & 4.420000  \\
+        \tabindent (6-12] months    & 62.021518                              & 4.100000                                    & 71.325950                           & 3.430000  & 72.466903    & 4.570000  \\
+        \tabindent > 12 months      & 55.669126                              & 4.380000                                    & 69.313656                           & 4.290000  & 72.282466    & 7.250000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Moneyness}                                                                                                                                            \\
-        \tabindent <= 0.7       & 65.196444                        & 3.460000                              & 71.762641                     & 7.370000  & 71.689001    & 7.290000  \\
-        \tabindent (0.7-0.9]    & 67.618182                        & 3.650000                              & 74.318808                     & 6.030000  & 74.876535    & 6.580000  \\
-        \tabindent (0.9-1.1]    & 64.141472                        & 3.610000                              & 73.115683                     & 4.540000  & 74.236648    & 5.660000  \\
-        \tabindent (1.1-1.3]    & 54.943206                        & 4.690000                              & 67.505754                     & 5.480000  & 70.929706    & 8.900000  \\
-        \tabindent > 1.3        & 53.468351                        & 4.620000                              & 64.293219                     & 4.080000  & 71.424038    & 11.210000 \\
+        \multicolumn{7}{l}{ Moneyness}                                                                                                                                                                  \\
+        \tabindent <= 0.7           & 65.196444                              & 3.460000                                    & 71.762641                           & 7.370000  & 71.689001    & 7.290000  \\
+        \tabindent (0.7-0.9]        & 67.618182                              & 3.650000                                    & 74.318808                           & 6.030000  & 74.876535    & 6.580000  \\
+        \tabindent (0.9-1.1]        & 64.141472                              & 3.610000                                    & 73.115683                           & 4.540000  & 74.236648    & 5.660000  \\
+        \tabindent (1.1-1.3]        & 54.943206                              & 4.690000                                    & 67.505754                           & 5.480000  & 70.929706    & 8.900000  \\
+        \tabindent > 1.3            & 53.468351                              & 4.620000                                    & 64.293219                           & 4.080000  & 71.424038    & 11.210000 \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                  \\
-        \tabindent At Mid       & 62.490146                        & 5.340000                              & 72.138236                     & 3.990000  & 74.022892    & 5.870000  \\
-        \tabindent Inside       & 62.566010                        & 2.120000                              & 68.807735                     & 4.300000  & 70.429973    & 5.930000  \\
-        \tabindent At Quotes    & 68.608870                        & 8.640000                              & 86.087938                     & 7.870000  & 86.165327    & 7.950000  \\
-        \tabindent Outside      & 63.228880                        & -3.550000                             & 63.792525                     & -1.130000 & 65.610951    & 0.690000  \\
-        \tabindent Unknown      & 78.268902                        & 1.860000                              & 77.824153                     & 1.420000  & 78.522066    & 2.110000  \\
+        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                        \\
+        \tabindent At Mid           & 62.490146                              & 5.340000                                    & 72.138236                           & 3.990000  & 74.022892    & 5.870000  \\
+        \tabindent Inside           & 62.566010                              & 2.120000                                    & 68.807735                           & 4.300000  & 70.429973    & 5.930000  \\
+        \tabindent At Quotes        & 68.608870                              & 8.640000                                    & 86.087938                           & 7.870000  & 86.165327    & 7.950000  \\
+        \tabindent Outside          & 63.228880                              & -3.550000                                   & 63.792525                           & -1.130000 & 65.610951    & 0.690000  \\
+        \tabindent Unknown          & 78.268902                              & 1.860000                                    & 77.824153                           & 1.420000  & 78.522066    & 2.110000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ All}                                                                                                                                                  \\
-        \tabindent All          & 63.783020                        & 3.730000                              & 72.581107                     & 4.970000  & 73.921795    & 6.310000  \\
+        \multicolumn{7}{l}{ All}                                                                                                                                                                        \\
+        \tabindent All              & 63.783020                              & 3.730000                                    & 72.581107                           & 4.970000  & 73.921795    & 6.310000  \\
         \bottomrule
     \end{tabular}
 \end{table}
 
 \begin{table}[h!]
     \centering
-    \caption[short-diff-cboe-transfer-test-fttransformer]{long-diff-cboe-transfer-test-fttransformer}
-    \label{tab:diff-cboe_transfer_test}
+    \caption[Robustness Checks For FT-Transformer On \glsentryshort{CBOE}]{This table presents accuracies of the FT-Transformer across various sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \label{tab:diff-cboe-transformer}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
-        {}                      & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                       \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-        {}                      & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}    & {Acc. in \%} & {+/-}     \\\midrule
-        \multicolumn{7}{l}{ Option Type}                                                                                                                                         \\
-        \tabindent C            & 65.628907                        & 5.490000                              & 71.945453                     & 6.010000 & 74.579113    & 8.640000  \\
-        \tabindent P            & 66.845425                        & 5.370000                              & 72.402406                     & 5.190000 & 73.917935    & 6.700000  \\
+        {}                          & \multicolumn{2}{c}{\gls{FS} Classical} & \multicolumn{2}{c}{\gls{FS} Classical-Size} & \multicolumn{2}{c}{\gls{FS} Option}                                       \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                          & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}    & {Acc. in \%} & {+/-}     \\\midrule
+        \multicolumn{7}{l}{ Option Type}                                                                                                                                                               \\
+        \tabindent C                & 65.628907                              & 5.490000                                    & 71.945453                           & 6.010000 & 74.579113    & 8.640000  \\
+        \tabindent P                & 66.845425                              & 5.370000                                    & 72.402406                           & 5.190000 & 73.917935    & 6.700000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Security Type}                                                                                                                                       \\
-        \tabindent Index option & 61.207800                        & 7.910000                              & 67.170125                     & 0.720000 & 69.051358    & 2.600000  \\
-        \tabindent Others       & 69.266211                        & 4.630000                              & 74.427252                     & 5.500000 & 75.859396    & 6.940000  \\
-        \tabindent Stock option & 65.395694                        & 5.520000                              & 71.703855                     & 6.180000 & 74.141068    & 8.620000  \\
+        \multicolumn{7}{l}{ Security Type}                                                                                                                                                             \\
+        \tabindent Index option     & 61.207800                              & 7.910000                                    & 67.170125                           & 0.720000 & 69.051358    & 2.600000  \\
+        \tabindent Others           & 69.266211                              & 4.630000                                    & 74.427252                           & 5.500000 & 75.859396    & 6.940000  \\
+        \tabindent Stock option     & 65.395694                              & 5.520000                                    & 71.703855                           & 6.180000 & 74.141068    & 8.620000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Trade Size}                                                                                                                                          \\
-        \tabindent (0,1]        & 63.135782                        & 6.170000                              & 71.074930                     & 7.100000 & 73.362654    & 9.380000  \\
-        \tabindent (1,3]        & 64.993995                        & 5.300000                              & 71.513064                     & 6.520000 & 73.846381    & 8.860000  \\
-        \tabindent (3,5]        & 65.605000                        & 5.110000                              & 72.070498                     & 5.730000 & 74.237799    & 7.900000  \\
-        \tabindent (5,11]       & 66.701471                        & 5.280000                              & 71.890991                     & 5.490000 & 73.979636    & 7.580000  \\
-        \tabindent >11          & 71.378727                        & 4.990000                              & 74.552019                     & 2.840000 & 76.246445    & 4.530000  \\
+        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                \\
+        \tabindent 1 contract       & 63.135782                              & 6.170000                                    & 71.074930                           & 7.100000 & 73.362654    & 9.380000  \\
+        \tabindent (1,3] contracts  & 64.993995                              & 5.300000                                    & 71.513064                           & 6.520000 & 73.846381    & 8.860000  \\
+        \tabindent (3,5] contracts  & 65.605000                              & 5.110000                                    & 72.070498                           & 5.730000 & 74.237799    & 7.900000  \\
+        \tabindent (5,11] contracts & 66.701471                              & 5.280000                                    & 71.890991                           & 5.490000 & 73.979636    & 7.580000  \\
+        \tabindent >11 contracts    & 71.378727                              & 4.990000                                    & 74.552019                           & 2.840000 & 76.246445    & 4.530000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Year}                                                                                                                                                \\
-        \tabindent 2015         & 65.830149                        & 4.600000                              & 71.843643                     & 6.800000 & 74.755266    & 9.710000  \\
-        \tabindent 2016         & 65.786999                        & 5.560000                              & 71.935076                     & 6.720000 & 74.353864    & 9.140000  \\
-        \tabindent 2017         & 66.648330                        & 5.410000                              & 72.424788                     & 4.330000 & 74.138831    & 6.040000  \\
+        \multicolumn{7}{l}{ Year}                                                                                                                                                                      \\
+        \tabindent 2015             & 65.830149                              & 4.600000                                    & 71.843643                           & 6.800000 & 74.755266    & 9.710000  \\
+        \tabindent 2016             & 65.786999                              & 5.560000                                    & 71.935076                           & 6.720000 & 74.353864    & 9.140000  \\
+        \tabindent 2017             & 66.648330                              & 5.410000                                    & 72.424788                           & 4.330000 & 74.138831    & 6.040000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                    \\
-        \tabindent <= 1         & 66.927563                        & 5.000000                              & 72.081695                     & 5.220000 & 74.167407    & 7.310000  \\
-        \tabindent (1-2]        & 67.642166                        & 5.680000                              & 72.576488                     & 5.160000 & 74.914699    & 7.500000  \\
-        \tabindent (2-3]        & 66.550561                        & 6.250000                              & 72.383470                     & 5.150000 & 73.512089    & 6.280000  \\
-        \tabindent (3-6]        & 65.257500                        & 6.200000                              & 73.243404                     & 6.610000 & 75.241041    & 8.610000  \\
-        \tabindent (6-12]       & 64.630833                        & 6.050000                              & 72.430785                     & 6.730000 & 74.759232    & 9.050000  \\
-        \tabindent > 12         & 56.949258                        & 6.270000                              & 68.451314                     & 8.810000 & 71.975430    & 12.340000 \\
+        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                                          \\
+        \tabindent <= 1 month       & 66.927563                              & 5.000000                                    & 72.081695                           & 5.220000 & 74.167407    & 7.310000  \\
+        \tabindent (1-2] months     & 67.642166                              & 5.680000                                    & 72.576488                           & 5.160000 & 74.914699    & 7.500000  \\
+        \tabindent (2-3] months     & 66.550561                              & 6.250000                                    & 72.383470                           & 5.150000 & 73.512089    & 6.280000  \\
+        \tabindent (3-6] months     & 65.257500                              & 6.200000                                    & 73.243404                           & 6.610000 & 75.241041    & 8.610000  \\
+        \tabindent (6-12] months    & 64.630833                              & 6.050000                                    & 72.430785                           & 6.730000 & 74.759232    & 9.050000  \\
+        \tabindent > 12 months      & 56.949258                              & 6.270000                                    & 68.451314                           & 8.810000 & 71.975430    & 12.340000 \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Moneyness}                                                                                                                                           \\
-        \tabindent <= 0.7       & 65.747181                        & 5.420000                              & 72.938769                     & 3.980000 & 75.030310    & 6.070000  \\
-        \tabindent (0.7-0.9]    & 66.501088                        & 5.690000                              & 72.160406                     & 5.100000 & 73.928341    & 6.870000  \\
-        \tabindent (0.9-1.1]    & 67.105536                        & 5.320000                              & 72.698844                     & 5.500000 & 74.754866    & 7.560000  \\
-        \tabindent (1.1-1.3]    & 58.732468                        & 5.550000                              & 67.827369                     & 8.770000 & 70.847531    & 11.790000 \\
-        \tabindent > 1.3        & 57.597394                        & 6.530000                              & 66.397443                     & 8.400000 & 71.088957    & 13.100000 \\
+        \multicolumn{7}{l}{ Moneyness}                                                                                                                                                                 \\
+        \tabindent <= 0.7           & 65.747181                              & 5.420000                                    & 72.938769                           & 3.980000 & 75.030310    & 6.070000  \\
+        \tabindent (0.7-0.9]        & 66.501088                              & 5.690000                                    & 72.160406                           & 5.100000 & 73.928341    & 6.870000  \\
+        \tabindent (0.9-1.1]        & 67.105536                              & 5.320000                                    & 72.698844                           & 5.500000 & 74.754866    & 7.560000  \\
+        \tabindent (1.1-1.3]        & 58.732468                              & 5.550000                                    & 67.827369                           & 8.770000 & 70.847531    & 11.790000 \\
+        \tabindent > 1.3            & 57.597394                              & 6.530000                                    & 66.397443                           & 8.400000 & 71.088957    & 13.100000 \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                 \\
-        \tabindent At Mid       & 60.688727                        & 6.950000                              & 67.528635                     & 4.080000 & 69.104800    & 5.660000  \\
-        \tabindent Inside       & 68.679525                        & 2.890000                              & 72.284311                     & 6.440000 & 73.930387    & 8.090000  \\
-        \tabindent At Quotes    & 56.479734                        & 18.300000                             & 74.815580                     & 2.470000 & 79.999142    & 7.650000  \\
-        \tabindent Outside      & 73.145095                        & -1.770000                             & 72.581753                     & 0.650000 & 71.908491    & -0.020000 \\
-        \tabindent Unknown      & 83.807460                        & 1.150000                              & 83.220446                     & 0.560000 & 83.491375    & 0.830000  \\
+        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                       \\
+        \tabindent At Mid           & 60.688727                              & 6.950000                                    & 67.528635                           & 4.080000 & 69.104800    & 5.660000  \\
+        \tabindent Inside           & 68.679525                              & 2.890000                                    & 72.284311                           & 6.440000 & 73.930387    & 8.090000  \\
+        \tabindent At Quotes        & 56.479734                              & 18.300000                                   & 74.815580                           & 2.470000 & 79.999142    & 7.650000  \\
+        \tabindent Outside          & 73.145095                              & -1.770000                                   & 72.581753                           & 0.650000 & 71.908491    & -0.020000 \\
+        \tabindent Unknown          & 83.807460                              & 1.150000                                    & 83.220446                           & 0.560000 & 83.491375    & 0.830000  \\
         \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ All}                                                                                                                                                 \\
-        \tabindent All          & 66.182348                        & 5.440000                              & 72.153338                     & 5.640000 & 74.278318    & 7.760000  \\
+        \multicolumn{7}{l}{ All}                                                                                                                                                                       \\
+        \tabindent All              & 66.182348                              & 5.440000                                    & 72.153338                           & 5.640000 & 74.278318    & 7.760000  \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-\todo{When the analysis was repeated using only the Lee and Radhakrishna subsample, the results were equally as strong or stronger, with two exceptions. Using their subsample, time between transactions is no longer a statistically signi"cant determinant of misclassi"cation and large trades are misclassi"ed slightly more frequently than small trades (odderswhite)}
-\todo{Our focus is on ... rules.}
-\todo{Improvements are particularily high for trades that are notourisly hard to classify by classical trade classification algorithms.}
+\clearpage
+
+\textbf{Gradient-Boosting With Self-Training}
+
+We analyse the robustness of \gls{GBRT} with self-training on \gls{CBOE} data in \cref{tab:diff-ise-gbm-semi} and \gls{CBOE} data in \cref{tab:diff-cboe-gbm-semi}. Similar to what we observe for the vanilla \glspl{GBRT}, \glspl{GBRT} with self-training outperforms the respective benchmarks on almost all subsets. The only exceptions are index options and options traded outside the quotes, where the model performs worse than $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$.
+
+Compared to the vanilla \glspl{GBRT}, performance degrades across almost all subsets. We indicate the change with an arrow. Quantitatively, we find no improvements in robustness as performance differences between sub-samples are of the same magnitude and the performance gap between rule-based classification extends for index options and trades outside the spread.
+
+\begin{table}
+    \centering
+    \caption[Robustness Checks For \gls{GBRT} With Self-Training On \glsentryshort{ISE}]{This table presents accuracies of the \gls{GBRT} with self-training across various sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \label{tab:diff-ise-gbm-semi}
+    \begin{tabular}{lSSSSSS@{}}
+        \toprule
+        {}                          & \multicolumn{2}{c}{\gls{FS} Classical} & \multicolumn{2}{c}{\gls{FS} Classical-Size} & \multicolumn{2}{c}{\gls{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                          & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
+        \multicolumn{7}{l}{ Option Type}                                                                                                                                                                \\
+        \tabindent C                & 62.652675                              & 3.480000                                    & 71.692310                           & 4.280000  & 73.080774    & 5.670000  \\
+        \tabindent P                & 64.248224                              & 3.190000                                    & 72.686646                           & 4.840000  & 74.057310    & 6.210000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Security Type}                                                                                                                                                              \\
+        \tabindent Index option     & 55.804436                              & -2.000000                                   & 56.841230                           & -1.660000 & 57.069948    & -1.430000 \\
+        \tabindent Others           & 68.063622                              & 2.540000                                    & 76.242209                           & 5.660000  & 77.167487    & 6.590000  \\
+        \tabindent Stock option     & 61.635859                              & 3.750000                                    & 70.742796                           & 4.190000  & 72.323667    & 5.770000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{Trade Size}                                                                                                                                                                  \\
+        \tabindent 1 contract       & 61.639494                              & 3.100000                                    & 72.340844                           & 3.170000  & 73.654797    & 4.480000  \\
+        \tabindent (1,3] contracts  & 62.223821                              & 3.770000                                    & 72.789348                           & 3.500000  & 74.255320    & 4.970000  \\
+        \tabindent (3,5] contracts  & 62.397287                              & 3.590000                                    & 72.519880                           & 3.120000  & 74.039560    & 4.640000  \\
+        \tabindent (5,11] contracts & 65.618460                              & 3.070000                                    & 71.684199                           & 8.020000  & 73.028391    & 9.360000  \\
+        \tabindent >11 contracts    & 67.040031                              & 3.370000                                    & 71.118780                           & 6.160000  & 72.439817    & 7.480000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Year}                                                                                                                                                                       \\
+        \tabindent 2015             & 60.243706                              & 3.840000                                    & 68.868343                           & 5.080000  & 70.786068    & 7.000000  \\
+        \tabindent 2016             & 63.512307                              & 3.340000                                    & 72.378496                           & 4.860000  & 73.722111    & 6.200000  \\
+        \tabindent 2017             & 64.193287                              & 3.200000                                    & 72.748578                           & 3.650000  & 74.032503    & 4.930000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                                           \\
+        \tabindent <= 1 month       & 64.191702                              & 3.310000                                    & 72.575096                           & 5.060000  & 73.992504    & 6.480000  \\
+        \tabindent (1-2] months     & 64.304365                              & 3.490000                                    & 72.671822                           & 4.100000  & 73.423384    & 4.850000  \\
+        \tabindent (2-3] months     & 62.723994                              & 2.820000                                    & 71.532663                           & 3.250000  & 72.521370    & 4.240000  \\
+        \tabindent (3-6] months     & 61.580416                              & 3.440000                                    & 71.045351                           & 3.180000  & 72.269140    & 4.410000  \\
+        \tabindent (6-12] months    & 61.499195                              & 3.580000                                    & 71.030021                           & 3.140000  & 72.522064    & 4.630000  \\
+        \tabindent > 12 months      & 54.968983                              & 3.680000                                    & 68.438668                           & 3.410000  & 71.434925    & 6.410000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Moneyness}                                                                                                                                                                  \\
+        \tabindent <= 0.7           & 65.208146                              & 3.470000                                    & 72.054059                           & 7.660000  & 72.305804    & 7.910000  \\
+        \tabindent (0.7-0.9]        & 67.296529                              & 3.330000                                    & 74.095772                           & 5.800000  & 74.898137    & 6.610000  \\
+        \tabindent (0.9-1.1]        & 63.795656                              & 3.270000                                    & 72.767171                           & 4.190000  & 73.884687    & 5.310000  \\
+        \tabindent (1.1-1.3]        & 54.138334                              & 3.890000                                    & 66.047839                           & 4.020000  & 69.444851    & 7.420000  \\
+        \tabindent > 1.3            & 52.429063                              & 3.580000                                    & 62.764020                           & 2.550000  & 69.521397    & 9.310000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                        \\
+        \tabindent  At mid          & 62.504158                              & 5.350000                                    & 72.020690                           & 3.870000  & 74.135598    & 5.990000  \\
+        \tabindent  Inside          & 62.254246                              & 1.810000                                    & 68.066336                           & 3.560000  & 69.616667    & 5.110000  \\
+        \tabindent  At Quotes       & 67.774587                              & 7.810000                                    & 86.631144                           & 8.420000  & 87.044176    & 8.830000  \\
+        \tabindent  Outside         & 60.665638                              & -6.110000                                   & 61.222573                           & -3.700000 & 63.007448    & -1.910000 \\
+        \tabindent  Unknown         & 78.419432                              & 2.010000                                    & 78.173110                           & 1.770000  & 78.775231    & 2.370000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ All}                                                                                                                                                                        \\
+        \tabindent All              & 63.397514                              & 3.350000                                    & 72.156489                           & 4.550000  & 73.536644    & 5.930000  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \caption[Robustness Checks For \gls{GBRT} With Self-Training On \glsentryshort{CBOE}]{This table presents accuracies of the \gls{GBRT} with self-training across various sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \label{tab:diff-cboe-gbm-semi}
+    \begin{tabular}{lSSSSSS@{}}
+        \toprule
+        {}                           & \multicolumn{2}{c}{\gls{FS} Classical} & \multicolumn{2}{c}{\gls{FS} Classical-Size} & \multicolumn{2}{c}{\gls{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                           & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
+        \multicolumn{7}{l}{ Option Type}                                                                                                                                                                 \\
+        \tabindent  C                & 65.684960                              & 5.550000                                    & 71.679647                           & 5.740000  & 73.861831    & 7.930000  \\
+        \tabindent  P                & 66.793889                              & 5.310000                                    & 72.213858                           & 5.000000  & 74.062937    & 6.850000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Security Type}                                                                                                                                                               \\
+        \tabindent Index option      & 60.473838                              & 7.180000                                    & 67.105136                           & 0.650000  & 71.887517    & 5.430000  \\
+        \tabindent  Others           & 69.244055                              & 4.610000                                    & 74.139991                           & 5.220000  & 75.199613    & 6.280000  \\
+        \tabindent  Stock option     & 65.488535                              & 5.620000                                    & 71.480260                           & 5.960000  & 73.641117    & 8.120000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                  \\
+        \tabindent  (0,1] contracts  & 62.973834                              & 6.010000                                    & 70.819157                           & 6.840000  & 72.937166    & 8.960000  \\
+        \tabindent  (1,3] contracts  & 65.118049                              & 5.420000                                    & 71.408791                           & 6.420000  & 73.257486    & 8.270000  \\
+        \tabindent  (3,5] contracts  & 65.737683                              & 5.240000                                    & 72.070108                           & 5.730000  & 73.863723    & 7.530000  \\
+        \tabindent  (5,11] contracts & 66.785771                              & 5.360000                                    & 71.417181                           & 5.020000  & 73.706455    & 7.310000  \\
+        \tabindent  >11 contracts    & 71.325873                              & 4.940000                                    & 74.284581                           & 2.570000  & 76.318963    & 4.600000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Year}                                                                                                                                                                        \\
+        \tabindent  2015             & 66.007593                              & 4.770000                                    & 71.481656                           & 6.430000  & 73.902835    & 8.850000  \\
+        \tabindent 2016              & 65.893291                              & 5.660000                                    & 71.648168                           & 6.440000  & 73.803728    & 8.590000  \\
+        \tabindent  2017             & 66.528435                              & 5.290000                                    & 72.270430                           & 4.180000  & 74.119449    & 6.020000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                                            \\
+        \tabindent  <= 1 month       & 67.056909                              & 5.130000                                    & 71.964529                           & 5.100000  & 73.786961    & 6.930000  \\
+        \tabindent  (1-2] months     & 67.772982                              & 5.810000                                    & 72.571659                           & 5.160000  & 74.814076    & 7.400000  \\
+        \tabindent  (2-3] months     & 66.301325                              & 6.010000                                    & 72.298979                           & 5.060000  & 74.336873    & 7.100000  \\
+        \tabindent  (3-6] months     & 65.245253                              & 6.190000                                    & 72.913470                           & 6.280000  & 74.748933    & 8.110000  \\
+        \tabindent  (6-12] months    & 64.278137                              & 5.700000                                    & 71.842299                           & 6.140000  & 74.118231    & 8.410000  \\
+        \tabindent  > 12 months      & 56.024652                              & 5.340000                                    & 66.747501                           & 7.110000  & 70.982970    & 11.340000 \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Moneyness}                                                                                                                                                                   \\
+        \tabindent  <= 0.7           & 65.922647                              & 5.600000                                    & 72.940931                           & 3.980000  & 75.846570    & 6.880000  \\
+        \tabindent (0.7-0.9]         & 66.505182                              & 5.690000                                    & 72.147835                           & 5.090000  & 74.406591    & 7.350000  \\
+        \tabindent  (0.9-1.1]        & 67.182047                              & 5.390000                                    & 72.578030                           & 5.380000  & 74.270874    & 7.070000  \\
+        \tabindent  (1.1-1.3]        & 58.154374                              & 4.970000                                    & 66.209109                           & 7.150000  & 69.276591    & 10.220000 \\
+        \tabindent  > 1.3            & 56.873419                              & 5.810000                                    & 64.526503                           & 6.530000  & 70.114857    & 12.120000 \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                         \\
+        \tabindent  At Mid           & 61.027628                              & 7.290000                                    & 68.014400                           & 4.570000  & 69.548723    & 6.100000  \\
+        \tabindent  Inside           & 69.027538                              & 3.240000                                    & 72.060074                           & 6.220000  & 73.387416    & 7.550000  \\
+        \tabindent  At Quotes        & 54.386870                              & 16.210000                                   & 74.035455                           & 1.690000  & 80.309025    & 7.960000  \\
+        \tabindent  Outside          & 72.265732                              & -2.650000                                   & 69.682605                           & -2.250000 & 68.810113    & -3.120000 \\
+        \tabindent  Unknown          & 83.581685                              & 0.920000                                    & 83.292694                           & 0.630000  & 83.861645    & 1.200000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ All}                                                                                                                                                                         \\
+        \tabindent All               & 66.189454                              & 5.440000                                    & 71.922680                           & 5.410000  & 73.953322    & 7.440000  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\clearpage
+
+\textbf{Transformer With Self-Training}
+
+In summary, our tests demonstrate that the strong results are stable across multiple dimensions and between exchanges.
 
 \clearpage
 
 \subsection{Feature Importance}\label{sec:feature-importance}
+
+\textbf{Attention Visualisation}
+
+Drawing on theory in \cref{sec:feature-importance-measure}, we employ the methodology of \textcite[][2--4]{cheferTransformerInterpretabilityAttention2021} to generate attention maps, which we then \emph{qualitatively} interpret.
+
+These attention maps offer transparency at the \emph{trade level}. To aid visualization, we focus on subsets of trades, where the performance of Transformers is particularly strong and select \num{16} mid-spread trades and \num{16} trades at the quotes from the \gls{ISE} test set. The resulting attention maps are shown in \cref{fig:attention-maps-ise}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{attention_maps_ise_quotes_mid.pdf}
+    \caption[Attention Maps of Transformer Trained on \glsentryshort{ISE} Data Set]{Attention maps of Transformer trained on \gls{ISE} data with \gls{FS} 3. The left plot contains attention weights of \num{16} trades at the quotes and the right plot of \num{16} mid-spread trades. Each column represents a trade and each row a feature. The intensity of the pixel represents the importance. $\mathtt{[CLS]}$ token excluded, as suggested in \textcite[][4]{cheferGenericAttentionmodelExplainability2021}.}
+    \label{fig:attention-maps-ise}
+\end{figure}
+
+Visually, the trade price and quotes at the exchange or inter-exchange level are important and frequently used. This aligns with theory, as these features are core to the quote rule and numerous hybrid algorithms. Also, quote-based algorithms are among the best performing in our dataset. Aside from the trade price, features required to estimate the tick rule attain only spurious attributions. Considering the devastating performance of tick-based algorithms in option trade classification, this is unsurprising. Features from the depth and trade size rule, such as the trade size, are used selectively for trades at the quotes. In this subset, option-specific features like the issue type, moneyness, time to maturity, or daily trading volume of the option series receive relatively high attention scores.  Overall, engineered features, like the proximity to quotes, attain low attention scores, which suggests that the Transformer itself can synthesise the feature from the \emph{raw} bid, ask, and trade price.
+
+The model assigns the highest attention scores to features found in the quote rule and hybrids' there-off. Due to the possible link to rule-based trade classification, it is worthwhile to explore, if the fine-grained patterns learned by specific attention heads translate to existing trade classification rules i.e., if specific tokens attend to features that are jointly used in rule-based classification. This information is sacrificed when aggregating over multiple attention heads and layers, as done for \cref{fig:attention-maps-ise}, but readily available from individual attention heads. To further analyse this aspect, we adapt the approach of \textcite[][4]{clarkWhatDoesBERT2019} to our setting and probe individual attention heads.
+
+\begin{figure}[h!]
+    \subfloat[Tick Rule-like Head (4,5)\label{fig:head-tick}]{\includegraphics[width=0.3\textwidth]{attention_head_5_layer_4_ise_quotes_mid.pdf}}
+    \hfill
+    \subfloat[Trade Size Rule-like Head (4,1)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth]{attention_head_1_layer_4_ise_quotes_mid.pdf}}
+    \hfill
+    \subfloat[\glsentryshort{LR}-Like Head (4,8)\label{fig:head-lr}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_4_ise_quotes_mid.pdf}}
+    \caption[Attention Heads That Correspond To Trade Classification Rules]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualised for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualisations based on code by \textcite[][4]{clarkWhatDoesBERT2019}.}
+    \label{fig:rule-like-attention-heads}
+\end{figure}
+
+\cref{fig:rule-like-attention-heads} depicts the result for selected attention heads involved in classifying a trade at the quote. The remaining attention heads are visualised in \todo{Create appendix}. Each subplot depicts the features to which the classification token $\mathtt{[CLS]}$ attends too. The attention weight determines the intensity of the line between the two. Referring to the results from the appendix, we note that attention heads learn diverse patterns, as most heads attend to different tokens at once learning different relations. For earlier layers in the network, the classification tokens gather from multiple tokens with generic patterns, whereas for the final self-attention layers, attention heads specialise in relations that seem related to rule-based trade classification. In \cref{fig:head-tick} the classification token gathers simultaneously from multiple size-related features similar to the trade size rule. \cref{fig:head-tsize} depicts a neighbouring classification head that focuses solely on the change in trade price similar to the tick rule. Finally, \cref{fig:head-lr} is a alike to the \gls{LR} algorithm with additional dependencies on the time to maturity. For other attention heads the purpose they serve in the network remains open. 
+
+While the similarity is striking, we advocate for a rigorous analysis. It would be interesting for future work to extend this analysis, as it potentially enables uncovering new rule-based approaches and understanding Transformer-based trade classification more detailedly.
+
+\textbf{Embedding Visualisation}
+
+For the Transformer we know from \cref{sec:token-embeddings}, that embeddings can capture similarities by arranging related objects closer in embedding space. Visualising the learnt embeddings enables insights into the model.
+
+The embeddings are queried from the feature tokenizer in FT-Transformer. The similarity between embeddings is measured by cosine distance in embedding space. The high-dimensional embeddings are then projected into 2D space using $t$-SNE \autocite[][2587]{vandermaatenVisualizingDataUsing2008}. As straightforward to interpret, we focus our analysis on the root, but note, that it applies to any numerical and categorical embeddings.
+
+\cref{fig:categorical-embeddings} illustrates the embeddings exemplary for SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) which can be \emph{qualitatively} interpreted.\footnote{As our analysis is condensed to two randomly chosen examples, we encourage the reader to use our interactive visualisation for further exploration. Accessible here \url{https://wandb.ai/fbv/thesis/runs/3cirr6nk}.}
+
+\begin{figure}[h!]
+    \subfloat[Most Similar Embeddings to $\mathtt{SPY}$\label{fig:cat-embeddings-spy}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_SPY.pdf}}
+    \vfill
+    \subfloat[Most Similar Embeddings to $\mathtt{JPM}$\label{fig:cat-embeddings-jpm}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_JPM.pdf}}
+    \caption[Embeddings of Selected Underlyings]{Embeddings of selected underlyings. The plot depicts the projected embedding of SPDR S\&P 500 ETF ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) and their most similar embeddings. Embeddings are projected into 2D-space using $t$-SNE \autocite[][2587]{vandermaatenVisualizingDataUsing2008}. The ten most similar embeddings by cosine distance in the original space are coloured and annotated. The model is trained on \gls{ISE} data.}
+    \label{fig:categorical-embeddings}
+\end{figure}
+
+For SPDR S\&P 500 ETF ($\mathtt{SPY}$) in \cref{fig:cat-embeddings-spy}, similar embeddings include iShares Russell 2000 ($\mathtt{IWM}$), iShares Russel 2000 ($\mathtt{WYV}$), SPDR S\&P 500 ETF ($\mathtt{OBV}$), and Direxion shares ETF ($\mathtt{XDT}$). This aligns with the intuition that \glspl{ETF} track identical or related indices. The model distinguishes \glspl{ETF} from other securities based on the feature issue type. Additional similar embeddings consist of Citigroup Inc. ($\mathtt{WRV}$), Kohl's Corp. ($\mathtt{OSS}$), Google Inc. ($\mathtt{YTM}$), and Intel Corp. ($\mathtt{INTC}$), which are long-term index constituents.
+
+Regarding JPMorgan Chase \& Co. ($\mathtt{JPM}$) in \cref{fig:cat-embeddings-jpm}, the most similar embedding is the of Bank of America ($\mathtt{BAC}$). Other similar embeddings include financial service providers like Amerigroup ($\mathtt{XGZ}$) and Janus Henderson Group ($\mathtt{ZPR}$). These results suggest that the model learned to group US financials, even without sector information provided. However, this argumentation does not apply to other related embeddings such as the Apollo Group ($\mathtt{OKO}$) or United Parcel Service of America ($\mathtt{YUP}$). % Autodesk Inc. ($\mathtt{ADQ}$) , Centex Corp. ($\mathtt{YYV}$), United Parcel Service of America ($\mathtt{YUP}$), Wild Oats Markets ($\mathtt{ZAC}$), SPDR S\&P 500 ETF ($\mathtt{SUE}$), and SPDR Dow Jones Industrial Average ($\mathtt{DIA}$).
+
+While these exemplary results indicate that the model can learn meaningful representations of the underlying, we must acknowledge its limitations. Both underlyings are frequently traded in our dataset, which may lead to meaningful embeddings. For infrequent underlyings, embeddings are likely to be close to their random initialisation and lack meaningful patterns due to limited parameter updates and missing context. This issue is analogous to handling rare vocabulary items found in natural language processing. As the underlying plays a subordinate role in classification, this caveat is accepted.
 
 \textbf{Sage Values}
 
@@ -494,40 +686,14 @@ To summarize, despite the significantly higher training costs, semi-supervised v
     \label{fig:sage-importances}
 \end{figure}
 
-\textbf{Attention Maps}
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=1\textwidth]{attention_maps_ise_quotes_mid.pdf}
-    \caption[tbd]{tbd}
-    \label{fig:attention-maps-ise}
-\end{figure}
-
-\textbf{Categorical Embeddings}
-
-For the Transformer we know from \cref{sec:token-embeddings}, that embeddings can capture similarities by arranging related objects closer in embedding space. Visualising the learnt embeddings gives insights into the model.
-
-The embeddings are queried from the feature tokenizer in FT-Transformer. The similarity between embeddings is measured by cosine distance in embedding space. The high-dimensional embeddings are then projected into 2D space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. As straightforward to interpret, we focus our analysis on the underlying, but note, that it applies to any numerical and categorical embeddings.
-
-Figure \cref{fig:categorical-embeddings} illustrates the embeddings exemplary for SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$).\footnote{As our analysis is condensed to two underlyings, we encourage the reader to use our interactive visualisation for further exploration. Accessible here \url{https://wandb.ai/fbv/thesis/runs/3cirr6nk}.} For SPY \todo{Graphically, ... wait for list of underlyings. What was not input to the model?}. For JPM \todo{Visually performs ... wait for the list of underlyings}
-
-\begin{figure}[h!]
-    \subfloat[Most Similar Embeddings to $\mathtt{SPY}$\label{fig:cat-embeddings-spy}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_SPY.pdf}}
-    \vfill
-    \subfloat[Most Similar Embeddings to $\mathtt{JPM}$\label{fig:fig:cat-embeddings-jpm}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_JPM.pdf}}
-    \caption[Categorical Embeddings of Selected Underlyings]{Categorical embeddings of selected underlyings. The plot depicts the projected embedding of SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) and their most similar embeddings. Embeddings are projected into 2D-space using $t$-SNE \autocite{vandermaatenVisualizingDataUsing2008}. The ten most similar embeddings by cosine similarity in the original space are coloured and annotated. The model is trained on \gls{ISE} data.}
-    \label{fig:categorical-embeddings}
-\end{figure}
-
-However, we want to stress the limitations. Both underlyings are among the most frequently traded in our dataset. For infrequent underlyings, embedding are likely close to their random initialisation and hence not meaningful, as no parameter updates take place. The raised problem transfers to handling rare vocabulary items, intensively studied in the context of natural language processing. \todo{Add relevant literature?}
+\todo{Discuss results of sage values.}
 
 \clearpage
 
 \section{Application in Transaction Cost Estimation}\label{sec:application}
 
 \textbf{Preliminaries}
-
-% TODO: Add why it is important. See Stoll, Huang, Roll (zettelkasten)
+% \todo{Add why it is important. See Stoll, Huang, Roll (zettelkasten)}
 
 Albeit the classification accuracy is a reasonable measure for comparing classifiers, one cannot immediately infer how changes in accuracy e.~g., an improvement by \SI{1}{\percent}, affect the application domains. In an attempt to make our results tangible, we apply all algorithms to estimate trading cost, a problem we previously identified to be reliant on correct trade classification (cp. \cref{sec:introduction}) and a common testing ground for trade classification rules \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][569]{finucaneDirectTestMethods2000}[][271--278]{petersonEvaluationBiasesExecution2003}[][896--897]{savickasInferringDirectionOption2003}.
 
@@ -545,23 +711,23 @@ For convenience, we also calculate the \emph{relative effective spread} as
 \begin{equation}
     {PS}_{i,t} = S_{i,t} / V_{i,t}.
 \end{equation}
-% \todo{check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does chakrabarty 2007 p. 3819?}
+% \todo{check how it is defined Savickas / Finucane use midpoint, Peterson and Sirri divide by price / so does Chakrabarty 2007 p. 3819?}
 
-The subsequent section estimates both the nominal and relative effective spread. Following \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal. The null hypothesis of equal medians is rejected at the \SI{1}{\percent} level.
+Adapted from \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal.
 
 \textbf{Results}
 
-The actual and the estimated effective spreads for the test sets are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimated the effective spreads of rules on a older subset of option trades at the \gls{CBOE}, which can be compared against. Our results match theirs in magnitude.
+The true and the estimated effective spreads for the test sets are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimated the effective spreads of rules on a older subset of option trades at the \gls{CBOE}, which can be compared against. Our results match theirs in magnitude.
 
 \begin{table}[!ht]
     \centering
     \input{Content/effective-spread.tex}
-    \caption{Effective Spreads Estimates of Trade Classification Rules and Classifiers}
+    \caption[Effective Spreads Estimates of Trade Classification Rules and Classifiers]{Effective spreads estimates of trade classification rules and classifiers. Results are calculated on \gls{ISE} and \gls{CBOE} test set and averaged over all trades within the samples. Classifiers match the configuration of \cref{sec:hyperparameter-tuning}.}
     \label{tab:effective-spread}
 \end{table}
 
-In summary, quote-based algorithms like the quote rule and the \gls{LR} algorithm severely overestimate the effective spread. The overestimate is less severe for the \gls{CLNV} algorithm due to stronger dependency on the tick rule. The tick rule itself achieves estimates closest to the true effective spread, which is \num[round-mode=places, round-precision=3]{0.004926} and \num[round-mode=places, round-precision=3]{0.012219} for the \gls{ISE} and \gls{CBOE} sample respectively. As primarily tick-based algorithms, like the tick rule or \gls{EMO} rule, perform like a random classifier in our samples, we conclude that the close estimate is an artefact to randomness, not due to superior predictive power. This observation is in line with \textcite[][897]{savickasInferringDirectionOption2003}, who make a similar argument for the \gls{EMO} rule on \gls{CBOE} trades. For rule-based algorithms $\operatorname{gsu}_{\mathrm{large}}$ provides reasonable estimates of the effective spread while achieving high classification accuracy.
+In summary, quote-based algorithms like the quote rule and the \gls{LR} algorithm severely overestimate the effective spread. The overestimate is less severe for the \gls{CLNV} algorithm due to stronger dependency on the tick rule. The tick rule itself achieves estimates closest to the true effective spread, which is \num[round-mode=places, round-precision=3]{0.004926} and \num[round-mode=places, round-precision=3]{0.012219} for the \gls{ISE} and \gls{CBOE} sample respectively. As primarily tick-based algorithms, like the tick rule or \gls{EMO} rule, act as a random classifier in our samples, we conclude that the close estimate is an artefact to randomness, not due to superior predictive power. This observation is in line with \textcite[][897]{savickasInferringDirectionOption2003}, who make a similar argument for the \gls{EMO} rule on \gls{CBOE} trades. For rule-based algorithms $\operatorname{gsu}_{\mathrm{large}}$ provides reasonable estimates of the effective spread while achieving high classification accuracy.
 
-From our machine learning-based classifiers the FT-Transformer or \gls{GBRT} trained on FS 3 provides estimates closest to the true effective spread, in particular on the \gls{CBOE} sample. The null hypothesis of equal medians is rejected.
+From our machine learning-based classifiers the FT-Transformer or \gls{GBRT} trained on \gls{FS} 3 provides estimates closest to the true effective spread, in particular on the \gls{CBOE} sample. The null hypothesis of equal medians is rejected at the \SI{1}{\percent} level for all classifiers.
 
-Thus, $\operatorname{gsu}_{\mathrm{large}}$ provides the best estimate of the effective spread if the true labels are absent. For labelled data, Transformer or gradient boosting-based approaches can provide more accurate estimates. The de facto standard, the \gls{LR} algorithm, fails to deliver accurate estimates and may bias empirical research.
+Thus, $\operatorname{gsu}_{\mathrm{large}}$ provides the best estimate of the effective spread if the true labels are absent. For labelled data, Transformer or gradient boosting-based approaches can provide more accurate estimates. The de facto standard, the \gls{LR} algorithm, fails to deliver accurate estimates and may bias research.

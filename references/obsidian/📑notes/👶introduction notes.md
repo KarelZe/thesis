@@ -1,3 +1,6 @@
+ Supply of sufficient background information  Definition of the (general) problem  State of knowledge about the problem (in detail)  Carving out the gap of research and development  Objectives of the work/paper  Overall purpose/goal: to fill the gap in R&D  Stating specific objectives: as objectives, as hypotheses or as research questions.  Our Recommendations: Begin the chapter “Introduction” with the problem statement. Set the context of your research and capture the reader's attention. Explain the background of your study, starting from a broad perspective narrowing it down to your own research goal. Go into more detail when presenting the state of knowledge to date. Review what is known about your research topic as far as it is relevant. Then, develop the research or development gap from the existing knowledge. This is an important part, because your research work starts with the “gap” and should result in new knowledge or new findings. Therefore, the goal of your research work is to close the gap which you have discovered. Then, specify your objectives. The easiest way is to set some special research questions, which you will directly answer later in the respective chapter “Conclusion”. Thus, you do not mix up/confuse this part with working steps. For example, “to make life cycle assessment”, “to make soil analysis” are working steps, and not objectives as such
+
+
 Our paper contributes....
 
 Motivated by these considerations, we investigate how the predictability documented in our main test varies across option contracts with differing degrees of leverage. We find that option signals constructed from deep out-of-the-money options, which are highly leveraged contracts, exhibit the greatest level of predictability, while the signals from contracts with low leverage provide very little, if any, predictability.3 ([[@panInformationOptionVolume2006]])
@@ -96,3 +99,28 @@ The rest of this paper is structured as follows. In Section 2, we describe the o
 
 
 We recall the existing HSIC estimator V-HSIC in Section 3.1, and its Nyström approximation for two compo- nents in Section 3.2. We present our proposed Nyström approximation for more than two components in Section 4.
+
+
+In this work, we revisit the question: Given a fixed FLOPs budget,1 how should one trade-off model
+size and the number of training tokens? To answer this question, we model the final pre-training loss2
+𝐿(𝑁, 𝐷) as a function of the number of model parameters 𝑁, and the number of training tokens, 𝐷.
+Since the computational budget 𝐶 is a deterministic function FLOPs(𝑁, 𝐷) of the number of seen
+training tokens and model parameters, we are interested in minimizing 𝐿 under the constraint
+FLOPs(𝑁, 𝐷) = 𝐶:
+𝑁𝑜𝑝𝑡 (𝐶), 𝐷𝑜𝑝𝑡 (𝐶) = argmin
+𝑁,𝐷 s.t. FLOPs(𝑁,𝐷)=𝐶
+𝐿(𝑁, 𝐷). (1)
+The functions 𝑁𝑜𝑝𝑡 (𝐶), and 𝐷𝑜𝑝𝑡 (𝐶) describe the optimal allocation of a computational budget 𝐶. We
+empirically estimate these functions based on the losses of over 400 models, ranging from under 70M
+to over 16B parameters, and trained on 5B to over 400B tokens – with each model configuration
+trained for several different training horizons. Our approach leads to considerably different results
+than that of Kaplan et al. (2020). We highlight our results in Figure 1 and how our approaches differ
+in Section 2.
+Based on our estimated compute-optimal frontier, we predict that for the compute budget used
+to train Gopher, an optimal model should be 4 times smaller, while being training on 4 times more
+tokens. We verify this by training a more compute-optimal 70B model, called Chinchilla, on 1.4 trillion
+tokens. Not only does Chinchilla outperform its much larger counterpart, Gopher, but its reduced
+model size reduces inference cost considerably and greatly facilitates downstream uses on smaller
+hardware. The energy cost of a large language model is amortized through its usage for inference an
+fine-tuning. The benefits of a more optimally trained smaller model, therefore, extend beyond the
+immediate benefits of its improved performance.

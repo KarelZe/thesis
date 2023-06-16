@@ -26,6 +26,33 @@
 \subsection{Power-Transforms of Features}
 \label{app:power-transforms-of-features}
 
+\begin{table}[ht]
+    \centering
+    \caption[Power-Transforms of Features]{Power-transforms of features. \lambda~specifies the exponent. Transformations estimated on \gls{ISE} training set.}
+    \label{tab:power-transformerations}
+    \begin{tabular}{lS}
+        \toprule
+        {Feature}        & {\lambda} \\
+        \midrule
+        strike price     & -0.082968 \\
+        trade size       & -0.204893 \\
+        trade price      & 0.060425  \\
+        best bid         & 0.110299  \\
+        best ask         & 0.056837  \\
+        ask (ex)         & 0.049090  \\
+        bid (ex)         & 0.113067  \\
+        bid size (ex)    & 0.140284  \\
+        ask size (ex)    & 0.029876  \\
+        price lead (all) & 0.054975  \\
+        price lag (all)  & 0.049097  \\
+        price lead (ex)  & 0.053774  \\
+        price lag (ex)   & 0.042910  \\
+        day volume       & -0.116017 \\
+        moneyness        & -0.109716 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
 \subsection{Features and Transformations}
 \label{app:feature-and-transformations}
 
@@ -93,7 +120,7 @@
     \label{tab:results-supervised-retraining-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
-                   &            & \multicolumn{2}{c}{FS Classical} & \multicolumn{2}{c}{FS Classical-Size} & \multicolumn{2}{c}{FS Option}                                      \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
+                   &            & \multicolumn{2}{c}{\gls{FS} Classical} & \multicolumn{2}{c}{\gls{FS} Classical-Size} & \multicolumn{2}{c}{\gls{FS} Option}                                      \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
         Classifier & Data Set   & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}    & {Acc. in \%} & {+/-}    \\ \midrule
         \gls{GBRT} & \gls{ISE}  & 66.413827                        & 6.360000                              & 73.945544                     & 6.330000 & 76.162269    & 8.550000 \\
                    & \gls{CBOE} & 67.526839                        & 6.780000                              & 72.754664                     & 6.240000 & 75.125406    & 8.610000 \\ \bottomrule

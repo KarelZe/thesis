@@ -71,6 +71,8 @@ By this means, the tick rule can sign all trades as long as a last differing tra
 
 The reverse tick test is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
 
+\todo{There are two opposing arguments about the relationship between the probability of successful classification and trade distance. One suggests that classification errors are a result of asynchronous trade and quote times and the accuracy of trade classification rules should increase when the trade distance is larger. The second argument is based on the possibility that the tick rule could become less accurate the longer the time between trades (Finucane, 2000). Consistent with the first argument, the marginal effects are positive for all four regressions, indicating that larger the trade distances increase the probability of correct classification. We also examine the time between the prevailing quote and the last quote update - quote distance. Short time intervals between quote changes can lead to the problem of asynchronous prices and hence decrease classification accuracy. The results of our regressions confirm that higher quote distances leads to better classification.9 (Found in chakrabarty paper)}
+
 \begin{equation}
     \operatorname{rtick} \colon \mathbb{N}^2 \to \mathcal{Y},\quad
     \operatorname{rtick}(i, t)=
@@ -107,7 +109,7 @@ As shown in \cref{eq:depth-rule}, the depth rule classifies midspread trades onl
 
 \subsubsection{Trade Size Rule}\label{sec:trade-size-rule}
 
-% TODO: Think about writing as restriction? https://en.wikipedia.org/wiki/Restriction_(mathematics)
+\todo{Think about writing as restriction? \url{https://en.wikipedia.org/wiki/Restriction_(mathematics)}}
 Generally, quote-based approaches are preferred due to their strong performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. The trade size rule is defined on $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: \tilde{P}_{i,t} = \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \lor \tilde{P}_{i,t} \neq\tilde{A}_{i,t} = \tilde{B}_{i,t} \right\}$ as:
 \begin{equation}
     \operatorname{tsize} \colon \mathcal{A} \to \mathcal{Y},\quad

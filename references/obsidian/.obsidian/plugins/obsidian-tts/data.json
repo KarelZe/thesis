@@ -6,7 +6,7 @@
   "speakLinks": false,
   "speakFrontmatter": false,
   "speakSyntax": false,
-  "speakTitle": true,
+  "speakTitle": false,
   "speakCodeblocks": false,
   "speakEmoji": false,
   "speakComments": false,
