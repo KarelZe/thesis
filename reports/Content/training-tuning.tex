@@ -195,7 +195,7 @@ The loss surface of the \gls{GBRT} trained on the feature set including option f
     \label{tab:solutions-gbm}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyperparameter               & Distribution                                  & {\gls{FS} Classical}              & {\gls{FS} Size}              & {\gls{FS} Option}              \\ \midrule
+        Hyperparameter               & Distribution                                  & {\glsentryshort{FS} Classical}              & {\glsentryshort{FS} Size}              & {\glsentryshort{FS} Option}              \\ \midrule
         Depth                        & $\operatorname{UniformInt}[1,12]$             & 8                   & 9                   & 12                  \\
         Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$     & 0.12484221864046671 & 0.12347889459796775 & 0.12471458170177774 \\
         $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$            & 15                  & 5                   & 16                  \\
@@ -216,7 +216,7 @@ The search space for the semi-supervised variant is identical to the supervised 
     \label{tab:solutions-GBRT-self-training}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyperparameter               & Distribution                                  & {\gls{FS} Classical}                                 & {\gls{FS} Size}                                 & {\gls{FS} Option}                                 \\ \midrule
+        Hyperparameter               & Distribution                                  & {\glsentryshort{FS} Classical}                                 & {\glsentryshort{FS} Size}                                 & {\glsentryshort{FS} Option}                                 \\ \midrule
         Depth                        & $\operatorname{UniformInt}[1,12]$             & 9                                      & 10                                     & 9                                      \\
         Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$     & 0.12337960608926582                    & 0.1248422186404667                     & 0.12347504812996231                    \\
         $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$            & 12                                     & 9                                      & 13                                     \\
@@ -276,7 +276,7 @@ The best combination is identical for all feature sets. The embedding dimension 
     \label{tab:solutions-transformer}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyperparameter                       & Distribution                                        & {\gls{FS} Classical}              & {\gls{FS} Size}              & {\gls{FS} Option}              \\ \midrule
+        Hyperparameter                       & Distribution                                        & {\glsentryshort{FS} Classical}              & {\glsentryshort{FS} Size}              & {\glsentryshort{FS} Option}              \\ \midrule
         Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    & 4                   & 4                   & 4                   \\
         Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                & 248                 & 248                 & 248                 \\
         Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.04424625102595975 & 0.04424625102595975 & 0.04424625102595975 \\
@@ -299,14 +299,14 @@ The hyperparameter search space for Transformers with a pre-training objective i
     \label{tab:solutions-transformer-pretraining}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyperparameter                       & Distribution                                        & {\gls{FS} Classical}                   & {\gls{FS} Size}                   & {\gls{FS} Option}                   \\ \midrule
-        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    &                          &                          &                          \\
-        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                &                          &                          &                          \\
-        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &                          &                          &                          \\
-        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &                          &                          &                          \\
-        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ &                          &                          &                          \\
-        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ &                          &                          &                          \\ \midrule
-        Validation Accuracy in \%            &                                                     & {$\downarrow \num{0.0}$} & {$\downarrow \num{0.0}$} & {$\downarrow \num{0.0}$} \\ \bottomrule
+        Hyperparameter                       & Distribution                                        & {\glsentryshort{FS} Classical}                   & {\glsentryshort{FS} Size}                   & {\glsentryshort{FS} Option}                   \\ \midrule
+        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    &  4                        &                          &                          \\
+        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                &  248                        &                          &                          \\
+        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &  0.04424625102595975                        &                          &                          \\
+        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &  0.0979914312095726                        &                          &                          \\
+        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ &  \num{1e-6}                        &                          &                          \\
+        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ &  \num{6e-5}                         &                          &                          \\ \midrule
+        Validation Accuracy in \%            &                                                     & {$\uparrow \num{65.13623935106421}$} & {$\downarrow \num{0.0}$} & {$\downarrow \num{0.0}$} \\ \bottomrule
     \end{tabular}
 \end{table}
 
