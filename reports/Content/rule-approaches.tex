@@ -57,15 +57,14 @@ A common alternative to the quote rule is the tick test. Based on the rationale 
     \operatorname{tick}\colon \mathbb{N}^2 \to \mathcal{Y},\quad
     \operatorname{tick}(i, t)=
     \begin{cases}
-        1,                           & \mathrm{if}\ t=1 \lor P_{t}>P_{t-1} \\
+        1,                           & \mathrm{if}\ P_{t}>P_{t-1} \\
         -1,                          & \mathrm{if}\ P_{i, t} < P_{i, t-1}  \\
+        Y\sim\mathrm{Uniform}(\mathcal{Y}), & \mathrm{if}\ t=1 \\
         \operatorname{tick}(i, t-1), & \mathrm{else}.
     \end{cases}
     \label{eq:tick-test}
 \end{equation}
-Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy~\footnote{To end recursion at $t=1$, we sign the trade to be buyer-initiated to simplify notation. Other choices are possible, e.g., random assignment or based on another rule. Similarly done for \cref{eq:reverse-tick-test}.}. Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[][735]{leeInferringTradeDirection1991}.
-
-\todo{End of recursion complicates things. Think of random classification to allign with later or remove it.}
+Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy.\footnote{To end recursion at $t=1$, we sign the trades randomly as buyer- or seller-initiated to simplify notation. Other choices are possible. Similarly done for \cref{eq:reverse-tick-test}.} Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[][735]{leeInferringTradeDirection1991}.
 
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
 
@@ -77,8 +76,9 @@ The reverse tick test is a variant of the tick test proposed in \textcite[][241]
     \operatorname{rtick} \colon \mathbb{N}^2 \to \mathcal{Y},\quad
     \operatorname{rtick}(i, t)=
     \begin{cases}
-        1,                            & \mathrm{if}\ t+1=T \lor P_{i, t} > P_{i, t+1} \\
+        1,                            & \mathrm{if}\ P_{i, t} > P_{i, t+1} \\
         -1,                           & \mathrm{if}\ P_{i, t} < P_{i, t+1}            \\
+        Y\sim\mathrm{Uniform}(\mathcal{Y}), & \mathrm{if}\ t+1=T \\
         \operatorname{rtick}(i, t+1), & \mathrm{else}
     \end{cases}
     \label{eq:reverse-tick-test}
@@ -109,7 +109,6 @@ As shown in \cref{eq:depth-rule}, the depth rule classifies midspread trades onl
 
 \subsubsection{Trade Size Rule}\label{sec:trade-size-rule}
 
-\todo{Think about writing as restriction? \url{https://en.wikipedia.org/wiki/Restriction_(mathematics)}}
 Generally, quote-based approaches are preferred due to their strong performance. \textcite[][13]{grauerOptionTradeClassification2022} stress, however, that the quote rule systematically misclassifies limit orders, and propose an override. The trade size rule is defined on $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: \tilde{P}_{i,t} = \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \lor \tilde{P}_{i,t} \neq\tilde{A}_{i,t} = \tilde{B}_{i,t} \right\}$ as:
 \begin{equation}
     \operatorname{tsize} \colon \mathcal{A} \to \mathcal{Y},\quad
