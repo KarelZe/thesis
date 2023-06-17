@@ -586,7 +586,7 @@ Compared to the vanilla \glspl{GBRT}, performance degrades across almost all sub
         \tabindent  Stock option     & 65.488535                                        & 5.620000                                              & 71.480260                                     & 5.960000  & 73.641117    & 8.120000  \\
         \cmidrule(rl){1-7}
         \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                                                \\
-        \tabindent  (0,1] contracts  & 62.973834                                        & 6.010000                                              & 70.819157                                     & 6.840000  & 72.937166    & 8.960000  \\
+        \tabindent  1 contract       & 62.973834                                        & 6.010000                                              & 70.819157                                     & 6.840000  & 72.937166    & 8.960000  \\
         \tabindent  (1,3] contracts  & 65.118049                                        & 5.420000                                              & 71.408791                                     & 6.420000  & 73.257486    & 8.270000  \\
         \tabindent  (3,5] contracts  & 65.737683                                        & 5.240000                                              & 72.070108                                     & 5.730000  & 73.863723    & 7.530000  \\
         \tabindent  (5,11] contracts & 66.785771                                        & 5.360000                                              & 71.417181                                     & 5.020000  & 73.706455    & 7.310000  \\
@@ -630,6 +630,120 @@ Compared to the vanilla \glspl{GBRT}, performance degrades across almost all sub
 \textbf{Transformer With Self-Training}
 
 In summary, our tests demonstrate that the strong results are stable across multiple dimensions and between exchanges.
+
+\begin{table}[!ht]
+    \centering
+    \caption[Robustness Checks For FT-Transformer With Pre-Training On \glsentryshort{ISE} Sample]{This table presents accuracies of the FT-Transformer with pre-training across various sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \label{tab:diff-ise-transformer-semi}
+    \begin{tabular}{lSSSSSS@{}}
+        \toprule
+        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                          & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
+        \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                              \\
+        \tabindent Call             & 63.749963                                        & 4.580000                                              & 72.330180                                     & 4.920000  & 74.065147    & 6.660000  \\
+        \tabindent Put              & 65.690288                                        & 4.640000                                              & 73.463103                                     & 5.620000  & 75.106791    & 7.260000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Security Type}                                                                                                                                                                                            \\
+        \tabindent Index option     & 56.362055                                        & -1.440000                                             & 58.108632                                     & -0.390000 & 58.383661    & -0.110000 \\
+        \tabindent Others           & 69.333274                                        & 3.810000                                              & 77.000304                                     & 6.420000  & 77.982061    & 7.400000  \\
+        \tabindent Stock option     & 62.901284                                        & 5.020000                                              & 71.414154                                     & 4.860000  & 73.413594    & 6.860000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                                               \\
+        \tabindent 1 contract       & 63.099320                                        & 4.560000                                              & 73.169661                                     & 4.000000  & 74.652337    & 5.480000  \\
+        \tabindent (1,3] contracts  & 63.569146                                        & 5.120000                                              & 73.528033                                     & 4.240000  & 75.335799    & 6.050000  \\
+        \tabindent (3,5] contracts  & 63.702058                                        & 4.900000                                              & 73.354536                                     & 3.960000  & 75.229101    & 5.830000  \\
+        \tabindent (5,11] contracts & 66.608410                                        & 4.060000                                              & 72.377698                                     & 8.710000  & 73.980762    & 10.310000 \\
+        \tabindent >11 contracts    & 68.019713                                        & 4.350000                                              & 71.405618                                     & 6.450000  & 73.320791    & 8.360000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                                               \\
+        \tabindent 2015             & 61.171782                                        & 4.770000                                              & 69.962628                                     & 6.180000  & 72.547607    & 8.760000  \\
+        \tabindent 2016             & 64.652031                                        & 4.480000                                              & 73.068479                                     & 5.550000  & 74.699170    & 7.180000  \\
+        \tabindent 2017             & 65.837899                                        & 4.850000                                              & 73.348413                                     & 4.250000  & 74.883283    & 5.780000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                                                                         \\
+        \tabindent <= 1 month       & 65.364027                                        & 4.480000                                              & 73.197856                                     & 5.680000  & 75.107317    & 7.590000  \\
+        \tabindent (1-2] months     & 65.628236                                        & 4.820000                                              & 73.369111                                     & 4.800000  & 74.148058    & 5.580000  \\
+        \tabindent (2-3] months     & 64.331533                                        & 4.430000                                              & 72.429163                                     & 4.150000  & 73.490378    & 5.210000  \\
+        \tabindent (3-6] months     & 63.013144                                        & 4.870000                                              & 71.952647                                     & 4.090000  & 73.084793    & 5.220000  \\
+        \tabindent (6-12] months    & 62.982075                                        & 5.060000                                              & 71.751427                                     & 3.860000  & 73.174654    & 5.280000  \\
+        \tabindent > 12 months      & 56.404085                                        & 5.110000                                              & 69.813541                                     & 4.790000  & 72.485012    & 7.460000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Moneyness}                                                                                                                                                                                                \\
+        \tabindent <= 0.7           & 66.156898                                        & 4.420000                                              & 72.078606                                     & 7.680000  & 71.583394    & 7.190000  \\
+        \tabindent (0.7-0.9]        & 68.418392                                        & 4.450000                                              & 74.538473                                     & 6.250000  & 75.484427    & 7.190000  \\
+        \tabindent (0.9-1.1]        & 65.039840                                        & 4.510000                                              & 73.344440                                     & 4.770000  & 74.821342    & 6.250000  \\
+        \tabindent (1.1-1.3]        & 55.622360                                        & 5.370000                                              & 68.048690                                     & 6.020000  & 72.040722    & 10.010000 \\
+        \tabindent > 1.3            & 54.546463                                        & 5.700000                                              & 65.280127                                     & 5.070000  & 72.811810    & 12.600000 \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                                                      \\
+        \tabindent at mid           & 62.489037                                        & 5.340000                                              & 71.949316                                     & 3.800000  & 74.545495    & 6.400000  \\
+        \tabindent inside           & 63.521196                                        & 3.080000                                              & 69.146617                                     & 4.640000  & 71.284755    & 6.780000  \\
+        \tabindent at quotes        & 69.633156                                        & 9.660000                                              & 86.380445                                     & 8.170000  & 86.061393    & 7.850000  \\
+        \tabindent outside          & 65.067436                                        & -1.710000                                             & 65.241898                                     & 0.320000  & 66.000134    & 1.080000  \\
+        \tabindent unknown          & 78.330482                                        & 1.920000                                              & 77.954157                                     & 1.550000  & 78.966815    & 2.560000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ All}                                                                                                                                                                                                      \\
+        \tabindent All              & 64.655751                                        & 4.600000                                              & 72.859054                                     & 5.250000  & 74.551410    & 6.940000  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \caption[Robustness Checks For FT-Transformer With Pre-Training On \glsentryshort{CBOE} Sample]{This table presents accuracies of the FT-Transformer with pre-training across various sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \label{tab:diff-cboe-transformer-semi}
+    \begin{tabular}{lSSSSSS@{}}
+        \toprule
+        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                          & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
+        \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                              \\
+        \tabindent Call             & 65.012528                                        & 4.880000                                              & 71.552840                                     & 5.620000  & 74.134277    & 8.200000  \\
+        \tabindent Put              & 66.454290                                        & 4.970000                                              & 72.060917                                     & 4.850000  & 74.049774    & 6.840000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Security Type}                                                                                                                                                                                            \\
+        \tabindent Index option     & 61.311664                                        & 8.010000                                              & 66.200771                                     & -0.250000 & 69.803565    & 3.350000  \\
+        \tabindent Others           & 68.410529                                        & 3.780000                                              & 73.924844                                     & 5.000000  & 75.449263    & 6.530000  \\
+        \tabindent Stock option     & 64.962393                                        & 5.090000                                              & 71.449345                                     & 5.920000  & 73.960004    & 8.440000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                                               \\
+        \tabindent 1 contract       & 62.775571                                        & 5.810000                                              & 70.759216                                     & 6.780000  & 73.235835    & 9.260000  \\
+        \tabindent (1,3] contracts  & 64.418288                                        & 4.720000                                              & 71.161498                                     & 6.170000  & 73.437399    & 8.450000  \\
+        \tabindent (3,5] contracts  & 65.023927                                        & 4.530000                                              & 71.953982                                     & 5.620000  & 73.815109    & 7.480000  \\
+        \tabindent (5,11] contracts & 66.114120                                        & 4.690000                                              & 71.497170                                     & 5.100000  & 73.745583    & 7.350000  \\
+        \tabindent >11 contracts    & 70.842405                                        & 4.460000                                              & 73.938486                                     & 2.220000  & 76.445743    & 4.730000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                                               \\
+        \tabindent 2015             & 64.831588                                        & 3.600000                                              & 71.241862                                     & 6.190000  & 74.077079    & 9.030000  \\
+        \tabindent 2016             & 64.855703                                        & 4.630000                                              & 71.290142                                     & 6.080000  & 73.770478    & 8.560000  \\
+        \tabindent 2017             & 66.640275                                        & 5.400000                                              & 72.378636                                     & 4.280000  & 74.445935    & 6.350000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                                                                         \\
+        \tabindent <= 1 month       & 66.307150                                        & 4.380000                                              & 71.689714                                     & 4.830000  & 74.034211    & 7.170000  \\
+        \tabindent (1-2] months     & 67.199760                                        & 5.230000                                              & 72.369898                                     & 4.960000  & 74.836544    & 7.420000  \\
+        \tabindent (2-3] months     & 66.121283                                        & 5.830000                                              & 71.973255                                     & 4.740000  & 74.055983    & 6.820000  \\
+        \tabindent (3-6] months     & 64.880126                                        & 5.820000                                              & 72.785279                                     & 6.150000  & 74.655329    & 8.020000  \\
+        \tabindent (6-12] months    & 64.462229                                        & 5.880000                                              & 72.106966                                     & 6.400000  & 74.350528    & 8.650000  \\
+        \tabindent > 12 months      & 56.625127                                        & 5.940000                                              & 68.155753                                     & 8.520000  & 71.192142    & 11.550000 \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Moneyness}                                                                                                                                                                                                \\
+        \tabindent <= 0.7           & 65.893283                                        & 5.570000                                              & 72.838065                                     & 3.880000  & 73.877530    & 4.920000  \\
+        \tabindent (0.7-0.9]        & 66.113484                                        & 5.300000                                              & 71.697415                                     & 4.640000  & 74.262558    & 7.210000  \\
+        \tabindent (0.9-1.1]        & 66.471015                                        & 4.680000                                              & 72.261464                                     & 5.060000  & 74.424000    & 7.230000  \\
+        \tabindent (1.1-1.3]        & 58.491437                                        & 5.310000                                              & 68.054102                                     & 9.000000  & 71.327315    & 12.270000 \\
+        \tabindent > 1.3            & 57.616065                                        & 6.550000                                              & 66.672676                                     & 8.680000  & 71.134668    & 13.140000 \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                                                      \\
+        \tabindent At Mid           & 60.148862                                        & 6.410000                                              & 66.945036                                     & 3.500000  & 68.593233    & 5.150000  \\
+        \tabindent Inside           & 67.857076                                        & 2.070000                                              & 71.837356                                     & 6.000000  & 73.554987    & 7.710000  \\
+        \tabindent At Quotes        & 57.650684                                        & 19.470000                                             & 75.013307                                     & 2.660000  & 81.104108    & 8.750000  \\
+        \tabindent Outside          & 74.484749                                        & -0.430000                                             & 73.996977                                     & 2.070000  & 72.822204    & 0.890000  \\
+        \tabindent Unknown          & 83.897769                                        & 1.240000                                              & 83.130136                                     & 0.470000  & 83.671995    & 1.010000  \\
+        \cmidrule(rl){1-7}
+        \multicolumn{7}{l}{ All}                                                                                                                                                                                                      \\
+        \tabindent All              & 65.668441                                        & 4.920000                                              & 71.783984                                     & 5.270000  & 74.095833    & 7.580000  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 \clearpage
 
