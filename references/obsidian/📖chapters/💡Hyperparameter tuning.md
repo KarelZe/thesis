@@ -62,6 +62,10 @@ Do like $\operatorname{Categorical}\left[\operatorname{tick}_{\text{ex}},\ldots,
 ![[Pasted image 20230617144732.png]]
 ![[Pasted image 20230617144757.png]]
 
+![[Pasted image 20230617200347.png]]
+
+![[Pasted image 20230617200407.png]]
+
 https://arxiv.org/pdf/1603.02754.pdf
 
 https://albertum.medium.com/l1-l2-regularisation-in-xgboost-regression-7b2db08a59e0

@@ -181,14 +181,14 @@ Conceptually similar \textcite[][267]{odders-whiteOccurrenceConsequencesInaccura
 
 Based on the contingency tables in \cref{tab:contigency-supervised-classifiers}, we observe that both models share a large portion of trades, for which both classifiers agree.\footnote{Through summation of correct classifications of one classifier divided by the matrix sum, one obtains the accuracy from \cref{tab:results-supervised-ise-cboe}. Consider the first entry, e.g., $(\num{5904530}+\num{374201}) / (\num{5904530} + \num{374201} + \num{385481} + \num{3197364}) \approx \num{0.63668637}$.} For larger feature sets, the share of trades correctly classified by one classifier grows, while the number of jointly correctly classified trades plateaus. This can be an indication, that both models learn specific patterns and excel in different trades. The performance differences between classifiers are statistically significant for at the \SI{1}{\percent}. The null hypothesis can be rejected.
 
-Contrary to the expectation, the performance improvements are highest for the \gls{CBOE} dataset, despite the models being trained on \gls{ISE} data. Part of this is due to a weaker benchmark performance, but also due to the stronger accuracy of classifiers on the smallest and mid-sized feature sets. One would expect a degradation between sets, assuming exchange-specific trading patterns and requiring exploration in greater detail.
+Contrary to the expectation, the performance improvements are highest for the \gls{CBOE} dataset, albeit the models are being trained on \gls{ISE} trades only. This result is in stark contrast to the of \textcite[][32]{ronenMachineLearningTrade2022}, who test random forests for trade classification and report subpar performance. Their setting differs from ours, as they apply ensembles trained in the bond market to equity trades. Moreover, it is unclear if data preprocessing procedures are shared between both sets, which may hamper performance. Part of the strong performance on \gls{CBOE} trades is due to weaker benchmark performance, but also due to the stronger accuracy of classifiers on the smallest and mid-sized feature sets. One would expect a degradation between sets, assuming exchange-specific trading patterns and requiring exploration in greater detail.
 
 \textbf{Finding 4: Classifier Performance On \gls{CBOE}}
 
 \todo{Formulate finding.}
 
 
-In summary, our supervised methods establish a new state-of-the-art in option trade classification. Our approach achieves full coverage and outperforms all previously reported classification rules in terms of accuracy. We perform additional robustness checks in \cref{sec:robustness-checks} to verify performance is consistent across sub-samples.
+In summary, our supervised methods establish a new state-of-the-art in option trade classification. Our approach achieves full coverage and outperforms all previously reported classification rules in terms of accuracy. Performance transfers across exchanges. We perform additional robustness checks in \cref{sec:robustness-checks} to verify performance is consistent across sub-samples.
 
 \subsection{Results of Semi-Supervised
     Models}\label{sec:results-of-semi-supervised-models}
@@ -210,11 +210,11 @@ We compare the performance of pre-trained Transformers and self-trained gradient
     \end{tabular}
 \end{table}
 
-Identical to the supervised case, our models consistently outperform their respective benchmarks. Gradient boosting with self-training surpasses $\operatorname{gsu}_{\mathrm{small}}$ by \SI{3.350000}{\percent} on \gls{ISE} and \SI{5.440000}{\percent} on \gls{CBOE} in accuracy. Improvements for larger feature sets over $\operatorname{gsu}_{\mathrm{large}}$ are marginally lower to the supervised model and range between \SI{4.550000}{\percent} and \SI{7.440000}{\percent}.
+Identical to the supervised case, our models consistently outperform their respective benchmarks. Gradient boosting with self-training surpasses $\operatorname{gsu}_{\mathrm{small}}$ by \SI{3.350000}{\percent} on \gls{ISE} and \SI{5.440000}{\percent} on \gls{CBOE} in accuracy. Improvements for larger feature sets over $\operatorname{gsu}_{\mathrm{large}}$ are marginally lower to the supervised model and range between \SI{4.550000}{\percent} and \SI{7.440000}{\percent}. 
 
-The results do not support the hypothesis, that adding unlabelled trades into the training corpus improves the generalisation performance of the classifier. We explore this finding in detail.
+Expectedly, the pre-trained Transformer performs better for \gls{ISE} trades, improving over the Transformer trained from scratch by up to \SI{0.87000}{\percent}. Adding unlabelled trades into the training corpus does not improve \gls{CBOE} performance. We explore this finding in detail.
 
-% \textbf{Finding 5: Unlabelled Trades Provide Poor Guidance}
+\textbf{Finding 5: Link Between Unlabelled Trades And Generalisation Performance}
 
 \todo{formulate finding, once Transformer results are ready.}
 
@@ -242,7 +242,9 @@ The results do not support the hypothesis, that adding unlabelled trades into th
     \end{tabular}
 \end{table}
 
-To summarize, despite the significantly higher training costs, semi-supervised variants do not provide better generalisation performance than supervised approaches. We subsequently evaluate if semi-supervised learning improves robustness if not performance.
+As evident from \cref{tab:contigency-semi-supervised-classifiers}, a vast majority of trades are classified by both classifiers correctly. For the \gls{ISE}, performance improvements in larger feature sets are driven by trades that are distinctly classified by both classifiers. In turn, at the \gls{CBOE}, the share of common classifications continues to grow.    
+
+To summarize, unrewarded for higher training costs, semi-supervised variants of \glspl{GBRT} do not provide better generalisation performance than supervised approaches. Pre-Training of Transformers improves performance on the \gls{ISE} sample but slightly deteriorates performance on the \gls{CBOE} set. We subsequently evaluate if semi-supervised learning improves robustness if not performance.
 
 
 \subsection{Robustness of Results}\label{sec:robustness-checks}
