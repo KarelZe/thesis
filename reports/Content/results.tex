@@ -101,7 +101,7 @@ From \cref{tab:ise-classical} we see, that practically all rule-based approaches
 \begin{figure}[!h]
     \centering
     \includegraphics{coverage-over-time.pdf}
-    \caption[Coverage Of Rule-Based Classifiers On \glsentryshort{ISE} and \glsentryshort{CBOE} Over Time]{Accuracy of rule-based classifiers on \gls{ISE} and \gls{CBOE} sample over time.}
+    \caption[Coverage Of Rule-Based Classifiers On \glsentryshort{ISE} and \glsentryshort{CBOE} Over Time]{Coverage of rule-based classifiers on \gls{ISE} and \gls{CBOE} sample over time.}
     \label{fig:classical-coverage-over-time}
 \end{figure}
 
@@ -271,8 +271,8 @@ The performance is stable for different trade sizes and over time. Similarly, ac
         {}                           & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                           & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                                 \\
-        \tabindent  C                & 62.890486                              & 3.720000                                    & 71.884647                           & 4.480000  & 73.647971    & 6.240000  \\
-        \tabindent  P                & 64.557394                              & 3.500000                                    & 72.867874                           & 5.020000  & 74.660185    & 6.820000  \\
+        \tabindent  Call                & 62.890486                              & 3.720000                                    & 71.884647                           & 4.480000  & 73.647971    & 6.240000  \\
+        \tabindent  Put                & 64.557394                              & 3.500000                                    & 72.867874                           & 5.020000  & 74.660185    & 6.820000  \\
         \cmidrule(rl){1-7}
         \multicolumn{7}{l}{ Security Type}                                                                                                                                                               \\
         \tabindent  Index option     & 56.345043                              & -1.460000                                   & 57.474458                           & -1.020000 & 58.649239    & 0.150000  \\
@@ -330,8 +330,8 @@ The performance is stable for different trade sizes and over time. Similarly, ac
         {}                         & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                         & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                               \\
-        \tabindent C               & 65.505083                              & 5.370000                                    & 71.707057                           & 5.770000  & 74.283388    & 8.350000  \\
-        \tabindent P               & 66.597419                              & 5.120000                                    & 72.245014                           & 5.030000  & 74.484832    & 7.270000  \\
+        \tabindent Call               & 65.505083                              & 5.370000                                    & 71.707057                           & 5.770000  & 74.283388    & 8.350000  \\
+        \tabindent Put               & 66.597419                              & 5.120000                                    & 72.245014                           & 5.030000  & 74.484832    & 7.270000  \\
         \cmidrule(rl){1-7}
         \multicolumn{7}{l}{Security Type}                                                                                                                                                              \\
         \tabindent Index Option    & 60.365562                              & 7.070000                                    & 67.298912                           & 0.850000  & 72.394792    & 5.940000  \\
@@ -399,8 +399,8 @@ Lastly, the FT-Transformers perform well on trades at the quotes. When trained o
         {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                          & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                                \\
-        \tabindent C                & 62.991514                              & 3.820000                                    & 72.099064                           & 4.690000  & 73.484904    & 6.080000  \\
-        \tabindent P                & 64.687031                              & 3.630000                                    & 73.131667                           & 5.290000  & 74.420786    & 6.580000  \\
+        \tabindent Call                & 62.991514                              & 3.820000                                    & 72.099064                           & 4.690000  & 73.484904    & 6.080000  \\
+        \tabindent Put                & 64.687031                              & 3.630000                                    & 73.131667                           & 5.290000  & 74.420786    & 6.580000  \\
         \cmidrule(rl){1-7}
         \multicolumn{7}{l}{ Security Type}                                                                                                                                                              \\
         \tabindent Index option     & 56.519890                              & -1.290000                                   & 58.457380                           & -0.040000 & 58.641678    & 0.140000  \\
@@ -456,8 +456,8 @@ Lastly, the FT-Transformers perform well on trades at the quotes. When trained o
         {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                       \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                          & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}    & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                               \\
-        \tabindent C                & 65.628907                              & 5.490000                                    & 71.945453                           & 6.010000 & 74.579113    & 8.640000  \\
-        \tabindent P                & 66.845425                              & 5.370000                                    & 72.402406                           & 5.190000 & 73.917935    & 6.700000  \\
+        \tabindent Call                & 65.628907                              & 5.490000                                    & 71.945453                           & 6.010000 & 74.579113    & 8.640000  \\
+        \tabindent Put                & 66.845425                              & 5.370000                                    & 72.402406                           & 5.190000 & 73.917935    & 6.700000  \\
         \cmidrule(rl){1-7}
         \multicolumn{7}{l}{ Security Type}                                                                                                                                                             \\
         \tabindent Index option     & 61.207800                              & 7.910000                                    & 67.170125                           & 0.720000 & 69.051358    & 2.600000  \\
@@ -521,8 +521,8 @@ Compared to the vanilla \glspl{GBRT}, performance degrades across almost all sub
         {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                          & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                                \\
-        \tabindent C                & 62.652675                              & 3.480000                                    & 71.692310                           & 4.280000  & 73.080774    & 5.670000  \\
-        \tabindent P                & 64.248224                              & 3.190000                                    & 72.686646                           & 4.840000  & 74.057310    & 6.210000  \\
+        \tabindent Call                & 62.652675                              & 3.480000                                    & 71.692310                           & 4.280000  & 73.080774    & 5.670000  \\
+        \tabindent Put                & 64.248224                              & 3.190000                                    & 72.686646                           & 4.840000  & 74.057310    & 6.210000  \\
         \cmidrule(rl){1-7}
         \multicolumn{7}{l}{ Security Type}                                                                                                                                                              \\
         \tabindent Index option     & 55.804436                              & -2.000000                                   & 56.841230                           & -1.660000 & 57.069948    & -1.430000 \\
@@ -578,8 +578,8 @@ Compared to the vanilla \glspl{GBRT}, performance degrades across almost all sub
         {}                           & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                           & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                                 \\
-        \tabindent  C                & 65.684960                              & 5.550000                                    & 71.679647                           & 5.740000  & 73.861831    & 7.930000  \\
-        \tabindent  P                & 66.793889                              & 5.310000                                    & 72.213858                           & 5.000000  & 74.062937    & 6.850000  \\
+        \tabindent  Call                & 65.684960                              & 5.550000                                    & 71.679647                           & 5.740000  & 73.861831    & 7.930000  \\
+        \tabindent  Put                & 66.793889                              & 5.310000                                    & 72.213858                           & 5.000000  & 74.062937    & 6.850000  \\
         \cmidrule(rl){1-7}
         \multicolumn{7}{l}{ Security Type}                                                                                                                                                               \\
         \tabindent Index option      & 60.473838                              & 7.180000                                    & 67.105136                           & 0.650000  & 71.887517    & 5.430000  \\
@@ -689,7 +689,7 @@ Regarding JPMorgan Chase \& Co. ($\mathtt{JPM}$) in \cref{fig:cat-embeddings-jpm
 
 While these exemplary results indicate that the model can learn meaningful representations of the underlying, we must acknowledge its limitations. Both underlyings are frequently traded in our dataset, which may lead to meaningful embeddings. For infrequent underlyings, embeddings are likely to be close to their random initialisation and lack meaningful patterns due to limited parameter updates and missing context. This issue is analogous to handling rare vocabulary items found in natural language processing. As the underlying plays a subordinate role in classification, this caveat is accepted.
 
-\textbf{Sage Values}
+\textbf{SAGE Values}
 
 \begin{figure}[h!]
     \centering

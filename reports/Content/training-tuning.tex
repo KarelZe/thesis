@@ -116,7 +116,7 @@ In summary, we extend the training setup of \textcite[][6]{gorishniyRevisitingDe
 
 Classical trade classification rules serve as a benchmark in our work. We implement them as a classifier that combines arbitrary trade classification rules through stacking, as covered in \cref{sec:semi-supervised-approaches}.
 
-In cases where classification is not feasible due to missing data or the rules' definition itself, we resort to a random classification, which achieves an average accuracy of \SI{50}{\percent}. The approach is adopted from \textcite[][887]{savickasInferringDirectionOption2003}. 
+In cases where classification is not feasible due to missing data or the rules' definition itself, we resort to a random classification, which achieves an average accuracy of \SI{50}{\percent}. The approach is adopted from \textcite[][887]{savickasInferringDirectionOption2003}.
 
 \subsubsection{Training of Semi-Supervised
     Models}\label{sec:training-of-semi-supervised-models}
@@ -129,9 +129,9 @@ To incorporate unlabelled trades into the training procedure, we combine gradien
 
 \textbf{Transformer with Pre-Training}
 
-The FT-Transformer is trained in two stages. First, we train for \num{20} epochs on unlabelled \gls{ISE} trades using the \gls{RTD} head, followed by \num{20} epochs of fine-tuning on labelled \gls{ISE} training data with the classification head. 
+The FT-Transformer is trained in two stages. First, we train for \num{20} epochs on unlabelled \gls{ISE} trades using the \gls{RTD} head, followed by \num{20} epochs of fine-tuning on labelled \gls{ISE} training data with the classification head.
 
-During both pre-training and fine-tuning, early stopping is applied based on the downstream metric, using patience of \num{10}. The hidden dimension of the classification head is set to \num{512}. Since the unlabelled sample includes various types of trades that may not be comparable to the labelled sample, we update all layers during fine-tuning. 
+During both pre-training and fine-tuning, early stopping is applied based on the downstream metric, using patience of \num{10}. The hidden dimension of the classification head is set to \num{512}. Since the unlabelled sample includes various types of trades that may not be comparable to the labelled sample, we update all layers during fine-tuning. \todo{\autocite{raeScalingLanguageModels2022}, why not freeze layers. For early stopping on the validation set. See \textcite{rubachevRevisitingPretrainingObjectives2022}}
 
 Following \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}, the learning rate and weight decay are shared between the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
 
@@ -195,13 +195,13 @@ The loss surface of the \gls{GBRT} trained on the feature set including option f
     \label{tab:solutions-gbm}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyperparameter               & Distribution                                  & {\glsentryshort{FS} Classical}              & {\glsentryshort{FS} Size}              & {\glsentryshort{FS} Option}              \\ \midrule
-        Depth                        & $\operatorname{UniformInt}[1,12]$             & 8                   & 9                   & 12                  \\
-        Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$     & 0.12484221864046671 & 0.12347889459796775 & 0.12471458170177774 \\
-        $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$            & 15                  & 5                   & 16                  \\
-        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ & \num{4e-9}          & \num{4e-7}          & \num{8e-6}          \\
-        Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$            & 0.6419530220498153  & 0.5574912093427532  & 0.45578836944233    \\ \midrule
-        Validation Accuracy in \%    &                                               & 64.37816236230594   & 75.03504680858162   & 76.99459643967347   \\ \bottomrule
+        Hyperparameter               & Distribution                                  & {\glsentryshort{FS} Classical} & {\glsentryshort{FS} Size} & {\glsentryshort{FS} Option} \\ \midrule
+        Depth                        & $\operatorname{UniformInt}[1,12]$             & 8                              & 9                         & 12                          \\
+        Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$     & 0.12484221864046671            & 0.12347889459796775       & 0.12471458170177774         \\
+        $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$            & 15                             & 5                         & 16                          \\
+        Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ & \num{4e-9}                     & \num{4e-7}                & \num{8e-6}                  \\
+        Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$            & 0.6419530220498153             & 0.5574912093427532        & 0.45578836944233            \\ \midrule
+        Validation Accuracy in \%    &                                               & 64.37816236230594              & 75.03504680858162         & 76.99459643967347           \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -216,7 +216,7 @@ The search space for the semi-supervised variant is identical to the supervised 
     \label{tab:solutions-GBRT-self-training}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyperparameter               & Distribution                                  & {\glsentryshort{FS} Classical}                                 & {\glsentryshort{FS} Size}                                 & {\glsentryshort{FS} Option}                                 \\ \midrule
+        Hyperparameter               & Distribution                                  & {\glsentryshort{FS} Classical}         & {\glsentryshort{FS} Size}              & {\glsentryshort{FS} Option}            \\ \midrule
         Depth                        & $\operatorname{UniformInt}[1,12]$             & 9                                      & 10                                     & 9                                      \\
         Learning rate $\eta$         & $\operatorname{LogUniform}[0.001, 0.125]$     & 0.12337960608926582                    & 0.1248422186404667                     & 0.12347504812996231                    \\
         $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$            & 12                                     & 9                                      & 13                                     \\
@@ -276,14 +276,14 @@ The best combination is identical for all feature sets. The embedding dimension 
     \label{tab:solutions-transformer}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyperparameter                       & Distribution                                        & {\glsentryshort{FS} Classical}              & {\glsentryshort{FS} Size}              & {\glsentryshort{FS} Option}              \\ \midrule
-        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    & 4                   & 4                   & 4                   \\
-        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                & 248                 & 248                 & 248                 \\
-        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.04424625102595975 & 0.04424625102595975 & 0.04424625102595975 \\
-        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.0979914312095726  & 0.0979914312095726  & 0.0979914312095726  \\
-        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ & \num{1e-6}          & \num{1e-6}          & \num{1e-6}          \\
-        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ & \num{6e-5}          & \num{6e-5}          & \num{6e-5}          \\ \midrule
-        Validation Accuracy in \%            &                                                     & 64.69               & 75.42               & 77.17               \\ \bottomrule
+        Hyperparameter                       & Distribution                                        & {\glsentryshort{FS} Classical} & {\glsentryshort{FS} Size} & {\glsentryshort{FS} Option} \\ \midrule
+        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    & 4                              & 4                         & 4                           \\
+        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                & 248                            & 248                       & 248                         \\
+        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.04424625102595975            & 0.04424625102595975       & 0.04424625102595975         \\
+        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.0979914312095726             & 0.0979914312095726        & 0.0979914312095726          \\
+        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ & \num{1e-6}                     & \num{1e-6}                & \num{1e-6}                  \\
+        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ & \num{6e-5}                     & \num{6e-5}                & \num{6e-5}                  \\ \midrule
+        Validation Accuracy in \%            &                                                     & 64.69                          & 75.42                     & 77.17                       \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -299,14 +299,14 @@ The hyperparameter search space for Transformers with a pre-training objective i
     \label{tab:solutions-transformer-pretraining}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
-        Hyperparameter                       & Distribution                                        & {\glsentryshort{FS} Classical}                   & {\glsentryshort{FS} Size}                   & {\glsentryshort{FS} Option}                   \\ \midrule
-        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    &  4                        &                          &                          \\
-        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                &  248                        &                          &                          \\
-        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &  0.04424625102595975                        &                          &                          \\
-        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    &  0.0979914312095726                        &                          &                          \\
-        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ &  \num{1e-6}                        &                          &                          \\
-        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ &  \num{6e-5}                         &                          &                          \\ \midrule
-        Validation Accuracy in \%            &                                                     & {$\uparrow \num{65.13623935106421}$} & {$\downarrow \num{0.0}$} & {$\downarrow \num{0.0}$} \\ \bottomrule
+        Hyperparameter                       & Distribution                                        & {\glsentryshort{FS} Classical}       & {\glsentryshort{FS} Size}            & {\glsentryshort{FS} Option} \\ \midrule
+        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    & 4                                    & 4                                    &                             \\
+        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                & 248                                  & 248                                  &                             \\
+        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.04424625102595975                  & 0.04424625102595975                  &                             \\
+        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.0979914312095726                   & 0.0979914312095726                   &                             \\
+        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ & \num{1e-6}                           & \num{1e-6}                           &                             \\
+        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ & \num{6e-5}                           & \num{6e-5}                           &                             \\ \midrule
+        Validation Accuracy in \%            &                                                     & {$\uparrow \num{65.13623935106421}$} & {$\uparrow \num{75.69871634547757}$} & {$\downarrow \num{0.0}$}    \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -314,9 +314,12 @@ Results are tabulated in \cref{tab:solutions-transformer-pretraining}. Visualisa
 
 \todo{Comment results. One can directly trace back performance differences, as search space is searched in the same fashion.}
 
+\todo{Add visualisation of pre-training on validation performance.}
+\todo{Add accuracy of pretraining objective.}
+
 \textbf{Classical Rules}
 
-Akin to selecting the machine learning classifiers, we select our classical baselines on the \gls{ISE} validation set. This prevents \gls{overfitting} the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the \gls{CBOE} sample. 
+Akin to selecting the machine learning classifiers, we select our classical baselines on the \gls{ISE} validation set. This prevents \gls{overfitting} the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the \gls{CBOE} sample.
 
 Optimising hybrids of trade classification rules through Bayesian search is experimentally feasible by the stacking paradigm of \cref{sec:rule-based-approaches} and by treating the rules as a tunable hyperparameter. We consider all rules from \cref{sec:rule-based-approaches} learned on adjacent quotes of the exchange and \gls{NBBO} level or adjacent prices at the exchange and inter-exchange level and stack up to six rules. To model simple rules, consisting of a single or few rules, we add an identity mapping, $\operatorname{Id}$, that defers classification to later rules in the stack. A caveat of this approach is that sampled combinations may not be economically meaningful e.g., applying depth rule after tick rule, or not effective e.g., quote rule after tick rule, assuming complete data. Despite being unexplored, a conditional search space or human-in-the-loop sampling could account for this.
 

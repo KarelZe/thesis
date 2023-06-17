@@ -123,3 +123,41 @@ Results:
 
 - **Classical Rules** Results align with intuition. Largest improvements come from applying the quote rule (nbbo), which requires quote_best + Trade price, quote (ex) is only applied to a fraction of all trades. The rev tick test is of hardly any importance, as it does not affect classification rules much, nor is it applied often
 
+Relation between attention techniques
+
+- put special emphasise in analysis Transformer performance, as it is 
+- arrange in graphics below. arrange like puzzle blocks, what is done by which approach
+- pick up and describe two trades
+
+- general overview in 
+
+![[model-wide-attention.png]]
+(from [[@coenenVisualizingMeasuringGeometry2019]])
+
+While [6] analyzed context embeddings, another natural place to look for encodings is in the attention matrices. After all, attention matrices are explicitly built on the relations between pairs of words.
+
+This broader analysis shows that BERT’s attention heads pay little attention to the current token but rather specialize to attend heavily on the next or previous token, especially in the earlier layers.
+
+A substantial amount of BERT’ attention focuses on a few special tokens such as the deliminator token [SEP] which means that such tokens play a vital role in BERT’s performance. The figure below shows the average attention behavior in each layer for some special tokens such as [CLS] and [SEP].
+
+With a few more creative tests (see paper for full details), the authors found that BERT’s attention maps have a fairly thorough representation of English syntax.
+
+Upon further investigation of the individual attention heads behavior for a given layer, the authors found that some heads behave similarly, possible due to some attention weights being zeroed-out via dropout. A surprising result, given that other researchers found that encouraging different behavior in attention heads improves a Transformer’s performance. There is more opportunity to conduct extended analysis to help further understand these behaviors in the attention layer.
+
+The example given here is correctly classified. Crucially, only in the first couple of layers, there are some distinctions in the attention patterns for different positions, while in higher layers the attention weights are rather uniform. Figure 2 (left) gives raw attention scores of the CLS token over input tokens (x-axis) at different layers (y-axis), which similarly lack an interpretable pattern.These observations reflect the fact that as we go deeper into the model, the embeddings are more contextualized and may all carry similar information. This underscores the need to track down attention weights all the way back to the input layer and is in line with findings of Serrano and Smith (2019), who show that attention weights do not necessarily correspond to the relative importance of input tokens. ([[@abnarQuantifyingAttentionFlow2020]])
+
+add a CLS token and use its embedding in the final layer as the input to the classifier
+
+Figures 2 and 3 show the weights from raw attention, attention rollout and attention flow for the CLS embedding over input tokens (x-axis) in all 6 layers (y-axis) for three examples. The first example is the same as the one in Figure 1. The second example is “the article on NNP large systems ”. The model correctly classifies this example and changing the subject of the missing verb from “article” to “articles” flips the decision of the model. The third example is “here the NNS differ in that the female ”, which is a miss-classified example and again changing “NNS” (plural noun) to “NNP” (singular proper noun) flips the decision of the model. For all cases, the raw attention weights are almost uniform above layer three (discussed before). raw attention attention rollout attention flow (a) “The author talked to Sara about mask book.” raw attention attention rollout attention flow (b) “Mary convinced John of mask love.” Figure 4: Bert attention maps. We look at the attention weights from the mask embedding to the two potential references for it, e.g. “author” and “Sara” in (a) and “Mary” and “John” in (b). The bars, at the left, show the relative predicted probability for the two possible pronouns, “his” and “her”. In the case of the correctly classified example, we observe that both attention rollout and attention flow assign relatively high weights to both the subject of the verb, “article’ and the attractor, “systems”. For the miss-classified example, both attention rollout and attention flow assign relatively high scores to the “NNS” token which is not the subject of the verb. This can explain the wrong prediction of the model.
+
+![[Pasted image 20230617080432.png]]
+
+We claim that one-layer attention-only transformers can be understood as an ensemble of a bigram model and several "skip-trigram" models (affecting the probabilities of sequences "A… BC"). 12 Intuitively, this is because each attention head can selectively attend from the present token ("B") to a previous token ("A") and copy information to adjust the probability of possible next tokens ("C"). (https://transformer-circuits.pub/2021/framework/index.html)
+
+- the innerworkings of transformers are not fully-understood yet. https://transformer-circuits.pub/2021/framework/index.html
+
+Compare attention of pre-trained Transformer with vanilla Transformer?
+![[Pasted image 20230617081051.png]]
+
+
+![[Pasted image 20230617081138.png]]
