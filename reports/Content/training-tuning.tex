@@ -300,13 +300,14 @@ The hyperparameter search space for Transformers with a pre-training objective i
     \begin{tabular}{@{}llSSS@{}}
         \toprule
         Hyperparameter                       & Distribution                                        & {\glsentryshort{FS} Classical}       & {\glsentryshort{FS} Size}            & {\glsentryshort{FS} Option} \\ \midrule
-        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    & 4                                    & 4                                    &                             \\
-        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                & 248                                  & 248                                  &                             \\
-        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.04424625102595975                  & 0.04424625102595975                  &                             \\
-        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.0979914312095726                   & 0.0979914312095726                   &                             \\
-        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ & \num{1e-6}                           & \num{1e-6}                           &                             \\
-        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ & \num{6e-5}                           & \num{6e-5}                           &                             \\ \midrule
-        Validation Accuracy in \%            &                                                     & {$\uparrow \num{65.13623935106421}$} & {$\uparrow \num{75.69871634547757}$} & {$\downarrow \num{0.0}$}    \\ \bottomrule
+        Layers $L$                           & $\operatorname{UniformInt}[1,6]$                    & 4                                    & 4                                    & 4                           \\
+        Embedding dimension $d_{\mathrm{e}}$ & $\operatorname{UniformInt}[64, 256]$                & 248                                  & 248                                  & 248                         \\
+        Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.04424625102595975                  & 0.04424625102595975                  & 0.04424625102595975         \\
+        \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.0979914312095726                   & 0.0979914312095726                   & 0.0979914312095726          \\
+        Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ & \num{1e-6}                           & \num{1e-6}                           & \num{1e-6}                  \\
+        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ & \num{6e-5}                           & \num{6e-5}                           & \num{6e-5}                  \\ \midrule
+        Validation Accuracy \%               & Pre-Train                                           & {\num{95.89540958404541}}            & {\num{95.64009308815002}}           & {\num{94.06319856643677}}   \\
+                                             & Fine-Tune                                           & {$\uparrow \num{65.13623935106421}$} & {$\uparrow \num{75.69871634547757}$} & {$\uparrow \num{77.8904}$}  \\ \bottomrule
     \end{tabular}
 \end{table}
 
