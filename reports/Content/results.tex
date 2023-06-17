@@ -89,10 +89,14 @@ Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][3
 \end{table}
 
 We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe-classical} and observe a similar ranking to \cref{tab:ise-classical}. Overall, the performance of classical trade classification rules further diminishes or remains at a low level strengthening the need for alternative classifiers. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the \gls{ISE} sample, the quote rule estimated on the \gls{NBBO}, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a lower performance than the quote rule applied to \gls{CBOE} quotes.
+\todo{Results match the of grauer in magnitude.}
+
 % Parts of this is due to the fact, that  $\operatorname{quote}_{\mathrm{nbbo}}$ achieves a considerably lower coverage of \SI{94.77}{\percent} compared to \SI{99.89}{\percent} in the \gls{ISE} sample, with fewer trades classified by the fallback criterion. In a filtered common sample, where trades are classified by both rules, performance is approximately similar. 
 Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best, the strong outperformance does not carry over to the test set as depicted \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[][33]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
 
 Aside from these high-level observations, we focus on two findings in greater detail.
+
+\todo{isolate what comes from missing data and is not limited by the rule.}
 
 \textbf{Finding 1: Accuracy of Basic Rules Is Downward-Biased by Coverage}
 
@@ -181,7 +185,7 @@ Based on the contingency tables in \cref{tab:contigency-supervised-classifiers},
 
 Contrary to the expectation, the performance improvements are highest for the \gls{CBOE} dataset, despite the models being trained on \gls{ISE} data. Part of this is due to a weaker benchmark performance, but also due to the stronger accuracy of classifiers on the smallest and mid-sized feature sets. One would expect a degradation between sets, assuming exchange-specific trading patterns and requiring exploration in greater detail.
 
-\textbf{Finding 4: Foo Affect Classifier Performance}
+\textbf{Finding 4: Classifier Performance On \gls{CBOE}}
 
 \todo{Formulate finding.}
 

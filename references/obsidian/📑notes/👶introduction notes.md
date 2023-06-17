@@ -45,6 +45,7 @@ Motivated by these considerations, we investigate how the predictability documen
 
 ## Contributions
 - from expose: In the introduction, we provide motivation and present our key findings. The contributions are three-fold: (I) We employ state-of-the-art machine learning algorithms i.~e., gradient-boosted trees and transformer networks, for trade classification. Tree-based approaches outperform state-of-the-art trade classification rules in out-of-sample tests. (II) As part of semi-supervised approaches, we study the impact of incorporating unlabelled trades into the training procedure on trade classification accuracy. (III) We consistently interpret feature contributions to classical trade classification rules and machine learning models with a game-theoretic approach.
+- through visualising attention we are able to establish a theoretical link between rule-based classification and machine learning
 
 Our contributions are n-fold:
 - Our paper contributes to at least two strands of literature. First, it is
