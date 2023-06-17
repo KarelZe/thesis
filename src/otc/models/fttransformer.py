@@ -614,9 +614,10 @@ class MultiheadAttention(nn.Module):
         if self.dropout is not None:
             attention_probs = self.dropout(attention_probs)
 
-        self.save_attn(attention_probs)
-        if attention_probs.requires_grad:
-            attention_probs.register_hook(self.save_attn_gradients)
+        # comment out for training
+        # self.save_attn(attention_probs)
+        # if attention_probs.requires_grad:
+        #     attention_probs.register_hook(self.save_attn_gradients)
 
         x = attention_probs @ self._reshape(v)
         x = (
