@@ -1,6 +1,12 @@
 
+- results for classical rules demonstrate that classical choices for option trade classification.
+- We identify missingess in data to be down-ward biasing the results of classical estimators. ML predictors are robust to this missingness, as they can handle missing values and potentially substitute.
 
-the elephant in the room
+- our study puts special emphasise on thoughtful tuning, data pre-processing.
+- 
+
+- the elephant in the room, labelled data and cmputational data. Finetune. Low cost of inference
+- our results contradict ronen et al. neural networks can achieve sota performance if well tuned.
 
 
 es it mean? Point out limitations and e. g., managerial implications or future impact.

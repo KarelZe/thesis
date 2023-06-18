@@ -57,5 +57,3 @@ By extension, we also estimate rules combinations involving overrides from the t
 
 In absence of other suitable baselines, we also the GSU method for FS3, even if it doesn't utilise option-specific features.
 
-
-
