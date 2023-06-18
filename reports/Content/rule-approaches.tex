@@ -42,7 +42,7 @@ The quote rule can be estimated at the exchange level or on the \gls{NBBO}.
 
 \subsubsection{Tick Test}\label{sec:tick-test}
 
-A common alternative to the quote rule is the tick test. Based on the rationale that buys increase the trade price and sells lower them, the tick test classifies trades by the change in trade price. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test is defined as:
+A common alternative to the quote rule is the tick test. Based on the rationale that buys increase trade prices and sells lower them, the tick test classifies trades by the change in trade price. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test is defined as:
 \begin{equation}
     \operatorname{tick}\colon \mathbb{N}^2 \to \mathcal{Y},\quad
     \operatorname{tick}(i, t)=
@@ -59,8 +59,6 @@ Considering the cases in \cref{eq:tick-test} the trade price is higher than the 
 By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
 
 The reverse tick test is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
-
-\todo{There are two opposing arguments about the relationship between the probability of successful classification and trade distance. One suggests that classification errors are a result of asynchronous trade and quote times and the accuracy of trade classification rules should increase when the trade distance is larger. The second argument is based on the possibility that the tick rule could become less accurate the longer the time between trades (Finucane, 2000). Consistent with the first argument, the marginal effects are positive for all four regressions, indicating that larger the trade distances increase the probability of correct classification. We also examine the time between the prevailing quote and the last quote update - quote distance. Short time intervals between quote changes can lead to the problem of asynchronous prices and hence decrease classification accuracy. The results of our regressions confirm that higher quote distances leads to better classification.9 (Found in chakrabarty paper)}
 
 \begin{equation}
     \operatorname{rtick} \colon \mathbb{N}^2 \to \mathcal{Y},\quad

@@ -6,12 +6,12 @@ This chapter expands the scope of trade classification from the supervised setti
 
 The supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the initiator can be inferred through matching procedures (cp. \cref{sec:trade-initiator}), which may bias the selection. Unlabelled trades, though, are abundant and can help improve the generalisation performance of the classifier. This concern is addressed by semi-supervised methods.
 
-Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside with true labels \autocite[][6]{chapelleSemisupervisedLearning2006}. They are centred around the semi-supervised assumption of smoothness, which states that if two samples, say $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$, are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if data points are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}.
+Semi-supervised methods leverage partially-labelled data by learning an algorithm on unlabelled instances alongside true labels \autocite[][6]{chapelleSemisupervisedLearning2006}. They are centred around the semi-supervised assumption of smoothness, which states that if two samples say $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$, are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if data points are separated by a low-density region, their labels may be different \autocite[][5]{chapelleSemisupervisedLearning2006}.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\linewidth]{decision-boundary-semi-supervised.pdf}
-    \caption[Decision Boundary of a Supervised and Semi-Supervised Classifier]{Decision boundary of a supervised and semi-supervised classifier. The supervised classifier is trained entirely on labelled data. The semi-supervised classifier uses both labelled and unlabelled instances to determine the decision boundary. Predicted class probabilities of \mycircle{viz-red} are visualised as a contour. Here, the unlabelled datapoints, drawn as \mycircle{viz-white}, lead to more confident predictions and a stretched class.}
+    \caption[Decision Boundary of a Supervised and Semi-Supervised Classifier]{Decision boundary of a supervised and semi-supervised classifier. The supervised classifier is trained entirely on labelled data. The semi-supervised classifier uses both labelled and unlabelled instances to determine the decision boundary. Predicted class probabilities of \mycircle{viz-red} are visualised as a contour. Here, the unlabelled data points, drawn as \mycircle{viz-white}, lead to more confident predictions and a stretched class.}
     \label{fig:supervised-semi-supervised}
 \end{figure}
 
@@ -21,9 +21,7 @@ The semi-supervised setting requires extending our notation from \cref{sec:probl
 
 \subsection{Selection of Approaches}\label{sec:selection-of-approaches-1}
 
-Our goal is to extend gradient-boosted trees and Transformers for the semi-supervised setting to make use of the abundant, unlabelled trade data. We are aimed to make minimally intrusive changes to maintain a fair comparison with the supervised counterparts.
-
-\todo{Put results at the beginning.}
+Our goal is to extend gradient-boosted trees and Transformers for the semi-supervised setting to make use of the abundant, unlabelled trade data. We are aimed to make minimally intrusive changes to maintain a fair comparison with the supervised counterparts. We find self-training for gradient boosting and pre-training of Transformers suitable for training on labelled and unlabelled trades, as our subsequent discussion derives.
 
 \textbf{Gradient Boosting}
 
