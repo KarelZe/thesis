@@ -53,7 +53,7 @@ Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][3
 \begin{figure}[ht]
     \centering
     \includegraphics{classical-accuracies-over-time.pdf}
-    \caption[Accuracy Of Rule-Based Classifiers On \glsentryshort{ISE} and \glsentryshort{CBOE} Over Time]{Accuracy of rule-based classifiers on \gls{ISE} and \gls{CBOE} sample over time. The dashed bar \myline{} indicates the beginning of a new subset based on the train-test split.}
+    \caption[Accuracy Of Rule-Based Classifiers On \glsentryshort{ISE} and \glsentryshort{CBOE} Over Time]{Accuracy of rule-based classifiers on \gls{ISE} and \gls{CBOE} sample over time. The bar \myline{} indicates the beginning of a new subset based on the train-test split.}
     \label{fig:classical-accuracies-over-time}
 \end{figure}
 
@@ -94,8 +94,6 @@ Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{la
 
 Aside from these high-level observations, we focus on two findings in greater detail.
 
-\todo{isolate what comes from missing data and is not limited by the rule.}
-
 \textbf{Finding 1: Accuracy of Basic Rules Is Downward-Biased by Coverage}
 
 From \cref{tab:ise-classical} we see, that practically all rule-based approaches leave trades unclassified. This is due to conceptual constraints in the rule itself, but also a result of missing data, which equally affects rules with theoretical full coverage. The latter is important here.
@@ -103,9 +101,11 @@ From \cref{tab:ise-classical} we see, that practically all rule-based approaches
 \begin{figure}[!h]
     \centering
     \includegraphics{coverage-over-time.pdf}
-    \caption[Coverage Of Rule-Based Classifiers On \glsentryshort{ISE} and \glsentryshort{CBOE} Over Time]{Coverage of rule-based classifiers on \gls{ISE} and \gls{CBOE} sample over time.}
+    \caption[Coverage Of Rule-Based Classifiers On \glsentryshort{ISE} and \glsentryshort{CBOE} Over Time]{Coverage of rule-based classifiers on \gls{ISE} and \gls{CBOE} sample over time. The bar \myline{} indicates the beginning of a new subset based on the train-test split.}
     \label{fig:classical-coverage-over-time}
 \end{figure}
+
+\todo{This is not entirely true, as it suggests, that low coverage of quote nbbo comes from missing data, but it comes from midspread trades. For tick rule, I can not distinguish if trade price was not found, or if it was not differnt. Rewrite.}
 
 As shown in \cref{fig:classical-coverage-over-time} coverage decreases qualitatively for selected classification rules over time. It is particularly low when the trade initiator is inferred from the \gls{NBBO}. For studies like ours or the of \textcites{grauerOptionTradeClassification2022}[][887]{savickasInferringDirectionOption2003}, which apply minimal filtering, the high degree of unclassified trades for some rules can (downward) bias the results. The recent approaches of \textcite[][18--19]{grauerOptionTradeClassification2022} circumvent the issue, as they leverage multiple data sources and rules through stacking. In an imperfect data regime, we conclude, that stacking can increase coverage and at best performance.
 
@@ -116,11 +116,11 @@ Much of the performance gains between $\operatorname{gsu}_{\mathrm{large}}$ over
 \begin{figure}[!h]
     \centering
     \includegraphics{accuracies-over-time-tsize.pdf}
-    \caption[Accuracy Over Trade Size Rule On \glsentryshort{ISE} and \glsentryshort{CBOE} Over Time]{Accuracy of trade size rule on \gls{ISE} and \gls{CBOE} sample over time.}
+    \caption[Accuracy and Coverage Of Trade Size Rule On \glsentryshort{ISE} and \glsentryshort{CBOE} Over Time]{Accuracy and Coverage of trade size rule on \gls{ISE} and \gls{CBOE} sample over time. The bar \myline{} indicates the beginning of a new subset based on the train-test split.}
     \label{fig:accuracies-over-time-tsize}
 \end{figure}
 
-For the subset of trades it is applicable to, the rule is outperforming all other rule-based classifiers by a large margin. At the same time, it also has the highest variance in accuracy over time. Thus, it remains unclear, under which circumstances the rule works reliably.
+For the subset of trades it is applicable to, the rule is outperforming all other rule-based classifiers by a large margin. At the same time, it also has the highest variance in accuracy over time with sharp drops in accuracy to \SI{47.991543}{\percent}. Thus, it remains unclear, under which circumstances the rule works reliably.
 
 Next, we test the supervised classifiers on the \gls{ISE}/\gls{CBOE} test sets, which prove to be a challenging test ground for rule-based classifiers as our results from above indicate.
 
