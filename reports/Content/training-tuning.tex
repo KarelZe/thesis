@@ -129,9 +129,11 @@ To incorporate unlabelled trades into the training procedure, we combine gradien
 
 \textbf{Transformer with Pre-Training}
 
-The FT-Transformer is trained in two stages. First, we train for \num{20} epochs on unlabelled \gls{ISE} trades using the \gls{RTD} head, followed by \num{20} epochs of fine-tuning on labelled \gls{ISE} training data with the classification head.
+The FT-Transformer is trained in two stages. First, we train for \num{20} epochs on unlabelled \gls{ISE} trades using the \gls{RTD} head, followed by \num{20} epochs of fine-tuning on labelled \gls{ISE} training data with the binary classification head.
 
-During both pre-training and fine-tuning, early stopping is applied based on the downstream metric, using patience of \num{10}. The hidden dimension of the classification head is set to \num{512}. Since the unlabelled sample includes various types of trades that may not be comparable to the labelled sample, we update all layers during fine-tuning. \todo{\autocite{raeScalingLanguageModels2022}, why not freeze layers. For early stopping on the validation set. See \textcite{rubachevRevisitingPretrainingObjectives2022}}
+During pre-training and fine-tuning, early stopping is applied based on the value of the objective on the validation set, using patience of \num{10}. This particular setup is adopted from \textcite[][15]{rubachevRevisitingPretrainingObjectives2022} for being compute-efficient and offering competitive performance. The hidden dimension of the classification head is set to \num{512}. Based on \textcite[][3]{clarkElectraPretrainingText2020} \SI{15}{\percent} of all tokens are replaced. 
+
+Since the unlabelled sample includes various types of trades that may not be comparable to the labelled sample, we update all layers during fine-tuning. Empirically, finetuning the entire model is among the most successful methods for large-scale Transformers, as results from \textcite[][104--105]{raeScalingLanguageModels2022} indicate.
 
 Following \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}, the learning rate and weight decay are shared between the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
 
@@ -146,6 +148,8 @@ Classical rules have no hyperparameters per se, but the best hybrid rules can be
 We perform a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function \autocite[][2]{shahriariTakingHumanOut2016}. Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in more promising trials.
 
 While different algorithmic implementations exist for Bayesian optimisation, we choose the \emph{Optuna} library by \textcite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters.\footnote{Implementation of the tree-parzen estimator searches the first 10 trials randomly before the completed trials affect the sampling.} We maximise the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $\num{50}$ trials per feature set for the \gls{GBRT} and $\num{10}$ trials for the FT-Transformer. The best combination of each is tested out-of-sample in \cref{sec:results}.
+
+\clearpage
 
 \textbf{Gradient Boosting}
 
@@ -222,11 +226,13 @@ The search space for the semi-supervised variant is identical to the supervised 
         $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$            & 12                                     & 9                                      & 13                                     \\
         Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ & \num{2e-8}                             & \num{5e-8}                             & \num{5e-8}                             \\
         Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$            & 0.34010535578784745                    & 0.5214954412829511                     & 0.4666577105566224                     \\ \midrule
-        Validation Accuracy in \%    &                                               & {$\downarrow \num{64.29671279599335}$} & {$\downarrow \num{74.83010065958079}$} & {$\downarrow \num{76.41433947686962}$} \\ \bottomrule
+        \multicolumn{2}{l}{Validation Accuracy in \%}                                               & {$\downarrow \num{64.29671279599335}$} & {$\downarrow \num{74.83010065958079}$} & {$\downarrow \num{76.41433947686962}$} \\ \bottomrule
     \end{tabular}
 \end{table}
 
 Matching the supervised results, semi-supervised ensembles exhaust the maximum tree depth and combine trees with a coarse learning rate. By parameter importance, both are most influential on the final result. Again, this is an indication that the trade data is not easily separable, requiring multiple features and splits. The found hyperparameters for $\ell_2$ leaf regularisation, random strength and bagging are balanced. Overall, the best validation accuracies are slightly inferior to the supervised variant.
+
+\clearpage
 
 \textbf{Transformer}
 
@@ -282,15 +288,17 @@ The best combination is identical for all feature sets. The embedding dimension 
         Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.04424625102595975            & 0.04424625102595975       & 0.04424625102595975         \\
         \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.0979914312095726             & 0.0979914312095726        & 0.0979914312095726          \\
         Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ & \num{1e-6}                     & \num{1e-6}                & \num{1e-6}                  \\
-        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ & \num{6e-5}                     & \num{6e-5}                & \num{6e-5}                  \\ \midrule
-        Validation Accuracy in \%            &                                                     & 64.69                          & 75.42                     & 77.17                       \\ \bottomrule
+        Weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ & \num{6e-5}                     & \num{6e-5}                & \num{6e-5}                  \\ \midrule
+        \multicolumn{2}{l}{Validation Accuracy in \%}                                                     & 64.69                          & 75.42                     & 77.17                       \\ \bottomrule
     \end{tabular}
 \end{table}
 
+\vskip 1.3in
 
 \textbf{Transformer With Pre-Training}
 
-The hyperparameter search space for Transformers with a pre-training objective is identical to that shown in \cref{tab:hyperparameter-space-2}.
+The hyperparameter search space for Transformers with a pre-training objective is identical to that shown in \cref{tab:hyperparameter-space-2}. As evident from \cref{tab:solutions-transformer-pretraining}, the found solutions are identical to these of the FT-Transformer without pre-training and identical for all three feature sets. During pre-training, we can detect if an token is replaced with \SI{94.06319856643677}{\percent} to \SI{95.89540958404541}{\percent} accuracy.\footnote{Na\"ive prediction yields \SI{85}{\percent} accuracy given the chosen replacement rate.} Validation accuracy after finetuning improves for all models over Transformers without pretraining. As the search space is identically sampled for both variants we can directly attribute the improvements of \SI{0.28}{\percent} to \SI{0.72}{\percent} in validation accuracy to pre-training on unlabelled trades. \todo{Optionally, add a visualisation of pre-training on validation performance (loss + accuracy). Due to reproducible sampling, the effect on validation performance can directly be inferred.} Visualisations of the hyperparameter search spaces are available online.\footnote{See \url{https://wandb.ai/fbv/thesis/runs/12isqh2m} for \gls{FS} classical, for \url{https://wandb.ai/fbv/thesis/runs/2hv1nayy} for \gls{FS} size, and \url{https://wandb.ai/fbv/thesis/runs/3jbqpp4r} for \gls{FS} option for details.}
+
 
 \begin{table}[!h]
     \centering
@@ -305,18 +313,11 @@ The hyperparameter search space for Transformers with a pre-training objective i
         Attention dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.04424625102595975                  & 0.04424625102595975                  & 0.04424625102595975         \\
         \gls{FFN} dropout                    & $\operatorname{Uniform}[0, 0.5]$                    & 0.0979914312095726                   & 0.0979914312095726                   & 0.0979914312095726          \\
         Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ & \num{1e-6}                           & \num{1e-6}                           & \num{1e-6}                  \\
-        weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ & \num{6e-5}                           & \num{6e-5}                           & \num{6e-5}                  \\ \midrule
+        Weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ & \num{6e-5}                           & \num{6e-5}                           & \num{6e-5}                  \\ \midrule
         Validation Accuracy \%               & Pre-Train                                           & {\num{95.89540958404541}}            & {\num{95.64009308815002}}           & {\num{94.06319856643677}}   \\
                                              & Fine-Tune                                           & {$\uparrow \num{65.13623935106421}$} & {$\uparrow \num{75.69871634547757}$} & {$\uparrow \num{77.8904}$}  \\ \bottomrule
     \end{tabular}
 \end{table}
-
-Results are tabulated in \cref{tab:solutions-transformer-pretraining}. Visualisations of the hyperparameter search space are available online.\footnote{See \url{https://wandb.ai/fbv/thesis/runs/12isqh2m} for \gls{FS} classical, for \url{https://wandb.ai/fbv/thesis/runs/2hv1nayy} for \gls{FS} size, and \url{https://wandb.ai/fbv/thesis/runs/3jbqpp4r} for \gls{FS} option for details.}
-
-\todo{Comment results. One can directly trace back performance differences, as search space is searched in the same fashion.}
-
-\todo{Add visualisation of pre-training on validation performance.}
-\todo{Add accuracy of pretraining objective.}
 
 \textbf{Classical Rules}
 
@@ -326,7 +327,7 @@ Optimising hybrids of trade classification rules through Bayesian search is expe
 
 After all, we find no outperformance over hybrid rules already reported in the literature, as documented online.\footnote{For \gls{FS} classical our best combination of $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ (simplified) reaches a validation accuracy of \SI{58.93934926393819}{\percent} equalling the solution of \textcite[][12]{grauerOptionTradeClassification2022}. For \gls{FS} size/option the best search solution is $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{tick}_{\mathrm{all}}$ (simplified) with \SI{69.03521015523933}{\percent} accuracy. The combination of \textcite[][14]{grauerOptionTradeClassification2022} reaches with $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ an accuracy of \SI{69.3726}{\percent}. See \url{https://wandb.ai/fbv/thesis/runs/3f2m9c6i} and \url{https://wandb.ai/fbv/thesis/runs/16d6e4dk} for details. Experiments are run with \num{500} trials each.} Our combinations match or trail the accuracies of rules from \textcite[][12--14]{grauerOptionTradeClassification2022} on the \gls{ISE} validation set. Subsequently, we adopt their combinations as our benchmark, considering them to be the most challenging.
 
-From all candidate algorithms, a combination of the quote rule, $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$, where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE} followed by the reverse tick rule at inter-exchange level, performs best reaching a validation accuracy of \SI{58.76225138074204}{\percent}. The rule can be estimated using features from feature set one, which qualifies it as a benchmark.
+From all candidate algorithms, a combination of quote and tick rules, $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$, where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE} followed by the reverse tick rule at inter-exchange level, performs best reaching a validation accuracy of \SI{58.76225138074204}{\percent}. The rule can be estimated using features from feature set one, which qualifies it as a benchmark.
 
 For the second feature set involving size-related rules, we consider rules that involve the trade size or depth rule. Consistent with the recommendation of \textcite[][14]{grauerOptionTradeClassification2022}, we find that a deep stack of the $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ achieves the highest validation accuracy. Much of the performance gains are owed to the trade size and depth rules, which reduce the dependence on the reverse tick test as a last resort and provide overrides for trades at the quotes, improving validation accuracy to \SI{69.37267458589436}{\percent}. Due to the extended use of the quoted sizes and trade sizes, it is our benchmark for the second feature set.
 

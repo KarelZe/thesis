@@ -216,7 +216,7 @@ Expectedly, the pre-trained Transformer performs better for \gls{ISE} trades, im
 
 \textbf{Finding 5: Link Between Unlabelled Trades And Generalisation Performance}
 
-\todo{formulate finding, once Transformer results are ready.}
+\todo{formulate finding.}
 
 \begin{table}[!h]
     \centering
@@ -252,6 +252,8 @@ To summarize, unrewarded for higher training costs, semi-supervised variants of 
 To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, as well as proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[][47]{grauerOptionTradeClassification2022} as well as  \textcite[][890--892]{savickasInferringDirectionOption2003}, strengthening comparability across different works.\footnote{Despite all efforts, when comparing with \textcite[][47--52]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.}
 
 Our results are tabulated \cref{tab:diff-ise-gbm,tab:diff-cboe-gbm,tab:diff-ise-transformer,tab:diff-cboe-transformer,tab:diff-ise-gbm-semi,tab:diff-cboe-gbm-semi}, separately for \glspl{GBRT} and Transformers as well as exchanges.
+
+\clearpage
 
 \textbf{Gradient Boosting}
 
