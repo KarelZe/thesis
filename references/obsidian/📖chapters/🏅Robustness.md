@@ -155,4 +155,16 @@ We analyse the robustness of gls-GBRT with self-training on gls-ise data in cref
 Compared to the vanilla gls-GBRT, performance degrades across almost all subsets. We indicate the change with an arrow. Quantitatively, we find no improvements in robustness as performance differences between sub-samples are of the same magnitude and the performance gap between rule-based classification mostly extend for index options and trades outside the spread. 
 
 
-Break down
+**Transformers with Pre-Training-Objective**
+
+Transformers with pre-training objective outperform the benchmark in all subsets apart from index options and trades outside the quotes. For gls-ISE trades in cref-ise-transformer-semi pre-training improves performance across subsets, reaching accuracies greater than percentage-86. The only exception are index options, where the performance gap slightly widens. Deep-out-of-the-money options and options with long maturity profit most from the introduction of option features. 
+
+For trades at the gls-cboe performance improvements associated with pre-training are slightly lower across several sub-groups. Positively, pre-training improves robustness, as the performance gap to the benchmarks narrows for trades outside the quotes. 
+
+
+
+
+
+
+![[Pasted image 20230618070205.png]]
+![[Pasted image 20230618070237.png]]

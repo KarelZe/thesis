@@ -144,7 +144,7 @@ We test the performance of our supervised models. We take the best configuration
     \end{tabular}
 \end{table}
 
-Both model architectures consistently outperform their respective benchmarks on the \gls{ISE} and \gls{CBOE} datasets, achieving state-of-the-art performance in option trade classification with comparable data requirements. Thereby, Transformers dominate the \gls{ISE} sample when trained on trade prices and quotes reaching \SI{63.783020}{\percent}  in accuracy and \SI{66.18}{\percent} on the \gls{CBOE} sample outperforming previous approaches by \SI{3.730000}{\percent} and \SI{5.440000}{\percent}. Additional trade size features improve the accuracy to \SI{72.581107}{\percent} for the \gls{ISE} sample and \SI{72.153338}{\percent} for the \gls{CBOE} sample. Gradient boosting outperforms all other approaches when trained on additional option features.
+Both model architectures consistently outperform their respective benchmarks on the \gls{ISE} and \gls{CBOE} datasets, establishing a state-of-the-art in option trade classification with comparable data requirements. Thereby, Transformers dominate the \gls{ISE} sample when trained on trade prices and quotes reaching \SI{63.783020}{\percent}  in accuracy and \SI{66.18}{\percent} on the \gls{CBOE} sample outperforming previous approaches by \SI{3.730000}{\percent} and \SI{5.440000}{\percent}. Additional trade size features improve the accuracy to \SI{72.581107}{\percent} for the \gls{ISE} sample and \SI{72.153338}{\percent} for the \gls{CBOE} sample. Gradient boosting outperforms all other approaches when trained on additional option features.
 
 While absolute improvements in accuracy over $\operatorname{gsu}_{\mathrm{small}}$ are modest on the smallest feature set, improvements are substantial for larger feature sets ranging between \SI{4.730000}{\percent} to \SI{7.860000}{\percent} over $\operatorname{gsu}_{\mathrm{large}}$. Specifically, the addition of trade size-related features positively contributes to the performance. We discuss feature importances in \cref{sec:feature-importance}.
 
@@ -244,7 +244,7 @@ Expectedly, the pre-trained Transformer performs better for \gls{ISE} trades, im
 
 As evident from \cref{tab:contigency-semi-supervised-classifiers}, a vast majority of trades are classified by both classifiers correctly. For the \gls{ISE}, performance improvements in larger feature sets are driven by trades that are distinctly classified by both classifiers. In turn, at the \gls{CBOE}, the share of common classifications continues to grow. \todo{What does this mean?} Performance differences between classifiers are significant.    
 
-To summarize, unrewarded for higher training costs, semi-supervised variants of \glspl{GBRT} do not provide better generalisation performance than supervised approaches. Pre-Training of Transformers improves performance on the \gls{ISE} sample but slightly deteriorates performance on the \gls{CBOE} set. We subsequently evaluate if semi-supervised learning improves robustness if not performance.
+To summarize, unrewarded for higher training costs, semi-supervised variants of \glspl{GBRT} do not provide better generalisation performance than supervised approaches. Pre-training of Transformers improves performance on the \gls{ISE} sample but slightly deteriorates performance on the \gls{CBOE} set. We subsequently evaluate if semi-supervised learning improves robustness if not performance.
 
 
 \subsection{Robustness of Results}\label{sec:robustness-checks}
@@ -385,7 +385,7 @@ Performance results of Transformers are robust across all tested dimensions. The
 
 Similar to \glspl{GBRT}, the FT-Transformer slightly underperforms the benchmark for index options in the \gls{ISE} sample. Even though the effect reverses on the \gls{CBOE} set, accuracies for index options are lower than the of any other underlying. Hence, we can extend the finding of \textcites[][22]{grauerOptionTradeClassification2022}[][9]{savickasInferringDirectionOption2003} that index options are notoriously difficult to classify to machine learning-based approaches.
 
-Classification is more accurate for options with near-maturity or deep-in-the-money options. In this sense, our finding contradicts the observation of \textcite[][891]{savickasInferringDirectionOption2003} made for rule-based classification. Again, we document that the addition of option-specific features, such as maturity or moneyness smooths out differences across maturity and moneyness levels.
+Classification is more accurate for options with near-maturity or deep-in-the-money options. In this sense, our finding contradicts the observation of \textcite[][891]{savickasInferringDirectionOption2003} made for rule-based classification. Again, we document that the addition of option-specific features, such as maturity or moneyness smooths out differences across maturity and moneyness levels. We explore this aspect in greater detail in \cref{sec:feature-importance}.
 
 Lastly, the FT-Transformers perform well on trades at the quotes. When trained on \gls{ISE} data it greatly outperforms for trades at the quotes, despite that some of the benchmarks contain explicit overrides from the trade size rule. Vice versa, the FT-Transformer fails to meet benchmark performance for trades outside the spread.
 
@@ -629,7 +629,11 @@ Compared to the vanilla \glspl{GBRT}, performance degrades across almost all sub
 
 \textbf{Transformer With Self-Training}
 
-In summary, our tests demonstrate that the strong results are stable across multiple dimensions and between exchanges.
+Transformers with pre-training objectives outperform the benchmark in all subsets apart from index options and trades outside the quotes. For \gls{ISE} trades in \cref{tab:diff-ise-transformer-semi} pre-training improves performance across subsets, reaching accuracies greater than \SI{86}{\percent}. The only exception is index options, where the performance gap slightly widens. Deep-out-of-the-money options and options with long maturity profit the most from the introduction of option features. 
+
+For trades at the \gls{CBOE} performance improvements associated with pre-training are slightly lower across several sub-groups. Positively, pre-training improves robustness, as the performance gap to the benchmarks narrows for trades outside the quotes. The results in conjunction with the identical model architecture suggest, that pre-training on unlabelled trades encodes exchange-specific knowledge, which improves performance and robustness on \gls{ISE} trades, but does not universally profit \gls{CBOE} trades. 
+
+More generally, our tests demonstrate that the strong results of our classifiers are stable across multiple dimensions and between exchanges.
 
 \begin{table}[!ht]
     \centering
@@ -676,11 +680,11 @@ In summary, our tests demonstrate that the strong results are stable across mult
         \tabindent > 1.3            & 54.546463                                        & 5.700000                                              & 65.280127                                     & 5.070000  & 72.811810    & 12.600000 \\
         \cmidrule(rl){1-7}
         \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                                                      \\
-        \tabindent at mid           & 62.489037                                        & 5.340000                                              & 71.949316                                     & 3.800000  & 74.545495    & 6.400000  \\
-        \tabindent inside           & 63.521196                                        & 3.080000                                              & 69.146617                                     & 4.640000  & 71.284755    & 6.780000  \\
-        \tabindent at quotes        & 69.633156                                        & 9.660000                                              & 86.380445                                     & 8.170000  & 86.061393    & 7.850000  \\
-        \tabindent outside          & 65.067436                                        & -1.710000                                             & 65.241898                                     & 0.320000  & 66.000134    & 1.080000  \\
-        \tabindent unknown          & 78.330482                                        & 1.920000                                              & 77.954157                                     & 1.550000  & 78.966815    & 2.560000  \\
+        \tabindent At Mid           & 62.489037                                        & 5.340000                                              & 71.949316                                     & 3.800000  & 74.545495    & 6.400000  \\
+        \tabindent Inside           & 63.521196                                        & 3.080000                                              & 69.146617                                     & 4.640000  & 71.284755    & 6.780000  \\
+        \tabindent At Quotes        & 69.633156                                        & 9.660000                                              & 86.380445                                     & 8.170000  & 86.061393    & 7.850000  \\
+        \tabindent Outside          & 65.067436                                        & -1.710000                                             & 65.241898                                     & 0.320000  & 66.000134    & 1.080000  \\
+        \tabindent Unknown          & 78.330482                                        & 1.920000                                              & 77.954157                                     & 1.550000  & 78.966815    & 2.560000  \\
         \cmidrule(rl){1-7}
         \multicolumn{7}{l}{ All}                                                                                                                                                                                                      \\
         \tabindent All              & 64.655751                                        & 4.600000                                              & 72.859054                                     & 5.250000  & 74.551410    & 6.940000  \\
