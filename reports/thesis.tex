@@ -49,6 +49,7 @@ width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 \newcommand{\bestcircle}{\tikz{\node[circle,draw=darkgray, fill=white, line width=0.5pt, minimum width=0.2cm,minimum height=0.2cm, inner sep=0pt, draw opacity=.2] at (0,0){};}}
 \newcommand{\myline}{\tikz{\draw[dashed, gray, line width=0.5pt] (0,0) -- (0,0.3);}}
 
+
 % Tables and Graphs
 \usepackage{makecell} %Connected rows
 \usepackage{booktabs} % Improves the design of the tables
@@ -58,7 +59,9 @@ width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 \usepackage{multirow,multicol} % With this package it is now possible to combine columns and rows within tables.
 \usepackage{graphicx} % Allows to implement graphics.
 % \usepackage[font={sf, small}]{subfig} % Enables graphs consisting of several figures.
+\usepackage{alphalph}
 \usepackage[font={small}]{subfig}
+\renewcommand\thesubfigure{\alphalph{\value{subfigure}}}
 % \usepackage[font={sf, small}]{floatrow} % enables to format tables
 \usepackage[font={small}]{floatrow}
 
@@ -179,6 +182,7 @@ bookmarksopen
 \newacronym{ADR}{ADR}{American depository receipt}
 \newacronym{ANN}{ANN}{artificial neural network}
 \newacronym{AUC}{AUC}{area under the curve}
+\newacronym{BERT}{BERT}{Bidirectional Encoder Representations from Transformers}
 \newacronym{BVC}{BVC}{bulk volume classification}
 \newacronym{CRSP}{CRSP}{Center for Research in Securities Prices}
 \newacronym{CBOE}{CBOE}{Chicago Board Options Exchange}
