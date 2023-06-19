@@ -755,16 +755,20 @@ More generally, our tests demonstrate that the strong results of our classifiers
 
 \subsection{Feature Importance}\label{sec:feature-importance}
 
+Transformers outperform all rule-based approaches by a large margin on the \gls{ISE} dataset. To gain insights into the factors driving this performance, we conduct a qualitative analysis of the attention mechanism and learned embeddings. For an evaluation of feature importances, that suffices for a cross-model comparison, we utilize \gls{SAGE}, building upon our rationale from \cref{sec:feature-importance-measure}.
+
 \textbf{Attention Visualisation}
 
-Drawing on theory in \cref{sec:feature-importance-measure}, we employ the methodology of \textcite[][2--4]{cheferTransformerInterpretabilityAttention2021} to generate attention maps, which we then \emph{qualitatively} interpret.
+The analysis of attention follows a top-down approach. Initially, we generate model-wide attention maps using the methodology of \textcite[][2--4]{cheferTransformerInterpretabilityAttention2021}. Subsequently, we detail the analysis by probing specific attention heads adapting a procedure of \textcite[][4]{clarkWhatDoesBERT2019}. The relation between the two approaches is visualised in cref-fig. 
 
-These attention maps offer transparency at the \emph{trade level}. To aid visualization, we focus on subsets of trades, where the performance of Transformers is particularly strong and select \num{16} mid-spread trades and \num{16} trades at the quotes from the \gls{ISE} test set. The resulting attention maps are shown in \cref{fig:attention-maps-ise}.
+
+
+Attention maps offer transparency at the trade or dataset level. To aid visualization, we focus on subsets of trades, where the performance of Transformers is particularly strong and select \num{16} mid-spread trades and \num{16} trades at the quotes from the \gls{ISE} test set. The resulting attention maps are shown in \cref{fig:attention-maps-ise}.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\textwidth]{attention_maps_ise_quotes_mid.pdf}
-    \caption[Attention Maps of Transformer Trained on \glsentryshort{ISE} Data Set]{Attention maps of Transformer trained on \gls{ISE} data with \gls{FS} 3. The left plot contains attention weights of \num{16} trades at the quotes and the right plot of \num{16} mid-spread trades. Each column represents a trade and each row a feature. The intensity of the pixel represents the importance. $\mathtt{[CLS]}$ token excluded, as suggested in \textcite[][4]{cheferGenericAttentionmodelExplainability2021}.}
+    \caption[Attention Maps of Transformer Trained on \glsentryshort{ISE} Data Set]{Attention maps of Transformer trained on \gls{ISE} data with \gls{FS} option. The left plot contains attention weights of \num{16} trades at the quotes and the right plot of \num{16} mid-spread trades. Each column represents a trade and each row a feature. The intensity of the pixel represents the importance. $\mathtt{[CLS]}$ token excluded, as suggested in \textcite[][4]{cheferGenericAttentionmodelExplainability2021}. The green area marks a trade, that was correctly classified by the network. The red area marks a trade that was falsely classified. Details on trades are given below.}
     \label{fig:attention-maps-ise}
 \end{figure}
 
@@ -773,11 +777,21 @@ Visually, the trade price and quotes at the exchange or inter-exchange level are
 The model assigns the highest attention scores to features found in the quote rule and hybrids' there-off. Due to the possible link to rule-based trade classification, it is worthwhile to explore, if the fine-grained patterns learned by specific attention heads translate to existing trade classification rules i.e., if specific tokens attend to features that are jointly used in rule-based classification. This information is sacrificed when aggregating over multiple attention heads and layers, as done for \cref{fig:attention-maps-ise}, but readily available from individual attention heads. To further analyse this aspect, we adapt the approach of \textcite[][4]{clarkWhatDoesBERT2019} to our setting and probe individual attention heads.
 
 \begin{figure}[h!]
-    \subfloat[Tick Rule-like Head (4,5)\label{fig:head-tick}]{\includegraphics[width=0.3\textwidth]{attention_head_5_layer_4_ise_quotes_mid.pdf}}
+    \subfloat[Tick Rule-like Head (3,5)\label{fig:head-tick}]{\includegraphics[width=0.3\textwidth]{attention_head_5_layer_3_color_green_ise_quotes_mid.pdf}}
     \hfill
-    \subfloat[Trade Size Rule-like Head (4,1)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth]{attention_head_1_layer_4_ise_quotes_mid.pdf}}
+    \subfloat[Trade Size Rule-like Head (3,8)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_3_color_green_ise_quotes_mid.pdf}}
     \hfill
-    \subfloat[\glsentryshort{LR}-Like Head (4,8)\label{fig:head-lr}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_4_ise_quotes_mid.pdf}}
+    \subfloat[\glsentryshort{LR}-Like Head (4,8)\label{fig:head-lr}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_4_color_green_ise_quotes_mid.pdf}}
+    \caption[Attention Heads That Correspond To Trade Classification Rules]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualised for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualisations based on code by \textcite[][4]{clarkWhatDoesBERT2019}.}
+    \label{fig:rule-like-attention-heads}
+\end{figure}
+
+\begin{figure}[h!]
+    \subfloat[Tick Rule-like Head (3,5)\label{fig:head-tick}]{\includegraphics[width=0.3\textwidth]{attention_head_5_layer_3_color_red_ise_quotes_mid.pdf}}
+    \hfill
+    \subfloat[Trade Size Rule-like Head (3,8)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_3_color_red_ise_quotes_mid.pdf}}
+    \hfill
+    \subfloat[\glsentryshort{LR}-Like Head (4,8)\label{fig:head-lr}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_4_color_red_ise_quotes_mid.pdf}}
     \caption[Attention Heads That Correspond To Trade Classification Rules]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualised for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualisations based on code by \textcite[][4]{clarkWhatDoesBERT2019}.}
     \label{fig:rule-like-attention-heads}
 \end{figure}
@@ -798,7 +812,7 @@ The embeddings are queried from the feature tokenizer in FT-Transformer. The sim
     \subfloat[Most Similar Embeddings to $\mathtt{SPY}$\label{fig:cat-embeddings-spy}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_SPY.pdf}}
     \vfill
     \subfloat[Most Similar Embeddings to $\mathtt{JPM}$\label{fig:cat-embeddings-jpm}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_JPM.pdf}}
-    \caption[Embeddings of Selected Underlyings]{Embeddings of selected underlyings. The plot depicts the projected embedding of SPDR S\&P 500 ETF ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) and their most similar embeddings. Embeddings are projected into 2D-space using $t$-SNE \autocite[][2587]{vandermaatenVisualizingDataUsing2008}. The ten most similar embeddings by cosine distance in the original space are coloured and annotated. The model is trained on \gls{ISE} data.}
+    \caption[Embeddings of Selected Underlyings]{Embeddings of selected underlyings. The plot depicts the projected embedding of SPDR S\&P 500 ETF ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) and their most similar embeddings. Embeddings are projected into 2D-space using $t$-SNE. The ten most similar embeddings by cosine distance in the original space are coloured and annotated. The model is trained on \gls{ISE} data.}
     \label{fig:categorical-embeddings}
 \end{figure}
 

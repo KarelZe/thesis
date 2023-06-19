@@ -25,6 +25,74 @@ Drawing on theory in cref-[[🧭Feature Importance Measure]], we employ the meth
 
 ![[attention-maps.png]]
 
+```python
+# at quotes (ise)
+Int64Index([39342191, 39342189, 39342188, 39342175, 39342174, 39342171,
+            39342233, 39342241, 39342238, 39342239, 39342237, 39342193,
+            39342194, 39342199, 39342202, 39342204],
+           dtype='int64', name='index')
+```
+
+```python
+# at mid (ise)
+Int64Index([39342276, 39342363, 39342387, 39342437, 39342436, 39342428,
+            39342464, 39342540, 39342608, 39342598, 39342620, 39342632,
+            39342674, 39342781, 39342804, 39342824],
+           dtype='int64', name='index')
+```
+
+```python
+# at quotes (ise correct) index 1
+buy_sell                                                    -1
+TRADE_SIZE                                                   5
+TRADE_PRICE                                                3.5
+ask_ex                                                    3.85
+ask_size_ex                                               11.0
+bid_ex                                                     3.5
+bid_size_ex                                               10.0
+OPTION_TYPE                                                  P
+issue_type                                        Stock option
+TRADE_SIZE_binned                                        (3,5]
+year_binned                                               2015
+ttm_binned                                                <= 1
+myn_binned                                           (0.9-1.1]
+prox_q_binned                                        at quotes
+mid                                                      3.675
+all                                                        all
+(fttransformer, fttransformer(classical))                   -1
+(fttransformer, fttransformer(classical-size))              -1
+(fttransformer, fttransformer(ml))                          -1
+(classical, tick(ex))                                      1.0
+Name: 39342191, dtype: object
+```
+
+```python
+# at quotes (ise false) index 8
+buy_sell                                                 -1
+TRADE_SIZE                                               21
+TRADE_PRICE                                             4.5
+ask_ex                                                  4.5
+ask_size_ex                                            21.0
+bid_ex                                                  4.4
+bid_size_ex                                            41.0
+OPTION_TYPE                                               C
+issue_type                                           Others
+TRADE_SIZE_binned                                       >11
+year_binned                                            2015
+ttm_binned                                            (3-6]
+myn_binned                                        (0.9-1.1]
+prox_q_binned                                     at quotes
+mid                                                    4.45
+all                                                     all
+(fttransformer, fttransformer(classical))                -1
+(fttransformer, fttransformer(classical-size))            1
+(fttransformer, fttransformer(ml))                        1
+(classical, tick(ex))                                   1.0
+Name: 39342388, dtype: object
+```
+
+
+
 Attention Maps of Transformer Trained on ISE data set
 Each column represents a single trade. Following the standard rationale all x-axis indicates the trade, y-axis denotes the features.
 We exclude the CLS  token as it accumulates most feature importances. Darkness of pixel represents strength of attention score.
@@ -73,6 +141,12 @@ We have proposed a series of analysis methods for understanding the attention me
 
 
 ----
+
+Transformers outperform all previous approaches by a large margin on the gls-ISE dataset. To gain insights into the factors driving this performance, we conduct a qualitative analysis of the attention mechanism and learned embeddings. For an evaluation of feature importances, that suffice for a cross-model comparison, we utilize gls-SAGE, building upon our previous rationale presented in cref-feature-importances.
+
+To gain deeper insights into the factors driving this performance, we conduct a qualitative analysis of the attention mechanism and learned embeddings, focusing specifically on Transformers. To evaluate the importance of features and enable cross-model comparisons, we utilize gls-SAGE, building upon our previous rationale presented in cref-feature-importances.
+
+generate attention maps and probe individual attention heads.
 
 Visualisation of embeddings and attention is Transformer-specific. 
 
@@ -134,6 +208,8 @@ Relation between attention techniques
 ![[model-wide-attention.png]]
 (from [[@coenenVisualizingMeasuringGeometry2019]])
 
+The data for our first experiment is a corpus of parsed sentences from the Penn Treebank [13]. This dataset has the constituency grammar for the sentences, which was translated to a dependency grammar using the PyStanfordDependencies library [14]. The entirety of the Penn Treebank consists of 3.1 million dependency relations; we filtered this by using only examples of the 30 dependency relations with more than 5,000 examples in the data set. We then ran each sentence through BERTbase, and obtained the model-wide attention vector (see Figure 1) between every pair of tokens in the sentence, excluding the [SEP ] and [CLS] tokens. This and subsequent experiments were conducted using PyTorch on MacBook machines.
+
 While [6] analyzed context embeddings, another natural place to look for encodings is in the attention matrices. After all, attention matrices are explicitly built on the relations between pairs of words.
 
 This broader analysis shows that BERT’s attention heads pay little attention to the current token but rather specialize to attend heavily on the next or previous token, especially in the earlier layers.
@@ -150,14 +226,12 @@ add a CLS token and use its embedding in the final layer as the input to the cla
 
 Figures 2 and 3 show the weights from raw attention, attention rollout and attention flow for the CLS embedding over input tokens (x-axis) in all 6 layers (y-axis) for three examples. The first example is the same as the one in Figure 1. The second example is “the article on NNP large systems ”. The model correctly classifies this example and changing the subject of the missing verb from “article” to “articles” flips the decision of the model. The third example is “here the NNS differ in that the female ”, which is a miss-classified example and again changing “NNS” (plural noun) to “NNP” (singular proper noun) flips the decision of the model. For all cases, the raw attention weights are almost uniform above layer three (discussed before). raw attention attention rollout attention flow (a) “The author talked to Sara about mask book.” raw attention attention rollout attention flow (b) “Mary convinced John of mask love.” Figure 4: Bert attention maps. We look at the attention weights from the mask embedding to the two potential references for it, e.g. “author” and “Sara” in (a) and “Mary” and “John” in (b). The bars, at the left, show the relative predicted probability for the two possible pronouns, “his” and “her”. In the case of the correctly classified example, we observe that both attention rollout and attention flow assign relatively high weights to both the subject of the verb, “article’ and the attractor, “systems”. For the miss-classified example, both attention rollout and attention flow assign relatively high scores to the “NNS” token which is not the subject of the verb. This can explain the wrong prediction of the model.
 
-![[Pasted image 20230617080432.png]]
-
 We claim that one-layer attention-only transformers can be understood as an ensemble of a bigram model and several "skip-trigram" models (affecting the probabilities of sequences "A… BC"). 12 Intuitively, this is because each attention head can selectively attend from the present token ("B") to a previous token ("A") and copy information to adjust the probability of possible next tokens ("C"). (https://transformer-circuits.pub/2021/framework/index.html)
 
 - the innerworkings of transformers are not fully-understood yet. https://transformer-circuits.pub/2021/framework/index.html
 
 Compare attention of pre-trained Transformer with vanilla Transformer?
-![[Pasted image 20230617081051.png]]
 
 
-![[Pasted image 20230617081138.png]]
+
+The system visualizes these 1,000 context embeddings using UMAP [15], generally showing clear clusters relating to word senses. Different senses of a word are typically spatially separated, and within the clusters there is often further structure related to fine shades of meaning.
