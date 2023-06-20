@@ -100,6 +100,9 @@ To establish a common ground, we derive three sets of features from raw data. Th
 
 \todo{define and explain option characterstics and add proper caption to table.}
 
+% Panel A uses the full sample, and panel B uses only trades that fall in a particular moneyness category, defined by the absolute value of the option delta: || (Big Delta) < 0.35 for OTM, 0.35 ≤|| < 0.65 for ATM, and 0.65 ≤|| for ITM options. The quoted half-spread is half the difference between the ask and bid prices at the time of the trade, expressed as either a percentage of the pretrade bid-ask midpoint or in dollars. The effective half-spread is the difference between the trade price and the bid-ask midpoint (bid-ask midpoint and trade price) for trades signed as buys (sells), where a trade is signed as a buy (sell) if the trade price is greater (less) than the midpoint. The price impact for a buy (sell) is the (negative of the) difference between the bid-ask midpoint 10 minutes after the trade and at the time of the trade, divided by the midpoint at the time of the trade. ( Found in murjaev)
+
+
 Features and feature sets are documented in \cref{tab:feature-sets}.
 We aid the models by estimating the change in trade price between the previous and successive distinguishable trades. This is identical to the criterion used in the (reverse) tick rule, but in a non-quantized fashion to enforce a richer decision boundary and to surpass hard cut-off points. Similarly, the proximity of the trade price to the quotes, which is the decisive criterion in the quote rule and hybrids' thereof is added. The feature value ranges from $\left(-\infty,\infty\right)$ and is $-1$ for trades at the bid, 0 for trades at the mid, and 1 for trades at the ask. Quotes and trade prices are also incorporated as-is.
 
