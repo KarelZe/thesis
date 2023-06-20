@@ -25,72 +25,6 @@ Drawing on theory in cref-[[🧭Feature Importance Measure]], we employ the meth
 
 ![[attention-maps.png]]
 
-```python
-# at quotes (ise)
-Int64Index([39342191, 39342189, 39342188, 39342175, 39342174, 39342171,
-            39342233, 39342241, 39342238, 39342239, 39342237, 39342193,
-            39342194, 39342199, 39342202, 39342204],
-           dtype='int64', name='index')
-```
-
-```python
-# at mid (ise)
-Int64Index([39342276, 39342363, 39342387, 39342437, 39342436, 39342428,
-            39342464, 39342540, 39342608, 39342598, 39342620, 39342632,
-            39342674, 39342781, 39342804, 39342824],
-           dtype='int64', name='index')
-```
-
-```python
-# at quotes (ise correct) index 1
-buy_sell                                                    -1
-TRADE_SIZE                                                   5
-TRADE_PRICE                                                3.5
-ask_ex                                                    3.85
-ask_size_ex                                               11.0
-bid_ex                                                     3.5
-bid_size_ex                                               10.0
-OPTION_TYPE                                                  P
-issue_type                                        Stock option
-TRADE_SIZE_binned                                        (3,5]
-year_binned                                               2015
-ttm_binned                                                <= 1
-myn_binned                                           (0.9-1.1]
-prox_q_binned                                        at quotes
-mid                                                      3.675
-all                                                        all
-(fttransformer, fttransformer(classical))                   -1
-(fttransformer, fttransformer(classical-size))              -1
-(fttransformer, fttransformer(ml))                          -1
-(classical, tick(ex))                                      1.0
-Name: 39342191, dtype: object
-```
-
-```python
-# at quotes (ise false) index 8
-buy_sell                                                 -1
-TRADE_SIZE                                               21
-TRADE_PRICE                                             4.5
-ask_ex                                                  4.5
-ask_size_ex                                            21.0
-bid_ex                                                  4.4
-bid_size_ex                                            41.0
-OPTION_TYPE                                               C
-issue_type                                           Others
-TRADE_SIZE_binned                                       >11
-year_binned                                            2015
-ttm_binned                                            (3-6]
-myn_binned                                        (0.9-1.1]
-prox_q_binned                                     at quotes
-mid                                                    4.45
-all                                                     all
-(fttransformer, fttransformer(classical))                -1
-(fttransformer, fttransformer(classical-size))            1
-(fttransformer, fttransformer(ml))                        1
-(classical, tick(ex))                                   1.0
-Name: 39342388, dtype: object
-```
-
 
 
 Attention Maps of Transformer Trained on ISE data set
@@ -100,13 +34,6 @@ We exclude the CLS  token as it accumulates most feature importances. Darkness o
 Visually, the trade price and quotes at the exchange or inter-exchange level are most important and most frequently used. This aligns with our intuition, as these features are core to the quote rule and numerous hybrid algorithms. Also, quote-based algorithms are among the best performing in our dataset. Aside from the trade price, features required to estimate the tick rule attain only low attention scores. Considering the devastating performance of tick-based algorithms in option trade classification, this is expected. Features from the depth and trade size rule, such as the trade size, are used selectively. For classification of trades at the quotes, option-specific feature like the issue type, moneyness, time to maturity, or daily trading volume of the option series receive relatively high attention scores. Overall, derived features, like the proximity to quotes, attain only low attention scores, which can be indication that the Transformer can synthesise the feature from the *raw* bid, ask and trade price itself.
 
 The model assigns the highest attention scores to features found in the quote rule and hybrids there-off. Due to the existing link to rule-based trade classification, it is tempting to explore, if the fine-grained patterns learned by specific attention heads translate to existing trade classification rules i. e., if specific tokens attend to features that are jointly used in rule-based classification. This information is sacrificed when aggregating over multiple attention heads and layers, as done for cref-fig, but readily available from individual attention heads. To further analyse this aspect, we adapt the approach of ([[@clarkWhatDoesBERT2019]]4) to our setting. 
-
-![[layer_3_head_0.png]]
-(layer 3, head 0)
-![[layer_3_head_4.png]]
-(layer 3, head 4)
-![[layer_3_head_8.png]]
-(layer 3, head 8)
 
 Figure cref-fig show three examples of attention heads involved in classifying a trade *at the quote*. The remaining attention heads are visualised in cref-appendix. Each subplots depicts the features to which the classification token ($\mathtt{[CLS]}$) attends to. The attention weight determines the intensity of the line between the two. Referring to the results from the appendix, we note that attention heads learn diverse patterns, as most heads attend to different tokens at once learning different relations. For earlier layers in the network, the classification tokens gathers from multiple tokens with non-obvious patterns, whereas for the final self-attention layers, attention heads specialise in relations that seems related to rule-based trade classification. In Fig-a) the classification token gathers simultaneously from multiple price / size-related features similar to the trade size rule. Fig-b depicts a neighbouring classification head that focuses solely on the change in trade price similar to the tick rule. Finally, fig-c) is an alike to the gls-LR algorithm with additional dependencies on the time to maturity. For other attention heads it remains open what purpose they serve in the network. While the similarity is striking, it requires a more rigorous analysis. It would be interesting for future work to extend this analysis, as it potentially enables to uncover new rule-based approaches as well as better understand Transformer-based trade classification as a whole.
 
@@ -193,7 +120,6 @@ Visualisation of embeddings and attention is Transformer-specific.
 	- Why are size-related features so important? Can we confirm the limit order theory? 
 
 Results:
-![[results-sage.png]]
 
 - **Classical Rules** Results align with intuition. Largest improvements come from applying the quote rule (nbbo), which requires quote_best + Trade price, quote (ex) is only applied to a fraction of all trades. The rev tick test is of hardly any importance, as it does not affect classification rules much, nor is it applied often
 
@@ -235,3 +161,12 @@ Compare attention of pre-trained Transformer with vanilla Transformer?
 
 
 The system visualizes these 1,000 context embeddings using UMAP [15], generally showing clear clusters relating to word senses. Different senses of a word are typically spatially separated, and within the clusters there is often further structure related to fine shades of meaning.
+
+**SAGE**
+
+![[sage-values.png]]
+Classical refers to gsu-small on FS classical and gsu-large on gls-FS size and gls-FS option. Error bar represents uncertainty.
+
+We compare the feature importances of rule-based and machine learning-based classifiers using gls-SAGE, which offers a clear interpretation of each feature's contribution to the prediction. As trade classification rules yield only hard probabilities, we estimate gls-SAGE values with the zero one loss. . This approach is appealing due  to the direct link to accuracy.-footnote(We contributed this loss function to the official implementation https://github.com/iancovert/sage/ as part of this thesis. ) Based on the distribution of the gls-ise test set, a naive prediction of the majority class yields an accuracy of percentage-51.4027 or a zero-one loss of 1- 0.514027 = 0.485973. gls-SAGE attributes the outperformance of machine learning or rule-based classifiers over the naive prediction to the features based on Shapley values. Notably, the sum of all gls-SAGE values for a given predictor represents the difference in loss compared to the naive classification-footnote(explain with example for grauer)
+
+From cref-fig that all models achieve the largest improvement in loss from quoted prices and if provided from the quoted sizes. The contribution of the gls-NBBO to performance is roughly equal for all models, suggesting, that even simple heuristics effectively exploit the data. For machine learning-based predictors, quotes at the exchange level hold equal importance in classification. This contrast with gls-gsu methods, which rely less on exchange-level quotes and mostly classify trades based on upstream rules. Transformers and gls-GBRT performance gains from incorporating option features from the addition of option features, i. e., moneyness and time-to-maturity. In conjunction with the results from the robustness checks, the result suggest that the improvement observed for long-running options or out-of-the-money options directly come from the features moneyness or time to maturity itself. However, it remains unclear how these features interact with others. Regardless of the method used, changes in trade price before or after the trade are irrelevant for classification and can even harm performance. Similarly, additional features such as option type, issue type, trading volume of the option series, and the underlying are also irrelevant.
