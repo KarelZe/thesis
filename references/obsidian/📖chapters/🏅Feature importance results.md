@@ -165,7 +165,7 @@ The system visualizes these 1,000 context embeddings using UMAP [15], generally 
 **SAGE**
 
 ![[sage-values.png]]
-Classical refers to gsu-small on FS classical and gsu-large on gls-FS size and gls-FS option. Error bar represents uncertainty.
+Comparison of feature importances estimated for Classical refers to gsu-small on FS classical and gsu-large on gls-FS size and gls-FS option. Error bar represents uncertainty.
 
 We compare the feature importances of rule-based and machine learning-based classifiers using gls-SAGE, which offers a clear interpretation of each feature's contribution to the prediction. As trade classification rules yield only hard probabilities, we estimate gls-SAGE values with the zero one loss. . This approach is appealing due  to the direct link to accuracy.-footnote(We contributed this loss function to the official implementation https://github.com/iancovert/sage/ as part of this thesis. ) Based on the distribution of the gls-ise test set, a naive prediction of the majority class yields an accuracy of percentage-51.4027 or a zero-one loss of 1- 0.514027 = 0.485973. gls-SAGE attributes the outperformance of machine learning or rule-based classifiers over the naive prediction to the features based on Shapley values. Notably, the sum of all gls-SAGE values for a given predictor represents the difference in loss compared to the naive classification-footnote(explain with example for grauer)
 
