@@ -43,6 +43,13 @@ Motivated by these considerations, we investigate how the predictability documen
 - What question do I solve? (SMART)
 - From Expose: "Against this backdrop, the question is, can an alternative, machine learning-based classifier improve upon standard trade classification rules?"
 
+
+## Outline
+The remainder of this paper is organized as follows. Cref-[[👪Related Work]] reviews publications on trade classification in option markets and using machine learning, thereby underpinning our research framework. Cref-[[🍪Selection Of Supervised Approaches]] discusses and introduces supervised methods for trade classification. Then, cref- [[🍪Selection Of Semisupervised Approaches]] extends the previously selected algorithms for the semi-supervised case. We test the models in cref-[[🌏Dataset]] in an empirical setting. In cref-[[🍕Application study]]  we apply our models to the problem of effective spread estimation. Finally, cref-foo concludes.
+
+
+
+
 ## Contributions
 - from expose: In the introduction, we provide motivation and present our key findings. The contributions are three-fold: (I) We employ state-of-the-art machine learning algorithms i.~e., gradient-boosted trees and transformer networks, for trade classification. Tree-based approaches outperform state-of-the-art trade classification rules in out-of-sample tests. (II) As part of semi-supervised approaches, we study the impact of incorporating unlabelled trades into the training procedure on trade classification accuracy. (III) We consistently interpret feature contributions to classical trade classification rules and machine learning models with a game-theoretic approach.
 - through visualising attention we are able to establish a theoretical link between rule-based classification and machine learning
@@ -64,51 +71,47 @@ applications in biomarker detection [Climente-González et al., 2019] and wind p
 
 We propose Nyström M-HSIC, an efficient HSIC estimator, which can handle more than two components and has runtime O ´ Mn13 ` Mn1n ¯ , where n denotes the number of samples, n 1 ! n stands for the number of Nyström points, and M is the number of random variables whose independence is measured. 2. We provide theoretical guarantees for Nyström MHSIC: we prove that our estimator converges with rate O ` n ´1{2 ˘ for n 1 „ ? n, which matches the convergence of the quadratic-time estimator. 3. We perform an extensive suite of experiments to demonstrate the efficiency of Nyström M-HSIC. These applications include dependency testing of media annotations
 
-## Outline
-The remainder of this paper is organized as follows. Cref-[[👪Related Work]] reviews publications on trade classification in option markets and using machine learning, thereby underpinning our research framework. Cref-[[🍪Selection Of Supervised Approaches]] discusses and introduces supervised methods for trade classification. Then, cref- [[🍪Selection Of Semisupervised Approaches]] extends the previously selected algorithms for the semi-supervised case. We test the models in cref-[[🌏Dataset]] in an empirical setting. In cref-[[🍕Application study]]  we apply our models to the problem of effective spread estimation. Finally, cref-foo concludes.
-
-
-
-**Examples:**
-In Sec. 2 we cover related work. Sec. 3 gives a short description of our benchmark methodology, including datasets, data processing, and hyper-parameter tuning. Then, Sec. 4 shows our raw results on deep learning and tree-based models after an extensive random search. Finally, Sec. 5 provides the results of an empirical study which exhibit desirable implicit biases of tabular datasets.
-
-**Examples:**
-Chapter 2 introduces the related work. In Chapter 3, we present the theoretical basis for the design of our algorithm. Chapter 4 details the algorithm design and the resulting trade-offs. We evaluate our algorithm in Chapter 5 and conclude in Chapter 6. The Appendix provides extra information about the effect of various parameter settings.
-
-**Examples:**
-The rest of the paper is organized as follows. Section 2 describes
-the data and defines the variables used in the regression analyses.
-Section 3 examines the trading patterns around earnings announcements and shows that the surge in volume is mostly due to small
-investors engaged in speculative trading. A refined test is offered
-to prove that the apparent predictability of option turnovers for future returns is simply spurious. Section 4 presents empirical results
-based on cross-section and time-series regression analyses employing various proxies of information asymmetry and opinion dispersion. Additional tests and robustness checks are presented in
-Section 5. Section 6 offers some reconciliation with intuition and
-the existing literature. Section 7 concludes the paper. The appendix
-is relegated to the end.
-
-**Examples:**
-The remainder of this paper is organized as follows. Section 2 gives a literature overview how consumers react to price changes. In Section 3, publications related to the financial benefits from Demand Response are reviewed.
-Afterwards, Section 4 identifies parameters that govern decisions in Demand
-Response programs to pioneer a mathematical problem such that Demand Response decisions of retailers are optimized. Finally, Section 5 evaluates the
-decisions derived by the model in a simulation based on historic data and analyzes their financial benefits.
-
-**Examples:**
-The paper is structured as follows. Our notations are introduced in Section 2. The existing Nyström-based HSIC approximation for two components is reviewed in Section 3. Our proposed method, which is capable of handling M ě 2 components, is presented in Section 4 together with its theoretical guarantees. In Section 5 we demonstrate the applicability of Nyström M-HSIC. All the proofs of our results are available in the supplementary material.
-
-**Examples**
-The rest of this paper is structured as follows. In Section 2, we describe the option data and sample selection process when matching LiveVol and Open/Close data and the methodology to infer the true side of a trade. Section 3 compares the performance of the common stock trade classification algorithms when applied to option trades on the ISE and introduces two new rules that strongly improve the classification success of existing methods. In Section 4, we test our new rules out-of-sample on the CBOE and the GEMX data. Section 5 provides sample splits along various dimensions and a time-series analysis of the improvements from our new rules. Section 6 applies our new trade classification algorithms to test the predictability of future stock returns based on option order imbalances. Finally, Section 7 concludes the paper.
-
-
 
 We recall the existing HSIC estimator V-HSIC in Section 3.1, and its Nyström approximation for two compo- nents in Section 3.2. We present our proposed Nyström approximation for more than two components in Section 4.
 
+
+To answer this question, we model trade classification throughTransformers and gradient boosting. We consider the cases, where labelled trades 
+## Contributions
+- from expose: In the introduction, we provide motivation and present our key findings. The contributions are three-fold: (I) We employ state-of-the-art machine learning algorithms i.~e., gradient-boosted trees and transformer networks, for trade classification. Tree-based approaches outperform state-of-the-art trade classification rules in out-of-sample tests. (II) As part of semi-supervised approaches, we study the impact of incorporating unlabelled trades into the training procedure on trade classification accuracy. (III) We consistently interpret feature contributions to classical trade classification rules and machine learning models with a game-theoretic approach.
+- through visualising attention we are able to establish a theoretical link between rule-based classification and machine learning
+
+Our contributions are n-fold:
+- Our paper contributes to at least two strands of literature. First, it is
+- We compare our streaming algorithm to the original... new state-of-the-art in terms of out-of-sample accuracy without additional data requirements. Stable results in out-of-sample test on CBOE dataset. What are results with and without additional data requirements?
+- test gradient-boosting and tabular transformers for the problem of trade classification
+- game theoretic approach to study the effect of features on the prediction
+- new framing as semi-supervised learning problem. Enables to learn on learn on unlabelled and labelled trades simultaneously
+- we test the algorithms for the purpose of estimating effective spreads purpose of calculating effective spreads
+- based on a unified framework compare feature importances of rule-based approaches
+
+Our work makes the following contributions:
+1. 
+2. We establish a link between classical trade classification rules and  mach consistently interpret feature attributions of classical trade classification rules and machine learning models with a game-theoretic approach.
+3. 
+
+Our experiments compare SAGE to several baselines and demonstrate that SAGE’s feature importance values are more representative of the predictive power associated with each feature. We also show that when a model’s performance is unexpectedly poor, SAGE can help identify corrupted features.
+
+Our experiments document a superiority of machine learning-based 
 
 as it threatens
 
 Whilst we reach the same conclusion, we estimate that large models should be trained for many more training tokens than recommended by the authors.
 
+![[Pasted image 20230621094017.png]]
+
+![[Pasted image 20230621091250.png]]
+
 ![[Pasted image 20230620171109.png]]
 ![[Pasted image 20230620181450.png]]
+
+![[Pasted image 20230621074457.png]]
+
+![[Pasted image 20230621074845.png]]
 
 Overall, however, the tick rule still outperforms BVC in terms of pure classification accuracy, a point analyzed in detail by Andersen and Bondarenko (2015). The major argument brought forward in favor of bulk classification is not raw buy-sell classification accuracy, though.
 
