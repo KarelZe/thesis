@@ -37,6 +37,23 @@ For this reason, we estimate feature importances using \gls{SAGE}, which can acc
 
 \gls{SAGE} is an additive feature importance measure with its foundations in cooperative game theory. As put forth by \textcite[][3]{lundbergUnifiedApproachInterpreting2017} feature contributions can be estimated through Shapley values \autocite[][11]{shapley17ValueNPerson1953}. Instead of allocating credit in a cooperative game to players, as in the original Shapley formulation, the problem transfers to assign credit across features based on a value function. Intuitionally, for \gls{SAGE}, credit is assigned based on the contribution to the model's performance.
 
+In \gls{SAGE}, Shapley values $\phi_i(v_f)$ are estimated as:
+\begin{equation}
+    \phi_i(v_f)=\frac{1}{d} \sum_{S \subseteq D \backslash\{i\}}\left(\begin{array}{c}
+        d-1 \\
+        |S|
+        \end{array}\right)^{-1}(v_f(S \cup\{i\})-v_f(S))
+        \label{eq:shapley}
+\end{equation}
+where $D=\left\{1,\ldots,d\right\}$ is a set of feature indices corresponding to the features $x_1,\ldots,x_d$ and $S\subset D$. Intuitionally, \cref{eq:shapley} estimates Shapley value as the weighted average of the incremental change in the value function, $v_f(S)$, before and after adding the $i$-th feature to the subsets $S$ \autocite[][4--5]{covertUnderstandingGlobalFeature2020}. Hereby, the first term $\left(\begin{smallmatrix} d-1 \\|S|\end{smallmatrix}\right)^{-1}$ accounts for the possibilities to choose a $|S|$-strong subset from $D \backslash\{i\}$. 
+
+While subsets of features $X_S = \left\{X_i \mid i \in S \right\}$ can be easily constructed, most classifiers cannot handle the absence of features and require fixed-sized inputs during training and inference. \textcite[][2]{covertUnderstandingGlobalFeature2020} mitigate the issue, by marginalising out missing features $\bar{S}=D\backslash S$ using their conditional distribution $p(X_{\bar{S}} \mid X_S=x_S)$.
+
+
+\begin{equation}
+    v_f(S)=\underbrace{\mathbb{E}\left[\ell\left(\mathbb{E}\left[f(X)\right], Y\right)\right]}_{\text {Mean prediction }}-\underbrace{\mathbb{E}\left[\ell\left(f_S\left(X_S\right), Y\right)\right]}_{\text {Using features } X_S}
+\end{equation}    
+
 It is typically infeasible to compute the complete \gls{SAGE} values due to a large number of subsets $S$, so an approximation is used instead.
 
 \textbf{Attention Maps}
