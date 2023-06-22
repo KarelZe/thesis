@@ -1,10 +1,6 @@
  Supply of sufficient background information  Definition of the (general) problem  State of knowledge about the problem (in detail)  Carving out the gap of research and development  Objectives of the work/paper  Overall purpose/goal: to fill the gap in R&D  Stating specific objectives: as objectives, as hypotheses or as research questions.  Our Recommendations: Begin the chapter “Introduction” with the problem statement. Set the context of your research and capture the reader's attention. Explain the background of your study, starting from a broad perspective narrowing it down to your own research goal. Go into more detail when presenting the state of knowledge to date. Review what is known about your research topic as far as it is relevant. Then, develop the research or development gap from the existing knowledge. This is an important part, because your research work starts with the “gap” and should result in new knowledge or new findings. Therefore, the goal of your research work is to close the gap which you have discovered. Then, specify your objectives. The easiest way is to set some special research questions, which you will directly answer later in the respective chapter “Conclusion”. Thus, you do not mix up/confuse this part with working steps. For example, “to make life cycle assessment”, “to make soil analysis” are working steps, and not objectives as such
 
 
-Our paper contributes....
-
-Motivated by these considerations, we investigate how the predictability documented in our main test varies across option contracts with differing degrees of leverage. We find that option signals constructed from deep out-of-the-money options, which are highly leveraged contracts, exhibit the greatest level of predictability, while the signals from contracts with low leverage provide very little, if any, predictability.3 ([[@panInformationOptionVolume2006]])
-
 **What is the problem?**
 - The validity of many economic studies hinges on the ability to properly classify trades as buyer or seller-initiated. ([[@odders-whiteOccurrenceConsequencesInaccurate2000]])
 - “Such indication made directly from the data is nowadays in mostly cases inaccessible, since the majority of public databases including transaction data do not contain information of trade initiators and trade direction.” ([[@nowakAccuracyTradeClassification2020]], p. 65)
@@ -28,101 +24,11 @@ Motivated by these considerations, we investigate how the predictability documen
 - Empirical market microstructure research often requires knowledge about whether a transaction was initiated by a buyer or a seller. Examples include, but are not limited to, accurate calculation of effective spreads (Lightfood et. al. 1999), the identification of the components of the bid-ask spreads using methods based on a trade indicator variable (Huang / Stoll 1997) and the estimation of certain structural microstructure models (e.g. Easley et. al. 1996). (found in [[@theissenTestAccuracyLee2000]])
 - The importance of identifying liquidity demanders in studies of financial markets is well established, given that demanding liquidity is known to require the liquidity demander to pay a fee (Grossman and Miller, 1988). Indeed, much work has gone into accurately identifying the initiators of trades (i.e., liquidity demanders) in equity markets (Lee and Ready, 1991)—with Easley, de Prado and O’Hara (2016) accurately inferring trade initiation in modern equity markets. Yet, as will be elaborated in what follows, methods used for assigning trade initiation in equity markets are not sufficiently applicable to OTC markets—and thus, perhaps surprisingly, liquidity demanders (vs. providers) are typically not identified in these markets.
 
-**Transition**
-- Why is there a need for alternatives? What happend and how this transfer / motivate the use of machine learning?
-- Extant methods are adapted from the stock market (...).  Commonly stock trade classification algorithms are used, that have been transferred to the option market
-- An initiative of ([[@grauerOptionTradeClassification2022]]) proposed new rules, tested in the option market
-- “Although extant algorithms are adequate to the basic job of sorting trades, our work suggests that a refinement to the extant methods of classifying trades will do even better.” (Ellis et al., 2000, p. 539) -> nice word "extant methods"
-- over time proposed methods applied more filters / got more sophisticated but didn't substantially improve im some cases. See e. g., [[@finucaneDirectTestMethods2000]] 
-- Is it time to switch / test to another paradigm and let the data speak?
-- Methods have become more sophisticated resulting in more complex decision boundaries
-- Crisp sentence of what ML is and why it is promising here. 
-- From expose: "The work of ([[@grauerOptionTradeClassification2022]]) and ([[@savickasInferringDirectionOption2003]]) raises concerns about the applicability of standard trade signing algorithms to the option market due to deteriorating classification accuracies."
-
-**Research Question**
-- What question do I solve? (SMART)
-- From Expose: "Against this backdrop, the question is, can an alternative, machine learning-based classifier improve upon standard trade classification rules?"
-
 ## Contributions
-- from expose: In the introduction, we provide motivation and present our key findings. The contributions are three-fold: (I) We employ state-of-the-art machine learning algorithms i.~e., gradient-boosted trees and transformer networks, for trade classification. Tree-based approaches outperform state-of-the-art trade classification rules in out-of-sample tests. (II) As part of semi-supervised approaches, we study the impact of incorporating unlabelled trades into the training procedure on trade classification accuracy. (III) We consistently interpret feature contributions to classical trade classification rules and machine learning models with a game-theoretic approach.
-- through visualising attention we are able to establish a theoretical link between rule-based classification and machine learning
 
-Our contributions are n-fold:
-- Our paper contributes to at least two strands of literature. First, it is
-- We compare our streaming algorithm to the original... new state-of-the-art in terms of out-of-sample accuracy without additional data requirements. Stable results in out-of-sample test on CBOE dataset. What are results with and without additional data requirements?
-- test gradient-boosting and tabular transformers for the problem of trade classification
-- game theoretic approach to study the effect of features on the prediction
-- new framing as semi-supervised learning problem. Enables to learn on learn on unlabelled and labelled trades simultaneously
-- we test the algorithms for the purpose of estimating effective spreads purpose of calculating effective spreads
-- based on a unified framework compare feature importances of rule-based approaches
-
-**Examples**
-Impressed by the superiority of tree-based models on tabular data, we strive to understand which inductive biases make them well-suited for these data. By transforming tabular datasets to modify the performances of different models, we uncover differing biases of tree-based models and deep learning algorithms which partly explain their different performances: neural networks struggle to learn irregular patterns of the target function, and their rotation invariance hurt their performance, in particular when handling the numerous uninformative features present in tabular data. Our contributions are as follow: 1. We create a new benchmark for tabular data, with a precise methodology for choosing and preprocessing a large number of representative datasets. We share these datasets through OpenML [Vanschoren et al., 2014], which makes them easy to use. 2. We extensively compare deep learning models and tree-based models on generic tabular datasets in multiple settings, accounting for the cost of choosing hyperparameters. We also share the raw results of our random searches, which will enable researchers to cheaply test new algorithms for a fixed hyperparameter optimization budget. 3. We investigate empirically why tree-based models outperform deep learning, by finding data transformations which narrow or widen their performance gap. This highlights desirable biases for tabular data learning, which
-
-**Examples:**
-applications in biomarker detection [Climente-González et al., 2019] and wind power prediction [Bouche et al., 2022], clustering [Song et al., 2007, Climente-González et al., 2019], and causal discovery [Mooij et al., 2016, Pfister et al., 2018, Chakraborty and Zhang, 2019, Schölkopf et al., 2021]. Various estimators for HSIC and other dependence measures exist in the literature, out of which we summarize the most closely related ones to our work in Table 1. The classical V-statistic based HSIC estimator (V-HSIC; Gretton et al. [2005], Quadrianto et al. [2009], Pfister et al. [2018]) is powerful but its runtime increases quadratically with the number of samples, which limits it applicability in largescale settings. To tackle this severe computational bottleneck, approximations of HSIC (N-HSIC, RFF-HSIC) have been proposed [Zhang et al., 2017], relying on the Nyström [Williams and Seeger, 2001] and the random Fourier feature (RFF; Rahimi and Recht [2007]) method, respectively. However, these estimators (i) are limited to two components, (ii) their extension to more than two components is not straightforward, and (iii) they lack theoretical guarantees. The RFF-based approach is further restricted to finitedimensional Euclidean domains and to translation-invariant kernels. The normalized finite set independence criterion (NFSIC; Jitkrittum et al. [2017]) replaces the RKHS norm of HSIC with an L2 one which allows the construction of linear-time estimators. However, NFSIC is also limited to two components, requires R d -valued input, and analytic kernels [Chwialkowski et al., 2015]. A novel complementary approach is the kernel partial correlation coefficient (KPCC; [Huang et al., 2022]) but when applied to kernel-enriched domains its runtime complexity is cubic in the sample size. The restriction of existing HSIC approximations to two components is a severe limitation in recent applications like causal discovery which require independence tests capable of handling more than two components. Furthermore, the emergence of large-scale data sets necessitates algorithms that scale well in the sample size. To alleviate these bottlenecks, we make the following contributions.
-
-We propose Nyström M-HSIC, an efficient HSIC estimator, which can handle more than two components and has runtime O ´ Mn13 ` Mn1n ¯ , where n denotes the number of samples, n 1 ! n stands for the number of Nyström points, and M is the number of random variables whose independence is measured. 2. We provide theoretical guarantees for Nyström MHSIC: we prove that our estimator converges with rate O ` n ´1{2 ˘ for n 1 „ ? n, which matches the convergence of the quadratic-time estimator. 3. We perform an extensive suite of experiments to demonstrate the efficiency of Nyström M-HSIC. These applications include dependency testing of media annotations
-
-## Outline
-The remainder of this paper is organized as follows. Cref-[[👪Related Work]] reviews publications on trade classification in option markets and using machine learning, thereby underpinning our research framework. Cref-[[🍪Selection Of Supervised Approaches]] discusses and introduces supervised methods for trade classification. Then, cref- [[🍪Selection Of Semisupervised Approaches]] extends the previously selected algorithms for the semi-supervised case. We test the models in cref-[[🌏Dataset]] in an empirical setting. In cref-[[🍕Application study]]  we apply our models to the problem of effective spread estimation. Finally, cref-foo concludes.
+Our work makes the following contributions:
+1. We employ state-of-the-art supervised algorithms i.~e., gradient-boosted trees and transformer networks to the problem of trade classification. Our work is the first to extensively benchmark tree-based ensembles against deep learning-based, and rules-based approaches.  Our emphasis is on a fair comparison with respect to comparable data requirements and hyperparameter tuning.  Our results show a clear outperformance of 
+2. In a real-world setting, labelled trades, or trades for which the true initiator is known, are sparse, but unlabelled trades are abundant. Motivated by this consideration, we  extend our classifiers to learn on both labelled and unlabelled data through pre-training and self-training procedures and study the impact on classification accuracy. Specifically, we can show, that pre-training of Transformers improves accuracy on gls-ise data.
+3. We strive to understand which features are most predictive. Through a game-theoretic approach, our work is the first to consistently attribute the performance of rule-based trade classification and machine learning-based predictors to individual features. We find that, both paradigms share a common set of features, but machine learning-based classifiers attain higher performance gains and thus better exploit the data. By probing and visualising the attention mechanism inside the Transformer, we can further strengthen the link to rule-based classification and uncover that the *learned* rules mimic *classical* rules.
 
 
-
-**Examples:**
-In Sec. 2 we cover related work. Sec. 3 gives a short description of our benchmark methodology, including datasets, data processing, and hyper-parameter tuning. Then, Sec. 4 shows our raw results on deep learning and tree-based models after an extensive random search. Finally, Sec. 5 provides the results of an empirical study which exhibit desirable implicit biases of tabular datasets.
-
-**Examples:**
-Chapter 2 introduces the related work. In Chapter 3, we present the theoretical basis for the design of our algorithm. Chapter 4 details the algorithm design and the resulting trade-offs. We evaluate our algorithm in Chapter 5 and conclude in Chapter 6. The Appendix provides extra information about the effect of various parameter settings.
-
-**Examples:**
-The rest of the paper is organized as follows. Section 2 describes
-the data and defines the variables used in the regression analyses.
-Section 3 examines the trading patterns around earnings announcements and shows that the surge in volume is mostly due to small
-investors engaged in speculative trading. A refined test is offered
-to prove that the apparent predictability of option turnovers for future returns is simply spurious. Section 4 presents empirical results
-based on cross-section and time-series regression analyses employing various proxies of information asymmetry and opinion dispersion. Additional tests and robustness checks are presented in
-Section 5. Section 6 offers some reconciliation with intuition and
-the existing literature. Section 7 concludes the paper. The appendix
-is relegated to the end.
-
-**Examples:**
-The remainder of this paper is organized as follows. Section 2 gives a literature overview how consumers react to price changes. In Section 3, publications related to the financial benefits from Demand Response are reviewed.
-Afterwards, Section 4 identifies parameters that govern decisions in Demand
-Response programs to pioneer a mathematical problem such that Demand Response decisions of retailers are optimized. Finally, Section 5 evaluates the
-decisions derived by the model in a simulation based on historic data and analyzes their financial benefits.
-
-**Examples:**
-The paper is structured as follows. Our notations are introduced in Section 2. The existing Nyström-based HSIC approximation for two components is reviewed in Section 3. Our proposed method, which is capable of handling M ě 2 components, is presented in Section 4 together with its theoretical guarantees. In Section 5 we demonstrate the applicability of Nyström M-HSIC. All the proofs of our results are available in the supplementary material.
-
-**Examples**
-The rest of this paper is structured as follows. In Section 2, we describe the option data and sample selection process when matching LiveVol and Open/Close data and the methodology to infer the true side of a trade. Section 3 compares the performance of the common stock trade classification algorithms when applied to option trades on the ISE and introduces two new rules that strongly improve the classification success of existing methods. In Section 4, we test our new rules out-of-sample on the CBOE and the GEMX data. Section 5 provides sample splits along various dimensions and a time-series analysis of the improvements from our new rules. Section 6 applies our new trade classification algorithms to test the predictability of future stock returns based on option order imbalances. Finally, Section 7 concludes the paper.
-
-
-
-We recall the existing HSIC estimator V-HSIC in Section 3.1, and its Nyström approximation for two compo- nents in Section 3.2. We present our proposed Nyström approximation for more than two components in Section 4.
-
-
-In this work, we revisit the question: Given a fixed FLOPs budget,1 how should one trade-off model
-size and the number of training tokens? To answer this question, we model the final pre-training loss2
-𝐿(𝑁, 𝐷) as a function of the number of model parameters 𝑁, and the number of training tokens, 𝐷.
-Since the computational budget 𝐶 is a deterministic function FLOPs(𝑁, 𝐷) of the number of seen
-training tokens and model parameters, we are interested in minimizing 𝐿 under the constraint
-FLOPs(𝑁, 𝐷) = 𝐶:
-𝑁𝑜𝑝𝑡 (𝐶), 𝐷𝑜𝑝𝑡 (𝐶) = argmin
-𝑁,𝐷 s.t. FLOPs(𝑁,𝐷)=𝐶
-𝐿(𝑁, 𝐷). (1)
-The functions 𝑁𝑜𝑝𝑡 (𝐶), and 𝐷𝑜𝑝𝑡 (𝐶) describe the optimal allocation of a computational budget 𝐶. We
-empirically estimate these functions based on the losses of over 400 models, ranging from under 70M
-to over 16B parameters, and trained on 5B to over 400B tokens – with each model configuration
-trained for several different training horizons. Our approach leads to considerably different results
-than that of Kaplan et al. (2020). We highlight our results in Figure 1 and how our approaches differ
-in Section 2.
-Based on our estimated compute-optimal frontier, we predict that for the compute budget used
-to train Gopher, an optimal model should be 4 times smaller, while being training on 4 times more
-tokens. We verify this by training a more compute-optimal 70B model, called Chinchilla, on 1.4 trillion
-tokens. Not only does Chinchilla outperform its much larger counterpart, Gopher, but its reduced
-model size reduces inference cost considerably and greatly facilitates downstream uses on smaller
-hardware. The energy cost of a large language model is amortized through its usage for inference an
-fine-tuning. The benefits of a more optimally trained smaller model, therefore, extend beyond the
-immediate benefits of its improved performance.

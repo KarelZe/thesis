@@ -1,21 +1,6 @@
-**Motivation:**
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction.  Common applications include the study of option demand ([[@garleanuDemandBasedOptionPricing2009]]3), the informational content of option trading ([[@huDoesOptionTrading2014]]631) and ([[@panInformationOptionVolume2006]]882) or todo-(pin...) or todo-(effective spread...). 
 
-For example, Mayhew, Sarin, and Shastri (1995) find evidence that informed traders migrate between stock and option markets in response to changes in the option margin requirement. Easley, O’Hara, and Srinivas (1998) and Pan and Poteshman (2003) find that signed trading volume in the option market can help forecast stock returns. Cao, Chen, and Griffin (2000) and others document abnormal trading volume in the options market prior to takeover announcements.
 
-Despite the evident importance for empirical research, the true initiator of the trade is frequently missing in option data sets and must be inferred using trade classification algorithms ([[@easleyOptionVolumeStock1998]]453). In consequence, the correctness of empirical studies hinges with the algorithm's ability to correctly identify the trade initiator.  
 
-Among the most prevailing variants to sign trades are the tick rule ([[@hasbrouckTradesQuotesInventories1988]]240), quote rule ([[@harrisDayEndTransactionPrice1989]]41), and hybrids thereof such as the gls-LR algorithm ([[@LeeInferringTradeDirection1991]]745), the gls-EMO algorithm ([[@ellisAccuracyTradeClassification2000]]536), and the gls-CLNV method ([[@chakrabartyTradeClassificationAlgorithms2007]]3809), that infer the trade initiator from adjacent prices and quotes. These algorithms have initially been proposed and tested for the stock market. 
-
-For option markets, the works of ([[@grauerOptionTradeClassification2022]]10--13) and ([[@savickasInferringDirectionOption2003]]887) raise concerns about the transferability of standard trade signing rules due to deteriorating classification accuracies and systematic miss-classification of trades.  todo-Trade classification in option markets is a particularly difficult testing ground due to illiquidity / trading at different venues / https://www.sec.gov/news/studies/ordpay.htm...)
-- https://onlinelibrary.wiley.com/doi/pdf/10.1111/1540-6261.00447
-- https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1540-6261.2004.00661.x
-
-The recent work of ([[@grauerOptionTradeClassification2022]]13--16) partly alleviates the concern by proposing explicit overrides for trade types and by combining multiple heuristics into deep-stacked rules, advancing the state-of-the-art performance in option trade classification. By this means, their approach enforces a more sophisticated decision boundary eventually leading to a more accurate classification. Beyond heuristics, however, it remains an open research problem in option markets, if classifiers *learned* on trade data can improve upon static classification rules with respect to performance.
-
-In this thesis, we focus on state-of-the-art machine learning methods to infer the trade initiator. Approaching trade classification with machine learning is a logical choice, given its capability to handle high-dimensional trade data and learn complex decision boundaries. Against this backdrop, the question is, can an alternative machine learning-based classifier improve upon standard trade classification rules?
-
-**Contributions:**
 
 
 **Outline:**
