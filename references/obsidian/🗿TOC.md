@@ -11,6 +11,13 @@
 - https://brushingupscience.com/2016/03/26/figures-need-attention-to-detail/
 - https://tex.stackexchange.com/questions/23193/siunitx-how-can-i-avoid-adding-decimal-zeroes
 
+- Read the abstract.
+- Try to predict what are the results and conclusions of the paper.
+- Go ahead to “Conclusions” section — check whether your prediction stands.
+- If your prediction was successful don't bother reading the rest of the paper, go to the next one.
+- If the outcome surprised you, then read the whole paper and carefully study the methods.
+- Profit!
+
 # Title
 Forget About the Rules: Improving Trade Side Classification With Machine Learning
 

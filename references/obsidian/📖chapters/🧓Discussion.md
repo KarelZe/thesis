@@ -1,4 +1,6 @@
 
+- Whilst we reach the same conclusion, we estimate that large models should be trained for many more training tokens than recommended by the authors.
+
 - results for classical rules demonstrate that classical choices for option trade classification.
 - We identify missingess in data to be down-ward biasing the results of classical estimators. ML predictors are robust to this missingness, as they can handle missing values and potentially substitute.
 
