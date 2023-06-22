@@ -9,7 +9,7 @@ Thereby, our goal is to estimate how much a feature contributes to the performan
 For this reason we estimate feature importances using gls-SAGE, which can account for complex interactions between features and yields global importances. 
 
 **Shapley Additive Global Importance**
-gls-SAGE is an additive feature importance measure with its foundations in cooperative game theory. As put forth by ([[@lundbergUnifiedApproachInterpreting2017]]3) feature contributions can be estimated through Shapley values (Source Lloyd). Instead of allocating credit in a cooperative game to players, as originally proposed, the problem transfers to assign credit across features based on a value function. Intuitionally, for gls-SAGE, credit is assigned based the contribution to the model's performance, which is different from classical gls-SHAP formulation, where the importance is determined by the contribution to the prediction.
+gls-SAGE is an additive feature importance measure with its foundations in cooperative game theory. As put forth by ([[@lundbergUnifiedApproachInterpreting2017]]3) feature contributions can be estimated through Shapley values (Source Lloyd). Instead of allocating credit in a cooperative game to players, as in the original Shapley formulation, the problem transfers to assign credit across features based on a value function. Intuitionally, for gls-SAGE, credit is assigned based the contribution to the model's performance, which is different from gls-SHAP formulation, where the importance is determined by the contribution to the prediction.
 
 Shapley values are defined as:
 
