@@ -29,25 +29,38 @@ Classical trade classification algorithms, as a rule-based classifier, are trans
 
 The machine-learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through \emph{model-agnostic, post-hoc interpretability techniques}.
 
-Thereby, our goal is to estimate how much a feature contributes to the performance of the classifier \emph{overall}, which urges for \emph{global feature attribution measures}. The appropriate approach is guided by the properties of the data. Due to the data-generating process with strongly correlated quotes and trade prices at the exchange and nationwide levels, features are strongly dependent. The redundant feature encoding of ratio features exacerbates this effect. Feature independence, however, is the central assumption of most popular feature importance measures, including \gls{SHAP}, \gls{LIME}, or random feature permutation \autocite[][2]{aasExplainingIndividualPredictions2021}. A violation of this constraint for two perfectly correlated, predictive features can have the effect that both are deemed unimportant as the feature importance is distributed between features underestimating the true importance of the feature \autocite[][4]{covertUnderstandingGlobalFeature2020}.
+Thereby, our goal is to estimate how much a feature contributes to the performance of the classifier \emph{overall}, which urges for \emph{global feature attribution measures}. The appropriate approach is guided by the properties of the data. Due to the data-generating process with strongly correlated quotes and trade prices at the exchange and nationwide levels, features are strongly dependent. The redundant feature encoding of ratio features exacerbates this effect. Feature independence, however, is the central assumption of most popular feature importance measures, including \gls{SHAP} or random feature permutation \autocite[][2]{aasExplainingIndividualPredictions2021}. A violation of this constraint for two perfectly correlated, predictive features can have the effect that both are deemed unimportant as the feature importance is distributed between features underestimating the true importance of the feature \autocite[][4]{covertUnderstandingGlobalFeature2020}.
 
 For this reason, we estimate feature importances using \gls{SAGE}, which can account for complex interactions between features and yields global importances. 
 
 \textbf{Shapley Additive Global Importance}
 
+\gls{SAGE} is an additive feature importance measure with its foundations in cooperative game theory. As put forth by \textcite[][3]{lundbergUnifiedApproachInterpreting2017} feature contributions can be estimated through Shapley values \autocite[][11]{shapley17ValueNPerson1953}. Instead of allocating credit in a cooperative game to players, as in the original Shapley formulation, the problem transfers to assign credit across features based on a value function. Intuitionally, for \gls{SAGE}, credit is assigned based on the contribution to the model's performance.
+
+In \gls{SAGE}, Shapley values $\phi_i(v_f)$ are estimated as:
+\begin{equation}
+    \phi_i(v_f)=\frac{1}{d} \sum_{S \subseteq D \backslash\{i\}}\left(\begin{array}{c}
+        d-1 \\
+        |S|
+        \end{array}\right)^{-1}(v_f(S \cup\{i\})-v_f(S))
+        \label{eq:shapley}
+\end{equation}
+where $D=\left\{1,\ldots,d\right\}$ is a set of feature indices corresponding to the features $x_1,\ldots,x_d$ and $S\subset D$. Intuitionally, \cref{eq:shapley} estimates Shapley value as the weighted average of the incremental change in the value function, $v_f(S)$, before and after adding the $i$-th feature to the subsets $S$ \autocite[][4--5]{covertUnderstandingGlobalFeature2020}. Hereby, the first term $\left(\begin{smallmatrix} d-1 \\|S|\end{smallmatrix}\right)^{-1}$ accounts for the possibilities to choose a $|S|$-strong subset from $D \backslash\{i\}$. 
+
+While subsets of features $X_S = \left\{X_i \mid i \in S \right\}$ can be easily constructed, most classifiers cannot handle the absence of features and require fixed-sized inputs during training and inference. \textcite[][2]{covertUnderstandingGlobalFeature2020} mitigate the issue, by marginalising out missing features $\bar{S}=D\backslash S$ using their conditional distribution $p(X_{\bar{S}} \mid X_S=x_S)$.
+
+
+\begin{equation}
+    v_f(S)=\underbrace{\mathbb{E}\left[\ell\left(\mathbb{E}\left[f(X)\right], Y\right)\right]}_{\text {Mean prediction }}-\underbrace{\mathbb{E}\left[\ell\left(f_S\left(X_S\right), Y\right)\right]}_{\text {Using features } X_S}
+\end{equation}    
+
+It is typically infeasible to compute the complete \gls{SAGE} values due to a large number of subsets $S$, so an approximation is used instead.
 
 \textbf{Attention Maps}
 
-In addition to permutation-based methods, Transformer-based models offer \emph{some} interpretability through their attention mechanism. In recent research a major controversy embarked around the question, of whether attention offers explanations to model predictions \autocites[cp.][150]{bastingsElephantInterpretabilityRoom2020}[][5--7]{jainAttentionNotExplanation2019}[][9]{wiegreffeAttentionNotNot2019}. The debate sparked around opposing definitions of explainability and the consistency of attention scores with other, established feature-importance measures. Our focus is less on post-hoc explainability of the model, but rather on transparency. Consistent with \textcite[][8]{wiegreffeAttentionNotNot2019} we view attention scores as a vehicle to model transparency.
+In addition to \gls{SAGE}, Transformer-based models offer \emph{some} interpretability through their attention mechanism. In recent research a major controversy embarked around the question, of whether attention offers explanations to model predictions \autocites[cp.][150]{bastingsElephantInterpretabilityRoom2020}[][5--7]{jainAttentionNotExplanation2019}[][9]{wiegreffeAttentionNotNot2019}. The debate sparked around opposing definitions of explainability and the consistency of attention scores with other, established feature-importance measures. Our focus is less on post-hoc explainability of the model, but rather on transparency. Consistent with \textcite[][8]{wiegreffeAttentionNotNot2019} we view attention scores as a vehicle to model transparency.
 
-Recall from our discussion on attention (cp. \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualising features to which the model attends to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis. % An example is shown in \cref{fig:attention-maps}.
-
-% \begin{figure}[ht]
-%     \centering
-%     \includegraphics{attention-maps.pdf}
-%     \caption[Attention Maps]{Attention Maps.}
-%     \label{fig:attention-maps}
-% \end{figure}
+Recall from our discussion on attention (cp. \cref{sec:attention}) that the attention matrix stores how much attention a token pays to each of the keys. Thus, feature attributions can be derived from attention by visualising features to which the model attends to in an attention map. While attention maps are specific to Transformers or other attention-based architectures, rendering them useless for cross-model comparisons, they give additional insights from different attention layers and attention heads of the model on a per-trade and global basis.
 
 In the tabular domain, various approaches have been investigated in the literature to obtain attention from multiple attention heads and Transformer blocks. \textcite[][18]{somepalliSaintImprovedNeural2021} and \textcite[][11]{borisovDeepNeuralNetworks2022} gather attention maps from the first attention layer only, and \textcite[][11]{borisovDeepNeuralNetworks2022} additionally obtain feature attributions by taking the diagonal of the attention matrix $\mathbf{A}$ or through column-wise summation. In contrast, \textcite[][10]{gorishniyRevisitingDeepLearning2021} leverage all attention matrices by averaging over multiple Transformer blocks, attention heads, and samples to obtain global feature attributions. Given \cref{sec:architectural-overview,sec:attention}, where we emphasised the unique role of attention heads and lower sub-layers, both approaches may be myopic, as attention heads may contribute unequally to the result, or as later attention layers are neglected altogether.
 
@@ -73,5 +86,3 @@ In an attempt to explain the decision-making process of multi-modal Transformers
 \end{equation}
 
 In this approach, the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(l)}=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(l)}$ is calculated to weight the attention head's importance. As previously suggested in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. Like all other presented approaches \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and is therefore computationally efficient.
-
-In the absence of ground truth for the true feature attribution, we resort to attention maps using \cref{eq:attention-map-weighted}. The level of agreement between attributions from attention maps and \gls{SAGE} values by calculating Spearman's rank correlation between them.

@@ -9,9 +9,59 @@ Thereby, our goal is to estimate how much a feature contributes to the performan
 For this reason we estimate feature importances using gls-SAGE, which can account for complex interactions between features and yields global importances. 
 
 **Shapley Additive Global Importance**
-gls-SAGE is an additive feature importance measure with its foundations in cooperative game theory. As put forth by ([[@lundbergUnifiedApproachInterpreting2017]]3) feature contributions can be estimated through Shapley values (Source Lloyd). Instead of allocating credit in a cooperative game to players, as originally proposed, the problem transfers to assign credit across features based on a value function. Intuitionally, for gls-SAGE, credit is assigned based the contribution to the model's performance, which is different from classical gls-SHAP formulation, where the importance is determined by the contribution to the prediction.
+gls-SAGE is an additive feature importance measure with its foundations in cooperative game theory. As put forth by ([[@lundbergUnifiedApproachInterpreting2017]]3) feature contributions can be estimated through Shapley values (Source Lloyd). Instead of allocating credit in a cooperative game to players, as in the original Shapley formulation, the problem transfers to assign credit across features based on a value function. Intuitionally, for gls-SAGE, credit is assigned based the contribution to the model's performance.
 
-Shapley values are defined as:
+In the context of gls-SAGE, Shapley values $\phi_i(v_f)$ are estimated as:
+$$
+\phi_i(v_f)=\frac{1}{d} \sum_{S \subseteq D \backslash\{i\}}\left(\begin{array}{c}
+d-1 \\
+|S|
+\end{array}\right)^{-1}(v_f(S \cup\{i\})-v_f(S))
+$$
+where $D=\left\{1,\ldots,d\right\}$ is a set of feature indices corresponding to the features $x_1,\ldots,x_d$ and $S\subset D$. Intuitionally, cref-eq, estimates Shapley value as the weighted average of the incremental change in the contribution function $v_f(S)$, before and after adding the $i$-th feature to the subsets $S$ ([[@covertExplainingRemovingUnified]]4--5). Hereby, the first term $\left(\begin{array}{c}d-1 \\|S|\end{array}\right)^{-1}$ accounts for the possibilities to choose a $|S|$-strong subset from $D \backslash\{i\}$.
+
+The contribution function $v_f(S)$ represents the performance or negative loss of classifier $f$ given the feature set $X^S$. 
+
+
+![[Pasted image 20230622210805.png]]
+
+While subsets of features $X_S = \left\{X_i \mid i \in S \right\}$ can be easily constructed, most classifiers cannot handle the absence of features and require fixed-sized inputs during training and inference. ([[@covertExplainingRemovingUnified]]2) mitigate the issue, by marginalising out missing features $\bar{S}=D\backslash S$ using their conditional distribution $p(X_{\bar{S}} \mid X_S=x_S)$. The value function is now simply the expected increase in accuracy, hence reduction in loss $\ell$, over the mean prediction, given the features $X_S$. Shapley values then assign credit to individual features. Typically, cross-entropy loss is chosen as the loss function $\ell$. As classical rules, however, only yield hard probabilities, we use the zero-one-loss instead.-footnote()
+
+Using this convention for accommodating subsets of features, we can now measure how much $f$ 's performance degrades when features are removed. Given a loss function $\ell$, the population risk for $f_S$ is defined as $\mathbb{E}\left[\ell\left(f_S\left(X_S\right), Y\right)\right]$ where the expectation is taken over the data distribution $p(X, Y)$. To define predictive power as a quantity that increases with model accuracy, we consider the reduction in risk over the mean prediction and define the function $v_f: \mathcal{P}(D) \mapsto \mathbb{R}$ as follows:
+$$
+v_f(S)=\underbrace{\mathbb{E}\left[\ell\left(f_{\varnothing}\left(X_{\varnothing}\right), Y\right)\right]}_{\text {Mean prediction }}-\underbrace{\mathbb{E}\left[\ell\left(f_S\left(X_S\right), Y\right)\right]}_{\text {Using features } X_S}
+$$
+The value function is now simply the expected increase in accuracy, hence reduction in loss $\ell$, after including $S$ over the mean prediction.
+
+Typically, cross-entropy loss is chosen as the loss function $\ell$. As classical rules, however, only yield hard probabilities, we use the zero-one-loss instead.-footnote()
+
+To apply the same logic to a ML model $f$, we must once again confront the problem that $f$ requires a fixed set of features. We can use the same trick as above and deal with missing features using their conditional distribution $X^{\bar{S}} \mid X^S=x^S$. We can now define a cooperative game that represents the model's performance given subsets of features. Given a loss function $\ell$ (e.g., MSE or cross entropy loss), the game $v_f$ is defined as
+$$
+v_f(S)=-\mathbb{E}\left[\ell\left(\mathbb{E}\left[f(X) \mid X^S\right], Y\right)\right]
+$$
+For any subset $S \subseteq D$, the quantity $v_f(S)$ represents $f$ 's performance given the features $X^S$, and we have a minus sign in front of the loss so that lower loss (improved accuracy) increases the value $v_f(S)$.
+Now, we can use the Shapley values $\phi_i\left(v_f\right)$ to quantify each feature's contribution to the model's performance. The features that are most critical for the model to make good predictions will have large
+
+v​f​​(S): the model �f's performance (negative loss) given the features ��X​S​​ (for SAGE values).
+
+
+Where S . $w(S)$  The value f
+
+features x1, . . . , xd in a machine learning model f (x) ∈ R
+
+Got
+![[Pasted image 20230622160219.png]]
+
+
+**How you calculate Shapley values:**
+Consider a cooperative game with $M$ players aiming at maximizing a payoff, and let $\mathcal{S} \subseteq \mathcal{M}=\{1, \ldots, M\}$ be a subset consisting of $|\mathcal{S}|$ players. Assume that we have a contribution function $v(\mathcal{S})$ that maps subsets of players to the real numbers, called the worth or contribution of coalition $\mathcal{S}$. It describes the total expected sum of payoffs the members of $\mathcal{S}$ can obtain by cooperation. The Shapley value [12] is one way to distribute the total gains to the players, assuming that they all collaborate. It is a "fair" distribution in the sense that it is the only distribution with certain desirable properties listed below. According to the Shapley value, the amount that player $j$ gets is
+$$
+\phi_j(v)=\phi_j=\sum_{\mathcal{S} \subseteq \mathcal{M} \backslash\{j\}} \frac{|\mathcal{S}| !(M-|\mathcal{S}|-1) !}{M !}(v(\mathcal{S} \cup\{j\})-v(\mathcal{S})), \quad j=1, \ldots, M,
+$$
+that is, a weighted mean over contribution function differences for all subsets $\mathcal{S}$ of players not containing player $j$. Note that the empty set $\mathcal{S}=\emptyset$ is also part of this sum. The formula can be interpreted as follows: Imagine the coalition being formed for one player at a time, with each player demanding their contribution $v(\mathcal{S} \cup\{j\})-v(\mathcal{S})$ as a fair compensation. Then, for each player, compute the average of this contribution over all permutations of all possible coalitions, yielding a weighted mean over the unique coalitions.
+
+
+
 
 - Most finance papers e. g., [[@finucaneDirectTestMethods2000]] (+ other examples as reported in expose) use logistic regression to find features that affect the classification most. Poor choice due to linearity assumption? How would one handle categorical variables? If I opt to implement logistic regression, also report $\chi^2$.
 
@@ -40,6 +90,7 @@ Methods with explanation models matching Definition [] attribute an effect $\phi
 *Shapley values*
 
 
+
 **Shapley values**
 Recall that the function $v_f$ describes the amount of predictive power that a model $f$ derives from subsets of features $S \subseteq D$. We define feature importance via $v_f$ to quantify how critical each feature $X_i$ is for $f$ to make accurate predictions. It is natural to view $v_f$ as a cooperative game, representing the profit (predictive power) when each player (feature) participates (is available to the model). Research in game theory has extensively analyzed credit allocation for cooperative games, so we apply a game theoretic solution known as the Shapley value [35].
 
@@ -50,22 +101,6 @@ Shapley values are the unique credit allocation scheme that satisfies a set of f
 4. (Monotonicity) If for two games $w$ and $w^{\prime}$ a player always make greater contributions to $w$ than $w^{\prime}$, or $w(S \cup\{i\})-w(S) \geq w^{\prime}(S \cup\{i\})-w^{\prime}(S)$ for all $S$, then $\phi_i(w) \geq \phi_i\left(w^{\prime}\right)$.
 5. (Linearity) The game $w(S)=\sum_{k=1}^n c_k w_k(S)$, which is a linear combination of multiple games $\left(w_1, \ldots, w_n\right)$, has scores given by $\phi_i(w)=\sum_{k=1}^n c_k \phi_i\left(w_k\right)$
 
-The Shapley values $\phi_i(w)$ are the unique credit allocation scheme that satisfies properties 1-5 [35], and they are given by the expression:
-$$
-\phi_i(w)=\frac{1}{d} \sum_{S \subseteq D \backslash\{i\}}\left(\begin{array}{c}
-d-1 \\
-|S|
-\end{array}\right)^{-1}(w(S \cup\{i\})-w(S))
-$$
-
-
-
-**How you calculate Shapley values:**
-Consider a cooperative game with $M$ players aiming at maximizing a payoff, and let $\mathcal{S} \subseteq \mathcal{M}=\{1, \ldots, M\}$ be a subset consisting of $|\mathcal{S}|$ players. Assume that we have a contribution function $v(\mathcal{S})$ that maps subsets of players to the real numbers, called the worth or contribution of coalition $\mathcal{S}$. It describes the total expected sum of payoffs the members of $\mathcal{S}$ can obtain by cooperation. The Shapley value [12] is one way to distribute the total gains to the players, assuming that they all collaborate. It is a "fair" distribution in the sense that it is the only distribution with certain desirable properties listed below. According to the Shapley value, the amount that player $j$ gets is
-$$
-\phi_j(v)=\phi_j=\sum_{\mathcal{S} \subseteq \mathcal{M} \backslash\{j\}} \frac{|\mathcal{S}| !(M-|\mathcal{S}|-1) !}{M !}(v(\mathcal{S} \cup\{j\})-v(\mathcal{S})), \quad j=1, \ldots, M,
-$$
-that is, a weighted mean over contribution function differences for all subsets $\mathcal{S}$ of players not containing player $j$. Note that the empty set $\mathcal{S}=\emptyset$ is also part of this sum. The formula can be interpreted as follows: Imagine the coalition being formed for one player at a time, with each player demanding their contribution $v(\mathcal{S} \cup\{j\})-v(\mathcal{S})$ as a fair compensation. Then, for each player, compute the average of this contribution over all permutations of all possible coalitions, yielding a weighted mean over the unique coalitions.
 
 To illustrate the application of (1), let us consider a game with three players such that $\mathcal{M}=\{1,2,3\}$. Then, there are eight possible subsets; $\emptyset,\{1\},\{2\},\{3\},\{1,2\},\{1,3\},\{2,3\}$, and $\{1,2,3\}$. Using (1), the Shapley values for the three players are given by
 $$
