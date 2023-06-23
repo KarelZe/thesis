@@ -270,7 +270,7 @@ Despite these advantages, high-cardinal features present a challenge for embeddi
 \textbf{Link To Positional Encoding and Attention}
 
 \todo{verify invariant property. Not sure if I got it right.}
-Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position \autocite[][3744]{leeSetTransformerFramework2019}. Positional information must be induced into the model to preserve the ordering (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualised in the self-attention mechanism (cp. \cref{sec:attention}).
+Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position. Positional information must be induced into the model to preserve the ordering (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualised in the self-attention mechanism (cp. \cref{sec:attention}).
 
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
 
