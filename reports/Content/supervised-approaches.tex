@@ -385,6 +385,8 @@ Until now it remains unclear, how the layer normalisation intertwines with the s
 
 \subsubsection{FT-Transformer}\label{sec:fttransformer}
 
+\todo{try to introduce BERT here somewhere.}
+
 Many of the previous concepts can be adapted to the tabular domain with minor architectural changes. \textcite[][5]{gorishniyRevisitingDeepLearning2021} propose with FT-Transformer an adaption, that pairs an embedding unit for both numerical and categorical inputs, dubbed the feature tokenizer, with a Transformer. The complete architecture is depicted in \cref{fig:fttransformer}. Notably, the Transformer units use a pre-norm setup for easier optimisation, whereby the very first normalisation layer in the encoder is removed due to a propitious performance \textcite[][17]{gorishniyRevisitingDeepLearning2021}. The upstream feature tokenizer transforms every feature in $\mathbf{x}$ to their embeddings. The embeddings are given by \cref{eq:numerical-embeddings,eq:categorical-embeddings}.
 
 \begin{figure}[ht]
