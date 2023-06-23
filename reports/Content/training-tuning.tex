@@ -10,7 +10,7 @@ Our implementation of \glspl{GBRT} is based on CatBoost \autocite[][5--6]{prokho
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-train-val-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of \glsentryshort{GBRT} on \glsentryshort{ISE} Sample]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \caption[Training and Validation Accuracy of Gradient-Boosting]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
     \label{fig:gbm-train-val-loss-acc}
 \end{figure}
 
@@ -23,7 +23,7 @@ Secondly, validation loss spikes for larger ensembles, while validation accuracy
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-loss-distribution.pdf}
-    \caption[Sample-Wise Log Loss of \glsentryshort{GBRT} on \glsentryshort{ISE} Sample]{Sample-wise log loss of \glsentryshort{GBRT} on \glsentryshort{ISE} sample as equi-width histogram. Loss is estimated on the classical feature set. In general, log loss improves for larger ensembles, as indicated by the increased number of samples accumulating around zero but few predictions contribute to the loss unproportionally causing the log loss to stagnate on average.}
+    \caption[Sample-Wise Log Loss of Gradient-Boosting]{Sample-wise log loss of \glsentryshort{GBRT} on \glsentryshort{ISE} sample as equi-width histogram. Loss is estimated on the classical feature set. In general, log loss improves for larger ensembles, as indicated by the increased number of samples accumulating around zero but few predictions contribute to the loss unproportionally causing the log loss to stagnate on average.}
     \label{fig:gbm-loss-distribution}
 \end{figure}
 
@@ -32,7 +32,7 @@ This behaviour can be explained by the log loss being unbound, where single inco
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-optimisations-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of \glsentryshort{GBRT} on \glsentryshort{ISE} with Optimisations]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBRT} with Optimisations]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
     \label{fig:gbm-optimisations-loss-acc}
 \end{figure}
 
@@ -65,7 +65,7 @@ The convergence behaviour of our model is similar to that of gradient boosting. 
 \begin{figure}[!ht]
     \centering
     \includegraphics{fttransformer-optimisations-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of FT-Transformer on \glsentryshort{ISE} with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to one gradient update. The end of each epoch is marked with a dashed bar. Loss is expected to decrease throughout training and accuracy to increase.}
+    \caption[Training and Validation Accuracy of FT-Transformer with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to one gradient update. The end of each epoch is marked with a dashed bar. Loss is expected to decrease throughout training and accuracy to increase.}
     \label{fig:fttransformer-optimisations-loss-acc}
 \end{figure}
 
@@ -184,7 +184,7 @@ As documented in \cref{tab:hyperparameter-space-gbm}, we tune five hyperparamete
 \begin{figure}[!ht]
     \addtocounter{figure}{-1}
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set Option\label{fig:ise-gbm-hyperparam-ml}]{\includegraphics[width=0.6\textwidth]{2t5zo50f-hyperparam-search-space.pdf}}
-    \caption[]{Hyperparameter Search Space of \gls{GBRT} on \gls{ISE} Validation Set}
+    \caption[Hyperparameter Search Space of Gradient-Boosting]{Hyperparameter Search Space of \gls{GBRT} on \gls{ISE} Validation Set}
     \label{fig:ise-gbm-hyperparam}
 \end{figure}
 
@@ -267,7 +267,7 @@ Due to the pseudo-random sampling during the first trials of Bayesian search com
 \begin{figure}[!ht]
     \addtocounter{figure}{-1}
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set Option\label{fig:ise-transformer-hyperparam-ml}]{\includegraphics[width=0.6\linewidth]{2h81aiow-hyperparam-search-space.pdf}}
-    \caption[Hyperparameter Search Space of FT-Transformer on \glsentryshort{ISE} Validation Set]{Hyperparameter Search Space of FT-Transformer on \gls{ISE} Validation Set}
+    \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter Search Space of FT-Transformer on \gls{ISE} Validation Set}
     \label{fig:ise-transformer-hyperparam}
 \end{figure}
 
@@ -303,7 +303,7 @@ The hyperparameter search space for Transformers with a pre-training objective i
 \begin{table}[!h]
     \centering
     \sisetup{table-format=3.2, table-number-alignment=right}
-    \caption[Search Solutions of FT-Transformer With-Pretraining]{Search solutions of FT-Transformer with pretraining. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{10} trials each. Arrows indicate the change compared to the supervised variant.}
+    \caption[Search Solutions of FT-Transformer With Pre-training]{Search solutions of FT-Transformer with pretraining. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{10} trials each. Arrows indicate the change compared to the supervised variant.}
     \label{tab:solutions-transformer-pretraining}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
