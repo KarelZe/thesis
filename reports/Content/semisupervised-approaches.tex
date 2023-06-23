@@ -2,7 +2,7 @@
 
 This chapter expands the scope of trade classification from the supervised setting to the semi-supervised setting and presents suitable extensions.
 
-\subsection{Framing as a Semi-Supervised Learning Problem}\label{sec:problem-framing-2}
+\subsection{Framing as a Semi-supervised Learning Problem}\label{sec:problem-framing-2}
 
 The supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the initiator can be inferred through matching procedures (cp. \cref{sec:trade-initiator}), which may bias the selection. Unlabelled trades, though, are abundant and can help improve the generalisation performance of the classifier. This concern is addressed by semi-supervised methods.
 
@@ -60,7 +60,7 @@ At the same time, self-training puts a high emphasis on the correctness of the p
 
 Independent of the base classifier, self-training increases computational cost, as training is repeated over several iterations on a growing training set \autocite[][9]{zophRethinkingPretrainingSelftraining2020}. Despite these limitations, the potentially improved decision boundary outweighs the concerns.
 
-\subsection{Transformers with Pre-Training}\label{sec:extensions-to-transformer}
+\subsection{Transformers With Pre-training}\label{sec:extensions-to-transformer}
 
 \gls{RTD} is a pre-training objective proposed by \textcite[][2--3]{clarkElectraPretrainingText2020} for the use in language models. The core idea is to randomly replace tokens with plausible alternatives and learn a binary classifier to distinguish between original and replaced tokens. Intuitionally, the random replacement forces the model to learn generalisable representations of the input, rather than memorising the co-occurrence of certain tokens. Additionally, surprising the model with random tokens strengthens its ability to incorporate contextual information.
 

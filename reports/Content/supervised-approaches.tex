@@ -357,7 +357,7 @@ In the \cref{eq:attention}, tokens can attend to any preceding or subsequent tok
 
 For the decoder, the self-attention is modified to \emph{masked self-attention} and \emph{cross-attention} mechanism. First, causal masking is required to achieve autoregressive sequence generation in the decoder. The context is \emph{unidirectional}, where a token is only allowed to attend to itself or all previously generated tokens. Second, the decoder uses \emph{cross-attention} to connect between the encoder and decoder. Other than in the self-attention mechanism, where keys, values and queries are generated from the same sequence, keys and values come from the encoder and queries are provided by the decoder. As our focus is on encoder-only architectures, we refer the reader to \textcite[][16--17]{raffelExploringLimitsTransfer2020} for an in-depth treatment of both topics.
 
-\subsubsection{Position-wise Feed-Forward Networks}\label{sec:position-wise-ffn}
+\subsubsection{Position-Wise Feed-Forward Networks}\label{sec:position-wise-ffn}
 
 The attention mechanism enables \glspl{token} to attend to other inputs in the immediate context. To retain general information on the task, outside and independent of the immediate context, each Transformer block adds a point-wise \gls{feed-forward-network}, which acts as a persistent memory to the model \autocite[][3]{sukhbaatarAugmentingSelfattentionPersistent2019}.
 

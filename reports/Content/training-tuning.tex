@@ -52,7 +52,7 @@ In regression trees of gradient-boosting, the split finding is typically approxi
 
 \emph{Early Stopping and Checkpointing}
 
-To reduce overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for \num{100} iterations. The ensemble is then cut back to achieve the highest validation accuracy. In the experiment above, early stopping does not apply, as validation accuracy continuous to improve for larger ensembles. We employ additional measures to address overfitting but treat them as a tunable hyperparameter, with further details provided in \cref{sec:hyperparameter-tuning}.
+To reduce overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for \num{100} iterations. The ensemble is then cut back to achieve the highest validation accuracy. In the experiment above, early stopping does not apply, as validation accuracy continues to improve for larger ensembles. We employ additional measures to address overfitting but treat them as a tunable hyperparameter, with further details provided in \cref{sec:hyperparameter-tuning}.
 
 We incorporate these ideas to leverage the improvements for our large-scale studies.
 
@@ -120,7 +120,7 @@ Classical trade classification rules serve as a benchmark in our work. We implem
 
 In cases where classification is not feasible due to missing data or the rules' definition itself, we resort to a random classification, which achieves an average accuracy of \SI{50}{\percent}. The approach is adopted from \textcite[][887]{savickasInferringDirectionOption2003}.
 
-\subsubsection{Training of Semi-Supervised
+\subsubsection{Training of Semi-supervised
     Models}\label{sec:training-of-semi-supervised-models}
 
 This section discusses the extensions necessary to train the semi-supervised variants of \glspl{GBRT} and the FT-Transformer.
