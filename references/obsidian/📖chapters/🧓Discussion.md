@@ -4,6 +4,7 @@
 - https://doi.org/10.1287/mnsc.2019.3529
 - https://www.dropbox.com/s/1i4zxc23qm00bv9/OptionMarketMakers.032623.pdf?dl=0
 - https://dmurav.com/CV_Dmitry_Muravyev_202305.pdf
+- for index options see [[@chordiaIndexOptionTrading2021]]
 - To test these hypotheses it would be best if we had the precise motivation behind the trades. While such analysis is not feasible here, using trade classification algorithms, we are able to assign stock and option volume as buyer or seller initiated. Easley et al. (1998) show how this directional volume is more informative than raw volume, because signed volume provides important information about the motivation of the trade (bullish or bearish). (cao paper)
 
 
