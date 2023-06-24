@@ -6,31 +6,20 @@ The subsequent chapter frames trade classification as a supervised learning prob
 
 \subsection{Framing as a Supervised Learning Problem}\label{sec:problem-framing}
 
-Our focus is on supervised classification, where a classifier learns a function mapping between the input and the label, which represents the trade initiator.
+All trade classification rules from \cref{sec:rule-based-approaches} perform discrete classification and assign a class to the trade. They are inherently unsupervised. Our focus is on supervised classification, where a classifier learns a function mapping between the input and the label, which represents the trade initiator.
 
-All trade classification rules from \cref{sec:rule-based-approaches} perform discrete classification and assign a class to the trade. Naturally, a more powerful insight is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives additional insights into the confidence of the prediction.
+More insightful, is to not just obtain the most probable class, but also the associated class probabilities for a trade to be a buy or sell. This gives insights into the quality of the prediction.
+Thus, we frame trade signing as a supervised, probabilistic classification task. This is similar to \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis and supervised. For machine learning-based classifiers, a probabilistic view enables a richer evaluation but restricts the selection of classifiers. Trade classification rules, as presented in \cref{sec:rule-based-approaches}, do not profit from this alternative formulation as they yield hard probabilities only and so no insight into the confidence of the prediction is gained.
 
-Thus, we frame trade signing as a supervised, probabilistic classification task. This is similar to \textcite[][272]{easleyDiscerningInformationTrade2016}, who alter the tick rule and \gls{BVC} algorithm to obtain the probability estimates of a buy from an individual or aggregated trades, but with a sole focus on trade signing on a trade-by-trade basis and supervised.
+We introduce more notation, which is used throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times M}$ and described by a random variable $X$. Any of the $M$ features in $\mathbf{x}$ may be numerical, e.g., the trade price or categorical e.g., the security type. Like before, the target is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $\Pr(X, Y)$. The labelled data set with $N$ i.i.d. samples is denoted by $\mathcal{D} =\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
 
-A probabilistic view enables a richer evaluation but restricts the selection to probabilistic classifiers. For comparability, classical trade signing rules need to be modified to yield both the predicted class (buy or sell) and the associated class probabilities.
-
-We introduce more notation, which we use throughout. Each data instance consists of a feature vector and the target. The former is given by $\mathbf{x} \in \mathbb{R}^{1 \times M}$ and described by a random variable $X$. Any of the $M$ features in $\mathbf{x}$ may be numerical, e.g., the trade price or categorical e.g., the security type. Like before, the target is given by $y \in \mathcal{Y}$ and described by a random variable $Y$. Each data instance is sampled from a joint probability distribution $\Pr(X, Y)$. The labelled data set with $N$ i.i.d. samples is denoted by $\mathcal{D} =\left\{\left(\mathbf{x}_i, y_i\right)\right\}_{i=1}^N$. For convienience, we define a feature matrix $\mathbf{X}=\left[\mathbf{x}_1,\ldots, \mathbf{x}_N\right]^{\top}$, that stores all instances and a corresponding vector of labels $\mathbf{y}=\left[y_1,\ldots, y_N \right]^{\top}$.
-
-For our machine learning classifiers, we aim to model $\Pr_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. As classical trade classification rules produce no probability estimates, simple classifier instead:
-\begin{equation}
-    \widehat{\operatorname{Pr}}(Y=y\mid X=\mathbf{x})= \begin{cases}1, & \text { if } y=\hat{y} \\ 0, & \text { else }.\end{cases}
-    \label{eq:prob-from-point-estimate}
-\end{equation}
-
-\todo{verify formula. What happens with unclassified trades?}
-
-Consequently, if a trade is predicted as a sell, hence $\hat{y} = -1$, we assign a probability of one for being a sell and a zero probability for being a buy and vice versa. Given the estimated class probabilities, we retrieve the most probable class in $\mathcal{Y}$ as:
+For our machine learning classifiers, we aim to model $\Pr_{\theta}(y \mid \mathbf{x})$ by fitting a classifier with the parameters $\theta$ on the training set. Given the estimated class probabilities, we retrieve the most probable class in $\mathcal{Y}$ as:
 \begin{equation}
     \hat{y}=\arg\max_{y \in \mathcal{Y}} \operatorname{Pr}(y \mid \mathbf{x}).
     \label{eq:class-from-prob}
 \end{equation}
-\cref{eq:prob-from-point-estimate} and \cref{eq:class-from-prob} allow to alternate between a discrete and probabilistic formulation for trade classification rules. Since the class probability estimates are either 0
-and 1, no insight into the confidence of the prediction is gained. Nonetheless, this approach enables a seamless comparison of classical rules and probabilistic classifiers in machine learning. Next, we discuss state-of-the-art classifiers suitable for trade classification.
+\cref{eq:class-from-prob} allow alternating between a discrete and probabilistic formulation for trade classification. This enables a seamless comparison of classical rules and probabilistic classifiers in machine learning.
+Next, we discuss state-of-the-art classifiers suitable for trade classification.
 
 \subsection{Selection of Approaches}\label{sec:selection-of-approaches}
 
@@ -270,7 +259,7 @@ Despite these advantages, high-cardinal features present a challenge for embeddi
 \textbf{Link To Positional Encoding and Attention}
 
 \todo{verify invariant property. Not sure if I got it right.}
-Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position \autocite[][3744]{leeSetTransformerFramework2019}. Positional information must be induced into the model to preserve the ordering (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualised in the self-attention mechanism (cp. \cref{sec:attention}).
+Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position. Positional information must be induced into the model to preserve the ordering (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualised in the self-attention mechanism (cp. \cref{sec:attention}).
 
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
 
@@ -357,7 +346,7 @@ In the \cref{eq:attention}, tokens can attend to any preceding or subsequent tok
 
 For the decoder, the self-attention is modified to \emph{masked self-attention} and \emph{cross-attention} mechanism. First, causal masking is required to achieve autoregressive sequence generation in the decoder. The context is \emph{unidirectional}, where a token is only allowed to attend to itself or all previously generated tokens. Second, the decoder uses \emph{cross-attention} to connect between the encoder and decoder. Other than in the self-attention mechanism, where keys, values and queries are generated from the same sequence, keys and values come from the encoder and queries are provided by the decoder. As our focus is on encoder-only architectures, we refer the reader to \textcite[][16--17]{raffelExploringLimitsTransfer2020} for an in-depth treatment of both topics.
 
-\subsubsection{Position-wise Feed-Forward Networks}\label{sec:position-wise-ffn}
+\subsubsection{Position-Wise Feed-Forward Networks}\label{sec:position-wise-ffn}
 
 The attention mechanism enables \glspl{token} to attend to other inputs in the immediate context. To retain general information on the task, outside and independent of the immediate context, each Transformer block adds a point-wise \gls{feed-forward-network}, which acts as a persistent memory to the model \autocite[][3]{sukhbaatarAugmentingSelfattentionPersistent2019}.
 
@@ -384,6 +373,8 @@ Until now it remains unclear, how the layer normalisation intertwines with the s
 \textcite[][3]{vaswaniAttentionAllYou2017} employ post-layer normalisation, but recent research has shown a shift towards pre-norm setups \autocite[][4]{narangTransformerModificationsTransfer2021}. Parts of the widespread adaption lie in faster training and omitting of the need for costly learning rate warm-up stages, whereby the learning rate is initially decreased to keep the gradients balanced \autocites[][2]{xiongLayerNormalizationTransformer2020}[][8]{liuUnderstandingDifficultyTraining2020}. In addition, post-norm Transformers have been found brittle to train and prone to convergence failures with its root cause in vanishing gradients, \glspl{exploding-gradient}, and an overall higher dependency on the residual stream \autocites[][8]{liuUnderstandingDifficultyTraining2020}[][1812]{wangLearningDeepTransformer2019}. Pre-norm Transformers, although they may sacrifice some performance, introduce a certain robustness to the training process. We come back to this property in our discussion on the FT-Transformer.
 
 \subsubsection{FT-Transformer}\label{sec:fttransformer}
+
+\todo{try to introduce BERT here somewhere.}
 
 Many of the previous concepts can be adapted to the tabular domain with minor architectural changes. \textcite[][5]{gorishniyRevisitingDeepLearning2021} propose with FT-Transformer an adaption, that pairs an embedding unit for both numerical and categorical inputs, dubbed the feature tokenizer, with a Transformer. The complete architecture is depicted in \cref{fig:fttransformer}. Notably, the Transformer units use a pre-norm setup for easier optimisation, whereby the very first normalisation layer in the encoder is removed due to a propitious performance \textcite[][17]{gorishniyRevisitingDeepLearning2021}. The upstream feature tokenizer transforms every feature in $\mathbf{x}$ to their embeddings. The embeddings are given by \cref{eq:numerical-embeddings,eq:categorical-embeddings}.
 
