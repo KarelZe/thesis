@@ -9,7 +9,7 @@ from attention heads that are yet unknown. This way, we can transfer the superio
 
 The goal of this study is to examine the performance of machine learning-based trade classification in the option market. In particular, we propose to model trade classification with Transformers and gradient boosting. Both approaches are supervised and suffice to learn on labelled trades. For settings, where labelled trades are scarce, we extend Transformers with a pre-training objective to learn on unlabelled trades as well as generate pseudo-labels for gradient-boosting through a self-training procedure.
 
-
+Our models achieve 
 
 
 In this paper, we present (...) that (...), and competitive with state-of-the-art foundation models. Most notably, 
