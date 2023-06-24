@@ -1,11 +1,21 @@
 ### Outlook
 - stronger focus on pre-text task 
-- 
+- fair comparison
 Furthermore, the hedge rebalancing is estimated to alter the probability of daily absolute stock returns 
 Graphically, our results show that specific attention heads in the Transformer specialise in patterns akin to classical trade classification rules. We are excited to explore this aspect systematically and potentially reverse engineer classification rules
 from attention heads that are yet unknown. This way, we can transfer the superior classification accuracy of the Transformer to regimes where labelled training data is abundant or computational costs of training are not affordable.
 
 ### Conclusion
+
+The goal of this study is to examine the performance of machine learning-based trade classification in the option market. In particular, we propose to model trade classification with Transformers and gradient boosting. Both approaches are supervised and suffice to learn on labelled trades. For settings, where labelled trades are scarce, we extend Transformers with a pre-training objective to learn on unlabelled trades as well as generate pseudo-labels for gradient-boosting through a self-training procedure.
+
+
+
+
+In this paper, we present (...) that (...), and competitive with state-of-the-art foundation models. Most notably, 
+Our approach achieves performance on par with SOTA
+The method we introduced satisfies numerous desirable properties
+
 
 The contextassociative power of language models likely confers significant advantages over 
 
@@ -17,14 +27,21 @@ We also, find evidence consistent with ([[@grauerOptionTradeClassification2022]]
 
 feature tick like features, ml is bound by features
 
+Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.
+
+![[Pasted image 20230624191358.png]]
+
+
+Compared to the ubiquitous tick test, quote rule, and LR algorithm, improvements . Improvements at 
+
 Our models deliver accurate predictions and improved robustness, which effectively reduce noise and bias in option's research reliant on good estimates for the trade initiator. When applied to the calculation of trading cost through effective spreads, the models dominate all rule-based approaches by approximating the true effective spread best. Concretely, the Transformer pre-trained on unlabelled trades estimates a mean spread of  \SI[round-precision=3]{0.013}[\$]{} versus \SI[round-precision=3]{0.005}[\$]{} actual spread at the gls-ISE.
+(feature importances)
 
-![[Pasted image 20230624180316.png]]
+In conclusion, our work demonstrates that machine learning is superior to existing trade signing algorithms for classifying option trades, if partially-labelled or labelled trades are available for training. While we tested our models on option trades, we expect that similar results are possible for other modalities including equity trades. 
 
-In conclusion, our work demonstrates that machine learning is superior to existing trade signing algorithms for classifying option trades, if partially-labelled or labelled trades are available for training. 
+---
 
-----
-
+dependent on reliable trade initiator estimates.
 
 
 Other desirable properties are low cost at inference and uncertainty estimates through a probabilistic problem framing.
@@ -40,9 +57,6 @@ is considerably lower than for stocks
 The goal of this study is to examine the performance (...) and determine (...).
 
 In conclusion, we propose a (...) to (...).
-In this paper, we present (...) that (...), and competitive with state-of-the-art foundation models. Most notably, 
-Our approach achieves performance on par with SOTA
-The method we introduced satisfies numerous desirable properties
 
 correctly classifying 85 %
 In particular, transactions inside the bid}ask spread, small transactions, and transactions in large or frequently traded stocks are often misclassifed.
