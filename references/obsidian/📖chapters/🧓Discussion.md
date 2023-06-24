@@ -7,6 +7,7 @@
 - for index options see [[@chordiaIndexOptionTrading2021]]
 - To test these hypotheses it would be best if we had the precise motivation behind the trades. While such analysis is not feasible here, using trade classification algorithms, we are able to assign stock and option volume as buyer or seller initiated. Easley et al. (1998) show how this directional volume is more informative than raw volume, because signed volume provides important information about the motivation of the trade (bullish or bearish). (cao paper)
 
+- see also [[@ellisAccuracyTradeClassification2000]] for trades inside and outside the spread
 
 - Whilst we reach the same conclusion, we estimate that large models should be trained for many more training tokens than recommended by the authors.
 
