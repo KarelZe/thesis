@@ -56,6 +56,8 @@ While subsets of features $X_S = \left\{X_i \mid i \in S \right\}$ can be easily
 
 It is typically infeasible to compute the complete \gls{SAGE} values due to a large number of subsets $S$, so an approximation is used instead.
 
+\todo{model the conditional distribution of held out features.}
+
 \textbf{Attention Maps}
 
 In addition to \gls{SAGE}, Transformer-based models offer \emph{some} interpretability through their attention mechanism. In recent research a major controversy embarked around the question, of whether attention offers explanations to model predictions \autocites[cp.][150]{bastingsElephantInterpretabilityRoom2020}[][5--7]{jainAttentionNotExplanation2019}[][9]{wiegreffeAttentionNotNot2019}. The debate sparked around opposing definitions of explainability and the consistency of attention scores with other, established feature-importance measures. Our focus is less on post-hoc explainability of the model, but rather on transparency. Consistent with \textcite[][8]{wiegreffeAttentionNotNot2019} we view attention scores as a vehicle to model transparency.
