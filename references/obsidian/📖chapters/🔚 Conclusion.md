@@ -9,12 +9,32 @@ from attention heads that are yet unknown. This way, we can transfer the superio
 
 The goal of this study is to examine the performance of machine learning-based trade classification in the option market. In particular, we propose to model trade classification with Transformers and gradient boosting. Both approaches are supervised and suffice to learn on labelled trades. For settings, where labelled trades are scarce, we extend Transformers with a pre-training objective to learn on unlabelled trades as well as generate pseudo-labels for gradient-boosting through a self-training procedure.
 
-Our models achieve 
+Our models achieve state-of-the-art performance on trade data from the gls-ISE and gls-CBOE.
+
+
+Unlike previous studies, we can trace back the performance of our approaches as well as of trade classification rules to individual features and feature groups using the importance measure gls-SAGE. We find that both approaches attain largest performance improvements from classifying trades based on quoted sizes and prices, but machine learning-based classifiers attain higher performance gains and effectively exploit the data. The change in the trade price, decisive criteria to the (reverse) tick test, plays no rule for option trade classification. We identify the relative illiquidity of options to hamper the information content of the surrounding trade prices. Our classifiers profit from the inclusion of option-specific features, like moneyness and  time-to-maturity, unexploited in classical trade classification. 
+
+By probing and visualising the attention mechanism inside the Transformer, we can establish connection to rule-based classification. Experimentally, our results show, that attention heads encode knowledge about rule-based classification. Whilst attention heads in earlier layers of the network broadly attend to all features, in later they focus on specific features jointly used in rule-based classification akin to the gls-LR algorithm, depth rule or others.  Furthermore embeddings encode knowledge about the underlyings. Our results show, that the Transformer learns to group similar underlyings in embedding space.
+
+
+
+Additionally, for Transformers we observe, that 
+
+and because of the 
+
+For the Transformer we find 
+
+Additionally, we observed like
+
+Relative to the ubiquitous tick test, quote rule, and LR algorithm, improvements are percentage-23.88, . Improvements at 
+
+
+The method we introduced satisfies numerous desirable properties
 
 
 In this paper, we present (...) that (...), and competitive with state-of-the-art foundation models. Most notably, 
 Our approach achieves performance on par with SOTA
-The method we introduced satisfies numerous desirable properties
+
 
 
 The contextassociative power of language models likely confers significant advantages over 
@@ -32,12 +52,12 @@ Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, 
 ![[Pasted image 20230624191358.png]]
 
 
-Compared to the ubiquitous tick test, quote rule, and LR algorithm, improvements . Improvements at 
-
 Our models deliver accurate predictions and improved robustness, which effectively reduce noise and bias in option's research reliant on good estimates for the trade initiator. When applied to the calculation of trading cost through effective spreads, the models dominate all rule-based approaches by approximating the true effective spread best. Concretely, the Transformer pre-trained on unlabelled trades estimates a mean spread of  \SI[round-precision=3]{0.013}[\$]{} versus \SI[round-precision=3]{0.005}[\$]{} actual spread at the gls-ISE.
 (feature importances)
 
-In conclusion, our work demonstrates that machine learning is superior to existing trade signing algorithms for classifying option trades, if partially-labelled or labelled trades are available for training. While we tested our models on option trades, we expect that similar results are possible for other modalities including equity trades. 
+In conclusion, our work demonstrates that machine learning is superior to existing trade signing algorithms for classifying option trades, if partially-labelled or labelled trades are available for training. 
+
+While we tested our models on option trades, we expect that similar results are possible for other modalities including equity trades. 
 
 ---
 
@@ -46,7 +66,7 @@ dependent on reliable trade initiator estimates.
 
 Other desirable properties are low cost at inference and uncertainty estimates through a probabilistic problem framing.
 
-Unlike previous study, we can trace back the performance of our approaches as well as of classical trade classification rules to individual features and feature groups. Particulari
+
 
 We illustrate the usefulness of our models by applying the trade direction suggested by each algorithm to compute effective spreads and price impacts of trades. Our algorithm provides better and unbiased estimates of both the actual effective spreads and price impacts compared to the other classification rules.
 
