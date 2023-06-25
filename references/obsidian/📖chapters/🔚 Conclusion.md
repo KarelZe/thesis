@@ -1,10 +1,7 @@
 
 The goal of this study is to examine the performance of machine learning-based trade classification in the option market. In particular, we propose to model trade classification with Transformers and gradient boosting. Both approaches are supervised and suffice to learn on labelled trades. For settings, where labelled trades are scarce, we extend Transformers with a pre-training objective to learn on unlabelled trades as well as generate pseudo-labels for gradient-boosting through a self-training procedure.
 
-Our models establish a new state-of-the-art for trade classification on gls-ISE and gls-CBOE, achieving 
-Performance generalises well Most notably,
-Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.
-Notably, performance is even stronger 
+Our models establish a new state-of-the-art for trade classification on the gls-ISE and gls-CBOE dataset. For gls-ISE trades, Transformers achieve an accuracy of percentage-63.78 when trained on trade and quoted prices as well as percentage-72.58 when trained on additional quoted sizes, improving over hybrid rules by ([[@grauerOptionTradeClassification2022]]27) by percentage-3.73 and percentage-4.97. Similarly, glspl-gbrt reaches accuracies of percentage-63.67 and percentage-73.24. We observe performance improvements up to percentage-6.51 for GBRT and percentage-6.31 for Transformers, when models have access to option characteristics. Both architectures generalise well on gls-CBOE trades, with even stronger improvements between percentage-4.92 and percentage-7.58 depending on model and feature set.
 
 Relative to the ubiquitous tick test, quote rule, and LR algorithm, improvements are percentage-23.88, percentage-17.11, and percentage-17.02, respectively on the gls-ISE dataset without additional data requirements. Performance improvements are particularly strong out-of-the-money options, options with late maturity, as well as trades executed at the quotes.
 
