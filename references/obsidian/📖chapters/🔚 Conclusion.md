@@ -18,5 +18,3 @@ Our models deliver accurate predictions and improved robustness, which effective
 
 In conclusion, our work demonstrates that machine learning is superior to existing trade signing algorithms for classifying option trades, if partially-labelled or labelled trades are available for training. 
 
-While we tested our models on option trades, we expect that similar results are possible for other modalities including equity trades. 
-
