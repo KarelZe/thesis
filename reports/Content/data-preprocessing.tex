@@ -15,7 +15,7 @@ Testing the empirical accuracy of our approaches requires option trades where th
 
 % \textbf{Trade Initiator}
 
-In \cref{sec:trade-initiator} we discussed three views on the trade initiator. As our data sources do not provide the order entry times or order types for both sides of the trade, we define the trade initiator based on the position relative to the market maker, who caters to the liquidity demand. More specifically, we classify customer trades as buyer-initiated if the trade is due to a customer buy order and as seller-initiated for customer sales. As previous literature, e.g., \textcite[][4276]{garleanuDemandBasedOptionPricing2009} suggests that trader types, for example, proprietary traders, have a similar role to market makers by supplying liquidity, we limit our analysis to trades between customers and market makers for which the picture is unambiguous. Our definition is consistent with the off \textcite[][8]{grauerOptionTradeClassification2022}.
+In \cref{sec:trade-initiator} we discussed three views on the trade initiator. As our data sources do not provide the order entry times or order types for both sides of the trade, we define the trade initiator based on the position relative to the market maker, who caters to the liquidity demand. More specifically, we classify customer trades as buyer-initiated if the trade is due to a customer buy order and as seller-initiated for customer sales. As previous literature, e.g., \textcite[][4276]{garleanuDemandBasedOptionPricing2009} suggests that trader types, for example, proprietary traders, have a similar role to market makers by supplying liquidity, we limit our analysis to trades between customers and market makers for which the picture is unambiguous. Our definition is consistent with the of \textcite[][8]{grauerOptionTradeClassification2022}.
 
 % \textbf{Sample Construction}
 
@@ -29,9 +29,7 @@ For the \gls{ISE} trades, our matched sample spans from 2 May 2005 to 31 May 201
 
 Following our initial rationale for using semi-supervised methods, we reserve unlabelled trades between 24 October 2012 and 24 October 2013 at the \gls{ISE} for pre- and self-training. We provide further details in \cref{sec:train-test-split}. Since LiveVol doesn't distinguish by trader types, this dataset includes both customer and non-customer trades, as well as simultaneous buy and sell trades on the same day.
 
-While our procedure makes the inference of the true trade initiator partly feasible, concerns regarding a selection bias due to the excessive filtering have to be raised. We address these concerns as part of our exploratory data analysis in (...), in which we compare unmerged and merged sub-samples.
-
-\todo{Report stats for unmatched and matched example in appendix or here. Adress differences between matched and unmatched sample.}
+While our procedure makes the inference of the true trade initiator partly feasible, concerns regarding a selection bias due to the excessive filtering have to be raised. We address these concerns and report summary statistics for unmerged and merged sub-samples in \cref{app:summary-statistics}.
 
 In the following chapter, we motivate feature engineering, present our feature sets and discuss strategies for transforming features into a form that accelerates and advances the training of our models.
 
@@ -51,14 +49,14 @@ To establish a common ground, we derive three sets of features from raw data. Th
     \begin{longtable}{@{}lllllll@{}}
 
 
-        \caption[Features and Feature Sets]{Features and Feature Sets.}\label{tab:feature-sets}                                                                                                  \\
+        \caption[Features and Feature Sets]{Features and Feature Sets.}\label{tab:feature-sets}                                                                                                                                                                       \\
         \toprule
-        Feature Name            & Definition                                                                                       & Source               & \gls{FS} 1 & \gls{FS} 2 & \gls{FS} 3 \\ \midrule
+        Feature Name            & Definition                                                                                       & Source               & \gls{FS} 1                        & \gls{FS} 2                        & \gls{FS} 3                        \\ \midrule
         \endfirsthead
 
-        \multicolumn{6}{l}{\textit{Continued \tablename~\thetable}}                                                                                                                              \\
+        \multicolumn{6}{l}{\textit{Continued \tablename~\thetable}}                                                                                                                                                                                                   \\
         \toprule
-        Feature Name            & Definition                                                                                       & Source               & \gls{FS} 1 & \gls{FS} 2 & \gls{FS} 3 \\ \midrule
+        Feature Name            & Definition                                                                                       & Source               & \gls{FS} 1                        & \gls{FS} 2                        & \gls{FS} 3                        \\ \midrule
         \endhead
 
         \bottomrule
@@ -67,36 +65,45 @@ To establish a common ground, we derive three sets of features from raw data. Th
         \insertTableNotes
         \endlastfoot
 
-        trade price             & $P_{i, t}$                                                                                       & tick rule            & \checkmark & \checkmark & \checkmark \\
-        price lag (ex)          & $P_{i, t-1}^{\text{ex}}$\tnote{*}                                                                & tick rule            & \checkmark & \checkmark & \checkmark \\
-        price lag (all)         & $P_{i, t-1}^{\text{all}}$\tnote{*}                                                               & tick rule            & \checkmark & \checkmark & \checkmark \\
-        price change lag (ex)   & $P_{i, t-1}^{\text{ex}}/P_{i, t}^{\text{ex}}$\tnote{*}                                           & tick rule            & \checkmark & \checkmark & \checkmark \\
-        price change lag (all)  & $P_{i, t-1}^{\text{all}}/P_{i, t}^{\text{all}}$\tnote{*}                                         & tick rule            & \checkmark & \checkmark & \checkmark \\
-        priced lead (ex)        & $P_{i, t+1}^{\text{ex}}$\tnote{*}                                                                & rev. tick rule       & \checkmark & \checkmark & \checkmark \\
-        price lead (all)        & $P_{i, t+1}^{\text{all}}$\tnote{*}                                                               & rev. tick rule       & \checkmark & \checkmark & \checkmark \\
-        price change lead (ex)  & $P_{i, t}^{\text{ex}}/P_{i, t+1}^{\text{ex}}$\tnote{*}                                           & rev. tick rule       & \checkmark & \checkmark & \checkmark \\
-        price change lead (all) & $P_{i, t}^{\text{all}}/P_{i, t+1}^{\text{all}}$\tnote{*}                                         & rev. tick rule       & \checkmark & \checkmark & \checkmark \\
-        bid (all)               & $B_{i, t}^{\text{all}}$                                                                          & quote rule           & \checkmark & \checkmark & \checkmark \\
-        bid (ex)                & $B_{i, t}^{\text{ex}}$                                                                           & quote rule           & \checkmark & \checkmark & \checkmark \\
-        ask (all)               & $A_{i, t}^{\text{all}}$                                                                          & quote rule           & \checkmark & \checkmark & \checkmark \\
-        ask (ex)                & $A_{i, t}^{\text{all}}$                                                                          & quote rule           & \checkmark & \checkmark & \checkmark \\
-        prox. to quotes (ex)    & $\left(P_{i, t}^{\text{ex}}- M_{i, t}^{\text{ex}}\right) / \tfrac{1}{2} S_{i, t}^{\text{ex}}$    & \gls{EMO}/\gls{CLNV} & \checkmark & \checkmark & \checkmark \\
-        prox. to quotes (all)   & $\left(P_{i, t}^{\text{all}}- M_{i, t}^{\text{all}}\right) / \tfrac{1}{2} S_{i, t}^{\text{all}}$ & \gls{EMO}/\gls{CLNV} & \checkmark & \checkmark & \checkmark \\
-        bid ask size ratio (ex) & $\tilde{B}_{i, t}^{\text{ex}}/\tilde{A}_{i, t}^{\text{ex}}$                                      & depth rule           &            & \checkmark & \checkmark \\
-        bid size (ex)           & $\tilde{B}_{i, t}^{\text{ex}}$                                                                   & depth rule           &            & \checkmark & \checkmark \\
-        ask size (ex)           & $\tilde{A}_{i, t}^{\text{ex}}$                                                                   & depth rule           &            & \checkmark & \checkmark \\
-        rel. bid size (ex)      & $\tilde{B}_{i, t}^{\text{ex}}/\tilde{P}_{i, t}^{\text{ex}}$                                      & trade size rule      &            & \checkmark & \checkmark \\
-        rel. ask size (ex)      & $\tilde{A}_{i, t}^{\text{ex}}/\tilde{P}_{i, t}^{\text{ex}}$                                      & trade size rule      &            & \checkmark & \checkmark \\
-        trade size              & $\tilde{P}_{i, t}$                                                                               & trade size rule      &            & \checkmark & \checkmark \\
-        strike price            &                                                                                                  & option               &            &            & \checkmark \\
-        volume option series    &                                                                                                  & option               &            &            & \checkmark \\
-        root                    &                                                                                                  & option               &            &            & \checkmark \\
-        time to maturity        &                                                                                                  & option               &            &            & \checkmark \\
-        moneyness               &                                                                                                  & option               &            &            & \checkmark \\
-        option type             &                                                                                                  & option               &            &            & \checkmark \\
-        issue type              &                                                                                                  & option               &            &            & \checkmark \\ \bottomrule
+        trade price             & $P_{i, t}$                                                                                       & tick rule            & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        price lag (ex)          & $P_{i, t-1}^{\text{ex}}$\tnote{*}                                                                & tick rule            & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        price lag (all)         & $P_{i, t-1}^{\text{all}}$\tnote{*}                                                               & tick rule            & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        price change lag (ex)   & $P_{i, t-1}^{\text{ex}}/P_{i, t}^{\text{ex}}$\tnote{*}                                           & tick rule            & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        price change lag (all)  & $P_{i, t-1}^{\text{all}}/P_{i, t}^{\text{all}}$\tnote{*}                                         & tick rule            & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        priced lead (ex)        & $P_{i, t+1}^{\text{ex}}$\tnote{*}                                                                & rev. tick rule       & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        price lead (all)        & $P_{i, t+1}^{\text{all}}$\tnote{*}                                                               & rev. tick rule       & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        price change lead (ex)  & $P_{i, t}^{\text{ex}}/P_{i, t+1}^{\text{ex}}$\tnote{*}                                           & rev. tick rule       & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        price change lead (all) & $P_{i, t}^{\text{all}}/P_{i, t+1}^{\text{all}}$\tnote{*}                                         & rev. tick rule       & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        bid (all)               & $B_{i, t}^{\text{all}}$                                                                          & quote rule           & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        bid (ex)                & $B_{i, t}^{\text{ex}}$                                                                           & quote rule           & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        ask (all)               & $A_{i, t}^{\text{all}}$                                                                          & quote rule           & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        ask (ex)                & $A_{i, t}^{\text{all}}$                                                                          & quote rule           & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        prox. to quotes (ex)    & $\left(P_{i, t}^{\text{ex}}- M_{i, t}^{\text{ex}}\right) / \tfrac{1}{2} S_{i, t}^{\text{ex}}$    & \gls{EMO}/\gls{CLNV} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        prox. to quotes (all)   & $\left(P_{i, t}^{\text{all}}- M_{i, t}^{\text{all}}\right) / \tfrac{1}{2} S_{i, t}^{\text{all}}$ & \gls{EMO}/\gls{CLNV} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        bid ask size ratio (ex) & $\tilde{B}_{i, t}^{\text{ex}}/\tilde{A}_{i, t}^{\text{ex}}$                                      & depth rule           &                                   & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        bid size (ex)           & $\tilde{B}_{i, t}^{\text{ex}}$                                                                   & depth rule           &                                   & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        ask size (ex)           & $\tilde{A}_{i, t}^{\text{ex}}$                                                                   & depth rule           &                                   & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        rel. bid size (ex)      & $\tilde{B}_{i, t}^{\text{ex}}/\tilde{P}_{i, t}^{\text{ex}}$                                      & trade size rule      &                                   & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        rel. ask size (ex)      & $\tilde{A}_{i, t}^{\text{ex}}/\tilde{P}_{i, t}^{\text{ex}}$                                      & trade size rule      &                                   & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        trade size              & $\tilde{P}_{i, t}$                                                                               & trade size rule      &                                   & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        strike price            & $K_i$                                                                                              & option               &                                   &                                   & \textcolor{viz-green}{\checkmark} \\
+        volume option series    &                                                                                                  & option               &                                   &                                   & \textcolor{viz-green}{\checkmark} \\
+        root                    &                                                                                                  & option               &                                   &                                   & \textcolor{viz-green}{\checkmark} \\
+        time to maturity        & $\tau_{i,t}$                                                                                           & option               &                                   &                                   & \textcolor{viz-green}{\checkmark} \\
+        moneyness               & $\left| \Delta_{i,t} \right|$                                                                          & option               &                                   &                                   & \textcolor{viz-green}{\checkmark} \\
+        option type             & $\left\{'C','P'\right\}$                                                                   & option               &                                   &                                   & \textcolor{viz-green}{\checkmark} \\
+        issue type              & $\left\{'0','A',\ldots\right\}$                                                                                                 & option               &                                   &                                   & \textcolor{viz-green}{\checkmark} \\ \bottomrule
     \end{longtable}
 \end{ThreePartTable}
+
+
+% Issue Type = the type of security: 
+% - 0 = Common Stock 
+% - A = Market index 
+% - 7 = Mutual or investment trust fund 
+% - F = ADR/ADS 
+% - % = Exchange-traded fund 
+% - (blank) = Unspecified
 
 \todo{define and explain option characterstics and add proper caption to table.}
 
