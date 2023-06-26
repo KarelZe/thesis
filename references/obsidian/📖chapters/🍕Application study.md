@@ -80,6 +80,8 @@ Savickas and Wilson 897 TABLE 5 Estimated Effective Spreads Average Sprd. Quote 
 % TODO: read: Pinder, S. (2003). An empirical examination of the impact of market microstructure changes on the determinants of option bid–ask spreads. International Review of Financial Analysis, 12(5):563–577.
 
 
+“In addition, my results offer little help in answering why option bid-ask spreads are so large. This is one of the biggest puzzles in the options literature—existing theories of the option spread fail to explain its magnitude and shape (Muravyev and Pearson (2014)).” (Muravyev, 2016, p. 696)
+
 - [[@rosenthalModelingTradeDirection2012]] lists fields where trade classification is used and what the impact of wrongly classified trades is.
 - The extent to which inaccurate trade classification biases empirical research depends on whether misclassifications occur randomly or systematically [[@theissenTestAccuracyLee2000]].
 
