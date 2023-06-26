@@ -1,6 +1,3 @@
-
-![[Pasted image 20230626165112.png]]
-
 Prime examples for auto-correlation between trades are market or limit orders, that are split into smaller orders to encourage order execution. Also, informed traders tend to slice orders into smaller-sized trades to disguise their trading activity, as documented in ([[@anandStealthTradingOptions2007]]183). Oder splitting leads trades executed (almost) simultaneously with similar trade characteristics, which would be trivial to classify with the true label of a single transaction.
 
 

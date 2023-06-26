@@ -60,12 +60,12 @@ To establish a common ground, we derive three sets of features from raw data. Th
 
         \caption[Features and Feature Sets]{Features and Feature Sets.}\label{tab:feature-sets}                                                                                                                                                                       \\
         \toprule
-        Feature Name            & Definition                                                                                       & Source               & \gls{FS} 1                        & \gls{FS} 2                        & \gls{FS} 3                        \\ \midrule
+        Feature Name            & Definition                                                                                       & Source               & \gls{FS} Classic                        & \gls{FS} Size                        & \gls{FS} Option                        \\ \midrule
         \endfirsthead
 
         \multicolumn{6}{l}{\textit{Continued \tablename~\thetable}}                                                                                                                                                                                                   \\
         \toprule
-        Feature Name            & Definition                                                                                       & Source               & \gls{FS} 1                        & \gls{FS} 2                        & \gls{FS} 3                        \\ \midrule
+        Feature Name            & Definition                                                                                       & Source               & \gls{FS} Classic                        & \gls{FS} Size                        & \gls{FS} Option                        \\ \midrule
         \endhead
 
         \bottomrule
@@ -87,8 +87,8 @@ To establish a common ground, we derive three sets of features from raw data. Th
         bid (ex)                & $B_{i, t}^{\text{ex}}$                                                                           & quote rule           & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
         ask (all)               & $A_{i, t}^{\text{all}}$                                                                          & quote rule           & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
         ask (ex)                & $A_{i, t}^{\text{all}}$                                                                          & quote rule           & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
-        prox. to quotes (ex)    & $\left(P_{i, t}^{\text{ex}}- M_{i, t}^{\text{ex}}\right) / \tfrac{1}{2} S_{i, t}^{\text{ex}}$    & \gls{EMO}/\gls{CLNV} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
-        prox. to quotes (all)   & $\left(P_{i, t}^{\text{all}}- M_{i, t}^{\text{all}}\right) / \tfrac{1}{2} S_{i, t}^{\text{all}}$ & \gls{EMO}/\gls{CLNV} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        prox. to quotes (ex)    & $\frac{2 \left(P_{i, t}^{\text{ex}}- M_{i, t}^{\text{ex}}\right)}{\left(A_{i, t}^{\text{ex}}-B_{i, t}^{\text{ex}}\right)}$    & \gls{EMO}/\gls{CLNV} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
+        prox. to quotes (all)   & $\frac{2 \left(P_{i, t}^{\text{all}}- M_{i, t}^{\text{all}}\right)}{\left(A_{i, t}^{\text{all}}-B_{i, t}^{\text{all}}\right)}$ & \gls{EMO}/\gls{CLNV} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
         bid ask size ratio (ex) & $\tilde{B}_{i, t}^{\text{ex}}/\tilde{A}_{i, t}^{\text{ex}}$                                      & depth rule           &                                   & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
         bid size (ex)           & $\tilde{B}_{i, t}^{\text{ex}}$                                                                   & depth rule           &                                   & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\
         ask size (ex)           & $\tilde{A}_{i, t}^{\text{ex}}$                                                                   & depth rule           &                                   & \textcolor{viz-green}{\checkmark} & \textcolor{viz-green}{\checkmark} \\

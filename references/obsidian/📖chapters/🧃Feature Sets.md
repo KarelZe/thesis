@@ -1,4 +1,11 @@
 
+![[Pasted image 20230626184331.png]]
+
+![[Pasted image 20230626184455.png]]
+
+![[Pasted image 20230626184607.png]]
+
+
 - option series (an option series is characterized by option type (call/put), underlying stock, strike price, and maturity date),
 
 ## NBBO / EX
