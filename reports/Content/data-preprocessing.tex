@@ -20,9 +20,11 @@ In \cref{sec:trade-initiator} we discussed three views on the trade initiator. A
 
 % \textbf{Sample Construction}
 
+\todo{Optional: Minor importance of cust-cust trades? “Second, market-makers stand on the liquidity-providing side of most trades. In the options market, market-makers transfer liquidity not only over time but also across different options. With several hundred option contracts available for each underlying, two investors rarely select the same option and thus they are likely to trade with a market-maker. Also, exchange rules grant lead market-makers substantial competitive edge over other liquidity providers (e.g., the 60/40 NBBO order split rule). These rules further strengthen lead market-makers position as the main liquidity providers and make it hard for new players to enter” Found in \textcite{muravyevOrderFlowExpected2016}.}
+
 Our sample construction follows \textcite[][7--9]{grauerOptionTradeClassification2022}, fostering comparability between both works. We acquire transaction-level options trade data for all major US exchanges from LiveVol. The dataset is tabular, and each record is time-stamped to the second. For each transaction, the executing exchange, trade price, trade volume, quotes and quote sizes for the exchanges where the option is quoted, as well as the \gls{NBBO} are recorded. This is sufficient to estimate the quote rule, depth rule, and trade size rule. In addition, for tick-based algorithms, we add the previous and subsequent distinguishable trade prices. We can uniquely identify the traded option series from a distinct key consisting of the underlying, expiration date, option type and strike price. Our analysis is conducted on transactions at the \gls{ISE} and \gls{CBOE}. To purge the data of potential errors, we filter out:
 \begin{enumerate}[label=(\roman*),noitemsep]
-    \item trades with a trade price $\leq 0$,
+    \item trades with a trade price $\leq \SI{0}[\$]{}$,
     \item trades with a trade volume $\leq 0$ or $\ge \num{10000000}$ contracts,
     \item cancelled or duplicated trades,
     \item entries with multiple underlying symbols for the same root.
@@ -39,8 +41,6 @@ Following our initial rationale for using semi-supervised methods, we reserve un
 While our procedure makes the inference of the true trade initiator partly feasible, concerns regarding a selection bias due to the excessive filtering have to be raised. We address these concerns and report summary statistics for unmerged and merged sub-samples in \cref{app:summary-statistics}.
 
 In the following chapter, we motivate feature engineering, present our feature sets and discuss strategies for transforming features into a form that accelerates and advances the training of our models.
-
-\todo{Minor importance of cust-cust trades? “Second, market-makers stand on the liquidity-providing side of most trades. In the options market, market-makers transfer liquidity not only over time but also across different options. With several hundred option contracts available for each underlying, two investors rarely select the same option and thus they are likely to trade with a market-maker. Also, exchange rules grant lead market-makers substantial competitive edge over other liquidity providers (e.g., the 60/40 NBBO order split rule). These rules further strengthen lead market-makers position as the main liquidity providers and make it hard for new players to enter” Found in \textcite{muravyevOrderFlowExpected2016}}
 
 \subsubsection{Data Preprocessing}\label{sec:data-preprocessing}
 
