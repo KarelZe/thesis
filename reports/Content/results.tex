@@ -131,6 +131,8 @@ Next, we test the supervised classifiers on the \gls{ISE}/\gls{CBOE} test sets, 
 \subsection{Results of Supervised
     Models}\label{sec:results-of-supervised-models}
 
+\todo{z-scores / statistical tests as \textcite[][]{theissenTestAccuracyLee2000}}
+
 We test the performance of our supervised models. We take the best configurations from \cref{sec:hyperparameter-tuning}, trained and tuned on the \gls{ISE} trade data, and evaluate their performance on the \gls{ISE} and \gls{CBOE} test sets. \cref{tab:results-supervised-ise-cboe} summarizes the results and benchmarks against state-of-the-art solutions from the literature.
 
 \begin{table}[ht]
@@ -838,8 +840,9 @@ From \cref{fig:sage-importances} that all models achieve the largest improvement
 \section{Application in Transaction Cost Estimation}\label{sec:application}
 
 \textbf{Preliminaries}
-% \todo{Add why it is important. See Stoll, Huang, Roll (zettelkasten)}
 
+\todo{Think about reporting as percentage? Adjust formula from above.}
+\todo{Look into \textcite{muravyevOptionsTradingCosts2020}}
 \todo{Options listed on multiple exchanges have narrower spreads than those listed on a single exchange, but the difference diminishes as option volume increases. Option spreads become wider when a competing exchange delists the option.\autocite{mayhewCompetitionMarketStructure2002}}
 
 Albeit the classification accuracy is a reasonable measure for comparing classifiers, one cannot immediately infer how changes in accuracy e.~g., an improvement by \SI{1}{\percent}, affect the application domains. In an attempt to make our results tangible, we apply all algorithms to estimate trading cost, a problem we previously identified to be reliant on correct trade classification (cp. \cref{sec:introduction}) and a common testing ground for trade classification rules \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][569]{finucaneDirectTestMethods2000}[][271--278]{petersonEvaluationBiasesExecution2003}[][896--897]{savickasInferringDirectionOption2003}.

@@ -20,8 +20,6 @@ footnote-what is link to accuracy
 todo-Discuss results
 Null hypothesis: A and B have the same error rate.
 
-![[mcnemar-ise.png]]
-
 Statistical significance is used to compare learning algorithms on achieved error rates. The three most frequently used statistical tests for comparing two learning algorithms [96], [97] are: 1) McNemar test [98]: denote the number of data instances misclassified by the first classifier and correctly classified by the second classifier by a, and denote b in the opposite way. The McNemar statistic is computed as M ¼ signða  bÞða  bÞ 2 =ða þ bÞ to test whether two classifiers perform equally well. The test follows the x2 distribution; 2) https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8496795
 
 McNemar’s chi-squared (χ2 ) test (McNemar 1947) was used to statistically compare error matrices by testing for the marginal homogeneity between two classifiers. Marginal homogeneity refers to the equality (i.e. lack of statistically significant difference) in the overall distributions of row or column variables predicted by one algorithm compared to another. It is a simple yet powerful method to compare class-wise predictions between algorithms. The test is parametric, has a low type I error and consists of a straightforward formulation (Dietterich 1998; de Leeuw et al. 2006). https://www.tandfonline.com/doi/pdf/10.1080/15481603.2019.1650447?needAccess=true&role=button
@@ -96,12 +94,6 @@ Similar to ([[@odders-whiteOccurrenceConsequencesInaccurate2000]] 267) we furthe
 and estimate McNemar's
 
 This allows more detailed analysis than simply observing the proportion of correct classifications (accuracy). Accuracy will yield misleading results if the data set is unbalanced; that is, when the numbers of observations in different classes vary greatly.
-
-![[confusion-matrix-ise.png]]
-(ise)
-![[confusion-matrix-cboe.png]]
-(cboe)
-
 
 - The recommendation of the McNemar’s test for models that are expensive to train, which suits large deep learning models.
 - How to transform prediction results from two classifiers into a contingency table and how the table is used to calculate the statistic in the McNemar’s test.

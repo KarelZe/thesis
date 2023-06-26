@@ -30,10 +30,8 @@ While the information about the initator of a trade is missing in public data se
 
 “Methods of inferring trade direction can be classified as: tick tests, which use changes in trade prices; the quote method, which compares trade prices to quotes;” (Finucane, 2000, p. 557)
 
+“Methods of inferring trade direction can be classified as: tick tests, which use changes in trade prices; the quote method, which compares trade prices to quotes;” (Finucane, 2000, p. 557)
 
-
-<mark style="background: #FFB86CA6;">“Methods of inferring trade direction can be classified as: tick tests, which use changes in trade prices; the quote method, which compares trade prices to quotes;” (Finucane, 2000, p. 557)
-</mark>
 
 
 **Synonyms**
