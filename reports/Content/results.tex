@@ -257,6 +257,8 @@ To summarise, unrewarded for higher training costs, semi-supervised variants of 
 
 \subsection{Robustness of Results}\label{sec:robustness-checks}
 
+\todo{call them long-term options / expiring options?}
+
 To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, as well as proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[][47]{grauerOptionTradeClassification2022} as well as  \textcite[][890--892]{savickasInferringDirectionOption2003}, strengthening comparability across different works.\footnote{Despite all efforts, when comparing with \textcite[][47--52]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.}
 
 Our results are tabulated \cref{tab:diff-ise-gbm,tab:diff-cboe-gbm,tab:diff-ise-transformer,tab:diff-cboe-transformer,tab:diff-ise-gbm-semi,tab:diff-cboe-gbm-semi}, separately for \glspl{GBRT} and Transformers as well as exchanges.
@@ -883,3 +885,7 @@ From our supervised classifiers the FT-Transformer or \gls{GBRT} trained on \gls
 \SI[round-precision=3]{0.005}[\$]{}
 
 Thus, $\operatorname{gsu}_{\mathrm{large}}$ provides the best estimate of the effective spread if the true labels are absent. For labelled data, Transformer or gradient boosting-based approaches can provide more accurate estimates. The de facto standard, the \gls{LR} algorithm, fails to deliver accurate estimates and may bias research.
+
+\todo{“In addition, my results offer little help in answering why option bid-ask spreads are so large. This is one of the biggest puzzles in the options literature—existing theories of the option spread fail to explain its magnitude and shape (Muravyev and Pearson (2014)).”}
+
+\todo{compare against \textcite[][4981]{muravyevOptionsTradingCosts2020}}
