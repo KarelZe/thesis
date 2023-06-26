@@ -50,6 +50,7 @@ width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 \newcommand{\bestcircle}{\tikz{\node[circle,draw=darkgray, fill=white, line width=0.5pt, minimum width=0.2cm,minimum height=0.2cm, inner sep=0pt, draw opacity=.2] at (0,0){};}}
 \newcommand{\myline}{\tikz{\draw[dashed, gray, line width=0.5pt] (0,0) -- (0,0.3);}}
 
+\usepackage{enumitem} % enumerate with letters https://tex.stackexchange.com/a/129960
 
 % Tables and Graphs
 \usepackage{makecell} %Connected rows
@@ -262,7 +263,7 @@ For tabular data, a token corresponds to a column in the data set.}}
 \newglossaryentry{exploding-gradient}{name={exploding gradient},plural={exploding gradients},description={Exploding gradients is a problem encountered in training deep neural networks with backpropagation. Error gradients can accumulate, and result in very large parameter updates and unstable training of the network. The opposite is the vanishing gradient problem, whereby gradients become successively smaller during backpropagation, resulting in no or small parameter updates of the network. In both cases, the network does not converge.}}
 
 % compile only locally
-\includeonly{Content/rule-approaches,Content/data-preprocessing,Content/Appendx}
+\includeonly{Content/introduction,Content/rule-approaches,Content/data-preprocessing,Content/Appendx}
 
 % ----------------------------------- Start of document -----------------------------------
 \begin{document}

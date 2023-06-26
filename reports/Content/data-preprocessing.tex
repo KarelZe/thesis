@@ -5,8 +5,7 @@ In this section, we demonstrate the effectiveness of machine learning for trade 
 
 \subsection{Data and Data Preparation}\label{sec:data-and-data-preparation}
 
-\todo{This paper employs one of the largest data sets in recent intraday options literature.}
-
+% \todo{This paper employs one of the largest data sets in recent intraday options literature.}
 The following chapter describes the construction of datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we define and infer the true trade initiator.
 
 \subsubsection{Data Collection}\label{sec:data-collection}
@@ -21,7 +20,13 @@ In \cref{sec:trade-initiator} we discussed three views on the trade initiator. A
 
 % \textbf{Sample Construction}
 
-Our sample construction follows \textcite[][7--9]{grauerOptionTradeClassification2022}, fostering comparability between both works. We acquire transaction-level options trade data for all major US exchanges from LiveVol. The dataset is tabular, and each record is time-stamped to the second. For each transaction, the executing exchange, trade price, trade volume, quotes and quote sizes for the exchanges where the option is quoted, as well as the \gls{NBBO} are recorded. This is sufficient to estimate the quote rule, depth rule, and trade size rule. In addition, for tick-based algorithms, we add the previous and subsequent distinguishable trade prices. We can uniquely identify the traded option series from a distinct key consisting of the underlying, expiration date, option type and strike price. Our analysis is conducted on transactions at the \gls{ISE} and \gls{CBOE}. To purge the data of potential errors, we filter out option trades with a trade price equal to or less than zero and eliminate trades with a negative or zero trade volume as well as large trades with a trading volume exceeding \num{10000000} contracts. We further remove cancelled or duplicated trades and eliminate entries with multiple underlying symbols for the same root.
+Our sample construction follows \textcite[][7--9]{grauerOptionTradeClassification2022}, fostering comparability between both works. We acquire transaction-level options trade data for all major US exchanges from LiveVol. The dataset is tabular, and each record is time-stamped to the second. For each transaction, the executing exchange, trade price, trade volume, quotes and quote sizes for the exchanges where the option is quoted, as well as the \gls{NBBO} are recorded. This is sufficient to estimate the quote rule, depth rule, and trade size rule. In addition, for tick-based algorithms, we add the previous and subsequent distinguishable trade prices. We can uniquely identify the traded option series from a distinct key consisting of the underlying, expiration date, option type and strike price. Our analysis is conducted on transactions at the \gls{ISE} and \gls{CBOE}. To purge the data of potential errors, we filter out:
+\begin{enumerate}[label=(\roman*),noitemsep]
+    \item trades with a trade price $\leq 0$,
+    \item trades with a trade volume $\leq 0$ or $\ge \num{10000000}$ contracts,
+    \item cancelled or duplicated trades,
+    \item entries with multiple underlying symbols for the same root.
+\end{enumerate}
 
 The open/close datasets for the \gls{ISE} and \gls{CBOE} contain the daily buy and sell volumes for the option series by trader type, the trade volume and whether a position was closed or opened. Four trader types are available: customer, professional customer, broker/dealer, and firm proprietary. Customer orders are placed by a retail trader or a member of the exchange on behalf of the customer. Professional customers are distinguished from the former by a high trading activity ($\geq390$ orders per day over one month period). Likewise, trades by a member are classified as proprietary, if executed for their account or broker/dealer if placed for non-members of the exchange \autocite[][2]{nasdaqincFrequentlyAskedQuestions2017}. Trades of customers and professional customers are detailed by trade volume ($\leq 100$; 101--199; $> 199$ contracts). As well as, if a position is newly opened or closed. We first sum buy and sell orders of all trader types and volumes to obtain the daily trading volumes at the \gls{ISE} or \gls{CBOE} per option series and day. Separately for the customer buy and sell volumes, we calculate the daily aggregates identified by the account type customer.
 
@@ -122,7 +127,7 @@ We aid the models by estimating the change in trade price between the previous a
 
 Our second feature set extends the first feature set by the trade size and size of the quotes, required to estimate hybrid rules involving the depth rule and trade size rule. Both rules are state-of-the-art when paired with hybrid algorithms and are thus both benchmark and source of features. We model the depth rule as the ratio between ask and bid sizes and the trade size rule as the ratio between the size of the trade and the quoted bid and ask sizes. Since features are not discretized, we obtain a generic formulation of the trade size rule, where part of the quoted size can remain unfilled. The trade price and midspread required for the depth rule are already encompassed in the first feature set.
 
-\todo{reason dependency on characteristics}
+\todo{reason dependency on option characteristics}
 
 Our largest feature set also incorporates option characteristics, including the strike price, the time to maturity, the moneyness, the option type and issue type as well as the underlying and traded volume of the option series. By providing the model with option-specific features, we make nuances between the underlying, security types, and option types learnable. Additionally, by providing unique identifiers for the option series, we can potentially learn to establish connections between transactions when trade initiators divide a single order into sub-orders.
 
@@ -170,7 +175,7 @@ Trades in the dataset are ordered by time of execution, and nearby trades exhibi
 
 \todo{“If these informed traders attempt to hide their information by splitting their trades into medium size trades, we should see medium size trades associated with higher price discovery in the dominant exchange and not in the other (non-dominant) exchanges. Underpinning our analysis is the intuition that an informed trader is likely to choose the options market venue (and option trade size) that best protects her ability to hide.” ([Anand and Chakravarty, 2007, p. 183}
 \todo{Orders might also be split by option series \autocite[][]{anandStealthTradingOptions2007}}
-\todo{Enumerate filters like in \autocite{muravyevTherePriceDiscovery2013}}
+
 
 Applying the time-based split, we attribute the first \SI{60}{\percent} of our dataset for training and the next \SI{20}{\percent} each for validation and testing. Days at the split boundary are assigned to either one set to avoid train-test contamination. Data within the training and validation set may be shuffled to accelerate training.
 

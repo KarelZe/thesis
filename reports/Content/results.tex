@@ -882,8 +882,6 @@ In summary, quote-based algorithms like the quote rule and the \gls{LR} algorith
 
 From our supervised classifiers the FT-Transformer or \gls{GBRT} trained on \gls{FS} option provides estimates closest to the true effective spread, in particular on the \gls{CBOE} sample. For semi-supervised classifiers, Transformer-based models approximate the true effective spread best. This best manifests in a predicted effective spread at the \gls{ISE} of \SI[round-mode=places, round-precision=3]{0.013118}[\$]{} versus \SI[round-mode=places, round-precision=3]{0.004926}[\$]{}. The null hypothesis of equal medians is rejected at the \SI{1}{\percent} level for all classifiers.
 
-\SI[round-precision=3]{0.005}[\$]{}
-
 Thus, $\operatorname{gsu}_{\mathrm{large}}$ provides the best estimate of the effective spread if the true labels are absent. For labelled data, Transformer or gradient boosting-based approaches can provide more accurate estimates. The de facto standard, the \gls{LR} algorithm, fails to deliver accurate estimates and may bias research.
 
 \todo{“In addition, my results offer little help in answering why option bid-ask spreads are so large. This is one of the biggest puzzles in the options literature—existing theories of the option spread fail to explain its magnitude and shape (Muravyev and Pearson (2014)).”}
