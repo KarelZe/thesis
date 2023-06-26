@@ -1,10 +1,18 @@
-“A floor broker seeking to execute a market order for a "large" number of shares will frequently split his order among the quotations of several competing market participants, such as other floor brokers and book or? ders. In this situation, successive sales are a consequence ofthe same trade, and take place on the same side of the market, but are recorded as separate transac? tions. This, in turn, implies positive serial correlation in transactiontype” (Choi et al., 1988, p. 221)
+
+![[Pasted image 20230626165112.png]]
+
+Prime examples for auto-correlation between trades are market or limit orders, that are split into smaller orders to encourage order execution. Also, informed traders tend to slice orders into smaller-sized trades to disguise their trading activity, as documented in ([[@anandStealthTradingOptions2007]]183). Oder splitting leads trades executed (almost) simultaneously with similar trade characteristics, which would be trivial to classify with the true label of a single transaction.
+
+
+
+“A floor broker seeking toexecute a market order for a "large" number of shares will frequently split his order among the quotations of several competing market participants, such as other floor brokers and book or? ders. In this situation, successive sales are a consequence ofthe same trade, and take place on the same side of the market, but are recorded as separate transac? tions. This, in turn, implies positive serial correlation in transactiontype” (Choi et al., 1988, p. 221)
 
 “Limit orders also can cause serial dependence in transaction type. Suppose the currentbid and ask quotes from the dealer are Pb and Pa, respectively. Limit orders to sell (buy) whose prices are lower (higher) than or equal to Pt,(Pa) are transacted at the market. All other limit orders remain in the dealer's book until there is a change in his quotations. However, a change in the dealer's quotation will result in transactions only on one side of the orders in the book. For exam? ple, if the "equilibrium" price increases (decreases), many ofthe limit orders to sell (buy) would be transacted at the same time. These transactions are recorded separately and would, therefore, induce serial correlation in transaction type.” (Choi et al., 1988, p. 221)
 
 “If these informed traders attempt to hide their information by splitting their trades into medium size trades, we should see medium size trades associated with higher price discovery in the dominant exchange and not in the other (non-dominant) exchanges. Underpinning our analysis is the intuition that an informed trader is likely to choose the options market venue (and option trade size) that best protects her ability to hide.” ([Anand and Chakravarty, 2007, p. 183)
 
 "Orders might also be split by option series" (anandStealthTradingOptions2007)
+
 
 Prior classical works assess the performance of classical rules in-sample (cp. [[@ellisAccuracyTradeClassification2000]]541) or in an out-of-sample setting (cp. [[@grauerOptionTradeClassification2022]]7--9) and ([[@chakrabartyTradeClassificationAlgorithms2007]]3814--3815).  In the presence of tunable hyperparameters in machine learning algorithms, we separate the dataset into *three* disjoint sets. The training set is used to fit the classifier to the data. The validation set is dedicated to tuning the hyperparameters, and the test set is used for unbiased out-of-sample estimates. 
 
