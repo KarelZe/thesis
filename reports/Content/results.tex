@@ -641,7 +641,7 @@ Compared to the vanilla \glspl{GBRT}, performance degrades across almost all sub
 
 \textbf{Transformer With Self-Training}
 
-Transformers with pre-training objectives outperform the benchmark in all subsets apart from index options and trades outside the quotes. For \gls{ISE} trades in \cref{tab:diff-ise-transformer-semi} pre-training improves performance across subsets, reaching accuracies greater than \SI{86}{\percent}. The only exception is index options, where the performance gap slightly widens. Deep-\gls{OTM}  options and options with long maturity profit the most from the introduction of option features. 
+Transformers with pre-training objectives outperform the benchmark in all subsets apart from index options and trades outside the quotes. For \gls{ISE} trades in \cref{tab:diff-ise-transformer-semi} pre-training improves performance across subsets, reaching accuracies greater than \SI{86}{\percent}. The only exception is index options, where the performance gap slightly widens. Deep-\gls{ITM}  options and options with long maturity profit the most from the introduction of option features. 
 
 For trades at the \gls{CBOE} performance improvements associated with pre-training are slightly lower across several sub-groups. Positively, pre-training improves robustness, as the performance gap to the benchmarks narrows for trades outside the quotes. The results in conjunction with the identical model architecture suggest, that pre-training on unlabelled trades encodes exchange-specific knowledge, which improves performance and robustness on \gls{ISE} trades, but does not universally profit \gls{CBOE} trades. 
 
@@ -835,7 +835,7 @@ We compare the feature importances of rule-based and machine learning-based clas
     \label{fig:sage-importances}
 \end{figure}
 
-From \cref{fig:sage-importances} that all models achieve the largest improvement in loss from quoted prices and if provided from the quoted sizes. The contribution of the \gls{NBBO} to performance is roughly equal for all models, suggesting that even simple heuristics effectively exploit the data. For machine learning-based predictors, quotes at the exchange level hold equal importance in classification. This contrast with \gls{GSU} methods, which rely less on exchange-level quotes and mostly classify trades based on upstream rules. The performance improvements from the trade size and quoted size, are slightly lower for rule-based methods compared to machine-learning-based methods.  Transformers and \glspl{GBRT} gain performance from the addition of option features, i.e., moneyness and time-to-maturity. In conjunction with the results from the robustness checks, this suggests that the improvement observed for long-running options or \gls{OTM}  options is directly linked to the moneyness or time to maturity of the traded option itself. However, it remains unclear how these features interact with others. Regardless of the method used, changes in trade price before or after the trade are irrelevant for classification and can even harm performance. Similarly, additional features such as option type, issue type, the trading volume of the option series, and the underlying are also irrelevant. Thus, we note that there is a significant overlap between the importance of features in classical trade classification rules and machine learning-based predictors.
+From \cref{fig:sage-importances} that all models achieve the largest improvement in loss from quoted prices and if provided from the quoted sizes. The contribution of the \gls{NBBO} to performance is roughly equal for all models, suggesting that even simple heuristics effectively exploit the data. For machine learning-based predictors, quotes at the exchange level hold equal importance in classification. This contrast with \gls{GSU} methods, which rely less on exchange-level quotes and mostly classify trades based on upstream rules. The performance improvements from the trade size and quoted size, are slightly lower for rule-based methods compared to machine-learning-based methods.  Transformers and \glspl{GBRT} gain performance from the addition of option features, i.e., moneyness and time-to-maturity. In conjunction with the results from the robustness checks, this suggests that the improvement observed for long-running options or \gls{ITM} options is directly linked to the moneyness or time to maturity of the traded option itself. However, it remains unclear how these features interact with others. Regardless of the method used, changes in trade price before or after the trade are irrelevant for classification and can even harm performance. Similarly, additional features such as option type, issue type, the trading volume of the option series, and the underlying are also irrelevant. Thus, we note that there is a significant overlap between the importance of features in classical trade classification rules and machine learning-based predictors.
 
 \clearpage
 
@@ -869,7 +869,7 @@ Adapted from \textcite[][12]{theissenTestAccuracyLee2000} a Wilcoxon test is con
 
 \textbf{Results}
 
-The true and the estimated effective spreads for the test sets are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimated the effective spreads of rules on a older subset of option trades at the \gls{CBOE}, which can be compared against. Our results match theirs in magnitude. \todo{Compare more recent study e.g., \autocite{muravyevOptionsTradingCosts2020} or \autocite{kaeckPriceImpactBid2022}}
+The true and the estimated effective spreads for the test sets are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimated the effective spreads of rules on a older subset of option trades at the \gls{CBOE}, which can be compared against. Our results match theirs in magnitude.
 
 \begin{table}[!ht]
     \centering
@@ -886,4 +886,4 @@ Thus, $\operatorname{gsu}_{\mathrm{large}}$ provides the best estimate of the ef
 
 \todo{“In addition, my results offer little help in answering why option bid-ask spreads are so large. This is one of the biggest puzzles in the options literature—existing theories of the option spread fail to explain its magnitude and shape (Muravyev and Pearson (2014)).”}
 
-\todo{compare against \textcite[][4981]{muravyevOptionsTradingCosts2020}}
+\todo{compare against \textcite[][4981]{muravyevOptionsTradingCosts2020} or \autocite{kaeckPriceImpactBid2022}}
