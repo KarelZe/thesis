@@ -19,6 +19,8 @@ The appropriate view differs by data availability i.e., if the order type or sub
 
 In anticipation of \cref{sec:data-preprocessing}, we adopt a customer's position-based view in relation to the market maker. Nevertheless, it is worth noting that the concepts presented in this thesis can be applied to other perspectives as well.
 
+\todo{new word: “Second, since net buying of puts by customers is tantamount to net put selling by market makers, and such order flow positively predicts market returns, option market makers may have information relevant for predicting market returns.” found in \textcite[][2]{chordiaIndexOptionTrading2021}}
+
 As the trade initiator is frequently absent in option datasets, it must be inferred using trade classification algorithms. The following section introduces basic rules for trade classification. We start with the ubiquitous quote and tick rule and continue with the more recent depth and trade size rule. Our focus is on classification rules, that sign trades on a trade-by-trade basis. Consequently, we omit classification rules for aggregated trades, like the \gls{BVC} algorithm of \textcite[][1466--1468]{easleyFlowToxicityLiquidity2012}.
 
 \subsection{Basic Rules}\label{sec:basic-rules}
@@ -39,6 +41,8 @@ The quote rule follows the rationale, that market makers provide quotes, against
 By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing midspread trades including ones based on the subsequent quotes, and contemporaneous, or the subsequent transaction. Yet, the most common solution to overcome this limitation is, coupling the quote rule with other approaches, as done in \cref{sec:hybrid-rules}.
 
 The quote rule can be estimated at the exchange level or on the \gls{NBBO}.
+
+\todo{“The structure of the U.S. options market is similar to that of the equity market but has some distinct features. Options are typically cross-listed across multiple fully electronic exchanges, and the NBBO rule is enforced. Investors can post limit or market orders, and market-makers are obliged to provide continuous two-sided quotes.” Make clear, what is the difference and why it matters.}
 
 \subsubsection{Tick Test}\label{sec:tick-test}
 

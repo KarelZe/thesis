@@ -8,7 +8,7 @@
     \label{app:literature-ml-tc}
     \begin{table}[ht]
         \centering
-        \caption*[Literature on Trade Classification Using Machine Learning.]{Literature on trade classification using machine learning. Improvement is the out-of-sample performance over the best baselines if multiple baselines are reported. Data requirements may not be identical to these of classical rules.}
+        \caption[Literature on Trade Classification Using Machine Learning.]{Literature on trade classification using machine learning. Improvement is the out-of-sample performance over the best baselines if multiple baselines are reported. Data requirements may not be identical to these of classical rules.}
         \label{tab:literature-trade-classification-ml}
         \begin{tabular}{@{}p{3cm}p{3cm}lp{4cm}p{4cm}l@{}}
             \toprule
@@ -22,13 +22,16 @@
     \end{table}
 \end{landscape}
 
+\subsection{Summary Statistics}
+\label{app:summary-statistics}
+
 
 \subsection{Power-Transforms of Features}
 \label{app:power-transforms-of-features}
 
 \begin{table}[ht]
     \centering
-    \caption*[Power-Transforms of Features]{Power-transforms of features. \lambda~specifies the exponent. Transformations estimated on \gls{ISE} training set.}
+    \caption[Power-Transforms of Features]{Power-transforms of features. \lambda~specifies the exponent. Transformations estimated on \gls{ISE} training set.}
     \label{tab:power-transformerations}
     \begin{tabular}{lS}
         \toprule
@@ -95,7 +98,7 @@
             \item[*] Notation assumes, that the previous or next trade price is distinguishable.
         \end{tablenotes}
     \end{threeparttable}
-    \caption*[Overview of Features and Transformations]{Overview of Features and Transformations}
+    \caption[Overview of Features and Transformations]{Overview of Features and Transformations}
     \label{tab:features-transformations}
 \end{table}
 
@@ -106,7 +109,7 @@
 \begin{figure}[ht]
     \centering
     \includegraphics{auto-corr-features.pdf}
-    \caption*[Autocorrelation of Features]{Autocorrelation Features. Own work.}
+    \caption[Autocorrelation of Features]{Autocorrelation Features. Own work.}
     \label{fig:auto-correlation-features}
 \end{figure}
 
@@ -116,7 +119,7 @@
 
 \begin{table}[ht]
     \centering
-    \caption*[Accuracies of Supervised Approaches With Re-Training On \glsentryshort{CBOE} and \glsentryshort{ISE} Sample]{This table reports the accuracy of \glspl{GBRT} for different feature sets on the \gls{ISE} and \gls{CBOE} test set after re-training on \gls{ISE} training and validation set. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For feature set classical, $\operatorname{gsu}_{\mathrm{small}}$ is the benchmark and otherwise $\operatorname{gsu}_{\mathrm{large}}$.}
+    \caption[Accuracies of Supervised Approaches With Re-Training On \glsentryshort{CBOE} and \glsentryshort{ISE} Sample]{This table reports the accuracy of \glspl{GBRT} for different feature sets on the \gls{ISE} and \gls{CBOE} test set after re-training on \gls{ISE} training and validation set. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For feature set classical, $\operatorname{gsu}_{\mathrm{small}}$ is the benchmark and otherwise $\operatorname{gsu}_{\mathrm{large}}$.}
     \label{tab:results-supervised-retraining-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
@@ -165,6 +168,6 @@
     % \subfloat[Head (2,8)]{\label{sfig:hb}\includegraphics[width=.23\textwidth]{attention_head_8_layer_2_color_green_ise_quotes_mid.pdf}}\hfill
     % \subfloat[Head (3,8)]{\label{sfig:hc}\includegraphics[width=.23\textwidth]{attention_head_8_layer_3_color_green_ise_quotes_mid.pdf}}\hfill
     % \subfloat[Head (4,8)]{\label{sfig:hd}\includegraphics[width=.23\textwidth]{attention_head_8_layer_4_color_green_ise_quotes_mid.pdf}}\\
-    \caption*[Rule-Like Roles of All Attention Heads]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). Plot visualises the attention weights for a trade executed at the quote, correctly classified by the model.}
+    \caption[Rule-Like Roles of All Attention Heads]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). Plot visualises the attention weights for a trade executed at the quote, correctly classified by the model.}
     \label{fig:attention-heads-ise-all-transformer}
     \end{figure}

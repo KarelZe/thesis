@@ -226,7 +226,7 @@ The search space for the semi-supervised variant is identical to the supervised 
         $\ell_2$ Leaf Regularisation & $\operatorname{UniformInt}[2, 30]$            & 12                                     & 9                                      & 13                                     \\
         Random Strength              & $\operatorname{LogUniform}[\num{1e-9}, 10.0]$ & \num{2e-8}                             & \num{5e-8}                             & \num{5e-8}                             \\
         Bagging Temperature          & $\operatorname{Uniform}[0.0, 1.0]$            & 0.34010535578784745                    & 0.5214954412829511                     & 0.4666577105566224                     \\ \midrule
-        \multicolumn{2}{l}{Validation Accuracy in \%}                                               & {$\downarrow \num{64.29671279599335}$} & {$\downarrow \num{74.83010065958079}$} & {$\downarrow \num{76.41433947686962}$} \\ \bottomrule
+        \multicolumn{2}{l}{Validation Accuracy in \%}                                               & {$\textcolor{viz-red}{\downarrow} \num{64.29671279599335}$} & {$\textcolor{viz-red}{\downarrow} \num{74.83010065958079}$} & {$\textcolor{viz-red}{\downarrow} \num{76.41433947686962}$} \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -315,7 +315,7 @@ The hyperparameter search space for Transformers with a pre-training objective i
         Learning rate $\eta$                 & $\operatorname{LogUniform}[\num{3e-5}, \num{3e-4}]$ & \num{1e-6}                           & \num{1e-6}                           & \num{1e-6}                  \\
         Weight decay $\lambda$               & $\operatorname{LogUniform}[\num{1e-6}, \num{1e-3}]$ & \num{6e-5}                           & \num{6e-5}                           & \num{6e-5}                  \\ \midrule
         Validation Accuracy \%               & Pre-Train                                           & {\num{95.89540958404541}}            & {\num{95.64009308815002}}           & {\num{94.06319856643677}}   \\
-                                             & Fine-Tune                                           & {$\uparrow \num{65.13623935106421}$} & {$\uparrow \num{75.69871634547757}$} & {$\uparrow \num{77.8904}$}  \\ \bottomrule
+                                             & Fine-Tune                                           & {$\textcolor{viz-green}{\uparrow}\num{65.13623935106421}$} & {$\textcolor{viz-green}{\uparrow} \num{75.69871634547757}$} & {$\textcolor{viz-green}{\uparrow} \num{77.8904}$}  \\ \bottomrule
     \end{tabular}
 \end{table}
 

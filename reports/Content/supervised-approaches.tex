@@ -326,6 +326,7 @@ where $\mathbf{S} \in \mathbb{R}^{d_s \times \ell_s}$ and $\mathbf{Z} \in \mathb
 
 Rather than relying on a single attention function, \textcite[][4--5]{vaswaniAttentionAllYou2017} introduce multiple \emph{attention heads}, which perform attention in parallel on $H$ \emph{different} linear projections of queries, keys, and values. The \emph{multi-head attention} enables the model to learn richer representations of the input, as attention heads operate independently, they can pick up unique patterns or focus on different positions in the sequence at once. Multi-head attention is visualised in \cref{fig:transformer-architecture-overview} (centre).
 
+\todo{introduce word modalities}
 Exemplary for machine translation, \textcite[][5795]{voitaAnalyzingMultiHeadSelfAttention2019} show, that heads serve indeed distinct purposes like learning positional or syntactic relations between tokens. It is conceivable, that for tabular data this maps to dependencies between features. In practice, Transformers may not leverage all attention heads and some heads could even be pruned without impacting the performance \autocites[][9]{michelAreSixteenHeads2019}[][5805]{voitaAnalyzingMultiHeadSelfAttention2019}.
 
 Multi-head attention can be computed as:
