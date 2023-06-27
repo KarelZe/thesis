@@ -1,5 +1,5 @@
+Our second feature set extends the first feature set by the trade size and size of the quotes, required to estimate hybrid rules involving the depth rule and trade size rule. Both rules achieve state-of-the-art performance on option trades when paired with hybrid algorithms and are thus an important source of features. We model the depth rule as the ratio between ask and bid sizes and the trade size rule as the ratio between the size of the trade and the quoted bid and ask sizes. Since features are not discretised, we obtain a generic formulation of the trade size rule, where part of the quoted size can remain unfilled. This potentially helps to distinguish limit from market orders. The trade price and midspread required for the depth rule are already encompassed in the first feature set. More generically, trade size is known to strongly affect classification. ([[@savickasInferringDirectionOption2003]]889) and ([[@ellisAccuracyTradeClassification2000]]537) report, that better classification is achieved for smaller trades, as smaller trades are more likely to be executed at the quotes. By providing the model with the trade and quoted sizes we hope to make these nuances learnable.
 
-![[Pasted image 20230626184331.png]]
 
 ![[Pasted image 20230626184455.png]]
 
