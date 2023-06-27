@@ -24,12 +24,11 @@ Next, we discuss state-of-the-art classifiers suitable for trade classification.
 \subsection{Selection of Approaches}\label{sec:selection-of-approaches}
 
 In this thesis, we perform a succinct literature discussion to select a set of supervised classifiers based on empirical evidence. In anticipation of the results, we ultimately select the FT-Transformer and Gradient Boosting for trade classification. To guide our discussion, we establish the following requirements a classifier must fullfil:
-
-\emph{performance:} The approach must deliver state-of-the-art performance in tabular classification tasks. Trades are typically provided as tabular datasets, consisting of rows representing instances and columns representing features. The classifier must be well-suited for probabilistic classification on tabular data.
-
-\emph{scalability:}  The approach must scale to datasets with > 10~Mio. samples. Due to the high trading activity and long data history, datasets may comprise millions of samples, so classifiers must cope with large quantities of trades.
-
-\emph{extensibility:} The approach must be extendable to train on partially-labelled trades.
+\begin{enumerate}[label=(\roman*),noitemsep]
+\item \emph{performance:} The approach must deliver state-of-the-art performance in tabular classification tasks. Trades are typically provided as tabular datasets, consisting of rows representing instances and columns representing features. The classifier must be well-suited for probabilistic classification on tabular data.
+\item \emph{scalability:}  The approach must scale to datasets with > 10~Mio. samples. Due to the high trading activity and long data history, datasets may comprise millions of samples, so classifiers must cope with large quantities of trades.
+\item \emph{extensibility:} The approach must be extendable to train on partially-labelled trades.
+\end{enumerate}
 
 Trade classification, as we framed it, fits into supervised learning on tabular data, which is comprehensively covered by the research community with several studies reviewing and benchmarking newly proposed approaches against established machine learning methods.
 
