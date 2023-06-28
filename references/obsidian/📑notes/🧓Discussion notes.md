@@ -1,13 +1,4 @@
 
-- moneyness / time-to-maturity / how do both relate with trade classification / motives
-- low accuracy for index options
-	- Study sources of missclassification. See e. g., [[@savickasInferringDirectionOption2003]]
-	- The extent to which inaccurate trade classification biases empirical research dependes on whether misclassifications occur randomly or systematically [[@theissenTestAccuracyLee2000]]. This document also contains ideas how to study the impact of wrong classifications in stock markets. Might different in option markets.
-	- “Spreads are portfolios of options of the same type (either only calls or only puts). Combinations are portfolios of options of different types. Traders can form these complex trades by individually buying the component options or by trading standard packages. The advantage of the latter approach is that the trader is subject to only one bid-ask spread, while buying the component options individually results in paying the bid-ask spread for each option. The market maker determines how to allocate the bid-ask spread among all options in a complex trade. Thus, not all (if any) of the component options necessarily trade at their quotes. Therefore, complex trades are highly likely to produce RQ and outside-quote trades. Furthermore, labeling complex trades as buys or  sells is not straightforward. For example, a bull spread involves buying a call option and selling another call option with a higher strike price. Thus, a buy requires a sell, and it is not clear whether treating the two trades separately is appropriate. Index option trading involves many complex trades because taking covered positions in index options is not as easy (or possible) as in equity options. Frequently, the only alternatives to naked positions in index options are complex options. Therefore, one way to reduce the problem of complex trades is to exclude all index trades. As Table 1 indicates, this results in a significant increase in the classification precision of all methods, but loses roughly one quarter of the sample, which is unacceptable.” (Savickas and Wilson, 2003, p. 899) (Savickas and Wilson, 2003, p. 898)
-	- Neither of the models can detect complex trades. It would require attention across rows and columns, which we outruled.
-	- “In contrast to Pan and Poteshman (2006), we use a unique data set from the International Securities Exchange (ISE), which contains the complete daily record of buy and sell activity in index options over a 12-year period, together with details on whether a transaction is involved in opening or closing an options position. These options are actively traded; indeed, on the ISE, the notional volume in index options is about onefifth of the total notional volume in all individual stock options during our sample period.” (Chordia et al., 2021, p. 1)
-
-“Savickas and Wilson 899 sells is not straightforward. For example, a bull spread involves buying a call option and selling another call option with a higher strike price. Thus, a buy requires a sell, and it is not clear whether treating the two trades separately is appropriate. Index option trading involves many complex trades because taking covered positions in index options is not as easy (or possible) as in equity options. Frequently, the only alternatives to naked positions in index options are complex options. Therefore, one way to reduce the problem of complex trades is to exclude all index trades. As Table 1 indicates, this results in a significant increase in the classification precision of all methods, but loses roughly one quarter of the sample, which is unacceptable.” (Savickas and Wilson, 2003, p. 899)
 - low accuracy for trades outside the quotes
 	- see also [[@ellisAccuracyTradeClassification2000]] for trades inside and outside the spread
 	- “On the one hand, we would expect that the greater (smaller) the transaction price relative to the midspread, the more likely that the transaction is a buy (sell) and occurs on an uptick (a downtick), implying higher classification success for outside-quote trades, especially for large trades in which the trade initiator is willing to pay a premium for the execution of his large order.” ([[@savickasInferringDirectionOption2003]] p. 888)
@@ -26,6 +17,36 @@
 	- labelled data and cmputational data. 
 	- Finetune. Low cost of inference
 - which algorithm is no preferable? Do Friedman rank test
+
+
+## Trade size
+![[tsize-my-results.png]]
+(Similar to [[@ellisAccuracyTradeClassification2000]]537)
+
+## Moneyness / Trade Size
+
+![[moneyness-vs-trade-size.png]]
+(test set)
+
+## Time-to-Maturity
+![[time-to-maturity-tsize-result.png]]
+(test set)
+
+## Index Options
+- only few index options in sample
+
+![[index-options-results.png]]
+(test set)
+
+- moneyness / time-to-maturity / how do both relate with trade classification / motives
+- low accuracy for index options
+	- Study sources of missclassification. See e. g., [[@savickasInferringDirectionOption2003]]
+	- The extent to which inaccurate trade classification biases empirical research dependes on whether misclassifications occur randomly or systematically [[@theissenTestAccuracyLee2000]]. This document also contains ideas how to study the impact of wrong classifications in stock markets. Might different in option markets.
+	- “Spreads are portfolios of options of the same type (either only calls or only puts). Combinations are portfolios of options of different types. Traders can form these complex trades by individually buying the component options or by trading standard packages. The advantage of the latter approach is that the trader is subject to only one bid-ask spread, while buying the component options individually results in paying the bid-ask spread for each option. The market maker determines how to allocate the bid-ask spread among all options in a complex trade. Thus, not all (if any) of the component options necessarily trade at their quotes. Therefore, complex trades are highly likely to produce RQ and outside-quote trades. Furthermore, labeling complex trades as buys or  sells is not straightforward. For example, a bull spread involves buying a call option and selling another call option with a higher strike price. Thus, a buy requires a sell, and it is not clear whether treating the two trades separately is appropriate. Index option trading involves many complex trades because taking covered positions in index options is not as easy (or possible) as in equity options. Frequently, the only alternatives to naked positions in index options are complex options. Therefore, one way to reduce the problem of complex trades is to exclude all index trades. As Table 1 indicates, this results in a significant increase in the classification precision of all methods, but loses roughly one quarter of the sample, which is unacceptable.” (Savickas and Wilson, 2003, p. 899) (Savickas and Wilson, 2003, p. 898)
+	- Neither of the models can detect complex trades. It would require attention across rows and columns, which we outruled.
+	- “In contrast to Pan and Poteshman (2006), we use a unique data set from the International Securities Exchange (ISE), which contains the complete daily record of buy and sell activity in index options over a 12-year period, together with details on whether a transaction is involved in opening or closing an options position. These options are actively traded; indeed, on the ISE, the notional volume in index options is about onefifth of the total notional volume in all individual stock options during our sample period.” (Chordia et al., 2021, p. 1)
+
+“Savickas and Wilson 899 sells is not straightforward. For example, a bull spread involves buying a call option and selling another call option with a higher strike price. Thus, a buy requires a sell, and it is not clear whether treating the two trades separately is appropriate. Index option trading involves many complex trades because taking covered positions in index options is not as easy (or possible) as in equity options. Frequently, the only alternatives to naked positions in index options are complex options. Therefore, one way to reduce the problem of complex trades is to exclude all index trades. As Table 1 indicates, this results in a significant increase in the classification precision of all methods, but loses roughly one quarter of the sample, which is unacceptable.” (Savickas and Wilson, 2003, p. 899)
 
 ## time-to-maturity
 - “Expiration dummies are particularly good instruments. Investors substitute expiring option positions with similar nonexpiring ones in the three-day window around the expiration day (every third Friday of a month). Because investors are short call and put equity options on average, the rollover creates unprecedentedly large selling pressure in the nonexpiring options. Option expirations create exogenous variation in order imbalance, and thus exogenous variation in market-maker inventories as investors open new positions to replace positions in expiring options. Volatility and returns of the underlying stocks change little around expiration. Thus, fundamentals and informed trading are not responsible for the order imbalance.” (Muravyev, 2016, p. 700)
