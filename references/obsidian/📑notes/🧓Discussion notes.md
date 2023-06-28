@@ -38,6 +38,10 @@
 ![[index-options-results.png]]
 (test set)
 
+## Proximity To Quotes
+![[proximity-quotes-results.png]]
+(all sets)
+
 - moneyness / time-to-maturity / how do both relate with trade classification / motives
 - low accuracy for index options
 	- Study sources of missclassification. See e. g., [[@savickasInferringDirectionOption2003]]
