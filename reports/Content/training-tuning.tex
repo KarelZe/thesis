@@ -1,6 +1,6 @@
 \subsection{Training and Tuning}\label{sec:training-and-tuning}
 
-Experiments are conducted on shared nodes of the bwHPC cluster, with 10 assigned Intel Xeon Gold 6230 cores at \SI{2.1}{\GHz}, an NVIDIA V100 \SI{32}{\giga\byte}, and \SI{92.160}{\giga\byte} random access memory running Red Hat Enterprise Linux release 8.4. For reproducibility, the implementation and experiment tracking are publicly available.\footnote{Code is available at~\url{https://github.com/KarelZe/thesis} Experiments are tracked at \url{https://wandb.ai/fbv/thesis}.}
+Experiments are conducted on shared nodes of the bwHPC cluster, with 10 assigned Intel Xeon Gold 6230 cores at \SI{2.1}{\GHz}, an NVIDIA V100 \SI{32}{\giga\byte}, and \SI{92.160}{\giga\byte} random access memory running Red Hat Enterprise Linux release 8.4. For reproducibility, the implementation and experiment tracking are publicly available.\footnote{Code is available at~\url{https://github.com/KarelZe/thesis}. Experiments are tracked at \url{https://wandb.ai/fbv/thesis}.}
 
 \subsubsection{Training of Supervised
     Models}\label{sec:training-of-supervised-models}
@@ -16,9 +16,9 @@ Our implementation of \glspl{GBRT} is based on CatBoost \autocite[][5--6]{prokho
 
 \cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The plots reveal several insights.
 
-Firstly, the model overfits the training data, as evident from the generalisation gap between training and validation accuracies. To improve generalisation performance, we apply regularisation techniques.
+First, the model overfits the training data, as evident from the generalisation gap between training and validation accuracies. To improve generalisation performance, we apply regularisation techniques.
 
-Secondly, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This discrepancy suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction.
+Second, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This discrepancy suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction.
 
 \begin{figure}[ht]
     \centering
@@ -54,7 +54,7 @@ In regression trees of gradient-boosting, the split finding is typically approxi
 
 To reduce overfitting, we monitor the training and validation accuracies when adding new trees to the ensemble and suspend training once validation accuracy decreases for \num{100} iterations. The ensemble is then cut back to achieve the highest validation accuracy. In the experiment above, early stopping does not apply, as validation accuracy continues to improve for larger ensembles. We employ additional measures to address overfitting but treat them as a tunable hyperparameter, with further details provided in \cref{sec:hyperparameter-tuning}.
 
-We incorporate these ideas to leverage the improvements for our large-scale studies.
+We incorporate all ideas into our large-scale studies.
 
 \textbf{Transformer}
 
@@ -87,7 +87,7 @@ A major problem in classification with neural networks is, that the network beco
 
 \emph{Learning Rate Schedule}
 
-When training Transformers, the learning rate is often adjusted throughout the training process. \textcite[][7]{vaswaniAttentionAllYou2017} use a learning rate warm-up period, whereby the learning rate is linearly increased in the early stages of training, followed by decay using an inverse square root learning rate schedule. The warm-up phase is thought to stabilise gradients as weight updates are considerably smaller. According to the research of \textcite[][3--4]{xiongLayerNormalizationTransformer2020}, learning rate warm-up is crucial for training post-norm Transformers, but optional for pre-norm Transformers like the FT-Transformer. Nevertheless, we experiment with the effect of learning rate warm-up in our setting and combine a linear warm-up for two epochs with subsequent cosine decay, as visualised in \cref{fig:lr-lin-warmup-cosine-decay}.
+When training Transformers, the learning rate is often adjusted throughout the training process. \textcite[][7]{vaswaniAttentionAllYou2017} use a learning rate warm-up period, whereby the learning rate is linearly increased in the early stages of training, followed by decay using an inverse square root learning rate schedule. The warm-up phase is thought to stabilise gradients as weight updates are considerably smaller. According to \cref{sec:residual-connections-layer-norm}, learning rate warm-up is crucial for training post-norm Transformers, but optional for pre-norm Transformers like the FT-Transformer. Nevertheless, we experiment with the effect of learning rate warm-up in our setting and combine a linear warm-up for two epochs with subsequent cosine decay, as visualised in \cref{fig:lr-lin-warmup-cosine-decay}.
 
 \begin{figure}[!ht]
     \centering
@@ -96,13 +96,13 @@ When training Transformers, the learning rate is often adjusted throughout the t
     \label{fig:lr-lin-warmup-cosine-decay}
 \end{figure}
 
-The scheduled learning rate has soothing effects on the training loss and accuracy estimates, as evident in \cref{fig:fttransformer-optimisations-loss-acc}. Therefore, we adopt a training setup with a learning rate schedule, despite the potential negative effects on training time. The learning rate itself is tuned as part of \cref{sec:hyperparameter-tuning}.
+The scheduled learning rate has soothing effects on the training loss and accuracy estimates, as evident in \cref{fig:fttransformer-optimisations-loss-acc}. Therefore, we adopt a training setup with a learning rate schedule, despite the negative effects on training time. The learning rate itself is tuned as part of \cref{sec:hyperparameter-tuning}.
 
 
 \emph{Batch Size}
 
 % 20 epochs (\num{36460} / \num{145840} iterations) 
-We use a fixed batch size of \num{8192} samples for the feature set classical / classical-size and \num{2048} for the feature set option, which is the largest possible size on our \gls{GPU}. Training is performed for \num{20} epochs at maximum. All samples within the training and validation set are shuffled randomly to promote convergence. Although a smaller batch size could enhance the generalisation capabilities of the model, as found in \textcite[][3]{keskarLargeBatchTrainingDeep2017}, we train on the largest number of trades per iteration, to optimise throughput. Additional regularisation is added to the model, but treated as a tunable hyperparameter.
+We use a fixed batch size of \num{8192} samples for the feature set classic / size and \num{2048} for the feature set option, which is the largest possible size on our \gls{GPU}. Training is performed for \num{20} epochs at maximum. All samples within the training and validation set are shuffled randomly to promote convergence. Although a smaller batch size could enhance the generalisation capabilities of the model, as found in \textcite[][3]{keskarLargeBatchTrainingDeep2017}, we train on the largest number of trades per iteration, to optimise throughput. Additional regularisation is added to the model, but treated as a tunable hyperparameter.
 
 \emph{Early Stopping and Checkpointing}
 
@@ -110,7 +110,7 @@ Similar to the \gls{GBRT}, we halt training prematurely based on a consecutive d
 
 \emph{Optimizer}
 
-In line with \textcite[][6]{gorishniyRevisitingDeepLearning2021}, we train the models using the AdamW optimizer \autocite[][2--3]{loshchilovDecoupledWeightDecay2019} with the standard hyperparameters~\footnote{Parameters $\beta_{1}=0.9, \beta_{2}=0.999$, and $\epsilon = \num{1e-8}$}. The weight decay coefficient in AdamW determining the degree of regularisation is tuned in \cref{sec:hyperparameter-tuning}. Weight decay is selectively applied and excludes embeddings, LayerNorm, and biases.
+In line with \textcite[][6]{gorishniyRevisitingDeepLearning2021}, we train the models using the AdamW optimizer \autocite[][2--3]{loshchilovDecoupledWeightDecay2019} with the standard hyperparameters.\footnote{Parameters $\beta_{1}=0.9, \beta_{2}=0.999$, and $\epsilon = \num{1e-8}$.} The weight decay coefficient in AdamW determining the degree of regularisation is tuned in \cref{sec:hyperparameter-tuning}. Weight decay is selectively applied and excludes embeddings, LayerNorm, and biases.
 
 In summary, we extend the training setup of \textcite[][6]{gorishniyRevisitingDeepLearning2021} with a sample weighting scheme and learning rate schedule aimed at boosting performance and training stability.
 
@@ -135,13 +135,13 @@ The FT-Transformer is trained in two stages. First, we train for \num{20} epochs
 
 During pre-training and fine-tuning, early stopping is applied based on the value of the objective on the validation set, using patience of \num{10}. This particular setup is adopted from \textcite[][15]{rubachevRevisitingPretrainingObjectives2022} for being compute-efficient and offering competitive performance. The hidden dimension of the classification head is set to \num{512}. Based on \textcite[][3]{clarkElectraPretrainingText2020} \SI{15}{\percent} of all tokens are replaced. 
 
-Since the unlabelled sample includes various types of trades that may not be comparable to the labelled sample, we update all layers during fine-tuning. Empirically, finetuning the entire model is among the most successful methods for large-scale Transformers, as results from \textcite[][104--105]{raeScalingLanguageModels2022} indicate.
+Since the unlabelled sample includes various types of trades that may not be comparable to the labelled sample, we update all layers during fine-tuning. Empirically, finetuning the entire model is among the most successful methods for large-scale Transformers, as results from \textcite[][104--105]{raeScalingLanguageModels2022} suggest.
 
 Following \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}, the learning rate and weight decay are shared between the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
 
 \subsubsection{Hyperparameter Tuning}\label{sec:hyperparameter-tuning}
 
-All of our machine-learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[][5]{grinsztajnWhyTreebasedModels2022}, emphasise the need for tuning routines, as the test performance of the FT-Transformer and \glspl{GBRT} largely fluctuates with the hyperparameter configuration. For a fair comparison, we employ an exhaustive hyperparameter search, to find a suitable hyperparameter configuration for each of our models.
+All of our machine learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[][5]{grinsztajnWhyTreebasedModels2022}, emphasise the need for tuning routines, as the test performance of the FT-Transformer and \glspl{GBRT} largely fluctuates with the hyperparameter configuration. For a fair comparison, we employ an exhaustive hyperparameter search, to find a suitable hyperparameter configuration for each of our models.
 
 Classical rules have no hyperparameters per se, but the best hybrid rules can be attained through hyperparameter search.
 
@@ -188,7 +188,7 @@ As documented in \cref{tab:hyperparameter-space-gbm}, we tune five hyperparamete
     \label{fig:ise-gbm-hyperparam}
 \end{figure}
 
-In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \gls{GBRT} trained on classical-size features. The loss surface is smooth with large connected regions. As the best solution achieving \SI{75.03504680858162}{\percent} accuracy lies within a splayed region of dense sampling, it is a good choice for further analysis. Consistent with the loss surface of \cref{fig:ise-gbm-hyperparam-classical}, the trees are grown to the maximum depth and a high learning rate, indicating the need for complex ensemble members highly corrective to previous predictions. Part of this could be due to the low signal-to-noise ratio in financial data.
+In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \gls{GBRT} trained on size features. The loss surface is smooth with large connected regions. As the best solution achieving \SI{75.03504680858162}{\percent} accuracy lies within a splayed region of dense sampling, it is a good choice for further analysis. Consistent with the loss surface of \cref{fig:ise-gbm-hyperparam-classical}, the trees are grown to the maximum depth and a high learning rate, indicating the need for complex ensemble members highly corrective to previous predictions. Part of this could be due to the low signal-to-noise ratio in financial data.
 
 The loss surface of the \gls{GBRT} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.99459643967347}{\percent}, worst trials even underperform these of smaller feature sets. Based on this observation we conjecture, that more data does not per se improve the model and that models require a thoughtful tuning procedure. By this means, our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles for trade classification. Results are tabulated in \cref{tab:solutions-gbm}.
 
@@ -254,9 +254,13 @@ The search space for the FT-Transformer is identical to \textcite[][18]{gorishni
     \end{tabular}
 \end{table}
 
-We vary the layer count and the embedding dimension, which directly affect the capacity of the network. Layers refer to the number of Transformer blocks in the encoder stack. The dimension of numerical and continuous embeddings $d_e$ is at \num{256} at maximum, which is half the dimension used in the author's work. We make this sacrifice, due to being computation-bound by the size of the dataset. Dropout \autocite[][1930]{srivastavaDropoutSimpleWay} in the attention module and the \gls{FFN} is used to prevent overfitting the training data. As discussed in \cref{sec:training-of-supervised-models}, we treat the weight decay term in the weight update rule of the AdamW optimizer as a hyperparameter, with larger values for \lambda~enforcing a stronger shrinkage of weights and thereby reducing overfitting.
+We vary the layer count and the embedding dimension, which directly affect the capacity of the network. Layers refer to the number of Transformer blocks in the encoder stack. The dimension of numerical and continuous embeddings $d_e$ is at \num{256} at maximum, which is half the dimension used in the author's work. We make this sacrifice, due to being computation-bound by the size of the dataset. Dropout in the attention module and the \gls{FFN} is used to prevent overfitting the training data. As discussed in \cref{sec:training-of-supervised-models}, we treat the weight decay term in the weight update rule of the AdamW optimizer as a hyperparameter, with larger values for \lambda~enforcing a stronger shrinkage of weights and thereby reducing overfitting.
+
+\todo{cite stuff only at first use e.g., Transformer names, dropout Bootstap....}
 
 Due to the pseudo-random sampling during the first trials of Bayesian search combined with the reduced number of trials for the Transformer studies, the tested hyperparameter combinations are identical for all feature sets, as visible in \cref{fig:ise-transformer-hyperparam}.
+
+\todo{Adjust z-score to move best combination to top.}
 
 \begin{figure}[!h]
     \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set Classical\label{fig:ise-transformer-hyperparam-classical}]{\includegraphics[width=0.6\linewidth]{3jpe46s1-hyperparam-search-space.pdf}}
