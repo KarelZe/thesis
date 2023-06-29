@@ -1,4 +1,47 @@
 
+Visually, the performance differences between gradient boosting and transformers on the same feature sets are minor, which is in line with previous studies ([[@grinsztajnWhyTreebasedModels2022]], [[@gorishniyRevisitingDeepLearning2021]]) These studies conclude, generally for tabular modelling, that neither Transformers nor GBRTs are universally superior. Our results validate this observation, specifically for trade classification.
+
+However, our findings contradict those of ([[@ronenMachineLearningTrade2022]]14--49), who benchmark tree-based ensembles in the form of gls-RF and neural networks in the form of gls-FFN for trade classification in the equity and bond market and find clear dominance of the tree-based approach. Beyond differences in the market under study and variants, two methodological differences are evident, that explain the diverging results. First, unlike gls-FFN, the FT-Transformer is tailored to learn on tabular data through being a rotationally-invariant learner. Second, the data pre-processing and feature engineering is tailored to the requirements of neural networks. Without these measures, tree-based approaches excel due to their robustness in handling skewed and missing data.
+
+
+From our experiments we observed, th
+
+
+
+
+
+
+So far it remain
+
+
+Figure 5.11 illustrates that the AUC-score of outlier detection can increase in the static setting on high-dimensional data with GMD preprocessing. This confirms the results from [Keller et al., 2012, Trittenbach and Böhm, 2019]. The experiments show that outlier detection profits from subspace search in the streaming setting, too:
+
+
+**Distribution in Sample: TTM, Trade Size, Moneyness** 
+- deep in the money-options most frequently traded / liquidity
+
+
+**Accuracy of Basic Rules Is Downward-Biased by Coverage** **Accuracy of 
+
+Trade Size Rule Is High And Highly Variant** **Improvements Relative To Literature** 
+
+How would a linear model do? 
+
+**No Universal Superior Classifier**
+
+
+
+**Supervised Classifier Performance on CBOE**
+
+**Link Between Unlabelled Trades And Generalisation Performance** 
+Why is pre-training successful? Why is self-training not successful? 
+
+**Robustness of Index Options / Options Outside The Quotes**
+**Importance of Moneyness and Time-to-Maturity** 
+**The Elephant In The Room** 
+Requires labelled data. Compute intensive.
+
+
 - low accuracy for trades outside the quotes
 	- see also [[@ellisAccuracyTradeClassification2000]] for trades inside and outside the spread
 	- “On the one hand, we would expect that the greater (smaller) the transaction price relative to the midspread, the more likely that the transaction is a buy (sell) and occurs on an uptick (a downtick), implying higher classification success for outside-quote trades, especially for large trades in which the trade initiator is willing to pay a premium for the execution of his large order.” ([[@savickasInferringDirectionOption2003]] p. 888)
@@ -78,3 +121,7 @@
 - https://dmurav.com/CV_Dmitry_Muravyev_202305.pdf
 - for index options see [[@chordiaIndexOptionTrading2021]]
 - To test these hypotheses it would be best if we had the precise motivation behind the trades. While such analysis is not feasible here, using trade classification algorithms, we are able to assign stock and option volume as buyer or seller initiated. Easley et al. (1998) show how this directional volume is more informative than raw volume, because signed volume provides important information about the motivation of the trade (bullish or bearish). ([[@caoInformationalContentOption2005]])
+
+7. Discussion 7.1. Towards Efficient Architectures In this work we have taken a well established architecture and pushed model scale. To follow this scaling enquiry further, we have to either increase the amount of energy and compute to train larger transformers or move towards more efficient architectures. 20 Scaling Language Models: Methods, Analysis & Insights from Training Gopher We break down the computational cost from training Gopher in Table A26 and Appendix F and observe the majority is spent in the linear maps. This motivated an investigation into sparseparameter training detailed in Appendix G, but did not yield an overall efficiency boost to date. An alternative approach to sparsifying the linear maps is to split them into separate, conditionallyactivated experts (Fedus et al., 2021; Lepikhin et al., 2021; Lin et al., 2021a). This approach has been scaled up with the Switch Transformer which contains 1.7T parameters but a smaller compute cost to Gopher (Fedus et al., 2021) and the more recent 1.2T GLaM (?) which outperforms GPT-3 across 29 language tasks whilst requiring 3X fewer FLOPs to train. We separately consider a retrieval mechanism searching over the training set for relevant extracts during pre-training (Borgeaud et al., 2021), partially avoiding the need to memorise knowledge into network weights. This approach reached GPT-3-level language model performance with a 7 billion parameter model and over a 10× reduction in training compute. Thus, whilst this paper focused on transformer models, this is likely a transitory stage as more efficient architectures are developed.
+
+5. Discussion & Conclusion The trend so far in large language model training has been to increase the model size, often without increasing the number of training tokens. The largest dense transformer, MT-NLG 530B, is now over 3× larger than GPT-3’s 170 billion parameters from just two years ago. However, this model, as well as the majority of existing large models, have all been trained for a comparable number of tokens—around 300 billion. While the desire to train these mega-models has led to substantial engineering innovation, we hypothesize that the race to train larger and larger models is resulting in models that are substantially underperforming compared to what could be achieved with the same compute budget. We propose three predictive approaches towards optimally setting model size and training duration, based on the outcome of over 400 training runs. All three approaches predict that Gopher is substantially over-sized and estimate that for the same compute budget a smaller model trained on more data will perform better. We directly test this hypothesis by training Chinchilla, a 70B parameter model, and show that it outperforms Gopher and even larger models on nearly every measured evaluation task. Whilst our method allows us to make predictions on how to scale large models when given additional compute, there are several limitations. Due to the cost of training large models, we only have two comparable training runs at large scale (Chinchilla and Gopher), and we do not have additional tests at intermediate scales. Furthermore, we assume that the efficient computational frontier can be described by a power-law relationship between the compute budget, model size, and number of training tokens. However, we observe some concavity in log 𝑁𝑜𝑝𝑡 at high compute budgets (see Appendix E). This suggests that we may still be overestimating the optimal size of large models. Finally, the training runs for our analysis have all been trained on less than an epoch of data; future work may consider the multiple epoch regime. Despite these limitations, the comparison of Chinchilla to Gopher validates our performance predictions, that have thus enabled training a better (and more 1 lightweight) model at the same compute budget. Though there has been significant recent work allowing larger and larger models to be trained, our analysis suggests an increased focus on dataset scaling is needed. Speculatively, we expect that scaling to larger and larger datasets is only beneficial when the data is high-quality. This calls for responsibly collecting larger datasets with a high focus on dataset quality. Larger datasets will require extra care to ensure train-test set overlap is properly accounted for, both in the language modelling loss but also with downstream tasks. Finally, training for trillions of tokens introduces many ethical and privacy concerns. Large datasets scraped from the web will contain toxic language, biases, and private information. With even larger datasets being used, the quantity (if not the frequency) of such information increases, which makes dataset introspection all the more important. Chinchilla does suffer from bias and toxicity but interestingly it seems less affected than Gopher. Better understanding how performance of large language models and toxicity interact is an important future research question. While we have applied our methodology towards the training of auto-regressive language models, we expect that there is a similar trade-off between model size and the amount of data in other modalities. As training large models is very expensive, choosing the optimal model size and training steps beforehand is essential. The methods we propose are easy to reproduce in new settings.
