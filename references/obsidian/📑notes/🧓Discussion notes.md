@@ -3,6 +3,32 @@ Visually, the performance differences between gradient boosting and transformers
 
 However, our findings contradict those of ([[@ronenMachineLearningTrade2022]]14--49), who benchmark tree-based ensembles in the form of gls-RF and neural networks in the form of gls-FFN for trade classification in the equity and bond market and find clear dominance of the tree-based approach. Beyond differences in the market under study and variants, two methodological differences are evident, that explain the diverging results. First, unlike gls-FFN, the FT-Transformer is tailored to learn on tabular data through being a rotationally-invariant learner. Second, the data pre-processing and feature engineering is tailored to the requirements of neural networks. Without these measures, tree-based approaches excel due to their robustness in handling skewed and missing data.
 
+Improvements in accuracy relative to related works are strong as a comprehensive comparison against \cref{app:literature-ml-tc} reveals. As no other study considers the option market or identical model architectures, the results are only indicative. The studies report improvements between percentage-1.1 and percentage-13.3 for their machine learning models over the benchmark. Our absolute improvements exceed all linear models, but the absolute improvements are smaller relative to some tree-based and deep learning models in ([[@ronenMachineLearningTrade2022]]49).  Yet, our models are trained on significantly fewer features whereby the data requirements align with the of the benchmark. Additionally, training is performed on a fixed training set instead of a rolling window approach requiring a fraction of the training cost. We believe, this conservative framing aligns well with scenarios, where trade classification is only a prerequisite to other empirical research.
+
+
+
+As we observe significant improvements from re-training, as documented in appendix-retraining, we expect to see  
+
+One has to interpret the results with care, as they originate from different models and models. . Our models are however trained on a fraction of features and on a fixed train-test split . As re-training, a 
+
+One has to interpret the results with care, as they are derived from different models and markets.
+
+
+
+We thus place more emphasis on other 10 Random 25.0% Average human rater 34.5% GPT-3 5-shot 43.9% Gopher 5-shot 60.0% Chinchilla 5-shot 67.6% Average human expert performance 89.8% June 2022 Forecast 57.1% June 2023 Forecast 63.4% Table 6 | Massive Multitask Language Understanding (MMLU). We report the average 5-shot accuracy over 57 tasks with model and human accuracy comparisons taken from Hendrycks et al. (2020). We also include the average prediction for state of the art accuracy in June 2022/2023 made by 73 competitive human forecasters in Steinhardt (2021). tasks for which leakage is less of a concern, such as MMLU (Hendrycks et al., 2020) and BIG-bench (BIG-bench collaboration, 2021) along with various closed-book question answering and common sense analyses.
+
+Training took 3.5 days on 8 P100 GPUs. Even our base model surpasses all previously published models and ensembles, at a fraction of the training cost of any of the competitive models.
+
+
+
+
+![[Pasted image 20230629105151.png]]
+
+As the authors rely on conceptually different approaches in other markets, the results are indicative.
+
+More importantly, the LLaMA-13B is also competitive on these benchmarks with GPT-3 and Chinchilla, despite being 5-10× smaller. This model runs on a single V100 GPU during inference.
+
+Our results in Table 4 show that despite the lack of task-specific tuning our model performs surprisingly well, yielding better results than all previously reported models with the exception of the Recurrent Neural Network Grammar [8].
 
 From our experiments we observed, th
 
@@ -29,6 +55,7 @@ How would a linear model do?
 
 **No Universal Superior Classifier**
 
+A particular strength
 
 
 **Supervised Classifier Performance on CBOE**
