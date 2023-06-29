@@ -8,6 +8,7 @@ The performance is stable for different trade sizes and over time. Similarly, ac
 
 glspl-GBRT achieve particularly strong results for trades at the quotes or if quote data at the exchange level is incomplete. In these subsets, improvements reach up to percentage-16.01 in the gls-cboe and thus tighten the gap between trades inside or at the quotes. Consistent across all feature sets and exchanges, glspl-GBRT fail to improve upon classical rules for trades outside the spread, underperforming the benchmark by percent--0.89 to percent--5.43. We identify the relatively stronger performance of quote-based classification on these trades as a reason that poses major challenges. 
 
+
 In line with ([[@grauerOptionTradeClassification2022]]41--44) we observe a strong performance of the benchmark outside the quotes, This. While we also observe a In our test samples, also the benchmarks deteriorate for trades outside the spread, whereas for We attribute the discrepancies to ()... (piece in)
 
 Opposing to

@@ -5,22 +5,19 @@ However, our findings contradict those of ([[@ronenMachineLearningTrade2022]]14-
 
 Improvements in accuracy relative to related works are strong as a comprehensive comparison against \cref{app:literature-ml-tc} reveals. As no other study considers the option market or identical model architectures, the results are only indicative. The studies report improvements between percentage-1.1 and percentage-13.3 for their machine learning models over the benchmark. Our absolute improvements exceed all linear models, but the absolute improvements are smaller relative to some tree-based and deep learning models in ([[@ronenMachineLearningTrade2022]]49).  Yet, our models are trained on significantly fewer features whereby the data requirements align with the of the benchmark. Additionally, training is performed on a fixed training set instead of a rolling window approach requiring a fraction of the training cost. We believe, this conservative framing aligns well with scenarios, where trade classification is only a prerequisite to other empirical research.
 
+So far it remains opens open, why most classifiers struggle to correctly classify index options and options traded outside the quotes. We discuss these aspect next. 
 
+([[@savickasInferringDirectionOption2003]]888) document for options and ([[@ellisAccuracyTradeClassification2000]]546) for stocks, lower accuracies for trades outside the quotes. In our sample performance for the benchmark is similar 
 
-As we observe significant improvements from re-training, as documented in appendix-retraining, we expect to see  
+One expects that trades above the ask (below the bid) will almost always be initiated by a buyer (seller), reflecting, for example, the premium that a large buyer is willing to pay for liquidity.
 
-One has to interpret the results with care, as they originate from different models and models. . Our models are however trained on a fraction of features and on a fixed train-test split . As re-training, a 
+As performance diminishes of quote rule
 
-One has to interpret the results with care, as they are derived from different models and markets.
+()
 
+(...) The explanation provided only accounts for the lower accuracies observed in index options as a whole, but it does not address why accuracies trail the benchmark. Some insights can be gained from the data distribution: index trades make up only percentage-1 of all trades in the total dataset or percentage-1 in the gls-ise training set, resulting in a highly imbalanced distribution of the security type. Consequently, the model has fewer index option samples to train on and is susceptible to overfitting if it learns distinguishable patterns for security types. A sample weighting scheme could place more emphasis on index options. 
 
-
-We thus place more emphasis on other 10 Random 25.0% Average human rater 34.5% GPT-3 5-shot 43.9% Gopher 5-shot 60.0% Chinchilla 5-shot 67.6% Average human expert performance 89.8% June 2022 Forecast 57.1% June 2023 Forecast 63.4% Table 6 | Massive Multitask Language Understanding (MMLU). We report the average 5-shot accuracy over 57 tasks with model and human accuracy comparisons taken from Hendrycks et al. (2020). We also include the average prediction for state of the art accuracy in June 2022/2023 made by 73 competitive human forecasters in Steinhardt (2021). tasks for which leakage is less of a concern, such as MMLU (Hendrycks et al., 2020) and BIG-bench (BIG-bench collaboration, 2021) along with various closed-book question answering and common sense analyses.
-
-Training took 3.5 days on 8 P100 GPUs. Even our base model surpasses all previously published models and ensembles, at a fraction of the training cost of any of the competitive models.
-
-
-
+In our test sets options traded outside the quotes can be reliably classified with the quote rule, which aligns with the intuition that customers are willing to trade at an additional liquidity premium, hence outside the quotes. We suspect the reason, why our methods fail to learn in this simple pattern in the data distribution. Only percentage-0.0 in the entire gls-ise dataset are traded outside the quotes. Thus, the model can overfit the training samples more easily, eventually leading to poor out-of-sample performance. Robustness estimates of classifier and benchmark are based on fewer observations. As both subgroups account for only a fraction of the entire set and differences in performance are only minor. We conclude that our approaches are stable across multiple dimensions and between exchanges.
 
 ![[Pasted image 20230629105151.png]]
 
