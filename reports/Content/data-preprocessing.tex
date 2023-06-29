@@ -1,26 +1,20 @@
 \addtocontents{toc}{\protect\newpage}
 \section{Empirical Study}\label{sec:empirical-study}
 
-In this section, we demonstrate the effectiveness of machine learning for trade classification in an empirical setting. To commence, the construction of datasets is presented.
+In this section, we demonstrate the efficacy of machine learning for trade classification in an empirical setting. We begin by outlining the dataset construction.
 
 \subsection{Data and Data Preparation}\label{sec:data-and-data-preparation}
 
-% \todo{This paper employs one of the largest data sets in recent intraday options literature.}
 The following chapter describes the construction of datasets, that suffice the data requirements of classical trade classification rules and for our machine learning models. We also discuss how we define and infer the true trade initiator.
 
 \subsubsection{Data Collection}\label{sec:data-collection}
 
-% \textbf{Data Sources}
 
 Testing the empirical accuracy of our approaches requires option trades where the true initiator is known. To arrive at a labelled sample, we combine data from four individual data sources. Our primary source is LiveVol, which records option trades executed at US option exchanges at a transaction level. We limit our focus to option trades executed at the \gls{CBOE} and \gls{ISE}. LiveVol contains both trade and matching quote data. Like most proprietary data sources, it does not distinguish the initiator nor does it include the involved trader types. For the \gls{CBOE} and \gls{ISE} exchange, the \gls{ISE} Open/Close Trade Profile and \gls{CBOE} Open-Close Volume Summary contain the buy and sell volumes for the option series by trader type aggregated on a daily level. A combination of the LiveVol dataset with the open/close data, allows us to infer the trade initiator for a subset of trades. For evaluation and use in some of our machine learning models, we acquire additional underlying and option characteristics from IvyDB's OptionMetrics.
 
-% \textbf{Trade Initiator}
+In \cref{sec:trade-initiator} we discussed three views on the trade initiator. Due to the absence of order entry times or order types in our data sources, we define the trade initiator based on the position relative to the market maker, who caters to the liquidity demand. Specifically, we classify customer trades as buyer-initiated if the trade is due to a customer buy order and as seller-initiated for customer sales. As previous literature, e.g., \textcite[][4276]{garleanuDemandBasedOptionPricing2009} suggests that trader types, for example, proprietary traders, have a similar role to market makers by supplying liquidity, we limit our analysis to trades between customers and market makers for which the picture is unambiguous. Our definition is consistent with the of \textcite[][8]{grauerOptionTradeClassification2022}.
 
-In \cref{sec:trade-initiator} we discussed three views on the trade initiator. As our data sources do not provide the order entry times or order types for both sides of the trade, we define the trade initiator based on the position relative to the market maker, who caters to the liquidity demand. More specifically, we classify customer trades as buyer-initiated if the trade is due to a customer buy order and as seller-initiated for customer sales. As previous literature, e.g., \textcite[][4276]{garleanuDemandBasedOptionPricing2009} suggests that trader types, for example, proprietary traders, have a similar role to market makers by supplying liquidity, we limit our analysis to trades between customers and market makers for which the picture is unambiguous. Our definition is consistent with the of \textcite[][8]{grauerOptionTradeClassification2022}.
 
-% \textbf{Sample Construction}
-
-% \todo{Optional: Minor importance of cust-cust trades? “Second, market-makers stand on the liquidity-providing side of most trades. In the options market, market-makers transfer liquidity not only over time but also across different options. With several hundred option contracts available for each underlying, two investors rarely select the same option and thus they are likely to trade with a market-maker. Also, exchange rules grant lead market-makers substantial competitive edge over other liquidity providers (e.g., the 60/40 NBBO order split rule). These rules further strengthen lead market-makers position as the main liquidity providers and make it hard for new players to enter” Found in \textcite{muravyevOrderFlowExpected2016}.}
 Our sample construction follows \textcite[][7--9]{grauerOptionTradeClassification2022}, fostering comparability between both works. We acquire transaction-level options trade data for all major US exchanges from LiveVol. The dataset is tabular, and each record is time-stamped to the second. For each transaction, the executing exchange, trade price, trade volume, quotes and quote sizes for the exchanges where the option is quoted, as well as the \gls{NBBO} are recorded. This is sufficient to estimate the quote rule, depth rule, and trade size rule. In addition, for tick-based algorithms, we add the previous and subsequent distinguishable trade prices. We can uniquely identify the traded option series from a distinct key consisting of the underlying, expiration date, option type and strike price. Our analysis is conducted on transactions at the \gls{ISE} and \gls{CBOE}. To purge the data of potential errors, we filter out:
 \begin{enumerate}[label=(\roman*),noitemsep]
     \item trades with a trade price $\leq \SI{0}[\$]{}$,
@@ -36,11 +30,9 @@ To infer the true label, we exploit that, if there were only customer buy or sel
 
 For the \gls{ISE} trades, our matched sample spans from 2 May 2005 to 31 May 2017 and includes \num{49203747} trades. The period covers the full history of \gls{ISE} open/close data up to the last date the dataset was available to us. Our matched \gls{CBOE} sample consists of \num{37155412} trades between 1 January 2011 and 31 October 2017. The sample period is governed by a paradigm shift in the construction of the \gls{CBOE} open/close dataset and the most recent trade in our LiveVol subscription.
 
-Following our initial rationale to explore semi-supervised methods, we reserve unlabelled trades between 24 October 2012 and 24 October 2013 at the \gls{ISE} for pre- and self-training. We provide further details in \cref{sec:train-test-split}. Since LiveVol doesn't distinguish by trader types, this dataset includes both customer and non-customer trades, as well as simultaneous buy and sell trades on the same day. Within the period, we filter out trades for which true label can be inferred, to avoid overlaps with the supervised data set. This is essential for self-training, as labelled and unlabelled data are provided to the model simultaneously.
+Following our initial rationale to explore semi-supervised methods, we reserve unlabelled trades between 24 October 2012 and 24 October 2013 at the \gls{ISE} for pre- and self-training. We provide further details in \cref{sec:train-test-split}. Since LiveVol doesn't distinguish by trader types, this dataset includes both customer and non-customer trades, as well as simultaneous buy and sell trades on the same day. Within this period, we filter out trades for which the true label can be inferred to avoid overlap with the supervised dataset. This is crucial for self-training, where labelled and unlabelled data are presented to the model simultaneously.
 
-While our procedure makes the inference of the true trade initiator partly feasible, concerns regarding a selection bias due to the excessive filtering have to be raised. We address these concerns and report summary statistics for unmerged and merged sub-samples in \cref{app:summary-statistics}.
-
-In the following chapter, we motivate feature engineering, present our feature sets and discuss strategies for transforming features into a form that accelerates the training of our models.
+While our procedure makes the inference of the true trade initiator partly feasible, concerns regarding a selection bias due to the excessive filtering have to be raised. We address these concerns and report summary statistics for unmerged and merged sub-samples in \cref{app:summary-statistics}. In the following chapter, we motivate feature engineering, present our feature sets and discuss strategies for transforming features into a form that accelerates the training of our models.
 
 \subsubsection{Data Preprocessing}\label{sec:data-preprocessing}
 
@@ -48,7 +40,7 @@ Classical algorithms infer the initiator of the trade from the \emph{raw} price 
 
 \textbf{Features and Feature Sets}
 
-To establish a common ground, we derive three sets of features from raw data. The feature sets, abbreviated as \glsdisp{FS}{FS}, are motivated by features inherent to classical trade classification rules and are consequently derived from quote and price data. Except for a third feature set, which includes option characteristics. Separated feature sets improve the transferability of our results.
+To establish a common ground, we define three feature sets, abbreviated as \glsdisp{FS}{FS}. These sets are motivated by features inherent to classical heuristics and are consequently derived from quote and price data. Except for a third feature set, which includes option characteristics. Using separate feature sets enhances result transferability.
 
 \begin{ThreePartTable}
     \centering
