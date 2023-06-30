@@ -14,6 +14,24 @@ The performance of hybrids, such as the gls-LR algorithm, hinges with the relian
 
 Notably, the combination of ([[@grauerOptionTradeClassification2022]]33) including overrides from the trade size and depth rules performs best, achieving percentage-67.20 accuracy on the gls-ise test set and percentage-75.03 on the entire dataset. Yet, the performance deteriorates most sharply between sets.
 
+From cref-tab we see, that practically all rule-based approaches leave trades unclassified. This is due to conceptual constraints in the rule itself, but also a result of missing data, which equally affects rules with theoretical full coverage. 
+
+As shown in \cref{fig:classical-coverage-over-time} coverage decreases qualitatively for selected classification rules over time. It is particularly low when the trade initiator is inferred from the \gls{NBBO}. For the tick test, the strongly fluctuating coverage stems from the absence of a distinguishable trade price. For the quote rule, we isolate isolate missing or inverted quotes from midspread trades.  
+Through comparison between cref-fig-1 and cref-fig-2 it is evident, that the majority of unclassified trades are midspread trades. Each rule can only classify percentage-90 percent of all trades, which is considerably lower than coverage rates reported in the stock market ([[@ellisAccuracyTradeClassification2000]]535). In our datasets, hybrids, have the advantage of leveraging multiple data sources, resulting in a higher coverage. If, as in the combinations of ([[@grauerOptionTradeClassification2022]]18--19), the basic rules are strong individually, higher coverage is associated with better performance. Our machine learning classifiers are robust to missing data, as they can learn alternate patterns for missing features.
+
+
+
+The relative success of (deep stacked) hybrids in the option market stems from improved coverage, as long as rules achieve accuracies
+
+[[grauerOptionTradeClassification2022]], circumvent the issue, as they leverage multiple data sources and rules through stacking. In an imperfect data regime, we conclude, that stacking can increase coverage and at best performance.
+
+For studies like ours or the of \textcites{grauerOptionTradeClassification2022}[][887]{savickasInferringDirectionOption2003}, which apply minimal filtering, the high degree of unclassified trades for some rules can (downward) bias the results. The recent approaches of \textcite[][18--19]{grauerOptionTradeClassification2022} 
+
+\todo{This is not entirely true, as it suggests, that low coverage of quote \gls{NBBO} comes from missing data, but it comes from midspread trades. For the tick rule, I can not distinguish if the trade price was not found, or if it was not different. Rewrite.}
+  
+
+Next, we test the supervised classifiers on the \gls{ISE}/\gls{CBOE} test sets, which prove to be a challenging test ground for rule-based classifiers as our results from above indicate.
+
 **Finding 1: Accuracy of tick-based algorithms is downward-biased by missingness**
 - grauer et al trace back low accuracy of tick-based algorithms to illiquidity in option markets. 
 - We do not have the time to previous trades. One would expect higher performance for more frequently traded options. Results of Grauer doe not indicate such a behaviour.
