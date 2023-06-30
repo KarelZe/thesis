@@ -86,15 +86,13 @@ Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][3
     \end{tabular}
 \end{table}
 
-We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe-classical} and observe a similar ranking to \cref{tab:ise-classical}. Overall, the performance of classical trade classification rules further diminishes or remains at a low level strengthening the need for alternative classifiers. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the \gls{ISE} sample, the quote rule estimated on the \gls{NBBO}, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a lower performance than the quote rule applied to \gls{CBOE} quotes.
-
-Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best, the strong outperformance does not carry over to the test set as depicted \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[][33]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
+We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe-classical} and observe a similar ranking to \cref{tab:ise-classical}. Overall, the performance of classical trade classification rules further diminishes or remains at a low level strengthening the need for alternative classifiers. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the \gls{ISE} sample, the quote rule estimated on the \gls{NBBO}, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a lower performance than the quote rule applied to \gls{CBOE} quotes. Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best, the strong outperformance does not carry over to the test set as depicted \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[][33]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
 
 From \cref{tab:ise-classical} we see, that practically all rule-based approaches leave trades unclassified. This is due to conceptual constraints in the rule itself, but also a result of missing data, which equally affects rules with theoretical full coverage. The latter is important here.
 
 \begin{figure}[!h]
     \centering
-    \includegraphics{coverage-over-time.pdf}
+    \includegraphics{classical-coverage-over-time.pdf}
     \caption[Coverage of Rule-Based Classifiers Over Time]{Coverage of rule-based classifiers on \gls{ISE} and \gls{CBOE} sample over time. The bar \myline{} indicates the beginning of a new subset based on the train-test split.}
     \label{fig:classical-coverage-over-time}
 \end{figure}
