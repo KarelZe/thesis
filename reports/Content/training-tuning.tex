@@ -177,14 +177,14 @@ As documented in \cref{tab:hyperparameter-space-gbm}, we tune five hyperparamete
 \begin{figure}[!h]
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set Classical\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[width=0.6\textwidth]{1gzk7msy-hyperparam-search-space.pdf}}
     \vfill
-    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set Size\label{fig:ise-gbm-hyperparam-classical-size}]{\addtocounter{subfigure}{1}\includegraphics[width=0.6\textwidth]{3vntumoi-hyperparam-search-space.pdf}}
+    \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set Size\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[width=0.6\textwidth]{3vntumoi-hyperparam-search-space.pdf}}
+    \caption[Hyperparameter Search Space of Gradient-Boosting]{Hyperparameter Search Space of \gls{GBRT} on \gls{ISE} Validation Set}
+    \label{fig:ise-gbm-hyperparam}
 \end{figure}
 \clearpage
 \begin{figure}[!ht]
-    \addtocounter{figure}{-1}
+    \ContinuedFloat
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set Option\label{fig:ise-gbm-hyperparam-ml}]{\includegraphics[width=0.6\textwidth]{2t5zo50f-hyperparam-search-space.pdf}}
-    \caption[Hyperparameter Search Space of Gradient-Boosting]{Hyperparameter Search Space of \gls{GBRT} on \gls{ISE} Validation Set}
-    \label{fig:ise-gbm-hyperparam}
 \end{figure}
 
 In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \gls{GBRT} trained on size features. The loss surface is smooth with large connected regions. As the best solution achieving \SI{75.03504680858162}{\percent} accuracy lies within a splayed region of dense sampling, it is a good choice for further analysis. Consistent with the loss surface of \cref{fig:ise-gbm-hyperparam-classical}, the trees are grown to the maximum depth and a high learning rate, indicating the need for complex ensemble members highly corrective to previous predictions. Part of this could be due to the low signal-to-noise ratio in financial data.
@@ -257,19 +257,17 @@ We vary the layer count and the embedding dimension, which directly affect the c
 
 Due to the pseudo-random sampling during the first trials of Bayesian search combined with the reduced number of trials for the Transformer studies, the tested hyperparameter combinations are identical for all feature sets, as visible in \cref{fig:ise-transformer-hyperparam}.
 
-\todo{Adjust z-score to move best combination to top.}
-
 \begin{figure}[!h]
     \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set Classical\label{fig:ise-transformer-hyperparam-classical}]{\includegraphics[width=0.6\linewidth]{3jpe46s1-hyperparam-search-space.pdf}}
     \vfill
-    \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set Size\label{fig:ise-transformer-hyperparam-classical-size}]{\addtocounter{subfigure}{1}\includegraphics[width=0.6\linewidth]{1qx3ul4j-hyperparam-search-space.pdf}}
+    \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set Size\label{fig:ise-transformer-hyperparam-classical-size}]{\includegraphics[width=0.6\linewidth]{1qx3ul4j-hyperparam-search-space.pdf}}
+    \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter Search Space of FT-Transformer on \gls{ISE} Validation Set}
+    \label{fig:ise-transformer-hyperparam}
 \end{figure}
 \clearpage
 \begin{figure}[!ht]
-    \addtocounter{figure}{-1}
+    \ContinuedFloat
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set Option\label{fig:ise-transformer-hyperparam-ml}]{\includegraphics[width=0.6\linewidth]{2h81aiow-hyperparam-search-space.pdf}}
-    \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter Search Space of FT-Transformer on \gls{ISE} Validation Set}
-    \label{fig:ise-transformer-hyperparam}
 \end{figure}
 
 With the smaller number of trials, the search space is less densely populated. Despite the decreased coverage, for the searched combinations the impact of hyperparameter tuning is less pronounced than for the \gls{GBRT}. As such, accuracies for \cref{fig:ise-transformer-hyperparam} fluctuate between \SI{62.55}{\percent} and \SI{64.65}{\percent}. This translates to other feature sets. Unaffected, the validation accuracies are higher than for gradient boosting.
