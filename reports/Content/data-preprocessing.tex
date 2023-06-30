@@ -139,7 +139,7 @@ Normalisation and log transformations have the advantage of preserving the data 
 
 As for the categorical variables, consisting of the option type, the underlying, and the issue type, different transformations are required. We perform a label encoding by randomly mapping every unique value onto their integer key. This basic transformation defers the handling of categorical data to the model. Also, it minimises target leakage. Missing classes or classes unseen during training are mapped to the key of an $\mathtt{[UNK]}$ \gls{token}, as motivated in \cref{sec:token-embeddings}.
 
-The option type and issue type are both low-cardinal with two and five unique classes. Differently, the underlying is high-cardinal with more than \num{9999} distinct classes, as options are written on a wide range of underlyings. The high cardinality of the feature not just drives the computational demand through a higher parameter count but also affects the model's tendency to overfit, as most classes appear infrequently. For simplicity, we do not remove infrequent categories.
+The option type and issue type are both low-cardinal with two and five unique classes. Differently, the underlying is high-cardinal with more than \num{9107} distinct classes, as options are written on a wide range of underlyings, impacting both the model's tendency to overfit and parameter count. For simplicity in evaluation, we do not remove infrequent categories.
 
 Disadvantages of label encoding, as raised in \textcite[][12]{hancockSurveyCategoricalData2020}, such as the unequal contributions of larger keys to the loss in neural networks or the artificially implied order, do not apply here, as the conversion is followed by sophisticated treatments within the models.
 

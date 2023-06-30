@@ -56,11 +56,11 @@ To reduce overfitting, we monitor the training and validation accuracies when ad
 
 We incorporate all ideas into our large-scale studies.
 
-\textbf{Transformer}
+\textbf{FT-Transformer}
 
-As derived in \cref{sec:supervised-approaches}, we rely on the FT-Transformer of \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule \autocite[][1]{liuUnderstandingDifficultyTraining2020}. We investigate minor modifications to the default FT-Transformer to stabilise training and improve overall performance. The default FT-Transformer trained for 10 epochs on \gls{ISE} dataset with classical features and loss and accuracy is visualised in \cref{fig:fttransformer-optimisations-loss-acc}.\footnote{Default configuration documented in \textcite[][18]{gorishniyRevisitingDeepLearning2021}.}
+We rely on the FT-Transformer of \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule \autocite[][1]{liuUnderstandingDifficultyTraining2020}. We investigate minor modifications to the default FT-Transformer to stabilise training and improve overall performance. The default FT-Transformer is trained for 10 epochs on \gls{ISE} dataset with classical features and loss and accuracy are visualised in \cref{fig:fttransformer-optimisations-loss-acc}.\footnote{Default configuration documented in \textcite[][18]{gorishniyRevisitingDeepLearning2021}.}
 
-The convergence behaviour of our model is similar to that of gradient boosting. Equally, a significant generalisation gap exists between the training and validation loss. Particularly concerning, the training loss decreases sharply, while the validation loss spuriously improves over its initial estimate. Despite this, validation accuracy improves throughout the entire training cycle. We reason that the network learns to correctly classify trades, indicated by the improved accuracy, but only attains low-confident correct predictions or confident but erroneous predictions which both contribute to a large validation loss. The shape of the flat validation loss and the decreasing training loss suggest that the training set may not be representative of trades in the validation set. This has broader implications on the classifiability of option trades using decision rules from classical trade classification rules for more recent observations. We explore this phenomenon thoroughly as part of our result discussion.
+The convergence behaviour of our model is similar to that of gradient boosting. Equally, a significant generalisation gap exists between the training and validation loss. Particularly concerning, the training loss decreases sharply, while the validation loss spuriously improves over its initial estimate. Despite this, validation accuracy improves throughout the entire training cycle. We reason that the network learns to correctly classify trades, indicated by the improved accuracy, but only attains low-confident correct predictions or confident but erroneous predictions which both contribute to a large validation loss.
 
 \begin{figure}[!ht]
     \centering
@@ -129,7 +129,7 @@ This section discusses the extensions necessary to train the semi-supervised var
 
 To incorporate unlabelled trades into the training procedure, we combine gradient boosting with a self-training classifier, as derived in \cref{sec:extensions-to-gradient-boosted-trees}. We repeat self-training for 2 iterations and require the predicted class probability to exceed $\tau=0.9$. As the entire ensemble is rebuilt three times, the relatively low number of iterations and high confidence threshold, strike a balance between computational requirements and the need for high-quality predictions. The base classifier is otherwise identical to supervised gradient boosting from \cref{sec:training-of-supervised-models}.
 
-\textbf{Transformer with Pre-Training}
+\textbf{FT-Transformer with Pre-Training}
 
 The FT-Transformer is trained in two stages. First, we train for \num{20} epochs on unlabelled \gls{ISE} trades using the \gls{RTD} head, followed by \num{20} epochs of fine-tuning on labelled \gls{ISE} training data with the binary classification head.
 
@@ -141,9 +141,8 @@ Following \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}, the learn
 
 \subsubsection{Hyperparameter Tuning}\label{sec:hyperparameter-tuning}
 
-All of our machine learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[][5]{grinsztajnWhyTreebasedModels2022}, emphasise the need for tuning routines, as the test performance of the FT-Transformer and \glspl{GBRT} largely fluctuates with the hyperparameter configuration. For a fair comparison, we employ an exhaustive hyperparameter search, to find a suitable hyperparameter configuration for each of our models.
-
-Classical rules have no hyperparameters per se, but the best hybrid rules can be attained through hyperparameter search.
+All of our machine learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[][5]{grinsztajnWhyTreebasedModels2022}, emphasise the need for tuning routines, as the test performance of the FT-Transformer and \glspl{GBRT} largely fluctuates with the hyperparameter configuration. Classical rules have no hyperparameters per se, but the best hybrid rules can be attained through hyperparameter search.
+For a fair comparison, we employ an exhaustive hyperparameter search, to find a suitable hyperparameter configuration for each of our models.
 
 \textbf{Bayesian Search}
 
@@ -171,7 +170,7 @@ Our search space is reported in \cref{tab:hyperparameter-space-gbm}, which is al
     \end{tabular}
 \end{table}
 
-As documented in \cref{tab:hyperparameter-space-gbm}, we tune five hyperparameters for gradient boosting. The first is the depth, which determines the number of levels in each tree. Other than \textcite[][]{gorishniyRevisitingDeepLearning2021}, we increase the upper bound to twelve to allow for more complex ensemble members. Acknowledging the research of \textcite[][14]{friedmanGreedyFunctionApproximation2001} that the learning rate \eta~and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop extending the ensemble based on the early stopping criterion. Random strength, bagging temperature, and $\ell_2$ leaf regularisation are measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness in the selected splits. In a similar vein, the algorithm introduces randomness on the sample level through Bayesian bootstrap. The hyperparameter controls the distribution used for sampling, and implicitly the aggressiveness of bagging. Finally, $\ell_2$ leaf regularisation adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularisation.
+As documented in \cref{tab:hyperparameter-space-gbm}, we tune five hyperparameters for gradient boosting. The first is the depth, which determines the number of levels in each tree. Other than \textcite[][]{gorishniyRevisitingDeepLearning2021}, we increase the upper bound to twelve to allow for more complex ensemble members. Acknowledging the research of \textcite[][14]{friedmanGreedyFunctionApproximation2001} that the learning rate \eta~and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop extending the ensemble based on the early stopping criterion. Random strength, bagging temperature, and $\ell_2$ leaf regularisation are measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness in the selected splits. In a similar vein, the algorithm introduces randomness on the sample level through Bayesian bootstrap \autocite[][130--131]{rubinBayesianBootstrap1981}. The hyperparameter controls the distribution used for sampling, and implicitly the aggressiveness of bagging. Finally, $\ell_2$ leaf regularisation adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularisation.
 
 \cref{fig:ise-gbm-hyperparam-classical} visualises the hyperparameter search space of the \gls{GBRT} on the \gls{ISE} dataset with classical features, from which we can derive several observations. First, hyperparameter tuning has a significant impact on the prediction, as the validation accuracy varies between \SI{58.429}{\percent} and \SI{64.378}{\percent} for different trials. Second, the best hyperparameter combination, marked with \bestcircle, lies off-the-borders surrounded by other promising trials, indicated by the contours, from which we can conclude, that the found solution is a stable and reasonable choice for further analysis.
 
@@ -234,7 +233,7 @@ Matching the supervised results, semi-supervised ensembles exhaust the maximum t
 
 \clearpage
 
-\textbf{Transformer}
+\textbf{FT-Transformer}
 
 The search space for the FT-Transformer is identical to \textcite[][18]{gorishniyRevisitingDeepLearning2021} (variant (b)) with minor deviations and reported in \cref{tab:hyperparameter-space-2}.
 
@@ -255,8 +254,6 @@ The search space for the FT-Transformer is identical to \textcite[][18]{gorishni
 \end{table}
 
 We vary the layer count and the embedding dimension, which directly affect the capacity of the network. Layers refer to the number of Transformer blocks in the encoder stack. The dimension of numerical and continuous embeddings $d_e$ is at \num{256} at maximum, which is half the dimension used in the author's work. We make this sacrifice, due to being computation-bound by the size of the dataset. Dropout in the attention module and the \gls{FFN} is used to prevent overfitting the training data. As discussed in \cref{sec:training-of-supervised-models}, we treat the weight decay term in the weight update rule of the AdamW optimizer as a hyperparameter, with larger values for \lambda~enforcing a stronger shrinkage of weights and thereby reducing overfitting.
-
-\todo{cite stuff only at first use e.g., Transformer names, dropout Bootstap....}
 
 Due to the pseudo-random sampling during the first trials of Bayesian search combined with the reduced number of trials for the Transformer studies, the tested hyperparameter combinations are identical for all feature sets, as visible in \cref{fig:ise-transformer-hyperparam}.
 
@@ -299,7 +296,7 @@ The best combination is identical for all feature sets. The embedding dimension 
 
 \vskip 1.3in
 
-\textbf{Transformer With Pre-Training}
+\textbf{FT-Transformer With Pre-Training}
 
 The hyperparameter search space for Transformers with a pre-training objective is identical to that shown in \cref{tab:hyperparameter-space-2}. As evident from \cref{tab:solutions-transformer-pretraining}, the found solutions are identical to these of the FT-Transformer without pre-training and identical for all three feature sets. During pre-training, we can detect if an token is replaced with \SI{94.06319856643677}{\percent} to \SI{95.89540958404541}{\percent} accuracy.\footnote{Na\"ive prediction yields \SI{85}{\percent} accuracy given the chosen replacement rate.} Validation accuracy after finetuning improves for all models over Transformers without pretraining. As the search space is identically sampled for both variants we can directly attribute the improvements of \SI{0.28}{\percent} to \SI{0.72}{\percent} in validation accuracy to pre-training on unlabelled trades. \todo{Optionally, add a visualisation of pre-training on validation performance (loss + accuracy). Due to reproducible sampling, the effect on validation performance can directly be inferred.} Visualisations of the hyperparameter search spaces are available online.\footnote{See \url{https://wandb.ai/fbv/thesis/runs/12isqh2m} for \gls{FS} classical, for \url{https://wandb.ai/fbv/thesis/runs/2hv1nayy} for \gls{FS} size, and \url{https://wandb.ai/fbv/thesis/runs/3jbqpp4r} for \gls{FS} option for details.}
 
