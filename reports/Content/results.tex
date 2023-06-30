@@ -8,7 +8,9 @@ We now estimate the accuracy of classical trade classification rules on the \gls
 
 We report in \cref{tab:ise-classical} accuracies for the entire data set and separate subsets spanning the periods of train, validation, and test set as defined in \cref{sec:train-test-split}. Doing so enables comparisons with previous works, but also provides meaningful estimates on the test set relevant for benchmarking purposes. Our results are approximately similar to \textcite[][29--33]{grauerOptionTradeClassification2022}. Minor deviations exist, which can be pinned down to differences in handling of unclassified trades and non-positive spreads, as well as divergent implementations of the depth rule.\footnote{Correspondence with the author.}
 
-From all rules, the tick rule performs worst when applied to trade prices at the trading venue with accuracies of a random guess, \SI{49.67}{\percent}. For comparison, a simple majority vote achieves \SI{51.40}{\percent} accuracy. The tick test performs best when estimated on the consecutive trade prices, and additionally, when estimated at the inter-exchange level marginally improves over a random classification, achieving accuracies of \SI{55.25}{\percent} for the reversed tick test. Due to the poor performance, of tick-based algorithms at the exchange level, we estimate all hybrids with last/next price from any exchange, dubbed $\operatorname{tick}_{\mathrm{all}}$ or $\operatorname{rtick}_{\mathrm{all}}$.
+From all rules, the tick rule performs worst when applied to trade prices at the trading venue with accuracies of a random guess, \SI{49.67}{\percent}. For comparison, a simple majority vote achieves \SI{51.40}{\percent} accuracy. The tick test performs best when estimated on the consecutive trade prices, and additionally, when estimated at the inter-exchange level marginally improves over a random classification, achieving accuracies of \SI{55.25}{\percent} for the reversed tick test. Due to the poor performance, of tick-based algorithms at the exchange level, we estimate all hybrids with last/next differing price from any exchange, dubbed $\operatorname{tick}_{\mathrm{all}}$ or $\operatorname{rtick}_{\mathrm{all}}$.
+
+Quote-based algorithms outperform tick-based algorithms delivering accuracy up to \SI{63.72}{\percent} when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites[][891]{savickasInferringDirectionOption2003}[][3]{grauerOptionTradeClassification2022}.
 
 \begin{table}[ht]
     \centering
@@ -41,8 +43,6 @@ From all rules, the tick rule performs worst when applied to trade prices at the
         \bottomrule
     \end{tabular}
 \end{table}
-
-Quote-based algorithms outperform tick-based algorithms delivering accuracy up to \SI{63.72}{\percent} when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites[][891]{savickasInferringDirectionOption2003}[][3]{grauerOptionTradeClassification2022}.
 
 The performance of hybrids, such as the \gls{LR} algorithm, hinges on the reliance on the tick test. Thus, the \gls{EMO} rules and to a lesser extent the \gls{CLNV} rules perform worst, achieving accuracies between \SI{55.42}{\percent} and \SI{57.57}{\percent}. In turn, variants of the \gls{LR}, which uses the quote rule for most trades, are among the best-performing algorithms. By extension, $\operatorname{gsu}_{\mathrm{small}}$ further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$.
 
@@ -86,9 +86,7 @@ Notably, $\operatorname{gsu}_{\mathrm{large}}$, the combination of \textcite[][3
     \end{tabular}
 \end{table}
 
-We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe-classical} and observe a similar ranking to \cref{tab:ise-classical}. Overall, the performance of classical trade classification rules further diminishes or remains at a low level strengthening the need for alternative classifiers. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the \gls{ISE} sample, the quote rule estimated on the \gls{NBBO}, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a lower performance than the quote rule applied to \gls{CBOE} quotes. Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best, the strong outperformance does not carry over to the test set as depicted \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[][33]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
-
-From \cref{tab:ise-classical} we see, that practically all rule-based approaches leave trades unclassified. This is due to conceptual constraints in the rule itself, but also a result of missing data, which equally affects rules with theoretical full coverage. The latter is important here.
+We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe-classical} and observe a similar ranking to \cref{tab:ise-classical}. Overall, the performance of classical trade classification rules further diminishes or remains at a low level. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. Different from the \gls{ISE} sample, the quote rule estimated on the \gls{NBBO}, $\operatorname{quote}_{\mathrm{nbbo}}$, leads to a degraded performance than the quote rule applied to \gls{CBOE} quotes. Again, $\operatorname{gsu}_{\mathrm{small}}$ and $\operatorname{gsu}_{\mathrm{large}}$ perform best, though the strong outperformance does not carry over to the test set as depicted \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[][33]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
 
 \begin{figure}[!h]
     \centering
@@ -97,9 +95,14 @@ From \cref{tab:ise-classical} we see, that practically all rule-based approaches
     \label{fig:classical-coverage-over-time}
 \end{figure}
 
-\todo{This is not entirely true, as it suggests, that low coverage of quote \gls{NBBO} comes from missing data, but it comes from midspread trades. For the tick rule, I can not distinguish if the trade price was not found, or if it was not different. Rewrite.}
+From \cref{tab:ise-classical,tab:cboe-classical} we see, that practically all rule-based approaches leave trades unclassified. This is due to conceptual constraints in the rule itself, but also a result of missing or corrupted data, which equally affects rules with theoretical full coverage. As visualised in \cref{fig:classical-coverage-over-time} coverage decreases qualitatively for selected classification rules over time. It is particularly low when the trade initiator is inferred from the \gls{NBBO}. Theoretically, the tick test can achieve full coverage, in our sample it classifies only $\approx$ \SI{91.5}{\percent}, which is signficantly lower than coverage rates reported in the stock market \autocite[][535]{ellisAccuracyTradeClassification2000}. The low, fluctating coverage stems from the absence of a distinguishable trade price. For the quote rule, we isolate isolate missing or inverted quotes from midspread trades. Through comparison between \cref{fig:classical-coverage-over-time} and \cref{fig:classical-at-mid-over-time} it is evident, that the majority of unclassified trades are midspread trades, whose share increases over time. In our datasets, hybrids, have the advantage of leveraging multiple data sources, resulting in more complete coverage. If, as in the combinations of \textcite[][18--19]{grauerOptionTradeClassification2022}, the basic rules are strong individually, higher coverage is associated with better performance, as fewer trades are classified by a fallback mechanism. Our machine learning classifiers are robust to missing data, as they can learn alternate patterns for missing features.
 
-As shown in \cref{fig:classical-coverage-over-time} coverage decreases qualitatively for selected classification rules over time. It is particularly low when the trade initiator is inferred from the \gls{NBBO}. For studies like ours or the of \textcites{grauerOptionTradeClassification2022}[][887]{savickasInferringDirectionOption2003}, which apply minimal filtering, the high degree of unclassified trades for some rules can (downward) bias the results. The recent approaches of \textcite[][18--19]{grauerOptionTradeClassification2022} circumvent the issue, as they leverage multiple data sources and rules through stacking. In an imperfect data regime, we conclude, that stacking can increase coverage and at best performance.
+\begin{figure}[!h]
+    \centering
+    \includegraphics{classical_at_mid_over_time.pdf}
+    \caption[Mid-Spread Trades Over Time]{Percentage of mid-spread trades on \gls{ISE} and \gls{CBOE} sample over time. Estimated using \gls{NBBO} quotes. The bar \myline{} indicates the beginning of a new subset based on the train-test split.}
+    \label{fig:classical-at-mid-over-time}
+\end{figure}
 
 Next, we test the supervised classifiers on the \gls{ISE}/\gls{CBOE} test sets, which prove to be a challenging test ground for rule-based classifiers as our results from above indicate.
 
@@ -114,7 +117,7 @@ We test the performance of our supervised models. We take the best configuration
     \label{tab:results-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
-                   &             & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                                                 \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
+                   &             & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                                                 \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
         Dataset    & Classifier  & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}              & {Acc. in \%}        & {+/-}              \\ \midrule
         \gls{ISE}  & \gls{GBRT}  & 63.668637                                        & 3.620000                                              & 72.343640                                     & 4.730000           & \bfseries 74.120496 & \bfseries 6.510000 \\
                    & Transformer & \bfseries 63.783020                              & \bfseries 3.730000                                    & \bfseries 72.581107                           & \bfseries 4.970000 & 73.921795           & 6.310000           \\ \addlinespace
@@ -139,7 +142,7 @@ Conceptually similar \textcite[][267]{odders-whiteOccurrenceConsequencesInaccura
     \label{tab:contigency-supervised-classifiers}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
-                                                                          &           & \multicolumn{2}{c}{{\glsentryshort{FS} Classical}}          & \multicolumn{2}{c}{{\glsentryshort{FS} Classical-Size}}      & \multicolumn{2}{c}{{\glsentryshort{FS} Option}}                                             \\
+                                                                          &           & \multicolumn{2}{c}{{\glsentryshort{FS} Classical}}          & \multicolumn{2}{c}{{\glsentryshort{FS} Size}}      & \multicolumn{2}{c}{{\glsentryshort{FS} Option}}                                             \\
         \cmidrule(l){3-4}\cmidrule(l){5-6}\cmidrule(l){7-8}
         \multicolumn{2}{l}{{$\downarrow$ Trans.$\rightarrow$ \gls{GBRT}}} & {Correct} & {Wrong}                                                     & {Correct}                                                    & {Wrong}                                                     & {Correct} & {Wrong}           \\
         \midrule
@@ -185,7 +188,7 @@ We compare the performance of pre-trained Transformers and self-trained gradient
     \label{tab:results-semi-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
-                   &             & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                                                 \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
+                   &             & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                                                 \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
         Dataset    & Classifier  & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}              & {Acc. in \%}        & {+/-}              \\ \midrule
         \gls{ISE}  & \gls{GBRT}  & 63.397514                                        & 3.350000                                              & 72.156489                                     & 4.550000           & 73.536644           & 5.930000           \\
                    & Transformer & \bfseries 64.655751                              & \bfseries 4.600000                                    & \bfseries 72.859054                           & \bfseries 5.250000 & \bfseries 74.551410 & \bfseries 6.940000 \\ \addlinespace
@@ -205,7 +208,7 @@ Expectedly, the pre-trained Transformer performs better for \gls{ISE} trades, im
     \label{tab:contigency-semi-supervised-classifiers}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
-                                                                          &           & \multicolumn{2}{c}{{\glsentryshort{FS} Classical}}      & \multicolumn{2}{c}{{\glsentryshort{FS} Classical-Size}}    & \multicolumn{2}{c}{{\glsentryshort{FS} Option}}                                            \\
+                                                                          &           & \multicolumn{2}{c}{{\glsentryshort{FS} Classical}}      & \multicolumn{2}{c}{{\glsentryshort{FS} Size}}    & \multicolumn{2}{c}{{\glsentryshort{FS} Option}}                                            \\
         \cmidrule(l){3-4}\cmidrule(l){5-6}\cmidrule(l){7-8}
         \multicolumn{2}{l}{{$\downarrow$ Trans.$\rightarrow$ \gls{GBRT}}} & {Correct} & {Wrong}                                                 & {Correct}                                                  & {Wrong}                                                    & {Correct} & {Wrong}           \\
         \midrule
@@ -253,7 +256,7 @@ The performance is stable for different trade sizes and over time. Similarly, ac
     \label{tab:diff-ise-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
-        {}                           & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                           & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                           & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                               \\
         \tabindent  Call             & 62.890486                                        & 3.720000                                              & 71.884647                                     & 4.480000  & 73.647971    & 6.240000  \\
@@ -312,7 +315,7 @@ The performance is stable for different trade sizes and over time. Similarly, ac
     \label{tab:diff-cboe-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
-        {}                         & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                         & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                         & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                             \\
         \tabindent Call            & 65.505083                                        & 5.370000                                              & 71.707057                                     & 5.770000  & 74.283388    & 8.350000  \\
@@ -381,7 +384,7 @@ Lastly, the FT-Transformers perform well on trades at the quotes. When trained o
     \label{tab:diff-ise-transformer}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
-        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                          & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                              \\
         \tabindent Call             & 62.991514                                        & 3.820000                                              & 72.099064                                     & 4.690000  & 73.484904    & 6.080000  \\
@@ -438,7 +441,7 @@ Lastly, the FT-Transformers perform well on trades at the quotes. When trained o
     \label{tab:diff-cboe-transformer}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
-        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                       \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                       \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                          & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}    & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                             \\
         \tabindent Call             & 65.628907                                        & 5.490000                                              & 71.945453                                     & 6.010000 & 74.579113    & 8.640000  \\
@@ -503,7 +506,7 @@ Compared to the vanilla \glspl{GBRT}, performance degrades across almost all sub
     \label{tab:diff-ise-gbm-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
-        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                          & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                              \\
         \tabindent Call             & 62.652675                                        & 3.480000                                              & 71.692310                                     & 4.280000  & 73.080774    & 5.670000  \\
@@ -560,7 +563,7 @@ Compared to the vanilla \glspl{GBRT}, performance degrades across almost all sub
     \label{tab:diff-cboe-gbm-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
-        {}                           & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                           & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                           & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                               \\
         \tabindent  Call             & 65.684960                                        & 5.550000                                              & 71.679647                                     & 5.740000  & 73.861831    & 7.930000  \\
@@ -631,7 +634,7 @@ In our test sets options traded outside the quotes can be reliably classified wi
     \label{tab:diff-ise-transformer-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
-        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                          & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                              \\
         \tabindent Call             & 63.749963                                        & 4.580000                                              & 72.330180                                     & 4.920000  & 74.065147    & 6.660000  \\
@@ -688,7 +691,7 @@ In our test sets options traded outside the quotes can be reliably classified wi
     \label{tab:diff-cboe-transformer-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
-        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Classical-Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classical} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
         {}                          & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
         \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                              \\
         \tabindent Call             & 65.012528                                        & 4.880000                                              & 71.552840                                     & 5.620000  & 74.134277    & 8.200000  \\
