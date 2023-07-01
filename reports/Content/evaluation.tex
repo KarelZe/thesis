@@ -13,6 +13,7 @@ where $\operatorname{L}_{\mathrm{0-1}}(\cdot)$ is the 0-1-loss given by:
 \begin{equation}
     % \operatorname{L}_{0-1} \colon \mathcal{Y} \times \mathcal{Y} \to \left[0, 1\right], \quad 
     \operatorname{L}_{\mathrm{0-1}}(y, \hat{y}) = \mathbb{I}\left(y\neq \hat{y}\right).
+    \label{eq:0-1-loss}
 \end{equation}
 
 Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalise by the number of samples $N$, which gives the normalised 0-1-loss. Notably, the loss is the same for false positives and negatives.
@@ -29,15 +30,13 @@ Classical trade classification algorithms, as a rule-based classifier, are trans
 
 The machine learning classifiers, studied in this work, can be deemed a black box model \autocite[][90]{barredoarrietaExplainableArtificialIntelligence2020}. Due to the sheer size of the network or ensemble, interpretability through transparency is impacted. Albeit, the attention mechanism of Transformers provides some interpretability through the attention mechanism,  interpretability across all classifiers can only be reached through \emph{model-agnostic, post-hoc interpretability techniques}.
 
-Thereby, our goal is to estimate how much a feature contributes to the performance of the classifier \emph{overall}, which urges for \emph{global feature attribution measures}. The appropriate approach is guided by the properties of the data. Due to the data-generating process with strongly correlated quotes and trade prices at the exchange and nationwide levels, features are strongly dependent. The redundant feature encoding of ratio features exacerbates this effect. Feature independence, however, is the central assumption of most popular feature importance measures, including \gls{SHAP} or random feature permutation \autocite[][2]{aasExplainingIndividualPredictions2021}. A violation of this constraint for two perfectly correlated, predictive features can have the effect that both are deemed unimportant as the feature importance is distributed between features underestimating the true importance of the feature \autocite[][4]{covertUnderstandingGlobalFeature2020}.
-
-For this reason, we estimate feature importances using \gls{SAGE}, which can account for complex interactions between features and yields global importances. 
+Thereby, our goal is to estimate how much a feature contributes to the performance of the classifier \emph{overall}, which urges for \emph{global feature attribution measures}. The appropriate approach is guided by the properties of the data. Due to the data-generating process with strongly correlated quotes and trade prices at the exchange and nationwide levels, features are strongly dependent. The redundant feature encoding of ratio features exacerbates this effect. Feature independence, however, is the central assumption of most popular feature importance measures, including \gls{SHAP} or random feature permutation \autocite[][2]{aasExplainingIndividualPredictions2021}. A violation of this constraint for two perfectly correlated, predictive features can have the effect that both are deemed unimportant as the feature importance is distributed between features underestimating the true importance of the feature \autocite[][4]{covertUnderstandingGlobalFeature2020}. For this reason, we estimate feature importances using \gls{SAGE}, which can account for complex interactions between features and yields global importances. 
 
 \textbf{Shapley Additive Global Importance}
 
 \gls{SAGE} is an additive feature importance measure with its foundations in cooperative game theory. As put forth by \textcite[][3]{lundbergUnifiedApproachInterpreting2017} feature contributions can be estimated through Shapley values \autocite[][11]{shapley17ValueNPerson1953}. Instead of allocating credit in a cooperative game to players, as in the original Shapley formulation, the problem transfers to assign credit across features based on a value function. Intuitionally, for \gls{SAGE}, credit is distributed among features based on the contribution to the model's performance.
 
-In \gls{SAGE}, Shapley values $\phi_i(v_f)$ are estimated as:
+Again, $X$ is a random variable describing the input, $Y$ is the response variable, and $f$ is the classifier. In \gls{SAGE} \autocite[][4--5]{covertUnderstandingGlobalFeature2020}, Shapley values $\phi_i(v_f)$ are estimated as:
 \begin{equation}
     \phi_i(v_f)=\frac{1}{d} \sum_{S \subseteq D \backslash\{i\}}\left(\begin{array}{c}
         d-1 \\
@@ -45,18 +44,14 @@ In \gls{SAGE}, Shapley values $\phi_i(v_f)$ are estimated as:
         \end{array}\right)^{-1}(v_f(S \cup\{i\})-v_f(S))
         \label{eq:shapley}
 \end{equation}
-where $D=\left\{1,\ldots,d\right\}$ is a set of feature indices corresponding to the features $x_1,\ldots,x_d$ and $S\subset D$. Intuitionally, \cref{eq:shapley} estimates Shapley value as the weighted average of the incremental change in the value function, $v_f(S)$, before and after adding the $i$-th feature to the feature subsets $S$ \autocite[][4--5]{covertUnderstandingGlobalFeature2020}. Hereby, the first term $\left(\begin{smallmatrix} d-1 \\|S|\end{smallmatrix}\right)^{-1}$ accounts for the possibilities to choose a $|S|$-strong subset from $D \backslash\{i\}$. 
+where $D=\left\{1,\ldots,d\right\}$ is a set of feature indices corresponding to the features $x_1,\ldots,x_d$ and $S\subset D$. Intuitionally, \cref{eq:shapley} estimates Shapley value as the weighted average of the incremental change in the value function, $v_f(S)$, before and after the $i$-th feature is added to the feature subsets $S$. Hereby, the first term $\left(\begin{smallmatrix} d-1 \\|S|\end{smallmatrix}\right)^{-1}$ accounts for the possibilities to choose a $|S|$-strong subset from $D \backslash\{i\}$. 
 
-While subsets of features $X_S = \left\{X_i \mid i \in S \right\}$ can be easily constructed, most classifiers cannot handle the absence of features and require fixed-sized inputs during training and inference. \textcite[][2]{covertUnderstandingGlobalFeature2020} mitigate the issue, by marginalising out missing features $\bar{S}=D\backslash S$ using their conditional distribution $p(X_{\bar{S}} \mid X_S=x_S)$.
-
-
+While subsets of features $X_S = \left\{X_i \mid i \in S \right\}$ can be easily constructed, most classifiers, including ours, cannot handle the absence of features as they require fixed-sized inputs during inference. \textcite[][2]{covertUnderstandingGlobalFeature2020} mitigate the issue, by marginalising out the missing features $\bar{S}=D\backslash S$ using the conditional distribution $p(X_{\bar{S}} \mid X_S=x_S)$. Following \textcite[][4--5]{covertExplainingRemovingUnified}, the performance of the model for a given subset of features $S$ and loss function $\ell$ can now be estimated by
 \begin{equation}
-    v_f(S)=\underbrace{\mathbb{E}\left[\ell\left(\mathbb{E}\left[f(X)\right], Y\right)\right]}_{\text {Mean prediction }}-\underbrace{\mathbb{E}\left[\ell\left(f_S\left(X_S\right), Y\right)\right]}_{\text {Using features } X_S}
-\end{equation}    
-
-It is typically infeasible to compute the complete \gls{SAGE} values due to a large number of subsets $S$, so an approximation is used instead.
-
-\todo{model the conditional distribution of held out features.}
+v_f(S)=-\mathbb{E}\left[\ell\left(\mathbb{E}\left[f(X) \mid X_S\right], Y\right)\right].
+\end{equation}
+As important features in a subset lead to a reduction in loss or improvement in performance, the negative sign ensures that the value $v_f(S)$ increases. Together with \cref{eq:shapley} the Shapley values can be estimated. Typically, the cross-entropy loss is chosen as the loss function $\ell$. As classical rules, yield only hard probabilities, we use the zero-one-loss from \cref{eq:0-1-loss} instead.\footnote{We contributed this loss function to the official implementation \url{https://github.com/iancovert/sage/} as part of this thesis.} 
+% In practice, it is infeasible to compute the complete \gls{SAGE} values due to a large number of subsets $S$, so approximations are used.
 
 \textbf{Attention Maps}
 

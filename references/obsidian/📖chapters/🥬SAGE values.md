@@ -23,7 +23,34 @@ where $D=\left\{1,\ldots,d\right\}$ is a set of feature indices corresponding to
 The contribution function $v_f(S)$ represents the performance or negative loss of classifier $f$ given the feature set $X^S$. 
 
 
-![[Pasted image 20230622210805.png]]
+
+![[Pasted image 20230701075816.png]]
+
+Following ([[@covertExplainingRemovingUnified]]4--5), the performance of the model for a given subset of features $S$ and loss function $\ell$, can now be estimated by
+$$
+v_f(S)=-\mathbb{E}\left[\ell\left(\mathbb{E}\left[f(X) \mid X_S\right], Y\right)\right].
+$$
+As important features in a subset lead to a reduction in loss, or improvement in performance, the negative sign ensures that the the value $v_f(S)$ increases. Together with cref-bla the Shapley values can be estimated.
+
+
+The contribution from adding  in reduction in loss $\ell$ from adding the the feature set $S$ can now
+
+
+conditional distribution $X^{\bar{S}} \mid X^S=x^S$. We can now define a cooperative game that represents the model's performance given subsets of features. Given a loss function $\ell$ (e.g., MSE or cross entropy loss), the game $v_f$ is defined as
+$$
+v_f(S)=-\mathbb{E}\left[\ell\left(\mathbb{E}\left[f(X) \mid X^S\right], Y\right)\right]
+$$
+For any subset $S \subseteq D$, the quantity $v_f(S)$ represents $f$ 's performance given the features $X^S$, and we have a minus sign in front of the loss so that lower loss (improved accuracy) increases the value $v_f(S)$.
+
+Based on this idea, the contribution of a feature set 
+
+model's performance given subsets of features. Given a loss function $\ell$ (e.g., MSE or cross entropy loss), the game $v_f$ is defined as
+$$
+v_f(S)=-\mathbb{E}\left[\ell\left(\mathbb{E}\left[f(X) \mid X^S\right], Y\right)\right]
+$$
+have a minus sign in front of the loss so that lower loss (improved accuracy) increases the value $v_f(S)$.
+
+Typically, cross-entropy loss is chosen as the loss function $\ell$. As classical rules, however, only yield hard probabilities, we use the zero-one-loss instead.
 
 While subsets of features $X_S = \left\{X_i \mid i \in S \right\}$ can be easily constructed, most classifiers cannot handle the absence of features and require fixed-sized inputs during training and inference. ([[@covertExplainingRemovingUnified]]2) mitigate the issue, by marginalising out missing features $\bar{S}=D\backslash S$ using their conditional distribution $p(X_{\bar{S}} \mid X_S=x_S)$. The value function is now simply the expected increase in accuracy, hence reduction in loss $\ell$, over the mean prediction, given the features $X_S$. Shapley values then assign credit to individual features. Typically, cross-entropy loss is chosen as the loss function $\ell$. As classical rules, however, only yield hard probabilities, we use the zero-one-loss instead.-footnote()
 
