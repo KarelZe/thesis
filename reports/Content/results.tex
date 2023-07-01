@@ -176,11 +176,6 @@ In summary, our supervised methods establish a new state-of-the-art in option tr
 \subsection{Results of Semi-supervised
     Models}\label{sec:results-of-semi-supervised-models}
 
-\todo{Why is pre-training successful? Why is self-training not successful?}
-\todo{Supervised Classifier Performance on \gls{CBOE}}
-\todo{Link Between Unlabelled Trades And Generalisation Performance}
-\todo{Gain general knowledge on downstream task rafel paper}
-
 We compare the performance of pre-trained Transformers and self-trained gradient-boosting on the \gls{ISE} and \gls{CBOE} test set. Results are reported in \cref{tab:results-semi-supervised-ise-cboe}.
 
 \begin{table}[ht]
@@ -199,8 +194,7 @@ We compare the performance of pre-trained Transformers and self-trained gradient
 \end{table}
 
 Identical to the supervised case, our models consistently outperform their respective benchmarks. Gradient boosting with self-training surpasses $\operatorname{gsu}_{\mathrm{small}}$ by \SI{3.350000}{\percent} on \gls{ISE} and \SI{5.440000}{\percent} on \gls{CBOE} in accuracy. Improvements for larger feature sets over $\operatorname{gsu}_{\mathrm{large}}$ are marginally lower to the supervised model and range between \SI{4.550000}{\percent} and \SI{7.440000}{\percent}. 
-
-Expectedly, the pre-trained Transformer performs better for \gls{ISE} trades, improving over the Transformer trained from scratch by up to \SI{0.87000}{\percent}. Adding unlabelled trades into the training corpus does not improve \gls{CBOE} performance. We discuss this finding later.
+Pre-training is beneficial for the performance of Transformers on \gls{ISE} trades, improving over Transformer with random initialisation by up to \SI{0.87000}{\percent}. Hence, the performance improvement from pre-training observed in \cref{sec:hyperparameter-tuning} on the validation set carries over the test set. On the \gls{CBOE} dataset, pre-training hurts performance.
 
 \begin{table}[!h]
     \centering
@@ -226,10 +220,16 @@ Expectedly, the pre-trained Transformer performs better for \gls{ISE} trades, im
     \end{tabular}
 \end{table}
 
-As evident from \cref{tab:contigency-semi-supervised-classifiers}, a vast majority of trades are classified by both classifiers correctly. For the \gls{ISE}, performance improvements in larger feature sets are driven by trades that are distinctly classified by both classifiers. In turn, at the \gls{CBOE}, the share of common classifications continues to grow. Performance differences between classifiers are significant.    
+As evident from \cref{tab:contigency-semi-supervised-classifiers}, a vast majority of trades are classified by both classifiers correctly. For the \gls{ISE}, performance improvements in larger feature sets are driven by trades that are distinctly classified by both classifiers. In turn, at the \gls{CBOE}, the share of common classifications continues to grow. Performance differences between classifiers estimated by the McNemar test are significant.
+
+As no previous work performed semi-supervised classification, we focus our discussion, on the performance difference between pre-training and self-training.
 
 \todo{Why is pre-training successful? Why is self-training not successful?}
 \todo{How would a linear model do?}
+\todo{Why is pre-training successful? Why is self-training not successful?}
+\todo{Supervised Classifier Performance on \gls{CBOE}}
+\todo{Link Between Unlabelled Trades And Generalisation Performance}
+\todo{Gain general knowledge on downstream task rafel paper}
 
 To summarise, unrewarded for higher training costs, semi-supervised variants of \glspl{GBRT} do not provide better generalisation performance than supervised approaches. Pre-training of Transformers improves performance on the \gls{ISE} sample but slightly deteriorates performance on the \gls{CBOE} set. We subsequently evaluate if semi-supervised learning improves robustness if not performance.
 
