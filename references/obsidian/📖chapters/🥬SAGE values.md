@@ -23,9 +23,6 @@ where $D=\left\{1,\ldots,d\right\}$ is a set of feature indices corresponding to
 The contribution function $v_f(S)$ represents the performance or negative loss of classifier $f$ given the feature set $X^S$. 
 
 
-
-![[Pasted image 20230701075816.png]]
-
 Following ([[@covertExplainingRemovingUnified]]4--5), the performance of the model for a given subset of features $S$ and loss function $\ell$, can now be estimated by
 $$
 v_f(S)=-\mathbb{E}\left[\ell\left(\mathbb{E}\left[f(X) \mid X_S\right], Y\right)\right].
