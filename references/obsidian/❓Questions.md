@@ -1,9 +1,9 @@
 ## Open
-- Relation between moneyness / and classification accuracy. Argumentation from Savickas seems to not apply here. Do you know papers?
-- Is argumentation with time-to-maturity ok?
-- Bug in paper. Is conclusion for moneyness correct?
 
 ## Closed
+- Relation between moneyness / and classification accuracy. Argumentation from Savickas seems to not apply here. Do you know papers? -> looks ok
+- Is argumentation with time-to-maturity ok? -> seems not bad
+- Bug in paper. Is conclusion for moneyness correct? -> will look into
 - Opinions on including robustness checks of classical rules? -> not necessary
 - Look up table for `ROOT`? -> received a file
 - Ask for comments on theory. -> will comment / excited to read. Received comments @ 23 May.

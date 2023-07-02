@@ -305,7 +305,7 @@ The hyperparameter search space for Transformers with a pre-training objective i
     \label{fig:fttransformer-pretrain-loss}
 \end{figure}
 
-Pre-training performance is however bound by the available computing budget. As evident from \cref{fig:fttransformer-pretrain-loss}, the models have not fully converged until the end of pre-training, as the loss on the train- and validation set steadily improves. In future work, models may profit from longer pretraining. 
+Pre-training performance is however bound by the available computing budget. As evident from \cref{fig:fttransformer-pretrain-loss}, the models have not fully converged until the end of pre-training, as the loss on the train- and validation set steadily improves.
 
 Validation accuracy after finetuning improves for all models over Transformers without pretraining. As the search space is identically sampled for both variants we can directly attribute the improvements of \SI{0.28}{\percent} to \SI{0.72}{\percent} in validation accuracy to pre-training on unlabelled trades. Visualisations of the hyperparameter search spaces are available online.\footnote{See \url{https://wandb.ai/fbv/thesis/runs/12isqh2m} for \gls{FS} classical, for \url{https://wandb.ai/fbv/thesis/runs/2hv1nayy} for \gls{FS} size, and \url{https://wandb.ai/fbv/thesis/runs/3jbqpp4r} for \gls{FS} option for details.}
 
