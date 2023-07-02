@@ -1,8 +1,10 @@
 \section{Discussion}\label{sec:discussion}
 
-\todo{The Elephant In The Room}
-\todo{Requires labelled data. Compute intensive.}
-\todo{found solutions are generally robust}
+In this study, we applied gradient boosting and the FT-Transformer, two well-established machine learning classifiers, to the task of trade classification in the option market. While our results clearly demonstrate the superior performance of machine learning over rule-based classification, it's important to acknowledge the limitations of our approach.
+
+Inference of our classifiers is computationally cheap, but training requires a significant amount of compute. To make training feasible at all, great effort is spent on utilising computing resources by optimising memory transfers, compute graphs, and data representation. In cases, where computing resources are scarce or classification accuracy is not the primary target, we advocate for heuristics, such as the \gls{GSU} method, which balances between computational cost and performance.
+
+All of our classifiers require some labelled instances for training. If the true label cannot be inferred from trades or generating labelled data is wasteful, our approaches are not applicable. For cases, where trades are partially labelled, our pre-trained FT-Transformer offers a viable alternative to rule-based classification.
 
 \newpage
 \section{Conclusion}\label{sec:conclusion}

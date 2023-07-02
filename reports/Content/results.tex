@@ -622,8 +622,6 @@ Transformers with pre-training objectives outperform the benchmark in all subset
 
 For trades at the \gls{CBOE} performance improvements associated with pre-training are slightly lower across several sub-groups. Positively, pre-training improves robustness, as the performance gap to the benchmarks narrows for trades outside the quotes. The results in conjunction with the identical model architecture suggest, that pre-training on unlabelled trades encodes exchange-specific knowledge, which improves performance and robustness on \gls{ISE} trades, but does not universally profit \gls{CBOE} trades. 
 
-\todo{Discuss why it is good that itm options are classified correctly.}
-
 So far it remains opens open, to why most classifiers struggle to correctly classify index options and options traded outside the quotes. Index options are notoriously difficult to classify by standard algorithms, as unanimously documented in \textcites[][898-898]{savickasInferringDirectionOption2003}[][20]{grauerOptionTradeClassification2022}. \textcite[][898-898]{savickasInferringDirectionOption2003} trace back the low accuracy to the intensified use of complex trades in index option trading, such as bull spreads, which typically involve simultaneous buys and sells of options. Conceptually, it remains unclear if the components should be classified separately or as single complex trade. The explanation sheds light on why classification is difficult as a whole, but it does not address why accuracies trail the benchmark. \todo{We cannot test as we do not have simultanous buy buy and sell orders?... ok different option series, but no other trade} Some insights can be gained from the data distribution: index trades make up only \SI{1.0731}{\percent} of all trades on the \gls{ISE} training set, resulting in a highly imbalanced distribution of the security type. Consequently, the model has fewer index option samples to train on and is susceptible to overfitting if it learns distinguishable patterns for security types. A sample weighting scheme could place more emphasis on index options. 
 
 In our test sets options traded outside the quotes can be reliably classified with the quote rule, which aligns with the intuition that customers are willing to trade at an additional liquidity premium, hence outside the quotes. We suspect the reason, why our methods fail to learn in this simple pattern in the infrequent distribution in \SI{0.7535}{\percent} of the \gls{ISE} dataset. Following our reasoning from above, the model can overfit the training samples more easily, eventually resulting in poor out-of-sample performance. As both subsets account for only a fraction of the entire set and differences in performance are only minor. We conclude that our approaches are stable across multiple dimensions and between exchanges.
@@ -827,10 +825,6 @@ From \cref{fig:sage-importances} that all models achieve the largest improvement
 
 \textbf{Preliminaries}
 
-\todo{Think about reporting as percentage? Adjust formula from above.}
-\todo{Look into \textcite{muravyevOptionsTradingCosts2020}}
-\todo{Options listed on multiple exchanges have narrower spreads than those listed on a single exchange, but the difference diminishes as option volume increases. Option spreads become wider when a competing exchange delists the option.\autocite{mayhewCompetitionMarketStructure2002}}
-
 Albeit the classification accuracy is a reasonable measure for comparing classifiers, one cannot immediately infer how changes in accuracy e.~g., an improvement by \SI{1}{\percent}, affect the application domains. In an attempt to make our results tangible, we apply all algorithms to estimate trading cost, a problem we previously identified to be reliant on correct trade classification (cp. \cref{sec:introduction}) and a common testing ground for trade classification rules \autocites[cp.][541]{ellisAccuracyTradeClassification2000}[][569]{finucaneDirectTestMethods2000}[][271--278]{petersonEvaluationBiasesExecution2003}[][896--897]{savickasInferringDirectionOption2003}.
 
 One of the most widely adopted measures for trading costs is the effective spread \autocite[][112]{Piwowar_2006}. It is defined as the difference between the trade price and the fundamental value of the asset \autocite[][238--239]{bessembinderIssuesAssessingTrade2003}. Following \textcite[][238--239]{bessembinderIssuesAssessingTrade2003}, we define the \emph{nominal, effective spread} as
@@ -869,5 +863,7 @@ From our supervised classifiers the FT-Transformer or \gls{GBRT} trained on \gls
 Thus, $\operatorname{gsu}_{\mathrm{large}}$ provides the best estimate of the effective spread if the true labels are absent. For labelled data, Transformer or gradient boosting-based approaches can provide more accurate estimates. The de facto standard, the \gls{LR} algorithm, fails to deliver accurate estimates and may bias research.
 
 \todo{“In addition, my results offer little help in answering why option bid-ask spreads are so large. This is one of the biggest puzzles in the options literature—existing theories of the option spread fail to explain its magnitude and shape (Muravyev and Pearson (2014)).”}
-
 \todo{compare against \textcite[][4981]{muravyevOptionsTradingCosts2020} or \autocite{kaeckPriceImpactBid2022}}
+\todo{Think about reporting as percentage? Adjust formula from above.}
+\todo{Look into \textcite{muravyevOptionsTradingCosts2020}}
+\todo{Options listed on multiple exchanges have narrower spreads than those listed on a single exchange, but the difference diminishes as option volume increases. Option spreads become wider when a competing exchange delists the option.\autocite{mayhewCompetitionMarketStructure2002}}
