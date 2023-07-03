@@ -252,7 +252,7 @@ The performance is stable for different trade sizes and over time. Similarly, ac
 
 \begin{table}[ht!]
     \centering
-    \caption[Robustness of Gradient-Boosting on \glsentryshort{ISE}]{This table presents accuracies of \glspl{GBRT} across various sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \caption[Robustness of Gradient-Boosting on \glsentryshort{ISE}]{This table presents accuracies of \glspl{GBRT} across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
     \label{tab:diff-ise-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -310,7 +310,7 @@ All              & 63.668637                                        & 3.620000  
 
 \begin{table}[h!]
     \centering
-    \caption[Robustness of Gradient-Boosting on \glsentryshort{CBOE}]{This table presents accuracies of \glspl{GBRT} across various sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \caption[Robustness of Gradient-Boosting on \glsentryshort{CBOE}]{This table presents accuracies of \glspl{GBRT} across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
     \label{tab:diff-cboe-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -378,7 +378,7 @@ Lastly, the FT-Transformers perform well on trades at the quotes. When trained o
 
 \begin{table}[h!]
     \centering
-    \caption[Robustness of FT-Transformer on \glsentryshort{ISE}]{This table presents accuracies of the FT-Transformer across various sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \caption[Robustness of FT-Transformer on \glsentryshort{ISE}]{This table presents accuracies of the FT-Transformer across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
     \label{tab:diff-ise-transformer}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -434,7 +434,7 @@ Lastly, the FT-Transformers perform well on trades at the quotes. When trained o
 
 \begin{table}[h!]
     \centering
-    \caption[Robustness of FT-Transformer on \glsentryshort{CBOE}]{This table presents accuracies of the FT-Transformer across various sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \caption[Robustness of FT-Transformer on \glsentryshort{CBOE}]{This table presents accuracies of the FT-Transformer across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
     \label{tab:diff-cboe-transformer}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -498,7 +498,7 @@ Compared to the standard \glspl{GBRT}, performance degrades across almost all su
 
 \begin{table}
     \centering
-    \caption[Robustness of Gradient-Boosting With Self-Training on \glsentryshort{ISE}]{This table presents accuracies of the \gls{GBRT} with self-training across various sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \caption[Robustness of Gradient-Boosting With Self-Training on \glsentryshort{ISE}]{This table presents accuracies of the \gls{GBRT} with self-training across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
     \label{tab:diff-ise-gbm-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -554,7 +554,7 @@ Compared to the standard \glspl{GBRT}, performance degrades across almost all su
 
 \begin{table}[!ht]
     \centering
-    \caption[Robustness of Gradient-Boosting With Self-Training on \glsentryshort{CBOE}]{This table presents accuracies of the \gls{GBRT} with self-training across various sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \caption[Robustness of Gradient-Boosting With Self-Training on \glsentryshort{CBOE}]{This table presents accuracies of the \gls{GBRT} with self-training across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
     \label{tab:diff-cboe-gbm-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -614,7 +614,7 @@ Compared to the standard \glspl{GBRT}, performance degrades across almost all su
 
 Transformers with pre-training objectives outperform the benchmark in all subsets apart from index options and trades outside the quotes. For \gls{ISE} trades in \cref{tab:diff-ise-transformer-semi} pre-training improves performance across subsets, reaching accuracies greater than \SI{86}{\percent}. The only exception is index options, where the performance gap slightly widens. Deep-\gls{ITM}  options and options with long maturity profit the most from the introduction of option features. 
 
-For trades at the \gls{CBOE} performance improvements associated with pre-training are slightly lower across several sub-groups. Positively, pre-training improves robustness, as the performance gap to the benchmarks narrows for trades outside the quotes. The results in conjunction with the identical model architecture suggest, that pre-training on unlabeled trades encodes exchange-specific knowledge, which improves performance and robustness on \gls{ISE} trades, but does not universally profit \gls{CBOE} trades. 
+For trades at the \gls{CBOE} performance improvements associated with pre-training are slightly lower across most sub-groups. Positively, pre-training improves robustness, as the performance gap to the benchmarks narrows for trades outside the quotes. The results in conjunction with the identical model architecture suggest, that pre-training on unlabeled trades encodes exchange-specific knowledge, which improves performance and robustness on \gls{ISE} trades, but does not universally profit \gls{CBOE} trades. 
 
 So far it remains open, as to why most classifiers struggle to correctly classify index options and options traded outside the quotes. Index options are notoriously difficult to classify by standard algorithms, as unanimously documented in \textcites[][898-898]{savickasInferringDirectionOption2003}[][20]{grauerOptionTradeClassification2022}. \textcite[][898-898]{savickasInferringDirectionOption2003} trace back the low accuracy to the intensified use of complex trades in index option trading, such as bull spreads, which typically involve simultaneous buys and sells of options. Conceptually, it remains unclear if the components should be classified separately or as single complex trade. The explanation sheds light on why classification is difficult as a whole, but it does not address why accuracies trail the benchmark. \todo{We cannot test as we do not have simultaneous buy and sell orders?... ok different option series, but no other trade} Some insights can be gained from the data distribution: index trades make up only \SI{1.0731}{\percent} of all trades on the \gls{ISE} training set, resulting in a highly imbalanced distribution of the security type. Consequently, the model has fewer index option samples to train on and is susceptible to overfitting if it learns distinguishable patterns for security types. A sample weighting scheme could place more emphasis on index options. 
 
@@ -622,7 +622,7 @@ In our test sets options traded outside the quotes can be reliably classified wi
 
 \begin{table}[!ht]
     \centering
-    \caption[Robustness of FT-Transformer With Pre-Training on \glsentryshort{ISE}]{This table presents accuracies of the FT-Transformer with pre-training across various sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \caption[Robustness of FT-Transformer With Pre-Training on \glsentryshort{ISE}]{This table presents accuracies of the FT-Transformer with pre-training across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
     \label{tab:diff-ise-transformer-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -678,7 +678,7 @@ In our test sets options traded outside the quotes can be reliably classified wi
 
 \begin{table}[!ht]
     \centering
-    \caption[Robustness of FT-Transformer With Pre-Training on \glsentryshort{CBOE}]{This table presents accuracies of the FT-Transformer with pre-training across various sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
+    \caption[Robustness of FT-Transformer With Pre-Training on \glsentryshort{CBOE}]{This table presents accuracies of the FT-Transformer with pre-training across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over $\operatorname{gsu}_{\mathrm{small}}$ for the feature set classical and $\operatorname{gsu}_{\mathrm{large}}$ for all other feature sets are given in +/- column.}
     \label{tab:diff-cboe-transformer-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
