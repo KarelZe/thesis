@@ -100,7 +100,7 @@ From \cref{tab:ise-classical,tab:cboe-classical} we see, that practically all ru
 \begin{figure}[!ht]
     \centering
     \includegraphics{classical_at_mid_over_time.pdf}
-    \caption[Mid-Spread Trades Over Time]{Percentage of mid-spread trades on \gls{ISE} and \gls{CBOE} sample over time. Estimated using \gls{NBBO} quotes. The bar \myline{} indicates the beginning of a new subset based on the train-test split.}
+    \caption[Mid-Spread Trades Over Time]{Percentage of midspread trades on \gls{ISE} and \gls{CBOE} sample over time. Estimated using \gls{NBBO} quotes. The bar \myline{} indicates the beginning of a new subset based on the train-test split.}
     \label{fig:classical-at-mid-over-time}
 \end{figure}
 
@@ -130,7 +130,7 @@ Both model architectures consistently outperform their respective benchmarks on 
 
 While absolute improvements in accuracy over $\operatorname{gsu}_{\mathrm{small}}$ are modest on the smallest feature set, improvements are substantial for larger feature sets ranging between \SI{4.730000}{\percent} to \SI{7.860000}{\percent} over $\operatorname{gsu}_{\mathrm{large}}$. Specifically, the addition of trade size-related features positively contributes to the performance. We discuss feature importances in \cref{sec:feature-importance}.
 
-The results can be enhanced through retraining on the validation set improving accuracies to \SI{76.162269}{\percent}, as documented in \cref{app:results-of-supervised-models-with-re-training}. In favour of conservative estimates, our models in the main text do not use this technique.
+The results can be enhanced through re-training on the validation set improving accuracies to \SI{76.162269}{\percent}, as documented in \cref{app:results-of-supervised-models-with-re-training}. In favor of conservative estimates, our models in the main text do not use this technique.
 
 To formally test, whether differences between both classifiers are significant, we construct contingency tables and pair-wise compare predictions using McNemar's test \autocite[][153--157]{mcnemarNoteSamplingError1947}. We formulate the null hypothesis that both classifiers have the same error rate.
 Conceptually similar \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000}, uses contingency tables of rule-based methods and true labels. Here, contingency tables are used to pair-wise compare the predictions of \glspl{GBRT} against Transformers.
@@ -230,7 +230,7 @@ An explanation as to why pre-training improves performance on \gls{ISE} but not 
 
 Self-training with \glspl{GBRT} as a base learner generally performs worse than \glspl{GBRT} trained on labeled trades, which contradicts our initial motivation for self-training in \cref{sec:extensions-to-gradient-boosted-trees}. With the pseudo labels derived from high-confident predictions, the success of self-training hinges on the reliability of the predicted class probabilities. In our analysis of the default \gls{GBRT} in \cref{sec:training-and-tuning} we observed that the validation loss in terms of sample-wise cross-entropy loss stagnates due to a growing number of overconfident but erroneous predictions. Although we cannot confirm for the self-training classifier, due to the absence of true labels, it is conceivable, that the increased number of confident yet incorrect predictions, affects the generated pseudo labels. Without the ability to correct for errors, self-training performance on the validation and test set is directly impacted.
 
-To summarise, unrewarded for higher training costs, semi-supervised variants of \glspl{GBRT} do not provide better generalization performance than supervised approaches. Pre-training of Transformers improves performance on the \gls{ISE} sample but slightly deteriorates performance on the \gls{CBOE} set. We subsequently evaluate if semi-supervised learning improves robustness if not performance.
+To summarize, unrewarded for higher training costs, semi-supervised variants of \glspl{GBRT} do not provide better generalization performance than supervised approaches. Pre-training of Transformers improves performance on the \gls{ISE} sample but slightly deteriorates performance on the \gls{CBOE} set. We subsequently evaluate if semi-supervised learning improves robustness if not performance.
 
 \subsection{Robustness of Results}\label{sec:robustness-checks}
 
@@ -738,16 +738,16 @@ In our test sets options traded outside the quotes can be reliably classified wi
 
 Transformers outperform all rule-based approaches by a large margin on the \gls{ISE} dataset. To gain insights into the factors driving this performance, we conduct a qualitative analysis of the attention mechanism and learned embeddings. For an evaluation of feature importances, that suffices for a cross-model comparison, we utilize \gls{SAGE}, building upon our rationale from \cref{sec:feature-importance-measure}.
 
-\textbf{Attention Visualisation}
+\textbf{Attention Visualization}
 
 The analysis of attention follows a top-down approach. Initially, we generate model-wide attention maps using the methodology of \textcite[][2--4]{cheferTransformerInterpretabilityAttention2021}. Subsequently, we detail the analysis by probing specific attention heads adapting a procedure of \textcite[][4]{clarkWhatDoesBERT2019}.
 
-Attention maps offer transparency at the trade or dataset level. To aid visualisation, we focus on subsets of trades, where the performance of Transformers is particularly strong and select \num{16} trades at the quotes and \num{16} mid-spread trades from the \gls{ISE} test set. The resulting attention maps are shown in \cref{fig:attention-maps-ise}.
+Attention maps offer transparency at the trade or dataset level. To aid visualization, we focus on subsets of trades, where the performance of Transformers is particularly strong and select \num{16} trades at the quotes and \num{16} midspread trades from the \gls{ISE} test set. The resulting attention maps are shown in \cref{fig:attention-maps-ise}.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\textwidth]{attention_maps_ise_quotes_mid.pdf}
-    \caption[Attention Maps of FT-Transformer]{Attention maps of FT-Transformer trained on \gls{ISE} data with \gls{FS} option. The left plot contains attention weights of \num{16} trades at the quotes and the right plot of \num{16} mid-spread trades. Each column represents a trade and each row represents a feature. The intensity of the pixel represents the importance. $\mathtt{[CLS]}$ token excluded, as suggested in \textcite[][4]{cheferGenericAttentionmodelExplainability2021}. The green area marks a trade, that was correctly classified by the network. Details on the trade are given below.}
+    \caption[Attention Maps of FT-Transformer]{Attention maps of FT-Transformer trained on \gls{ISE} data with \gls{FS} option. The left plot contains attention weights of \num{16} trades at the quotes and the right plot of \num{16} midspread trades. Each column represents a trade and each row represents a feature. The intensity of the pixel represents the importance. $\mathtt{[CLS]}$ token excluded, as suggested in \textcite[][4]{cheferGenericAttentionmodelExplainability2021}. The green area marks a trade, that was correctly classified by the network. Details on the trade are given below.}
     \label{fig:attention-maps-ise}
 \end{figure}
 
@@ -761,25 +761,25 @@ The model assigns higher attention scores to features present in rule-based algo
     \subfloat[Trade Size Rule-like Head (3,8)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_3_color_green_ise_quotes_mid.pdf}}
     \hfill
     \subfloat[\glsentryshort{LR}-Like Head (4,8)\label{fig:head-lr}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_4_color_green_ise_quotes_mid.pdf}}
-    \caption[Rule-like Roles of Selected Attention Heads]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualized for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualisations based on code by \textcite[][4]{clarkWhatDoesBERT2019}.}
+    \caption[Rule-like Roles of Selected Attention Heads]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualized for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualizations based on code by \textcite[][4]{clarkWhatDoesBERT2019}.}
     \label{fig:rule-like-attention-heads}
 \end{figure}
 
 We study attention weights of one specific trade in detail, which is marked in green in \cref{fig:attention-maps-ise}. The trade has the following properties: trade price \SI{3.5}[\$]{}, trade size \SI{5}[]{} contracts, ask at exchange, \SI{3.85}[\$]{}, bid at exchange \SI{3.5}[\$]{}, ask size \SI{11}[]{} contracts, and bid size \SI{10}[]{} contracts, classified as sell. \cref{fig:rule-like-attention-heads} depicts the result for selected attention heads involved in classifying the specific trade. The remaining attention heads are visualized in \cref{app:attention-heads-of-transformer}. Each subplot depicts the features to which the classification token $\mathtt{[CLS]}$ attends too. The attention weight determines the intensity of the line between the two. 
 
-Referring to the results from the appendix, we note that attention heads learn diverse patterns, as most heads attend to different tokens at once learning different relations. However, certain heads exhibit redundancy. For earlier layers in the network, the classification tokens gather from multiple tokens with uniform attention weights, whereas for the final self-attention layers, attention heads specialise in relations that seem related to rule-based trade classification. \cref{fig:head-tick} depicts a classification head that focuses solely on the change in trade price akin to the tick rule. In \cref{fig:head-tsize} the classification token in the neighbouring head gathers simultaneously from multiple size-related features similar to the trade size rule. Finally, \cref{fig:head-lr} is alike to the \gls{LR} algorithm with additional dependencies on the moneyness. For other attention heads the purpose they serve in the network remains open. 
+Referring to the results from the appendix, we note that attention heads learn diverse patterns, as most heads attend to different tokens at once learning different relations. However, certain heads exhibit redundancy. For earlier layers in the network, the classification tokens gather from multiple tokens with uniform attention weights, whereas for the final self-attention layers, attention heads specialize in relations that seem related to rule-based trade classification. \cref{fig:head-tick} depicts a classification head that focuses solely on the change in trade price akin to the tick rule. In \cref{fig:head-tsize} the classification token in the neighboring head gathers simultaneously from multiple size-related features similar to the trade size rule. Finally, \cref{fig:head-lr} is alike to the \gls{LR} algorithm with additional dependencies on the moneyness. For other attention heads the purpose they serve in the network remains open. 
 
 The redundancy between attention heads is possibly explained by the use of attention dropout in our networks (cp. \cref{sec:hyperparameter-tuning}), which randomly deactivates units of the network during training and forces the network to learn redundant representations. A similar point is made by \textcite[][8--9]{clarkWhatDoesBERT2019} for the related \gls{BERT} model. Our finding of uniform attention weights in earlier layers of the network is consistent with the of \textcite[][4]{abnarQuantifyingAttentionFlow2020} made for \gls{BERT}.
 
 When repeated for other trades, the identified roles of the attention heads are partially retained, but it is important to highlight that a more comprehensive analysis is required. We suggest revisiting this topic in future research as it potentially enables uncovering new rule-based approaches and understanding Transformer-based trade classification in more detail.
 
-\textbf{Embedding Visualisation}
+\textbf{Embedding Visualization}
 
-For the Transformer we know from \cref{sec:token-embeddings}, that embeddings can capture similarities by arranging related objects closer in embedding space. Visualising the learned embeddings enables insights into the model.
+For the Transformer we know from \cref{sec:token-embeddings}, that embeddings can capture similarities by arranging related objects closer in embedding space. Visualizing the learned embeddings enables insights into the model.
 
 The embeddings are queried from the feature tokenizer in FT-Transformer. The similarity between embeddings is measured by cosine distance in embedding space. The high-dimensional embeddings are then projected into 2D space using $t$-SNE \autocite[][2587]{vandermaatenVisualizingDataUsing2008}. As straightforward to interpret, we focus our analysis on the root, but note, that it applies to any numerical and categorical embeddings.
 
-\cref{fig:categorical-embeddings} illustrates the embeddings exemplary for SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) which can be \emph{qualitatively} interpreted.\footnote{As our analysis is condensed to two randomly chosen examples, we encourage the reader to use our interactive visualisation for further exploration. Accessible here \url{https://projector.tensorflow.org/?config=https://raw.githubusercontent.com/KarelZe/Embeddings/main/embedding_projector.config.json}.}
+\cref{fig:categorical-embeddings} illustrates the embeddings exemplary for SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$) which can be \emph{qualitatively} interpreted.\footnote{As our analysis is condensed to two randomly chosen examples, we encourage the reader to use our interactive visualization for further exploration. Accessible here \url{https://projector.tensorflow.org/?config=https://raw.githubusercontent.com/KarelZe/Embeddings/main/embedding_projector.config.json}.}
 
 \begin{figure}[h!]
     \subfloat[Most Similar Embeddings to $\mathtt{SPY}$\label{fig:cat-embeddings-spy}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_SPY.pdf}}
