@@ -15,7 +15,7 @@
             Research                                                      & Data                              & Sample Period            & Method                                                                                                 & Baseline                                                     & Improvement              \\ \midrule
             \autocite[][15]{rosenthalModelingTradeDirection2012}          & \gls{NASDAQ}                      &                          & Logistic regression                                                                                    & \gls{EMO} rule, \gls{LR} rule,\newline and tick rule         & max. \SI{2.2}{\percent}  \\ \cmidrule{2-6}
                                                                           & \gls{NYSE}                        & 03/12/2004 -- 31/12/2004 & Logistic regression                                                                                    & \gls{EMO} rule, \gls{LR} rule,\newline and tick rule         & max. \SI{1.1}{\percent}  \\\cmidrule{1-6}
-            \autocite[][489--494]{blazejewskiLocalNonParametricModel2005} & Australian Stock\newline Exchange & 11/11/2002 -- 27/08/2003 & $k$ nearest neighbour, \newline logistic regression,\newline trade continuation,\newline majority vote & -                                                            & -                         \\ \cmidrule{1-6}
+            \autocite[][489--494]{blazejewskiLocalNonParametricModel2005} & Australian Stock\newline Exchange & 11/11/2002 -- 27/08/2003 & $k$ nearest neighbor, \newline logistic regression,\newline trade continuation,\newline majority vote & -                                                            & -                         \\ \cmidrule{1-6}
             \autocite[][49--57]{ronenMachineLearningTrade2022}            & \gls{TRACE}                       & 01/07/2002 -- 31/12/2019 & Logistic regression, decision tree,\newline neural network, and random forests                         & \gls{LR} rule and tick rule,\newline and \gls{BVC} algorithm & max. \SI{13.3}{\percent} \\ \cmidrule{2-6}
                                                                           & \gls{NASDAQ}                      & 09/12/2013 -- 13/12/2013 & Logistic regression, decision tree,\newline neural network, and random forests                         & \gls{LR} rule, tick rule,\newline and \gls{BVC} algorithm    & max. \SI{3.3}{\percent}  \\ \bottomrule
         \end{tabular}
@@ -65,32 +65,32 @@
         \begin{tabular}{@{}ll@{}}
             \toprule
             Feature Name            & Transform              \\ \midrule
-            trade price             & $\log$ + standardised  \\
-            price lag (ex)          & $\log$ + standardised  \\
-            price lag (all)         & $\log$ + standardised  \\
-            price change lag (ex)   & clipped + standardised \\
-            price change lag (all)  & clipped + standardised \\
-            price lead (ex)         & $\log$ + standardised  \\
-            price lead (all)        & $\log$ + standardised  \\
-            price change lead (ex)  & clipped + standardised \\
-            price change lead (all) & clipped + standardised \\
-            bid (all)               & $\log$ + standardised  \\
-            bid (ex)                & $\log$ + standardised  \\
-            ask (all)               & $\log$ + standardised  \\
-            ask (ex)                & $\log$ + standardised  \\
-            prox. to quotes (ex)    & clipped + standardised \\
-            prox. to quotes (all)   & clipped + standardised \\
-            bid ask size ratio (ex) & clipped + standardised \\
-            bid size (ex)           & $\log$ + standardised  \\
-            ask size (ex)           & $\log$ + standardised  \\
-            rel. bid size (ex)      & clipped + standardised \\
-            rel. ask size (ex)      & clipped + standardised \\
-            trade size              & $\log$ + standardised  \\
-            strike price            & $\log$ + standardised  \\
-            volume option series    & $\log$ + standardised  \\
+            trade price             & $\log$ + standardized  \\
+            price lag (ex)          & $\log$ + standardized  \\
+            price lag (all)         & $\log$ + standardized  \\
+            price change lag (ex)   & clipped + standardized \\
+            price change lag (all)  & clipped + standardized \\
+            price lead (ex)         & $\log$ + standardized  \\
+            price lead (all)        & $\log$ + standardized  \\
+            price change lead (ex)  & clipped + standardized \\
+            price change lead (all) & clipped + standardized \\
+            bid (all)               & $\log$ + standardized  \\
+            bid (ex)                & $\log$ + standardized  \\
+            ask (all)               & $\log$ + standardized  \\
+            ask (ex)                & $\log$ + standardized  \\
+            prox. to quotes (ex)    & clipped + standardized \\
+            prox. to quotes (all)   & clipped + standardized \\
+            bid ask size ratio (ex) & clipped + standardized \\
+            bid size (ex)           & $\log$ + standardized  \\
+            ask size (ex)           & $\log$ + standardized  \\
+            rel. bid size (ex)      & clipped + standardized \\
+            rel. ask size (ex)      & clipped + standardized \\
+            trade size              & $\log$ + standardized  \\
+            strike price            & $\log$ + standardized  \\
+            volume option series    & $\log$ + standardized  \\
             root                    & binarised              \\
-            time to maturity        & standardised           \\
-            moneyness               & standardised           \\
+            time to maturity        & standardized           \\
+            moneyness               & standardized           \\
             option type             & binarised              \\
             issue type              & binarised              \\ \bottomrule
         \end{tabular}
@@ -168,6 +168,6 @@
     % \subfloat[Head (2,8)]{\label{sfig:hb}\includegraphics[width=.23\textwidth]{attention_head_8_layer_2_color_green_ise_quotes_mid.pdf}}\hfill
     % \subfloat[Head (3,8)]{\label{sfig:hc}\includegraphics[width=.23\textwidth]{attention_head_8_layer_3_color_green_ise_quotes_mid.pdf}}\hfill
     % \subfloat[Head (4,8)]{\label{sfig:hd}\includegraphics[width=.23\textwidth]{attention_head_8_layer_4_color_green_ise_quotes_mid.pdf}}\\
-    \caption[Rule-Like Roles of All Attention Heads]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). Plot visualises the attention weights for a trade executed at the quote, correctly classified by the model.}
+    \caption[Rule-Like Roles of All Attention Heads]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). Plot visualizes the attention weights for a trade executed at the quote, correctly classified by the model.}
     \label{fig:attention-heads-ise-all-transformer}
 \end{figure}
