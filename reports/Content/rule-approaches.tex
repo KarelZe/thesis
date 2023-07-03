@@ -17,7 +17,8 @@ research. Among these, the:
 
 The appropriate view differs by data availability i.e., if the order type or submission type can be inferred from data and the application context. Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is distinguished by $\hat{y}$.
 
-In anticipation of \cref{sec:data-preprocessing}, we adopt a customer's position-based view in relation to the market maker. Nevertheless, it is worth noting that the concepts presented in this thesis can be applied to other perspectives as well.
+In anticipation of \cref{sec:data-preprocessing}, we adopt a customer's position-based view in relation to the market maker. Nevertheless, the concepts presented in this thesis can be applied to other perspectives as well.
+% \todo{new word: “Second, since net buying of puts by customers is tantamount to net put selling by market makers, and such order flow positively predicts market returns, option market makers may have information relevant for predicting market returns.” found in \textcite[][2]{chordiaIndexOptionTrading2021}}
 
 \todo{new word: “Second, since net buying of puts by customers is tantamount to net put selling by market makers, and such order flow positively predicts market returns, option market makers may have information relevant for predicting market returns.” found in \textcite[][2]{chordiaIndexOptionTrading2021}}
 
@@ -40,7 +41,7 @@ The quote rule follows the rationale, that market makers provide quotes, against
 \end{equation}
 By definition, the quote rule cannot classify trades at the midpoint of the quoted spread. \textcite[][241]{hasbrouckTradesQuotesInventories1988} discusses multiple alternatives for signing midspread trades including ones based on the subsequent quotes, and contemporaneous, or the subsequent transaction. Yet, the most common solution to overcome this limitation is, coupling the quote rule with other approaches, as done in \cref{sec:hybrid-rules}.
 
-The quote rule can be estimated at the exchange level or on the \gls{NBBO}.
+As options are typically cross-listed on multiple exchanges, the quote rule can be estimated at the exchange level or on the \gls{NBBO}.
 
 \todo{“The structure of the U.S. options market is similar to that of the equity market but has some distinct features. Options are typically cross-listed across multiple fully electronic exchanges, and the NBBO rule is enforced. Investors can post limit or market orders, and market-makers are obliged to provide continuous two-sided quotes.” Make clear, what is the difference and why it matters.}
 
@@ -79,7 +80,7 @@ As denoted in \cref{eq:reverse-tick-test}, the trade is classified as seller-ini
 
 Both tests result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}.
 
-The performance of the tick rules hinges on the availability of recent trade prices for inference. For infrequently traded assets this can pose a problem, as outdated prices might loose their relevancy in classification, as documented in \textcite[][568]{finucaneDirectTestMethods2000}.
+Tick tests can be estimated using the surrounding prices trading venue or at the inter-exchange level. The performance of the tick rules hinges on the availability of recent trade prices for inference. For infrequently traded assets this can pose a problem, as outdated prices might lose their relevancy in classification, as documented in \textcite[][568]{finucaneDirectTestMethods2000}.
 % similar in chakrabarty paper, but there seems to be a typo. Her sentence just makes no sense.
 
 \subsubsection{Depth Rule}\label{sec:depth-rule}

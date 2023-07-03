@@ -73,6 +73,8 @@ Independent of the base classifier, self-training increases computational cost, 
     \label{fig:random-token-replacement}
 \end{figure}
 
+\todo{Adapt to tabular data}
+
 The approach uses two neural networks, namely the generator and the discriminator, typically implemented as Transformers, as visualised in \cref{fig:random-token-replacement}.  The generator is responsible for generating replacement tokens and receives an input sequence, i.e., a sentence, that has been intentionally masked out. It learns to predict the original token of the now-masked token through tokens in the bidirectional context (cp. \cref{sec:attention}). For masking, an additional $\mathtt{[MASK]}$ token is introduced, which extends the vocabulary (cp. \cref{sec:token-embeddings}). Separately for each token, the final hidden state of the masked token is fed through a softmax activation to obtain the predicted probability distribution of the masked token and the cross entropy loss is used to compare against the true distribution. By replacing the masked token with a token from the generator distribution, convincing replacements now take place for some of the original inputs \autocite[][2--3]{clarkElectraPretrainingText2020}.
 
 The discriminator then receives the corrupted input sequence and is trained to distinguish between original and replaced tokens originating from the generator. The output is a binary mask to be compared against the mask initially used for masking tokens in the generator \autocite[][2--3]{clarkElectraPretrainingText2020}.

@@ -24,12 +24,11 @@ Next, we discuss state-of-the-art classifiers suitable for trade classification.
 \subsection{Selection of Approaches}\label{sec:selection-of-approaches}
 
 In this thesis, we perform a succinct literature discussion to select a set of supervised classifiers based on empirical evidence. In anticipation of the results, we ultimately select the FT-Transformer and Gradient Boosting for trade classification. To guide our discussion, we establish the following requirements a classifier must fullfil:
-
-\emph{performance:} The approach must deliver state-of-the-art performance in tabular classification tasks. Trades are typically provided as tabular datasets, consisting of rows representing instances and columns representing features. The classifier must be well-suited for probabilistic classification on tabular data.
-
-\emph{scalability:}  The approach must scale to datasets with > 10~Mio. samples. Due to the high trading activity and long data history, datasets may comprise millions of samples, so classifiers must cope with large quantities of trades.
-
-\emph{extensibility:} The approach must be extendable to train on partially-labelled trades.
+\begin{enumerate}[label=(\roman*),noitemsep]
+\item \emph{performance:} The approach must deliver state-of-the-art performance in tabular classification tasks. Trades are typically provided as tabular datasets, consisting of rows representing instances and columns representing features. The classifier must be well-suited for probabilistic classification on tabular data.
+\item \emph{scalability:}  The approach must scale to datasets with > 10~Mio. samples. Due to the high trading activity and long data history, datasets may comprise millions of samples, so classifiers must cope with large quantities of trades.
+\item \emph{extensibility:} The approach must be extendable to train on partially-labelled trades.
+\end{enumerate}
 
 Trade classification, as we framed it, fits into supervised learning on tabular data, which is comprehensively covered by the research community with several studies reviewing and benchmarking newly proposed approaches against established machine learning methods.
 
@@ -113,8 +112,6 @@ Gradient boosting iteratively combines oversimplified models, the weak learners,
 % classifier with outputs in [-1, 1]
 By \cref{sec:problem-framing} we perform binary probabilistic classification and by \cref{sec:trade-initiator} we defined the labels to be $y \in \{-1,1\}$. For gradient boosting, instead of modelling the class-conditional probabilities directly, we model the conditional log odds instead, which can be interpreted as the probability of observing class $1$ or a buyer-initiated trade, and covert to class-conditional probabilities as needed.
 
-
-\todo{better write logloss? Make connection clearer?}
 Following \textcite[][9]{friedmanStochasticGradientBoosting2002} we set the loss function to be the cross-entropy loss, given by:
 \begin{equation}
     L_{\mathrm{BCE}} \colon \mathbb{R}^2 \to \mathbb{R} \quad L_{\mathrm{BCE}}(y, F) = \log(1+\exp(-2yF))
@@ -173,7 +170,7 @@ The subsequent chapters provide an introduction to classifiers based on the Tran
 
 The Transformer is a neural network architecture by \textcite[][2--6]{vaswaniAttentionAllYou2017} proposed for sequence-to-sequence modelling. Its original application is in machine translation, whereby sentences in the source language are translated into sentences in the target language. More precisely, the sentence is first decomposed into individual \glspl{token} and mapped into a sequence of \glspl{embedding}, which are rich vector representations of the raw input. The Transformer then processes the \glspl{embedding} to generate the output sequence.
 
-As the network operates on \glspl{embedding}, rather than strings, the architecture is not constrained to process textual data. It has been adapted to other representations including image data \autocites[][2--5]{parmarImageTransformer2018}[][3]{dosovitskiyImageWorth16x162021} and tabular data \autocite[cp.][4]{gorishniyRevisitingDeepLearning2021}. The latter is important for our work, as derived in \cref{sec:selection-of-approaches}.
+As the network operates on \glspl{embedding}, rather than strings, the architecture is not constrained to process textual data. It has been adapted to other modalities including image data \autocites[][2--5]{parmarImageTransformer2018}[][3]{dosovitskiyImageWorth16x162021} and tabular data \autocite[cp.][4]{gorishniyRevisitingDeepLearning2021}. The latter is important for our work, as derived in \cref{sec:selection-of-approaches}.
 
 Following the architecture for machine translation of \textcite[][3]{sutskeverSequenceSequenceLearning2014}, the network features two main components: the encoder and the decoder. A sequence of \glspl{token} is first mapped to a sequence of \glspl{embedding} and augmented with positional information. The encoder receives these \glspl{embedding} and creates an enriched representation from it by encoding the context in which the input appears i.e., the surrounding words. The output of the encoder is then fed to the decoder. The decoder takes the embedded target sequence along with parts of the encoded representation of the input, to autoregressively generate the output sequence, i.e., the translation in the target language \gls{token} by \gls{token} \autocite[][3]{vaswaniAttentionAllYou2017}. \cref{fig:transformer-architecture-overview} depicts the complete architecture and serves as a guide through the subsequent sub-chapters.
 
@@ -359,7 +356,7 @@ with $\mathbf{W}_{\mathrm{mlp} 1}^l \in \mathbb{R}^{d_{\mathrm{mlp}} \times d_{e
 
 \textcite[][9]{vaswaniAttentionAllYou2017} set the hidden dimension to be two to eight magnitudes of the embedding dimension. The large capacity strengthens the model's ability to retain information but also contributes significantly to the high computational requirements and memory footprint of Transformers \autocites[][5]{tayEfficientTransformersSurvey2022}[][1]{kitaevReformerEfficientTransformer2020}. Both linear transformations are separated by a \gls{ReLU} \gls{activation-function} \autocite[][318]{glorotDeepSparseRectifier2011} to introduce non-linearities to the network.
 
-Like the attention layer, the position-wise \gls{FFN} is surrounded by residual connections, followed by layer normalisation (cp. \cref{sec:residual-connections-layer-norm}). Both are vital for the training process and convergence of the overall network. Optionally, dropout \autocite[][1930]{srivastavaDropoutSimpleWay} is added to prevent the model from \gls{overfitting}.
+Like the attention layer, the position-wise \gls{FFN} is surrounded by residual connections, followed by layer normalisation (cp. \cref{sec:residual-connections-layer-norm}). Both are vital for the training process and convergence of the overall network. Optionally, dropout is added to prevent the model from \gls{overfitting}.
 
 \subsubsection{Residual Connections and Layer Normalisation}\label{sec:residual-connections-layer-norm}
 

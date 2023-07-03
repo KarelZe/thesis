@@ -15,7 +15,7 @@
             Research                                                      & Data                              & Sample Period            & Method                                                                                                 & Baseline                                                     & Improvement              \\ \midrule
             \autocite[][15]{rosenthalModelingTradeDirection2012}          & \gls{NASDAQ}                      &                          & Logistic regression                                                                                    & \gls{EMO} rule, \gls{LR} rule,\newline and tick rule         & max. \SI{2.2}{\percent}  \\ \cmidrule{2-6}
                                                                           & \gls{NYSE}                        & 03/12/2004 -- 31/12/2004 & Logistic regression                                                                                    & \gls{EMO} rule, \gls{LR} rule,\newline and tick rule         & max. \SI{1.1}{\percent}  \\\cmidrule{1-6}
-            \autocite[][489--494]{blazejewskiLocalNonParametricModel2005} & Australian Stock\newline Exchange & 11/11/2002 -- 27/08/2003 & $k$ nearest neighbour, \newline logistic regression,\newline trade continuation,\newline majority vote &                                                              &                          \\ \cmidrule{1-6}
+            \autocite[][489--494]{blazejewskiLocalNonParametricModel2005} & Australian Stock\newline Exchange & 11/11/2002 -- 27/08/2003 & $k$ nearest neighbour, \newline logistic regression,\newline trade continuation,\newline majority vote & -                                                            & -                         \\ \cmidrule{1-6}
             \autocite[][49--57]{ronenMachineLearningTrade2022}            & \gls{TRACE}                       & 01/07/2002 -- 31/12/2019 & Logistic regression, decision tree,\newline neural network, and random forests                         & \gls{LR} rule and tick rule,\newline and \gls{BVC} algorithm & max. \SI{13.3}{\percent} \\ \cmidrule{2-6}
                                                                           & \gls{NASDAQ}                      & 09/12/2013 -- 13/12/2013 & Logistic regression, decision tree,\newline neural network, and random forests                         & \gls{LR} rule, tick rule,\newline and \gls{BVC} algorithm    & max. \SI{3.3}{\percent}  \\ \bottomrule
         \end{tabular}
@@ -62,37 +62,37 @@
 \begin{table}[H]
     \centering
     \begin{threeparttable}
-        \begin{tabular}{@{}lll@{}}
+        \begin{tabular}{@{}ll@{}}
             \toprule
-            Feature Name            & Definition                                                                                       & Transform              \\ \midrule
-            trade price             & $P_{i, t}$                                                                                       & $\log$ + standardised  \\
-            price lag (ex)          & $P_{i, t-1}^{\text{ex}}$\tnote{*}                                                                & $\log$ + standardised  \\
-            price lag (all)         & $P_{i, t-1}^{\text{all}}$\tnote{*}                                                               & $\log$ + standardised  \\
-            price change lag (ex)   & $P_{i, t-1}^{\text{ex}}/P_{i, t}^{\text{ex}}$\tnote{*}                                           & clipped + standardised \\
-            price change lag (all)  & $P_{i, t-1}^{\text{all}}/P_{i, t}^{\text{all}}$\tnote{*}                                         & clipped + standardised \\
-            price lead (ex)        & $P_{i, t+1}^{\text{ex}}$\tnote{*}                                                                & $\log$ + standardised  \\
-            price lead (all)        & $P_{i, t+1}^{\text{all}}$\tnote{*}                                                               & $\log$ + standardised  \\
-            price change lead (ex)  & $P_{i, t}^{\text{ex}}/P_{i, t+1}^{\text{ex}}$\tnote{*}                                           & clipped + standardised \\
-            price change lead (all) & $P_{i, t}^{\text{all}}/P_{i, t+1}^{\text{all}}$\tnote{*}                                         & clipped + standardised \\
-            bid (all)               & $B_{i, t}^{\text{all}}$                                                                          & $\log$ + standardised  \\
-            bid (ex)                & $B_{i, t}^{\text{ex}}$                                                                           & $\log$ + standardised  \\
-            ask (all)               & $A_{i, t}^{\text{all}}$                                                                          & $\log$ + standardised  \\
-            ask (ex)                & $A_{i, t}^{\text{all}}$                                                                          & $\log$ + standardised  \\
-            prox. to quotes (ex)    & $\left(P_{i, t}^{\text{ex}}- M_{i, t}^{\text{ex}}\right) / \tfrac{1}{2} S_{i, t}^{\text{ex}}$    & clipped + standardised \\
-            prox. to quotes (all)   & $\left(P_{i, t}^{\text{all}}- M_{i, t}^{\text{all}}\right) / \tfrac{1}{2} S_{i, t}^{\text{all}}$ & clipped + standardised \\
-            bid ask size ratio (ex) & $\tilde{B}_{i, t}^{\text{ex}}/\tilde{A}_{i, t}^{\text{ex}}$                                      & clipped + standardised \\
-            bid size (ex)           & $\tilde{B}_{i, t}^{\text{ex}}$                                                                   & $\log$ + standardised  \\
-            ask size (ex)           & $\tilde{A}_{i, t}^{\text{ex}}$                                                                   & $\log$ + standardised  \\
-            rel. bid size (ex)      & $\tilde{B}_{i, t}^{\text{ex}}/\tilde{P}_{i, t}^{\text{ex}}$                                      & clipped + standardised \\
-            rel. ask size (ex)      & $\tilde{A}_{i, t}^{\text{ex}}/\tilde{P}_{i, t}^{\text{ex}}$                                      & clipped + standardised \\
-            trade size              & $\tilde{P}_{i, t}$                                                                               & $\log$ + standardised  \\
-            strike price            &                                                                                                  & $\log$ + standardised  \\
-            volume option series    &                                                                                                  & $\log$ + standardised  \\
-            root                    &                                                                                                  & binarised              \\
-            time to maturity        &                                                                                                  & standardised           \\
-            moneyness               &                                                                                                  & standardised           \\
-            option type             &                                                                                                  & binarised              \\
-            issue type              &                                                                                                  & binarised              \\ \bottomrule
+            Feature Name            & Transform              \\ \midrule
+            trade price             & $\log$ + standardised  \\
+            price lag (ex)          & $\log$ + standardised  \\
+            price lag (all)         & $\log$ + standardised  \\
+            price change lag (ex)   & clipped + standardised \\
+            price change lag (all)  & clipped + standardised \\
+            price lead (ex)         & $\log$ + standardised  \\
+            price lead (all)        & $\log$ + standardised  \\
+            price change lead (ex)  & clipped + standardised \\
+            price change lead (all) & clipped + standardised \\
+            bid (all)               & $\log$ + standardised  \\
+            bid (ex)                & $\log$ + standardised  \\
+            ask (all)               & $\log$ + standardised  \\
+            ask (ex)                & $\log$ + standardised  \\
+            prox. to quotes (ex)    & clipped + standardised \\
+            prox. to quotes (all)   & clipped + standardised \\
+            bid ask size ratio (ex) & clipped + standardised \\
+            bid size (ex)           & $\log$ + standardised  \\
+            ask size (ex)           & $\log$ + standardised  \\
+            rel. bid size (ex)      & clipped + standardised \\
+            rel. ask size (ex)      & clipped + standardised \\
+            trade size              & $\log$ + standardised  \\
+            strike price            & $\log$ + standardised  \\
+            volume option series    & $\log$ + standardised  \\
+            root                    & binarised              \\
+            time to maturity        & standardised           \\
+            moneyness               & standardised           \\
+            option type             & binarised              \\
+            issue type              & binarised              \\ \bottomrule
         \end{tabular}
         \begin{tablenotes}\footnotesize
             \item[*] Notation assumes, that the previous or next trade price is distinguishable.
@@ -123,10 +123,10 @@
     \label{tab:results-supervised-retraining-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
-                   &            & \multicolumn{2}{c}{\gls{FS} Classical} & \multicolumn{2}{c}{\gls{FS} Classical-Size} & \multicolumn{2}{c}{\gls{FS} Option}                                      \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
-        Classifier & Data Set   & {Acc. in \%}                     & {+/-}                                 & {Acc. in \%}                  & {+/-}    & {Acc. in \%} & {+/-}    \\ \midrule
-        \gls{GBRT} & \gls{ISE}  & 66.413827                        & 6.360000                              & 73.945544                     & 6.330000 & 76.162269    & 8.550000 \\
-                   & \gls{CBOE} & 67.526839                        & 6.780000                              & 72.754664                     & 6.240000 & 75.125406    & 8.610000 \\ \bottomrule
+                   &            & \multicolumn{2}{c}{\gls{FS} Classical} & \multicolumn{2}{c}{\gls{FS} Size} & \multicolumn{2}{c}{\gls{FS} Option}                                      \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
+        Classifier & Data Set   & {Acc. in \%}                           & {+/-}                                       & {Acc. in \%}                        & {+/-}    & {Acc. in \%} & {+/-}    \\ \midrule
+        \gls{GBRT} & \gls{ISE}  & 66.413827                              & 6.360000                                    & 73.945544                           & 6.330000 & 76.162269    & 8.550000 \\
+                   & \gls{CBOE} & 67.526839                              & 6.780000                                    & 72.754664                           & 6.240000 & 75.125406    & 8.610000 \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -170,4 +170,4 @@
     % \subfloat[Head (4,8)]{\label{sfig:hd}\includegraphics[width=.23\textwidth]{attention_head_8_layer_4_color_green_ise_quotes_mid.pdf}}\\
     \caption[Rule-Like Roles of All Attention Heads]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). Plot visualises the attention weights for a trade executed at the quote, correctly classified by the model.}
     \label{fig:attention-heads-ise-all-transformer}
-    \end{figure}
+\end{figure}

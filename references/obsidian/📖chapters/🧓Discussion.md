@@ -1,3 +1,3 @@
 
 **Notes:**
-[[🔚Discussion notes]]
+[[🧓Discussion notes]]
