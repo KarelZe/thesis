@@ -16,7 +16,7 @@ Our implementation of \glspl{GBRT} is based on CatBoost \autocite[][5--6]{prokho
 
 \cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The plots reveal several insights.
 
-First, the model overfits the training data, as evident from the generalisation gap between training and validation accuracies. To improve generalisation performance, we apply regularisation techniques.
+First, the model overfits the training data, as evident from the generalization gap between training and validation accuracies. To improve generalization performance, we apply regularisation techniques.
 
 Second, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This discrepancy suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction.
 
@@ -32,11 +32,11 @@ This behaviour can be explained by the log loss being unbound, where single inco
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-optimisations-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of \glsentryshort{GBRT} with Optimisations]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
-    \label{fig:gbm-optimisations-loss-acc}
+    \caption[Training and Validation Accuracy of \glsentryshort{GBRT} with Optimisations]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample with optimizations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \label{fig:gbm-optimizations-loss-acc}
 \end{figure}
 
-We leverage several architectural changes to reduce the loss, further improve performance and mitigate overfitting in gradient boosting, as shown in \cref{fig:gbm-optimisations-loss-acc}, where the effects on validation accuracy and log loss over the default configuration are visualised. Following standard practice, e.g., \textcite{tuningplaybookgithub}, all other parameters are kept at their default values, while a single parameter is varied to derive the plots. Although this approach ignores parameter interactions, it still can guide the optimal training configuration. We train on the ISE training set with classical features and report metrics on the validation set.
+We leverage several architectural changes to reduce the loss, further improve performance and mitigate overfitting in gradient boosting, as shown in \cref{fig:gbm-optimizations-loss-acc}, where the effects on validation accuracy and log loss over the default configuration are visualized. Following standard practice, e.g., \textcite{tuningplaybookgithub}, all other parameters are kept at their default values, while a single parameter is varied to derive the plots. Although this approach ignores parameter interactions, it still can guide the optimal training configuration. We train on the ISE training set with classical features and report metrics on the validation set.
 
 \emph{Growth Strategy}
 
@@ -44,7 +44,7 @@ To improve performance, we switch to a leaf-wise growth strategy, following \tex
 
 \emph{Sample Weighting}
 
-The work of \textcite[][36--38]{grauerOptionTradeClassification2022} suggests a strong temporal shift in the data, with the performance of classical trade classification rules deteriorating over time.  As a result, the predictability of features derived from these rules diminishes over time, and patterns learnt from old observations become less relevant for predicting test samples. To address this, we introduce a sample weighting scheme that assigns higher weights to recent training samples and gradually decays weights over time, which we incorporate into the log loss. Validation and test samples are equally weighted. Sample weighting proves to be essential for achieving high validation performance, and it positively impacts the accuracy and confidence in the prediction mitigating the problem from above.
+The work of \textcite[][36--38]{grauerOptionTradeClassification2022} suggests a strong temporal shift in the data, with the performance of classical trade classification rules deteriorating over time.  As a result, the predictability of features derived from these rules diminishes over time, and patterns learned from old observations become less relevant for predicting test samples. To address this, we introduce a sample weighting scheme that assigns higher weights to recent training samples and gradually decays weights over time, which we incorporate into the log loss. Validation and test samples are equally weighted. Sample weighting proves to be essential for achieving high validation performance, and it positively impacts the accuracy and confidence in the prediction mitigating the problem from above.
 
 \emph{Border Count}
 
@@ -58,36 +58,36 @@ We incorporate all ideas into our large-scale studies.
 
 \textbf{FT-Transformer}
 
-We rely on the FT-Transformer of \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule \autocite[][1]{liuUnderstandingDifficultyTraining2020}. We investigate minor modifications to the default FT-Transformer to stabilise training and improve overall performance. The default FT-Transformer is trained for 10 epochs on \gls{ISE} dataset with classical features and loss and accuracy are visualised in \cref{fig:fttransformer-optimisations-loss-acc}.\footnote{Default configuration documented in \textcite[][18]{gorishniyRevisitingDeepLearning2021}.}
+We rely on the FT-Transformer of \textcite[][4--5]{gorishniyRevisitingDeepLearning2021} as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule \autocite[][1]{liuUnderstandingDifficultyTraining2020}. We investigate minor modifications to the default FT-Transformer to stabilise training and improve overall performance. The default FT-Transformer is trained for 10 epochs on \gls{ISE} dataset with classical features and loss and accuracy are visualized in \cref{fig:fttransformer-optimizations-loss-acc}.\footnote{Default configuration documented in \textcite[][18]{gorishniyRevisitingDeepLearning2021}.}
 
-The convergence behaviour of our model is similar to that of gradient boosting. Equally, a significant generalisation gap exists between the training and validation loss. Particularly concerning, the training loss decreases sharply, while the validation loss spuriously improves over its initial estimate. Despite this, validation accuracy improves throughout the entire training cycle. We reason that the network learns to correctly classify trades, indicated by the improved accuracy, but only attains low-confident correct predictions or confident but erroneous predictions which both contribute to a large validation loss.
+The convergence behaviour of our model is similar to that of gradient boosting. Equally, a significant generalization gap exists between the training and validation loss. Particularly concerning, the training loss decreases sharply, while the validation loss spuriously improves over its initial estimate. Despite this, validation accuracy improves throughout the entire training cycle. We reason that the network learns to correctly classify trades, indicated by the improved accuracy, but only attains low-confident correct predictions or confident but erroneous predictions which both contribute to a large validation loss.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics{fttransformer-optimisations-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of FT-Transformer with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimisations. Metrics are estimated on the classical feature set. One iteration corresponds to one gradient update. The end of each epoch is marked with a dashed bar. Loss is expected to decrease throughout training and accuracy to increase.}
-    \label{fig:fttransformer-optimisations-loss-acc}
+    \caption[Training and Validation Accuracy of FT-Transformer with Optimisations]{Training and validation accuracy of FT-Transformer on \gls{ISE} sample with optimizations. Metrics are estimated on the classical feature set. One iteration corresponds to one gradient update. The end of each epoch is marked with a dashed bar. Loss is expected to decrease throughout training and accuracy to increase.}
+    \label{fig:fttransformer-optimizations-loss-acc}
 \end{figure}
 
 \textbf{Solutions For FT-Transformer}
 
 \emph{Activation Function}
 
-Motivated by previous research, we experiment with replacing the $\operatorname{ReLU}$ activation with the $\operatorname{GELU}$ activation function \autocite[][2]{hendrycksGaussianErrorLinear2020} in the classification head and the gated variant $\operatorname{ReGLU}$ with the gated variant $\operatorname{GEGLU}$ \autocite[][2]{shazeerGLUVariantsImprove2020} in the \gls{FFN}. As visualised in \cref{fig:fttransformer-optimisations-loss-acc}, no advantage in terms of validation accuracy or loss is evident.
+Motivated by previous research, we experiment with replacing the $\operatorname{ReLU}$ activation with the $\operatorname{GELU}$ activation function \autocite[][2]{hendrycksGaussianErrorLinear2020} in the classification head and the gated variant $\operatorname{ReGLU}$ with the gated variant $\operatorname{GEGLU}$ \autocite[][2]{shazeerGLUVariantsImprove2020} in the \gls{FFN}. As visualized in \cref{fig:fttransformer-optimizations-loss-acc}, no advantage in terms of validation accuracy or loss is evident.
 
 \emph{Sample Weighting}
 
-We apply the concept of sample weighting from \gls{GBRT} to Transformers. Specifically, we scale the contribution of individual training samples to the loss using a sample weight, which penalises the model for misclassifying recent observations. This method is crucial for achieving low validation loss and high validation accuracies, as visible in \cref{fig:fttransformer-optimisations-loss-acc}. The significantly lower training accuracy implies, that patterns from latter observations do not universally transfer to previous observations. At this time, it remains unclear what is causing the data drift within the training set.
+We apply the concept of sample weighting from \gls{GBRT} to Transformers. Specifically, we scale the contribution of individual training samples to the loss using a sample weight, which penalises the model for misclassifying recent observations. This method is crucial for achieving low validation loss and high validation accuracies, as visible in \cref{fig:fttransformer-optimizations-loss-acc}. The significantly lower training accuracy implies, that patterns from latter observations do not universally transfer to previous observations. At this time, it remains unclear what is causing the data drift within the training set.
 
 \clearpage
 
 \emph{Label Smoothing}
 
-A major problem in classification with neural networks is, that the network becomes over-confident in predicting training samples but performs poorly on unseen data. In \cref{fig:fttransformer-optimisations-loss-acc} the effect is evident, as the increased confidence in the prediction on the training set does not transfer to the validation set. To regularise the network, we experiment with label smoothing \autocite[][2823]{szegedyRethinkingInceptionArchitecture2016} by training on soft labels with an uncertainty constant of $\epsilon$. Instead of assigning hard class probabilities of 0 or 1, we assume that true labels in the training set are correct with $1-\epsilon$ probability and incorrect otherwise. For $\epsilon=\num{0.1}$, a trade with the true label $-1$ is assumed to be \SI{90}{\percent} seller-initiated and \SI{10}{\percent} buyer-initiated. While we observe that label smoothing improves the validation loss and reduces the generalisation gap, we find that it has a negligible effect on validation accuracy and therefore abandon this approach.
+A major problem in classification with neural networks is, that the network becomes over-confident in predicting training samples but performs poorly on unseen data. In \cref{fig:fttransformer-optimizations-loss-acc} the effect is evident, as the increased confidence in the prediction on the training set does not transfer to the validation set. To regularise the network, we experiment with label smoothing \autocite[][2823]{szegedyRethinkingInceptionArchitecture2016} by training on soft labels with an uncertainty constant of $\epsilon$. Instead of assigning hard class probabilities of 0 or 1, we assume that true labels in the training set are correct with $1-\epsilon$ probability and incorrect otherwise. For $\epsilon=\num{0.1}$, a trade with the true label $-1$ is assumed to be \SI{90}{\percent} seller-initiated and \SI{10}{\percent} buyer-initiated. While we observe that label smoothing improves the validation loss and reduces the generalization gap, we find that it has a negligible effect on validation accuracy and therefore abandon this approach.
 
 \emph{Learning Rate Schedule}
 
-When training Transformers, the learning rate is often adjusted throughout the training process. \textcite[][7]{vaswaniAttentionAllYou2017} use a learning rate warm-up period, whereby the learning rate is linearly increased in the early stages of training, followed by decay using an inverse square root learning rate schedule. The warm-up phase is thought to stabilise gradients as weight updates are considerably smaller. According to \cref{sec:residual-connections-layer-norm}, learning rate warm-up is crucial for training post-norm Transformers, but optional for pre-norm Transformers like the FT-Transformer. Nevertheless, we experiment with the effect of learning rate warm-up in our setting and combine a linear warm-up for two epochs with subsequent cosine decay, as visualised in \cref{fig:lr-lin-warmup-cosine-decay}.
+When training Transformers, the learning rate is often adjusted throughout the training process. \textcite[][7]{vaswaniAttentionAllYou2017} use a learning rate warm-up period, whereby the learning rate is linearly increased in the early stages of training, followed by decay using an inverse square root learning rate schedule. The warm-up phase is thought to stabilise gradients as weight updates are considerably smaller. According to \cref{sec:residual-connections-layer-norm}, learning rate warm-up is crucial for training post-norm Transformers, but optional for pre-norm Transformers like the FT-Transformer. Nevertheless, we experiment with the effect of learning rate warm-up in our setting and combine a linear warm-up for two epochs with subsequent cosine decay, as visualized in \cref{fig:lr-lin-warmup-cosine-decay}.
 
 \begin{figure}[!ht]
     \centering
@@ -96,13 +96,13 @@ When training Transformers, the learning rate is often adjusted throughout the t
     \label{fig:lr-lin-warmup-cosine-decay}
 \end{figure}
 
-The scheduled learning rate has soothing effects on the training loss and accuracy estimates, as evident in \cref{fig:fttransformer-optimisations-loss-acc}. Therefore, we adopt a training setup with a learning rate schedule, despite the negative effects on training time. The learning rate itself is tuned as part of \cref{sec:hyperparameter-tuning}.
+The scheduled learning rate has soothing effects on the training loss and accuracy estimates, as evident in \cref{fig:fttransformer-optimizations-loss-acc}. Therefore, we adopt a training setup with a learning rate schedule, despite the negative effects on training time. The learning rate itself is tuned as part of \cref{sec:hyperparameter-tuning}.
 
 
 \emph{Batch Size}
 
 % 20 epochs (\num{36460} / \num{145840} iterations) 
-We use a fixed batch size of \num{8192} samples for the feature set classic/size and \num{2048} for the feature set option, which is the largest possible size on our \gls{GPU}. Training is performed for \num{20} epochs at maximum. All samples within the training and validation set are shuffled randomly to promote convergence. Although a smaller batch size could enhance the generalisation capabilities of the model, as found in \textcite[][3]{keskarLargeBatchTrainingDeep2017}, we train on the largest number of trades per iteration, to optimise throughput. Additional regularisation is added to the model, but treated as a tunable hyperparameter.
+We use a fixed batch size of \num{8192} samples for the feature set classic/size and \num{2048} for the feature set option, which is the largest possible size on our \gls{GPU}. Training is performed for \num{20} epochs at maximum. All samples within the training and validation set are shuffled randomly to promote convergence. Although a smaller batch size could enhance the generalization capabilities of the model, as found in \textcite[][3]{keskarLargeBatchTrainingDeep2017}, we train on the largest number of trades per iteration, to optimize throughput. Additional regularisation is added to the model, but treated as a tunable hyperparameter.
 
 \emph{Early Stopping and Checkpointing}
 
@@ -127,28 +127,28 @@ This section discusses the extensions necessary to train the semi-supervised var
 
 \textbf{Gradient Boosting With Self-Training}
 
-To incorporate unlabelled trades into the training procedure, we combine gradient boosting with a self-training classifier, as derived in \cref{sec:extensions-to-gradient-boosted-trees}. We repeat self-training for 2 iterations and require the predicted class probability to exceed $\tau=0.9$. As the entire ensemble is rebuilt three times, the relatively low number of iterations and high confidence threshold, strike a balance between computational requirements and the need for high-quality predictions. The base classifier is otherwise identical to supervised gradient boosting from \cref{sec:training-of-supervised-models}.
+To incorporate unlabeled trades into the training procedure, we combine gradient boosting with a self-training classifier, as derived in \cref{sec:extensions-to-gradient-boosted-trees}. We repeat self-training for 2 iterations and require the predicted class probability to exceed $\tau=0.9$. As the entire ensemble is rebuilt three times, the relatively low number of iterations and high confidence threshold, strike a balance between computational requirements and the need for high-quality predictions. The base classifier is otherwise identical to supervised gradient boosting from \cref{sec:training-of-supervised-models}.
 
 \textbf{FT-Transformer with Pre-Training}
 
-The FT-Transformer is trained in two stages. First, we train for \num{20} epochs on unlabelled \gls{ISE} trades using the \gls{RTD} head, followed by \num{20} epochs of fine-tuning on labelled \gls{ISE} training data with the binary classification head.
+The FT-Transformer is trained in two stages. First, we train for \num{20} epochs on unlabeled \gls{ISE} trades using the \gls{RTD} head, followed by \num{20} epochs of fine-tuning on labeled \gls{ISE} training data with the binary classification head.
 
 During pre-training and fine-tuning, early stopping is applied based on the value of the objective on the validation set, using patience of \num{10}. This particular setup is adopted from \textcite[][15]{rubachevRevisitingPretrainingObjectives2022} for being compute-efficient and offering competitive performance. The hidden dimension of the classification head is set to \num{512}. Based on \textcite[][3]{clarkElectraPretrainingText2020} \SI{15}{\percent} of all tokens are replaced. 
 
-Since the unlabelled sample includes various types of trades that may not be comparable to the labelled sample, we update all layers during fine-tuning. Empirically, finetuning the entire model is among the most successful methods for large-scale Transformers, as results from \textcite[][104--105]{raeScalingLanguageModels2022} suggest.
+Since the unlabeled sample includes various types of trades that may not be comparable to the labeled sample, we update all layers during fine-tuning. Empirically, finetuning the entire model is among the most successful methods for large-scale Transformers, as results from \textcite[][104--105]{raeScalingLanguageModels2022} suggest.
 
 Following \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}, the learning rate and weight decay are shared between the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
 
 \subsubsection{Hyperparameter Tuning}\label{sec:hyperparameter-tuning}
 
-All of our machine-learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[][5]{grinsztajnWhyTreebasedModels2022}, emphasise the need for tuning routines, as the test performance of the FT-Transformer and \glspl{GBRT} largely fluctuates with the hyperparameter configuration. Classical rules have no hyperparameters per se, but the best hybrid rules can be attained through hyperparameter search.
+All of our machine-learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[][5]{grinsztajnWhyTreebasedModels2022}, emphasize the need for tuning routines, as the test performance of the FT-Transformer and \glspl{GBRT} largely fluctuates with the hyperparameter configuration. Classical rules have no hyperparameters per se, but the best hybrid rules can be attained through hyperparameter search.
 For a fair comparison, we employ an exhaustive hyperparameter search, to find a suitable hyperparameter configuration for each of our models.
 
 \textbf{Bayesian Search}
 
 We perform a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function \autocite[][2]{shahriariTakingHumanOut2016}. Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in more promising trials.
 
-While different algorithmic implementations exist for Bayesian optimisation, we choose the \emph{Optuna} library \autocite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters.\footnote{Implementation of the tree-parzen estimator searches the first 10 trials randomly before the completed trials affect the sampling.} We maximise the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $\num{50}$ trials per feature set for the \gls{GBRT} and $\num{10}$ trials for the FT-Transformer. The best combination of each is tested out-of-sample in \cref{sec:results}.
+While different algorithmic implementations exist for Bayesian optimization, we choose the \emph{Optuna} library \autocite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters.\footnote{Implementation of the tree-parzen estimator searches the first 10 trials randomly before the completed trials affect the sampling.} We maximise the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $\num{50}$ trials per feature set for the \gls{GBRT} and $\num{10}$ trials for the FT-Transformer. The best combination of each is tested out-of-sample in \cref{sec:results}.
 
 \textbf{Gradient Boosting}
 
@@ -307,7 +307,7 @@ The hyperparameter search space for Transformers with a pre-training objective i
 
 Pre-training performance is however bound by the available computing budget. As evident from \cref{fig:fttransformer-pretrain-loss}, the models have not fully converged until the end of pre-training, as the loss on the train- and validation set steadily improves.
 
-Validation accuracy after finetuning improves for all models over Transformers without pretraining. As the search space is identically sampled for both variants we can directly attribute the improvements of \SI{0.28}{\percent} to \SI{0.72}{\percent} in validation accuracy to pre-training on unlabelled trades. Visualisations of the hyperparameter search spaces are available online.\footnote{See \url{https://wandb.ai/fbv/thesis/runs/12isqh2m} for \gls{FS} classical, for \url{https://wandb.ai/fbv/thesis/runs/2hv1nayy} for \gls{FS} size, and \url{https://wandb.ai/fbv/thesis/runs/3jbqpp4r} for \gls{FS} option for details.}
+Validation accuracy after finetuning improves for all models over Transformers without pretraining. As the search space is identically sampled for both variants we can directly attribute the improvements of \SI{0.28}{\percent} to \SI{0.72}{\percent} in validation accuracy to pre-training on unlabeled trades. Visualisations of the hyperparameter search spaces are available online.\footnote{See \url{https://wandb.ai/fbv/thesis/runs/12isqh2m} for \gls{FS} classical, for \url{https://wandb.ai/fbv/thesis/runs/2hv1nayy} for \gls{FS} size, and \url{https://wandb.ai/fbv/thesis/runs/3jbqpp4r} for \gls{FS} option for details.}
 
 
 \begin{table}[!h]
@@ -343,5 +343,5 @@ For the second feature set involving size-related rules, we consider rules that 
 
 In the absence of other baselines, we repeatedly compare against the same method as a baseline for the third feature set, even if it doesn't involve option-specific features.
 
-In the direct comparison between the validation accuracies of classical rules and our classifiers, the validation accuracies of classical rules considerably underperform the learnt classifier. \cref{sec:results} discusses if the results hold for the test sets. But before we do so, we present the metrics used
+In the direct comparison between the validation accuracies of classical rules and our classifiers, the validation accuracies of classical rules considerably underperform the learned classifier. \cref{sec:results} discusses if the results hold for the test sets. But before we do so, we present the metrics used
 for evaluation.
