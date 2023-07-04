@@ -1,3 +1,29 @@
+The intuition behind BERT is that the early layers learn generic linguistic patterns that have little relevance to the downstream task, while the later layers learn task-specific patterns. This intuition is in line with deep computer vision models, where the early layers learn generic features such as edges and corners, and the later layers learn specific features, such as eyes and noses in the case of facial detection.
+
+This intuition has been experimentally confirmed by another Google team, Amil Merchant et al, in their work “[What Happens To BERT Embeddings During Fine-tuning?](https://arxiv.org/pdf/2004.14448.pdf)” One of their techniques is called partial freezing: they keep the early BERT layers frozen, i.e. fixed, during the fine-tuning process, and measure how much the performance on the downstream task changes when varying the number of frozen layers. They show that the performance on both MNLI and SQuAD tasks does not notably drop even when freezing the first 8 of the 12 BERT layers (i.e. tuning only the last 4).
+
+This finding corroborates the intuition that the the last layers are the most task-specific, and therefore change the most during the fine-tuning process, while the early layers remain relatively stable. The results also imply that practitioners can potentially save compute resources by freezing the early layers instead of training the entire network during fine-tuning.
+
+“Impact of target domain Pretrained language model representations are intended to be universal. However, the target domain might still impact the adaptation performance. We calculate the Jensen-Shannon divergence based on term distributions (Ruder and Plank, 2017) between the domains used to train BERT (books and Wikipedia) and each MNLI domain. We show results in Table 6. We find no significant correlation. At least for this task, the distance of the source and target domains does not seem to have a major impact on the adaptation performance.” ([[@petersTuneNotTune2019]], p. 4)
+
+“Past work in NLP (Mou et al., 2016) showed that similar pretraining tasks transfer better.1 In computer vision (CV), Yosinski et al. (2014) similarly found that the transferability of 1Mou et al. (2016), however, only investigate transfer between classification tasks (NLI → SICK-E/MRPC). features decreases as the distance between the pretraining and target task increases. In this vein, Skip-thoughts—and Quick-thoughts (Logeswaran and Lee, 2018), which has similar performancewhich use a next-sentence prediction objective similar to BERT, perform particularly well on STS tasks, indicating a close alignment between the pretraining and target task. This strong alignment also seems to be the reason for BERT’s strong relative performance on these tasks.” ([[@petersTuneNotTune2019]], p. 3)
+
+“We find that while fine-tuning necessarily makes significant changes, it does not lead to catastrophic forgetting of linguistic phenomena. We instead find that fine-tuning primarily affects the top layers of BERT, but with noteworthy variation across tasks.” ([[@merchantWhatHappensBERT2020]] p. 1)
+
+“fine-tuned Transformers achieve state-of-the-art performance but also can end up learning shallow shortcuts, heuristics, and biases (McCoy et al., 2019b,a; Gururangan et al., 2018; Poliak et al., 2018).” ([[@merchantWhatHappensBERT2020]], p. 1)
+
+Transformer-based models (Vaswani et al., 2017), analyses of attention weights have shown interpretable patterns in their structure (Coenen et al., 2019; Vig and Belinkov, 2019; Voita et al., 2019b; Hoover et al., 2019) and found strong correlations to syntax (Clark et al., 2019). However, other studies have also cast doubt on what conclusions can be drawn from attention patterns (Jain and Wallace, 2019; Serrano and Smith, 2019; Brunner et al., 2019).
+
+“Next, our results using RSA and layer ablations show that the changes from fine-tuning alter a fraction of the model capacity, specifically within the top few layers (up to some variation across tasks). Also, although fine-tuning has a significant affect on the representations of in-domain sentences, the representations of out-of-domain examples remain much closer to those of the pre-trained model.” (Merchant et al., 2020, p. 9)
+
+“Generalization is a crucial component of learning a language. No training set can contain all possible sentences, so learners must be able to generalize to sentences that they have never encountered before. We differentiate two types of generalization: 1. In-distribution generalization: Generalization to examples which are novel but which are drawn from the same distribution as the training set. 2. Out-of-distribution generalization: Generalization to examples drawn from a different distribution than the training set.” (McCoy et al., 2020, p. 1)
+
+“owever, this strong performance does not necessarily indicate mastery of language. Because of biases in training distributions, it is often possible for a model to achieve strong in-distribution generalization by using shallow heuristics rather than deeper linguistic knowledge.” (McCoy et al., 2020, p. 1)
+
+“e found that these 100 instances were remarkably consistent in their in-distribution generalization accuracy, with all accuracies on the MNLI development set falling in the range 83.6% to 84.8%, and with a high level of consistency on labels for specific examples (e.g., we identified 526 examples that all 100 instances labeled incorrectly). In contrast, these 100 instances varied dramatically in their out-of-distribution generalization performance; for example, on one of the thirty categories of examples in the HANS dataset, accuracy ranged from 4% to 76%.” ([[@mccoyBERTsFeatherNot2020]], p. 2)
+
+
+
 We compare the performance of pre-trained Transformers and self-trained gradient-boosting on the gls-ise and gls-cboe test set. Results are reported in cref-tab-semi-supervised-results. 
 ![[Pasted image 20230701154037.png]]
 (supervised)

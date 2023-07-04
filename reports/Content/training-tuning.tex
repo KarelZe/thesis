@@ -133,6 +133,10 @@ To incorporate unlabeled trades into the training procedure, we combine gradient
 
 \textbf{FT-Transformer with Pre-Training}
 
+\todo{Finetuning does not require the identical architecture, as weights can be initialised randomly.}
+\todo{Motivate with empirical results from \gls{BERT}. See e.g., \autocite{merchantWhatHappensBERT2020}. }
+\todo{Make clear \textcite{rubachevRevisitingPretrainingObjectives2022} study tabular data but mlps only.}
+
 The FT-Transformer is trained in two stages. First, we train for \num{20} epochs on unlabeled \gls{ISE} trades using the \gls{RTD} head, followed by \num{20} epochs of fine-tuning on labeled \gls{ISE} training data with the binary classification head.
 
 During pre-training and fine-tuning, early stopping is applied based on the value of the objective on the validation set, using patience of \num{10}. This particular setup is adopted from \textcite[][15]{rubachevRevisitingPretrainingObjectives2022} for being compute-efficient and offering competitive performance. The hidden dimension of the classification head is set to \num{512}. Based on \textcite[][3]{clarkElectraPretrainingText2020} \SI{15}{\percent} of all tokens are replaced.

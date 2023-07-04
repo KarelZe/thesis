@@ -740,6 +740,8 @@ Transformers outperform all rule-based approaches by a large margin on the \gls{
 
 \textbf{Attention Visualization}
 
+\todo{Transformer-based models (Vaswani et al., 2017), analyses of attention weights have shown interpretable patterns in their structure (Coenen et al., 2019; Vig and Belinkov, 2019; Voita et al., 2019b; Hoover et al., 2019) and found strong correlations to syntax (Clark et al., 2019). However, other studies have also cast doubt on what conclusions can be drawn from attention patterns (Jain and Wallace, 2019; Serrano and Smith, 2019; Brunner et al., 2019). (found in merchant)}
+
 The analysis of attention follows a top-down approach. Initially, we generate model-wide attention maps using the methodology of \textcite[][2--4]{cheferTransformerInterpretabilityAttention2021}. Subsequently, we detail the analysis by probing specific attention heads adapting a procedure of \textcite[][4]{clarkWhatDoesBERT2019}.
 
 Attention maps offer transparency at the trade or dataset level. To aid visualization, we focus on subsets of trades, where the performance of Transformers is particularly strong and select \num{16} trades at the quotes and \num{16} midspread trades from the \gls{ISE} test set. The resulting attention maps are shown in \cref{fig:attention-maps-ise}.
