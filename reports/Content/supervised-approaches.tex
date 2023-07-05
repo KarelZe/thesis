@@ -283,7 +283,7 @@ with $0<i \leq \gls{d}_{e} / 2$, the maximum sequence length $\gls{ellmax}$, whi
 
 The positional encoding is visualized in \cref{fig:positional-embedding}. One can see the alternating pattern between even and odd columns and the unique pattern for each \gls{token}'s position.
 
-Using trigonometric functions for the positional embedding is favorable, due to being zero-centered and resulting in values in the closed range of $[-1,1]$. These properties are long known to promote convergence of neural networks \autocites[][8-9]{lecunEfficientBackProp2012}[][2]{ioffeBatchNormalizationAccelerating2015}.
+Using trigonometric functions for the positional embedding is favorable, due to being zero-centered and resulting in values in the closed range of $[-1,1]$. These properties are long known to promote convergence of neural networks \autocites[][16--17]{lecunEfficientBackProp2012}[][2]{ioffeBatchNormalizationAccelerating2015}.
 
 The reason for encoding with both the sine and cosine is more subtle, as either one would suffice for absolute embeddings. \textcite[][6]{vaswaniAttentionAllYou2017} hypothesize, that besides learning the \emph{absolute} position i.e., fifth place in sequence, providing both sine and cosine also enables the model to attend to \emph{relative} positions, i.e., two places from a given \gls{token}.
 
