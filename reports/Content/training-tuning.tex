@@ -58,7 +58,7 @@ We incorporate all ideas into our large-scale studies.
 
 \textbf{FT-Transformer}
 
-We rely on the FT-Transformer of \textcite[][18935--18936]{gorishniyRevisitingDeepLearning2021} as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule \autocite[][5747]{liuUnderstandingDifficultyTraining2020}. We investigate minor modifications to the default FT-Transformer to stabilize training and improve overall performance. The default FT-Transformer is trained for 10 epochs on \gls{ISE} dataset with classical features and loss and accuracy are visualized in \cref{fig:fttransformer-optimizations-loss-acc}.\footnote{Default configuration documented in \textcite[\checkmark][18949]{gorishniyRevisitingDeepLearning2021}.}
+We rely on the FT-Transformer of \textcite[][18935--18936]{gorishniyRevisitingDeepLearning2021} as our second model. The training of Transformers has been found non-trivial and requires a carefully designed training setup of model, optimizer, and learning rate schedule \autocite[\checkmark][5747]{liuUnderstandingDifficultyTraining2020}. We investigate minor modifications to the default FT-Transformer to stabilize training and improve overall performance. The default FT-Transformer is trained for 10 epochs on \gls{ISE} dataset with classical features and loss and accuracy are visualized in \cref{fig:fttransformer-optimizations-loss-acc}.\footnote{Default configuration documented in \textcite[\checkmark][18949]{gorishniyRevisitingDeepLearning2021}.}
 
 The convergence behavior of our model is similar to that of gradient boosting. Equally, a significant generalization gap exists between the training and validation loss. Particularly concerning, the training loss decreases sharply, while the validation loss spuriously improves over its initial estimate. Despite this, validation accuracy improves throughout the entire training cycle. We reason that the network learns to correctly classify trades, indicated by the improved accuracy, but only attains low-confident correct predictions or confident but erroneous predictions which both contribute to a large validation loss.
 
@@ -135,30 +135,30 @@ To incorporate unlabeled trades into the training procedure, we combine gradient
 
 \todo{Finetuning does not require the identical architecture, as weights can be initialised randomly.}
 \todo{Motivate with empirical results from \gls{BERT}. See e.g., \autocite{merchantWhatHappensBERT2020}. }
-\todo{Make clear \textcite{rubachevRevisitingPretrainingObjectives2022} study tabular data but mlps only.}
+\todo{Make clear \textcite[][]{rubachevRevisitingPretrainingObjectives2022} study tabular data but mlps only.}
 
 The FT-Transformer is trained in two stages. First, we train for \num{20} epochs on unlabeled \gls{ISE} trades using the \gls{RTD} head, followed by \num{20} epochs of fine-tuning on labeled \gls{ISE} training data with the binary classification head.
 
-During pre-training and fine-tuning, early stopping is applied based on the value of the objective on the validation set, using patience of \num{10}. This particular setup is adopted from \textcite[][15]{rubachevRevisitingPretrainingObjectives2022} for being compute-efficient and offering competitive performance. The hidden dimension of the classification head is set to \num{512}. Based on \textcite[][3]{clarkElectraPretrainingText2020} \SI{15}{\percent} of all tokens are replaced.
+During pre-training and fine-tuning, early stopping is applied based on the value of the objective on the validation set, using patience of \num{10}. This particular setup is adopted from \textcite[\checkmark][15]{rubachevRevisitingPretrainingObjectives2022} for being compute-efficient and offering competitive performance. The hidden dimension of the classification head is set to \num{512}. Based on \textcite[][3]{clarkElectraPretrainingText2020} \SI{15}{\percent} of all tokens are replaced.
 
-Since the unlabeled sample includes various types of trades that may not be comparable to the labeled sample, we update all layers during fine-tuning. Empirically, fine-tuning the entire model is among the most successful methods for large-scale Transformers, as results from \textcite[][104--105]{raeScalingLanguageModels2022} suggest.
+Since the unlabeled sample includes various types of trades that may not be comparable to the labeled sample, we update all layers during fine-tuning. Empirically, fine-tuning the entire model is among the most successful methods for large-scale Transformers, as results from \textcite[\checkmark][104--105]{raeScalingLanguageModels2022} suggest.
 
-Following \textcite[][4]{rubachevRevisitingPretrainingObjectives2022}, the learning rate and weight decay are shared between the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
+Following \textcite[\checkmark][4]{rubachevRevisitingPretrainingObjectives2022}, the learning rate and weight decay are shared between the pre-training and fine-tuning stages. Given the nature of pre-training, all other hyperparameters related to the model are identical.
 
 \subsubsection{Hyperparameter Tuning}\label{sec:hyperparameter-tuning}
 
-All of our machine-learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[][5]{grinsztajnWhyTreebasedModels2022}, emphasize the need for tuning routines, as the test performance of the FT-Transformer and \glspl{GBRT} largely fluctuates with the hyperparameter configuration. Classical rules have no hyperparameters per se, but the best hybrid rules can be attained through hyperparameter search.
+All of our machine-learning models feature a set of tunable hyperparameters. The results of previous studies, exemplary the one of \textcite[\checkmark][5]{grinsztajnWhyTreebasedModels2022}, emphasize the need for tuning routines, as the test performance of the FT-Transformer and \glspl{GBRT} largely fluctuates with the hyperparameter configuration. Classical rules have no hyperparameters per se, but the best hybrid rules can be attained through hyperparameter search.
 For a fair comparison, we employ an exhaustive hyperparameter search, to find a suitable hyperparameter configuration for each of our models.
 
 \textbf{Bayesian Search}
 
-We run a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function \autocite[][2]{shahriariTakingHumanOut2016}. Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in more promising trials.
+We run a novel Bayesian search to suggest and tune the hyperparameters automatically. In Bayesian search, a prior belief for all possible objective functions is formulated from the parameter intervals, which is then gradually refined by updating the Bayesian posterior with data from previous trials thereby approximating the likely objective function \autocite[\checkmark][149]{shahriariTakingHumanOut2016}. Compared to brute-force approaches, such as grid search, unpromising search regions are omitted, resulting in more promising trials.
 
-While different algorithmic implementations exist for Bayesian optimization, we choose the \emph{Optuna} library \autocite[][1--10]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters.\footnote{Implementation of the tree-parzen estimator searches the first 10 trials randomly before the completed trials affect the sampling.} We maximize the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $\num{50}$ trials per feature set for the \gls{GBRT} and $\num{10}$ trials for the FT-Transformer. The best combination of each is tested out-of-sample in \cref{sec:results}.
+While different algorithmic implementations exist for Bayesian optimization, we choose the \emph{Optuna} library \autocite[\checkmark][2623--2631]{akibaOptunaNextgenerationHyperparameter2019}, which implements the tree parzen estimator algorithm and is capable of handling both continuous and categorical hyperparameters.\footnote{Implementation of the tree-parzen estimator searches the first 10 trials randomly before the completed trials affect the sampling.} We maximize the accuracy of the validation set, which is also our decisive metric for evaluation (cp. \cref{sec:evaluation-metric}), and run $\num{50}$ trials per feature set for the \gls{GBRT} and $\num{10}$ trials for the FT-Transformer. The best combination of each is tested out-of-sample in \cref{sec:results}.
 
 \textbf{Gradient Boosting}
 
-Our search space is reported in \cref{tab:hyperparameter-space-gbm}, which is aligned with the recommendations in \textcite[][20]{prokhorenkovaCatBoostUnbiasedBoosting2018} with minor deviations.
+Our search space is reported in \cref{tab:hyperparameter-space-gbm}, which is aligned with the recommendations in \textcite[][6659]{prokhorenkovaCatBoostUnbiasedBoosting2018} with minor deviations.
 
 \begin{table}[!h]
     \centering
