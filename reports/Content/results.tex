@@ -166,6 +166,8 @@ Based on the contingency tables in \cref{tab:contigency-supervised-classifiers},
 
 Relative to related works performing trade classification with machine learning, the improvements are strong, as documented in \cref{app:literature-ml-tc}. As no other work studies the option market or identical model architectures, the results are indicative. The studies report improvements between \SI{1.1}{\percent} and \SI{13.3}{\percent} for their machine learning models over the benchmark. Our absolute improvements exceed all linear models, but the absolute improvements are smaller relative to some tree-based and deep learning models in \textcite[][49]{ronenMachineLearningTrade2022}. At the same time, our models are trained on significantly fewer features and on a static training set requiring a fraction of the training cost. We believe, our conservative framing aligns well with scenarios, where trade classification is only a prerequisite to other empirical research.
 
+\todo{check if page 57 isnt the right source of ronen paper.}
+
 Visually, the performance differences between gradient boosting and Transformers on the same feature sets are minor, which is in accordance to \textcites{grinsztajnWhyTreebasedModels2022}{gorishniyRevisitingDeepLearning2021}. These studies conclude, generally for tabular modeling, that neither Transformers nor \glspl{GBRT} are universally superior. Our results validate this observation, specifically for trade classification.
 % \todo{It is conceivable, that ...}
 
