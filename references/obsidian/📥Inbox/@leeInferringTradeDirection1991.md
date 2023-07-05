@@ -12,7 +12,6 @@ related:
 **code:**
 - https://github.com/jblocher/sas_util/blob/master/LR_Trade_ID.sas
 
-
 ## Notes
 - Most cited paper in journal of finance.
 - Authors propose the LR algorithm to classify individual trades as market buys and sell orders using intraday trade / execution prices and quote data. The LR algorithm fuses two commonly used algorithms. Use quote rule in general (due to performance) but apply tick rule to trades at the midpoint spread.
@@ -25,7 +24,6 @@ related:
 - Tick test is relatively imprecise when compared with the quote rule. This is esspecially evident if the prevailing quote has changed or if the quote is a long time back.
 - An alternative is the reverse tick test ([[@hasbrouckTradesQuotesInventories1988]]), that compares the trade price against the prices of trades immediately following the trade. If the following price is higher, the reverse tick test classifies the current trade as a sell.
 - I the trade is bracketed by price reversal (price change before the trade is the opposite to the price change after the trade) the reverse tick test and the tick test yield the same results.
-![[tick-rule-reverse-tick-rule.png]]
 - Authors study a sample of NYSE stocks. Authors do not know true labels. This limits their evaluation e. g. what is the true direction of a trade inside the spread. For trades at the ask 92.1 % are classified as buys using the tick test and 90.2 % at the bid are classified as sells. Thus there is a high degree of agreement between the tick test and quote rule, if the prevailing quote is unambiguous. Unambigous means that the quote reversion occured more than 5 sec before the trade. Quote reversions are generally triggered by trades.
 - Trades and quotes can be out of their natural order depending on how they are entered into the system (Problem 1). Authors observe that quote reversions are clustered near the trade with a substantial portion of quote recorded ahead of the trade.  Authors suggest an adjustment. If the current quote is less than 5 sec old it was probably caused by the trade an so the previous quote should be used for classification. They note that a different delay might be appropriate for other markets and that the 5 sec rule was derived from the AMEX and NYSE sample.
 - When a trade causes a quote reversion, the new quote tends to straddle the trade that triggered it. If new quotes are however recorded ahead of time, the current quote could cause a larger number of trades to appear inside the spread.
@@ -106,3 +104,5 @@ related:
 “We present evidence that trading inside the spread is due largely to “standing orders” that cause the effective spread to be narrower than the quoted spread” ([Lee and Ready, 1991, p. 14](zotero://select/library/items/FW283V5Z)) ([pdf](zotero://open-pdf/library/items/SVM9XEPW?page=14&annotation=J2SNEGZM))
 
 “For trades closer to the bid or ask we show that the tick test continues to perform well, although a simple assignment of trades as buys (sells),if they are closer to the bid (ask), will also perform well.” ([Lee and Ready, 1991, p. 14](zotero://select/library/items/FW283V5Z)) ([pdf](zotero://open-pdf/library/items/SVM9XEPW?page=14&annotation=PCR8DYSJ))
+
+“However, based on the data for 114 and 318 spread, we expect that the best approach for these trades is to classify those that occur in the middle of the spread using the tick test and other trades inside the spread as buys (sells) if they are closer to the ask (bid).” (Lee and Ready, 1991, p. 13)
