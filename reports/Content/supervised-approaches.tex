@@ -133,8 +133,8 @@ Expectedly, $F_0(\mathbf{x})$ is a poor estimate, capturing hardly any regularit
 \begin{equation}
     r_i=-\left[\frac{\partial L_{\mathrm{BCE}}\left(y_i, F\left(\mathbf{x}_i\right)\right)}{\partial F\left(\mathbf{x}_i\right)}\right]_{F(\mathbf{x})=F_{m-1}(\mathbf{x})}=2 y_i /\left(1+\exp \left(2 y_i F_{m-1}\left(\mathbf{x}_i\right)\right)\right).
 \end{equation}
-\todo{yields the maximum decrease are similar to the components of the negative gradient descent. However, the  major drawback is that the gradient is only defined for data points xi seen during training, contradicting the creation of a generalizing model.}
-Typically, regression trees (cp. \cref{sec:decision-tree}) are chosen as weak learners since they are computationally cheap and can produce continuous estimates for the residual. The $m$-th regression tree contains $J$ terminal regions, denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. We search for an estimate $\gamma_{j,m}$ for the terminal node $R_{jm}$ that minimizes the cross-entropy over all samples within the node:
+
+Residuals or gradients are only defined on training samples. For a generalized model, residuals are approximated. Typically, regression trees (cp. \cref{sec:decision-tree}) are chosen as weak learners since they are computationally cheap and can produce continuous estimates for the residual. The $m$-th regression tree contains $J$ terminal regions, denoted by $R_{j m}, j=1,2, \ldots, J_{m}$. We search for an estimate $\gamma_{j,m}$ for the terminal node $R_{jm}$ that minimizes the cross-entropy over all samples within the node:
 \begin{equation}
     \gamma_{j m}=\arg \min _\gamma \sum_{\mathbf{x}_i \in R_{j m}} \log \left(1+\exp \left(-2 y_i\left(F_{m-1}\left(\mathbf{x}_i\right)+\gamma\right)\right)\right)
     \label{eq:region-estimate-gbm}
