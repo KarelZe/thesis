@@ -140,7 +140,7 @@ Typically, regression trees (cp. \cref{sec:decision-tree}) are chosen as weak le
     \label{eq:region-estimate-gbm}
 \end{equation}
 
-\cref{eq:region-estimate-gbm} cannot be solved in closed form and is typically approached by the Newton-Raphson method with a second-order approximation of the loss~\footnote{Compare the second-order Taylor polynomial given by \todo{complete?}.}:
+\cref{eq:region-estimate-gbm} cannot be solved in closed form and is typically approached by the Newton-Raphson method with a second-order approximation of the loss:
 \begin{equation}
     \gamma_{j m}=\sum_{\mathbf{x}_i \in R_{j m}} r_i / \sum_{\mathbf{x}_i \in R_{j m}}\left|r_i\right|\left(2-\left|r_i\right|\right)
 \end{equation}
@@ -196,8 +196,6 @@ For its original application, machine translation, both the encoder and decoder 
 \subsubsection{Token Embedding}\label{sec:token-embeddings}
 
 As explained previously, Transformers operate on sequences of numeric vector representations, the \emph{token embeddings}. The classical Transformer was trained on \emph{word embeddings}. Nevertheless, \gls{token} embeddings are generic and arbitrary inputs that can be embedded and then processed by the Transformer. In the spirit of \textcite[][5]{vaswaniAttentionAllYou2017}, we first explore word embeddings for textual data, before adapting embeddings to the tabular domain.
-
-\todo{write down, how the sequence of token ids is constructed.}
 
 \textbf{Embeddings For Textual Data}
 
@@ -255,7 +253,6 @@ Despite these advantages, high-cardinal features present a challenge for embeddi
 
 \textbf{Link To Positional Encoding and Attention}
 
-\todo{verify invariant property. Not sure if I got it right.}
 Embeddings can only encode the semantic relationship of tokens, but they do not provide a clue to the model about the relative and absolute ordering of tokens in which they appear in the sequence, since all stages of the encoder and decoder are invariant to the token's position. Positional information must be induced into the model to preserve the ordering (cp. \cref{sec:positional-encoding}). Another limitation of embeddings is, that identical tokens share the embedding, even if they are ambiguous and their meaning is different from the context in which they appear. To resolve this issue, embeddings get contextualized in the self-attention mechanism (cp. \cref{sec:attention}).
 
 \subsubsection{Positional Encoding}\label{sec:positional-encoding}
@@ -323,7 +320,6 @@ where $\mathbf{S} \in \mathbb{R}^{d_s \times \ell_s}$ and $\mathbf{Z} \in \mathb
 
 Rather than relying on a single attention function, \textcite[][4--5]{vaswaniAttentionAllYou2017} introduce multiple \emph{attention heads}, which perform attention in parallel on $H$ \emph{different} linear projections of queries, keys, and values. The \emph{multi-head attention} enables the model to learn richer representations of the input, as attention heads operate independently, they can pick up unique patterns or focus on different positions in the sequence at once. Multi-head attention is visualized in \cref{fig:transformer-architecture-overview} (center).
 
-\todo{introduce word modalities}
 Exemplary for machine translation, \textcite[][5795]{voitaAnalyzingMultiHeadSelfAttention2019} show, that heads serve indeed distinct purposes like learning positional or syntactic relations between tokens. It is conceivable, that for tabular data this maps to dependencies between features. In practice, Transformers may not leverage all attention heads and some heads could even be pruned without impacting the performance \autocites[][9]{michelAreSixteenHeads2019}[][5805]{voitaAnalyzingMultiHeadSelfAttention2019}.
 
 Multi-head attention can be computed as:
