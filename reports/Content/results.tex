@@ -145,7 +145,7 @@ Similar to \textcite[\checkmark][267]{odders-whiteOccurrenceConsequencesInaccura
         \toprule
                                                                           &           & \multicolumn{2}{c}{{\glsentryshort{FS} Classic}}          & \multicolumn{2}{c}{{\glsentryshort{FS} Size}}      & \multicolumn{2}{c}{{\glsentryshort{FS} Option}}                                             \\
         \cmidrule(l){3-4}\cmidrule(l){5-6}\cmidrule(l){7-8}
-        \multicolumn{2}{l}{{$\downarrow$ Trans.$\rightarrow$ \gls{GBRT}}} & {Correct} & {Wrong}                                                     & {Correct}                                                    & {Wrong}                                                     & {Correct} & {Wrong}           \\
+        \multicolumn{2}{l}{{$\downarrow$  \gls{GBRT} $\rightarrow$ Trans.}} & {Correct} & {Wrong}                                                     & {Correct}                                                    & {Wrong}                                                     & {Correct} & {Wrong}           \\
         \midrule
         \gls{ISE}                                                         & Correct   & 5904530                                                     & 374201                                                       & 6790958                                                     & 343265    & 6722730 & 586719  \\
                                                                           & Wrong     & 385481                                                      & 3197364                                                      & 366683                                                      & 2360670   & 567124  & 1985003 \\         \addlinespace
@@ -159,7 +159,6 @@ Similar to \textcite[\checkmark][267]{odders-whiteOccurrenceConsequencesInaccura
         \bottomrule
     \end{tabular}
 \end{table}
-\todo{Verify labeling for Transformer and Gradien-Boosting is correct.}
 
 Based on the contingency tables in \cref{tab:contigency-supervised-classifiers}, we see that both models share a large portion of trades, for which both classifiers agree.\footnote{Through summation of correct classifications of one classifier divided by the matrix sum, one obtains the accuracy from \cref{tab:results-supervised-ise-cboe}. Consider the first entry, e.g., $(\num{5904530}+\num{374201}) / (\num{5904530} + \num{374201} + \num{385481} + \num{3197364}) \approx \num{0.63668637}$.} For larger feature sets, the share of trades correctly classified by one classifier grows, while the number of jointly correctly classified trades plateaus. Thus, both models learn specific patterns and excel in different trades. The performance differences between classifiers are statistically significant at the \SI{1}{\percent} level. The null hypothesis can be rejected.
 
@@ -198,7 +197,7 @@ Pre-training is beneficial for the performance of Transformers on \gls{ISE} trad
         \toprule
                                                                           &           & \multicolumn{2}{c}{{\glsentryshort{FS} Classic}}      & \multicolumn{2}{c}{{\glsentryshort{FS} Size}}    & \multicolumn{2}{c}{{\glsentryshort{FS} Option}}                                            \\
         \cmidrule(l){3-4}\cmidrule(l){5-6}\cmidrule(l){7-8}
-        \multicolumn{2}{l}{{$\downarrow$ Trans.$\rightarrow$ \gls{GBRT}}} & {Correct} & {Wrong}                                                 & {Correct}                                                  & {Wrong}                                                    & {Correct} & {Wrong}           \\
+        \multicolumn{2}{l}{{$\downarrow$  \gls{GBRT} $\rightarrow$ Trans.}} & {Correct} & {Wrong}                                                 & {Correct}                                                  & {Wrong}                                                    & {Correct} & {Wrong}           \\
         \midrule
         \gls{ISE}                                                         & Correct   & 5740391                                                 & 511603                                                     & 6658028                                                    & 457739    & 6665176 & 586696  \\
                                                                           & Wrong     & 635685                                                  & 2973897                                                    & 527023                                                     & 2218786   & 686768  & 1922936 \\         \addlinespace
