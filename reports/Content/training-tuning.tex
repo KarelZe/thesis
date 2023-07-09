@@ -196,7 +196,7 @@ The loss surface of the \gls{GBRT} trained on the feature set including option f
 \begin{table}[!h]
     \centering
     \sisetup{table-format=3.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
-    \caption[Search Solutions of Gradient Boosting]{Search solutions of gradient boosting. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials each.}
+    \caption[Search Solutions of Gradient Boosting]{Search solutions of gradient boosting. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials.}
     \label{tab:solutions-gbm}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
@@ -219,7 +219,7 @@ The search space for the semi-supervised variant is identical to the supervised 
 \begin{table}[!h]
     \centering
     \sisetup{table-format=3.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
-    \caption[Search Solutions of Gradient Boosting With Self-Training]{Search solutions of gradient boosting with self-training. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials each. Arrows indicate the change compared to the supervised variant.}
+    \caption[Search Solutions of Gradient Boosting With Self-Training]{Search solutions of gradient boosting with self-training. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials. Arrows indicate the change compared to the supervised variant.}
     \label{tab:solutions-GBRT-self-training}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
@@ -281,7 +281,7 @@ The best combination is identical for all feature sets. The embedding dimension 
 \begin{table}[!h]
     \centering
     \sisetup{table-format=3.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
-    \caption[Search Solutions of FT-Transformer]{Search solutions of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{10} trials each. A discussion of these results is provided below.}
+    \caption[Search Solutions of FT-Transformer]{Search solutions of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{10} trials. A discussion of these results is provided below.}
     \label{tab:solutions-transformer}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
@@ -317,7 +317,7 @@ Validation accuracy after fine-tuning improves for all models over Transformers 
 \begin{table}[!h]
     \centering
     \sisetup{table-format=3.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
-    \caption[Search Solutions of FT-Transformer With Pre-training]{Search solutions of FT-Transformer with pretraining. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{10} trials each. Arrows indicate the change compared to the supervised variant.}
+    \caption[Search Solutions of FT-Transformer With Pre-training]{Search solutions of FT-Transformer with pretraining. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{10} trials. Arrows indicate the change compared to the supervised variant.}
     \label{tab:solutions-transformer-pretraining}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
@@ -337,7 +337,7 @@ Validation accuracy after fine-tuning improves for all models over Transformers 
 
 Akin to selecting the machine learning classifiers, we select our classical baselines on the \gls{ISE} validation set. This prevents \gls{overfitting} the test set and maintains consistency between both paradigms. For the same reason, baselines are kept constant in the transfer setting on the \gls{CBOE} sample.
 
-Optimizing hybrids of trade classification rules through Bayesian search is experimentally feasible by the stacking paradigm of \cref{sec:stacked-rule} and by treating the rules from \cref{sec:rule-based-approaches} as a tunable hyperparameter. After all, we find no outperformance over hybrid rules already reported in the literature, as documented online.\footnote{For the performance of found combinations see \url{https://wandb.ai/fbv/thesis/runs/3f2m9c6i} and \url{https://wandb.ai/fbv/thesis/runs/16d6e4dk} for details. Experiments are run with \num{500} trials each. Performance of rules for literature is documented in \cref{tab:ise-classical}.} Our combinations match or trail the accuracies of rules from \textcite[\checkmark][13--15]{grauerOptionTradeClassification2022} on the \gls{ISE} validation set. Subsequently, we adopt their combinations as our benchmark, considering them to be the most challenging.
+Optimizing hybrids of trade classification rules through Bayesian search is experimentally feasible by the stacking paradigm of \cref{sec:stacked-rule} and by treating the rules from \cref{sec:rule-based-approaches} as a tunable hyperparameter. After all, we find no outperformance over hybrid rules already reported in the literature, as documented online.\footnote{For the performance of found combinations see \url{https://wandb.ai/fbv/thesis/runs/3f2m9c6i} and \url{https://wandb.ai/fbv/thesis/runs/16d6e4dk} for details. Experiments are run with \num{500} trials. Performance of rules for literature is documented in \cref{tab:ise-classical}.} Our combinations match or trail the accuracies of rules from \textcite[\checkmark][13--15]{grauerOptionTradeClassification2022} on the \gls{ISE} validation set. Subsequently, we adopt their combinations as our benchmark, considering them to be the most challenging.
 
 From all candidate algorithms, a combination of quote and tick rules, $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$, where the quote rule first applied to the \gls{NBBO} and then to quotes of the \gls{ISE} followed by the reverse tick rule at inter-exchange level, performs best reaching a validation accuracy of \SI{58.76225138074204}{\percent}. For brevity, we refer to this combination as the \gls{GSU} method (small). It can be estimated using features from feature set one, which qualifies it as a benchmark.
 

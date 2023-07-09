@@ -4,7 +4,7 @@ This chapter expands the scope of trade classification from the supervised setti
 
 \subsection{Framing as a Semi-supervised Learning Problem}\label{sec:problem-framing-2}
 
-The supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the initiator can be inferred through matching procedures (cp. \cref{sec:trade-initiator}), which may bias the selection. Unlabeled trades, though, are abundant and can help improve the generalization performance of the classifier. This concern is addressed by semi-supervised methods.
+The supervised approaches depend on the availability of the trade initiator as the true label. Yet, obtaining the label is often restricted to the rare cases, where the trade initiator is provided by the exchange or to subsets of trades where the initiator can be inferred through matching procedures (cp. \cref{sec:trade-initiator}). This may bias the selection. Unlabeled trades, though, are abundant and can help improve the generalization performance of the classifier. This concern is addressed by semi-supervised methods.
 
 Semi-supervised methods leverage partially-labeled data by learning an algorithm on unlabeled instances alongside true labels \autocite[\checkmark][2]{chapelleSemisupervisedLearning2006}. They are centered around the semi-supervised assumption of smoothness, which states that if two samples say $\mathbf{x}_{1}$ and $\mathbf{x}_{2}$ are nearby in a high-density region, their class labels $y_{1}$ and $y_{2}$ should also be similar. Vice versa, if data points are separated by a low-density region, their labels may be different \autocite[\checkmark][5]{chapelleSemisupervisedLearning2006}.
 
@@ -69,7 +69,7 @@ Independent of the base classifier, self-training increases computational cost, 
     {\renewcommand\normalsize{\small}
         \normalsize
         \input{./Graphs/random-token-replacement.pdf_tex}}
-    \caption[Replaced Token Detection]{Replaced Token Detection. Own work inspired by \autocite[\checkmark][3]{clarkElectraPretrainingText2020}.}
+    \caption[Replaced Token Detection]{Replaced Token Detection. Visualization inspired by \autocite[\checkmark][3]{clarkElectraPretrainingText2020}.}
     \label{fig:random-token-replacement}
 \end{figure}
 
