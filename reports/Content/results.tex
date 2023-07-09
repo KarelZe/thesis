@@ -879,9 +879,13 @@ From our supervised classifiers the FT-Transformer or \gls{GBRT} trained on \gls
 
 Thus, \gls{GSU} method (large) provides the best estimate of the effective spread if the true labels are absent. For labeled data, Transformer or gradient boosting-based approaches can provide more accurate estimates. The de facto standard, the \gls{LR} algorithm, fails to deliver accurate estimates and may bias research.
 
-
+\todo{my results are smaller than in \textcites[][]{muravyevOptionsTradingCosts2020}{savickasInferringDirectionOption2003}{kaeckPriceImpactBid2022}. Might have to do with moneyness but verify root cause.}
 \todo{“In addition, my results offer little help in answering why option bid-ask spreads are so large. This is one of the biggest puzzles in the options literature—existing theories of the option spread fail to explain its magnitude and shape (Muravyev and Pearson (2014)).”}
 \todo{compare against \textcite[\checkmark][4981]{muravyevOptionsTradingCosts2020} or \autocite{kaeckPriceImpactBid2022}}
 \todo{Think about reporting as a percentage. Adjust the formula from above.}
 \todo{Look into \textcite{muravyevOptionsTradingCosts2020}}
 \todo{Options listed on multiple exchanges have narrower spreads than those listed on a single exchange, but the difference diminishes as option volume increases. Option spreads become wider when a competing exchange delists the option.\autocite{mayhewCompetitionMarketStructure2002}}
+\todo{“The nature of option markets is such that percentage and dollar spreads are not easily comparable between options with different degrees of moneyness. In particular, deep out-of-the-money options have a low value and therefore the percentage spread is typically large compared to its dollar spread. The opposite holds for deep in-the-money options. Further, we show both value-weighted and equal-weighted spreads, because the former overweights high-priced ITM options and the latter overweights low-priced OTM options.” (Kaeck et al)}
+\todo{“he equal-weighted average effective quoted half spread, i.e., the quoted half-spread just before each trade, is 12.8 prozent, while the effective spread is only 5.6 pronzent. The large difference is explained by the many trades negotiated off-exchange or directly with dealers that occur inside the quoted bid and ask prices. The dollar value-weighted percentage spreads are about one-third of the equal-weighted values, reflecting that high-priced ITM options have relatively small percentage spreads.” (Kaek et al)}
+\todo{Explain what Muravyev do differently. “They replace the midpoint by the predicted value of a regression of the midpoint on Black–Scholes price minus midpoint, delta times lagged underlying price differences, and lagged price changes. This adjustment offers a better expectation of the unobserved fundamental value than the quoted midpoint.” (Kaeck et al)}
+
