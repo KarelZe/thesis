@@ -251,6 +251,8 @@ Despite the strong performance of our approaches, it's important to acknowledge 
 
 All of our classifiers require some labeled instances for training. If the true label cannot be inferred from trades or generating labeled data is wasteful, our approaches are not applicable. For cases, where trades are partially labeled, our pre-trained FT-Transformer offers a viable alternative to rule-based classification. Next, we analyze the robustness of our classifiers.
 
+\subsection{Robustness}\label{sec:robustness}
+
 \subsubsection{Robustness Results}\label{sec:robustness-results}
 
 To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, and proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[\checkmark][47--50]{grauerOptionTradeClassification2022} as well as \textcite[\checkmark][890--892]{savickasInferringDirectionOption2003}, strengthening comparability across different works.\footnote{When comparing with \textcite[\checkmark][47--50]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.} Our results are tabulated \cref{tab:diff-ise-gbm,tab:diff-cboe-gbm,tab:diff-ise-transformer,tab:diff-cboe-transformer,tab:diff-ise-gbm-semi,tab:diff-cboe-gbm-semi}, separately for \glspl{GBRT} and Transformers as well as exchanges.
