@@ -53,4 +53,4 @@ Embeddings can only encode the semantic relationship of tokens, but they do not 
 [^2:] Throughout this work, we adhere to a notation suggested in [[@phuongFormalAlgorithmsTransformers2022]] (p. 1 f) to maintain consistency.
 
 **Notes:**
-[[🛌 Token embeddings notes]]
+[[🛌Token embeddings notes]]

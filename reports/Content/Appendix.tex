@@ -13,10 +13,10 @@
         \begin{tabular}{@{}p{3cm}p{3cm}lp{4cm}p{4cm}l@{}}
             \toprule
             Research                                                      & Data                              & Sample Period            & Method                                                                                                 & Baseline                                                     & Improvement              \\ \midrule
-            \autocite[][15]{rosenthalModelingTradeDirection2012}          & \gls{NASDAQ}                      &                          & Logistic regression                                                                                    & \gls{EMO} rule, \gls{LR} rule,\newline and tick rule         & max. \SI{2.2}{\percent}  \\ \cmidrule{2-6}
+            \autocite[\checkmark][411]{rosenthalModelingTradeDirection2012}          & \gls{NASDAQ}                      &                          & Logistic regression                                                                                    & \gls{EMO} rule, \gls{LR} rule,\newline and tick rule         & max. \SI{2.2}{\percent}  \\ \cmidrule{2-6}
                                                                           & \gls{NYSE}                        & 03/12/2004 -- 31/12/2004 & Logistic regression                                                                                    & \gls{EMO} rule, \gls{LR} rule,\newline and tick rule         & max. \SI{1.1}{\percent}  \\\cmidrule{1-6}
-            \autocite[][489--494]{blazejewskiLocalNonParametricModel2005} & Australian Stock\newline Exchange & 11/11/2002 -- 27/08/2003 & $k$ nearest neighbor, \newline logistic regression,\newline trade continuation,\newline majority vote & -                                                            & -                         \\ \cmidrule{1-6}
-            \autocite[][49--57]{ronenMachineLearningTrade2022}            & \gls{TRACE}                       & 01/07/2002 -- 31/12/2019 & Logistic regression, decision tree,\newline neural network, and random forests                         & \gls{LR} rule and tick rule,\newline and \gls{BVC} algorithm & max. \SI{13.3}{\percent} \\ \cmidrule{2-6}
+            \autocite[\checkmark][489--493]{blazejewskiLocalNonParametricModel2005} & Australian Stock\newline Exchange & 11/11/2002 -- 27/08/2003 & $k$ nearest neighbor, \newline logistic regression,\newline trade continuation,\newline majority vote & -                                                            & -                         \\ \cmidrule{1-6}
+            \autocite[\checkmark][49--57]{ronenMachineLearningTrade2022}            & \gls{TRACE}                       & 01/07/2002 -- 31/12/2019 & Logistic regression, decision tree,\newline neural network, and random forests                         & \gls{LR} rule and tick rule,\newline and \gls{BVC} algorithm & max. \SI{13.3}{\percent} \\ \cmidrule{2-6}
                                                                           & \gls{NASDAQ}                      & 09/12/2013 -- 13/12/2013 & Logistic regression, decision tree,\newline neural network, and random forests                         & \gls{LR} rule, tick rule,\newline and \gls{BVC} algorithm    & max. \SI{3.3}{\percent}  \\ \bottomrule
         \end{tabular}
     \end{table}
@@ -109,7 +109,7 @@
 \begin{figure}[ht]
     \centering
     \includegraphics{auto-corr-features.pdf}
-    \caption[Autocorrelation of Features]{Autocorrelation Features. Own work.}
+    \caption[Autocorrelation of Features]{Autocorrelation of features.}
     \label{fig:auto-correlation-features}
 \end{figure}
 

@@ -10,6 +10,8 @@
 \DeclareLanguageMapping{british}{british-apa}
 % \renewcommand{\thepage}{} % Removes the page number
 \addbibresource{Content/bibliography.bib}
+\usepackage{xurl} % url breaks in biblatex
+% https://tex.stackexchange.com/questions/567789/adding-line-break-to-bibliography-with-long-numerical-doi
 
 % Format and layout
 \usepackage[left=3cm,right=3cm,bottom=3cm]{geometry} % Specifies left and right side margins.
@@ -49,7 +51,7 @@ triangle,isosceles triangle stretches,shape border rotate=90,minimum
 width=0.2cm,minimum height=0.2cm,inner sep=0pt] at (0,0) {};}}
 
 \newcommand{\bestcircle}{\tikz{\node[circle,draw=darkgray, fill=white, line width=0.5pt, minimum width=0.2cm,minimum height=0.2cm, inner sep=0pt, draw opacity=.2] at (0,0){};}}
-\newcommand{\myline}{\tikz{\draw[dashed, gray, line width=0.5pt] (0,0) -- (0,0.3);}}
+\newcommand{\myline}{\tikz{\draw[dashed, gray, line width=1pt] (0,0) -- (0,0.3);}}
 
 \usepackage{enumitem} % enumerate with letters https://tex.stackexchange.com/a/129960
 
@@ -120,7 +122,7 @@ output-exponent-marker=\ensuremath{\mathrm{e}}
 % Please fill in this information once at the beginning. This way, gaps will be filled in automatically in the following.
 \newcommand{\name}{Markus Bilz} % Enter your name.
 \newcommand{\dateofthesis}{15 July 2023} % Enter the submission date of your thesis.
-\newcommand{\titleofthesis}{Learn the Rules: Improving Option Trade Classification With Machine Learning} % Enter the title of your thesis.
+\newcommand{\titleofthesis}{Improving Option Trade Classification With Machine Learning} % Enter the title of your thesis.
 \newcommand{\streetadress}{Mathystr.~14-16 // XI-11} % Enter your street address.
 \newcommand{\postalcode}{76133} % Enter your postal code.
 \newcommand{\city}{Karlsruhe} % Enter your city/town.
@@ -212,7 +214,7 @@ bookmarksopen
 \newacronym{OTM}{OTM}{out-of-the-money}
 \newacronym{RMSE}{RMSE}{root mean squared error}
 \newacronym{RF}{RF}{random forest}
-\newacronym{ReLU}{ReLU}{Rectified Linear Units}
+\newacronym{ReLU}{ReLU}{Rectified Linear Unit}
 \newacronym{SAGE}{SAGE}{Shapley Additive Global importancE}
 \newacronym{SSE}{SSE}{sum of squared errors}
 \newacronym{SHAP}{SHAP}{SHapley Additive exPlanations}
