@@ -48,7 +48,7 @@ The work of \textcite[\checkmark][35]{grauerOptionTradeClassification2022} sugge
 
 \emph{Border Count}
 
-In regression trees of gradient-boosting, the split finding is typically approximated with quantization, whereby all numeric features are first discretised into a fixed number of buckets through histogram building, and splits are evaluated at the border of the buckets \autocite[\checkmark][3147]{keLightGBMHighlyEfficient2017}. To increase the number of split candidates, we raise the border count to \num{254}. Generally, this leads to increased accuracy at the cost of computational efficiency. Yet, in the experiment above, the improvements in validation loss and accuracy are minor compared to the previous modifications.
+In regression trees of gradient-boosting, the split finding is typically approximated with quantization, whereby all numeric features are first discretized into a fixed number of buckets through histogram building, and splits are evaluated at the border of the buckets \autocite[\checkmark][3147]{keLightGBMHighlyEfficient2017}. To increase the number of split candidates, we raise the border count to \num{254}. Generally, this leads to increased accuracy at the cost of computational efficiency. Yet, in the experiment above, the improvements in validation loss and accuracy are minor compared to the previous modifications.
 
 \emph{Early Stopping and Checkpointing}
 
@@ -96,7 +96,7 @@ When training Transformers, the learning rate is often adjusted throughout the t
     \label{fig:lr-lin-warmup-cosine-decay}
 \end{figure}
 
-The scheduled learning rate has smoothing effects on the training loss and accuracy estimates, as evident in \cref{fig:fttransformer-optimizations-loss-acc}. Therefore, we adopt a training setup with a learning rate schedule, despite the negative effects on training time. The learning rate itself is tuned as part of \cref{sec:hyperparameter-tuning}.
+The scheduled learning rate smooths the training loss and accuracy estimates, as evident in \cref{fig:fttransformer-optimizations-loss-acc}. Therefore, we adopt a training setup with a learning rate schedule, despite the negative effects on training time. The learning rate itself is tuned as part of \cref{sec:hyperparameter-tuning}.
 
 
 \emph{Batch Size}
@@ -137,7 +137,7 @@ The FT-Transformer is trained in two stages. First, we train for \num{20} epochs
 
 During pre-training and fine-tuning, early stopping is applied based on the value of the objective on the validation set, using patience of \num{10}. This particular setup is adopted from \textcite[\checkmark][15]{rubachevRevisitingPretrainingObjectives2022} for being compute-efficient and offering competitive performance on tabular datasets. The hidden dimension of the classification head is set to \num{512}. Based on \textcite[][3]{clarkElectraPretrainingText2020} \SI{15}{\percent} of all tokens are replaced.
 
-Since the unlabeled sample includes various types of trades that may not be comparable to the labeled sample, we update all layers during fine-tuning. Empirically, fine-tuning the entire model is among the most successful methods, as results from \textcite[\checkmark][104--105]{raeScalingLanguageModels2022} for Transformers in general and results from \autocite[][7]{merchantWhatHappensBERT2020} specific for \gls{BERT}-like architectures document. Yet, updating all layers is most resource-intensive.
+Since the unlabeled sample includes various types of trades that may not be comparable to the labeled sample, we update all layers during fine-tuning. Empirically, fine-tuning the entire model is among the most successful methods, as results from \textcite[\checkmark][104--105]{raeScalingLanguageModels2022} for Transformers in general and results from \autocite[][7]{merchantWhatHappensBERT2020} specific for \gls{BERT}-like architectures document. Yet, updating all layers is the most resource-intensive.
 
 Following \textcite[\checkmark][4]{rubachevRevisitingPretrainingObjectives2022}, the learning rate and weight decay are shared between the pre-training and fine-tuning stages. All other hyperparameters related to the model are identical.
 
