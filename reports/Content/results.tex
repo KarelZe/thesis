@@ -167,7 +167,7 @@ In summary, our supervised methods establish a new state-of-the-art in option tr
 \subsubsection{Performance of Semi-supervised
     Models}\label{sec:results-of-semi-supervised-models}
 
-We compare the performance of pre-trained Transformers and self-trained gradient-boosting on the \gls{ISE} and \gls{CBOE} test set. Results are reported in \cref{tab:results-semi-supervised-ise-cboe}.
+We compare the performance of pre-trained Transformers and self-trained gradient boosting on the \gls{ISE} and \gls{CBOE} test set. Results are reported in \cref{tab:results-semi-supervised-ise-cboe}.
 
 \begin{table}[ht]
     \centering
@@ -266,7 +266,7 @@ The performance is stable for different trade sizes and over time. Similarly, ac
 
 \begin{table}[ht!]
     \centering
-    \caption[Robustness of Gradient-Boosting on \glsentryshort{ISE}]{Accuracies of \glspl{GBRT} across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of Gradient Boosting on \glsentryshort{ISE}]{Accuracies of \glspl{GBRT} across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-ise-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -324,7 +324,7 @@ All              & 63.668637                                        & 3.620000  
 
 \begin{table}[h!]
     \centering
-    \caption[Robustness of Gradient-Boosting on \glsentryshort{CBOE}]{Accuracies of \glspl{GBRT} across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of Gradient Boosting on \glsentryshort{CBOE}]{Accuracies of \glspl{GBRT} across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-cboe-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -504,7 +504,7 @@ Lastly, the FT-Transformers perform well on trades at the quotes. When trained o
 
 \clearpage
 
-\textbf{Gradient-Boosting With Self-Training}
+\textbf{Gradient Boosting With Self-Training}
 
 We analyze the robustness of \gls{GBRT} with self-training on \gls{CBOE} data in \cref{tab:diff-ise-gbm-semi} and \gls{CBOE} data in \cref{tab:diff-cboe-gbm-semi}. Similar to what we observe for the standard \glspl{GBRT}, \glspl{GBRT} with self-training outperforms the respective benchmarks on almost all subsets. The only exceptions are index options and options traded outside the quotes, where the model performs worse than \gls{GSU} method (small)/(large).
 
@@ -512,7 +512,7 @@ Compared to the standard \glspl{GBRT}, performance degrades across almost all su
 
 \begin{table}
     \centering
-    \caption[Robustness of Gradient-Boosting With Self-Training on \glsentryshort{ISE}]{Accuracies of the \gls{GBRT} with self-training across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of Gradient Boosting With Self-Training on \glsentryshort{ISE}]{Accuracies of the \gls{GBRT} with self-training across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-ise-gbm-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -568,7 +568,7 @@ Compared to the standard \glspl{GBRT}, performance degrades across almost all su
 
 \begin{table}[!ht]
     \centering
-    \caption[Robustness of Gradient-Boosting With Self-Training on \glsentryshort{CBOE}]{Accuracies of the \gls{GBRT} with self-training across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of Gradient Boosting With Self-Training on \glsentryshort{CBOE}]{Accuracies of the \gls{GBRT} with self-training across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-cboe-gbm-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
