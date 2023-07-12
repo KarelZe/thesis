@@ -79,6 +79,6 @@ The discriminator then receives the corrupted input sequence and is trained to d
 
 Applied to tabular datasets, \gls{RTD} transfers to randomly replacing feature values in $\mathbf{x}_{i}$ instead of sequences. The objective is now to predict a binary mask $\mathbf{m}_{i}\in \{0,1\}^{M}$ corresponding to $\mathbf{x}_{i}$, indicating which features, or entries in $\mathbf{x}_{i}$, have been replaced. Previous adaptions for tabular data, e.g., \textcite[\checkmark][3]{huangTabTransformerTabularData2020}, simplify the replacement strategy by sampling replacement values directly from the feature, which alleviates the need for a generator network and requires less compute. Since the replacement is done on a feature-per-feature basis, the replaced token is \emph{per se} harder to detect.
 
-For tabular data the random replacement of feature values also strengthens the model's ability to incorporate a combination of features, rather than a single or few features based on their absolute value, which would facilitate overfitting.
+For tabular data, the random replacement of feature values also strengthens the model's ability to incorporate a combination of features, rather than a single or few features based on their absolute value, which would facilitate overfitting.
 
 In summary, \gls{RTD} can help to learn expressive representations of the input, even if the true label is unavailable. Given previous research, we expect pre-training \gls{RTD} to improve the performance of the FT-Transformer and match or exceed the of the \gls{GBRT}.
