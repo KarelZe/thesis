@@ -1,8 +1,10 @@
 \section{Results and Discussion}\label{sec:results}
 
-This chapter compares the performance of rule-based trade classification against machine learning-based classification. 
+We subsequently report and discuss performance and robustness results as well as feature importances. 
 
 \subsection{Performance}\label{sec:performance-results-discussion}
+
+This chapter analyzes the performance of rule-based trade classification and our classifiers in the out-of-sample setting.
 
 \subsubsection{Performance of Rule-Based Approaches}\label{sec:result-of-rule-based-approaches}
 
@@ -248,9 +250,11 @@ Self-training with \glspl{GBRT} as a base learner generally performs worse than 
 
 Despite the strong performance of our approaches, it's important to acknowledge the limitations. Inference of the classifiers is computationally cheap, but training requires a significant amount of compute. To make training feasible, great effort is spent on utilizing computing resources by optimizing memory transfers, compute graphs, and data representation. In cases where computing resources are scarce or classification accuracy is not the mere target, we advocate for heuristics, such as the \gls{GSU} method, which balances computational cost and performance.
 
-All of our classifiers require some labeled instances for training. If the true label cannot be inferred from trades or generating labeled data is wasteful, our approaches are not applicable. For cases, where trades are partially labeled, our pre-trained FT-Transformer offers a viable alternative to rule-based classification. Next, we analyze the robustness of our classifiers.
+All of our classifiers require some labeled instances for training. If the true label cannot be inferred from trades or generating labeled data is wasteful, our approaches are not applicable. For cases, where trades are partially labeled, our pre-trained FT-Transformer offers a viable alternative to rule-based classification.
 
 \subsection{Robustness}\label{sec:robustness}
+
+Next, we analyze the robustness of our classifiers.
 
 \subsubsection{Robustness Results}\label{sec:robustness-results}
 
