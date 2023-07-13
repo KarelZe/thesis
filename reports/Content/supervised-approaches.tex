@@ -385,6 +385,6 @@ Recall from our discussion on self-attention (cp. \cref{sec:attention}), that ea
     P=\operatorname{Linear}\left(\operatorname{ReLU}\left(\operatorname{LayerNorm}\left(\mathbf{S}\left[:,0\right]\right)\right)\right).
     \label{eq:bert-ft}
 \end{equation}
-\todo{Add softmax, think about ReLU, change the linear layer to Weight matrix?}
+% \todo{Add softmax, think about ReLU, change the linear layer to Weight matrix?}
 
 \textcite[][18939]{gorishniyRevisitingDeepLearning2021} achieve state-of-the-art performance through numerical and categorical embeddings. Embedding both categorical and numerical inputs enables the Transformer to attend to all other features, but at a considerable computational cost, that may only be justified by higher classification accuracies. Next, all previous models are extended for learning on partially-labeled data.

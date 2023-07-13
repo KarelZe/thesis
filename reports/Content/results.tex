@@ -43,12 +43,12 @@ Quote-based algorithms outperform tick-based algorithms delivering accuracy up t
         $\operatorname{clnv}_{\mathrm{nbbo}}$  & 98.8975           & 61.5439                            & 56.3371           & 57.0753           & 59.6079           \\
         $\operatorname{rclnv}_{\mathrm{nbbo}}$ & 98.7000           & 62.2628                            & 56.5928           & 57.4307           & 60.1614           \\ \midrule
         $\operatorname{gsu}_{\mathrm{small}}$  & 99.7918           & 66.8171                            & 58.9378           & 60.0508           & 63.8865           \\
-        $\operatorname{gsu}_{\mathrm{large}}$  & \bfseries 99.9943 & \bfseries 80.1647                  & \bfseries 69.3726 & \bfseries 67.6112 & \bfseries 75.4922 \\
+        $\operatorname{gsu}_{\mathrm{large}}$  & 99.9943 & \bfseries 80.1647                  & \bfseries 69.3726 & \bfseries 67.6112 & \bfseries 75.4922 \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-The performance of hybrids, such as the \gls{LR} algorithm, hinges on the reliance on the tick test. Thus, the \gls{EMO} rules and to a lesser extent the \gls{CLNV} rules perform worst, achieving accuracies between \SI{55.42}{\percent} and \SI{57.57}{\percent}. In turn, variants of the \gls{LR}, which uses the quote rule for most trades, are among the best-performing algorithms. By extension, \gls{GSU} method (small) further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$.
+The performance of hybrids, such as the \gls{LR} algorithm, hinges on the reliance on the tick test. Thus, the \gls{EMO} rules and to a lesser extent the \gls{CLNV} rules perform worst, achieving accuracies between \SI{55.42}{\percent} and \SI{60.1614}{\percent}. In turn, variants of the \gls{LR} algorithm, which uses the quote rule for most trades, are among the best-performing algorithms. By extension, the \gls{GSU} method (small) further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$.
 
 Notably, the \gls{GSU} method (large) featuring overrides from the trade size and depth rules performs best, achieving \SI{67.61}{\percent} accuracy on the test set and \SI{75.49}{\percent} on the entire dataset. Yet, the performance deteriorates most sharply between sets, as visualized in \cref{fig:classical-accuracies-over-time}.
 
@@ -86,7 +86,7 @@ Notably, the \gls{GSU} method (large) featuring overrides from the trade size an
         $\operatorname{clnv}_{\mathrm{nbbo}}$  & 98.8975           & 55.3058                            & 54.1294           & 54.9008           \\
         $\operatorname{rclnv}_{\mathrm{nbbo}}$ & 98.7000           & 56.3217                            & 55.4032           & 56.0055           \\\midrule
         $\operatorname{gsu}_{\mathrm{small}}$  & 99.7918           & 61.8938                            & 60.7464           & 61.4988           \\
-        $\operatorname{gsu}_{\mathrm{large}}$  & \bfseries 99.9943 & \bfseries 74.6511                  & \bfseries 66.5176 & \bfseries 71.8510 \\\bottomrule
+        $\operatorname{gsu}_{\mathrm{large}}$  & 99.9943 & \bfseries 74.6511                  & \bfseries 66.5176 & \bfseries 71.8510 \\\bottomrule
     \end{tabular}
 \end{table}
 
@@ -107,7 +107,7 @@ Next, we test the performance of supervised classifiers on the test sets.
 \begin{figure}[!ht]
     \centering
     \includegraphics{classical_at_mid_over_time.pdf}
-    \caption[Mid-Spread Trades Over Time]{Percentage of midspread trades on \gls{ISE} and \gls{CBOE} sample over time and estimated using \gls{NBBO} quotes. The bar \myline{} indicates the beginning of a new subset based on the train-test split.}
+    \caption[Mid-Spread Trades Over Time]{Percentage of midspread trades on \gls{ISE} and \gls{CBOE} sample over time. Estimated using \gls{NBBO} quotes. The bar \myline{} indicates the beginning of a new subset based on the train-test split.}
     \label{fig:classical-at-mid-over-time}
 \end{figure}
 
@@ -118,7 +118,7 @@ We take the best configurations from \cref{sec:hyperparameter-tuning}, trained a
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Supervised Approaches]{Accuracy of supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic, \gls{GSU} (small) is the benchmark, and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
+    \caption[Accuracies of Supervised Approaches]{Accuracy of supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
     \label{tab:results-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
@@ -136,7 +136,7 @@ Both model architectures consistently outperform their respective benchmarks on 
 The results can be enhanced through re-training on the validation set improving accuracies to \SI{76.162269}{\percent}, as documented in \cref{app:results-of-supervised-models-with-re-training}. In favor of conservative estimates, our models in the main text do not use this technique.
 
 Visually, the performance differences between gradient boosting and Transformers on the same feature sets are minor. To formally test, whether differences between both classifiers are significant, we construct contingency tables and pair-wise compare predictions using McNemar's test \autocite[][153--157]{mcnemarNoteSamplingError1947}. We formulate the null hypothesis that both classifiers have the same error rate.
-Similar to \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000}, uses contingency tables of rule-based methods and true labels. Here, contingency tables are used to pair-wise compare the predictions of \glspl{GBRT} against Transformers.
+Similar to \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000}, who uses contingency tables of rule-based methods and true labels. Here, contingency tables are used to pair-wise compare the predictions of \glspl{GBRT} against Transformers.
 
 \begin{table}[!ht]
     \centering
@@ -173,7 +173,7 @@ We compare the performance of pre-trained Transformers and self-trained gradient
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Semi-Supervised Approaches]{Accuracy of semi-supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For feature set classic, $\operatorname{gsu}_{\mathrm{small}}$ is the benchmark and otherwise $\operatorname{gsu}_{\mathrm{large}}$. Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
+    \caption[Accuracies of Semi-Supervised Approaches]{Accuracy of semi-supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For feature set classic, \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
     \label{tab:results-semi-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
@@ -186,9 +186,13 @@ We compare the performance of pre-trained Transformers and self-trained gradient
     \end{tabular}
 \end{table}
 
-Identical to the supervised case, our models consistently outperform their respective benchmarks. Gradient boosting with self-training surpasses \gls{GSU} (small) by \SI{3.350000}{\percent} on \gls{ISE} and \SI{5.440000}{\percent} on \gls{CBOE} in accuracy. Improvements for larger feature sets over \gls{GSU} (large) are marginally lower to the supervised model and range between \SI{4.550000}{\percent} and \SI{7.440000}{\percent}. This result extends the result for the validation set in \cref{sec:hyperparameter-tuning}.
+Identical to the supervised case, our models consistently outperform their respective benchmarks. Gradient boosting with self-training surpasses \gls{GSU} (small) by \SI{3.350000}{\percent} on \gls{ISE} and \SI{5.440000}{\percent} on \gls{CBOE} in accuracy. Improvements for larger feature sets over \gls{GSU} (large) are marginally lower to the supervised model and range between \SI{4.550000}{\percent} and \SI{7.440000}{\percent}. This result is analogous to the observation for the validation set in \cref{sec:hyperparameter-tuning}.
 
 Pre-training is beneficial for the performance of Transformers on \gls{ISE} trades, improving over Transformer with random initialization by up to \SI{0.87000}{\percent}. Hence, the performance improvement from pre-training on the validation set carries over to the test set. On the \gls{CBOE} dataset, pre-training hurts performance.
+
+As evident from \cref{tab:contigency-semi-supervised-classifiers}, the majority of trades are classified by both classifiers correctly. For the \gls{ISE}, performance improvements in larger feature sets are driven by trades that are distinctly classified by both classifiers. In turn, at the \gls{CBOE} the share of common classifications continues to grow. Performance differences between classifiers estimated by the McNemar test are significant at the \SI{1}{\percent} level.
+
+To summarize, semi-supervised variants of \glspl{GBRT} do not provide better generalization performance than supervised approaches, despite significantly higher training costs. Pre-training of Transformers improves performance on the \gls{ISE} sample but slightly deteriorates performance on the \gls{CBOE} set. We later evaluate if semi-supervised learning improves robustness if not performance.
 
 \begin{table}[!ht]
     \centering
@@ -214,10 +218,6 @@ Pre-training is beneficial for the performance of Transformers on \gls{ISE} trad
     \end{tabular}
 \end{table}
 
-As evident from \cref{tab:contigency-semi-supervised-classifiers}, the majority of trades are classified by both classifiers correctly. For the \gls{ISE}, performance improvements in larger feature sets are driven by trades that are distinctly classified by both classifiers. In turn, at the \gls{CBOE}, the share of common classifications continues to grow. Performance differences between classifiers estimated by the McNemar test are significant at the \SI{1}{\percent} level.
-
-To summarize, semi-supervised variants of \glspl{GBRT} do not provide better generalization performance than supervised approaches, despite significantly higher training costs. Pre-training of Transformers improves performance on the \gls{ISE} sample but slightly deteriorates performance on the \gls{CBOE} set. We later evaluate if semi-supervised learning improves robustness if not performance.
-
 \subsubsection{Performance Discussion}\label{sec:performance-discussion}
 
 \textbf{Rule-based Classification}
@@ -226,15 +226,15 @@ Basic classification rules leave every tenth trade unclassified. Thereby, the pr
 
 Naturally, our machine learning classifiers can classify any trade and are robust to missingness, as models can learn alternating patterns for missing features. Consider the classification of a trade based on quotes at the trading venue, whereby the quotes are missing. The quote rule leaves the trade unclassified. Transformers, however, can attend to any other feature within the context and readily classify the trade. Similarly, \glspl{GBRT} can split by alternative criteria.
 
-% \vskip 1.3in
+\vskip 1.3in
 
 \textbf{Supervised Classification}
 
-While statistically significant, performance differences between supervised \gls{GBRT} and Transformers, are relatively small compared to rule-based classification on the same feature sets. The result is aligned with \textcite[][18941]{gorishniyRevisitingDeepLearning2021}. The study concludes, generally for tabular modeling, that neither Transformers nor \glspl{GBRT} are universally superior. Our results confirm this observation, in the context of trade classification.
+While statistically significant, performance differences between supervised \glspl{GBRT} and Transformers, are relatively small compared to rule-based classification on the same feature sets. The result is aligned with \textcite[][18941]{gorishniyRevisitingDeepLearning2021}. The study concludes, generally for tabular modeling, that neither Transformers nor \glspl{GBRT} are universally superior. Our results confirm this observation in the context of trade classification.
 
-The results contradict those of \textcite[][14--49]{ronenMachineLearningTrade2022}, who benchmark random forests and \gls{FFN} for trade classification in the equity and bond market and find clear dominance of the tree-based approach. Beyond differences in the market under study and variants, two methodological differences are evident, that explain the contrasting results. First, unlike \gls{FFN}, the FT-Transformer is tailored to learn on tabular data through being a rotationally-invariant learner. Second, our data pre-processing and feature engineering are adapted to the requirements of neural networks. Without these measures, tree-based approaches excel due to their robustness in handling skewed and missing data.
+The results contradict those of \textcite[][14--49]{ronenMachineLearningTrade2022}, who benchmark random forests and \glspl{FFN} for trade classification in the equity and bond market and find clear dominance of the tree-based approach. Beyond differences in the market under study and variants, two methodological differences are evident, that explain the contrasting results. First, unlike \gls{FFN}, the FT-Transformer is tailored to learn on tabular data through being a rotationally-invariant learner. Second, our data pre-processing and feature engineering are adapted to the requirements of neural networks. Without these measures, tree-based approaches excel due to their robustness in handling skewed and missing data.
 
-Despite the lack of adaption to \gls{CBOE} data, the performance improvements are highest for the \gls{CBOE} dataset. Part of the strong performance on \gls{CBOE} trades hails from weaker benchmark performance, but also a stronger accuracy of classifiers on the smallest and mid-sized feature sets. Again, this result is in stark contrast to \textcite[][32]{ronenMachineLearningTrade2022}, who report subpar performance for random forests. Their setting differs from ours, as they apply ensembles trained in the bond market to equity trades. Moreover, it is unclear if data preprocessing procedures are shared between both sets, which may hamper performance. 
+Despite the lack of adaption to \gls{CBOE} data, the performance improvements are highest for the \gls{CBOE} dataset. Part of the strong performance on \gls{CBOE} trades hails from weaker benchmark performance, but also a stronger accuracy of classifiers on the smallest feature set. Again, this result is in stark contrast to \textcite[][32]{ronenMachineLearningTrade2022}, who report subpar performance for random forests. Their setting differs from ours, as they apply ensembles trained in the bond market to equity trades. Moreover, it is unclear if data preprocessing procedures are shared between both sets, which may hamper performance. 
 
 Relative to related works performing trade classification with supervised machine learning, the improvements are strong, as documented in \cref{app:literature-ml-tc}. As no other work studies the option market or identical model architectures, the results are indicative. The studies report improvements between \SI{1.1}{\percent} and \SI{13.3}{\percent} for their machine learning models over the benchmark. Our absolute improvements exceed all linear models, but the absolute improvements are smaller relative to some tree-based and deep learning models in \textcite[][49]{ronenMachineLearningTrade2022}. At the same time, our models are trained on significantly fewer features and a static training set, requiring a fraction of the training cost. We believe, our conservative framing aligns well with scenarios, where trade classification is only a prerequisite to other empirical research.
 
@@ -261,9 +261,9 @@ All of our classifiers require some labeled instances for training. If the true 
 
 \subsubsection{Robustness Results}\label{sec:robustness-results}
 
-To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, and proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[][47--50]{grauerOptionTradeClassification2022} as well as \textcite[][890--892]{savickasInferringDirectionOption2003}, strengthening comparability across different works.\footnote{When comparing with \textcite[][47--50]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.} Our results are tabulated \cref{tab:diff-ise-gbm,tab:diff-cboe-gbm,tab:diff-ise-transformer,tab:diff-cboe-transformer,tab:diff-ise-gbm-semi,tab:diff-cboe-gbm-semi}, separately for \glspl{GBRT} and Transformers as well as exchanges.
+To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, and proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[][47--50]{grauerOptionTradeClassification2022} as well as \textcite[][890--892]{savickasInferringDirectionOption2003}, strengthening comparability across different works.\footnote{When comparing with \textcite[][47--50]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.} Our results are tabulated in \cref{tab:diff-ise-gbm,tab:diff-cboe-gbm,tab:diff-ise-transformer,tab:diff-cboe-transformer,tab:diff-ise-gbm-semi,tab:diff-cboe-gbm-semi}, separately for \glspl{GBRT} and Transformers as well as exchanges.
 
-\vskip 1.3in
+% \vskip 1.3in
 
 \textbf{Gradient Boosting}
 
@@ -271,7 +271,7 @@ Performance improvements of \glspl{GBRT} are consistent for calls and puts acros
 
 The performance is stable for different trade sizes and over time. Similarly, accuracy improvements are comparable for different maturities and moneyness ratios. Aligning with rule-based approaches, accuracies are lowest for option trades with long maturities and deep \gls{ITM} options, as reported in \textcite[][22]{grauerOptionTradeClassification2022}. The addition of option-specific features has annealing effects on accuracies by moneyness ratios and maturities.
 
-\gls{GBRT} achieve particularly strong results for trades at the quotes or if quote data at the exchange level is absent. In these subsets, improvements reach up to \SI{16.01}{\percent} in the \gls{CBOE} and thus tighten the gap between trades inside or at the quotes. Consistent across all feature sets and exchanges, \glspl{GBRT} fail to improve upon classical rules for trades outside the spread, underperforming the benchmark \SI{-0.89}{\percent} to \SI{-5.43}{\percent}. We identify the strong performance of quote-based classification on these trades as a reason, that poses challenges.
+\glspl{GBRT} achieve particularly strong results for trades at the quotes or if quote data at the exchange level is absent. In these subsets, improvements reach up to \SI{16.01}{\percent} in the \gls{CBOE} sample and thus tighten the gap between trades inside or at the quotes. Consistent across all feature sets and exchanges, \glspl{GBRT} fail to improve upon classical rules for trades outside the spread, underperforming the benchmark \SI{-0.89}{\percent} to \SI{-5.43}{\percent}. % We identify the strong performance of quote-based classification on these trades as a reason, that poses challenges.
 
 \begin{table}[ht!]
     \centering
@@ -391,9 +391,7 @@ All             & 66.002029                                        & 5.260000   
 
 \textbf{FT-Transformer}
 
-Performance results of Transformers are robust across all tested dimensions. The accuracy is approximately equal for calls and puts. We observe, that the benchmark performance of puts is consistently higher in our sub-samples, which contrasts the finding of \textcite[][22]{grauerOptionTradeClassification2022}.
-
-Similar to \glspl{GBRT}, the FT-Transformer slightly underperforms the benchmark for index options in the \gls{ISE} sample. Even though the effect reverses on the \gls{CBOE} set, accuracies for index options are lower than those of any other underlying. Hence, we can extend the finding of \textcites[][22]{grauerOptionTradeClassification2022}[][886]{savickasInferringDirectionOption2003} that index options are notoriously difficult to classify to machine learning-based approaches.
+Performance results of Transformers are robust across all tested dimensions. The accuracy is approximately equal for calls and puts. Similar to \glspl{GBRT}, the FT-Transformer slightly underperforms the benchmark for index options in the \gls{ISE} sample. Even though the effect reverses on the \gls{CBOE} set, accuracies for index options are lower than those of any other underlying. Hence, we can extend the finding of \textcites[][22]{grauerOptionTradeClassification2022}[][886]{savickasInferringDirectionOption2003} that index options are notoriously difficult to classify for machine learning-based approaches.
 
 Classification is more accurate for near-expiring or deep \gls{ITM} options. In this sense, our finding contradicts the observation of \textcite[][891]{savickasInferringDirectionOption2003} made for rule-based classification. Again, we document that the addition of option-specific features, such as maturity or moneyness smooths out differences across maturity and moneyness levels.
 
@@ -515,31 +513,33 @@ Lastly, the FT-Transformers perform well on trades at the quotes. When trained o
 
 \textbf{Gradient Boosting With Self-Training}
 
-We analyze the robustness of \gls{GBRT} with self-training on \gls{CBOE} data in \cref{tab:diff-ise-gbm-semi} and \gls{CBOE} data in \cref{app:robustness-of-gradient-boosting-with-self-training}. Similar to what we observe for the standard \glspl{GBRT}, \glspl{GBRT} with self-training outperforms the respective benchmarks on almost all subsets. The only exceptions are index options and options traded outside the quotes, where the model performs worse than \gls{GSU} method (small)/(large).
+We analyze the robustness of \glspl{GBRT} with self-training on \gls{CBOE} data in \cref{tab:diff-ise-gbm-semi} and \gls{CBOE} data in \cref{app:robustness-of-gradient-boosting-with-self-training}. Similar to what we observe for the standard \glspl{GBRT}, \glspl{GBRT} with self-training outperform the respective benchmarks on almost all subsets. The only exceptions are index options and options traded outside the quotes, where the model performs worse than the \gls{GSU} method (small)/(large).
 
-Compared to the standard \glspl{GBRT}, performance degrades across almost all subsets. Quantitatively, no improvements in robustness as performance differences between sub-samples are of the same magnitude and the performance gap between rule-based classification extends for index options and trades outside the spread are observable.
+Compared to the standard \glspl{GBRT}, performance degrades across almost all subsets. Quantitatively, no improvements in robustness are observable, as performance differences between sub-samples are of the same magnitude and the performance gap between rule-based classification extends for index options and trades outside the spread.
 
 \textbf{Transformer With Self-Training}
 
-Transformers with pre-training objectives outperform the benchmark in all subsets apart from index options and trades outside the quotes. For \gls{ISE} trades in \cref{app:robustness-of-ft-transformer-with-pre-training} pre-training improves performance across subsets, reaching accuracies greater than \SI{86}{\percent}. The only exception is index options, where the performance gap slightly widens. Deep \gls{ITM} options and options with long maturities profit the most from the introduction of option features. 
+Transformers with pre-training objectives outperform the benchmark in all subsets apart from index options and trades outside the quotes. For \gls{ISE} trades in \cref{app:robustness-of-ft-transformer-with-pre-training} pre-training improves performance across most subsets, reaching accuracies greater than \SI{86}{\percent}. The only exception is index options, where the performance gap slightly widens. Deep \gls{ITM} options and options with long maturities profit the most from the introduction of option features. 
 
-For trades at the \gls{CBOE} performance improvements associated with pre-training are slightly lower across most sub-groups. Pre-training improves robustness, as the performance gap to the benchmarks narrows for trades outside the quotes.
+For trades at the \gls{CBOE}, performance improvements from pre-training are slightly lower across most sub-groups. Pre-training improves robustness, as the performance gap to the benchmarks narrows for trades outside the quotes.
 
 \subsubsection{Robustness Discussion}\label{sec:robustness-discussion}
 
 All our classifiers achieve performance improvements that are robust across most subsets. Nevertheless, most classifiers struggle to correctly classify index options and options traded outside the quotes. We discuss both aspects.
 
-Index options are notoriously difficult to classify by standard algorithms, as unanimously documented in \textcites[][898--899]{savickasInferringDirectionOption2003}[][22]{grauerOptionTradeClassification2022}. \textcite[][898--898]{savickasInferringDirectionOption2003} trace back the low accuracy to the intensified use of complex trades in index options trading, such as bull spreads, which typically involve simultaneous buys and sells of options. Conceptually, it remains unclear if the components should be classified separately or as single complex trade. We cannot verify this hypothesis as our labeling procedure does not guarantee that all components are contained in the final sample. Also, it only explains why classification is difficult as a whole, but it does not address why accuracies trail the benchmark. Some insights can be gained from the data distribution: index trades make up only \SI{1.0731}{\percent} of all trades on the \gls{ISE} training set, resulting in a highly imbalanced distribution of the security type. Consequently, the model has fewer index option samples to train on and is susceptible to overfitting if it learns distinguishable patterns for security types. A sample weighting scheme could place more emphasis on index options. 
+Index options are notoriously difficult to classify by standard algorithms, as unanimously documented in \textcites[][898--899]{savickasInferringDirectionOption2003}[][22]{grauerOptionTradeClassification2022}. \textcite[][898--898]{savickasInferringDirectionOption2003} trace back the low accuracy to the intensified use of complex trades in index options trading, such as bull spreads, which typically involve simultaneous buys and sells of options. Conceptually, it remains unclear if the components should be classified separately or as a single complex trade. We cannot verify this hypothesis as our labeling procedure does not guarantee that all components are contained in the final sample. Also, it only explains why classification is difficult as a whole, but it does not address why accuracies trail the benchmark. Some insights can be gained from the data distribution: index option trades make up only \SI{1.0731}{\percent} of all trades on the \gls{ISE} training set, resulting in a highly imbalanced distribution of the security type. Consequently, the model has fewer index option samples to train on and is susceptible to overfitting if it learns distinguishable patterns for security types. A sample weighting scheme could place more emphasis on index options. 
 
-In our test sets options traded outside the quotes can be reliably classified with the quote rule, which aligns with the intuition that customers are willing to trade at an additional liquidity premium, hence outside the quotes. We suspect the reason, why our methods fail to learn in this simple pattern in the infrequent distribution in \SI{0.7535}{\percent} of the \gls{ISE} dataset. Following our reasoning from above, the model can overfit the training samples more easily, eventually resulting in poor out-of-sample performance. 
+In our test sets options traded outside the quotes can be reliably classified with the quote rule, which aligns with the intuition that customers are willing to trade at an additional liquidity premium, hence outside the quotes. We suspect that the reason, why our methods fail to learn this simple pattern, is the infrequent occurrence in the \gls{ISE} dataset, which is as low as \SI{0.7535}{\percent}. Following our reasoning from above, the model can overfit the training samples more easily, eventually resulting in poor out-of-sample performance. 
 
-As both subsets account for only a fraction of the entire set and differences in performance are only minor. We conclude that our approaches are stable across multiple dimensions and between exchanges.
+As both subsets account for only a fraction of the entire set and differences in performance are only minor, we conclude that our approaches are stable across multiple dimensions and between exchanges.
 
 \subsection{Feature Importance}\label{sec:feature-importance}
 
 \subsubsection{Feature Importance Results}\label{sec:feature-importance-results}
 
 To gain insights into the Transformer, we conduct a qualitative analysis of the attention mechanism and learned embeddings. For an evaluation of feature importances, that suffices for a cross-model comparison, we use \gls{SAGE}, building upon our rationale from \cref{sec:feature-importance-measure}.
+
+\vskip 1.3in
 
 \textbf{Attention Visualization}
 
@@ -550,7 +550,7 @@ Attention maps offer transparency at the dataset or trade level. To aid visualiz
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\textwidth]{attention_maps_ise_quotes_mid.pdf}
-    \caption[Attention Maps of FT-Transformer]{Attention maps of FT-Transformer trained on \gls{ISE} data with \gls{FS} option. The left plot contains attention weights of \num{16} trades at the quotes and the right plot of \num{16} midspread trades. Each column represents a trade and each row represents a feature. The intensity of the pixel represents the importance. $\mathtt{[CLS]}$ token excluded, as suggested in \textcite[][400]{cheferGenericAttentionmodelExplainability2021}. The green area marks a trade, that was correctly classified by the network. Details on the trade are provided below.}
+    \caption[Attention Maps of FT-Transformer]{Attention maps of FT-Transformer trained on \gls{ISE} data with \gls{FS} option. The left plot contains attention weights of \num{16} trades at the quotes and the right plot of \num{16} midspread trades. Each column represents a trade and each row represents a feature. The intensity of the pixel represents the importance. $\mathtt{[CLS]}$ token is excluded, as suggested in \textcite[][400]{cheferGenericAttentionmodelExplainability2021}. The green area marks a trade, that was correctly classified by the network. Details on the trade are provided below.}
     \label{fig:attention-maps-ise}
 \end{figure}
 
@@ -564,13 +564,13 @@ The model assigns high attention scores to features from rule-based algorithms. 
     \subfloat[Trade Size Rule-like Head (3,8)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_3_color_green_ise_quotes_mid.pdf}}
     \hfill
     \subfloat[\glsentryshort{LR}-Like Head (4,8)\label{fig:head-lr}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_4_color_green_ise_quotes_mid.pdf}}
-    \caption[Rule-like Roles of Selected Attention Heads]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualized for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualizations based on code by \textcite[][279]{clarkWhatDoesBERT2019}.}
+    \caption[Rule-like Roles of Selected Attention Heads]{Attention heads that correspond to trade classification rules. The tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualized for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualizations based on code by \textcite[][279]{clarkWhatDoesBERT2019}.}
     \label{fig:rule-like-attention-heads}
 \end{figure}
 
-We study attention weights of one specific trade in detail, which is marked in green in \cref{fig:attention-maps-ise}. The trade has the following properties: trade price \SI{3.5}[\$]{}, trade size \SI{5}[]{} contracts, ask at exchange, \SI{3.85}[\$]{}, bid at exchange \SI{3.5}[\$]{}, ask size \SI{11}[]{} contracts, and bid size \SI{10}[]{} contracts, classified as sell. \cref{fig:rule-like-attention-heads} depicts the result for selected attention heads involved in classifying the specific trade. The remaining attention heads are visualized in \cref{app:attention-heads-of-transformer}. Each subplot depicts the features to which the classification token $\mathtt{[CLS]}$ attends too. The attention weight determines the intensity of the line between the two. 
+We study attention weights of one specific trade in detail, which is marked in green in \cref{fig:attention-maps-ise}. The trade has the following properties: trade price \SI{3.5}[\$]{}, trade size \SI{5}[]{} contracts, ask at exchange \SI{3.85}[\$]{}, bid at exchange \SI{3.5}[\$]{}, ask size \SI{11}[]{} contracts, and bid size \SI{10}[]{} contracts, classified as sell. \cref{fig:rule-like-attention-heads} depicts the result for selected attention heads involved in classifying the specific trade. The remaining attention heads are visualized in \cref{app:attention-heads-of-transformer}. Each subplot depicts the features to which the classification token $\mathtt{[CLS]}$ attends too. The attention weight determines the intensity of the line between the two. 
 
-Referring to the results from the Appendix, we note that attention heads learn diverse patterns, as most heads attend to different tokens at once learning different relations. However, certain heads exhibit redundancy. For earlier layers in the network, the classification tokens gather from multiple tokens with uniform attention weights, whereas for the final self-attention layers, attention heads specialize in relations that seem related to rule-based trade classification. \cref{fig:head-tick} depicts a classification head that focuses solely on the change in trade price akin to the tick rule. In \cref{fig:head-tsize} the classification token in the neighboring head gathers simultaneously from multiple size-related features similar to the trade size rule. Finally, \cref{fig:head-lr} is alike to the \gls{LR} algorithm with additional dependencies on the moneyness. For other attention heads the purpose they serve in the network cannot be mapped. 
+Referring to the results from the Appendix, we note that attention heads learn diverse patterns, as most heads attend to different tokens thereby learning different relations. However, certain heads exhibit redundancy. For earlier layers in the network, the classification tokens gather from multiple tokens with uniform attention weights, whereas for the final self-attention layers, attention heads specialize in relations that seem related to rule-based trade classification. \cref{fig:head-tick} depicts a classification head that focuses solely on the change in trade price akin to the tick rule. In \cref{fig:head-tsize} the classification token in the neighboring head gathers simultaneously from multiple size-related features similar to the trade size rule. Finally, \cref{fig:head-lr} is alike to the \gls{LR} algorithm with additional dependencies on the moneyness. For other attention heads the purpose they serve in the network cannot be mapped. 
 
 When repeated for other trades, the identified roles of the attention heads are partially retained. We intend to investigate this result in future work in a more comprehensive analysis.
 
@@ -644,7 +644,7 @@ Adapted from \textcite[][158]{theissenTestAccuracyLee2001} a Wilcoxon test is co
 
 \textbf{Results}
 
-The true and the estimated effective spreads for the test sets are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimated the effective spreads of rules on an older subset of option trades at the \gls{CBOE}, which can be compared against. Our results match theirs in magnitude.
+The true and the estimated effective spreads for the test sets are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimate the effective spreads of rules on an older subset of option trades at the \gls{CBOE}, which can be compared against. Our results roughly match theirs in magnitude.
 
 \begin{table}[!ht]
     \centering
@@ -653,7 +653,7 @@ The true and the estimated effective spreads for the test sets are shown in the 
     \label{tab:effective-spread}
 \end{table}
 
-In summary, quote-based algorithms like the quote rule and the \gls{LR} algorithm severely overestimate the effective spread. The overestimate is less severe for the \gls{CLNV} algorithm due to stronger dependency on the tick rule. The tick rule itself achieves estimates closest to the true effective spread, which is \num[round-mode=places, round-precision=3]{0.004926}[\$]{} and \num[round-mode=places, round-precision=3]{0.012219}[\$]{} for the \gls{ISE} and \gls{CBOE} sample respectively. As primarily tick-based algorithms, like the tick rule or \gls{EMO} rule, act as a random classifier in our samples, we conclude that the close estimate is an artifact of randomness, not due to superior predictive power. This observation is in line with \textcite[][897]{savickasInferringDirectionOption2003}, who make a similar argument for the \gls{EMO} rule on \gls{CBOE} trades. For rule-based algorithms \gls{GSU} (large) provides reasonable estimates of the effective spread while achieving high classification accuracy.
+In summary, quote-based algorithms like the quote rule and the \gls{LR} algorithm severely overestimate the effective spread. The overestimate is less severe for the \gls{CLNV} algorithm due to stronger dependency on the tick rule. The tick rule itself achieves estimates closest to the true effective spread, which is \SI[round-mode=places, round-precision=3]{0.004926}[\$]{} and \SI[round-mode=places, round-precision=3]{0.012219}[\$]{} for the \gls{ISE} and \gls{CBOE} sample respectively. As primarily tick-based algorithms, like the tick rule or \gls{EMO} rule, act as a random classifier in our samples, we conclude that the close estimate is an artifact of randomness, not due to superior predictive power. This observation is in line with \textcite[][897]{savickasInferringDirectionOption2003}, who make a similar argument for the \gls{EMO} rule on \gls{CBOE} trades. For rule-based algorithms, \gls{GSU} (large) provides reasonable estimates of the effective spread while achieving high classification accuracy.
 
 From our supervised classifiers the FT-Transformer or \gls{GBRT} trained on \gls{FS} option provides estimates closest to the true effective spread, in particular on the \gls{CBOE} sample. For semi-supervised classifiers, Transformer-based models approximate the true effective spread best. This best manifests in a predicted effective spread at the \gls{ISE} of \SI[round-mode=places, round-precision=3]{0.013118}[\$]{} versus \SI[round-mode=places, round-precision=3]{0.004926}[\$]{}. The null hypothesis of equal medians is rejected at the \SI{1}{\percent} level for all classifiers.
 
