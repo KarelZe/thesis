@@ -4,7 +4,7 @@ We subsequently report and discuss performance and robustness results as well as
 
 \subsection{Performance}\label{sec:performance-results-discussion}
 
-This chapter analyzes the performance of rule-based trade classification and our classifiers in the out-of-sample setting.
+% This chapter analyzes the performance of rule-based trade classification and our classifiers in the out-of-sample setting.
 
 \subsubsection{Performance of Rule-Based Approaches}\label{sec:result-of-rule-based-approaches}
 
@@ -255,7 +255,7 @@ All of our classifiers require some labeled instances for training. If the true 
 \addtocontents{toc}{\protect\newpage}
 \subsection{Robustness}\label{sec:robustness}
 
-Next, we analyze the robustness of the classifiers.
+% Next, we analyze the robustness of the classifiers.
 
 \subsubsection{Robustness Results}\label{sec:robustness-results}
 
@@ -533,9 +533,9 @@ As both subsets account for only a fraction of the entire set and differences in
 
 \subsection{Feature Importance}\label{sec:feature-importance}
 
-Transformers outperform all rule-based approaches by a large margin on the \gls{ISE} dataset. To gain insights into the network, we conduct a qualitative analysis of the attention mechanism and learned embeddings. For an evaluation of feature importances, that suffices for a cross-model comparison, we use \gls{SAGE}, building upon our rationale from \cref{sec:feature-importance-measure}.
-
 \subsubsection{Feature Importance Results}\label{sec:feature-importance-results}
+
+To gain insights into the Transformer, we conduct a qualitative analysis of the attention mechanism and learned embeddings. For an evaluation of feature importances, that suffices for a cross-model comparison, we use \gls{SAGE}, building upon our rationale from \cref{sec:feature-importance-measure}.
 
 \textbf{Attention Visualization}
 
@@ -592,7 +592,7 @@ The results for these underlyings suggest that the model can learn meaningful re
 
 \textbf{SAGE Values}
 
-We compare the feature importances of rule-based and machine learning-based classifiers using \gls{SAGE} with zero-one loss. Based on the distribution of the \gls{ISE} test set (see \cref{app:summary-statistics}), a na\"ive prediction of the majority class yields an accuracy of \SI{51.4027}{\percent} or a zero-one loss of $1- \num{0.514027} = \num{0.485973}$. \gls{SAGE} attributes the outperformance of machine learning or rule-based classifiers over the na\"ive prediction to the features based on the Shapley values. For interpretation, the sum of all \gls{SAGE} values for a given predictor represents the difference in loss compared to the na\"ive classification. We group features to hide implementation details in classical rules.
+We compare the feature importances of rule-based and machine learning-based classifiers using \gls{SAGE} with zero-one loss. Based on the distribution of the \gls{ISE} test set, a na\"ive prediction of the majority class yields an accuracy of \SI{51.4027}{\percent} or a zero-one loss of $1- \num{0.514027} = \num{0.485973}$. \gls{SAGE} attributes the outperformance of machine learning or rule-based classifiers over the na\"ive prediction to the features based on the Shapley values. For interpretation, the sum of all \gls{SAGE} values for a given predictor represents the difference in loss compared to the na\"ive classification. We group features to hide implementation details in classical rules.
 
 \begin{figure}[h!]
     \centering
