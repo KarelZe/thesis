@@ -597,7 +597,7 @@ We compare the feature importances of rule-based and machine learning-based clas
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\textwidth]{sage-importances.pdf}
-    \caption[\glsentryshort{SAGE} Feature Importances For Classifiers]{\gls{SAGE} feature importances of rule-based and machine learning-based classifiers.}
+    \caption[\glsentryshort{SAGE} Feature Importances For Classifiers]{\gls{SAGE} feature importances of rule-based and machine learning-based classifiers. Importances estimated on \gls{ISE} test set.}
     \label{fig:sage-importances}
 \end{figure}
 
@@ -609,7 +609,9 @@ Regardless of the method used, changes in trade price before or after the trade 
 
 \subsubsection{Feature Importance Discussion}\label{sec:feature-importance-discussion}
 
-The redundancy between attention heads is possibly due to the attention dropout in our networks (cp. \cref{sec:hyperparameter-tuning}), which randomly deactivates units of the network during training and forces the network to learn redundant representations. A similar point is made by \textcite[\checkmark][283--284]{clarkWhatDoesBERT2019} for the related \gls{BERT} model. Our finding of uniform attention weights in earlier layers of the network is consistent with the observation of \textcite[\checkmark][4193]{abnarQuantifyingAttentionFlow2020} made for \gls{BERT}.
+Our analysis of the attention heads suggests that the relations learned by individual attention heads are similar to rule-based classification. This is expected, as classical rules are based on established economic rationale. Therefore, it is natural for strong classifiers to learn related or even identical patterns. Also, features are often not meaningful in isolation, e.g., quoted ask or bid size, and must be related. From \cref{app:attention-heads-of-transformer} we see that individual attention heads learn redundant patterns. The redundancy between attention heads is possibly due to the attention dropout in our networks (cp. \cref{sec:hyperparameter-tuning}), which randomly deactivates units of the network during training and forces the network to learn redundant representations. A similar point is made by \textcite[\checkmark][283--284]{clarkWhatDoesBERT2019} for the related \gls{BERT} model. Our other finding of uniform attention weights in earlier layers of the network is consistent with the observation of \textcite[\checkmark][4193]{abnarQuantifyingAttentionFlow2020} made for \gls{BERT} in language modeling. Hence, we confirm for tabular modeling that earlier layers of a Transformer-based model learn more general representations, while later layers learn more specific representations.
+
+The analysis of the \gls{SAGE} importances has two important implications.
 
 In conjunction with the results from the robustness checks, this suggests that the improvements observed for long-running options or \gls{ITM} options are directly linked to the moneyness or time to maturity of the traded option itself. However, it remains unclear how these features interact with others.
 \todo{Importance of Moneyness and Time-to-Maturity. How do these results fit into a broader picture?}

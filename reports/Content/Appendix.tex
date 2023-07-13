@@ -28,7 +28,7 @@
 \begin{table}[ht]
     \centering
     \sisetup{table-format=4.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
-    \caption[shortise-supervised-all]{longise-supervised-all}
+    \caption[Summary Statistics for \glsshortkey{ISE} Sample]{Summary statistics for \gls{ISE} labelled sample. Time to maturity in months.}
     \label{tab:ise-supervised-all}
     \begin{tabular}{@{}lSSSSSSSSS@{}}
         \toprule
@@ -42,17 +42,17 @@
         price lag (ex)   & 5.009203   & 15.326354   & 0.020000 & 0.080000 & 0.550000  & 1.630000  & 4.400000   & 17.750000   & 59.000000   \\
         price lead (ex)  & 5.035194   & 15.649212   & 0.020000 & 0.060000 & 0.500000  & 1.600000  & 4.400000   & 17.990000   & 59.759998   \\
         price lag (all)  & 4.962591   & 15.660495   & 0.020000 & 0.060000 & 0.500000  & 1.550000  & 4.300000   & 17.680000   & 58.860001   \\
-        price lead (all) & 5.005602   & 21.510473   & 0.020000 & 0.050000 & 0.500000  & 1.570000  & 4.350000   & 17.879999   & 59.200001   \\
+        price lead (all) & 5.005602   & 21.510473   & 0.020000 & 0.050000 & 0.500000  & 1.570000  & 4.350000   & 17.879999   & 59.200001   \\\addlinespace
         trade size       & 13.615033  & 77.752615   & 1.000000 & 1.000000 & 1.000000  & 4.000000  & 10.000000  & 50.000000   & 150.000000  \\
         bid size (ex)    & 266.541321 & 1112.201294 & 0.000000 & 1.000000 & 20.000000 & 57.000000 & 197.000000 & 1092.000000 & 2995.000000 \\
-        ask size (ex)    & 280.400757 & 1184.970825 & 1.000000 & 2.000000 & 21.000000 & 63.000000 & 214.000000 & 1121.000000 & 3029.000000 \\
+        ask size (ex)    & 280.400757 & 1184.970825 & 1.000000 & 2.000000 & 21.000000 & 63.000000 & 214.000000 & 1121.000000 & 3029.000000 \\\addlinespace
         strike price     & 110.803169 & 350.870270  & 4.000000 & 9.000000 & 25.000000 & 45.000000 & 85.000000  & 310.000000  & 1260.000000 \\
         ttm              & 3.430495   & 4.930164    & 0.000000 & 0.000000 & 1.000000  & 1.000000  & 4.000000   & 15.000000   & 24.000000   \\
         moneyness        & 7.000215   & 2299.693359 & 0.476429 & 0.685166 & 0.884600  & 0.967481  & 1.038636   & 1.290323    & 1.824375    \\
-        vol option       & 74.887596  & 406.361938  & 1.000000 & 1.000000 & 3.000000  & 10.000000 & 35.000000  & 290.000000  & 1116.000000 \\
         \bottomrule
     \end{tabular}
 \end{table}
+
 
 
 
@@ -72,8 +72,8 @@
         strike price     & -0.082968 \\
         trade size       & -0.204893 \\
         trade price      & 0.060425  \\
-        best bid         & 0.110299  \\
-        best ask         & 0.056837  \\
+        bid (best)       & 0.110299  \\
+        ask (best)       & 0.056837  \\
         ask (ex)         & 0.049090  \\
         bid (ex)         & 0.113067  \\
         bid size (ex)    & 0.140284  \\
@@ -106,21 +106,21 @@
             price lead (all)        & $\log$ + standardized  \\
             price change lead (ex)  & clipped + standardized \\
             price change lead (all) & clipped + standardized \\
-            bid (all)               & $\log$ + standardized  \\
+            bid (best)              & $\log$ + standardized  \\
             bid (ex)                & $\log$ + standardized  \\
-            ask (all)               & $\log$ + standardized  \\
+            ask (best)              & $\log$ + standardized  \\
             ask (ex)                & $\log$ + standardized  \\
             prox. to quotes (ex)    & clipped + standardized \\
-            prox. to quotes (all)   & clipped + standardized \\
+            prox. to quotes (best)  & clipped + standardized \\ \addlinespace
             bid ask size ratio (ex) & clipped + standardized \\
             bid size (ex)           & $\log$ + standardized  \\
             ask size (ex)           & $\log$ + standardized  \\
             rel. bid size (ex)      & clipped + standardized \\
             rel. ask size (ex)      & clipped + standardized \\
-            trade size              & $\log$ + standardized  \\
+            trade size              & $\log$ + standardized  \\ \addlinespace
             strike price            & $\log$ + standardized  \\
-            volume option series    & $\log$ + standardized  \\
-            root                    & binarised              \\
+            volume option series    & $\log$ + standardized  \\ 
+            root                    & binarised              \\ 
             time to maturity        & standardized           \\
             moneyness               & standardized           \\
             option type             & binarised              \\
@@ -130,7 +130,7 @@
             \item[*] Notation assumes, that the previous or next trade price is distinguishable.
         \end{tablenotes}
     \end{threeparttable}
-    \caption[Overview of Features and Transformations]{Overview of Features and Transformations}
+    \caption[Overview of Features and Transformations]{Overview of features and transformations.}
     \label{tab:features-transformations}
 \end{table}
 
