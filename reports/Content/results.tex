@@ -107,7 +107,7 @@ Next, we test the performance of supervised classifiers on the test sets.
 \begin{figure}[!ht]
     \centering
     \includegraphics{classical_at_mid_over_time.pdf}
-    \caption[Mid-Spread Trades Over Time]{Percentage of midspread trades on \gls{ISE} and \gls{CBOE} sample over time. Estimated using \gls{NBBO} quotes. The bar \myline{} indicates the beginning of a new subset based on the train-test split.}
+    \caption[Midspread Trades Over Time]{Percentage of midspread trades on \gls{ISE} and \gls{CBOE} sample over time. Estimated using \gls{NBBO} quotes. The bar \myline{} indicates the beginning of a new subset based on the train-test split.}
     \label{fig:classical-at-mid-over-time}
 \end{figure}
 
@@ -173,7 +173,7 @@ We compare the performance of pre-trained Transformers and self-trained gradient
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Semi-Supervised Approaches]{Accuracy of semi-supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For feature set classic, \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
+    \caption[Accuracies of Semi-Supervised Approaches]{Accuracy of semi-supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic, \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
     \label{tab:results-semi-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
@@ -232,13 +232,13 @@ Naturally, our machine learning classifiers can classify any trade and are robus
 
 While statistically significant, performance differences between supervised \glspl{GBRT} and Transformers, are relatively small compared to rule-based classification on the same feature sets. The result is aligned with \textcite[][18941]{gorishniyRevisitingDeepLearning2021}. The study concludes, generally for tabular modeling, that neither Transformers nor \glspl{GBRT} are universally superior. Our results confirm this observation in the context of trade classification.
 
-The results contradict those of \textcite[][14--49]{ronenMachineLearningTrade2022}, who benchmark random forests and \glspl{FFN} for trade classification in the equity and bond market and find clear dominance of the tree-based approach. Beyond differences in the market under study and variants, two methodological differences are evident, that explain the contrasting results. First, unlike \gls{FFN}, the FT-Transformer is tailored to learn on tabular data through being a rotationally-invariant learner. Second, our data pre-processing and feature engineering are adapted to the requirements of neural networks. Without these measures, tree-based approaches excel due to their robustness in handling skewed and missing data.
+The results contradict those of \textcite[][14--49]{ronenMachineLearningTrade2022}, who benchmark random forests and \glspl{FFN} for trade classification in the equity and bond market and find clear dominance of the tree-based approach. Beyond differences in the market under study and variants, two methodological differences are evident, that explain the contrasting results. First, unlike \gls{FFN}, the FT-Transformer is tailored to learn on tabular data through being a rotationally-invariant learner. Second, our data preprocessing and feature engineering are adapted to the requirements of neural networks. Without these measures, tree-based approaches excel due to their robustness in handling skewed and missing data.
 
 Despite the lack of adaption to \gls{CBOE} data, the performance improvements are highest for the \gls{CBOE} dataset. Part of the strong performance on \gls{CBOE} trades hails from weaker benchmark performance, but also a stronger accuracy of classifiers on the smallest feature set. Again, this result is in stark contrast to \textcite[][32]{ronenMachineLearningTrade2022}, who report subpar performance for random forests. Their setting differs from ours, as they apply ensembles trained in the bond market to equity trades. Moreover, it is unclear if data preprocessing procedures are shared between both sets, which may hamper performance. 
 
 Relative to related works performing trade classification with supervised machine learning, the improvements are strong, as documented in \cref{app:literature-ml-tc}. As no other work studies the option market or identical model architectures, the results are indicative. The studies report improvements between \SI{1.1}{\percent} and \SI{13.3}{\percent} for their machine learning models over the benchmark. Our absolute improvements exceed all linear models, but the absolute improvements are smaller relative to some tree-based and deep learning models in \textcite[][49]{ronenMachineLearningTrade2022}. At the same time, our models are trained on significantly fewer features and a static training set, requiring a fraction of the training cost. We believe, our conservative framing aligns well with scenarios, where trade classification is only a prerequisite to other empirical research.
 
-\vskip 1.3in
+% \vskip 1.3in
 
 \textbf{Semi-supervised Classification}
 
@@ -263,7 +263,7 @@ All of our classifiers require some labeled instances for training. If the true 
 
 To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, and proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[][47--50]{grauerOptionTradeClassification2022} as well as \textcite[][890--892]{savickasInferringDirectionOption2003}, strengthening comparability across different works.\footnote{When comparing with \textcite[][47--50]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.} Our results are tabulated in \cref{tab:diff-ise-gbm,tab:diff-cboe-gbm,tab:diff-ise-transformer,tab:diff-cboe-transformer,tab:diff-ise-gbm-semi,tab:diff-cboe-gbm-semi}, separately for \glspl{GBRT} and Transformers as well as exchanges.
 
-% \vskip 1.3in
+\vskip 1.3in
 
 \textbf{Gradient Boosting}
 
@@ -615,7 +615,7 @@ Regardless of the method used, changes in trade price before or after the trade 
 
 Our analysis of the attention heads suggests that the relations learned by individual attention heads are similar to rule-based classification. This is expected, as classical rules are based on established economic rationale. Thus, it seems natural for Transformers to learn related or even identical patterns. Also, several features are not meaningful in isolation, e.g., quoted ask or bid sizes, features must be related. From \cref{app:attention-heads-of-transformer} we see that individual attention heads learn redundant patterns. The redundancy between attention heads is possibly due to the attention dropout in our networks as described in \cref{sec:hyperparameter-tuning}, which randomly deactivates units of the network during training and forces the network to learn redundant representations. A similar point is made by \textcite[][283--284]{clarkWhatDoesBERT2019} for the related \gls{BERT} model. Our other finding of uniform attention weights in earlier layers of the network is consistent with the observation of \textcite[][4193]{abnarQuantifyingAttentionFlow2020} made for \gls{BERT} in language modeling. We confirm in our setting that earlier layers of a Transformer-based model learn generic representations, while later layers learn more specific representations.
 
-From the analysis of the \gls{SAGE} values, we find that the \gls{GSU} methods, \glspl{GBRT}, and Transformers attain the largest performance gains from a common set of features, namely quoted prices and if provided quoted sizes. This result aligns with the expectation, as these features are core to the quote rule, as well as the depth and trade size rule, which form the best-performing hybrid rules. Considering the almost random classification of the tick rule, tick-based features are also expectedly uninformative to the models. The moneyness and time-to-maturity features lead to smaller performance improvements for gradient boosting and Transformers. In conjunction with the results from the robustness checks, likely, the performance improvements associated with long-running options or deep \gls{ITM} options in the largest feature set are directly linked to the moneyness and time-to-maturity of the traded option itself. Due to \gls{SAGE} being a global importance measure, we cannot verify on the trade level. Next, we test our classifiers and common trade classification rules in an application setting.
+From the analysis of the \gls{SAGE} values, we find that the \gls{GSU} methods, \glspl{GBRT}, and Transformers attain the largest performance gains from a common set of features, namely quoted prices and if provided quoted sizes. This result aligns with the expectation, as these features are core to the quote rule, as well as the depth and trade size rule, which form the best-performing hybrid rules. Considering the almost random classification of the tick rule, tick-based features are also expectedly uninformative to the models. The moneyness and time-to-maturity features lead to smaller performance improvements for gradient boosting and Transformers. In conjunction with the results from the robustness checks, likely, the performance improvements associated with long-running options or deep \gls{ITM} options in the largest feature set are directly linked to the moneyness and time-to-maturity of the traded option itself. Due to \gls{SAGE} being a global importance measure, we cannot verify at the trade level. Next, we test our classifiers and common trade classification rules in an application setting.
 
 \clearpage
 
