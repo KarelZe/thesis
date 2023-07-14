@@ -46,7 +46,7 @@ A common alternative to the quote rule is the tick test. Based on the rationale 
     \operatorname{tick}\colon \mathbb{N}^2 \to \mathcal{Y},\quad
     \operatorname{tick}(i, t)=
     \begin{cases}
-        1,                           & \mathrm{if}\ P_{t}>P_{t-1} \\
+        1,                           & \mathrm{if}\ P_{i, t}>P_{i, t-1} \\
         -1,                          & \mathrm{if}\ P_{i, t} < P_{i, t-1}  \\
         Y\sim\mathrm{Uniform}(\mathcal{Y}), & \mathrm{if}\ t=1 \\
         \operatorname{tick}(i, t-1), & \mathrm{else}.
@@ -82,7 +82,7 @@ As \cref{sec:quote-rule} discusses, the quote rule necessitates alternative proc
 
 The depth rule gauges the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity at one trade side, trades are classified as a buy (sell) for a larger ask (bid) size \autocite[][14--15]{grauerOptionTradeClassification2022}.
 
-Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t}$ of the bid, and $P_{i,t}$ the trade Price at $t$ of the $i$-th option. We set the domain as $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} = \gls{M}_{i,t} \land \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \right\}$. The depth rule is now calculated as:
+Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t}$ of the bid, and $P_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} = \gls{M}_{i,t} \land \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \right\}$. The depth rule is now calculated as:
 \begin{equation}
     \operatorname{depth} \colon \mathcal{A} \to \mathcal{Y},\quad
     \operatorname{depth}(i, t)=
@@ -160,7 +160,7 @@ In combination, the algorithm primarily signs trades according to the quote rule
         \operatorname{tick}(i, t), & \mathrm{else}.
     \end{cases}
 \end{equation}
-As the algorithm requires both trade and quote data, it is less data-efficient than its subparts. Outside the model's tight assumptions, the expected accuracy of the tick test can be unmet. Nevertheless, the algorithm is a common choice in option research \autocite[cp.][453]{easleyOptionVolumeStock1998}. It is also the basis for more advanced algorithms, such as the \gls{EMO} rule, which is next.
+Outside the model's tight assumptions, the expected accuracy of the tick test can be unmet. Nevertheless, the algorithm is a common choice in option research \autocite[cp.][453]{easleyOptionVolumeStock1998}. It is also the basis for more advanced algorithms, such as the \gls{EMO} rule, which is next.
 
 \subsubsection{Ellis-Michaely-O'Hara
     Rule}\label{sec:ellis-michaely-ohara-rule}
@@ -178,7 +178,7 @@ As such, the \gls{EMO} algorithm extends the tick rule by classifying trades at 
     \end{cases}
     \label{eq:emo-rule}
 \end{equation}
-\Cref{eq:emo-rule} embeds both the quote and tick rule. As trades off the quotes are classified by the tick rule, the algorithm's overall success rate is dominated by the tick test assuming most trades are off-the-quotes. For option markets (e.g.,\textcites[][891]{savickasInferringDirectionOption2003}[][12--13]{grauerOptionTradeClassification2022}) this dependence causes the performance to lag behind quote-based approaches, contrary to the successful adaption in the stock market (e.g.,\autocites[][541]{ellisAccuracyTradeClassification2000}[][3813]{chakrabartyTradeClassificationAlgorithms2007}). \textcite[][41--44]{grauerOptionTradeClassification2022} improve the classification accuracy for option trades by applying the reverse tick test as a proxy for the tick test.
+\Cref{eq:emo-rule} embeds both the quote and tick rule. As trades off the quotes are classified by the tick rule, the algorithm's overall success rate is dominated by the tick test assuming most trades are off-the-quotes. For option markets (e.g., \textcites[][891]{savickasInferringDirectionOption2003}[][12--13]{grauerOptionTradeClassification2022}) this dependence causes the performance to lag behind quote-based approaches, contrary to the successful adaption in the stock market (e.g., \textcites[][541]{ellisAccuracyTradeClassification2000}[][3813]{chakrabartyTradeClassificationAlgorithms2007}). \textcite[][41--44]{grauerOptionTradeClassification2022} improve the classification accuracy for option trades by applying the reverse tick test as a proxy for the tick test.
 
 \subsubsection{Chakrabarty-Li-Nguyen-Van-Ness
     Method}\label{sec:chakarabarty-li-nguyen-van-ness-method}
@@ -195,11 +195,11 @@ Like the previous two algorithms, the \gls{CLNV} method of \textcite[][3811-3812
     \label{eq:CLNV-rule}
 \end{equation}
 
-The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile.\footnote{The spread is assumed to be positive and evenly divided into ten deciles and the first to third deciles are classified by the quote rule. Counted from the bid, the first decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ third decile. As all trade prices are below the midpoint, they are classified as a sell.} The classical \gls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test can be exchanged for the reverse tick test.
+The algorithm is summarized in \cref{eq:CLNV-rule}. It is derived from a performance comparison of the tick rule (\gls{EMO} rule) against the quote rule (\gls{LR} algorithm) on stock data, whereby the accuracy was assessed separately for each decile.\footnote{The spread is assumed to be positive and evenly divided into ten deciles and the first to third deciles are classified by the quote rule. Counted from the bid, the first decile starts at $B_{i,t}$ and ends at $B_{i,t} + \tfrac{3}{10} (A_{i,t} - B_{i,t}) = \tfrac{7}{10} B_{i,t} + \tfrac{3}{10} A_{i,t}$ third decile. As all trade prices are below the midpoint, they are classified as a sell.} The classical \gls{CLNV} method uses the backward-looking tick rule. In the spirit of \textcite[][735]{leeInferringTradeDirection1991}, the tick test can be swapped for the reverse tick test.
 
 \subsubsection{Stacked Rule}\label{sec:stacked-rule}
 
-The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][15]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached.\footnote{For a trade, which cannot be classified by any classifier, one may fallback on a random assignment or the majority class if the distribution of trades is imbalanced.} The classification is now dependent on the employed rules but also on their relative ordering.
+The previous algorithms are static concerning the used base rules and their alignment. Combining arbitrary rules into a single algorithm requires a generic procedure. \textcite[][15]{grauerOptionTradeClassification2022} combine basic and hybrid rules through stacking. In this setting, the trade traverses a stack of pre-defined rules until a rule can classify the trade or the end of the stack is reached.\footnote{For a trade, which cannot be classified by any classifier, one may classify randomly or by majority class if the distribution of trades is imbalanced.} The classification is now dependent on the employed rules but also on their relative ordering.
 
 The most basic application is in the \gls{LR} algorithm, combining $\operatorname{quote} \to \operatorname{tick}$, whereby the quote rule is applied first as indicated by the arrow. For a more complex example consider the hybrid rule consisting of $\operatorname{tsize}_{\mathrm{ex}} \to \operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}} \to \operatorname{depth}_{\mathrm{nbbo}} \to \operatorname{depth}_{\mathrm{ex}} \to \operatorname{rtick}_{\mathrm{all}}$ popularized in \textcite[][15]{grauerOptionTradeClassification2022}. Only a fraction of all trades are classifiable by the trade size rule, which is the primary rule, due to a narrow domain, and classification is deferred to lower rules in the stack, specifically the quote rule at the \gls{NBBO}, which by design has larger coverage. Theoretically, stacked rules can grow to great depth with an arbitrary arrangement. In practice, rules may be ordered greedily and new rules added if there are unclassified trades.
 

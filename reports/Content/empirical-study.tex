@@ -314,7 +314,7 @@ While different algorithmic implementations exist for Bayesian optimization, we 
 
 Our search space is reported in \cref{tab:hyperparameter-space-gbm}, which is loosely aligned with \textcite[][sup.]{gorishniyRevisitingDeepLearning2021}.
 
-\begin{table}[!h]
+\begin{table}[!ht]
     \centering
     \sisetup{table-number-alignment=left}
     \caption[Hyperparameter Search Space of Gradient Boosting]{Hyperparameter search space of gradient boosting.}
@@ -332,7 +332,7 @@ Our search space is reported in \cref{tab:hyperparameter-space-gbm}, which is lo
 
 As documented, we tune five hyperparameters for gradient boosting. The first is the depth, which determines the number of levels in each tree. Other than \textcite[][sup.]{gorishniyRevisitingDeepLearning2021}, we increase the upper bound to twelve to allow for more complex ensemble members. Acknowledging the research of \textcite[][1203]{friedmanGreedyFunctionApproximation2001} that the learning rate \eta~and the size of the ensemble have a strong interdependence, we only tune the learning rate and stop extending the ensemble based on the early stopping criterion. Random strength, bagging temperature, and $\ell_2$ leaf regularization are measures to counter overfitting. Specifically, random strength controls the degree of Gaussian noise added to the scores of split candidates to introduce randomness in the selected splits. In a similar vein, the algorithm introduces randomness on the sample level through Bayesian bootstrap \autocite[][130--131]{rubinBayesianBootstrap1981}. The hyperparameter controls the distribution used for sampling, and implicitly the aggressiveness of bagging. Finally, $\ell_2$ leaf regularization adds a penalty term to the terminal leaf's estimates. The hyperparameter controls the degree of regularization.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set Classic\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[width=0.6\textwidth]{1gzk7msy-hyperparam-search-space.pdf}}
     \vfill
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set Size\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[width=0.6\textwidth]{3vntumoi-hyperparam-search-space.pdf}}
@@ -351,7 +351,7 @@ In \cref{fig:ise-gbm-hyperparam-classical-size} we repeat the analysis for \glsp
 
 The loss surface of the \gls{GBRT} trained on the feature set including option features is the least fragmented. While the validation accuracy of the best combinations improves significantly to \SI{76.99459643967347}{\percent}, worst trials even underperform these of smaller feature sets. We note, more data does not per se improve the model and that models require a thoughtful tuning procedure. Our conclusion contradicts the one of \textcite[][14]{ronenMachineLearningTrade2022}, who find no advantage in tuning tree-based ensembles for trade classification. Results are tabulated in \cref{tab:solutions-gbm}.
 
-\begin{table}[!h]
+\begin{table}[!ht]
     \centering
     \sisetup{table-format=3.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
     \caption[Search Solutions of Gradient Boosting]{Search solutions of gradient boosting. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials.}
@@ -372,7 +372,7 @@ The loss surface of the \gls{GBRT} trained on the feature set including option f
 
 The search space for the semi-supervised variant is identical to the supervised gradient boosting. To conserve space, we only report the tabulated results in \cref{tab:solutions-GBRT-self-training}.\footnote{Visualizations of the hyperparameter search space are available online. See \url{https://wandb.ai/fbv/thesis/runs/37lymmzc} for \gls{FS} classic, \url{https://wandb.ai/fbv/thesis/runs/324v3uv5} for \gls{FS} size, and \url{https://wandb.ai/fbv/thesis/runs/t55nd8r0} for \gls{FS} option.}
 
-\begin{table}[!h]
+\begin{table}[!ht]
     \centering
     \sisetup{table-format=3.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
     \caption[Search Solutions of Gradient Boosting With Self-Training]{Search solutions of gradient boosting with self-training. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{50} trials. Arrows indicate the change compared to the supervised variant.}
@@ -396,7 +396,7 @@ Matching the supervised results, semi-supervised ensembles exhaust the maximum t
 
 The search space for the FT-Transformer is identical to \textcite[][sup.]{gorishniyRevisitingDeepLearning2021} (variant (b)) with minor deviations and reported in \cref{tab:hyperparameter-space-2}.
 
-\begin{table}[!h]
+\begin{table}[!ht]
     \centering
     \sisetup{table-format=3.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
     \caption[Hyperparameter Search Space of FT-Transformer]{Hyperparameter search space of FT-Transformer.}
@@ -416,7 +416,7 @@ We vary the layer count and the embedding dimension, which directly affect the c
 
 Due to the pseudo-random sampling during the first trials of Bayesian search combined with the reduced number of trials for the Transformer studies, the tested hyperparameter combinations are identical for all feature sets, as visible in \cref{fig:ise-transformer-hyperparam}.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set Classic\label{fig:ise-transformer-hyperparam-classical}]{\includegraphics[width=0.6\linewidth]{3jpe46s1-hyperparam-search-space.pdf}}
     \vfill
     \subfloat[Hyperparameter Search Space of FT-Transformer With Feature Set Size\label{fig:ise-transformer-hyperparam-classical-size}]{\includegraphics[width=0.6\linewidth]{1qx3ul4j-hyperparam-search-space.pdf}}
@@ -433,7 +433,7 @@ With the smaller number of trials, the search space is less densely populated. D
 
 The best combination is identical for all feature sets. The embedding dimension is at \num{248}, which is almost maxed out and the model uses four Transformer blocks. Thus, it has a medium capacity with \num{1985649} to \num{4252369} parameters, depending on the feature set. From all hyperparameters, the number of layers is most impactful on the final accuracy. While the use of dropout and weight decay for regularization is minimal and marginally affects the validation performance. The large token dimensionality and mid-layer count could be an indication, that few attention heads are enough to extract patterns, but the learned patterns are relatively complex. The search results are compiled in \cref{tab:solutions-transformer}.
 
-\begin{table}[!h]
+\begin{table}[!ht]
     \centering
     \sisetup{table-format=3.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
     \caption[Search Solutions of FT-Transformer]{Search solutions of FT-Transformer. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{10} trials. A discussion of these results is provided below.}
@@ -457,7 +457,7 @@ The best combination is identical for all feature sets. The embedding dimension 
 
 The hyperparameter search space for Transformers with a pre-training objective is identical to that shown in \cref{tab:hyperparameter-space-2}. As evident from \cref{tab:solutions-transformer-pretraining}, the found solutions are identical to these of the FT-Transformer without pre-training and identical for all three feature sets. During pre-training, we can detect if a token is replaced with \SI{94.06319856643677}{\percent} to \SI{95.89540958404541}{\percent} accuracy.\footnote{Na\"ive prediction yields \SI{85}{\percent} accuracy given the chosen replacement rate.}
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics{transformer_ise_pretrain_classical.pdf}
     \caption[Pre-Training Loss of FT-Transformer]{Pre-training loss on \gls{ISE} sample with \gls{FS} classic. Training is performed for 20 epochs. Loss is the mean over all batches per epoch.}
@@ -469,7 +469,7 @@ Pre-training performance is however bound by the available computing budget. As 
 Validation accuracy after fine-tuning improves for all models over Transformers without pre-training. As the search space is identically sampled for both variants we can directly attribute the improvements of \SI{0.28}{\percent} to \SI{0.72}{\percent} in validation accuracy to pre-training on unlabeled trades.\footnote{Visualizations of the hyperparameter search spaces are available online. See \url{https://wandb.ai/fbv/thesis/runs/12isqh2m} for \gls{FS} classic, for \url{https://wandb.ai/fbv/thesis/runs/2hv1nayy} for \gls{FS} size, and \url{https://wandb.ai/fbv/thesis/runs/3jbqpp4r} for \gls{FS} option for details.}
 
 
-\begin{table}[!h]
+\begin{table}[!ht]
     \centering
     \sisetup{table-format=3.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
     \caption[Search Solutions of FT-Transformer With Pre-Training]{Search solutions of FT-Transformer with pre-training. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{10} trials. Arrows indicate the change compared to the supervised variant.}
@@ -539,7 +539,7 @@ Thereby, our goal is to estimate how much a feature contributes to the performan
 
 \textbf{Shapley Additive Global Importance}
 
-\gls{SAGE} is an additive feature importance measure with its foundations in cooperative game theory. As put forth by \textcite[][4770]{lundbergUnifiedApproachInterpreting2017} feature contributions can be estimated through Shapley values \autocite[][310--312]{shapley17ValueNPerson1953}. Instead of allocating credit in a cooperative game to players, as in the original Shapley formulation, the problem transfers to assign credit across features based on a value function. Intuitionally, for \gls{SAGE}, credit is distributed among features based on the contribution to the model's performance.
+\gls{SAGE} is an additive feature importance measure with its foundations in cooperative game theory. As put forth by \textcite[][4770]{lundbergUnifiedApproachInterpreting2017} feature contributions can be estimated through Shapley values \autocite[][310--312]{shapleyValueNpersonGames1953}. Instead of allocating credit in a cooperative game to players, as in the original Shapley formulation, the problem transfers to assign credit across features based on a value function. Intuitionally, for \gls{SAGE}, credit is distributed among features based on the contribution to the model's performance.
 
 Again, $X$ is a random variable describing the input, $Y$ is the response variable, and $f$ is the classifier. In \gls{SAGE} \autocite[][17215--17216]{covertUnderstandingGlobalFeature2020}, Shapley values $\phi_i(v_f)$ are estimated as:
 \begin{equation}
