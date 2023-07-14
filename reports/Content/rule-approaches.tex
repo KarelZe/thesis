@@ -14,7 +14,7 @@ research. Among these, the:
 
 \emph{Positional view:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite to the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand.
 
-The appropriate view differs by data availability i.e., if the order type or submission type can be inferred from data and the application context. Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $\gls{y} \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is distinguished by $\hat{y}$.
+The appropriate view differs by data availability i.e., if the order type or submission type can be inferred from data and the application context. Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $y \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is distinguished by $\hat{y}$.
 
 In anticipation of \cref{sec:data-collection}, we adopt a customer's position-based view in relation to the market maker. Nevertheless, the concepts presented in this thesis can be applied to other perspectives as well.
 
@@ -26,7 +26,7 @@ This section presents basic classification rules, that may be used for trade cla
 
 \subsubsection{Quote Rule}\label{sec:quote-rule}
 
-The quote rule follows the rationale, that market makers provide quotes, against which buyers or sellers trade. It classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $(P_{i,t})_{t=1}^{T}$ and the corresponding ask at $t$ by $\gls{A}_{i,t}$ and bid by $\gls{B}_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, estimated as $\gls{M}_{i,t} = \tfrac{1}{2}(B_{i,t} + A_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}.\footnote{For simplicity we assume an ideal data regime, where quote data is complete and spreads are positive.} Thus, the classification rule on $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} \neq M_{i,t}\right\}$ is given by:
+The quote rule follows the rationale, that market makers provide quotes, against which buyers or sellers trade. It classifies a trade by comparing the trade price against the corresponding quotes at the time of the trade. We denote the sequence of trade prices of the $i$-th security by $(P_{i,t})_{t=1}^{T}$ and the corresponding ask at $t$ by $A_{i,t}$ and bid by $B_{i,t}$. If the trade price is above the midpoint of the bid-ask spread, estimated as $M_{i,t} = \tfrac{1}{2}(B_{i,t} + A_{i,t})$, the trade is classified as a buy and if it is below the midpoint, as a sell \autocite[][41]{harrisDayEndTransactionPrice1989}.\footnote{For simplicity we assume an ideal data regime, where quote data is complete and spreads are positive.} Thus, the classification rule on $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} \neq M_{i,t}\right\}$ is given by:
 \begin{equation}
     \operatorname{quote}\colon \mathcal{A} \to \mathcal{Y},\quad
     \operatorname{quote}(i, t)=
@@ -82,7 +82,7 @@ As \cref{sec:quote-rule} discusses, the quote rule necessitates alternative proc
 
 The depth rule gauges the trade initiator from the quoted size at the best bid and ask. Based on the observation that an exceeding bid or ask size relates to higher liquidity at one trade side, trades are classified as a buy (sell) for a larger ask (bid) size \autocite[][14--15]{grauerOptionTradeClassification2022}.
 
-Let $\gls{A-tilde}_{i,t}$ denote the quoted size of the ask, $\gls{B-tilde}_{i,t}$ of the bid, and $P_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} = \gls{M}_{i,t} \land \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \right\}$. The depth rule is now calculated as:
+Let $\tilde{A}_{i,t}$ denote the quoted size of the ask, $\tilde{B}_{i,t}$ of the bid, and $P_{i,t}$ the trade price at $t$ of the $i$-th option. We set the domain as $\mathcal{A} = \left\{(i, t) \in \mathbb{N}^2: P_{i,t} = M_{i,t} \land \tilde{A}_{i,t} \neq \tilde{B}_{i,t} \right\}$. The depth rule is now calculated as:
 \begin{equation}
     \operatorname{depth} \colon \mathcal{A} \to \mathcal{Y},\quad
     \operatorname{depth}(i, t)=
