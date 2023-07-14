@@ -103,7 +103,7 @@ Our second feature set, named \gls{FS} size, extends the first feature set by th
 
 Our largest feature set, abbreviated with \gls{FS} option, also incorporates option characteristics, including the option type among others. By providing unique identifiers for the option series, we can potentially establish connections between transactions when trade initiators divide a single order into sub-orders or rely on complex trades. Similar reasoning applies to the daily volume of the option series. Option features are also informative individually. Time to maturity $\tau_{i,t}$, estimated in months, indirectly affects classification performance. On \gls{CBOE} data in \textcite[][889]{savickasInferringDirectionOption2003}, trades with longer maturities are smaller, hence more likely to be classified correctly. Moreover, time to maturity can be used as a dummy to identify rollovers \autocite[][700]{muravyevOrderFlowExpected2016}. When investors are short in call or put options, they replace expiring for non-expiring options, which creates selling pressure in the non-expiring option. The feature could make the procedure learnable. Related to the time to maturity is moneyness, estimated as the ratio between the price of the underlying $S_{i,t}$ and the strike price $K_{i}$ for calls and the reciprocal for puts. As moneyness is linked to leverage in the investment, we reason that incentives to initiate a trade might vary between buyers and sellers. The classification of index options poses challenges for traditional approaches relative to other security types \autocites[][22]{grauerOptionTradeClassification2022}[][898-899]{savickasInferringDirectionOption2003}. We equip the models with the security type, as well as the option type and root to extend the learnable context.
 
-Arguably, our models have simultaneous access to the previous and successive trade prices and quotes for both the exchange and the \gls{NBBO}, which is an advantage over base rules. As we benchmark against various, stacked hybrid rules, the data requirements are still comparable. We emphasize this aspect, as it is neglected in previous works \autocites[][485]{blazejewskiLocalNonParametricModel2005}[][48]{ronenMachineLearningTrade2022}[][398]{rosenthalModelingTradeDirection2012}.
+Arguably, our models have simultaneous access to the previous and successive trade prices and quotes for both the exchange and the \gls{NBBO}, which is an advantage over base rules. As we benchmark against various, stacked hybrid rules, the data requirements are still comparable. We emphasize this aspect, as it is neglected in previous works (cp. \textcites[][485]{blazejewskiLocalNonParametricModel2005}[][48]{ronenMachineLearningTrade2022}[][398]{rosenthalModelingTradeDirection2012}).
 
 \textbf{Numerical Features}
 
@@ -157,31 +157,27 @@ Models are pre-trained on unlabeled samples from the last six months of the trai
 
 We use the \gls{CBOE} sample past 5 November 2015 as a second test set, as visualized in \cref{fig:train-test-split}. Our evaluation approach is the most rigorous as it disallows any form of adaptation of the models, thereby ensuring a rigorous evaluation. Unlike transfer learning techniques such as parameter or model transfer, which expectedly improve model performance, we choose to forgo these techniques and demonstrate the effectiveness of our models without any transfer of knowledge. The start date ensures that leakage from the \gls{ISE} set is minimized.\footnote{The datasets contain features, such as the \gls{NBBO}, that are identical for both sets, assuming trades were executed at both exchanges simultaneously. Also, quotes can be identical between exchanges, if market makers quote at the \gls{NBBO}, which is common practice as documented in \textcite[][10]{securitiesandexchangecommissionReportConcerningExaminations2007}. Utilizing the full \gls{CBOE} sample could result in exaggerated performance estimates if the corresponding \gls{ISE} trade is used in training.}
 
-Our train-test-split assumes that all subsets are drawn from the same distribution, so fitting a classifier on the training set and optimizing for the validation set provides good estimates for the test set. To validate this assumption, we use adversarial validation. Specifically, we re-label all training samples with $y=-1$ and all trades of the validation set with $y=1$, train a classifier on a random subset of the composed dataset, and predict class conformance. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which ranges between $\left[-1, 1\right]$ and is insensitive to class imbalances.\footnote{Classes are imbalanced, due to the training set being three times the size of the validation set.} Assuming train and validation samples are sampled from the same distribution, the performance estimate is near a random guess, or $\operatorname{MCC} = 0$. For the mid-sized feature set, the \gls{MCC} is \num{0.364260805498287} suggesting training and validation sets are approximately similar. The next section discusses techniques used in training the classifiers.
+Our train-test-split assumes that all subsets are drawn from the same distribution, so fitting a classifier on the training set and optimizing for the validation set provides good estimates for the test set. To validate this assumption, we use adversarial validation. Specifically, we re-label all training samples with $y=-1$ and all trades of the validation set with $y=1$, train a classifier on a random subset of the composed dataset, and predict class conformance. The performance is estimated using the \gls{MCC} of \textcite[][445]{matthewsComparisonPredictedObserved1975}, which ranges between $\left[-1, 1\right]$ and is insensitive to class imbalances.\footnote{Classes are imbalanced, due to the training set being $3\times$ the size of the validation set.} Assuming train and validation samples are sampled from the same distribution, the performance estimate is near a random guess, or $\operatorname{MCC} = 0$. For the mid-sized feature set, the \gls{MCC} is \num{0.364260805498287} suggesting training and validation sets are approximately similar. The next section discusses techniques used in training the classifiers.
 
 \subsection{Training and Tuning}\label{sec:training-and-tuning}
 
-The following section describes the experimental setup.\footnote{The authors acknowledge support by the federal state of Baden-Württemberg through \href{https://www.bwhpc.de/}{bwHPC}.} For reproducibility, the implementation and experiment tracking are publicly available.\footnote{Code is available at~\url{https://github.com/KarelZe/thesis}. Experiments are tracked at \url{https://wandb.ai/fbv/thesis}.}
+The following section describes the experimental setup. For reproducibility, the implementation and experiment tracking are publicly available.\footnote{Code is available at~\url{https://github.com/KarelZe/thesis}. Experiments are tracked at \url{https://wandb.ai/fbv/thesis}.}
 
 \subsubsection{Training of Supervised
     Models}\label{sec:training-of-supervised-models}
 
-Our implementation of \glspl{GBRT} is based on CatBoost \autocite[][5--6]{prokhorenkovaCatBoostUnbiasedBoosting2018} because of its efficient implementation on \glspl{GPU} and native support for categorical variables. However, as discussed in \cref{sec:gradient-boosting-procedure}, we expect the chosen library to have minimal impact on performance.
+Our implementation of \glspl{GBRT} is based on CatBoost \autocite[][5--6]{prokhorenkovaCatBoostUnbiasedBoosting2018} because of its efficient implementation on \glspl{GPU} and native support for categorical variables. % However, as discussed in \cref{sec:gradient-boosting-procedure}, we expect the chosen library to have minimal impact on performance.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics{gbm-train-val-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of Gradient Boosting]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample. Metrics are estimated on the feature set classic. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \caption[Training and Validation Accuracy of Gradient Boosting]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample. Metrics are estimated on the feature set classic. One iteration corresponds to an additional regression tree added to the ensemble.}
     \label{fig:gbm-train-val-loss-acc}
 \end{figure}
 
-\cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The plots reveal several insights.
+\cref{fig:gbm-train-val-loss-acc} displays the loss and accuracies of the default implementation on the \gls{ISE} training and validation set using classical features. The plots reveal several insights. First, the model overfits the training data, as evident from the generalization gap between training and validation accuracies. To improve generalization performance, we apply regularization techniques. Second, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This discrepancy suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction.
 
-First, the model overfits the training data, as evident from the generalization gap between training and validation accuracies. To improve generalization performance, we apply regularization techniques.
-
-Second, validation loss spikes for larger ensembles, while validation accuracy continues to improve. This discrepancy suggests that the predicted class's correctness improves, but the ensemble becomes less confident in the correctness of the prediction.
-
-\begin{figure}[ht]
+\begin{figure}[!h]
     \centering
     \includegraphics{gbm-loss-distribution.pdf}
     \caption[Sample-Wise Loss of Gradient Boosting]{Sample-wise log loss of \glsentryshort{GBRT} on \glsentryshort{ISE} sample as equi-width histogram. Loss is estimated on the classical feature set. In general, log loss improves for larger ensembles, as indicated by the increased number of samples accumulating around zero but few predictions contribute to the loss unproportionally causing the log loss to stagnate on average.}
@@ -312,7 +308,7 @@ While different algorithmic implementations exist for Bayesian optimization, we 
 
 \textbf{Gradient Boosting}
 
-Our search space is reported in \cref{tab:hyperparameter-space-gbm}, which is loosely aligned with \textcite[][sup.]{gorishniyRevisitingDeepLearning2021}.
+Our search space is reported in \cref{tab:hyperparameter-space-gbm}, which is loosely aligned with \textcites[][sup.]{gorishniyRevisitingDeepLearning2021}[][sup.]{prokhorenkovaCatBoostUnbiasedBoosting2018}.
 
 \begin{table}[!ht]
     \centering
@@ -523,7 +519,7 @@ where $\operatorname{L}_{\mathrm{0-1}}(\cdot)$ is the 0-1-loss given by:
 
 Intuitively, from the 0-1-loss we obtain the error rate on the dataset, as for every misclassified trade we count a loss of one and normalize by the number of samples $N$, which gives the normalized 0-1-loss. Notably, the loss is the same for false positives and negatives.
 
-Our datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vise versa have similar associated costs, which makes accuracy an ideal choice as a performance metric.\footnote{The \gls{ISE} test set consists of \SI{48.5973}{\percent} of buy trades and \SI{46.1278}{\percent} of the \gls{CBOE} test set are buy trades.} As the 0-1-loss and in consequence, the accuracy is not differentiable, it cannot be used in optimization, but as an early stopping criterion to halt training or as an optimization target in the hyperparameter search. We report the accuracy of the test sets.
+Our datasets are approximately balanced and buyer-initiated trades predicted as seller-initiated and vice versa have similar associated costs, which makes accuracy an ideal choice as a performance metric.\footnote{The \gls{ISE} test set consists of \SI{48.5973}{\percent} of buy trades and \SI{46.1278}{\percent} of the \gls{CBOE} test set are buy trades.} We report the accuracy of the test sets.
 
 \subsubsection{Feature Importance
     Measure}\label{sec:feature-importance-measure}
@@ -541,21 +537,21 @@ Thereby, our goal is to estimate how much a feature contributes to the performan
 
 \gls{SAGE} is an additive feature importance measure with its foundations in cooperative game theory. As put forth by \textcite[][4770]{lundbergUnifiedApproachInterpreting2017} feature contributions can be estimated through Shapley values \autocite[][310--312]{shapleyValueNpersonGames1953}. Instead of allocating credit in a cooperative game to players, as in the original Shapley formulation, the problem transfers to assign credit across features based on a value function. Intuitionally, for \gls{SAGE}, credit is distributed among features based on the contribution to the model's performance.
 
-Again, $X$ is a random variable describing the input, $Y$ is the response variable, and $f$ is the classifier. In \gls{SAGE} \autocite[][17215--17216]{covertUnderstandingGlobalFeature2020}, Shapley values $\phi_i(v_f)$ are estimated as:
+Again, $X$ is a random variable describing the input, $Y$ is the response variable, and $F$ is the classifier. In \gls{SAGE} \autocite[][17215--17216]{covertUnderstandingGlobalFeature2020}, Shapley values $\phi_i(v_F)$ are estimated as:
 \begin{equation}
     \phi_i(v_f)=\frac{1}{d} \sum_{S \subseteq D \backslash\{i\}}\left(\begin{array}{c}
         d-1 \\
         |S|
-        \end{array}\right)^{-1}(v_f(S \cup\{i\})-v_f(S))
+        \end{array}\right)^{-1}(v_F(S \cup\{i\})-v_f(S))
         \label{eq:shapley}
 \end{equation}
-where $D=\left\{1,\ldots,d\right\}$ is a set of feature indices corresponding to the features $x_1,\ldots,x_d$ and $S\subset D$. Intuitionally, \cref{eq:shapley} estimates Shapley values as the weighted average of the incremental change in the value function, $v_f(S)$, before and after the $i$-th feature is added to the feature subsets $S$. Hereby, the first term $\left(\begin{smallmatrix} d-1 \\|S|\end{smallmatrix}\right)^{-1}$ accounts for the possibilities to choose a $|S|$-strong subset from $D \backslash\{i\}$. 
+where $D=\left\{1,\ldots,d\right\}$ is a set of feature indices corresponding to the features $x_1,\ldots,x_d$ and $S\subset D$. Intuitionally, \cref{eq:shapley} estimates Shapley values as the weighted average of the incremental change in the value function, $v_F(S)$, before and after the $i$-th feature is added to the feature subsets $S$. Hereby, the first term $\left(\begin{smallmatrix} d-1 \\|S|\end{smallmatrix}\right)^{-1}$ accounts for the possibilities to choose a $|S|$-strong subset from $D \backslash\{i\}$. 
 
-While subsets of features $X_S = \left\{X_i \mid i \in S \right\}$ can be easily constructed, most classifiers, including ours, cannot handle the absence of features as they require fixed-sized inputs during inference. \textcite[][17213]{covertUnderstandingGlobalFeature2020} mitigate the issue, by marginalizing out the missing features $\bar{S}=D\backslash S$ using the conditional distribution $p(X_{\bar{S}} \mid X_S=x_S)$. Following \textcite[][17215--17216]{covertUnderstandingGlobalFeature2020}, the performance of the model for a given subset of features $S$ and loss function $\ell$ can now be estimated by
+While subsets of features $X_S = \left\{X_i \mid i \in S \right\}$ can be easily constructed, most classifiers, including ours, cannot handle the absence of features as they require fixed-sized inputs during inference. \textcite[][17213]{covertUnderstandingGlobalFeature2020} mitigate the issue, by marginalizing out the missing features $\bar{S}=D\backslash S$ using the conditional distribution $p(X_{\bar{S}} \mid X_S=x_S)$. Following \textcite[][17215--17216]{covertUnderstandingGlobalFeature2020}, the performance of the model for a given subset of features $S$ and loss function $L$ can now be estimated by
 \begin{equation}
-v_f(S)=-\mathbb{E}\left[\ell\left(\mathbb{E}\left[f(X) \mid X_S\right], Y\right)\right].
+v_F(S)=-\mathbb{E}\left[L\left(\mathbb{E}\left[F(X) \mid X_S\right], Y\right)\right].
 \end{equation}
-As important features in a subset lead to a reduction in loss or improvement in performance, the negative sign ensures that the value $v_f(S)$ increases. Together with \cref{eq:shapley} the Shapley values can be estimated. Typically, the cross-entropy loss is chosen as the loss function $\ell$. As classical rules, yield only hard probabilities, we use the zero-one-loss from \cref{eq:0-1-loss} instead.\footnote{We contribute this loss function to the official implementation \url{https://github.com/iancovert/sage/} as part of this thesis.} 
+As important features in a subset lead to a reduction in loss or improvement in performance, the negative sign ensures that the value $v_F(S)$ increases. Together with \cref{eq:shapley} the Shapley values can be estimated. Typically, the cross-entropy loss is chosen as the loss function $L$. As classical rules, yield only hard probabilities, we use the zero-one-loss from \cref{eq:0-1-loss} instead.\footnote{We contribute this loss function to the official implementation \url{https://github.com/iancovert/sage/} as part of this thesis.} 
 
 \textbf{Attention Maps}
 
