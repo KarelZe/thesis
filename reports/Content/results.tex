@@ -18,7 +18,7 @@ Quote-based algorithms outperform tick-based algorithms delivering accuracy up t
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Rule-Based Approaches on \glsentryshort{ISE}]{Accuracy of common trade classification rules and their variations for option trades on \gls{ISE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in bold.}
+    \caption[Accuracies of Rule-Based Approaches on \glsentryshort{ISE} Sample]{Accuracy of common trade classification rules and their variations for option trades on \gls{ISE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in bold.}
     \label{tab:ise-classical}
     \begin{tabular}{@{}lSSSSS@{}}
         \toprule
@@ -61,7 +61,7 @@ Notably, the \gls{GSU} method (large) featuring overrides from the trade size an
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Rule-Based Approaches on \glsentryshort{CBOE}]{Accuracy of common trade classification rules and their variations for option trades on \gls{CBOE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in bold.}
+    \caption[Accuracies of Rule-Based Approaches on \glsentryshort{CBOE} Sample]{Accuracy of common trade classification rules and their variations for option trades on \gls{CBOE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in bold.}
     \label{tab:cboe-classical}
     \begin{tabular}{lSSSS}
         \toprule
@@ -118,7 +118,7 @@ We take the best configurations from \cref{sec:hyperparameter-tuning}, trained a
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Supervised Approaches]{Accuracy of supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
+    \caption[Accuracies of Supervised Classifiers]{Accuracy of supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
     \label{tab:results-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
@@ -173,7 +173,7 @@ We compare the performance of pre-trained Transformers and self-trained gradient
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Semi-Supervised Approaches]{Accuracy of semi-supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic, \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
+    \caption[Accuracies of Semi-Supervised Classifiers]{Accuracy of semi-supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic, \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
     \label{tab:results-semi-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
@@ -275,7 +275,7 @@ The performance is stable for different trade sizes and over time. Similarly, ac
 
 \begin{table}[ht!]
     \centering
-    \caption[Robustness of Gradient Boosting on \glsentryshort{ISE}]{Accuracies of \glspl{GBRT} across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of Gradient Boosting on \glsentryshort{ISE} Sample]{Accuracies of \glspl{GBRT} across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-ise-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -333,7 +333,7 @@ All              & 63.668637                                        & 3.620000  
 
 \begin{table}[h!]
     \centering
-    \caption[Robustness of Gradient Boosting on \glsentryshort{CBOE}]{Accuracies of \glspl{GBRT} across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of Gradient Boosting on \glsentryshort{CBOE} Sample]{Accuracies of \glspl{GBRT} across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-cboe-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -399,7 +399,7 @@ Lastly, the FT-Transformers perform well on trades at the quotes. When trained o
 
 \begin{table}[h!]
     \centering
-    \caption[Robustness of FT-Transformer on \glsentryshort{ISE}]{Accuracies of the FT-Transformer across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of FT-Transformer on \glsentryshort{ISE} Sample]{Accuracies of the FT-Transformer across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-ise-transformer}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -455,7 +455,7 @@ Lastly, the FT-Transformers perform well on trades at the quotes. When trained o
 
 \begin{table}[h!]
     \centering
-    \caption[Robustness of FT-Transformer on \glsentryshort{CBOE}]{Accuracies of the FT-Transformer across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of FT-Transformer on \glsentryshort{CBOE} Sample]{Accuracies of the FT-Transformer across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-cboe-transformer}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -559,12 +559,12 @@ Visually, the trade price and quotes at the exchange or inter-exchange level are
 The model assigns high attention scores to features from rule-based algorithms. Due to a possible link to rule-based classification, we explore, if the fine-grained patterns learned by attention heads individually translate to existing trade classification rules i.e., if specific tokens attend to features that are jointly used in rule-based classification. This information is sacrificed when aggregating over multiple attention heads and layers, as done for \cref{fig:attention-maps-ise}.
 
 \begin{figure}[h!]
-    \subfloat[Tick Rule-like Head (3,5)\label{fig:head-tick}]{\includegraphics[width=0.3\textwidth]{attention_head_5_layer_3_color_green_ise_quotes_mid.pdf}}
+    \subfloat[Tick Rule-Like Head (3,5)\label{fig:head-tick}]{\includegraphics[width=0.3\textwidth]{attention_head_5_layer_3_color_green_ise_quotes_mid.pdf}}
     \hfill
-    \subfloat[Trade Size Rule-like Head (3,8)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_3_color_green_ise_quotes_mid.pdf}}
+    \subfloat[Trade Size Rule-Like Head (3,8)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_3_color_green_ise_quotes_mid.pdf}}
     \hfill
     \subfloat[\glsentryshort{LR}-Like Head (4,8)\label{fig:head-lr}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_4_color_green_ise_quotes_mid.pdf}}
-    \caption[Rule-like Roles of Selected Attention Heads]{Attention heads that correspond to trade classification rules. The tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualized for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualizations based on code by \textcite[][279]{clarkWhatDoesBERT2019}.}
+    \caption[Rule-Like Roles of Selected Attention Heads]{Attention heads that correspond to trade classification rules. The tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualized for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualizations based on code by \textcite[][279]{clarkWhatDoesBERT2019}.}
     \label{fig:rule-like-attention-heads}
 \end{figure}
 
@@ -601,7 +601,7 @@ We compare the feature importances of rule-based and machine learning-based clas
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\textwidth]{sage-importances.pdf}
-    \caption[\glsentryshort{SAGE} Feature Importances For Classifiers]{\gls{SAGE} feature importances of rule-based and machine learning-based classifiers. Importances estimated on \gls{ISE} test set.}
+    \caption[\glsentryshort{SAGE} Feature Importances]{\gls{SAGE} feature importances of rule-based and machine learning-based classifiers. Importances estimated on \gls{ISE} test set.}
     \label{fig:sage-importances}
 \end{figure}
 
@@ -649,7 +649,7 @@ The true and the estimated effective spreads for the test sets are shown in the 
 \begin{table}[!ht]
     \centering
     \input{Content/effective-spread.tex}
-    \caption[Effective Spreads Estimates]{Effective spreads estimates of trade classification rules and classifiers. Results are calculated on \gls{ISE} and \gls{CBOE} test set and averaged over all trades within the samples. Classifiers match the configuration of \cref{sec:hyperparameter-tuning}.}
+    \caption[Effective Spread Estimates]{Effective spread estimates of trade classification rules and classifiers. Results are calculated on \gls{ISE} and \gls{CBOE} test set and averaged over all trades within the samples. Classifiers match the configuration of \cref{sec:hyperparameter-tuning}.}
     \label{tab:effective-spread}
 \end{table}
 

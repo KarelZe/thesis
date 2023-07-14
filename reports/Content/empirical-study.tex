@@ -171,7 +171,7 @@ Our implementation of \glspl{GBRT} is based on CatBoost \autocite[][5--6]{prokho
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-train-val-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of Gradient-Boosting]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample. Metrics are estimated on the feature set classic. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \caption[Training and Validation Accuracy of Gradient Boosting]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample. Metrics are estimated on the feature set classic. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
     \label{fig:gbm-train-val-loss-acc}
 \end{figure}
 
@@ -184,7 +184,7 @@ Second, validation loss spikes for larger ensembles, while validation accuracy c
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-loss-distribution.pdf}
-    \caption[Sample-Wise Log Loss of Gradient-Boosting]{Sample-wise log loss of \glsentryshort{GBRT} on \glsentryshort{ISE} sample as equi-width histogram. Loss is estimated on the classical feature set. In general, log loss improves for larger ensembles, as indicated by the increased number of samples accumulating around zero but few predictions contribute to the loss unproportionally causing the log loss to stagnate on average.}
+    \caption[Sample-Wise Loss of Gradient Boosting]{Sample-wise log loss of \glsentryshort{GBRT} on \glsentryshort{ISE} sample as equi-width histogram. Loss is estimated on the classical feature set. In general, log loss improves for larger ensembles, as indicated by the increased number of samples accumulating around zero but few predictions contribute to the loss unproportionally causing the log loss to stagnate on average.}
     \label{fig:gbm-loss-distribution}
 \end{figure}
 
@@ -193,7 +193,7 @@ This behavior can be explained by the log loss being unbound, where single incor
 \begin{figure}[ht]
     \centering
     \includegraphics{gbm-optimisations-loss-acc.pdf}
-    \caption[Training and Validation Accuracy of \glsentryshort{GBRT} with Optimisations]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample with optimizations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
+    \caption[Training and Validation Accuracy of Gradient Boosting with Optimisations]{Training and validation accuracy of \gls{GBRT} on \gls{ISE} sample with optimizations. Metrics are estimated on the classical feature set. One iteration corresponds to an additional regression tree added to the ensemble. Loss is expected to decrease for more complex ensembles and accuracy to increase.}
     \label{fig:gbm-optimizations-loss-acc}
 \end{figure}
 
@@ -209,7 +209,7 @@ The work of \textcite[][35]{grauerOptionTradeClassification2022} suggests a stro
 
 \emph{Border Count}
 
-In regression trees of gradient-boosting, the split finding is typically approximated with quantization, whereby all numeric features are first discretized into a fixed number of buckets through histogram building, and splits are evaluated at the border of the buckets \autocite[][3147]{keLightGBMHighlyEfficient2017}. To increase the number of split candidates, we raise the border count to \num{254}. Generally, this leads to increased accuracy at the cost of computational efficiency. Yet, in the experiment above, the improvements in validation loss and accuracy are minor compared to the previous modifications.
+In regression trees of gradient boosting, the split finding is typically approximated with quantization, whereby all numeric features are first discretized into a fixed number of buckets through histogram building, and splits are evaluated at the border of the buckets \autocite[][3147]{keLightGBMHighlyEfficient2017}. To increase the number of split candidates, we raise the border count to \num{254}. Generally, this leads to increased accuracy at the cost of computational efficiency. Yet, in the experiment above, the improvements in validation loss and accuracy are minor compared to the previous modifications.
 
 \emph{Early Stopping and Checkpointing}
 
@@ -336,7 +336,7 @@ As documented, we tune five hyperparameters for gradient boosting. The first is 
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set Classic\label{fig:ise-gbm-hyperparam-classical}]{\includegraphics[width=0.6\textwidth]{1gzk7msy-hyperparam-search-space.pdf}}
     \vfill
     \subfloat[Hyperparameter Search Space of \gls{GBRT} With Feature Set Size\label{fig:ise-gbm-hyperparam-classical-size}]{\includegraphics[width=0.6\textwidth]{3vntumoi-hyperparam-search-space.pdf}}
-    \caption[Hyperparameter Search Space of Gradient-Boosting]{Hyperparameter Search Space of \gls{GBRT} on \gls{ISE} Validation Set}
+    \caption[Hyperparameter Search Space of Gradient Boosting]{Hyperparameter Search Space of \gls{GBRT} on \gls{ISE} Validation Set}
     \label{fig:ise-gbm-hyperparam}
 \end{figure}
 \clearpage
@@ -472,7 +472,7 @@ Validation accuracy after fine-tuning improves for all models over Transformers 
 \begin{table}[!h]
     \centering
     \sisetup{table-format=3.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
-    \caption[Search Solutions of FT-Transformer With Pre-training]{Search solutions of FT-Transformer with pre-training. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{10} trials. Arrows indicate the change compared to the supervised variant.}
+    \caption[Search Solutions of FT-Transformer With Pre-Training]{Search solutions of FT-Transformer with pre-training. The three right columns document the best combination in terms of validation accuracy per feature set. We perform \num{10} trials. Arrows indicate the change compared to the supervised variant.}
     \label{tab:solutions-transformer-pretraining}
     \begin{tabular}{@{}llSSS@{}}
         \toprule
