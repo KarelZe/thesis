@@ -12,12 +12,12 @@
         \label{tab:literature-trade-classification-ml}
         \begin{tabular}{@{}p{3cm}p{3cm}lp{4cm}p{4cm}l@{}}
             \toprule
-            Research                                                                & Data                              & Sample Period            & Method                                                                                                & Baseline                                                     & Improvement              \\ \midrule
+            Research                                                      & Data                              & Sample Period            & Method                                                                                                & Baseline                                                     & Improvement              \\ \midrule
             \autocite[][411]{rosenthalModelingTradeDirection2012}         & \gls{NASDAQ}                      &                          & Logistic regression                                                                                   & \gls{EMO} rule, \gls{LR} rule,\newline and tick rule         & max. \SI{2.2}{\percent}  \\ \cmidrule{2-6}
-                                                                                    & \gls{NYSE}                        & 03/12/2004 -- 31/12/2004 & Logistic regression                                                                                   & \gls{EMO} rule, \gls{LR} rule,\newline and tick rule         & max. \SI{1.1}{\percent}  \\\cmidrule{1-6}
+                                                                          & \gls{NYSE}                        & 03/12/2004 -- 31/12/2004 & Logistic regression                                                                                   & \gls{EMO} rule, \gls{LR} rule,\newline and tick rule         & max. \SI{1.1}{\percent}  \\\cmidrule{1-6}
             \autocite[][489--493]{blazejewskiLocalNonParametricModel2005} & Australian Stock\newline Exchange & 11/11/2002 -- 27/08/2003 & $k$ nearest neighbor, \newline logistic regression,\newline trade continuation,\newline majority vote & -                                                            & -                        \\ \cmidrule{1-6}
             \autocite[][49--57]{ronenMachineLearningTrade2022}            & \gls{TRACE}                       & 01/07/2002 -- 31/12/2019 & Logistic regression, decision tree,\newline neural network, and random forests                        & \gls{LR} rule and tick rule,\newline and \gls{BVC} algorithm & max. \SI{13.3}{\percent} \\ \cmidrule{2-6}
-                                                                                    & \gls{NASDAQ}                      & 09/12/2013 -- 13/12/2013 & Logistic regression, decision tree,\newline neural network, and random forests                        & \gls{LR} rule, tick rule,\newline and \gls{BVC} algorithm    & max. \SI{3.3}{\percent}  \\ \bottomrule
+                                                                          & \gls{NASDAQ}                      & 09/12/2013 -- 13/12/2013 & Logistic regression, decision tree,\newline neural network, and random forests                        & \gls{LR} rule, tick rule,\newline and \gls{BVC} algorithm    & max. \SI{3.3}{\percent}  \\ \bottomrule
         \end{tabular}
     \end{table}
 \end{landscape}
@@ -25,36 +25,91 @@
 \subsection{Summary Statistics}
 \label{app:summary-statistics}
 
-\begin{table}[ht]
+\begin{table}[!ht]
     \centering
     \sisetup{table-format=4.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
-    \caption[Summary Statistics for \glsentryshort{ISE} Sample]{Summary statistics for \gls{ISE} labelled sample. Time to maturity in months.}
-    \label{tab:ise-supervised-all}
+    \caption[Summary Statistics for Labeled \glsentryshort{ISE} Full Sample]{Summary statistics for full \gls{ISE} labeled sample.}
+    \label{tab:ise-summary-labeled-full}
     \begin{tabular}{@{}lSSSSSSSSS@{}}
         \toprule
-        {}               & {Mean}     & {SD}        & {1\%}    & {5\%}    & {25\%}    & {Median}  & {75\%}     & {95\%}      & {99\%}      \\
+        \multicolumn{3}{c}{} & \multicolumn{7}{c}{{Percentile}}                                                                                                      \\
+        {}                   & {Mean}                           & {Std. Dev.} & {1\%}    & {5\%}    & {25\%}    & {50\%}    & {75\%}     & {95\%}      & {99\%}      \\
         \midrule
-        trade price      & 4.975898   & 15.722798   & 0.010000 & 0.050000 & 0.460000  & 1.540000  & 4.300000   & 17.799999   & 59.200001   \\
-        bid (ex)         & 4.831530   & 15.563911   & 0.000000 & 0.010000 & 0.400000  & 1.450000  & 4.150000   & 17.400000   & 58.400002   \\
-        ask (ex)         & 5.144752   & 15.946395   & 0.020000 & 0.070000 & 0.520000  & 1.650000  & 4.500000   & 18.299999   & 60.400002   \\
-        ask (best)       & 5.150689   & 101.225182  & 0.020000 & 0.060000 & 0.500000  & 1.600000  & 4.500000   & 18.100000   & 60.000000   \\
-        bid (best)       & 4.849738   & 15.569823   & 0.000000 & 0.020000 & 0.400000  & 1.450000  & 4.200000   & 17.400000   & 58.400002   \\
-        price lag (ex)   & 5.009203   & 15.326354   & 0.020000 & 0.080000 & 0.550000  & 1.630000  & 4.400000   & 17.750000   & 59.000000   \\
-        price lead (ex)  & 5.035194   & 15.649212   & 0.020000 & 0.060000 & 0.500000  & 1.600000  & 4.400000   & 17.990000   & 59.759998   \\
-        price lag (all)  & 4.962591   & 15.660495   & 0.020000 & 0.060000 & 0.500000  & 1.550000  & 4.300000   & 17.680000   & 58.860001   \\
-        price lead (all) & 5.005602   & 21.510473   & 0.020000 & 0.050000 & 0.500000  & 1.570000  & 4.350000   & 17.879999   & 59.200001   \\\addlinespace
-        trade size       & 13.615033  & 77.752615   & 1.000000 & 1.000000 & 1.000000  & 4.000000  & 10.000000  & 50.000000   & 150.000000  \\
-        bid size (ex)    & 266.541321 & 1112.201294 & 0.000000 & 1.000000 & 20.000000 & 57.000000 & 197.000000 & 1092.000000 & 2995.000000 \\
-        ask size (ex)    & 280.400757 & 1184.970825 & 1.000000 & 2.000000 & 21.000000 & 63.000000 & 214.000000 & 1121.000000 & 3029.000000 \\\addlinespace
-        strike price     & 110.803169 & 350.870270  & 4.000000 & 9.000000 & 25.000000 & 45.000000 & 85.000000  & 310.000000  & 1260.000000 \\
-        ttm              & 3.430495   & 4.930164    & 0.000000 & 0.000000 & 1.000000  & 1.000000  & 4.000000   & 15.000000   & 24.000000   \\
-        moneyness        & 7.000215   & 2299.693359 & 0.476429 & 0.685166 & 0.884600  & 0.967481  & 1.038636   & 1.290323    & 1.824375    \\
+        trade price          & 4.975898                         & 15.722798   & 0.010000 & 0.050000 & 0.460000  & 1.540000  & 4.300000   & 17.799999   & 59.200001   \\
+        bid (ex)             & 4.831530                         & 15.563911   & 0.000000 & 0.010000 & 0.400000  & 1.450000  & 4.150000   & 17.400000   & 58.400002   \\
+        ask (ex)             & 5.144752                         & 15.946395   & 0.020000 & 0.070000 & 0.520000  & 1.650000  & 4.500000   & 18.299999   & 60.400002   \\
+        ask (best)           & 5.150689                         & 101.225182  & 0.020000 & 0.060000 & 0.500000  & 1.600000  & 4.500000   & 18.100000   & 60.000000   \\
+        bid (best)           & 4.849738                         & 15.569823   & 0.000000 & 0.020000 & 0.400000  & 1.450000  & 4.200000   & 17.400000   & 58.400002   \\
+        price lag (ex)       & 5.009203                         & 15.326354   & 0.020000 & 0.080000 & 0.550000  & 1.630000  & 4.400000   & 17.750000   & 59.000000   \\
+        price lead (ex)      & 5.035194                         & 15.649212   & 0.020000 & 0.060000 & 0.500000  & 1.600000  & 4.400000   & 17.990000   & 59.759998   \\
+        price lag (all)      & 4.962591                         & 15.660495   & 0.020000 & 0.060000 & 0.500000  & 1.550000  & 4.300000   & 17.680000   & 58.860001   \\
+        price lead (all)     & 5.005602                         & 21.510473   & 0.020000 & 0.050000 & 0.500000  & 1.570000  & 4.350000   & 17.879999   & 59.200001   \\
+        trade size           & 13.615033                        & 77.752615   & 1.000000 & 1.000000 & 1.000000  & 4.000000  & 10.000000  & 50.000000   & 150.000000  \\
+        bid size (ex)        & 266.541321                       & 1112.201294 & 0.000000 & 1.000000 & 20.000000 & 57.000000 & 197.000000 & 1092.000000 & 2995.000000 \\
+        ask size (ex)        & 280.400757                       & 1184.970825 & 1.000000 & 2.000000 & 21.000000 & 63.000000 & 214.000000 & 1121.000000 & 3029.000000 \\
+        strike price         & 110.803169                       & 350.870270  & 4.000000 & 9.000000 & 25.000000 & 45.000000 & 85.000000  & 310.000000  & 1260.000000 \\
+        ttm                  & 3.430495                         & 4.930164    & 0.000000 & 0.000000 & 1.000000  & 1.000000  & 4.000000   & 15.000000   & 24.000000   \\
+        moneyness            & 7.000215                         & 2299.693359 & 0.476429 & 0.685166 & 0.884600  & 0.967481  & 1.038636   & 1.290323    & 1.824375    \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\begin{table}[!h]
+    \centering
+    \sisetup{table-format=4.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
+    \caption[Summary Statistics for Labeled \glsentryshort{CBOE} Full Sample]{Summary statistics for full \gls{CBOE} labeled sample.}
+    \label{tab:cboe-summary-labeled-full}
+    \begin{tabular}{@{}lSSSSSSSSS@{}}
+        \toprule
+        \multicolumn{3}{c}{} & \multicolumn{7}{c}{{Percentile}}                                                                                                      \\
+        {}                   & {Mean}                           & {Std. Dev.} & {1\%}    & {5\%}    & {25\%}    & {50\%}    & {75\%}     & {95\%}      & {99\%}      \\
+        \midrule
+        trade price          & 4.959277                         & 28.704565   & 0.010000 & 0.040000 & 0.370000  & 1.190000  & 3.300000   & 14.580000   & 68.000000   \\
+        bid (ex)             & 4.812144                         & 28.620659   & 0.000000 & 0.000000 & 0.300000  & 1.100000  & 3.150000   & 14.150000   & 66.800003   \\
+        ask (ex)             & 5.133390                         & 28.979645   & 0.020000 & 0.060000 & 0.430000  & 1.280000  & 3.500000   & 15.040000   & 69.570000   \\
+        ask (best)           & 5.095160                         & 29.095181   & 0.020000 & 0.050000 & 0.410000  & 1.250000  & 3.480000   & 15.000000   & 69.199997   \\
+        bid (best)           & 4.821404                         & 28.535358   & 0.000000 & 0.010000 & 0.320000  & 1.100000  & 3.200000   & 14.200000   & 66.699997   \\
+        price lag (ex)       & 5.037857                         & 28.620440   & 0.020000 & 0.060000 & 0.440000  & 1.260000  & 3.400000   & 14.710000   & 69.669998   \\
+        price lead (ex)      & 5.036025                         & 28.772753   & 0.010000 & 0.050000 & 0.400000  & 1.220000  & 3.360000   & 14.900000   & 69.680000   \\
+        price lag (all)      & 4.917773                         & 28.392250   & 0.020000 & 0.050000 & 0.400000  & 1.210000  & 3.310000   & 14.500000   & 67.300003   \\
+        price lead (all)     & 4.944581                         & 28.446793   & 0.020000 & 0.050000 & 0.400000  & 1.210000  & 3.340000   & 14.630000   & 67.360001   \\
+        trade size           & 18.138643                        & 223.242526  & 1.000000 & 1.000000 & 2.000000  & 5.000000  & 10.000000  & 50.000000   & 200.000000  \\
+        bid size (ex)        & 301.640411                       & 896.559509  & 0.000000 & 0.000000 & 21.000000 & 78.000000 & 271.000000 & 1200.000000 & 2990.000000 \\
+        ask size (ex)        & 310.611816                       & 904.802612  & 1.000000 & 2.000000 & 24.000000 & 82.000000 & 282.000000 & 1231.000000 & 3051.000000 \\
+        strike price         & 158.485962                       & 475.618256  & 4.000000 & 9.500000 & 28.000000 & 50.000000 & 95.000000  & 670.000000  & 2415.000000 \\
+        ttm                  & 3.141497                         & 4.552771    & 0.000000 & 0.000000 & 1.000000  & 1.000000  & 4.000000   & 13.000000   & 23.000000   \\
+        moneyness            & 1.171937                         & 362.641022  & 0.507000 & 0.711333 & 0.898652  & 0.967323  & 1.020700   & 1.209000    & 1.620746    \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-
-
+\begin{table}[ht!]
+    \centering
+    \sisetup{table-format=4.2,table-alignment-mode = none, table-number-alignment=left, table-text-alignment = left}
+    \caption[Summary Statistics for Unlabeled \glsentryshort{ISE} Training Sample]{Summary statistics for \gls{ISE} unlabeled training sample.}
+    \label{tab:ise-summary-unlabeled-train}
+    \begin{tabular}{@{}lSSSSSSSSS@{}}
+        \toprule
+        \multicolumn{3}{c}{} & \multicolumn{7}{c}{{Percentile}}                                                                                                      \\
+        {}                   & {Mean}                           & {Std. Dev.} & {1\%}    & {5\%}     & {25\%}    & {50\%}    & {75\%}     & {95\%}     & {99\%}      \\
+        \midrule
+        trade price          & 3.375032                         & 8.831281    & 0.020000 & 0.090000  & 0.490000  & 1.250000  & 2.990000   & 13.420000  & 34.119999   \\
+        bid (ex)             & 3.303517                         & 8.759763    & 0.000000 & 0.070000  & 0.460000  & 1.200000  & 2.920000   & 13.200000  & 33.700001   \\
+        ask (ex)             & 3.448208                         & 8.909276    & 0.030000 & 0.110000  & 0.510000  & 1.290000  & 3.100000   & 13.650000  & 34.500000   \\
+        ask (best)           & 3.423623                         & 9.310712    & 0.030000 & 0.100000  & 0.500000  & 1.270000  & 3.050000   & 13.600000  & 34.400002   \\
+        bid (best)           & 3.321758                         & 8.769208    & 0.010000 & 0.080000  & 0.470000  & 1.220000  & 2.940000   & 13.250000  & 33.799999   \\
+        price lag (ex)       & 3.366137                         & 8.371501    & 0.030000 & 0.100000  & 0.500000  & 1.260000  & 3.000000   & 13.400000  & 33.849998   \\
+        price lead (ex)      & 3.356368                         & 8.354015    & 0.020000 & 0.090000  & 0.490000  & 1.250000  & 2.990000   & 13.400000  & 33.849998   \\
+        price lag (all)      & 3.369529                         & 8.665418    & 0.030000 & 0.100000  & 0.490000  & 1.250000  & 2.990000   & 13.400000  & 34.000000   \\
+        price lead (all)     & 3.372703                         & 9.061480    & 0.030000 & 0.100000  & 0.490000  & 1.250000  & 3.000000   & 13.410000  & 34.049999   \\
+        trade size           & 20.877274                        & 221.772519  & 1.000000 & 1.000000  & 1.000000  & 5.000000  & 10.000000  & 58.000000  & 225.000000  \\
+        bid size (ex)        & 140.130890                       & 382.809845  & 0.000000 & 1.000000  & 12.000000 & 35.000000 & 94.000000  & 623.000000 & 1951.000000 \\
+        ask size (ex)        & 147.694733                       & 406.890961  & 1.000000 & 2.000000  & 13.000000 & 36.000000 & 97.000000  & 662.000000 & 2064.000000 \\
+        strike price         & 210.058350                       & 333.269287  & 7.000000 & 15.000000 & 40.000000 & 92.000000 & 230.000000 & 865.000000 & 1035.000000 \\
+        ttm                  & 1.382022                         & 2.825969    & 0.000000 & 0.000000  & 0.000000  & 1.000000  & 1.000000   & 6.000000   & 17.000000   \\
+        moneyness            & 1.408313                         & 566.840515  & 0.602462 & 0.829876  & 0.946851  & 0.984138  & 1.003228   & 1.070625   & 1.316000    \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 \clearpage
 
@@ -63,7 +118,7 @@
 
 \begin{table}[ht]
     \centering
-    \caption[Power-Transforms of Features]{Power-transforms of features. The parameter \lambda~specifies the exponent. Transformations estimated on \gls{ISE} training set.}
+    \caption[Power-Transforms of Features]{Power-transforms of features estimated by the Box-Cox procedure \autocite[][214]{boxAnalysisTransformations2022}. The parameter \lambda~specifies the exponent. Transformations calculated on the \gls{ISE} training set.}
     \label{tab:power-transformerations}
     \begin{tabular}{lS}
         \toprule
@@ -93,43 +148,38 @@
 
 \begin{table}[H]
     \centering
-    \begin{threeparttable}
-        \begin{tabular}{@{}ll@{}}
-            \toprule
-            Feature Name            & Transform              \\ \midrule
-            trade price             & $\log$ + standardized  \\
-            price lag (ex)          & $\log$ + standardized  \\
-            price lag (all)         & $\log$ + standardized  \\
-            price change lag (ex)   & clipped + standardized \\
-            price change lag (all)  & clipped + standardized \\
-            price lead (ex)         & $\log$ + standardized  \\
-            price lead (all)        & $\log$ + standardized  \\
-            price change lead (ex)  & clipped + standardized \\
-            price change lead (all) & clipped + standardized \\
-            bid (best)              & $\log$ + standardized  \\
-            bid (ex)                & $\log$ + standardized  \\
-            ask (best)              & $\log$ + standardized  \\
-            ask (ex)                & $\log$ + standardized  \\
-            prox. to quotes (ex)    & clipped + standardized \\
-            prox. to quotes (best)  & clipped + standardized \\ \addlinespace
-            bid ask size ratio (ex) & clipped + standardized \\
-            bid size (ex)           & $\log$ + standardized  \\
-            ask size (ex)           & $\log$ + standardized  \\
-            rel. bid size (ex)      & clipped + standardized \\
-            rel. ask size (ex)      & clipped + standardized \\
-            trade size              & $\log$ + standardized  \\ \addlinespace
-            strike price            & $\log$ + standardized  \\
-            volume option series    & $\log$ + standardized  \\ 
-            root                    & binarised              \\ 
-            time to maturity        & standardized           \\
-            moneyness               & standardized           \\
-            option type             & binarised              \\
-            issue type              & binarised              \\ \bottomrule
-        \end{tabular}
-        \begin{tablenotes}\footnotesize
-            \item[*] Notation assumes, that the previous or next trade price is distinguishable.
-        \end{tablenotes}
-    \end{threeparttable}
+    \begin{tabular}{@{}ll@{}}
+        \toprule
+        Feature Name            & Transform              \\ \midrule
+        trade price             & $\log$ + standardized  \\
+        price lag (ex)          & $\log$ + standardized  \\
+        price lag (all)         & $\log$ + standardized  \\
+        price change lag (ex)   & clipped + standardized \\
+        price change lag (all)  & clipped + standardized \\
+        price lead (ex)         & $\log$ + standardized  \\
+        price lead (all)        & $\log$ + standardized  \\
+        price change lead (ex)  & clipped + standardized \\
+        price change lead (all) & clipped + standardized \\
+        bid (best)              & $\log$ + standardized  \\
+        bid (ex)                & $\log$ + standardized  \\
+        ask (best)              & $\log$ + standardized  \\
+        ask (ex)                & $\log$ + standardized  \\
+        prox. to quotes (ex)    & clipped + standardized \\
+        prox. to quotes (best)  & clipped + standardized \\
+        bid ask size ratio (ex) & clipped + standardized \\
+        bid size (ex)           & $\log$ + standardized  \\
+        ask size (ex)           & $\log$ + standardized  \\
+        rel. bid size (ex)      & clipped + standardized \\
+        rel. ask size (ex)      & clipped + standardized \\
+        trade size              & $\log$ + standardized  \\
+        strike price            & $\log$ + standardized  \\
+        volume option series    & $\log$ + standardized  \\
+        root                    & binarised              \\
+        time to maturity        & standardized           \\
+        moneyness               & standardized           \\
+        option type             & binarised              \\
+        issue type              & binarised              \\ \bottomrule
+    \end{tabular}
     \caption[Overview of Features and Transformations]{Overview of features and transformations.}
     \label{tab:features-transformations}
 \end{table}
@@ -141,7 +191,7 @@
 \begin{figure}[ht]
     \centering
     \includegraphics{auto_corr_features.pdf}
-    \caption[Autocorrelation of Features]{Autocorrelation of features.}
+    \caption[Autocorrelation of Features]{Autocorrelation of numerical features estimated on \gls{ISE} train set. Estimated with \num{20} lags and with normalized input vectors. Autocorrelation is very low for most features. Exceptions are the trade price and trade size as well as the bid and ask at the inter-exchange level. A limitation is that all features are considered in isolation.}
     \label{fig:auto-correlation-features}
 \end{figure}
 
@@ -170,7 +220,7 @@
 \label{app:robustness-of-gradient-boosting-with-self-training}
 \begin{table}[!ht]
     \centering
-    \caption[Robustness of Gradient Boosting With Self-Training on \glsentryshort{ISE} Sample]{Accuracies of the \gls{GBRT} with self-training across all sub-samples of the \gls{ISE} test set. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of Gradient Boosting With Self-Training on \glsentryshort{ISE} Sample]{Accuracies of the \gls{GBRT} with self-training across all sub-samples of the \gls{ISE} test set. Subsets as described in \cref{tab:diff-ise-gbm}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-ise-gbm-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -228,7 +278,7 @@
 
 \begin{table}[!ht]
     \centering
-    \caption[Robustness of Gradient Boosting With Self-Training on \glsentryshort{CBOE} Sample]{Accuracies of the \gls{GBRT} with self-training across all sub-samples of the \gls{CBOE} test set. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of Gradient Boosting With Self-Training on \glsentryshort{CBOE} Sample]{Accuracies of the \gls{GBRT} with self-training across all sub-samples of the \gls{CBOE} test set. Subsets as described in \cref{tab:diff-ise-gbm}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-cboe-gbm-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -290,7 +340,7 @@
 \label{app:robustness-of-ft-transformer-with-pre-training}
 \begin{table}[!ht]
     \centering
-    \caption[Robustness of FT-Transformer With Pre-Training on \glsentryshort{ISE} Sample]{Accuracies of the FT-Transformer with pre-training across all sub-samples of the \gls{ISE} test set. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of FT-Transformer With Pre-Training on \glsentryshort{ISE} Sample]{Accuracies of the FT-Transformer with pre-training across all sub-samples of the \gls{ISE} test set. Subsets as described in \cref{tab:diff-ise-transformer}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-ise-transformer-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -348,7 +398,7 @@
 
 \begin{table}[!ht]
     \centering
-    \caption[Robustness of FT-Transformer With Pre-Training on \glsentryshort{CBOE} Sample]{Accuracies of the FT-Transformer with pre-training across all sub-samples of the \gls{CBOE} test set. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of FT-Transformer With Pre-Training on \glsentryshort{CBOE} Sample]{Accuracies of the FT-Transformer with pre-training across all sub-samples of the \gls{CBOE} test set. Subsets as described in \cref{tab:diff-ise-transformer}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-cboe-transformer-semi}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
