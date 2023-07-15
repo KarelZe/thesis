@@ -1,22 +1,22 @@
 \section{Results and Discussion}\label{sec:results}
 
-This chapter compares the performance of rule-based trade classification against machine learning-based classification. 
+We subsequently report and discuss performance and robustness results as well as feature importances. 
 
 \subsection{Performance}\label{sec:performance-results-discussion}
+
+% This chapter analyzes the performance of rule-based trade classification and our classifiers in the out-of-sample setting.
 
 \subsubsection{Performance of Rule-Based Approaches}\label{sec:result-of-rule-based-approaches}
 
 We estimate the accuracy of classical trade classification rules on the \gls{ISE} and \gls{CBOE} samples. We consider the tick and quote rule, as well as the \gls{LR} algorithm, \gls{EMO} rule, and \gls{CLNV} method in their classical and reversed formulation. Additionally, we report the \gls{GSU} method (small) and \gls{GSU} method (large) due to their state-of-the-art performance on the validation set, as derived in \cref{sec:hyperparameter-tuning}.
 
-\cref{tab:ise-classical} reports the accuracies for the entire data set and for separate subsets spanning the periods of the train, validation, and test set as defined in \cref{sec:train-test-split}. Doing so enables comparisons with previous works, but also provides meaningful estimates on the test set relevant for benchmarking purposes. Our results are approximately similar to \textcite[\checkmark][40--42]{grauerOptionTradeClassification2022}. Minor deviations exist, which can be pinned down to differences in handling of unclassified trades and non-positive spreads, as well as divergent implementations of the depth rule.\footnote{Correspondence with the author.}
+\cref{tab:ise-classical} reports the accuracies for the entire \gls{ISE} dataset and for separate subsets spanning the periods of the train, validation, and test set as defined in \cref{sec:train-test-split}. Doing so enables comparisons with previous works, but also provides meaningful estimates on the test set relevant for benchmarking purposes. Our results are approximately similar to \textcite[][40--42]{grauerOptionTradeClassification2022}. Minor deviations exist, which can be pinned down to differences in handling of unclassified trades and non-positive spreads, as well as divergent implementations of the depth rule.\footnote{Correspondence with the author.}
 
 From all rules, the tick rule performs worst when applied to trade prices at the trading venue with accuracies of a random guess, \SI{49.67}{\percent}. For comparison, a na\"ive majority vote achieves \SI{51.40}{\percent} accuracy. The tick test performs best when estimated on consecutive trade prices. Additionally, when estimated at the inter-exchange level marginally improves over a random classification, achieving accuracies of \SI{55.25}{\percent} for the reversed tick test. Due to the poor performance of tick-based algorithms at the exchange level, we estimate all hybrids with the last/next differing price from any exchange, distinguished by $\operatorname{tick}_{\mathrm{all}}$ or $\operatorname{rtick}_{\mathrm{all}}$.
 
-Quote-based algorithms outperform tick-based algorithms delivering accuracy up to \SI{63.72}{\percent} when estimated on the \gls{NBBO}. The superiority of quote-based algorithms in option trade classification has previously been documented in \textcites[\checkmark][891]{savickasInferringDirectionOption2003}[\checkmark][3]{grauerOptionTradeClassification2022}.
-
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Rule-Based Approaches on \glsentryshort{ISE}]{Accuracy of common trade classification rules and their variations for option trades on \gls{ISE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in bold.}
+    \caption[Accuracies of Rule-Based Approaches on \glsentryshort{ISE} Sample]{Accuracy of common trade classification rules and their variations for option trades on \gls{ISE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in bold.}
     \label{tab:ise-classical}
     \begin{tabular}{@{}lSSSSS@{}}
         \toprule
@@ -41,14 +41,12 @@ Quote-based algorithms outperform tick-based algorithms delivering accuracy up t
         $\operatorname{clnv}_{\mathrm{nbbo}}$  & 98.8975           & 61.5439                            & 56.3371           & 57.0753           & 59.6079           \\
         $\operatorname{rclnv}_{\mathrm{nbbo}}$ & 98.7000           & 62.2628                            & 56.5928           & 57.4307           & 60.1614           \\ \midrule
         $\operatorname{gsu}_{\mathrm{small}}$  & 99.7918           & 66.8171                            & 58.9378           & 60.0508           & 63.8865           \\
-        $\operatorname{gsu}_{\mathrm{large}}$  & \bfseries 99.9943 & \bfseries 80.1647                  & \bfseries 69.3726 & \bfseries 67.6112 & \bfseries 75.4922 \\
+        $\operatorname{gsu}_{\mathrm{large}}$  & 99.9943 & \bfseries 80.1647                  & \bfseries 69.3726 & \bfseries 67.6112 & \bfseries 75.4922 \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-The performance of hybrids, such as the \gls{LR} algorithm, hinges on the reliance on the tick test. Thus, the \gls{EMO} rules and to a lesser extent the \gls{CLNV} rules perform worst, achieving accuracies between \SI{55.42}{\percent} and \SI{57.57}{\percent}. In turn, variants of the \gls{LR}, which uses the quote rule for most trades, are among the best-performing algorithms. By extension, \gls{GSU} method (small) further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$.
-
-Notably, the \gls{GSU} method (large) featuring overrides from the trade size and depth rules performs best, achieving \SI{67.61}{\percent} accuracy on the test set and \SI{75.49}{\percent} on the entire dataset. Yet, the performance deteriorates most sharply between sets, as visualized in \cref{fig:classical-accuracies-over-time}.
+The performance of hybrids, such as the \gls{LR} algorithm, hinges on the reliance on the tick test. Thus, the \gls{EMO} rules and to a lesser extent the \gls{CLNV} rules perform worst, achieving accuracies between \SI{55.42}{\percent} and \SI{60.1614}{\percent}. In turn, variants of the \gls{LR} algorithm, which uses the quote rule for most trades, are among the best-performing algorithms. By extension, the \gls{GSU} method (small) further reduces the dependence on tick-based methods through the successive applications of quote rules, here $\operatorname{quote}_{\mathrm{nbbo}} \to \operatorname{quote}_{\mathrm{ex}}$. Notably, the \gls{GSU} method (large) featuring overrides from the trade size and depth rules performs best, achieving \SI{67.61}{\percent} accuracy on the test set and \SI{75.49}{\percent} on the entire dataset. Yet, the performance deteriorates between sets, as visualized in \cref{fig:classical-accuracies-over-time}.
 
 \begin{figure}[ht]
     \centering
@@ -59,7 +57,7 @@ Notably, the \gls{GSU} method (large) featuring overrides from the trade size an
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Rule-Based Approaches on \glsentryshort{CBOE}]{Accuracy of common trade classification rules and their variations for option trades on \gls{CBOE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in bold.}
+    \caption[Accuracies of Rule-Based Approaches on \glsentryshort{CBOE} Sample]{Accuracy of common trade classification rules and their variations for option trades on \gls{CBOE} sample. Unclassifiable trades by the respective rule are assigned randomly as buy or sell. Hybrid methods are estimated using trade prices across all exchanges. We report the percentage of classifiable trades and the overall accuracy for subsets based on our train-test split and the entire dataset. The best rule is in bold.}
     \label{tab:cboe-classical}
     \begin{tabular}{lSSSS}
         \toprule
@@ -84,11 +82,11 @@ Notably, the \gls{GSU} method (large) featuring overrides from the trade size an
         $\operatorname{clnv}_{\mathrm{nbbo}}$  & 98.8975           & 55.3058                            & 54.1294           & 54.9008           \\
         $\operatorname{rclnv}_{\mathrm{nbbo}}$ & 98.7000           & 56.3217                            & 55.4032           & 56.0055           \\\midrule
         $\operatorname{gsu}_{\mathrm{small}}$  & 99.7918           & 61.8938                            & 60.7464           & 61.4988           \\
-        $\operatorname{gsu}_{\mathrm{large}}$  & \bfseries 99.9943 & \bfseries 74.6511                  & \bfseries 66.5176 & \bfseries 71.8510 \\\bottomrule
+        $\operatorname{gsu}_{\mathrm{large}}$  & 99.9943 & \bfseries 74.6511                  & \bfseries 66.5176 & \bfseries 71.8510 \\\bottomrule
     \end{tabular}
 \end{table}
 
-We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe-classical} and observe a similar ranking to \cref{tab:ise-classical}. Overall, the performance of classical trade classification rules further diminishes or remains at a low level. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. None of the rules reaches the classification performance in \textcite[\checkmark][886]{savickasInferringDirectionOption2003} on an earlier subset of \gls{CBOE}. Different from the \gls{ISE} sample, the quote rule estimated on the \gls{NBBO} leads to a degraded performance than the quote rule applied to \gls{CBOE} quotes. Again, \gls{GSU} method (small) and \gls{GSU} method (large) perform best, though the strong outperformance does not carry over to the test set as depicted \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[\checkmark][44]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
+We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe-classical} and observe a similar ranking to \cref{tab:ise-classical}. Overall, the performance of classical trade classification rules further diminishes or remains at a low level. Tick-based rules trail the performance of quote-based approaches, and the accuracy of hybrids varies with the dependence on the tick test. None of the rules reaches the classification performance in \textcite[][886]{savickasInferringDirectionOption2003} on an earlier subset of \gls{CBOE}. Different from the \gls{ISE} sample, the quote rule estimated on the \gls{NBBO} leads to a degraded performance than the quote rule applied to \gls{CBOE} quotes. Again, the \gls{GSU} method (small) and \gls{GSU} method (large) perform best, though the strong outperformance does not carry over to the test set as depicted \cref{fig:classical-accuracies-over-time}.\footnote{Performance on \gls{CBOE} can be improved if the order of quote rules is reversed. For full combinatoric coverage see \textcite[][44]{grauerOptionTradeClassification2022}. To avoid overfitting the test set by classical rules, we keep the baseline constant following our reasoning from \cref{sec:hyperparameter-tuning}.}
 
 \begin{figure}[!ht]
     \centering
@@ -97,15 +95,15 @@ We repeat the analysis on the \gls{CBOE} dataset in \cref{tab:cboe-classical} an
     \label{fig:classical-coverage-over-time}
 \end{figure}
 
-From \cref{tab:ise-classical,tab:cboe-classical} we see, that practically all rule-based approaches leave trades unclassified. This is due to conceptual constraints in the rule itself, but also a result of missing or corrupted data, which equally affects rules with theoretical full coverage. As visualized in \cref{fig:classical-coverage-over-time} coverage decreases qualitatively for selected classification rules over time. It is particularly low when the trade initiator is inferred from the \gls{NBBO}. Theoretically, the tick test can achieve full coverage, in our sample it classifies only $\approx$ \SI{91.5}{\percent}, which is significantly lower than coverage rates reported in the stock market \autocite[\checkmark][535]{ellisAccuracyTradeClassification2000} and option market \autocite[\checkmark][886]{savickasInferringDirectionOption2003} (variant (no reset)). The low, fluctuating coverage stems from the absence of a distinguishable trade price. For the quote rule, we isolate missing or crossed quotes from midspread trades. 
+From \cref{tab:ise-classical,tab:cboe-classical} we see, that practically all rule-based approaches leave trades unclassified. This is due to conceptual constraints in the rule itself, but also a result of missing or corrupted data, which equally affects rules with theoretical full coverage. As visualized in \cref{fig:classical-coverage-over-time} coverage decreases qualitatively for selected classification rules over time. It is particularly low when the trade initiator is inferred from the \gls{NBBO}. Theoretically, the tick test can achieve full coverage, in our sample it classifies only $\approx$ \SI{91.5}{\percent}, which is significantly lower than coverage rates reported in the stock market \autocite[][535]{ellisAccuracyTradeClassification2000} and option market \autocite[][886]{savickasInferringDirectionOption2003} (variant (no reset)). The low, fluctuating coverage stems from the absence of a distinguishable trade price. For the quote rule, we isolate missing or crossed quotes from midspread trades. 
 
 Through comparison between \cref{fig:classical-coverage-over-time} and \cref{fig:classical-at-mid-over-time} it is evident, that the majority of unclassified trades are midspread trades, whose share increases over time. The outliers in \cref{fig:classical-coverage-over-time} are due to missing quotes.
 Next, we test the performance of supervised classifiers on the test sets.
 
-\begin{figure}[!ht]
+\begin{figure}[!h]
     \centering
     \includegraphics{classical_at_mid_over_time.pdf}
-    \caption[Mid-Spread Trades Over Time]{Percentage of midspread trades on \gls{ISE} and \gls{CBOE} sample over time and estimated using \gls{NBBO} quotes. The bar \myline{} indicates the beginning of a new subset based on the train-test split.}
+    \caption[Midspread Trades Over Time]{Percentage of midspread trades on \gls{ISE} and \gls{CBOE} sample over time. Estimated using \gls{NBBO} quotes. The bar \myline{} indicates the beginning of a new subset based on the train-test split. Ordinate reversed for better comparability.}
     \label{fig:classical-at-mid-over-time}
 \end{figure}
 
@@ -116,7 +114,7 @@ We take the best configurations from \cref{sec:hyperparameter-tuning}, trained a
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Supervised Approaches]{Accuracy of supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic, \gls{GSU} (small) is the benchmark, and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
+    \caption[Accuracies of Supervised Classifiers]{Accuracy of supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
     \label{tab:results-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
@@ -133,8 +131,8 @@ Both model architectures consistently outperform their respective benchmarks on 
 
 The results can be enhanced through re-training on the validation set improving accuracies to \SI{76.162269}{\percent}, as documented in \cref{app:results-of-supervised-models-with-re-training}. In favor of conservative estimates, our models in the main text do not use this technique.
 
-Visually, the performance differences between gradient boosting and Transformers on the same feature sets are minor. To formally test, whether differences between both classifiers are significant, we construct contingency tables and pair-wise compare predictions using McNemar's test \autocite[\checkmark][153--157]{mcnemarNoteSamplingError1947}. We formulate the null hypothesis that both classifiers have the same error rate.
-Similar to \textcite[\checkmark][267]{odders-whiteOccurrenceConsequencesInaccurate2000}, uses contingency tables of rule-based methods and true labels. Here, contingency tables are used to pair-wise compare the predictions of \glspl{GBRT} against Transformers.
+Visually, the performance differences between gradient boosting and Transformers on the same feature sets are minor. To formally test, whether differences between both classifiers are significant, we construct contingency tables and pair-wise compare predictions using McNemar's test \autocite[][153--157]{mcnemarNoteSamplingError1947}. We formulate the null hypothesis that both classifiers have the same error rate.
+Similar to \textcite[][267]{odders-whiteOccurrenceConsequencesInaccurate2000}, who uses contingency tables of rule-based methods and true labels, here, contingency tables are used to pair-wise compare the predictions of \glspl{GBRT} against Transformers.
 
 \begin{table}[!ht]
     \centering
@@ -167,11 +165,11 @@ In summary, our supervised methods establish a new state-of-the-art in option tr
 \subsubsection{Performance of Semi-supervised
     Models}\label{sec:results-of-semi-supervised-models}
 
-We compare the performance of pre-trained Transformers and self-trained gradient-boosting on the \gls{ISE} and \gls{CBOE} test set. Results are reported in \cref{tab:results-semi-supervised-ise-cboe}.
+We compare the performance of pre-trained Transformers and self-trained gradient boosting on the \gls{ISE} and \gls{CBOE} test set. Results are reported in \cref{tab:results-semi-supervised-ise-cboe}.
 
 \begin{table}[ht]
     \centering
-    \caption[Accuracies of Semi-Supervised Approaches]{Accuracy of semi-supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For feature set classic, $\operatorname{gsu}_{\mathrm{small}}$ is the benchmark and otherwise $\operatorname{gsu}_{\mathrm{large}}$. Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
+    \caption[Accuracies of Semi-Supervised Classifiers]{Accuracy of semi-supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in bold.}
     \label{tab:results-semi-supervised-ise-cboe}
     \begin{tabular}{@{}llSSSSSS@{}}
         \toprule
@@ -184,9 +182,13 @@ We compare the performance of pre-trained Transformers and self-trained gradient
     \end{tabular}
 \end{table}
 
-Identical to the supervised case, our models consistently outperform their respective benchmarks. Gradient boosting with self-training surpasses \gls{GSU} (small) by \SI{3.350000}{\percent} on \gls{ISE} and \SI{5.440000}{\percent} on \gls{CBOE} in accuracy. Improvements for larger feature sets over \gls{GSU} (large) are marginally lower to the supervised model and range between \SI{4.550000}{\percent} and \SI{7.440000}{\percent}. This result extends the result for the validation set in \cref{sec:hyperparameter-tuning}.
+Identical to the supervised case, our models consistently outperform their respective benchmarks. Gradient boosting with self-training surpasses \gls{GSU} (small) by \SI{3.350000}{\percent} on \gls{ISE} and \SI{5.440000}{\percent} on \gls{CBOE} in accuracy. Improvements for larger feature sets over \gls{GSU} (large) are marginally lower to the supervised model and range between \SI{4.550000}{\percent} and \SI{7.440000}{\percent}. This result is analogous to the observation for the validation set in \cref{sec:hyperparameter-tuning}.
 
 Pre-training is beneficial for the performance of Transformers on \gls{ISE} trades, improving over Transformer with random initialization by up to \SI{0.87000}{\percent}. Hence, the performance improvement from pre-training on the validation set carries over to the test set. On the \gls{CBOE} dataset, pre-training hurts performance.
+
+As evident from \cref{tab:contigency-semi-supervised-classifiers}, the majority of trades are classified by both classifiers correctly. For the \gls{ISE}, performance improvements in larger feature sets are driven by trades that are distinctly classified by both classifiers. In turn, at the \gls{CBOE} the share of common classifications continues to grow. Performance differences between classifiers estimated by the McNemar test are significant at the \SI{1}{\percent} level.
+
+To summarize, semi-supervised variants of \glspl{GBRT} do not provide better generalization performance than supervised approaches, despite significantly higher training costs. Pre-training of Transformers improves performance on the \gls{ISE} sample but slightly deteriorates performance on the \gls{CBOE} set. We later evaluate if semi-supervised learning improves robustness if not performance.
 
 \begin{table}[!ht]
     \centering
@@ -212,10 +214,6 @@ Pre-training is beneficial for the performance of Transformers on \gls{ISE} trad
     \end{tabular}
 \end{table}
 
-As evident from \cref{tab:contigency-semi-supervised-classifiers}, the majority of trades are classified by both classifiers correctly. For the \gls{ISE}, performance improvements in larger feature sets are driven by trades that are distinctly classified by both classifiers. In turn, at the \gls{CBOE}, the share of common classifications continues to grow. Performance differences between classifiers estimated by the McNemar test are significant at the \SI{1}{\percent} level.
-
-To summarize, semi-supervised variants of \glspl{GBRT} do not provide better generalization performance than supervised approaches, despite significantly higher training costs. Pre-training of Transformers improves performance on the \gls{ISE} sample but slightly deteriorates performance on the \gls{CBOE} set. We later evaluate if semi-supervised learning improves robustness if not performance.
-
 \subsubsection{Performance Discussion}\label{sec:performance-discussion}
 
 \textbf{Rule-based Classification}
@@ -228,45 +226,52 @@ Naturally, our machine learning classifiers can classify any trade and are robus
 
 \textbf{Supervised Classification}
 
-While statistically significant, performance differences between supervised \gls{GBRT} and Transformers, are relatively small compared to rule-based classification on the same feature sets. The result is aligned with \textcite[\checkmark][18941]{gorishniyRevisitingDeepLearning2021}. The study concludes, generally for tabular modeling, that neither Transformers nor \glspl{GBRT} are universally superior. Our results confirm this observation, in the context of trade classification.
+While statistically significant, performance differences between supervised \glspl{GBRT} and Transformers, are relatively small compared to rule-based classification on the same feature sets. The result is aligned with \textcite[][18941]{gorishniyRevisitingDeepLearning2021}. The study concludes, generally for tabular modeling, that neither Transformers nor \glspl{GBRT} are universally superior. Our results confirm this observation in the context of trade classification.
 
-The results contradict those of \textcite[\checkmark][14--49]{ronenMachineLearningTrade2022}, who benchmark random forests and \gls{FFN} for trade classification in the equity and bond market and find clear dominance of the tree-based approach. Beyond differences in the market under study and variants, two methodological differences are evident, that explain the contrasting results. First, unlike \gls{FFN}, the FT-Transformer is tailored to learn on tabular data through being a rotationally-invariant learner. Second, our data pre-processing and feature engineering are adapted to the requirements of neural networks. Without these measures, tree-based approaches excel due to their robustness in handling skewed and missing data.
+The results contradict those of \textcite[][14--49]{ronenMachineLearningTrade2022}, who benchmark random forests and \glspl{FFN} for trade classification in the equity and bond market and find clear dominance of the tree-based approach. Beyond differences in the market under study and variants, two methodological differences are evident, that explain the contrasting results. First, unlike \gls{FFN}, the FT-Transformer is tailored to learn on tabular data through being a non-rotationally-invariant learner. Second, our data preprocessing and feature engineering are adapted to the requirements of neural networks. Without these measures, tree-based approaches excel due to their robustness in handling skewed and missing data.
 
-Despite the lack of adaption to \gls{CBOE} data, the performance improvements are highest for the \gls{CBOE} dataset. Part of the strong performance on \gls{CBOE} trades hails from weaker benchmark performance, but also a stronger accuracy of classifiers on the smallest and mid-sized feature sets. Again, this result is in stark contrast to \textcite[\checkmark][32]{ronenMachineLearningTrade2022}, who report subpar performance for random forests. Their setting differs from ours, as they apply ensembles trained in the bond market to equity trades. Moreover, it is unclear if data preprocessing procedures are shared between both sets, which may hamper performance. 
+Despite the lack of adaption to \gls{CBOE} data, the performance improvements are highest for the \gls{CBOE} dataset. Part of the strong performance on \gls{CBOE} trades hails from weaker benchmark performance, but also a stronger accuracy of classifiers on the smallest feature set. Again, this result is in stark contrast to \textcite[][32]{ronenMachineLearningTrade2022}, who report subpar performance for random forests. Their setting differs from ours, as they apply ensembles trained in the bond market to equity trades. Moreover, it is unclear if data preprocessing procedures are shared between both sets, which may hamper performance. 
 
-Relative to related works performing trade classification with supervised machine learning, the improvements are strong, as documented in \cref{app:literature-ml-tc}. As no other work studies the option market or identical model architectures, the results are indicative. The studies report improvements between \SI{1.1}{\percent} and \SI{13.3}{\percent} for their machine learning models over the benchmark. Our absolute improvements exceed all linear models, but the absolute improvements are smaller relative to some tree-based and deep learning models in \textcite[\checkmark][49]{ronenMachineLearningTrade2022}. At the same time, our models are trained on significantly fewer features and a static training set, requiring a fraction of the training cost. We believe, our conservative framing aligns well with scenarios, where trade classification is only a prerequisite to other empirical research.
+Relative to related works performing trade classification with supervised machine learning, the improvements are strong, as documented in \cref{app:literature-ml-tc}. As no other work studies the option market or identical model architectures, the results are indicative. The studies report improvements between \SI{1.1}{\percent} and \SI{13.3}{\percent} for their machine learning models over the benchmark. Our absolute improvements exceed all linear models, but the absolute improvements are smaller relative to some tree-based and deep learning models in \textcite[][49]{ronenMachineLearningTrade2022}. At the same time, our models are trained on significantly fewer features and a static training set, requiring a fraction of the training cost. We believe, our conservative framing aligns well with scenarios, where trade classification is only a prerequisite to other empirical research.
+
+% \vskip 1.3in
 
 \textbf{Semi-supervised Classification}
 
 As no previous work performed semi-supervised classification, we focus our discussion on the performance difference between pre-training and self-training. On \gls{ISE} data, pre-training with the \gls{RTD} objective on unlabeled trades yields significantly stronger performance. The results align with the intuition from \cref{sec:extensions-to-transformer}, that pre-training exposes the model to a larger quantity of trades, which strengthens its ability to learn generalizable knowledge about the data useful in later trade classification. Also, the model is exposed to more diverse trades, as unlabeled trades are not restricted by customer type or trading activity, effectively preventing overfitting.  
 
-An explanation as to why pre-training improves performance on \gls{ISE} but not \gls{CBOE} trades, may be found in the pre-training data and setup. It is conceivable, that pre-training encodes exchange-specific knowledge. Trades used for pre-training are recorded at the \gls{ISE} only and are repeatedly shown to the model. While our pre-training objective is stochastic with different features being masked in each epoch, past research has shown that repeatedly presenting the same tokens in conjunction with a small-sized pre-training dataset, can degrade performance on the downstream classification task. For instance, \textcite[\checkmark][27--28]{raffelExploringLimitsTransfer2020} document in the context of language modeling that a high degree of repetition encourages memorization in the model, but few repetitions are not harmful. As each trade is only shown $20\times$ to the model, but the size of the dataset is significantly smaller, the true impact remains unclear. Future work could revisit pre-training on a larger subset of LiveVol, incorporating trades from different exchanges, whereby each trade is only shown once to the model. We assume, that such a setup would, analogous to language modeling, improve performance on both \gls{ISE} and \gls{CBOE} trades, as the model is less prone to memorize data and learns a more diverse context.
+An explanation as to why pre-training improves performance on \gls{ISE} but not \gls{CBOE} trades, may be found in the pre-training data and setup. It is conceivable, that pre-training encodes exchange-specific knowledge. Trades used for pre-training are recorded at the \gls{ISE} only and are repeatedly shown to the model. While our pre-training objective is stochastic with different features being masked in each epoch, past research has shown that repeatedly presenting the same tokens in conjunction with a small-sized pre-training dataset, can degrade performance on the downstream classification task. For instance, \textcite[][27--28]{raffelExploringLimitsTransfer2020} document in the context of language modeling that a high degree of repetition encourages memorization in the model, but few repetitions are not harmful. As each trade is only shown $20\times$ to the model, but the size of the dataset is significantly smaller, the true impact remains unclear. Future work could revisit pre-training on a larger subset of LiveVol, incorporating trades from different exchanges, whereby each trade is only shown once to the model. We assume, that such a setup would, analogous to language modeling, improve performance on both \gls{ISE} and \gls{CBOE} trades, as the model is less prone to memorize data and learns a more diverse context.
 
-Self-training with \glspl{GBRT} as a base learner generally performs worse than \glspl{GBRT} trained on labeled trades, which contradicts our initial motivation for self-training in \cref{sec:extensions-to-gradient-boosted-trees}. With the pseudo labels derived from high-confident predictions, the success of self-training hinges on the reliability of the predicted class probabilities. In our analysis of the default \gls{GBRT} in \cref{sec:training-and-tuning} we observe that the validation loss in terms of sample-wise cross-entropy loss stagnates due to a growing number of overconfident but erroneous predictions. Although we cannot confirm for the self-training classifier, due to the absence of true labels, it is conceivable, that the increased number of confident yet incorrect predictions, affects the generated pseudo labels. Without the ability to correct for errors, self-training performance on the validation and test set is directly impacted.
+Self-training with \glspl{GBRT} as a base learner generally performs worse than \glspl{GBRT} trained on labeled trades, which contradicts our initial motivation for self-training in \cref{sec:extensions-to-gradient-boosted-trees}. With the pseudo labels derived from high-confident predictions, the success of self-training hinges on the reliability of the predicted class probabilities. In our analysis of the default \gls{GBRT} in \cref{sec:training-and-tuning} we observe that the validation loss in terms of sample-wise loss stagnates due to a growing number of overconfident but erroneous predictions. Although we cannot confirm for the self-training classifier, due to the absence of true labels, it is conceivable, that the increased number of confident yet incorrect predictions, affects the generated pseudo labels. Without the ability to correct for errors, self-training performance on the validation and test set is directly impacted.
 
 \textbf{Limitations}
 
 Despite the strong performance of our approaches, it's important to acknowledge the limitations. Inference of the classifiers is computationally cheap, but training requires a significant amount of compute. To make training feasible, great effort is spent on utilizing computing resources by optimizing memory transfers, compute graphs, and data representation. In cases where computing resources are scarce or classification accuracy is not the mere target, we advocate for heuristics, such as the \gls{GSU} method, which balances computational cost and performance.
 
-All of our classifiers require some labeled instances for training. If the true label cannot be inferred from trades or generating labeled data is wasteful, our approaches are not applicable. For cases, where trades are partially labeled, our pre-trained FT-Transformer offers a viable alternative to rule-based classification. Next, we analyze the robustness of our classifiers.
+All of our classifiers require some labeled instances for training. If the true label cannot be inferred from trades or generating labeled data is wasteful, our approaches are not applicable. For cases, where trades are partially labeled, our pre-trained FT-Transformer offers a viable alternative to rule-based classification.
 
+\addtocontents{toc}{\protect\newpage}
 \subsection{Robustness}\label{sec:robustness}
+
+% Next, we analyze the robustness of the classifiers.
 
 \subsubsection{Robustness Results}\label{sec:robustness-results}
 
-To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, and proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[\checkmark][47--50]{grauerOptionTradeClassification2022} as well as \textcite[\checkmark][890--892]{savickasInferringDirectionOption2003}, strengthening comparability across different works.\footnote{When comparing with \textcite[\checkmark][47--50]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.} Our results are tabulated \cref{tab:diff-ise-gbm,tab:diff-cboe-gbm,tab:diff-ise-transformer,tab:diff-cboe-transformer,tab:diff-ise-gbm-semi,tab:diff-cboe-gbm-semi}, separately for \glspl{GBRT} and Transformers as well as exchanges.
+To assess the robustness of our algorithms, we partition the test sets into sub-samples along seven dimensions: option type, security type, trade size, year, time to maturity, moneyness, and proximity to quotes. Comparable robustness checks have been previously conducted in \textcite[][47--50]{grauerOptionTradeClassification2022} as well as \textcite[][890--892]{savickasInferringDirectionOption2003}, strengthening comparability across different works.\footnote{When comparing with \textcite[][47--50]{grauerOptionTradeClassification2022}, one has to be aware that evaluation periods and fallback strategies differ. Furthermore, the authors group similar algorithms. Thus, we recommend relying on our estimates of their rules.} Our results are tabulated in \cref{tab:diff-ise-gbm,tab:diff-cboe-gbm,tab:diff-ise-transformer,tab:diff-cboe-transformer,tab:diff-ise-gbm-semi,tab:diff-cboe-gbm-semi}, separately for \glspl{GBRT} and Transformers as well as exchanges.
+
+% \vskip 1.3in
 
 \textbf{Gradient Boosting}
 
-Performance improvements of \glspl{GBRT} are consistent for calls and puts across all feature sets and exchanges. Conditional on the security type of the underlying, \gls{GBRT} achieves the largest improvements for index options in the \gls{CBOE} sample, but performs worse than rule-based approaches on the \gls{ISE} set. Accuracies are lowest for index options, which corroborates with the literature on rule-based classification.
+Performance improvements of \glspl{GBRT} are consistent for calls and puts across all feature sets and exchanges. Conditional on the security type, \glspl{GBRT} achieves the largest improvements for index options in the \gls{CBOE} sample (\gls{FS} classic), but mostly underperforms rule-based approaches on the \gls{ISE} set.
 
-The performance is stable for different trade sizes and over time. Similarly, accuracy improvements are comparable for different maturities and moneyness ratios. Aligning with rule-based approaches, accuracies are lowest for option trades with long maturities and deep \gls{ITM} options, as reported in \textcite[\checkmark][22]{grauerOptionTradeClassification2022}. The addition of option-specific features has annealing effects on accuracies by moneyness ratios and maturities.
+The performance is stable for different trade sizes and over time. Similarly, accuracy improvements are comparable for different maturities and moneyness ratios. Aligning with rule-based approaches, accuracies are lowest for option trades with long maturities and deep \gls{ITM} options, as reported in \textcite[][22]{grauerOptionTradeClassification2022}. The addition of option-specific features has annealing effects on accuracies by moneyness ratios and maturities.
 
-\gls{GBRT} achieve particularly strong results for trades at the quotes or if quote data at the exchange level is absent. In these subsets, improvements reach up to \SI{16.01}{\percent} in the \gls{CBOE} and thus tighten the gap between trades inside or at the quotes. Consistent across all feature sets and exchanges, \glspl{GBRT} fail to improve upon classical rules for trades outside the spread, underperforming the benchmark \SI{-0.89}{\percent} to \SI{-5.43}{\percent}. We identify the strong performance of quote-based classification on these trades as a reason, that poses challenges.
+\glspl{GBRT} achieve particularly strong results for trades at the quotes or if quote data at the exchange level is absent. In these subsets, improvements reach up to \SI{16.01}{\percent} in the \gls{CBOE} sample and thus tighten the gap between trades inside or at the quotes. Consistent across all feature sets and exchanges, \glspl{GBRT} fail to improve upon classical rules for trades outside the spread, underperforming the benchmark \SI{-0.89}{\percent} to \SI{-5.43}{\percent}. % We identify the strong performance of quote-based classification on these trades as a reason, that poses challenges.
 
 \begin{table}[ht!]
     \centering
-    \caption[Robustness of Gradient-Boosting on \glsentryshort{ISE}]{Accuracies of \glspl{GBRT} across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of Gradient Boosting on \glsentryshort{ISE} Sample]{Accuracies of \glspl{GBRT} across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-ise-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -324,7 +329,7 @@ All              & 63.668637                                        & 3.620000  
 
 \begin{table}[h!]
     \centering
-    \caption[Robustness of Gradient-Boosting on \glsentryshort{CBOE}]{Accuracies of \glspl{GBRT} across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of Gradient Boosting on \glsentryshort{CBOE} Sample]{Accuracies of \glspl{GBRT} across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-cboe-gbm}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -382,17 +387,15 @@ All             & 66.002029                                        & 5.260000   
 
 \textbf{FT-Transformer}
 
-Performance results of Transformers are robust across all tested dimensions. The accuracy is approximately equal for calls and puts. We observe, that the benchmark performance of puts is consistently higher in our sub-samples, which contrasts the finding of \textcite[\checkmark][22]{grauerOptionTradeClassification2022}.
+Performance results of Transformers are robust across all tested dimensions. The accuracy is approximately equal for calls and puts. Similar to \glspl{GBRT}, the FT-Transformer slightly underperforms the benchmark for index options in the \gls{ISE} sample. Even though the effect reverses on the \gls{CBOE} set, accuracies for index options are lower than those of any other underlying.
 
-Similar to \glspl{GBRT}, the FT-Transformer slightly underperforms the benchmark for index options in the \gls{ISE} sample. Even though the effect reverses on the \gls{CBOE} set, accuracies for index options are lower than those of any other underlying. Hence, we can extend the finding of \textcites[\checkmark][22]{grauerOptionTradeClassification2022}[\checkmark][886]{savickasInferringDirectionOption2003} that index options are notoriously difficult to classify to machine learning-based approaches.
-
-Classification is more accurate for near-expiring or deep \gls{ITM} options. In this sense, our finding contradicts the observation of \textcite[\checkmark][891]{savickasInferringDirectionOption2003} made for rule-based classification. Again, we document that the addition of option-specific features, such as maturity or moneyness smooths out differences across maturity and moneyness levels.
+Classification is more accurate for near-expiring or deep \gls{ITM} options. Again, we document that the addition of option-specific features, such as maturity or moneyness smooths out differences across maturity and moneyness levels.
 
 Lastly, the FT-Transformers perform well on trades at the quotes. When trained on \gls{ISE} data it greatly outperforms for trades at the quotes, despite that some of the benchmarks contain explicit overrides from the trade size rule. Vice versa, the FT-Transformer fails to meet benchmark performance for trades outside the spread.
 
 \begin{table}[h!]
     \centering
-    \caption[Robustness of FT-Transformer on \glsentryshort{ISE}]{Accuracies of the FT-Transformer across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of FT-Transformer on \glsentryshort{ISE} Sample]{Accuracies of the FT-Transformer across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-ise-transformer}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -448,7 +451,7 @@ Lastly, the FT-Transformers perform well on trades at the quotes. When trained o
 
 \begin{table}[h!]
     \centering
-    \caption[Robustness of FT-Transformer on \glsentryshort{CBOE}]{Accuracies of the FT-Transformer across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
+    \caption[Robustness of FT-Transformer on \glsentryshort{CBOE} Sample]{Accuracies of the FT-Transformer across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
     \label{tab:diff-cboe-transformer}
     \begin{tabular}{lSSSSSS@{}}
         \toprule
@@ -504,292 +507,66 @@ Lastly, the FT-Transformers perform well on trades at the quotes. When trained o
 
 \clearpage
 
-\textbf{Gradient-Boosting With Self-Training}
+\textbf{Gradient Boosting With Self-Training}
 
-We analyze the robustness of \gls{GBRT} with self-training on \gls{CBOE} data in \cref{tab:diff-ise-gbm-semi} and \gls{CBOE} data in \cref{tab:diff-cboe-gbm-semi}. Similar to what we observe for the standard \glspl{GBRT}, \glspl{GBRT} with self-training outperforms the respective benchmarks on almost all subsets. The only exceptions are index options and options traded outside the quotes, where the model performs worse than \gls{GSU} method (small)/(large).
+We analyze the robustness of \glspl{GBRT} with self-training on \gls{CBOE} data in \cref{tab:diff-ise-gbm-semi} and \gls{CBOE} data in \cref{app:robustness-of-gradient-boosting-with-self-training}. Similar to what we observe for the standard \glspl{GBRT}, \glspl{GBRT} with self-training outperform the respective benchmarks on almost all subsets. The only exceptions are index options and options traded outside the quotes, where the model performs worse than the \gls{GSU} method (small)/(large).
 
-Compared to the standard \glspl{GBRT}, performance degrades across almost all subsets. Quantitatively, no improvements in robustness as performance differences between sub-samples are of the same magnitude and the performance gap between rule-based classification extends for index options and trades outside the spread are observable.
-
-\begin{table}
-    \centering
-    \caption[Robustness of Gradient-Boosting With Self-Training on \glsentryshort{ISE}]{Accuracies of the \gls{GBRT} with self-training across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
-    \label{tab:diff-ise-gbm-semi}
-    \begin{tabular}{lSSSSSS@{}}
-        \toprule
-        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classic} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-        {}                          & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
-        \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                              \\
-        \tabindent Call             & 62.652675                                        & 3.480000                                              & 71.692310                                     & 4.280000  & 73.080774    & 5.670000  \\
-        \tabindent Put              & 64.248224                                        & 3.190000                                              & 72.686646                                     & 4.840000  & 74.057310    & 6.210000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Security Type}                                                                                                                                                                                            \\
-        \tabindent Index option     & 55.804436                                        & -2.000000                                             & 56.841230                                     & -1.660000 & 57.069948    & -1.430000 \\
-        \tabindent Others           & 68.063622                                        & 2.540000                                              & 76.242209                                     & 5.660000  & 77.167487    & 6.590000  \\
-        \tabindent Stock option     & 61.635859                                        & 3.750000                                              & 70.742796                                     & 4.190000  & 72.323667    & 5.770000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{Trade Size}                                                                                                                                                                                                \\
-        \tabindent 1 contract       & 61.639494                                        & 3.100000                                              & 72.340844                                     & 3.170000  & 73.654797    & 4.480000  \\
-        \tabindent (1,3] contracts  & 62.223821                                        & 3.770000                                              & 72.789348                                     & 3.500000  & 74.255320    & 4.970000  \\
-        \tabindent (3,5] contracts  & 62.397287                                        & 3.590000                                              & 72.519880                                     & 3.120000  & 74.039560    & 4.640000  \\
-        \tabindent (5,11] contracts & 65.618460                                        & 3.070000                                              & 71.684199                                     & 8.020000  & 73.028391    & 9.360000  \\
-        \tabindent >11 contracts    & 67.040031                                        & 3.370000                                              & 71.118780                                     & 6.160000  & 72.439817    & 7.480000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Year}                                                                                                                                                                                                     \\
-        \tabindent 2015             & 60.243706                                        & 3.840000                                              & 68.868343                                     & 5.080000  & 70.786068    & 7.000000  \\
-        \tabindent 2016             & 63.512307                                        & 3.340000                                              & 72.378496                                     & 4.860000  & 73.722111    & 6.200000  \\
-        \tabindent 2017             & 64.193287                                        & 3.200000                                              & 72.748578                                     & 3.650000  & 74.032503    & 4.930000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                                                                         \\
-        \tabindent <= 1 month       & 64.191702                                        & 3.310000                                              & 72.575096                                     & 5.060000  & 73.992504    & 6.480000  \\
-        \tabindent (1-2] months     & 64.304365                                        & 3.490000                                              & 72.671822                                     & 4.100000  & 73.423384    & 4.850000  \\
-        \tabindent (2-3] months     & 62.723994                                        & 2.820000                                              & 71.532663                                     & 3.250000  & 72.521370    & 4.240000  \\
-        \tabindent (3-6] months     & 61.580416                                        & 3.440000                                              & 71.045351                                     & 3.180000  & 72.269140    & 4.410000  \\
-        \tabindent (6-12] months    & 61.499195                                        & 3.580000                                              & 71.030021                                     & 3.140000  & 72.522064    & 4.630000  \\
-        \tabindent > 12 months      & 54.968983                                        & 3.680000                                              & 68.438668                                     & 3.410000  & 71.434925    & 6.410000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Moneyness}                                                                                                                                                                                                \\
-        \tabindent <= 0.7           & 65.208146                                        & 3.470000                                              & 72.054059                                     & 7.660000  & 72.305804    & 7.910000  \\
-        \tabindent (0.7-0.9]        & 67.296529                                        & 3.330000                                              & 74.095772                                     & 5.800000  & 74.898137    & 6.610000  \\
-        \tabindent (0.9-1.1]        & 63.795656                                        & 3.270000                                              & 72.767171                                     & 4.190000  & 73.884687    & 5.310000  \\
-        \tabindent (1.1-1.3]        & 54.138334                                        & 3.890000                                              & 66.047839                                     & 4.020000  & 69.444851    & 7.420000  \\
-        \tabindent > 1.3            & 52.429063                                        & 3.580000                                              & 62.764020                                     & 2.550000  & 69.521397    & 9.310000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                                                      \\
-        \tabindent  At mid          & 62.504158                                        & 5.350000                                              & 72.020690                                     & 3.870000  & 74.135598    & 5.990000  \\
-        \tabindent  Inside          & 62.254246                                        & 1.810000                                              & 68.066336                                     & 3.560000  & 69.616667    & 5.110000  \\
-        \tabindent  At Quotes       & 67.774587                                        & 7.810000                                              & 86.631144                                     & 8.420000  & 87.044176    & 8.830000  \\
-        \tabindent  Outside         & 60.665638                                        & -6.110000                                             & 61.222573                                     & -3.700000 & 63.007448    & -1.910000 \\
-        \tabindent  Unknown         & 78.419432                                        & 2.010000                                              & 78.173110                                     & 1.770000  & 78.775231    & 2.370000  \\
-        \cmidrule(rl){1-7}
- All              & 63.397514                                        & 3.350000                                              & 72.156489                                     & 4.550000  & 73.536644    & 5.930000  \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\begin{table}[!ht]
-    \centering
-    \caption[Robustness of Gradient-Boosting With Self-Training on \glsentryshort{CBOE}]{Accuracies of the \gls{GBRT} with self-training across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
-    \label{tab:diff-cboe-gbm-semi}
-    \begin{tabular}{lSSSSSS@{}}
-        \toprule
-        {}                           & \multicolumn{2}{c}{\glsentryshort{FS} Classic} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-        {}                           & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
-        \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                               \\
-        \tabindent  Call             & 65.684960                                        & 5.550000                                              & 71.679647                                     & 5.740000  & 73.861831    & 7.930000  \\
-        \tabindent  Put              & 66.793889                                        & 5.310000                                              & 72.213858                                     & 5.000000  & 74.062937    & 6.850000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Security Type}                                                                                                                                                                                             \\
-        \tabindent Index option      & 60.473838                                        & 7.180000                                              & 67.105136                                     & 0.650000  & 71.887517    & 5.430000  \\
-        \tabindent  Others           & 69.244055                                        & 4.610000                                              & 74.139991                                     & 5.220000  & 75.199613    & 6.280000  \\
-        \tabindent  Stock option     & 65.488535                                        & 5.620000                                              & 71.480260                                     & 5.960000  & 73.641117    & 8.120000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                                                \\
-        \tabindent  1 contract       & 62.973834                                        & 6.010000                                              & 70.819157                                     & 6.840000  & 72.937166    & 8.960000  \\
-        \tabindent  (1,3] contracts  & 65.118049                                        & 5.420000                                              & 71.408791                                     & 6.420000  & 73.257486    & 8.270000  \\
-        \tabindent  (3,5] contracts  & 65.737683                                        & 5.240000                                              & 72.070108                                     & 5.730000  & 73.863723    & 7.530000  \\
-        \tabindent  (5,11] contracts & 66.785771                                        & 5.360000                                              & 71.417181                                     & 5.020000  & 73.706455    & 7.310000  \\
-        \tabindent  >11 contracts    & 71.325873                                        & 4.940000                                              & 74.284581                                     & 2.570000  & 76.318963    & 4.600000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Year}                                                                                                                                                                                                      \\
-        \tabindent  2015             & 66.007593                                        & 4.770000                                              & 71.481656                                     & 6.430000  & 73.902835    & 8.850000  \\
-        \tabindent 2016              & 65.893291                                        & 5.660000                                              & 71.648168                                     & 6.440000  & 73.803728    & 8.590000  \\
-        \tabindent  2017             & 66.528435                                        & 5.290000                                              & 72.270430                                     & 4.180000  & 74.119449    & 6.020000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                                                                          \\
-        \tabindent  <= 1 month       & 67.056909                                        & 5.130000                                              & 71.964529                                     & 5.100000  & 73.786961    & 6.930000  \\
-        \tabindent  (1-2] months     & 67.772982                                        & 5.810000                                              & 72.571659                                     & 5.160000  & 74.814076    & 7.400000  \\
-        \tabindent  (2-3] months     & 66.301325                                        & 6.010000                                              & 72.298979                                     & 5.060000  & 74.336873    & 7.100000  \\
-        \tabindent  (3-6] months     & 65.245253                                        & 6.190000                                              & 72.913470                                     & 6.280000  & 74.748933    & 8.110000  \\
-        \tabindent  (6-12] months    & 64.278137                                        & 5.700000                                              & 71.842299                                     & 6.140000  & 74.118231    & 8.410000  \\
-        \tabindent  > 12 months      & 56.024652                                        & 5.340000                                              & 66.747501                                     & 7.110000  & 70.982970    & 11.340000 \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Moneyness}                                                                                                                                                                                                 \\
-        \tabindent  <= 0.7           & 65.922647                                        & 5.600000                                              & 72.940931                                     & 3.980000  & 75.846570    & 6.880000  \\
-        \tabindent (0.7-0.9]         & 66.505182                                        & 5.690000                                              & 72.147835                                     & 5.090000  & 74.406591    & 7.350000  \\
-        \tabindent  (0.9-1.1]        & 67.182047                                        & 5.390000                                              & 72.578030                                     & 5.380000  & 74.270874    & 7.070000  \\
-        \tabindent  (1.1-1.3]        & 58.154374                                        & 4.970000                                              & 66.209109                                     & 7.150000  & 69.276591    & 10.220000 \\
-        \tabindent  > 1.3            & 56.873419                                        & 5.810000                                              & 64.526503                                     & 6.530000  & 70.114857    & 12.120000 \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                                                       \\
-        \tabindent  At Mid           & 61.027628                                        & 7.290000                                              & 68.014400                                     & 4.570000  & 69.548723    & 6.100000  \\
-        \tabindent  Inside           & 69.027538                                        & 3.240000                                              & 72.060074                                     & 6.220000  & 73.387416    & 7.550000  \\
-        \tabindent  At Quotes        & 54.386870                                        & 16.210000                                             & 74.035455                                     & 1.690000  & 80.309025    & 7.960000  \\
-        \tabindent  Outside          & 72.265732                                        & -2.650000                                             & 69.682605                                     & -2.250000 & 68.810113    & -3.120000 \\
-        \tabindent  Unknown          & 83.581685                                        & 0.920000                                              & 83.292694                                     & 0.630000  & 83.861645    & 1.200000  \\
-        \cmidrule(rl){1-7}
- All               & 66.189454                                        & 5.440000                                              & 71.922680                                     & 5.410000  & 73.953322    & 7.440000  \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\clearpage
+Compared to the standard \glspl{GBRT}, performance degrades across almost all subsets. Quantitatively, no improvements in robustness are observable, as performance differences between sub-samples are of the same magnitude and the performance gap between rule-based classification extends for index options and trades outside the spread.
 
 \textbf{Transformer With Self-Training}
 
-Transformers with pre-training objectives outperform the benchmark in all subsets apart from index options and trades outside the quotes. For \gls{ISE} trades in \cref{tab:diff-ise-transformer-semi} pre-training improves performance across subsets, reaching accuracies greater than \SI{86}{\percent}. The only exception is index options, where the performance gap slightly widens. Deep \gls{ITM} options and options with long maturities profit the most from the introduction of option features. 
+Transformers with pre-training objectives outperform the benchmark in all subsets apart from index options and trades outside the quotes. For \gls{ISE} trades in \cref{app:robustness-of-ft-transformer-with-pre-training} pre-training improves performance across most subsets, reaching accuracies greater than \SI{86}{\percent}. The only exception is index options, where the performance gap slightly widens. Deep \gls{ITM} options and options with long maturities profit the most from the introduction of option features. 
 
-For trades at the \gls{CBOE} performance improvements associated with pre-training are slightly lower across most sub-groups. Pre-training improves robustness, as the performance gap to the benchmarks narrows for trades outside the quotes.
-
-\begin{table}[!ht]
-    \centering
-    \caption[Robustness of FT-Transformer With Pre-Training on \glsentryshort{ISE}]{Accuracies of the FT-Transformer with pre-training across all sub-samples of the \gls{ISE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
-    \label{tab:diff-ise-transformer-semi}
-    \begin{tabular}{lSSSSSS@{}}
-        \toprule
-        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classic} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-        {}                          & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
-        \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                              \\
-        \tabindent Call             & 63.749963                                        & 4.580000                                              & 72.330180                                     & 4.920000  & 74.065147    & 6.660000  \\
-        \tabindent Put              & 65.690288                                        & 4.640000                                              & 73.463103                                     & 5.620000  & 75.106791    & 7.260000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Security Type}                                                                                                                                                                                            \\
-        \tabindent Index option     & 56.362055                                        & -1.440000                                             & 58.108632                                     & -0.390000 & 58.383661    & -0.110000 \\
-        \tabindent Others           & 69.333274                                        & 3.810000                                              & 77.000304                                     & 6.420000  & 77.982061    & 7.400000  \\
-        \tabindent Stock option     & 62.901284                                        & 5.020000                                              & 71.414154                                     & 4.860000  & 73.413594    & 6.860000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                                               \\
-        \tabindent 1 contract       & 63.099320                                        & 4.560000                                              & 73.169661                                     & 4.000000  & 74.652337    & 5.480000  \\
-        \tabindent (1,3] contracts  & 63.569146                                        & 5.120000                                              & 73.528033                                     & 4.240000  & 75.335799    & 6.050000  \\
-        \tabindent (3,5] contracts  & 63.702058                                        & 4.900000                                              & 73.354536                                     & 3.960000  & 75.229101    & 5.830000  \\
-        \tabindent (5,11] contracts & 66.608410                                        & 4.060000                                              & 72.377698                                     & 8.710000  & 73.980762    & 10.310000 \\
-        \tabindent >11 contracts    & 68.019713                                        & 4.350000                                              & 71.405618                                     & 6.450000  & 73.320791    & 8.360000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                                               \\
-        \tabindent 2015             & 61.171782                                        & 4.770000                                              & 69.962628                                     & 6.180000  & 72.547607    & 8.760000  \\
-        \tabindent 2016             & 64.652031                                        & 4.480000                                              & 73.068479                                     & 5.550000  & 74.699170    & 7.180000  \\
-        \tabindent 2017             & 65.837899                                        & 4.850000                                              & 73.348413                                     & 4.250000  & 74.883283    & 5.780000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                                                                         \\
-        \tabindent <= 1 month       & 65.364027                                        & 4.480000                                              & 73.197856                                     & 5.680000  & 75.107317    & 7.590000  \\
-        \tabindent (1-2] months     & 65.628236                                        & 4.820000                                              & 73.369111                                     & 4.800000  & 74.148058    & 5.580000  \\
-        \tabindent (2-3] months     & 64.331533                                        & 4.430000                                              & 72.429163                                     & 4.150000  & 73.490378    & 5.210000  \\
-        \tabindent (3-6] months     & 63.013144                                        & 4.870000                                              & 71.952647                                     & 4.090000  & 73.084793    & 5.220000  \\
-        \tabindent (6-12] months    & 62.982075                                        & 5.060000                                              & 71.751427                                     & 3.860000  & 73.174654    & 5.280000  \\
-        \tabindent > 12 months      & 56.404085                                        & 5.110000                                              & 69.813541                                     & 4.790000  & 72.485012    & 7.460000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Moneyness}                                                                                                                                                                                                \\
-        \tabindent <= 0.7           & 66.156898                                        & 4.420000                                              & 72.078606                                     & 7.680000  & 71.583394    & 7.190000  \\
-        \tabindent (0.7-0.9]        & 68.418392                                        & 4.450000                                              & 74.538473                                     & 6.250000  & 75.484427    & 7.190000  \\
-        \tabindent (0.9-1.1]        & 65.039840                                        & 4.510000                                              & 73.344440                                     & 4.770000  & 74.821342    & 6.250000  \\
-        \tabindent (1.1-1.3]        & 55.622360                                        & 5.370000                                              & 68.048690                                     & 6.020000  & 72.040722    & 10.010000 \\
-        \tabindent > 1.3            & 54.546463                                        & 5.700000                                              & 65.280127                                     & 5.070000  & 72.811810    & 12.600000 \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                                                      \\
-        \tabindent At Mid           & 62.489037                                        & 5.340000                                              & 71.949316                                     & 3.800000  & 74.545495    & 6.400000  \\
-        \tabindent Inside           & 63.521196                                        & 3.080000                                              & 69.146617                                     & 4.640000  & 71.284755    & 6.780000  \\
-        \tabindent At Quotes        & 69.633156                                        & 9.660000                                              & 86.380445                                     & 8.170000  & 86.061393    & 7.850000  \\
-        \tabindent Outside          & 65.067436                                        & -1.710000                                             & 65.241898                                     & 0.320000  & 66.000134    & 1.080000  \\
-        \tabindent Unknown          & 78.330482                                        & 1.920000                                              & 77.954157                                     & 1.550000  & 78.966815    & 2.560000  \\
-        \cmidrule(rl){1-7}
-  All              & 64.655751                                        & 4.600000                                              & 72.859054                                     & 5.250000  & 74.551410    & 6.940000  \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\begin{table}[!ht]
-    \centering
-    \caption[Robustness of FT-Transformer With Pre-Training on \glsentryshort{CBOE}]{Accuracies of the FT-Transformer with pre-training across all sub-samples of the \gls{CBOE} test set over time and by proximity to quotes, as well as option characteristics such as option and security type, time to maturity in days, and moneyness. The security type category "Others" encompasses options written on \glspl{ETF}, mutual funds, and \glspl{ADR}. The absolute improvements over \gls{GSU} (small) for the feature set classic and \gls{GSU} (large) for all other feature sets are given in the +/- column.}
-    \label{tab:diff-cboe-transformer-semi}
-    \begin{tabular}{lSSSSSS@{}}
-        \toprule
-        {}                          & \multicolumn{2}{c}{\glsentryshort{FS} Classic} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                        \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-        {}                          & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}     & {Acc. in \%} & {+/-}     \\\midrule
-        \multicolumn{7}{l}{ Option Type}                                                                                                                                                                                              \\
-        \tabindent Call             & 65.012528                                        & 4.880000                                              & 71.552840                                     & 5.620000  & 74.134277    & 8.200000  \\
-        \tabindent Put              & 66.454290                                        & 4.970000                                              & 72.060917                                     & 4.850000  & 74.049774    & 6.840000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Security Type}                                                                                                                                                                                            \\
-        \tabindent Index option     & 61.311664                                        & 8.010000                                              & 66.200771                                     & -0.250000 & 69.803565    & 3.350000  \\
-        \tabindent Others           & 68.410529                                        & 3.780000                                              & 73.924844                                     & 5.000000  & 75.449263    & 6.530000  \\
-        \tabindent Stock option     & 64.962393                                        & 5.090000                                              & 71.449345                                     & 5.920000  & 73.960004    & 8.440000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                                               \\
-        \tabindent 1 contract       & 62.775571                                        & 5.810000                                              & 70.759216                                     & 6.780000  & 73.235835    & 9.260000  \\
-        \tabindent (1,3] contracts  & 64.418288                                        & 4.720000                                              & 71.161498                                     & 6.170000  & 73.437399    & 8.450000  \\
-        \tabindent (3,5] contracts  & 65.023927                                        & 4.530000                                              & 71.953982                                     & 5.620000  & 73.815109    & 7.480000  \\
-        \tabindent (5,11] contracts & 66.114120                                        & 4.690000                                              & 71.497170                                     & 5.100000  & 73.745583    & 7.350000  \\
-        \tabindent >11 contracts    & 70.842405                                        & 4.460000                                              & 73.938486                                     & 2.220000  & 76.445743    & 4.730000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Trade Size}                                                                                                                                                                                               \\
-        \tabindent 2015             & 64.831588                                        & 3.600000                                              & 71.241862                                     & 6.190000  & 74.077079    & 9.030000  \\
-        \tabindent 2016             & 64.855703                                        & 4.630000                                              & 71.290142                                     & 6.080000  & 73.770478    & 8.560000  \\
-        \tabindent 2017             & 66.640275                                        & 5.400000                                              & 72.378636                                     & 4.280000  & 74.445935    & 6.350000  \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Time To Maturity}                                                                                                                                                                                         \\
-        \tabindent <= 1 month       & 66.307150                                        & 4.380000                                              & 71.689714                                     & 4.830000  & 74.034211    & 7.170000  \\
-        \tabindent (1-2] months     & 67.199760                                        & 5.230000                                              & 72.369898                                     & 4.960000  & 74.836544    & 7.420000  \\
-        \tabindent (2-3] months     & 66.121283                                        & 5.830000                                              & 71.973255                                     & 4.740000  & 74.055983    & 6.820000  \\
-        \tabindent (3-6] months     & 64.880126                                        & 5.820000                                              & 72.785279                                     & 6.150000  & 74.655329    & 8.020000  \\
-        \tabindent (6-12] months    & 64.462229                                        & 5.880000                                              & 72.106966                                     & 6.400000  & 74.350528    & 8.650000  \\
-        \tabindent > 12 months      & 56.625127                                        & 5.940000                                              & 68.155753                                     & 8.520000  & 71.192142    & 11.550000 \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Moneyness}                                                                                                                                                                                                \\
-        \tabindent <= 0.7           & 65.893283                                        & 5.570000                                              & 72.838065                                     & 3.880000  & 73.877530    & 4.920000  \\
-        \tabindent (0.7-0.9]        & 66.113484                                        & 5.300000                                              & 71.697415                                     & 4.640000  & 74.262558    & 7.210000  \\
-        \tabindent (0.9-1.1]        & 66.471015                                        & 4.680000                                              & 72.261464                                     & 5.060000  & 74.424000    & 7.230000  \\
-        \tabindent (1.1-1.3]        & 58.491437                                        & 5.310000                                              & 68.054102                                     & 9.000000  & 71.327315    & 12.270000 \\
-        \tabindent > 1.3            & 57.616065                                        & 6.550000                                              & 66.672676                                     & 8.680000  & 71.134668    & 13.140000 \\
-        \cmidrule(rl){1-7}
-        \multicolumn{7}{l}{ Proximity To Quotes}                                                                                                                                                                                      \\
-        \tabindent At Mid           & 60.148862                                        & 6.410000                                              & 66.945036                                     & 3.500000  & 68.593233    & 5.150000  \\
-        \tabindent Inside           & 67.857076                                        & 2.070000                                              & 71.837356                                     & 6.000000  & 73.554987    & 7.710000  \\
-        \tabindent At Quotes        & 57.650684                                        & 19.470000                                             & 75.013307                                     & 2.660000  & 81.104108    & 8.750000  \\
-        \tabindent Outside          & 74.484749                                        & -0.430000                                             & 73.996977                                     & 2.070000  & 72.822204    & 0.890000  \\
-        \tabindent Unknown          & 83.897769                                        & 1.240000                                              & 83.130136                                     & 0.470000  & 83.671995    & 1.010000  \\
-        \cmidrule(rl){1-7}
- All              & 65.668441                                        & 4.920000                                              & 71.783984                                     & 5.270000  & 74.095833    & 7.580000  \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\clearpage
+For trades at the \gls{CBOE}, performance improvements from pre-training are slightly lower across most sub-groups. Pre-training improves robustness, as the performance gap to the benchmarks narrows for trades outside the quotes.
 
 \subsubsection{Robustness Discussion}\label{sec:robustness-discussion}
 
 All our classifiers achieve performance improvements that are robust across most subsets. Nevertheless, most classifiers struggle to correctly classify index options and options traded outside the quotes. We discuss both aspects.
 
-Index options are notoriously difficult to classify by standard algorithms, as unanimously documented in \textcites[\checkmark][898--899]{savickasInferringDirectionOption2003}[\checkmark][22]{grauerOptionTradeClassification2022}. \textcite[\checkmark][898--898]{savickasInferringDirectionOption2003} trace back the low accuracy to the intensified use of complex trades in index options trading, such as bull spreads, which typically involve simultaneous buys and sells of options. Conceptually, it remains unclear if the components should be classified separately or as single complex trade. We cannot verify this hypothesis as our labeling procedure does not guarantee that all components are contained in the final sample. Also, it only explains why classification is difficult as a whole, but it does not address why accuracies trail the benchmark. Some insights can be gained from the data distribution: index trades make up only \SI{1.0731}{\percent} of all trades on the \gls{ISE} training set, resulting in a highly imbalanced distribution of the security type. Consequently, the model has fewer index option samples to train on and is susceptible to overfitting if it learns distinguishable patterns for security types. A sample weighting scheme could place more emphasis on index options. 
+Index options are notoriously difficult to classify by standard algorithms, as unanimously documented in \textcites[][898--899]{savickasInferringDirectionOption2003}[][22]{grauerOptionTradeClassification2022}. \textcite[][898--898]{savickasInferringDirectionOption2003} trace back the low accuracy to the intensified use of complex trades in index options trading, such as bull spreads, which typically involve simultaneous buys and sells of options. Conceptually, it remains unclear if the components should be classified separately or as a single complex trade. We cannot verify this hypothesis as our labeling procedure does not guarantee that all components are contained in the final sample. Also, it only explains why classification is difficult as a whole, but it does not address why accuracies trail the benchmark. Some insights can be gained from the data distribution: index option trades make up only \SI{1.0731}{\percent} of all trades on the \gls{ISE} training set, resulting in a highly imbalanced distribution of the security type. Consequently, the model has fewer index option samples to train on and is susceptible to overfitting if it learns distinguishable patterns for security types. A sample weighting scheme could place more emphasis on index options. 
 
-In our test sets options traded outside the quotes can be reliably classified with the quote rule, which aligns with the intuition that customers are willing to trade at an additional liquidity premium, hence outside the quotes. We suspect the reason, why our methods fail to learn in this simple pattern in the infrequent distribution in \SI{0.7535}{\percent} of the \gls{ISE} dataset. Following our reasoning from above, the model can overfit the training samples more easily, eventually resulting in poor out-of-sample performance. 
+In our test sets options traded outside the quotes can be reliably classified with the quote rule, which aligns with the intuition that customers are willing to trade at an additional liquidity premium, hence outside the quotes. We suspect that the reason, why our methods fail to learn this simple pattern, is the infrequent occurrence in the \gls{ISE} dataset, which is as low as \SI{0.7535}{\percent}. Following our reasoning from above, the model can overfit the training samples more easily, eventually resulting in poor out-of-sample performance. 
 
-As both subsets account for only a fraction of the entire set and differences in performance are only minor. We conclude that our approaches are stable across multiple dimensions and between exchanges.
+As both subsets account for only a fraction of the entire set and differences in performance are only minor, we conclude that our approaches are stable across multiple dimensions and between exchanges.
 
 \subsection{Feature Importance}\label{sec:feature-importance}
 
-Transformers outperform all rule-based approaches by a large margin on the \gls{ISE} dataset. To gain insights into the network, we conduct a qualitative analysis of the attention mechanism and learned embeddings. For an evaluation of feature importances, that suffices for a cross-model comparison, we use \gls{SAGE}, building upon our rationale from \cref{sec:feature-importance-measure}.
-
 \subsubsection{Feature Importance Results}\label{sec:feature-importance-results}
+
+To gain insights into the Transformer, we conduct a qualitative analysis of the attention mechanism and learned embeddings. For an evaluation of feature importances, that suffices for a cross-model comparison, we use \gls{SAGE}, building upon our rationale from \cref{sec:feature-importance-measure}.
+
+\vskip 1.3in
 
 \textbf{Attention Visualization}
 
-The analysis of attention follows a top-down approach. Initially, we generate model-wide attention maps using the methodology of \textcite[\checkmark][784--786]{cheferTransformerInterpretabilityAttention2021}, then detail the analysis by probing specific attention heads adapting a procedure of \textcite[\checkmark][279]{clarkWhatDoesBERT2019}.
+The analysis of attention follows a top-down approach. Initially, we generate model-wide attention maps using the methodology of \textcite[][784--786]{cheferTransformerInterpretabilityAttention2021}, then detail the analysis by probing specific attention heads adapting a procedure of \textcite[][279]{clarkWhatDoesBERT2019}.
 
 Attention maps offer transparency at the dataset or trade level. To aid visualization, we focus on subsets of trades, where the performance of Transformers is particularly strong, and select \num{16} trades at the quotes and \num{16} midspread trades from the \gls{ISE} test set. The resulting attention maps are shown in \cref{fig:attention-maps-ise}.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\textwidth]{attention_maps_ise_quotes_mid.pdf}
-    \caption[Attention Maps of FT-Transformer]{Attention maps of FT-Transformer trained on \gls{ISE} data with \gls{FS} option. The left plot contains attention weights of \num{16} trades at the quotes and the right plot of \num{16} midspread trades. Each column represents a trade and each row represents a feature. The intensity of the pixel represents the importance. $\mathtt{[CLS]}$ token excluded, as suggested in \textcite[\checkmark][400]{cheferGenericAttentionmodelExplainability2021}. The green area marks a trade, that was correctly classified by the network. Details on the trade are provided below.}
+    \caption[Attention Maps of FT-Transformer]{Attention maps of FT-Transformer trained on \gls{ISE} data with \gls{FS} option. The left plot contains attention weights of \num{16} trades at the quotes and the right plot of \num{16} midspread trades. Each column represents a trade and each row represents a feature. The intensity of the pixel represents the importance. $\mathtt{[CLS]}$ token is excluded, as suggested in \textcite[][400]{cheferGenericAttentionmodelExplainability2021}. The green area marks a trade, that was correctly classified by the network. Details on the trade are provided below.}
     \label{fig:attention-maps-ise}
 \end{figure}
 
-Visually, the trade price and quotes at the exchange or inter-exchange level are important and frequently used. Also, quote-based algorithms are among the best performing in our dataset. Aside from the trade price, features required to estimate the tick rule attain only spurious attributions. Features from the depth and trade size rule, such as the trade size, are used selectively for trades at the quotes. In this subset, option-specific features like the issue type, moneyness, time to maturity, or daily trading volume of the option series receive relatively high attention scores.  Overall, engineered features, like the proximity to quotes, attain low attention scores, which suggests that the Transformer itself can synthesize the feature from the \emph{raw} bid, ask, and trade price.
+Visually, the trade price and quotes at the exchange or inter-exchange level are important and frequently used. Aside from the trade price, features required to estimate the tick rule attain only spurious attributions. Features from the depth and trade size rule, such as the trade size, are used selectively for trades at the quotes. In this subset, option-specific features like the issue type, moneyness, time to maturity, or daily trading volume of the option series receive relatively high attention scores.  Overall, engineered features, like the proximity to quotes, attain low attention scores, which suggests that the Transformer itself can synthesize the feature from the \emph{raw} bid, ask, and trade price.
 
 The model assigns high attention scores to features from rule-based algorithms. Due to a possible link to rule-based classification, we explore, if the fine-grained patterns learned by attention heads individually translate to existing trade classification rules i.e., if specific tokens attend to features that are jointly used in rule-based classification. This information is sacrificed when aggregating over multiple attention heads and layers, as done for \cref{fig:attention-maps-ise}.
 
 \begin{figure}[h!]
-    \subfloat[Tick Rule-like Head (3,5)\label{fig:head-tick}]{\includegraphics[width=0.3\textwidth]{attention_head_5_layer_3_color_green_ise_quotes_mid.pdf}}
+    \subfloat[Tick Rule-Like Head (3,5)\label{fig:head-tick}]{\includegraphics[width=0.3\textwidth]{attention_head_5_layer_3_color_green_ise_quotes_mid.pdf}}
     \hfill
-    \subfloat[Trade Size Rule-like Head (3,8)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_3_color_green_ise_quotes_mid.pdf}}
+    \subfloat[Trade Size Rule-Like Head (3,8)\label{fig:head-tsize}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_3_color_green_ise_quotes_mid.pdf}}
     \hfill
     \subfloat[\glsentryshort{LR}-Like Head (4,8)\label{fig:head-lr}]{\includegraphics[width=0.3\textwidth]{attention_head_8_layer_4_color_green_ise_quotes_mid.pdf}}
-    \caption[Rule-like Roles of Selected Attention Heads]{Attention heads that correspond to trade classification rules. Tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualized for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualizations based on code by \textcite[\checkmark][279]{clarkWhatDoesBERT2019}.}
+    \caption[Rule-Like Roles of Selected Attention Heads]{Attention heads that correspond to trade classification rules. The tuple denotes the location of the attention head in the model in the form of (layer, head). The intensity of the line represents the strength of attention weight. Attentions are only visualized for the $\mathtt{[CLS]}$ token. The model is trained on \gls{ISE} data. Visualizations based on code by \textcite[][279]{clarkWhatDoesBERT2019}.}
     \label{fig:rule-like-attention-heads}
 \end{figure}
 
-We study attention weights of one specific trade in detail, which is marked in green in \cref{fig:attention-maps-ise}. The trade has the following properties: trade price \SI{3.5}[\$]{}, trade size \SI{5}[]{} contracts, ask at exchange, \SI{3.85}[\$]{}, bid at exchange \SI{3.5}[\$]{}, ask size \SI{11}[]{} contracts, and bid size \SI{10}[]{} contracts, classified as sell. \cref{fig:rule-like-attention-heads} depicts the result for selected attention heads involved in classifying the specific trade. The remaining attention heads are visualized in \cref{app:attention-heads-of-transformer}. Each subplot depicts the features to which the classification token $\mathtt{[CLS]}$ attends too. The attention weight determines the intensity of the line between the two. 
+We study attention weights of one specific trade in detail, which is marked in green in \cref{fig:attention-maps-ise}. The trade has the following properties: trade price \SI{3.50}[\$]{}, trade size \SI{5}[]{} contracts, ask at exchange \SI{3.85}[\$]{}, bid at exchange \SI{3.50}[\$]{}, ask size \SI{11}[]{} contracts, and bid size \SI{10}[]{} contracts, classified as sell. \cref{fig:rule-like-attention-heads} depicts the result for selected attention heads involved in classifying the specific trade. The remaining attention heads are visualized in \cref{app:attention-heads-of-transformer}. Each subplot depicts the features to which the classification token $\mathtt{[CLS]}$ attends too. The attention weight determines the intensity of the line between the two. 
 
-Referring to the results from the Appendix, we note that attention heads learn diverse patterns, as most heads attend to different tokens at once learning different relations. However, certain heads exhibit redundancy. For earlier layers in the network, the classification tokens gather from multiple tokens with uniform attention weights, whereas for the final self-attention layers, attention heads specialize in relations that seem related to rule-based trade classification. \cref{fig:head-tick} depicts a classification head that focuses solely on the change in trade price akin to the tick rule. In \cref{fig:head-tsize} the classification token in the neighboring head gathers simultaneously from multiple size-related features similar to the trade size rule. Finally, \cref{fig:head-lr} is alike to the \gls{LR} algorithm with additional dependencies on the moneyness. For other attention heads the purpose they serve in the network cannot be mapped. 
+Referring to the results from the Appendix, we note that attention heads learn diverse patterns, as most heads attend to different tokens thereby learning different relations. However, certain heads exhibit redundancy. For earlier layers in the network, the classification tokens gather from multiple tokens with uniform attention weights, whereas for the final self-attention layers, attention heads specialize in relations that seem related to rule-based trade classification. \cref{fig:head-tick} depicts a classification head that focuses solely on the change in trade price akin to the tick rule. In \cref{fig:head-tsize} the classification token in the neighboring head gathers simultaneously from multiple size-related features similar to the trade size rule. Finally, \cref{fig:head-lr} is alike to the \gls{LR} algorithm with additional dependencies on the moneyness. Not for all attention heads in the network a role can be mapped. 
 
 When repeated for other trades, the identified roles of the attention heads are partially retained. We intend to investigate this result in future work in a more comprehensive analysis.
 
@@ -797,7 +574,7 @@ When repeated for other trades, the identified roles of the attention heads are 
 
 For Transformers we know from \cref{sec:token-embeddings}, that embeddings can capture similarities by arranging related objects closer in embedding space. Visualizing the learned embeddings enables insights into the learned patterns.
 
-The embeddings are queried from the feature tokenizer in FT-Transformer. The similarity between embeddings is measured by cosine distance in embedding space. The high-dimensional embeddings are then projected into 2D space using $t$-SNE \autocite[\checkmark][2587]{vandermaatenVisualizingDataUsing2008}. As straightforward to interpret, we focus our analysis on the root, but note, that it applies to any numerical and categorical embeddings. \cref{fig:categorical-embeddings} illustrates the embeddings exemplary for SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$).\footnote{As our analysis is condensed to two randomly chosen examples, we encourage the reader to use our interactive visualization for further exploration. Accessible here \url{https://projector.tensorflow.org/?config=https://raw.githubusercontent.com/KarelZe/Embeddings/main/embedding_projector.config.json}.}
+The embeddings are queried from the feature tokenizer in FT-Transformer. The similarity between embeddings is measured by cosine distance in embedding space. The high-dimensional embeddings are then projected into 2D space using $t$-SNE \autocite[][2587]{vandermaatenVisualizingDataUsing2008}. We focus our analysis on the root, but note, that it applies to any numerical and categorical embeddings. \cref{fig:categorical-embeddings} illustrates the embeddings exemplary for SPDR S\&P 500 Trust ($\mathtt{SPY}$) and JPMorgan Chase \& Co ($\mathtt{JPM}$).\footnote{As our analysis is condensed to two randomly chosen examples, we encourage the reader to use our interactive visualization for further exploration. Accessible here \url{https://projector.tensorflow.org/?config=https://raw.githubusercontent.com/KarelZe/Embeddings/main/embedding_projector.config.json}.}
 
 \begin{figure}[h!]
     \subfloat[Most Similar Embeddings to $\mathtt{SPY}$\label{fig:cat-embeddings-spy}]{\includegraphics[width=0.6\textwidth]{categorical_embeddings_SPY.pdf}}
@@ -811,7 +588,7 @@ For SPDR S\&P 500 ETF ($\mathtt{SPY}$) in \cref{fig:cat-embeddings-spy}, similar
 
 Regarding JPMorgan Chase \& Co. ($\mathtt{JPM}$) in \cref{fig:cat-embeddings-jpm}, the most similar embedding is the of Bank of America ($\mathtt{BAC}$). Other similar embeddings include financial service providers like Amerigroup ($\mathtt{XGZ}$) and Janus Henderson Group ($\mathtt{ZPR}$). Here, the model learns to group US financials, even without sector information provided. This argumentation does not apply to other related embeddings such as the Apollo Group ($\mathtt{OKO}$) or United Parcel Service of America ($\mathtt{YUP}$). 
 
-Results suggest that the model can learn meaningful representations of the underlying. However, limitations exist. Both underlyings are frequently traded and prevalent in our dataset, for infrequent underlyings embeddings are likely to be close to their random initialization and lack meaningful patterns due to limited parameter updates and missing context. This issue is analogous to handling rare vocabulary items found in language processing.
+The results for these underlyings suggest that the model can learn meaningful representations but limitations exist. Both underlyings are frequently traded and prevalent in our dataset, for infrequent underlyings embeddings are likely to be close to their random initialization and lack meaningful patterns due to limited parameter updates and missing context. This issue is analogous to handling rare vocabulary items in language processing.
 
 \textbf{SAGE Values}
 
@@ -820,27 +597,21 @@ We compare the feature importances of rule-based and machine learning-based clas
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\textwidth]{sage-importances.pdf}
-    \caption[\glsentryshort{SAGE} Feature Importances For Classifiers]{\gls{SAGE} feature importances of rule-based and machine learning-based classifiers.}
+    \caption[\glsentryshort{SAGE} Feature Importances]{\gls{SAGE} feature importances of rule-based and machine learning-based classifiers. Importances estimated on \gls{ISE} test set with zero-one loss. Bigger feature importances are better. For \gls{FS} classical the \gls{GSU} method (small) is used and otherwhise the \gls{GSU} method (large). The \glspl{GBRT} and Transformers are the best combinations from \cref{sec:hyperparameter-tuning}.}
     \label{fig:sage-importances}
 \end{figure}
 
 From \cref{fig:sage-importances} we see that all models achieve the largest improvement in loss from quoted prices and if provided from the quoted sizes. The contribution of the \gls{NBBO} to performance is roughly equal for all models, suggesting that even simple heuristics effectively exploit the data. For machine learning-based predictors, quotes at the exchange level hold equal importance in classification. This contrasts with \gls{GSU} methods, which rely less on exchange-level quotes and mostly classify trades based on top-level rules. 
 
-The performance improvements from the trade size and quoted size, are slightly lower for rule-based methods compared to machine learning-based methods.  Transformers and \glspl{GBRT} gain performance from the addition of option features, i.e., moneyness and time-to-maturity. 
+The performance improvements from the trade size and quoted size, are slightly lower for rule-based methods compared to machine learning-based methods.  Transformers and \glspl{GBRT} slightly benefit from the addition of option features, i.e., moneyness and time to maturity. 
 
 Regardless of the method used, changes in trade price before or after the trade are irrelevant for classification and can even harm performance. Similarly, additional features such as option type, issue type, the trading volume of the option series, and the underlying are also irrelevant. Overall, we observe a large overlap between the importance of features in classical trade classification rules and machine learning-based predictors.
 
 \subsubsection{Feature Importance Discussion}\label{sec:feature-importance-discussion}
 
-The redundancy between attention heads is possibly due to the attention dropout in our networks (cp. \cref{sec:hyperparameter-tuning}), which randomly deactivates units of the network during training and forces the network to learn redundant representations. A similar point is made by \textcite[\checkmark][283--284]{clarkWhatDoesBERT2019} for the related \gls{BERT} model. Our finding of uniform attention weights in earlier layers of the network is consistent with the observation of \textcite[\checkmark][4193]{abnarQuantifyingAttentionFlow2020} made for \gls{BERT}.
+Our analysis of the attention heads suggests that the relations learned by individual attention heads are similar to rule-based classification. This is expected, as classical rules are based on established economic rationale. Thus, it seems natural for Transformers to learn related or even identical patterns. Also, several features are not meaningful in isolation, e.g., quoted ask or bid sizes, features must be related. From \cref{app:attention-heads-of-transformer} we see that individual attention heads learn redundant patterns. The redundancy between attention heads is possibly due to the attention dropout in our networks as described in \cref{sec:hyperparameter-tuning}, which randomly deactivates units of the network during training and forces the network to learn redundant representations. A similar point is made by \textcite[][283--284]{clarkWhatDoesBERT2019} for the related \gls{BERT} model. Our other finding of uniform attention weights in earlier layers of the network is consistent with the observation of \textcite[][4193]{abnarQuantifyingAttentionFlow2020} made for \gls{BERT} in language modeling. We confirm in our setting that earlier layers of a Transformer-based model learn generic representations, while later layers learn more specific representations.
 
-In conjunction with the results from the robustness checks, this suggests that the improvements observed for long-running options or \gls{ITM} options are directly linked to the moneyness or time to maturity of the traded option itself. However, it remains unclear how these features interact with others.
-\todo{Importance of Moneyness and Time-to-Maturity. How do these results fit into a broader picture?}
-\todo{Distribution in Sample: TTM, Trade Size, Moneyness}
-\todo{Transformer-based models (Vaswani et al., 2017), analyses of attention weights have shown interpretable patterns in their structure (Coenen et al., 2019; Vig and Belinkov, 2019; Voita et al., 2019b; Hoover et al., 2019) and found strong correlations to syntax (Clark et al., 2019). However, other studies have also cast doubt on what conclusions can be drawn from attention patterns (Jain and Wallace, 2019; Serrano and Smith, 2019; Brunner et al., 2019). (found in merchant)}
-Considering the devastating performance of tick-based algorithms in option trade classification, this is unsurprising.
-
-This aligns with theory, as these features are core to the quote rule and numerous hybrid algorithms. 
+From the analysis of the \gls{SAGE} values, we find that the \gls{GSU} methods, \glspl{GBRT}, and Transformers attain the largest performance gains from a common set of features, namely quoted prices and if provided quoted sizes. This result aligns with the expectation, as these features are core to the quote rule, as well as the depth and trade size rule, which form the best-performing hybrid rules. Considering the almost random classification of the tick rule, tick-based features are also expectedly uninformative to the models. The moneyness and time to maturity features lead to smaller performance improvements for gradient boosting and Transformers. In conjunction with the results from the robustness checks, likely, the performance improvements associated with long-running options or deep \gls{ITM} options in the largest feature set are directly linked to the moneyness and time to maturity of the traded option itself. Due to \gls{SAGE} being a global importance measure, we cannot verify at the trade level. Next, we test our classifiers and common trade classification rules in an application setting.
 
 \clearpage
 
@@ -848,15 +619,15 @@ This aligns with theory, as these features are core to the quote rule and numero
 
 \textbf{Preliminaries}
 
-Albeit the classification accuracy is a reasonable measure for comparing classifiers, one cannot immediately infer how changes in accuracy e.~g., an improvement by \SI{1}{\percent}, affect the application domains. In an attempt to make our results tangible, we apply all algorithms to estimate trading cost, a problem we previously identified to be reliant on correct trade classification (cp. \cref{sec:introduction}) and a common testing ground for trade classification rules \autocites[cp.][540--541]{ellisAccuracyTradeClassification2000}[\checkmark][569--570]{finucaneDirectTestMethods2000}[\checkmark][271--278]{petersonEvaluationBiasesExecution2003}[\checkmark][896--897]{savickasInferringDirectionOption2003}.
+Albeit the classification accuracy is a reasonable measure for comparing classifiers, one cannot immediately infer how changes in accuracy e.~g., an improvement by \SI{1}{\percent}, affect the application domains. In an attempt to make our results tangible, we apply all algorithms to estimate trading cost, a problem we previously identified to be reliant on correct trade classification (cp. \cref{sec:introduction}) and a common testing ground for trade classification rules \autocites[cp.][540--541]{ellisAccuracyTradeClassification2000}[][569--570]{finucaneDirectTestMethods2000}[][271--278]{petersonEvaluationBiasesExecution2003}[][896--897]{savickasInferringDirectionOption2003}.
 
-One of the most widely adopted measures for trading costs is the effective spread \autocite[\checkmark][112]{Piwowar_2006}. It is defined as the difference between the trade price and the fundamental value of the asset \autocite[\checkmark][238--239]{bessembinderIssuesAssessingTrade2003}. Following \textcite[\checkmark][238--239]{bessembinderIssuesAssessingTrade2003}, we define the \emph{nominal, effective spread} as
+One of the most widely adopted measures for trading costs is the effective spread \autocite[][112]{Piwowar_2006}. It is defined as the difference between the trade price and the fundamental value of the asset \autocite[][238--239]{bessembinderIssuesAssessingTrade2003}. Following \textcite[][238--239]{bessembinderIssuesAssessingTrade2003}, we define the \emph{nominal, effective spread} as
 \begin{equation}
     S_{i,t} = 2 (P_{i,t} - V_{i,t}) D_{i,t}.
     \label{eq:effective-spread}
 \end{equation}
 
-Like before, $i$ indexes the security and $t$ the point in time. Here, $D_{i,t}$ is the trade direction, which is either $1$ for customer buy orders and $-1$ for sell orders. If the trade initiator is known, we set $D_{i,t} = y_{i,t}$ and $D_{i,t}=\hat{y}_{it}$, if inferred from a rule or classifier. As the fundamental value $V_{i,t}$ is unobserved at the time of the trade, we follow a common track in research and use the midpoint of the prevailing quotes as an observable proxy.\footnote{An alternative treatment for options is discussed in \textcite[\checkmark][4975--4976]{muravyevOptionsTradingCosts2020} Our focus is on the midspread, as it is the most common proxy for the value.} This is also a natural choice, under the assumption that, on average, the spread is symmetric and centered around the true fundamental value \autocite[\checkmark][1018]{leeMarketIntegrationPrice1993}. We multiply the so-obtained half-spread by $2 \times$ to obtain the effective spread, which represents the cost for a round trip trade involving a buy and sell excluding commissions.
+Like before, $i$ indexes the security and $t$ the point in time. Here, $D_{i,t}$ is the trade direction, which is either $1$ for customer buy orders and $-1$ for sell orders. If the trade initiator is known, we set $D_{i,t} = y_{i,t}$ and $D_{i,t}=\hat{y}_{it}$, if inferred from a rule or classifier. As the fundamental value $V_{i,t}$ is unobserved at the time of the trade, we follow a common track in research and use the midpoint of the prevailing quotes as an observable proxy.\footnote{An alternative treatment for options is discussed in \textcite[][4975--4976]{muravyevOptionsTradingCosts2020} Our focus is on the midspread, as it is the most common proxy for the value.} This is also a natural choice, under the assumption that, on average, the spread is symmetric and centered around the true fundamental value \autocite[][1018]{leeMarketIntegrationPrice1993}. We multiply the so-obtained half-spread by $2 \times$ to obtain the effective spread, which represents the cost for a round trip trade involving a buy and sell excluding commissions.
 
 Apparent from \cref{eq:effective-spread}, poor estimates for the predicted trade direction, lead to an under or overestimated effective spread, and hence to a skewed trade cost estimate. Only for trades at the midspread, the predicted trade direction is irrelevant, since the effective spread is zero. By comparing the true effective spread from the estimated, we can derive the economic significance. A classifier correctly classifying every trade, achieves an effective spread estimate equal to the true spread. For a random classifier, the effective spread is around zero, as misclassification estimates the spread with the opposite sign, which offsets with other correct, random estimates.
 
@@ -865,32 +636,20 @@ For convenience, we also calculate the \emph{relative effective spread} as
     {PS}_{i,t} = S_{i,t} / V_{i,t}.
 \end{equation}
 
-Adapted from \textcite[\checkmark][158]{theissenTestAccuracyLee2001} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal.
+Adapted from \textcite[][158]{theissenTestAccuracyLee2001} a Wilcoxon test is conducted to assess if the medians of the estimated, effective spread and the true effective spread are equal.
 
 \textbf{Results}
 
-The true and the estimated effective spreads for the test sets are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[\checkmark][896--897]{savickasInferringDirectionOption2003} estimated the effective spreads of rules on an older subset of option trades at the \gls{CBOE}, which can be compared against. Our results match theirs in magnitude.
+The true and the estimated effective spreads for the test sets are shown in the \cref{tab:effective-spread} aggregated by mean. \textcite[][896--897]{savickasInferringDirectionOption2003} estimate the effective spreads of rules on an older subset of option trades at the \gls{CBOE}, which can be compared against. Our results roughly match theirs in magnitude.
 
-\begin{table}[!ht]
+\begin{table}[!h]
     \centering
     \input{Content/effective-spread.tex}
-    \caption[Effective Spreads Estimates]{Effective spreads estimates of trade classification rules and classifiers. Results are calculated on \gls{ISE} and \gls{CBOE} test set and averaged over all trades within the samples. Classifiers match the configuration of \cref{sec:hyperparameter-tuning}.}
+    \caption[Effective Spread Estimates]{Effective spread estimates of trade classification rules and classifiers. Results are calculated on \gls{ISE} and \gls{CBOE} test set and averaged over all trades within the samples. Classifiers match the configuration of \cref{sec:hyperparameter-tuning}.}
     \label{tab:effective-spread}
 \end{table}
 
-In summary, quote-based algorithms like the quote rule and the \gls{LR} algorithm severely overestimate the effective spread. The overestimate is less severe for the \gls{CLNV} algorithm due to stronger dependency on the tick rule. The tick rule itself achieves estimates closest to the true effective spread, which is \num[round-mode=places, round-precision=3]{0.004926}[\$]{} and \num[round-mode=places, round-precision=3]{0.012219}[\$]{} for the \gls{ISE} and \gls{CBOE} sample respectively. As primarily tick-based algorithms, like the tick rule or \gls{EMO} rule, act as a random classifier in our samples, we conclude that the close estimate is an artifact of randomness, not due to superior predictive power. This observation is in line with \textcite[\checkmark][897]{savickasInferringDirectionOption2003}, who make a similar argument for the \gls{EMO} rule on \gls{CBOE} trades. For rule-based algorithms \gls{GSU} (large) provides reasonable estimates of the effective spread while achieving high classification accuracy.
-
-From our supervised classifiers the FT-Transformer or \gls{GBRT} trained on \gls{FS} option provides estimates closest to the true effective spread, in particular on the \gls{CBOE} sample. For semi-supervised classifiers, Transformer-based models approximate the true effective spread best. This best manifests in a predicted effective spread at the \gls{ISE} of \SI[round-mode=places, round-precision=3]{0.013118}[\$]{} versus \SI[round-mode=places, round-precision=3]{0.004926}[\$]{}. The null hypothesis of equal medians is rejected at the \SI{1}{\percent} level for all classifiers.
+In summary, quote-based algorithms like the quote rule and the \gls{LR} algorithm severely overestimate the effective spread. The overestimate is less severe for the \gls{CLNV} algorithm due to stronger dependency on the tick rule. The tick rule itself achieves estimates closest to the true effective spread, which is \SI[round-mode=places, round-precision=3]{0.004926}[\$]{} and \SI[round-mode=places, round-precision=3]{0.012219}[\$]{} for the \gls{ISE} and \gls{CBOE} sample respectively. As primarily tick-based algorithms, like the tick rule or \gls{EMO} rule, act as a random classifier in our samples, we conclude that the close estimate is an artifact of randomness, not due to superior predictive power. This observation is in line with \textcite[][897]{savickasInferringDirectionOption2003}, who make a similar argument for the \gls{EMO} rule on \gls{CBOE} trades. For rule-based algorithms, \gls{GSU} (large) provides reasonable estimates of the effective spread while achieving high classification accuracy. From our supervised classifiers the FT-Transformer or \gls{GBRT} trained on \gls{FS} option provides estimates closest to the true effective spread, in particular on the \gls{CBOE} sample. For semi-supervised classifiers, Transformer-based models approximate the true effective spread best. This best manifests in a predicted effective spread at the \gls{ISE} of \SI[round-mode=places, round-precision=3]{0.013118}[\$]{} versus \SI[round-mode=places, round-precision=3]{0.004926}[\$]{}. The null hypothesis of equal medians is rejected at the \SI{1}{\percent} level for all classifiers.
 
 Thus, \gls{GSU} method (large) provides the best estimate of the effective spread if the true labels are absent. For labeled data, Transformer or gradient boosting-based approaches can provide more accurate estimates. The de facto standard, the \gls{LR} algorithm, fails to deliver accurate estimates and may bias research.
-
-\todo{my results are smaller than in \textcites[][]{muravyevOptionsTradingCosts2020}{savickasInferringDirectionOption2003}{kaeckPriceImpactBid2022}. Might have to do with moneyness but verify root cause.}
-\todo{“In addition, my results offer little help in answering why option bid-ask spreads are so large. This is one of the biggest puzzles in the options literature—existing theories of the option spread fail to explain its magnitude and shape (Muravyev and Pearson (2014)).”}
-\todo{compare against \textcite[\checkmark][4981]{muravyevOptionsTradingCosts2020} or \autocite{kaeckPriceImpactBid2022}}
-\todo{Think about reporting as a percentage. Adjust the formula from above.}
-\todo{Look into \textcite{muravyevOptionsTradingCosts2020}}
-\todo{Options listed on multiple exchanges have narrower spreads than those listed on a single exchange, but the difference diminishes as option volume increases. Option spreads become wider when a competing exchange delists the option.\autocite{mayhewCompetitionMarketStructure2002}}
-\todo{“The nature of option markets is such that percentage and dollar spreads are not easily comparable between options with different degrees of moneyness. In particular, deep out-of-the-money options have a low value and therefore the percentage spread is typically large compared to its dollar spread. The opposite holds for deep in-the-money options. Further, we show both value-weighted and equal-weighted spreads, because the former overweights high-priced ITM options and the latter overweights low-priced OTM options.” (Kaeck et al)}
-\todo{“he equal-weighted average effective quoted half spread, i.e., the quoted half-spread just before each trade, is 12.8 prozent, while the effective spread is only 5.6 pronzent. The large difference is explained by the many trades negotiated off-exchange or directly with dealers that occur inside the quoted bid and ask prices. The dollar value-weighted percentage spreads are about one-third of the equal-weighted values, reflecting that high-priced ITM options have relatively small percentage spreads.” (Kaek et al)}
-\todo{Explain what Muravyev do differently. “They replace the midpoint by the predicted value of a regression of the midpoint on Black–Scholes price minus midpoint, delta times lagged underlying price differences, and lagged price changes. This adjustment offers a better expectation of the unobserved fundamental value than the quoted midpoint.” (Kaeck et al)}
 

@@ -1,7 +1,7 @@
 """
 Utility to check for broken links in LaTeX documents.
 
-TODO: Add more functionality.
+Looks into .bib and .tex files.
 """
 import glob
 import os
@@ -26,7 +26,7 @@ def loc_urls() -> dict:
     )
 
     # find all .bib and .tex files
-    os.chdir("../../reports")
+    os.chdir("../../../reports")
     files = glob.glob("./**/*.tex", recursive=True) + glob.glob(
         "./**/*.bib", recursive=True
     )

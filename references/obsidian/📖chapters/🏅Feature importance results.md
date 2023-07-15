@@ -170,3 +170,29 @@ Comparison of feature importances estimated for Classical refers to gsu-small on
 We compare the feature importances of rule-based and machine learning-based classifiers using gls-SAGE, which offers a clear interpretation of each feature's contribution to the prediction. As trade classification rules yield only hard probabilities, we estimate gls-SAGE values with the zero one loss. . This approach is appealing due  to the direct link to accuracy.-footnote(We contributed this loss function to the official implementation https://github.com/iancovert/sage/ as part of this thesis. ) Based on the distribution of the gls-ise test set, a naive prediction of the majority class yields an accuracy of percentage-51.4027 or a zero-one loss of 1- 0.514027 = 0.485973. gls-SAGE attributes the outperformance of machine learning or rule-based classifiers over the naive prediction to the features based on Shapley values. Notably, the sum of all gls-SAGE values for a given predictor represents the difference in loss compared to the naive classification-footnote(explain with example for grauer)
 
 From cref-fig that all models achieve the largest improvement in loss from quoted prices and if provided from the quoted sizes. The contribution of the gls-NBBO to performance is roughly equal for all models, suggesting that even simple heuristics effectively exploit the data. For machine learning-based predictors, quotes at the exchange level hold equal importance in classification. This contrast with gls-gsu methods, which rely less on exchange-level quotes and mostly classify trades based on upstream rules. The performance improvements from the trade size and quoted size, are slightly lower for rule-based methods compared to machine-learning-based methods.  Transformers and gls-GBRT gain performance from the addition of option features, i. e., moneyness and time-to-maturity. In conjunction with the results from the robustness checks, this suggest that the improvement observed for long-running options or out-of-the-money options are directly linked to the features moneyness or time to maturity itself. However, it remains unclear how these features interact with others. Regardless of the method used, changes in trade price before or after the trade are irrelevant for classification and can even harm performance. Similarly, additional features such as option type, issue type, trading volume of the option series, and the underlying are also irrelevant. Thus, we note that there is a significant overlap between the importance of features in classical trade classification rules and machine learning-based predictors.
+
+
+
+The redundancy between attention heads is possibly due to the attention dropout in
+our networks (cp. Section 6.2.3), which randomly deactivates units of the network
+during training and forces the network to learn redundant representations. A similar
+point is made by Clark et al. (✓ 2019, pp. 283–284) for the related Bidirectional
+Encoder Representations from Transformers (BERT) model. Our finding of uniform
+attention weights in earlier layers of the network is consistent with the observation
+of Abnar and Zuidema (✓ 2020, p. 4193) made for BERT.
+In conjunction with the results from the robustness checks, this suggests that the
+improvements observed for long-running options or ITM options are directly linked
+to the moneyness or time to maturity of the traded option itself. However, it remains
+7 RESULTS AND DISCUSSION 115
+unclear how these features interact with others. TODO: Importance of Moneyness
+and Time-to-Maturity. How do these results fit into a broader picture? TODO:
+Distribution in Sample: TTM, Trade Size, Moneyness TODO: Transformer-based
+models (Vaswani et al., 2017), analyses of attention weights have shown interpretable
+patterns in their structure (Coenen et al., 2019; Vig and Belinkov, 2019; Voita et
+al., 2019b; Hoover et al., 2019) and found strong correlations to syntax (Clark et
+al., 2019). However, other studies have also cast doubt on what conclusions can be
+drawn from attention patterns (Jain and Wallace, 2019; Serrano and Smith, 2019;
+Brunner et al., 2019). (found in merchant) Considering the devastating performance
+of tick-based algorithms in option trade classification, this is unsurprising.
+This aligns with theory, as these features are core to the quote rule and numerous
+hybrid algorithms.
