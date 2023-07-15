@@ -166,7 +166,7 @@ The following section describes the experimental setup. For reproducibility, the
 \subsubsection{Training of Supervised
     Models}\label{sec:training-of-supervised-models}
 
-Our implementation of \glspl{GBRT} is based on CatBoost \autocite[][5--6]{prokhorenkovaCatBoostUnbiasedBoosting2018} because of its efficient implementation on \glspl{GPU} and native support for categorical variables. % However, as discussed in \cref{sec:gradient-boosting-procedure}, we expect the chosen library to have minimal impact on performance.
+Our implementation of \glspl{GBRT} is based on CatBoost \autocite[][5--6]{prokhorenkovaCatBoostUnbiasedBoosting2018} because of its efficient implementation on \glspl{GPU} and native support for categorical variables. 
 
 \begin{figure}[H]
     \centering
@@ -539,7 +539,7 @@ Thereby, our goal is to estimate how much a feature contributes to the performan
 
 Again, $X$ is a random variable describing the input, $Y$ is the response variable, and $F$ is the classifier. In \gls{SAGE} \autocite[][17215--17216]{covertUnderstandingGlobalFeature2020}, Shapley values $\phi_i(v_F)$ are estimated as:
 \begin{equation}
-    \phi_i(v_f)=\frac{1}{d} \sum_{S \subseteq D \backslash\{i\}}\left(\begin{array}{c}
+    \phi_i(v_F)=\frac{1}{d} \sum_{S \subseteq D \backslash\{i\}}\left(\begin{array}{c}
         d-1 \\
         |S|
         \end{array}\right)^{-1}(v_F(S \cup\{i\})-v_f(S))
@@ -547,11 +547,11 @@ Again, $X$ is a random variable describing the input, $Y$ is the response variab
 \end{equation}
 where $D=\left\{1,\ldots,d\right\}$ is a set of feature indices corresponding to the features $x_1,\ldots,x_d$ and $S\subset D$. Intuitionally, \cref{eq:shapley} estimates Shapley values as the weighted average of the incremental change in the value function, $v_F(S)$, before and after the $i$-th feature is added to the feature subsets $S$. Hereby, the first term $\left(\begin{smallmatrix} d-1 \\|S|\end{smallmatrix}\right)^{-1}$ accounts for the possibilities to choose a $|S|$-strong subset from $D \backslash\{i\}$. 
 
-While subsets of features $X_S = \left\{X_i \mid i \in S \right\}$ can be easily constructed, most classifiers, including ours, cannot handle the absence of features as they require fixed-sized inputs during inference. \textcite[][17213]{covertUnderstandingGlobalFeature2020} mitigate the issue, by marginalizing out the missing features $\bar{S}=D\backslash S$ using the conditional distribution $p(X_{\bar{S}} \mid X_S=x_S)$. Following \textcite[][17215--17216]{covertUnderstandingGlobalFeature2020}, the performance of the model for a given subset of features $S$ and loss function $L$ can now be estimated by
+While subsets of features $X_S = \left\{X_i \mid i \in S \right\}$ can be easily constructed, most classifiers, including ours, cannot handle the absence of features as they require fixed-sized inputs during inference. \textcite[][17213]{covertUnderstandingGlobalFeature2020} mitigate the issue, by marginalizing out the missing features $\bar{S}=D\backslash S$ using the conditional distribution $p(X_{\bar{S}} \mid X_S=x_S)$. Following \textcite[][17215--17216]{covertUnderstandingGlobalFeature2020}, the performance of the model for a given subset of features $S$ and loss function $\operatorname{L}(\cdot)$ can now be estimated by
 \begin{equation}
-v_F(S)=-\mathbb{E}\left[L\left(\mathbb{E}\left[F(X) \mid X_S\right], Y\right)\right].
+v_F(S)=-\mathbb{E}\left[\operatorname{L}\left(\mathbb{E}\left[F(X) \mid X_S\right], Y\right)\right].
 \end{equation}
-As important features in a subset lead to a reduction in loss or improvement in performance, the negative sign ensures that the value $v_F(S)$ increases. Together with \cref{eq:shapley} the Shapley values can be estimated. Typically, the cross-entropy loss is chosen as the loss function $L$. As classical rules, yield only hard probabilities, we use the zero-one-loss from \cref{eq:0-1-loss} instead.\footnote{We contribute this loss function to the official implementation \url{https://github.com/iancovert/sage/} as part of this thesis.} 
+As important features in a subset lead to a reduction in loss or improvement in performance, the negative sign ensures that the value $v_F(S)$ increases. Together with \cref{eq:shapley} the Shapley values can be estimated. Typically, the cross-entropy loss is chosen as the loss function. As classical rules, yield only hard probabilities, we use the zero-one-loss from \cref{eq:0-1-loss} instead.\footnote{We contribute this loss function to the official implementation \url{https://github.com/iancovert/sage/} as part of this thesis.} 
 
 \textbf{Attention Maps}
 
@@ -582,4 +582,4 @@ In an attempt to explain the decision-making process of multi-modal Transformers
     \label{eq:attention-map-weighted}
 \end{equation}
 
-In this approach, the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(l)}=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(l)}$ is calculated to weight the attention head's importance. As introduced in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and are therefore computationally efficient.
+In this approach, the element-wise product between the gradient of the attention map $\nabla \mathbf{A}^{(l)}=\frac{\partial y_t}{\partial \mathbf{A}}$ for the model's target class $t$ and the attention map $\mathbf{A}^{(l)}$ is calculated to weight the attention head's importance. As introduced in \textcite[][786]{cheferTransformerInterpretabilityAttention2021}, negative contributions are eliminated to focus on the positive relevance, and the results are averaged over the heads dimension. \cref{eq:attention-map-rollout,eq:attention-map-weighted} can be computed with a single forward pass and are computationally efficient.
