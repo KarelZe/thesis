@@ -12,7 +12,7 @@ research. Among these, the:
 
 \emph{Immediacy view:} In contrast, \textcite[][94--97]{leeInferringInvestorBehavior2000} equate the trade initiator with the party in demand for immediate execution. Thus, traders placing market orders, immediately executable at whatever price, or executable limit orders, are considered the trade initiator. By contrast, the party placing non-executable limit orders, which may not even result in a trade, is the non-initiator. This definition remains ambiguous for trades resulting from crossed limit orders, matched market orders, or batched orders \autocite[][94--95]{leeInferringInvestorBehavior2000}.
 
-\emph{Positional view:} Independent from the order type and submission time, \textcite[][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite to the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand.
+\emph{Positional view:} Independent from the order type and submission time, \textcite[\checkmark][533]{ellisAccuracyTradeClassification2000} deduce their definition of the trade initiator based on the position of the involved parties opposite to the market maker or broker. The assumption is, that the market maker or broker only provides liquidity to the investor and the trade would not exist without the initial investor's demand.
 
 The appropriate view differs by data availability i.e., if the order type or submission type can be inferred from data and the application context. Regardless of the definition used, the trade initiator is binary and can either be the seller or the buyer. Henceforth, we denote it by $y \in \mathcal{Y}$ with $\mathcal{Y}=\{-1,1\}$, with $y=-1$ indicating a seller-initiated and $y=1$ a buyer-initiated trade. The predicted trade initiator is distinguished by $\hat{y}$.
 
@@ -41,7 +41,7 @@ As options are typically cross-listed on multiple exchanges, the quote rule can 
 
 \subsubsection{Tick Test}\label{sec:tick-test}
 
-A common alternative to the quote rule is the tick test. Based on the rationale that buys increase trade prices and sells lower them, the tick test classifies trades by the change in trade price. It was first applied in \textcites[][244]{holthausenEffectLargeBlock1987}[][240]{hasbrouckTradesQuotesInventories1988}. The tick test is defined as:
+A common alternative to the quote rule is the tick test. Based on the rationale that buys increase trade prices and sells lower them, the tick test classifies trades by the change in trade price. It was first applied in \textcites[\checkmark][244]{holthausenEffectLargeBlock1987}[\checkmark][240]{hasbrouckTradesQuotesInventories1988}. The tick test is defined as:
 \begin{equation}
     \operatorname{tick}\colon \mathbb{N}^2 \to \mathcal{Y},\quad
     \operatorname{tick}(i, t)=
@@ -53,11 +53,11 @@ A common alternative to the quote rule is the tick test. Based on the rationale 
     \end{cases}
     \label{eq:tick-test}
 \end{equation}
-Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy.\footnote{To end recursion at $t=1$, we sign the trades randomly as buyer- or seller-initiated to simplify notation. Other choices are possible. Similarly done for \cref{eq:reverse-tick-test}.} Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[][735]{leeInferringTradeDirection1991}.
+Considering the cases in \cref{eq:tick-test} the trade price is higher than the previous price (uptick) the trade is classified as a buy.\footnote{To end recursion at $t=1$, we sign the trades randomly as buyer- or seller-initiated to simplify notation. Other choices are possible. Similarly done for \cref{eq:reverse-tick-test}.} Reversely, if it is below the previous price (downtick), the trade is classified as a sell. If the price change is zero (zero tick), the signing uses the last price different from the current price \autocite[\checkmark][735]{leeInferringTradeDirection1991}.
 
-By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
+By this means, the tick rule can sign all trades as long as a last differing trade price exists, but the overall precision can be impacted by infrequent trading. Being only dependent on transaction data makes the tick rule highly data-efficient. Waiving any quote data for classification contributes to this efficiency, but also poses a major limitation with regard to trades at the bid or ask, as discussed by \textcite[\checkmark][557--558]{finucaneDirectTestMethods2000}. For instance, if quotes rise between trades, then a sale at the bid on an uptick or zero uptick is misclassified as a buy by the tick test due to the overall increased trade price. Similarly for falling quotes, buys at the ask on downticks or zero downticks are erroneously classified as a sell.
 
-The reverse tick test is a variant of the tick test proposed in \textcite[][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
+The reverse tick test is a variant of the tick test proposed in \textcite[\checkmark][241]{hasbrouckTradesQuotesInventories1988}. It is similar to the tick rule but classifies based on the next, distinguishable trade price.
 
 \begin{equation}
     \operatorname{rtick} \colon \mathbb{N}^2 \to \mathcal{Y},\quad
@@ -72,7 +72,7 @@ The reverse tick test is a variant of the tick test proposed in \textcite[][241]
 \end{equation}
 As denoted in \cref{eq:reverse-tick-test}, the trade is classified as seller-initiated, if the next trade is on an uptick or a zero uptick, and classified as buyer-initiated for trades at a downtick or a zero downtick \autocite[][735--736]{leeInferringTradeDirection1991}.
 
-Both tests result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[][736]{leeInferringTradeDirection1991}.
+Both tests result in the same classification, if the current trade is bracketed by a price reversal and the price change after the trade is opposite from the change before the trade, but differ for price continuations when price changes are in the same direction \autocite[\checkmark][736]{leeInferringTradeDirection1991}.
 
 Tick tests can be estimated using the surrounding prices at the trading venue or the inter-exchange level. The performance of the tick rules hinges on the availability of recent trade prices for inference. For infrequently traded assets this can pose a problem, as outdated prices might lose their relevancy in classification \autocite[][568]{finucaneDirectTestMethods2000}.
 
@@ -106,7 +106,7 @@ Generally, quote-based approaches are preferred due to their strong performance.
     \end{cases}
     \label{eq:trade-size-rule}
 \end{equation}
-The trade size rule in \cref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{P}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the contemporaneous bid or ask, with a trade size equaling the quoted size \autocite[][13]{grauerOptionTradeClassification2022}. When both the size of the ask and bid correspond with the trade size or the trade size does not match the quoted sizes, the result is ambiguous.
+The trade size rule in \cref{eq:trade-size-rule} classifies based on a match between the size of the trade $\tilde{P}_{i, t}$ and the quoted bid and ask sizes. The rationale is, that the market maker tries to fill the limit order of a customer, which results in the trade being executed at the contemporaneous bid or ask, with a trade size equaling the quoted size \autocite[\checkmark][13]{grauerOptionTradeClassification2022}. When both the size of the ask and bid correspond with the trade size or the trade size does not match the quoted sizes, the result is ambiguous.
 
 Expectedly, the improvement is highest for trades at the quotes and reverses for trades outside the quote \autocite[][13]{grauerOptionTradeClassification2022}. Based on these results, the trade size rule may only be applied selectively to trades near or at the quote. Since only a fraction of all trades can be classified with the trade size rule, the rule must be combined with other basic or hybrid rules for complete coverage. The subsequent section introduces four hybrid algorithms, that combine basic rules into more sophisticated algorithms.
 
