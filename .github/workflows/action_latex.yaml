@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Git repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@master
         with:
@@ -30,7 +30,7 @@ jobs:
           mkdir ~/tmplatex
           mv reports/thesis.pdf ~/tmplatex/thesis.pdf
       - name: setup target repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: KarelZe/thesis2video
           ref: main
