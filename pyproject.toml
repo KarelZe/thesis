@@ -23,7 +23,7 @@ dependencies =[
   "click==8.1.7",
   "catboost==1.1",
   "fastparquet==2023.8.0",
-  "gcsfs==2023.9.0",
+  "gcsfs==2023.9.1",
   "google-auth==2.23.0", # needed by w&b in runpod
   "modin==0.17.0",
   "numpy==1.23.4",
