@@ -1,5 +1,4 @@
-"""
-Script to perform a hyperparameter search for various models.
+"""Script to perform a hyperparameter search for various models.
 
 Currently classical rules and gradient boosted trees are supported.
 
@@ -84,10 +83,10 @@ def main(
     dataset: str,
     pretrain: bool,
 ) -> None:
-    """
-    Start study.
+    """Start study.
 
     Args:
+    ----
         trials (int): no. of trials.
         seed (int): seed for rng.
         features (str): name of feature set.
@@ -139,7 +138,7 @@ def main(
         Path(artifact_dir_labelled, "train_set.parquet"), columns=columns
     )
     y_train = x_train["buy_sell"]
-    x_train.drop(columns=["buy_sell"], inplace=True)
+    x_train = x_train.drop(columns=["buy_sell"])
 
     if pretrain:
         # Load unlabelled data
@@ -150,7 +149,7 @@ def main(
             Path(artifact_dir_unlabelled, "train_set.parquet"), columns=columns
         )
         y_train_unlabelled = x_train_unlabelled["buy_sell"]
-        x_train_unlabelled.drop(columns=["buy_sell"], inplace=True)
+        x_train_unlabelled = x_train_unlabelled.drop(columns=["buy_sell"])
 
         # Concatenate labelled and unlabelled data unlabelled will merge in between
         x_train = pd.concat([x_train, x_train_unlabelled])
@@ -161,7 +160,7 @@ def main(
         Path(artifact_dir_labelled, "val_set.parquet"), columns=columns
     )
     y_val = x_val["buy_sell"]
-    x_val.drop(columns=["buy_sell"], inplace=True)
+    x_val = x_val.drop(columns=["buy_sell"])
 
     # pretrain training activated
     has_label = (y_train != 0).all()

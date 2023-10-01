@@ -1,5 +1,4 @@
-"""
-Tests for Neural networks.
+"""Tests for Neural networks.
 
 See:
 https://thenerdstation.medium.com/how-to-unit-test-machine-learning-code-57cf6fd81765
@@ -17,10 +16,10 @@ from sklearn.utils.estimator_checks import check_estimator
 
 
 class NeuralNetTestsMixin:
-    """
-    Perform automated tests for neural networks.
+    """Perform automated tests for neural networks.
 
     Args:
+    ----
         metaclass (_type_, optional): parent. Defaults to abc.ABCMeta.
     """
 
@@ -33,18 +32,17 @@ class NeuralNetTestsMixin:
     batch_size: int
 
     def get_outputs(self) -> torch.Tensor:
-        """
-        Return relevant output of model.
+        """Return relevant output of model.
 
-        Returns:
+        Returns
+        -------
             torch.Tensor: outputs
         """
         return self.net(self.x_cat.clone(), self.x_cont.clone())
 
     @torch.no_grad()
     def test_shapes(self) -> None:
-        """
-        Test, if shapes of the network equal the targets.
+        """Test, if shapes of the network equal the targets.
 
         Loss might be calculated due to broadcasting, but might be wrong.
         Adapted from: # https://krokotsch.eu/posts/deep-learning-unit-tests/
@@ -53,8 +51,7 @@ class NeuralNetTestsMixin:
         assert self.expected_outputs.shape == outputs.shape
 
     def test_convergence(self) -> None:
-        """
-        Tests, whether loss approaches zero for single batch.
+        """Tests, whether loss approaches zero for single batch.
 
         Training on a single batch leads to serious overfitting.
         If loss does not become, this indicates a possible error.
@@ -84,8 +81,7 @@ class NeuralNetTestsMixin:
         torch.cuda.is_available() is False, reason="No GPU was detected."
     )
     def test_device_moving(self) -> None:
-        """
-        Test, if all tensors reside on the gpu / cpu.
+        """Test, if all tensors reside on the gpu / cpu.
 
         Adapted from: https://krokotsch.eu/posts/deep-learning-unit-tests/
         """
@@ -100,8 +96,7 @@ class NeuralNetTestsMixin:
         assert round(abs(0.0 - torch.sum(outputs_cpu - outputs_back_on_cpu)), 7) == 0
 
     def test_all_parameters_updated(self) -> None:
-        """
-        Test, if all parameters are updated.
+        """Test, if all parameters are updated.
 
         If parameters are not updated this could indicate dead ends.
 
@@ -121,8 +116,7 @@ class NeuralNetTestsMixin:
                 assert torch.tensor(0) != param_sum
 
     def test_batch_independence(self) -> None:
-        """
-        Checks sample independence by performing of inputs.
+        """Checks sample independence by performing of inputs.
 
         Required as SGD-based algorithms like ADAM work on mini-batches. Batching
         training samples assumes that your model can process each sample as if they
@@ -161,10 +155,10 @@ class NeuralNetTestsMixin:
 
 
 class ClassifierMixin:
-    """
-    Perform automated tests for Classifiers.
+    """Perform automated tests for Classifiers.
 
     Args:
+    ----
         unittest (_type_): unittest module
     """
 
@@ -173,14 +167,11 @@ class ClassifierMixin:
     y_test: pd.Series
 
     def test_sklearn_compatibility(self) -> None:
-        """
-        Test, if classifier is compatible with sklearn.
-        """
+        """Test, if classifier is compatible with sklearn."""
         check_estimator(self.clf)
 
     def test_shapes(self) -> None:
-        """
-        Test, if shapes of the classifier equal the targets.
+        """Test, if shapes of the classifier equal the targets.
 
         Shapes are usually [no. of samples, 1].
         """
@@ -189,15 +180,13 @@ class ClassifierMixin:
         assert self.y_test.shape == y_pred.shape
 
     def test_proba(self) -> None:
-        """
-        Test, if probabilities are in [0, 1].
-        """
+        """Test, if probabilities are in [0, 1]."""
         y_pred = self.clf.predict_proba(self.x_test)
-        assert (y_pred >= 0).all() and (y_pred <= 1).all()
+        assert (y_pred >= 0).all()
+        assert (y_pred <= 1).all()
 
     def test_score(self) -> None:
-        """
-        Test, if score is correctly calculated..
+        """Test, if score is correctly calculated..
 
         For a random classification i. e., `layers=[("nan", "ex")]`, the score
         should be around 0.5.

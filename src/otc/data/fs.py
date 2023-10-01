@@ -1,5 +1,4 @@
-"""
-Gives simple access to the google cloud storage bucket.
+"""Gives simple access to the google cloud storage bucket.
 
 Instance is only created once.
 """
@@ -13,10 +12,10 @@ from otc.config.config import settings
 
 
 def _create_environment() -> gcsfs.GCSFileSystem:
-    """
-    Implement the global object pattern to connect only once to GCS.
+    """Implement the global object pattern to connect only once to GCS.
 
-    Returns:
+    Returns
+    -------
         gcsfs.GCSFileSystem: Instance of GCSFileSystem.
     """
     gcloud_config = str(Path(settings.GCS_CRED_FILE).expanduser().resolve())

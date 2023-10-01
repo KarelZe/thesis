@@ -1,5 +1,4 @@
-"""
-Tests for the transformer classifier.
+"""Tests for the transformer classifier.
 
 Use of artificial data to test the classifier.
 """

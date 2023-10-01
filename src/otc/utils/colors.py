@@ -1,5 +1,4 @@
-"""
-Provides format options.
+"""Provides format options.
 
 Adapted from here:
 https://stackoverflow.com/a/287944/5755604
@@ -7,8 +6,7 @@ https://stackoverflow.com/a/287944/5755604
 
 
 class Colors:
-    """
-    Definition of formatters.
+    """Definition of formatters.
 
     Includes both color and font styles.
     """
@@ -24,8 +22,7 @@ class Colors:
     UNDERLINE = "\033[4m"
 
     def disable(self) -> None:
-        """
-        Disable formatter.
+        """Disable formatter.
 
         Resets colors and font style.
         """

@@ -1,5 +1,4 @@
-"""
-Defines feature sets.
+"""Defines feature sets.
 
 See notebook/3.0b-feature-engineering.ipynb for details.
 """

@@ -1,5 +1,4 @@
-"""
-Utility to check for broken links in LaTeX documents.
+"""Utility to check for broken links in LaTeX documents.
 
 Looks into .bib and .tex files.
 """
@@ -13,10 +12,10 @@ import typer
 
 
 def loc_urls() -> dict:
-    """
-    Locate all urls in .bib and .tex files located in /reports dir.
+    """Locate all urls in .bib and .tex files located in /reports dir.
 
-    Returns:
+    Returns
+    -------
         dict: Dict with filename as key and list of urls as values.
     """
     # adapted from https://stackoverflow.com/a/2102648/5755604
@@ -49,10 +48,10 @@ def loc_urls() -> dict:
 
 
 def check_urls(urls: dict) -> None:
-    """
-    Check if urls can be resolved.
+    """Check if urls can be resolved.
 
     Args:
+    ----
         urls (dict): dict with filename as key and list of urls
     """
     for filename, urls_in_file in urls.items():
@@ -68,8 +67,7 @@ def check_urls(urls: dict) -> None:
 
 
 def main() -> None:
-    """
-    Locate and check urls.
+    """Locate and check urls.
 
     Urls a relocated from `.tex` files and then parsed and tested.
     """

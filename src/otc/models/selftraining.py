@@ -1,5 +1,4 @@
-"""
-Implements self-training classifier with a sklearn-like interface.
+"""Implements self-training classifier with a sklearn-like interface.
 
 Based on sklearn implementation.
 """
@@ -19,13 +18,14 @@ from sklearn.utils.validation import check_is_fitted
 
 
 def _estimator_has(attr: str) -> Callable[[Any], bool]:
-    """
-    Check if `self.base_estimator_ `or `self.base_estimator_` has `attr`.
+    """Check if `self.base_estimator_ `or `self.base_estimator_` has `attr`.
 
     Args:
+    ----
         attr (str): attribute.
 
     Returns:
+    -------
         bool: boolean.
     """
     return lambda self: (
@@ -36,8 +36,7 @@ def _estimator_has(attr: str) -> Callable[[Any], bool]:
 
 
 class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
-    """
-    Self-training classifier.
+    """Self-training classifier.
 
     Based on http://dx.doi.org/10.3115/981658.981684.
     """
@@ -53,10 +52,10 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         max_iter: int = 10,
         verbose: bool = False,
     ):
-        """
-        Initialize a SelfTrainingClassifier.
+        """Initialize a SelfTrainingClassifier.
 
         Args:
+        ----
             base_estimator (BaseEstimator): An estimator object implementing
             fit and predict_proba. Invoking the fit method will fit a clone of
             the passed estimator, which will be stored in the base_estimator_
@@ -70,7 +69,7 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
             pseudo-labels with prediction probabilities above threshold are
             added to the dataset. If 'k_best', the k_best pseudo-labels
             with highest prediction probabilities are added to the dataset.
-            When using the ‘threshold’ criterion, a well calibrated classifier
+            When using the `threshold` criterion, a well calibrated classifier
             should be used. Defaults to "threshold".
             k_best (int, optional): The amount of samples to add in each
             iteration. Only used when criterion='k_best'. Defaults to 10
@@ -87,20 +86,22 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         self.max_iter = max_iter
         self.verbose = verbose
 
-    def fit(  # noqa: C901
+    def fit(
         self, train_set: dict, eval_set: Pool, **kwargs: Any
     ) -> SelfTrainingClassifier:
-        """
-        Fit self-training classifier using `X`, `y` as training data.
+        """Fit self-training classifier using `X`, `y` as training data.
 
         Args:
+        ----
             train_set (dict) dict with training data
             eval_set (Pool): pool of validation data
 
         Raises:
+        ------
             ValueError: warning for wrong datatype
 
         Returns:
+        -------
             SelfTrainingClassifier: self
         """
         # get features, labels etc from trian set
@@ -213,13 +214,14 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
 
     @available_if(_estimator_has("predict"))
     def predict(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
-        """
-        Perform classification on test vectors `X`.
+        """Perform classification on test vectors `X`.
 
         Args:
+        ----
             X (npt.NDArray | pd.DataFrame): feature matrix.
 
         Returns:
+        -------
             npt.NDArray: Predicted traget values for X.
         """
         check_is_fitted(self)
@@ -233,13 +235,14 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
 
     @available_if(_estimator_has("predict_proba"))
     def predict_proba(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArra:
-        """
-        Predict class probabilities for X.
+        """Predict class probabilities for X.
 
         Args:
+        ----
             X (npt.NDArray | pd.DataFrame): feature matrix
 
         Returns:
+        -------
             npt.NDArray: probabilities
         """
         check_is_fitted(self)

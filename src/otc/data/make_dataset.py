@@ -1,5 +1,4 @@
-"""
-Script to pre-process the raw data set.
+"""Script to pre-process the raw data set.
 
 See `notebooks/` for further details.
 """
@@ -16,11 +15,11 @@ from dotenv import find_dotenv, load_dotenv
 @click.argument("input_filepath", type=click.Path(exists=True))
 @click.argument("output_filepath", type=click.Path())
 def main(input_filepath: click.Path, output_filepath: click.Path) -> None:
-    """
-    Run data processing scripts to turn raw data from (../raw) into\
+    """Run data processing scripts to turn raw data from (../raw) into\
     cleaned data ready to be analyzed (saved in ../processed).
 
     Args:
+    ----
         input_filepath (click.Path): input file
         output_filepath (click.Path): output file
     """

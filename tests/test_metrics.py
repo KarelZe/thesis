@@ -1,6 +1,4 @@
-"""
-Tests for Metrics.
-"""
+"""Tests for Metrics."""
 
 import numpy as np
 
@@ -9,16 +7,15 @@ from otc.models.objective import set_seed
 
 
 class TestMetrics:
-    """
-    Perform automated tests for objectives.
+    """Perform automated tests for objectives.
 
     Args:
+    ----
         metaclass (_type_, optional): parent. Defaults to abc.ABCMeta.
     """
 
     def test_effective_spread(self) -> None:
-        """
-        Test if effective spread returns a valid value.
+        """Test if effective spread returns a valid value.
 
         Value may not be NaN.
         """

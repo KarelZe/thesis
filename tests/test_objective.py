@@ -1,6 +1,4 @@
-"""
-Tests for Objectives.
-"""
+"""Tests for Objectives."""
 import datetime as dt
 import os
 from unittest.mock import patch
@@ -18,16 +16,15 @@ from otc.models.transformer_classifier import TransformerClassifier
 
 
 class TestObjectives:
-    """
-    Perform automated tests for objectives.
+    """Perform automated tests for objectives.
 
     Args:
+    ----
         metaclass (_type_, optional): parent. Defaults to abc.ABCMeta.
     """
 
     def setup(self) -> None:
-        """
-        Set up basic data.
+        """Set up basic data.
 
         Construct feature matrix and target.
         """
@@ -44,8 +41,7 @@ class TestObjectives:
         self._y_val = self._y_train.copy()
 
     def test_classical_objective(self) -> None:
-        """
-        Test if classical objective returns a valid value.
+        """Test if classical objective returns a valid value.
 
         Value obtained is the accuracy. Should lie in [0,1].
         Value may not be NaN.
@@ -71,8 +67,7 @@ class TestObjectives:
         assert 0.0 <= study.best_value <= 1.0
 
     def test_gradient_boosting_objective(self) -> None:
-        """
-        Test if gradient boosting objective returns a valid value.
+        """Test if gradient boosting objective returns a valid value.
 
         Value obtained is the accuracy. Should lie in [0,1].
         Value may not be NaN.
@@ -99,8 +94,7 @@ class TestObjectives:
         assert 0.0 <= study.best_value <= 1.0
 
     def test_gradient_boosting_pretraining_objective(self) -> None:
-        """
-        Test if gradient boosting objective returns a valid value.
+        """Test if gradient boosting objective returns a valid value.
 
         Pretraining is activated.
 
@@ -121,7 +115,8 @@ class TestObjectives:
         # train set with -1, 1, and 0
         self._y_train = pd.Series(np.random.randint(-1, 2, self._y_train.shape[0]))
         # val set with 1
-        self._y_val = np.random.randint(1, 2, self._y_train.shape[0])
+        rng = np.random.default_rng()
+        self._y_val = rng.integers(low=1, high=2, size=self._y_train.shape[0])
 
         study = optuna.create_study(direction="maximize")
         objective = GradientBoostingObjective(
@@ -135,8 +130,7 @@ class TestObjectives:
         assert 0.0 <= study.best_value <= 1.0
 
     def test_fttransformer_objective(self) -> None:
-        """
-        Test if FTTransformer objective returns a valid value.
+        """Test if FTTransformer objective returns a valid value.
 
         Value obtained is the accuracy. Should lie in [0,1].
         Value may not be NaN.

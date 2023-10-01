@@ -1,5 +1,4 @@
-"""
-Implementation of callbacks for neural nets and other models.
+"""Implementation of callbacks for neural nets and other models.
 
 TODO: Refactor early stoppping to callback.
 """
@@ -27,24 +26,22 @@ logger = logging.getLogger(__name__)
 
 
 class Callback:
-    """
-    Abstract base class used to build new callbacks.
+    """Abstract base class used to build new callbacks.
 
     Concrete Callbacks must implement some of the methods.
     """
 
     def __init__(self) -> None:
-        """
-        Initialize the callback.
+        """Initialize the callback.
 
         May be overwritten in subclass.
         """
 
     def set_params(self, params: Any) -> None:
-        """
-        Set the parameters of the callback.
+        """Set the parameters of the callback.
 
         Args:
+        ----
             params (Any): params.
         """
         self.params = params
@@ -52,10 +49,10 @@ class Callback:
     def on_epoch_end(
         self, epoch: int, epochs: int, train_loss: float, val_loss: float
     ) -> None:
-        """
-        Call at the end of each epoch.
+        """Call at the end of each epoch.
 
         Args:
+        ----
             epoch (int): current epoch.
             epochs (int): total number of epochs.
             train_loss (float): train loss in epoch.
@@ -69,10 +66,10 @@ class Callback:
         model: Any,
         name: str,
     ) -> None:
-        """
-        Call on_train_end for each callback in container.
+        """Call on_train_end for each callback in container.
 
         Args:
+        ----
             study (optuna.Study): optuna study.
             trial (optuna.trial.Trial | optuna.trial.FrozenTrial): optuna trial.
             model (TransformerClassifier | CatBoostClassifier): model.
@@ -81,21 +78,21 @@ class Callback:
 
 
 class SaveCallback(Callback):
-    """
-    Callback to save the models.
+    """Callback to save the models.
 
     Args:
+    ----
         Callback (callback): callback.
     """
 
     def __init__(self, wandb_kwargs: dict[str, Any] | None = None) -> None:
-        """
-        Initialize the callback.
+        """Initialize the callback.
 
         Similar to optuna wandb callback, but with the ability to save models to GCS.
         See: https://bit.ly/3OSGFyU
 
         Args:
+        ----
             wandb_kwargs (dict[str, Any] | None, optional): kwargs of wandb.
             Defaults to None.
         """
@@ -105,8 +102,7 @@ class SaveCallback(Callback):
             self._run = self._initialize_run()
 
     def _initialize_run(self) -> wandb.sdk.wandb_run.Run:  # type: ignore
-        """
-        Initialize wandb run.
+        """Initialize wandb run.
 
         Adapted from: https://bit.ly/3OSGFyU.
         """
@@ -126,8 +122,7 @@ class SaveCallback(Callback):
         model: TransformerClassifier | CatBoostClassifier,
         name: str,
     ) -> None:
-        """
-        Save the model at the end of the training, if it is the best model in the study.
+        """Save the model at the end of the training, if it is the best model in the study.
 
         Delete old models from GCS from previous trials of the same study. References to
         the old models are logged in wandb.
@@ -136,6 +131,7 @@ class SaveCallback(Callback):
         For PyTorch models, save the model as a state_dict.
 
         Args:
+        ----
             study (optuna.Study): optuna study.
             trial (optuna.trial.Trial | optuna.trial.FrozenTrial): optuna trial.
             model (TransformerClassifier | CatBoostClassifier): model.
@@ -178,7 +174,7 @@ class SaveCallback(Callback):
                 ).as_posix()
 
                 fs.put(loc_training_stats, uri_training_stats)
-                m_artifact = wandb.Artifact(name=file_model, type="model")  # type: ignore # noqa: E501
+                m_artifact = wandb.Artifact(name=file_model, type="model")  # type: ignore
 
                 m_artifact.add_reference(uri_training_stats, name=file_training_stats)
                 logger.info(
@@ -199,7 +195,7 @@ class SaveCallback(Callback):
                     # torch.save(model.clf, f)
                     pickle.dump(model, f, protocol=4)
 
-                m_artifact = wandb.Artifact(name=file_model, type="model")  # type: ignore # noqa: E501
+                m_artifact = wandb.Artifact(name=file_model, type="model")  # type: ignore
             else:
                 return
 
@@ -244,20 +240,20 @@ class SaveCallback(Callback):
 
 
 class PrintCallback(Callback):
-    """
-    Callback to print train and validation loss.
+    """Callback to print train and validation loss.
 
     Args:
+    ----
         Callback (callback): callback.
     """
 
     def on_epoch_end(
         self, epoch: int, epochs: int, train_loss: float, val_loss: float
     ) -> None:
-        """
-        Print train and validation loss on each epoch.
+        """Print train and validation loss on each epoch.
 
         Args:
+        ----
             epoch (int): current epoch.
             epochs (int): total number of epochs.
             train_loss (float): train loss in epoch.
@@ -280,8 +276,7 @@ class PrintCallback(Callback):
 
 @dataclass
 class CallbackContainer:
-    """
-    Container holding a list of callbacks.
+    """Container holding a list of callbacks.
 
     Register using append method.
     """
@@ -289,19 +284,19 @@ class CallbackContainer:
     callbacks: list[Callback] = field(default_factory=list)
 
     def append(self, callback: Callback) -> None:
-        """
-        Add a callback to the container.
+        """Add a callback to the container.
 
         Args:
+        ----
             callback (Callback): callback to add.
         """
         self.callbacks.append(callback)
 
     def set_params(self, params: Any) -> None:
-        """
-        Set params for callbacks in container.
+        """Set params for callbacks in container.
 
         Args:
+        ----
             params (Any): parameter.
         """
         for callback in self.callbacks:
@@ -310,10 +305,10 @@ class CallbackContainer:
     def on_epoch_end(
         self, epoch: int, epochs: int, train_loss: float, val_loss: float
     ) -> None:
-        """
-        Call on_epoch_end for each callback in container.
+        """Call on_epoch_end for each callback in container.
 
         Args:
+        ----
             epoch (int): current epoch.
             epochs (int): total number of epochs.
             train_loss (float): train loss in epoch.
@@ -329,10 +324,10 @@ class CallbackContainer:
         model: TransformerClassifier | CatBoostClassifier,
         name: str,
     ) -> None:
-        """
-        Call on_train_end for each callback in container.
+        """Call on_train_end for each callback in container.
 
         Args:
+        ----
             study (optuna.Study): optuna study.
             trial (optuna.trial.Trial | optuna.trial.FrozenTrial):
             optuna trial.

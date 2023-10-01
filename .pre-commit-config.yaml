@@ -24,22 +24,7 @@ repos:
       - id: debug-statements
       - id: end-of-file-fixer
       - id: mixed-line-ending
-  - repo: https://github.com/PyCQA/autoflake
-    rev: v1.7.7
-    hooks:
-      - id: autoflake
-        args:
-          # - "--check"
-          - "--ignore-init-module-imports"
-          - "--remove-all-unused-imports"
-          - "--remove-unused-variables"
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.10.1
-    hooks:
-      - id: isort
-        name: isort (python)
-        # args:
-        #   - "--check-only"
+      - id: trailing-whitespace
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.991
     hooks:
@@ -47,29 +32,19 @@ repos:
         # yaml requires additional stubs.
         # Similar to: https://stackoverflow.com/a/73603491/5755604
         additional_dependencies: ['types-PyYAML']
-  - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.9.0
-    hooks:
-      - id: python-use-type-annotations
   - repo: https://github.com/psf/black.git
     rev: 22.10.0
     hooks:
       - id: black
-        # args:
-        #  - "--check"
-        language_version: python3
-        exclude: ^(tests\/hooks-abort-render\/hooks|docs)
-  - repo: https://github.com/pycqa/flake8
-    rev: 5.0.4
+        exclude: ^(docs)
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.284
     hooks:
-      - id: flake8
-        additional_dependencies:
-          - flake8-absolute-import
-          - flake8-black
-          - flake8-docstrings
-          - flake8-bugbear
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.2.2
+    - id: ruff
+      args:
+      - --fix
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.6.0
     hooks:
-      - id: pyupgrade
+    - id: nbstripout
 exclude: "^(references|reports)"

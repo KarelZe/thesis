@@ -1,5 +1,4 @@
-"""
-Perform automated tests.
+"""Perform automated tests.
 
 Includes tests for data sets with categorical and without
 categorical data.
@@ -14,16 +13,15 @@ from otc.data.dataset import TabDataset
 
 
 class TestDataLoader:
-    """
-    Perform automated tests.
+    """Perform automated tests.
 
     Args:
+    ----
         unittest (_type_): testcase
     """
 
     def test_len(self) -> None:
-        """
-        Test, if length returned by data loader is correct.
+        """Test, if length returned by data loader is correct.
 
         Lenth is simply the number of partial or full batches.
         """
@@ -53,8 +51,7 @@ class TestDataLoader:
         assert len(data_loader) == length // batch_size + (length % batch_size > 0)
 
     def test_with_cat_features(self) -> None:
-        """
-        Test, if data loader can be created with categorical features.
+        """Test, if data loader can be created with categorical features.
 
         If the data set contains categorical features, the data loader
         should return a tensor with the categorical features.
@@ -71,7 +68,7 @@ class TestDataLoader:
             y=y,
             cat_features=["a"],
             feature_names=["a", "b", "c"],
-            cat_unique_counts=tuple([100]),
+            cat_unique_counts=(100,),
         )
         train_loader = TabDataLoader(
             training_data.x_cat,
@@ -85,8 +82,7 @@ class TestDataLoader:
         assert torch.tensor([[0], [3]]).equal(cat_features)  # type: ignore
 
     def test_no_cat_features(self) -> None:
-        """
-        Test, if data loader can be created without categorical features.
+        """Test, if data loader can be created without categorical features.
 
         If data set doesn't contain categorical features, the data loader
         should return None.

@@ -1,5 +1,4 @@
-"""
-A fast dataloader-like object to load batches of tabular data sets.
+"""A fast dataloader-like object to load batches of tabular data sets.
 
 Adapted from here:
 https://discuss.pytorch.org/t/dataloader-much-slower-than-manual-batching/27014/6
@@ -12,8 +11,7 @@ import torch
 
 
 class TabDataLoader:
-    """
-    PyTorch Implementation of a dataloader for tabular data.
+    """PyTorch Implementation of a dataloader for tabular data.
 
     Due to a chunk-wise reading or several rows at once it is preferred
     over the standard dataloader that reads row-wise.
@@ -27,12 +25,12 @@ class TabDataLoader:
         device: str = "cpu",
         **kwargs: Any,
     ):
-        """
-        TabDataLoader.
+        """TabDataLoader.
 
         Tensors can be None e. g., if there is no categorical data.
 
         Args:
+        ----
             batch_size (int, optional): size of batch. Defaults to 4096.
             shuffle (bool, optional): shuffle data. Defaults to False.
             device (str, optional): device where. Defaults to "cpu".
@@ -57,10 +55,10 @@ class TabDataLoader:
         self.n_batches = n_batches
 
     def __iter__(self) -> TabDataLoader:
-        """
-        Return itself.
+        """Return itself.
 
-        Returns:
+        Returns
+        -------
             TabDataLoader: TabDataLoader
         """
         if self.shuffle:
@@ -71,13 +69,16 @@ class TabDataLoader:
         return self
 
     def __next__(self) -> tuple[torch.Tensor | None, ...]:
-        """
-        Generate next batch with size of 'batch_size'.
+        """Generate next batch with size of 'batch_size'.
 
         Batches can be underful.
-        Raises:
+
+        Raises
+        ------
             StopIteration: stopping criterion.
-        Returns:
+
+        Returns
+        -------
             Tuple[torch.Tensor | None, torch.Tensor, torch.Tensor]: (X_cat), X_cont,
             weight, y
         """
@@ -96,10 +97,10 @@ class TabDataLoader:
         return tuple(mixed_batch)
 
     def __len__(self) -> int:
-        """
-        Get number of full and partial batches in data set.
+        """Get number of full and partial batches in data set.
 
-        Returns:
+        Returns
+        -------
             int: number of batches.
         """
         return self.n_batches
