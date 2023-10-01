@@ -73,7 +73,6 @@ class TestEarlyStopping:
         Best loss is used for comparsion.
 
         Example:
-        -------
         ```
         min_delta = 5
         patience=3

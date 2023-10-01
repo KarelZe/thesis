@@ -79,7 +79,7 @@ class TestDataLoader:
         )
         cat_features, _, _ = next(iter(train_loader))
 
-        assert torch.tensor([[0], [3]]).equal(cat_features)  # type: ignore
+        assert torch.tensor([[0], [3]]).equal(cat_features)
 
     def test_no_cat_features(self) -> None:
         """Test, if data loader can be created without categorical features.

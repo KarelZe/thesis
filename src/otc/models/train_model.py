@@ -100,7 +100,7 @@ def main(
 
     logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
 
-    run = wandb.init(  # type: ignore
+    run = wandb.init(
         project=settings.WANDB_PROJECT, entity=settings.WANDB_ENTITY, name=id
     )
 
@@ -113,7 +113,8 @@ def main(
         artifact_study = run.use_artifact(id + ".optuna:latest")
         artifact_dir = artifact_study.download()
 
-        saved_study = pickle.load(open(Path(artifact_dir, id + ".optuna"), "rb"))
+        with Path(artifact_dir / id + ".optuna").open(mode="rb") as f:
+            saved_study = pickle.load(f)
         sampler = saved_study.sampler
 
     # select right feature set
@@ -219,7 +220,7 @@ def main(
     logger.info("writing artifacts to weights and biases. 🗃️")
 
     # provide summary statistics
-    wandb.run.summary.update(  # type: ignore
+    wandb.run.summary.update(
         {
             "best_accuracy": study.best_trial.value,
             "best_trial": study.best_trial.number,
@@ -233,7 +234,7 @@ def main(
         }
     )
 
-    wandb.log(  # type: ignore
+    wandb.log(
         {
             "plot_optimization_history": optuna.visualization.plot_optimization_history(
                 study
@@ -252,7 +253,7 @@ def main(
 
 if __name__ == "__main__":
 
-    with open("logging.yaml") as file:
+    with Path.open("logging.yaml") as file:
         loaded_config = yaml.safe_load(file)
         logging.config.dictConfig(loaded_config)
 

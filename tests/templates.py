@@ -34,8 +34,7 @@ class NeuralNetTestsMixin:
     def get_outputs(self) -> torch.Tensor:
         """Return relevant output of model.
 
-        Returns
-        -------
+        Returns:
             torch.Tensor: outputs
         """
         return self.net(self.x_cat.clone(), self.x_cont.clone())

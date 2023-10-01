@@ -72,8 +72,7 @@ class TestDataLoader:
             )
 
     def test_invalid_unique_count(self) -> None:
-        """Test, if an error is raised if length of 'cat_features' and 'cat_unique_counts'\
-        do not match.
+        """Test, if an error is raised if length of 'cat_features' and 'cat_unique_counts' do not match.
 
         Models like TabTransformer require to know the number of unique values for each
         categorical feature, as it used in the embedding layer.
@@ -112,7 +111,7 @@ class TestDataLoader:
 
         true_x_cat = torch.tensor([[0], [3], [6]])
 
-        assert true_x_cat.equal(training_data.x_cat)  # type: ignore
+        assert true_x_cat.equal(training_data.x_cat)
 
     def test_no_cat_features(self) -> None:
         """Test, if data loader can be created without categorical features.
@@ -154,15 +153,13 @@ class TestDataLoader:
         assert data.weight.equal(torch.ones(length))
 
     def test_no_feature_names(self) -> None:
-        """Test, if no feature names are provided, feature names are inferred from\
-        the `pd.DataFrame`.
-        """
+        """Test, if no feature names are provided, feature names are inferred from the `pd.DataFrame`."""
         length = 10
         x = pd.DataFrame(np.arange(30).reshape(length, 3), columns=["A", "B", "C"])
         y = pd.Series(np.arange(length))
         data = TabDataset(x=x, y=y, cat_features=["C"], cat_unique_counts=(1,))
         assert data.x_cont.shape == (length, 2)
-        assert data.x_cat.shape == (length, 1)  # type: ignore
+        assert data.x_cat.shape == (length, 1)
 
     def test_feature_names(self) -> None:
         """Test, column selection wiht feature_names for `np.array`s."""
@@ -177,7 +174,7 @@ class TestDataLoader:
             cat_unique_counts=(1,),
         )
         assert data.x_cont.shape == (length, 2)
-        assert data.x_cat.shape == (length, 1)  # type: ignore
+        assert data.x_cat.shape == (length, 1)
 
     def test_empty_feature_names(self) -> None:
         """Test, if assertation is raised if resulting feature_names are empty.
@@ -195,9 +192,7 @@ class TestDataLoader:
             )
 
     def test_overlong_cat_features(self) -> None:
-        """Test, if assertation is raised if `cat_feature` is provided, that is not in\
-        `feature_names`. Might be a typo.
-        """
+        """Test, if assertation is raised if `cat_feature` is provided, that is not in `feature_names`. Might be a typo."""
         length = 10
         x = pd.DataFrame(np.arange(30).reshape(length, 3), columns=["A", "B", "C"])
         y = pd.Series(np.arange(length))

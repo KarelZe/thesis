@@ -34,7 +34,6 @@ class TabDataset(Dataset):
         https://catboost.ai/en/docs/concepts/python-reference_pool
 
         Args:
-        ----
             x (pd.DataFrame | npt.ndarray): feature matrix
             y (pd.Series | npt.ndarray): target
             weight (pd.Series | npt.ndarray | None, optional): weights of samples. If
@@ -114,8 +113,7 @@ class TabDataset(Dataset):
     def __len__(self) -> int:
         """Length of dataset.
 
-        Returns
-        -------
+        Returns:
             int: length
         """
         return len(self.x_cont)
@@ -126,11 +124,9 @@ class TabDataset(Dataset):
         """Get sample for model.
 
         Args:
-        ----
             idx (int): index of item.
 
         Returns:
-        -------
             Tuple[torch.Tensor | None, torch.Tensor, torch.Tensor torch.Tensor]:
             x_cat (if present if present otherwise None), x_cont, weight and y.
         """

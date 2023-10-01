@@ -30,10 +30,11 @@ class TabDataLoader:
         Tensors can be None e. g., if there is no categorical data.
 
         Args:
-        ----
             batch_size (int, optional): size of batch. Defaults to 4096.
             shuffle (bool, optional): shuffle data. Defaults to False.
             device (str, optional): device where. Defaults to "cpu".
+            **kwargs: keyword arguments
+            *tensors: tensors
         """
         self.device = device
         # check for tensors that are None
@@ -57,8 +58,7 @@ class TabDataLoader:
     def __iter__(self) -> TabDataLoader:
         """Return itself.
 
-        Returns
-        -------
+        Returns:
             TabDataLoader: TabDataLoader
         """
         if self.shuffle:
@@ -73,12 +73,10 @@ class TabDataLoader:
 
         Batches can be underful.
 
-        Raises
-        ------
+        Raises:
             StopIteration: stopping criterion.
 
-        Returns
-        -------
+        Returns:
             Tuple[torch.Tensor | None, torch.Tensor, torch.Tensor]: (X_cat), X_cont,
             weight, y
         """
@@ -99,8 +97,7 @@ class TabDataLoader:
     def __len__(self) -> int:
         """Get number of full and partial batches in data set.
 
-        Returns
-        -------
+        Returns:
             int: number of batches.
         """
         return self.n_batches

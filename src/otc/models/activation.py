@@ -25,11 +25,9 @@ class GeGLU(nn.Module):
         """Forward pass of GeGlU activation.
 
         Args:
-        ----
             x (torch.Tensor): input tensor.
 
         Returns:
-        -------
             torch.Tensor: output tensor.
         """
         assert x.shape[-1] % 2 == 0
@@ -53,11 +51,9 @@ class ReGLU(nn.Module):
         """Forward pass of GeGlU activation.
 
         Args:
-        ----
             x (torch.Tensor): input tensor.
 
         Returns:
-        -------
             torch.Tensor: output tensor.
         """
         assert x.shape[-1] % 2 == 0

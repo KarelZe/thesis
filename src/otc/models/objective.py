@@ -31,11 +31,9 @@ def set_seed(seed_val: int = 42) -> int:
     """Seeds basic parameters for reproducibility of results.
 
     Args:
-    ----
         seed_val (int, optional): random seed used in rngs. Defaults to 42.
 
     Returns:
-    -------
         int: seed
     """
     # python
@@ -64,7 +62,6 @@ class Objective:
     """Generic implementation of objective.
 
     Args:
-    ----
         ABC (abstract): abstract class
     """
 
@@ -81,13 +78,13 @@ class Objective:
         """Initialize objective.
 
         Args:
-        ----
             x_train (pd.DataFrame): feature matrix (train)
             y_train (pd.Series): ground truth (train)
             x_val (pd.DataFrame): feature matrix (val)
             y_val (pd.Series): ground truth (val)
             name (str, optional): Name of objective. Defaults to "default".
             pretrain (bool, optional): Whether to pretrain. Defaults to False.
+            **kwargs: arguments
         """
         self.x_train, self.y_train, self.x_val, self.y_val, = (
             x_train,
@@ -106,7 +103,6 @@ class Objective:
         """Perform operations at the end of trail.
 
         Args:
-        ----
             study (optuna.Study): current study.
             trial (optuna.trial.Trial | optuna.trial.FrozenTrial): current trial.
         """
@@ -119,7 +115,6 @@ class FTTransformerObjective(Objective):
     See here: https://optuna.readthedocs.io/en/stable/
 
     Args:
-    ----
         Objective (Objective): objective
     """
 
@@ -137,7 +132,6 @@ class FTTransformerObjective(Objective):
         """Initialize objective.
 
         Args:
-        ----
             x_train (pd.DataFrame): feature matrix (train)
             y_train (pd.Series): ground truth (train)
             x_val (pd.DataFrame): feature matrix (val)
@@ -168,11 +162,9 @@ class FTTransformerObjective(Objective):
         Hyperarameters are suggested, unless they are fixed.
 
         Args:
-        ----
             trial (optuna.Trial): current trial.
 
         Returns:
-        -------
             float: accuracy of trial on validation set.
         """
         # https://arxiv.org/pdf/2106.11959v2.pdf page 18  (B)
@@ -233,8 +225,8 @@ class FTTransformerObjective(Objective):
         }
 
         module_params = {
-            "transformer": Transformer(**transformer_kwargs),  # type: ignore
-            "feature_tokenizer": FeatureTokenizer(**feature_tokenizer_kwargs),  # type: ignore
+            "transformer": Transformer(**transformer_kwargs),
+            "feature_tokenizer": FeatureTokenizer(**feature_tokenizer_kwargs),
             "cat_features": self._cat_features,
             "cat_cardinalities": self._cat_cardinalities,
             "d_token": d_token,
@@ -247,7 +239,7 @@ class FTTransformerObjective(Objective):
             module_params=module_params,
             optim_params=optim_params,
             dl_params=dl_params,
-            callbacks=self._callbacks,  # type: ignore
+            callbacks=self._callbacks,
             pretrain=self._pretrain,
         )
 
@@ -257,7 +249,7 @@ class FTTransformerObjective(Objective):
             eval_set=(self.x_val, self.y_val),
         )
 
-        return self._clf.score(self.x_val, self.y_val)  # type: ignore
+        return self._clf.score(self.x_val, self.y_val)
 
 
 class ClassicalObjective(Objective):
@@ -266,7 +258,6 @@ class ClassicalObjective(Objective):
     See here: https://optuna.readthedocs.io/en/stable/
 
     Args:
-    ----
         Objective (Objective): objective
     """
 
@@ -283,13 +274,13 @@ class ClassicalObjective(Objective):
         """Initialize objective.
 
         Args:
-        ----
             x_train (pd.DataFrame): feature matrix (train)
             y_train (pd.Series): ground truth (train)
             x_val (pd.DataFrame): feature matrix (val)
             y_val (pd.Series): ground truth (val)
             name (str, optional): Name of objective. Defaults to "default".
             pretrain (bool, optional): Whether to pretrain. Defaults to False.
+            **kwargs: keyword arguments
         """
         self._callbacks = CallbackContainer([SaveCallback()])
         super().__init__(x_train, y_train, x_val, y_val, name, pretrain)
@@ -300,11 +291,9 @@ class ClassicalObjective(Objective):
         Hyperarameters are suggested, unless they are fixed.
 
         Args:
-        ----
             trial (optuna.Trial): current trial.
 
         Returns:
-        -------
             float: accuracy of trial on validation set.
         """
         # see https://github.com/optuna/optuna/issues/3093#issuecomment-968075749
@@ -388,7 +377,6 @@ class GradientBoostingObjective(Objective):
     See here: https://optuna.readthedocs.io/en/stable/
 
     Args:
-    ----
         Objective (Objective): objective
     """
 
@@ -406,7 +394,6 @@ class GradientBoostingObjective(Objective):
         """Initialize objective.
 
         Args:
-        ----
             x_train (pd.DataFrame): feature matrix (train)
             y_train (pd.Series): ground truth (train)
             x_val (pd.DataFrame): feature matrix (val)
@@ -415,6 +402,7 @@ class GradientBoostingObjective(Objective):
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
             pretrain (bool, optional): Whether to pretrain. Defaults to False.
+            **kwargs: keyword arguments
         """
         # decay weight of very old observations in training set. See eda notebook.
         weight = np.geomspace(0.001, 1, num=len(y_train))
@@ -450,11 +438,9 @@ class GradientBoostingObjective(Objective):
         Hyperarameters are suggested, unless they are fixed.
 
         Args:
-        ----
             trial (optuna.Trial): current trial.
 
         Returns:
-        -------
             float: accuracy of trial on validation set.
         """
         # https://catboost.ai/en/docs/features/training-on-gpu
@@ -487,7 +473,7 @@ class GradientBoostingObjective(Objective):
         }
 
         # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
-        self._clf = CatBoostClassifier(**kwargs_cat)  # type: ignore
+        self._clf = CatBoostClassifier(**kwargs_cat)
 
         if self.pretrain:
             self_train_clf = SelfTrainingClassifier(
@@ -503,4 +489,4 @@ class GradientBoostingObjective(Objective):
             )
 
         # calculate accuracy
-        return self._clf.score(self._val_pool)  # type: ignore
+        return self._clf.score(self._val_pool)

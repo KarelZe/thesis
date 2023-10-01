@@ -55,7 +55,6 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         """Initialize a SelfTrainingClassifier.
 
         Args:
-        ----
             base_estimator (BaseEstimator): An estimator object implementing
             fit and predict_proba. Invoking the fit method will fit a clone of
             the passed estimator, which will be stored in the base_estimator_
@@ -92,21 +91,19 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         """Fit self-training classifier using `X`, `y` as training data.
 
         Args:
-        ----
             train_set (dict) dict with training data
             eval_set (Pool): pool of validation data
+            **kwargs: keyword arguments
 
         Raises:
-        ------
             ValueError: warning for wrong datatype
 
         Returns:
-        -------
             SelfTrainingClassifier: self
         """
         # get features, labels etc from trian set
         X = train_set["data"]
-        y = train_set["label"].values
+        y = train_set["label"].to_numpy()
         weight = train_set["weight"]
         cat_features = train_set["cat_features"]
 
@@ -217,11 +214,9 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         """Perform classification on test vectors `X`.
 
         Args:
-        ----
             X (npt.NDArray | pd.DataFrame): feature matrix.
 
         Returns:
-        -------
             npt.NDArray: Predicted traget values for X.
         """
         check_is_fitted(self)
@@ -238,11 +233,9 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         """Predict class probabilities for X.
 
         Args:
-        ----
             X (npt.NDArray | pd.DataFrame): feature matrix
 
         Returns:
-        -------
             npt.NDArray: probabilities
         """
         check_is_fitted(self)

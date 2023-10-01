@@ -2,9 +2,9 @@
 
 Looks into .bib and .tex files.
 """
-import glob
 import os
 import re
+from pathlib import Path
 from urllib.error import HTTPError
 from urllib.request import urlopen
 
@@ -14,7 +14,7 @@ import typer
 def loc_urls() -> dict:
     """Locate all urls in .bib and .tex files located in /reports dir.
 
-    Returns
+    Returns:
     -------
         dict: Dict with filename as key and list of urls as values.
     """
@@ -26,9 +26,7 @@ def loc_urls() -> dict:
 
     # find all .bib and .tex files
     os.chdir("../../../reports")
-    files = glob.glob("./**/*.tex", recursive=True) + glob.glob(
-        "./**/*.bib", recursive=True
-    )
+    files = Path.rglob("./**/*.tex") + Path.rglob("./**/*.bib")
 
     typer.echo(f"files checked: {files}")
 
@@ -36,7 +34,7 @@ def loc_urls() -> dict:
     matches_per_file = {}
 
     for fname in files:
-        with open(fname, encoding="utf8") as infile:
+        with Path.open(fname, encoding="utf8") as infile:
             file_contents = infile.read()
             matches = re.findall(r, file_contents)
 
@@ -51,7 +49,6 @@ def check_urls(urls: dict) -> None:
     """Check if urls can be resolved.
 
     Args:
-    ----
         urls (dict): dict with filename as key and list of urls
     """
     for filename, urls_in_file in urls.items():

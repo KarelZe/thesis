@@ -5,8 +5,7 @@ Can be used as a consistent interface for evaluation and tuning.
 from __future__ import annotations
 
 import gc
-import glob
-import os
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -51,7 +50,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         """Initialize the model.
 
         Args:
-        ----
             module (nn.Module): module to instantiate
             module_params (dict[str, Any]): params for module
             optim_params (dict[str, Any]): params for optimizer
@@ -91,12 +89,12 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         """Write weights and biases to checkpoint."""
         # remove old files
         print("deleting old checkpoints.")
-        for filename in glob.glob("checkpoints/tf_clf*"):
-            os.remove(filename)
+        for filename in Path.glob("checkpoints/tf_clf*"):
+            Path.unlink(filename)
 
         # create_dir
         dir_checkpoints = "checkpoints/"
-        os.makedirs(dir_checkpoints, exist_ok=True)
+        Path.mkdir(dir_checkpoints, exist_ok=True, parents=True)
 
         # save new file
         print("saving new checkpoint.")
@@ -105,7 +103,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
     def _checkpoint_restore(self) -> None:
         """Restore weights and biases from checkpoint."""
         print("restore from checkpoint.")
-        cp = glob.glob("checkpoints/tf_clf*")
+        cp = Path.glob("checkpoints/tf_clf*")
         self.clf.load_state_dict(torch.load(cp[0]))
 
     def array_to_dataloader_finetune(
@@ -117,14 +115,12 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         """Convert array like to dataloader.
 
         Args:
-        ----
             X (npt.NDArray | pd.DataFrame): feature matrix
             y (npt.NDArray | pd.Series): target vector
             weight (npt.NDArray | None, optional): weights for each sample.
             Defaults to None.
 
         Returns:
-        -------
             TabDataLoader: data loader.
         """
         data = TabDataset(
@@ -209,7 +205,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         """Fit the model.
 
         Args:
-        ----
             X (npt.NDArray | pd.DataFrame): feature matrix
             y (npt.NDArray | pd.Series): target
             eval_set (tuple[npt.NDArray, npt.NDArray] |
@@ -217,7 +212,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             If no eval set is passed, the training set is used.
 
         Returns:
-        -------
             TransformerClassifier: self
         """
         # get features from pd.DataFrame, if not provided
@@ -332,7 +326,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                     with torch.autocast(device_type="cuda", dtype=torch.float16):
                         logits = self.clf(x_cat, x_cont)
-                        train_loss = criterion(logits, mask.float())  # type: ignore[union-attr]
+                        train_loss = criterion(logits, mask.float())
 
                     scaler.scale(train_loss).backward()
                     scaler.step(optimizer)
@@ -358,7 +352,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                         # for my implementation
                         logits = self.clf(x_cat, x_cont)
-                        val_loss = criterion(logits, mask.float())  # type: ignore[union-attr]
+                        val_loss = criterion(logits, mask.float())
                         loss_in_epoch_val += val_loss.item()
 
                         # accuracy
@@ -595,7 +589,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         """Predict class labels for X.
 
         Args:
-        ----
             X (npt.NDArray | pd.DataFrame): feature matrix
         Returns:
             npt.NDArray: labels
@@ -610,7 +603,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         """Predict class probabilities for X.
 
         Args:
-        ----
             X (npt.NDArray | pd.DataFrame): feature matrix
         Returns:
             npt.NDArray: probabilities
@@ -635,4 +627,4 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 probabilites.append(probability.detach().cpu().numpy())
 
         probabilites = np.concatenate(probabilites)
-        return np.column_stack((1 - probabilites, probabilites))  # type: ignore
+        return np.column_stack((1 - probabilites, probabilites))

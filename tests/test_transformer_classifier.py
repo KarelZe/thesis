@@ -54,7 +54,7 @@ Use of artificial data to test the classifier.
 
 #     with patch.object(TransformerClassifier, "epochs", 5):
 #         self.clf = TransformerClassifier(
-#             module=FTTransformer,  # type: ignore
+#             module=FTTransformer,
 #             module_params=module_params,
 #             optim_params=optim_params,
 #             dl_params=dl_params,

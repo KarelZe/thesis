@@ -2,9 +2,9 @@
 
 TODO: add more tests.
 """
-import glob
 import os
 import re
+from pathlib import Path
 
 import typer
 
@@ -13,7 +13,6 @@ def check_citation(file_name: str, file_contents: str) -> None:
     r"""Check if all citations include page counts.
 
     Args:
-    ----
         file_name (str): file name
         file_contents (str): contents of file
     """
@@ -42,7 +41,6 @@ def check_formulae(file_name: str, file_contents: str) -> None:
     Avoid use of `mathrm` (instead of `textit`).
 
     Args:
-    ----
         file_name (str): file name
         file_contents (str): contents of file
     """
@@ -61,7 +59,6 @@ def check_acronyms(file_name: str, file_contents: str, acronyms: list) -> None:
     r"""Check for acronyms in text that don't use `\gls{acr}` or `\gls{acr}` wrapping.
 
     Args:
-    ----
         file_name (str): file name
         file_contents (str): content of file
         acronyms (list): list with acronyms
@@ -86,7 +83,6 @@ def check_hyphens(file_name: str, file_contents: str, vocabulary: list) -> None:
     E. g., semi-supervised and semisupervised. (true) semi supervised (false).
 
     Args:
-    ----
         file_name (str): file name
         file_contents (str): file content
         vocabulary (list): vocabulary in document
@@ -112,7 +108,6 @@ def check_refs(file_name: str, file_contents: str) -> None:
     """Check if there are references to tables, figures, appendix in lower-case letters.
 
     Args:
-    ----
         file_name (str): file name
         file_contents (str): file contents
     """
@@ -132,12 +127,11 @@ def check_refs(file_name: str, file_contents: str) -> None:
 def loc_files() -> dict:
     """Locate all urls in .tex files located in /reports dir.
 
-    Returns
-    -------
+    Returns:
         dict: Dict with filename as key and file contents as values.
     """
     os.chdir("../../../reports")
-    files = glob.glob("./**/*.tex", recursive=True)
+    files = Path.glob("./**/*.tex")
 
     typer.echo(f"files checked: {files}")
 
@@ -145,7 +139,7 @@ def loc_files() -> dict:
     matches_per_file = {}
 
     for fname in files:
-        with open(fname, encoding="latin1") as infile:
+        with Path.open(fname, encoding="latin1") as infile:
             file_contents = infile.read()
             matches_per_file[fname] = file_contents
 
@@ -157,11 +151,9 @@ def get_acronyms(files: dict) -> list:
     """Get acroynms from .tex file in lower-case.
 
     Args:
-    ----
         files (dict): dict with filenames and file contents
 
     Returns:
-    -------
         list: list with acroynms
     """
     rough_matches = re.findall(r"\\newacronym.+", str(files.get(".\\expose.tex")))
@@ -174,11 +166,9 @@ def get_vocabulary(files: dict) -> list:
     """Get vocabulary in lower-case from files.
 
     Args:
-    ----
         files (dict): dict with filename and file contents
 
     Returns:
-    -------
         list: list in lower-case of vocabulary
     """
     vocab = []
@@ -192,8 +182,9 @@ def check_formalia(files: dict, vocabulary: list, acronyms: list) -> None:
     """Check if formalia is fullfilled.
 
     Args:
-    ----
         files (dict): dict with filename as key and list of urls
+        vocabulary (list): list of words in vocabulary
+        acronyms (list): list of acronyms
     """
     for file_name, file_contents in files.items():
 

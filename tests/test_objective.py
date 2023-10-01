@@ -1,6 +1,6 @@
 """Tests for Objectives."""
 import datetime as dt
-import os
+from pathlib import Path
 from unittest.mock import patch
 
 import numpy as np
@@ -28,7 +28,7 @@ class TestObjectives:
 
         Construct feature matrix and target.
         """
-        self._old_cwd = os.getcwd()
+        self._old_cwd = Path.cwd()
         start = dt.datetime(2020, 1, 1).replace(tzinfo=dt.timezone.utc)
         end = dt.datetime(2021, 12, 31).replace(tzinfo=dt.timezone.utc)
         index = pd.date_range(start=start, end=end, freq="15min")

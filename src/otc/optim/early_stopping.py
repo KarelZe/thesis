@@ -23,7 +23,6 @@ class EarlyStopping:
         """Implement early stopping.
 
         Args:
-        ----
             patience (int, optional): number of epochs to wait. Defaults to 5.
             min_delta (float, optional): minimum difference between old and new loss.
             Defaults to 0.
@@ -38,7 +37,6 @@ class EarlyStopping:
         """Tracks, whether training should be aborted.
 
         Args:
-        ----
             val_loss (float): validation loss of current epoch.
         """
         if math.isnan(self.best_loss):

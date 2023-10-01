@@ -48,7 +48,7 @@ def effective_spread(
     s = 2 * (trade_price - fundamental_value) * y_pred
     if mode == "nominal":
         return np.nanmean(s)
-    elif mode == "relative":
+    if mode == "relative":
         # nan when div by zero https://stackoverflow.com/a/54364060/5755604
         ps = np.empty(y_pred.shape)
         np.divide(s, fundamental_value, out=ps, where=fundamental_value != 0)

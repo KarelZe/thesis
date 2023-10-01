@@ -15,8 +15,7 @@ from dotenv import find_dotenv, load_dotenv
 @click.argument("input_filepath", type=click.Path(exists=True))
 @click.argument("output_filepath", type=click.Path())
 def main(input_filepath: click.Path, output_filepath: click.Path) -> None:
-    """Run data processing scripts to turn raw data from (../raw) into\
-    cleaned data ready to be analyzed (saved in ../processed).
+    """Run data processing scripts to turn raw data from (../raw) into cleaned data ready to be analyzed (saved in ../processed).
 
     Args:
     ----
@@ -29,7 +28,7 @@ def main(input_filepath: click.Path, output_filepath: click.Path) -> None:
 
 if __name__ == "__main__":
 
-    with open("logging.yaml") as file:
+    with Path("logging.yaml").open() as file:
         loaded_config = yaml.safe_load(file)
         logging.config.dictConfig(loaded_config)
 

@@ -89,7 +89,7 @@ class TestClassicalClassifier(ClassifierMixin):
             layers=[("foo", "all")],
             random_state=42,
         )
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match=r"Unknown function string"):
             classifier.fit(self.x_train, self.y_train)
 
     def test_invalid_subset(self) -> None:
@@ -102,7 +102,7 @@ class TestClassicalClassifier(ClassifierMixin):
             layers=[("tick", "bar")],
             random_state=42,
         )
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match=r"Unknown subset"):
             classifier.fit(self.x_train, self.y_train)
 
     def test_invalid_col_length(self) -> None:
@@ -116,7 +116,7 @@ class TestClassicalClassifier(ClassifierMixin):
         classifier = ClassicalClassifier(
             layers=[("tick", "all")], random_state=42, features=["one"]
         )
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, math=r"Expected"):
             classifier.fit(self.x_train.values, self.y_train.values)
 
     def test_override(self) -> None:
@@ -196,7 +196,6 @@ class TestClassicalClassifier(ClassifierMixin):
         Tests cases where prev. trade price is higher, lower, equal or missing.
 
         Args:
-        ----
             subset (str): subset e. g., 'ex'
         """
         x_train = pd.DataFrame(
@@ -224,7 +223,6 @@ class TestClassicalClassifier(ClassifierMixin):
         Tests cases where suc. trade price is higher, lower, equal or missing.
 
         Args:
-        ----
             subset (str): subset e. g., 'ex'
         """
         x_train = pd.DataFrame(
@@ -251,7 +249,6 @@ class TestClassicalClassifier(ClassifierMixin):
         Tests cases where prev. trade price is higher, lower, equal or missing.
 
         Args:
-        ----
             subset (str): subset e. g., 'ex'
         """
         x_train = pd.DataFrame(
@@ -285,7 +282,6 @@ class TestClassicalClassifier(ClassifierMixin):
         Tests cases where both quote rule and tick rule all are used.
 
         Args:
-        ----
             subset (str): subset e. g., 'ex'
         """
         x_train = pd.DataFrame(
@@ -312,7 +308,6 @@ class TestClassicalClassifier(ClassifierMixin):
         Tests cases where both quote rule and tick rule all are used.
 
         Args:
-        ----
             subset (str): subset e. g., 'ex'
         """
         x_train = pd.DataFrame(
@@ -346,8 +341,7 @@ class TestClassicalClassifier(ClassifierMixin):
         Tests cases where both quote rule at bid or ask and tick rule all are used.
 
         Args:
-        ----
-            subset (str): subset e. g., 'ex'
+            subset (str): subset e.g., best
         """
         x_train = pd.DataFrame(
             [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
@@ -385,7 +379,6 @@ class TestClassicalClassifier(ClassifierMixin):
         Tests cases where both quote rule at bid or ask and rev. tick rule all are used.
 
         Args:
-        ----
             subset (str): subset e. g., 'ex'
         """
         x_train = pd.DataFrame(
@@ -419,7 +412,6 @@ class TestClassicalClassifier(ClassifierMixin):
         Tests cases where both quote rule and  tick rule all are used.
 
         Args:
-        ----
             subset (str): subset e. g., 'ex'
         """
         x_train = pd.DataFrame(
@@ -453,7 +445,6 @@ class TestClassicalClassifier(ClassifierMixin):
         Tests cases where both quote rule and rev. tick rule all are used.
 
         Args:
-        ----
             subset (str): subset e. g., 'ex'
         """
         x_train = pd.DataFrame(

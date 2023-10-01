@@ -11,7 +11,7 @@ from typing import Any, Callable, cast
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+import torch.nn.functional as F  # noqa: N812
 import torch.optim
 
 from otc.models.activation import GeGLU, ReGLU
@@ -86,7 +86,6 @@ class _TokenInitialization(enum.Enum):
         """Initiliaze the tensor with specific initialization scheme.
 
         Args:
-        ----
             x (torch.Tensor): input tensor
             d (int): degree of quare root
         """
@@ -121,7 +120,6 @@ class NumericalFeatureTokenizer(nn.Module):
         """Initialize the module.
 
         Args:
-        ----
             n_features (int): number of continuous (scalar) features
             d_token (int): size of one token
             bias (bool): if `False`, then the transformation will include only
@@ -145,8 +143,7 @@ class NumericalFeatureTokenizer(nn.Module):
     def n_tokens(self) -> int:
         """Calculate the number of tokens.
 
-        Returns
-        -------
+        Returns:
             int: no. of tokens.
         """
         return len(self.weight)
@@ -155,8 +152,7 @@ class NumericalFeatureTokenizer(nn.Module):
     def d_token(self) -> int:
         """Calculate the dimension of the token.
 
-        Returns
-        -------
+        Returns:
             int: dimension of token.
         """
         return self.weight.shape[1]
@@ -167,11 +163,9 @@ class NumericalFeatureTokenizer(nn.Module):
         Multiply the input tensor by the weight and add the bias.
 
         Args:
-        ----
             x (torch.Tensor): input tensor.
 
         Returns:
-        -------
             torch.Tensor: output tensor.
         """
         x = self.weight[None] * x[..., None]
@@ -199,7 +193,6 @@ class CategoricalFeatureTokenizer(nn.Module):
         """Initialize the module.
 
         Args:
-        ----
             cardinalities (list[int]): the number of distinct values for each feature.
             For example, `cardinalities=[3, 4]` describes two features: the first one
             can take values in the range `[0, 1, 2]` and the second one can take values
@@ -233,8 +226,7 @@ class CategoricalFeatureTokenizer(nn.Module):
     def n_tokens(self) -> int:
         """Calculate the number of tokens.
 
-        Returns
-        -------
+        Returns:
             int: number of tokens.
         """
         return len(self.category_offsets)
@@ -243,8 +235,7 @@ class CategoricalFeatureTokenizer(nn.Module):
     def d_token(self) -> int:
         """Calculate the dimension of the token.
 
-        Returns
-        -------
+        Returns:
             int: dimension of token.
         """
         return self.embeddings.embedding_dim
@@ -255,11 +246,9 @@ class CategoricalFeatureTokenizer(nn.Module):
         Calculate embedding from input vector and category offset and add bias.
 
         Args:
-        ----
             x (torch.Tensor): input tensor.
 
         Returns:
-        -------
             torch.Tensor: output tensor.
         """
         x = self.embeddings(x + self.category_offsets[None])
@@ -285,13 +274,13 @@ class FeatureTokenizer(nn.Module):
         """Initialize the module.
 
         Args:
-        ----
             num_continous (int): number of continuous features. Pass `0` if there
                 are no numerical features.
             cat_cardinalities (list[int]): number of unique values for each feature. See
                 `CategoricalFeatureTokenizer` for details. Pass an empty list if there
                 are no categorical features.
             d_token (int): size of one token.
+            **kwargs: keyword arguments
         """
         super().__init__()
         assert num_continous >= 0, "n_num_features must be non-negative"
@@ -322,8 +311,7 @@ class FeatureTokenizer(nn.Module):
     def n_tokens(self) -> int:
         """Calculate the number of tokens.
 
-        Returns
-        -------
+        Returns:
             int: number of tokens.
         """
         return sum(
@@ -336,12 +324,11 @@ class FeatureTokenizer(nn.Module):
     def d_token(self) -> int:
         """Calculate the dimension of the token.
 
-        Returns
-        -------
+        Returns:
             int: dimension of token.
         """
         return (
-            self.cat_tokenizer.d_token  # type: ignore
+            self.cat_tokenizer.d_token
             if self.num_tokenizer is None
             else self.num_tokenizer.d_token
         )
@@ -352,7 +339,6 @@ class FeatureTokenizer(nn.Module):
         """Perform the forward pass.
 
         Args:
-        ----
             x_num (torch.Tensor | None): continuous features. Must be presented
             if `n_num_features > 0` was passed to the constructor.
             x_cat (torch.Tensor | None): categorical features
@@ -360,7 +346,6 @@ class FeatureTokenizer(nn.Module):
             if non-empty `cat_cardinalities` was passed to the constructor.
 
         Returns:
-        -------
             torch.Tensor: tokens.
         """
         assert (
@@ -386,7 +371,7 @@ class CLSToken(nn.Module):
     To learn about the [CLS]-based inference, see [devlin2018bert]. When used as a
     module, the [CLS]-token is appended **to the end** of each item in the batch.
 
-    References
+    References:
     ----------
         * [devlin2018bert] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova
          "BERT: Pre-training of Deep Bidirectional Transformers for Language
@@ -397,7 +382,6 @@ class CLSToken(nn.Module):
         """Initialize the module.
 
         Args:
-        ----
             d_token (int): size of token.
             initialization (str): initialization policy for parameters. Must be one of
             `['uniform', 'normal']`. Let `s = d ** -0.5`. Then, the corresponding
@@ -417,13 +401,11 @@ class CLSToken(nn.Module):
         examples of usage.
 
         Note:
-        ----
             Under the hood, the `torch.torch.Tensor.expand` method is applied to the
             underlying `weight` parameter, so gradients will be propagated as
             expected.
 
         Args:
-        ----
             leading_dimensions: the additional new dimensions
         Returns:
             torch.Tensor: tensor with shape [*leading_dimensions, len(self.weight)]
@@ -437,11 +419,9 @@ class CLSToken(nn.Module):
         """Append self **to the end** of each item in the batch (see `CLSToken`).
 
         Args:
-        ----
             x (torch.Tensor): input tensor.
 
         Returns:
-        -------
             torch.Tensor: output tensor.
         """
         return torch.cat([x, self.expand(len(x), 1)], dim=1)
@@ -456,7 +436,7 @@ class MultiheadAttention(nn.Module):
     the compression technique from [wang2020linformer] to speed up the module when the
     number of tokens is large.
 
-    References
+    References:
     ----------
         * [devlin2018bert] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova
         "BERT: Pre-training
@@ -478,7 +458,6 @@ class MultiheadAttention(nn.Module):
         """Initialize the module.
 
         Args:
-        ----
             d_token (int): token size. Must be a multiple of `n_heads`.
             n_heads (int): the number of heads. If greater than 1, then the module will
             have an addition output layer (so called "mixing" layer).
@@ -525,7 +504,6 @@ class MultiheadAttention(nn.Module):
         """Save attention probabilities tensor.
 
         Args:
-        ----
             attn (torch): attention probabilities.
         """
         self.attn = attn
@@ -538,7 +516,6 @@ class MultiheadAttention(nn.Module):
         """Save attention gradients tensor.
 
         Args:
-        ----
             attn_gradients (torch.Tensor): attention gradients.
         """
         self.attn_gradients = attn_gradients
@@ -551,11 +528,9 @@ class MultiheadAttention(nn.Module):
         """Reshape the input tensor to the shape [].
 
         Args:
-        ----
             x (torch.Tensor): input tensor.
 
         Returns:
-        -------
             torch.Tensor: output tensor.
         """
         batch_size, n_tokens, d = x.shape
@@ -576,7 +551,6 @@ class MultiheadAttention(nn.Module):
         """Perform the forward pass.
 
         Args:
-        ----
             x_q (torch.Tensor): query tokens
             x_kv (torch.Tensor): key-value tokens
             key_compression (nn.Linear | None): Linformer-style compression for keys
@@ -584,7 +558,6 @@ class MultiheadAttention(nn.Module):
             values
 
         Returns:
-        -------
             Tuple[torch.Tensor, Dict[str, torch.Tensor]]: Tuple with tokens and
             attention_stats
         """
@@ -596,7 +569,7 @@ class MultiheadAttention(nn.Module):
             assert tensor.shape[-1] % self.n_heads == 0, _INTERNAL_ERROR_MESSAGE
         if key_compression is not None:
             k = key_compression(k.transpose(1, 2)).transpose(1, 2)
-            v = value_compression(v.transpose(1, 2)).transpose(1, 2)  # type: ignore
+            v = value_compression(v.transpose(1, 2)).transpose(1, 2)
 
         batch_size = len(q)
         d_head_key = k.shape[-1] // self.n_heads
@@ -651,8 +624,7 @@ class Transformer(nn.Module):
             """Initialize the module.
 
             Args:
-            ----
-                d_token (int): dimensionality of token.
+                    d_token (int): dimensionality of token.
                 d_hidden (int): dimensionality of hidden layers.
                 bias_first (bool): flag indicating whether to use bias in the first
                 bias_second (bool): flag indicating whether to use bias in the second
@@ -673,11 +645,9 @@ class Transformer(nn.Module):
             """Perform the forward pass.
 
             Args:
-            ----
-                x (torch.Tensor): input tensor.
+                    x (torch.Tensor): input tensor.
 
             Returns:
-            -------
                 torch.Tensor: output tensor.
             """
             x = self.linear_first(x)
@@ -700,8 +670,7 @@ class Transformer(nn.Module):
             """Initialize the module.
 
             Args:
-            ----
-                d_in (int): dimension of the input
+                    d_in (int): dimension of the input
                 bias (bool): add bias to the linear layer
                 activation (Callable[..., nn.Module]): activation function
                 normalization (Callable[..., nn.Module]): normalization layer
@@ -716,11 +685,9 @@ class Transformer(nn.Module):
             """Perform the forward pass.
 
             Args:
-            ----
-                x (torch.Tensor): input tensor.
+                    x (torch.Tensor): input tensor.
 
             Returns:
-            -------
                 torch.Tensor: output tensor.
             """
             x = x[:, -1]
@@ -756,7 +723,6 @@ class Transformer(nn.Module):
         """Initialize the module.
 
         Args:
-        ----
             d_token (int): dimensionality of token.
             n_blocks (int): number of blocks.
             attention_n_heads (int): number of attention heads.
@@ -784,11 +750,9 @@ class Transformer(nn.Module):
             d_out (int): dimensionality of the output
 
         Raises:
-        ------
             ValueError: value error
 
         Returns:
-        -------
             None: None
         """
         super().__init__()
@@ -865,7 +829,7 @@ class Transformer(nn.Module):
             d_in=d_token,
             d_out=d_out,
             bias=True,
-            activation=head_activation,  # type: ignore
+            activation=head_activation,
             normalization=head_normalization if prenormalization else nn.Identity(),
         )
 
@@ -911,11 +875,9 @@ class Transformer(nn.Module):
         """Perform forward pass.
 
         Args:
-        ----
             x (torch.Tensor): input tensor.
 
         Returns:
-        -------
             torch.Tensor: output tensor.
         """
         assert (
@@ -974,7 +936,6 @@ class FTTransformer(nn.Module):
         """Initialize the module.
 
         Args:
-        ----
             feature_tokenizer (FeatureTokenizer): feature tokenizer.
             transformer (Transformer): transformer.
         """
@@ -991,12 +952,10 @@ class FTTransformer(nn.Module):
         """Perform forward pass.
 
         Args:
-        ----
             x_cat (torch.Tensor | None): tensor with categorical data.
             x_cont (torch.Tensor | None): tensor with continous data.
 
         Returns:
-        -------
             torch.Tensor: predictions
         """
         x = self.feature_tokenizer(x_cont, x_cat)

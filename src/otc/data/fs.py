@@ -14,7 +14,7 @@ from otc.config.config import settings
 def _create_environment() -> gcsfs.GCSFileSystem:
     """Implement the global object pattern to connect only once to GCS.
 
-    Returns
+    Returns:
     -------
         gcsfs.GCSFileSystem: Instance of GCSFileSystem.
     """

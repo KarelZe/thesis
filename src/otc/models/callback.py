@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import logging
 import logging.config
-import os
 import pickle
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -41,7 +40,6 @@ class Callback:
         """Set the parameters of the callback.
 
         Args:
-        ----
             params (Any): params.
         """
         self.params = params
@@ -52,7 +50,6 @@ class Callback:
         """Call at the end of each epoch.
 
         Args:
-        ----
             epoch (int): current epoch.
             epochs (int): total number of epochs.
             train_loss (float): train loss in epoch.
@@ -69,7 +66,6 @@ class Callback:
         """Call on_train_end for each callback in container.
 
         Args:
-        ----
             study (optuna.Study): optuna study.
             trial (optuna.trial.Trial | optuna.trial.FrozenTrial): optuna trial.
             model (TransformerClassifier | CatBoostClassifier): model.
@@ -92,22 +88,21 @@ class SaveCallback(Callback):
         See: https://bit.ly/3OSGFyU
 
         Args:
-        ----
             wandb_kwargs (dict[str, Any] | None, optional): kwargs of wandb.
             Defaults to None.
         """
-        self._wandb_kwargs = wandb_kwargs or {}  # type: ignore
-        self._run = wandb.run  # type: ignore
+        self._wandb_kwargs = wandb_kwargs or {}
+        self._run = wandb.run
         if not self._run:
             self._run = self._initialize_run()
 
-    def _initialize_run(self) -> wandb.sdk.wandb_run.Run:  # type: ignore
+    def _initialize_run(self) -> wandb.sdk.wandb_run.Run:
         """Initialize wandb run.
 
         Adapted from: https://bit.ly/3OSGFyU.
         """
-        run = wandb.init(**self._wandb_kwargs)  # type: ignore
-        if not isinstance(run, wandb.sdk.wandb_run.Run):  # type: ignore
+        run = wandb.init(**self._wandb_kwargs)
+        if not isinstance(run, wandb.sdk.wandb_run.Run):
             raise RuntimeError(
                 "Cannot create a Run. "
                 "Expected wandb.sdk.wandb_run.Run as a return."
@@ -131,7 +126,6 @@ class SaveCallback(Callback):
         For PyTorch models, save the model as a state_dict.
 
         Args:
-        ----
             study (optuna.Study): optuna study.
             trial (optuna.trial.Trial | optuna.trial.FrozenTrial): optuna trial.
             model (TransformerClassifier | CatBoostClassifier): model.
@@ -144,7 +138,7 @@ class SaveCallback(Callback):
             uri_model: str
             file_model: str
 
-            m_artifact: wandb.Artifact  # type: ignore
+            m_artifact: wandb.Artifact
 
             # write new files on remote
             if isinstance(model, CatBoostClassifier):
@@ -170,11 +164,11 @@ class SaveCallback(Callback):
                     ).as_posix()
                 )
                 loc_training_stats = Path(
-                    os.getcwd(), "catboost_info", "catboost_training.json"
+                    Path.cwd(), "catboost_info", "catboost_training.json"
                 ).as_posix()
 
                 fs.put(loc_training_stats, uri_training_stats)
-                m_artifact = wandb.Artifact(name=file_model, type="model")  # type: ignore
+                m_artifact = wandb.Artifact(name=file_model, type="model")
 
                 m_artifact.add_reference(uri_training_stats, name=file_training_stats)
                 logger.info(
@@ -195,13 +189,13 @@ class SaveCallback(Callback):
                     # torch.save(model.clf, f)
                     pickle.dump(model, f, protocol=4)
 
-                m_artifact = wandb.Artifact(name=file_model, type="model")  # type: ignore
+                m_artifact = wandb.Artifact(name=file_model, type="model")
             else:
                 return
 
             # add reference to model file
             m_artifact.add_reference(uri_model, name=file_model)
-            self._run.log_artifact(m_artifact)  # type: ignore
+            self._run.log_artifact(m_artifact)
             logger.info("%sSaved '%s'.%s", Colors.OKGREEN, file_model, Colors.ENDC)
 
         # save study object in every trial.
@@ -214,7 +208,7 @@ class SaveCallback(Callback):
             ).as_posix()
         )
         with fs.open(uri_study, "wb") as f:
-            pickle.dump(study, f, protocol=4)  # type: ignore
+            pickle.dump(study, f, protocol=4)
 
         # save sqlite db of study to gcs
         file_db = study.study_name + ".db"
@@ -226,14 +220,14 @@ class SaveCallback(Callback):
                 file_db,
             ).as_posix()
         )
-        loc_db = Path(os.getcwd(), file_db).as_posix()
+        loc_db = Path(Path.cwd(), file_db).as_posix()
         fs.put(loc_db, uri_db)
 
-        s_artifact = wandb.Artifact(name=file_study, type="study")  # type: ignore
+        s_artifact = wandb.Artifact(name=file_study, type="study")
         s_artifact.add_reference(uri_study, name=file_study)
         s_artifact.add_reference(uri_db, name=file_db)
 
-        self._run.log_artifact(s_artifact)  # type: ignore
+        self._run.log_artifact(s_artifact)
         logger.info(
             "%sSaved '%s' and '%s'.%s", Colors.OKGREEN, file_study, file_db, Colors.ENDC
         )
@@ -253,7 +247,6 @@ class PrintCallback(Callback):
         """Print train and validation loss on each epoch.
 
         Args:
-        ----
             epoch (int): current epoch.
             epochs (int): total number of epochs.
             train_loss (float): train loss in epoch.
@@ -287,7 +280,6 @@ class CallbackContainer:
         """Add a callback to the container.
 
         Args:
-        ----
             callback (Callback): callback to add.
         """
         self.callbacks.append(callback)
@@ -296,7 +288,6 @@ class CallbackContainer:
         """Set params for callbacks in container.
 
         Args:
-        ----
             params (Any): parameter.
         """
         for callback in self.callbacks:
@@ -308,7 +299,6 @@ class CallbackContainer:
         """Call on_epoch_end for each callback in container.
 
         Args:
-        ----
             epoch (int): current epoch.
             epochs (int): total number of epochs.
             train_loss (float): train loss in epoch.
@@ -327,7 +317,6 @@ class CallbackContainer:
         """Call on_train_end for each callback in container.
 
         Args:
-        ----
             study (optuna.Study): optuna study.
             trial (optuna.trial.Trial | optuna.trial.FrozenTrial):
             optuna trial.
