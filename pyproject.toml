@@ -22,7 +22,7 @@ classifiers = [
 dependencies =[
   "click==8.1.7",
   "catboost==1.1",
-  "fastparquet==2023.8.0",
+  "fastparquet==2023.10.0",
   "google-auth==2.23.3", # needed by w&b in runpod
   "gcsfs==2023.10.0",
   "modin==0.17.0",
