@@ -207,8 +207,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         Args:
             X (npt.NDArray | pd.DataFrame): feature matrix
             y (npt.NDArray | pd.Series): target
-            eval_set (tuple[npt.NDArray, npt.NDArray] |
-            tuple[pd.DataFrame, pd.Series] | None): eval set. Defaults to None.
+            eval_set (tuple[npt.NDArray, npt.NDArray] | tuple[pd.DataFrame, pd.Series] | None): eval set. Defaults to None.
             If no eval set is passed, the training set is used.
 
         Returns:
@@ -229,7 +228,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self._stats_pretrain_epoch = []
 
         if self.pretrain:
-
             print("start pre-training...")
             mask = y == 0
 
@@ -313,14 +311,12 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             best_accuracy = -1.0
 
             for epoch in range(self.epochs_pretrain):
-
                 # perform training
                 loss_in_epoch_train = 0
 
                 batch = 0
 
                 for x_cat, x_cont, mask in train_loader_pretrain:
-
                     self.clf.train()
                     optimizer.zero_grad()
 
@@ -349,7 +345,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                 with torch.no_grad():
                     for x_cat, x_cont, mask in val_loader_pretrain:
-
                         # for my implementation
                         logits = self.clf(x_cat, x_cont)
                         val_loss = criterion(logits, mask.float())
@@ -470,7 +465,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self._stats_epoch = []
 
         for epoch in range(self.epochs_finetune):
-
             # perform training
             loss_in_epoch_train = 0
             train_batch = 0
@@ -478,7 +472,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             self.clf.train()
 
             for x_cat, x_cont, weights, targets in train_loader_finetune:
-
                 # reset the gradients back to zero
                 self.clf.train()
                 optimizer.zero_grad()

@@ -116,7 +116,7 @@ class TestClassicalClassifier(ClassifierMixin):
         classifier = ClassicalClassifier(
             layers=[("tick", "all")], random_state=42, features=["one"]
         )
-        with pytest.raises(ValueError, math=r"Expected"):
+        with pytest.raises(ValueError, match=r"Expected"):
             classifier.fit(self.x_train.values, self.y_train.values)
 
     def test_override(self) -> None:

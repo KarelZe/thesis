@@ -27,7 +27,6 @@ def main(input_filepath: click.Path, output_filepath: click.Path) -> None:
 
 
 if __name__ == "__main__":
-
     with Path("logging.yaml").open() as file:
         loaded_config = yaml.safe_load(file)
         logging.config.dictConfig(loaded_config)

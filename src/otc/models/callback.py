@@ -132,7 +132,6 @@ class SaveCallback(Callback):
             name (str): name of study.
         """
         if study.best_trial == trial:
-
             prefix_file = f"{study.study_name}_" f"{model.__class__.__name__}_{name}"
 
             uri_model: str
@@ -317,10 +316,9 @@ class CallbackContainer:
         """Call on_train_end for each callback in container.
 
         Args:
-            study (optuna.Study): optuna study.
-            trial (optuna.trial.Trial | optuna.trial.FrozenTrial):
-            optuna trial.
-            model (TransformerClassifier | CatBoostClassifier): model.
+            study (optuna.Study): optuna study
+            trial (optuna.trial.Trial | optuna.trial.FrozenTrial): optuna trial
+            model (TransformerClassifier | CatBoostClassifier): model
             name (str): name of study.
         """
         for callback in self.callbacks:

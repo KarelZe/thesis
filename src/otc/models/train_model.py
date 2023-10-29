@@ -252,7 +252,6 @@ def main(
 
 
 if __name__ == "__main__":
-
     with Path.open("logging.yaml") as file:
         loaded_config = yaml.safe_load(file)
         logging.config.dictConfig(loaded_config)

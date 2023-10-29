@@ -63,7 +63,6 @@ class NeuralNetTestsMixin:
 
         # perform training
         for _ in range(512):
-
             outputs = self.get_outputs()
             optimizer.zero_grad()
 

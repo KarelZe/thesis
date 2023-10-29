@@ -86,7 +86,12 @@ class Objective:
             pretrain (bool, optional): Whether to pretrain. Defaults to False.
             **kwargs: arguments
         """
-        self.x_train, self.y_train, self.x_val, self.y_val, = (
+        (
+            self.x_train,
+            self.y_train,
+            self.x_val,
+            self.y_val,
+        ) = (
             x_train,
             y_train,
             x_val,

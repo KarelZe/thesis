@@ -394,8 +394,7 @@ class CLSToken(nn.Module):
         initialization_.apply(self.weight, d_token)
 
     def expand(self, *leading_dimensions: int) -> torch.Tensor:
-        """Expand (repeat) the underlying [CLS]-token to a tensor with the given\
-        leading dimensions.
+        """Expand (repeat) the underlying [CLS]-token to a tensor with the given leading dimensions.
 
         A possible use case is building a batch of [CLS]-tokens. See `CLSToken` for
         examples of usage.
@@ -624,7 +623,7 @@ class Transformer(nn.Module):
             """Initialize the module.
 
             Args:
-                    d_token (int): dimensionality of token.
+                d_token (int): dimensionality of token.
                 d_hidden (int): dimensionality of hidden layers.
                 bias_first (bool): flag indicating whether to use bias in the first
                 bias_second (bool): flag indicating whether to use bias in the second
@@ -670,8 +669,8 @@ class Transformer(nn.Module):
             """Initialize the module.
 
             Args:
-                    d_in (int): dimension of the input
-                bias (bool): add bias to the linear layer
+                d_in (int): dimension of the input
+                bias (bool): bias in linear layer
                 activation (Callable[..., nn.Module]): activation function
                 normalization (Callable[..., nn.Module]): normalization layer
                 d_out (int): dimension of the output
@@ -727,8 +726,7 @@ class Transformer(nn.Module):
             n_blocks (int): number of blocks.
             attention_n_heads (int): number of attention heads.
             attention_dropout (float): degree of attention dropout.
-            attention_initialization (str): initialization strategy for attention
-            weights.
+            attention_initialization (str): initialization strategy for attention weights.
             attention_normalization (nn.Module): attention normalization layer.
             ffn_d_hidden (int): capacity of the hidden layers in the FFN.
             ffn_dropout (float): dropout in the FFN.
@@ -736,18 +734,15 @@ class Transformer(nn.Module):
             ffn_normalization (nn.Module): normalization layer in the FFN.
             residual_dropout (float): degree of residual dropout.
             prenormalization (bool): flag to use prenormalization.
-            first_prenormalization (bool): flag to use prenormalization in the first
-            layer.
-            last_layer_query_idx (None | list[int] | slice): query index for the
-            last layer.
+            first_prenormalization (bool): flag to use prenormalization in the first layer.
+            last_layer_query_idx (None | list[int] | slice): query index for the last layer.
             n_tokens (int | None): number of tokens.
-            kv_compression_ratio (float | None): compression ratio for the key and
-            values.
-            kv_compression_sharing (str | None): strategy for sharing the key and
-            values of compression.
-            head_activation (Callable[..., nn.Module]): activation function in the
-            attention head.
+            kv_compression_ratio (float | None): compression ratio for the key and values.
+            kv_compression_sharing (str | None): strategy for sharing the key and values of compression.
+            head_activation (Callable[..., nn.Module]): activation function in the attention head.
+            head_normalization (Callable[..., nn.Module]): normalization layer in the attention head.
             d_out (int): dimensionality of the output
+            **kwargs: keyword arguments
 
         Raises:
             ValueError: value error
@@ -773,7 +768,7 @@ class Transformer(nn.Module):
         assert kv_compression_sharing in [None, "headwise", "key-value", "layerwise"]
 
         def make_kv_compression() -> nn.Module:
-            assert (
+            assert (  # noqa: PT018
                 n_tokens and kv_compression_ratio
             ), _INTERNAL_ERROR_MESSAGE  # for mypy
             # https://bit.ly/3h8RdO5
@@ -938,6 +933,7 @@ class FTTransformer(nn.Module):
         Args:
             feature_tokenizer (FeatureTokenizer): feature tokenizer.
             transformer (Transformer): transformer.
+            **kwargs: keyword arguments
         """
         super().__init__()
         self.feature_tokenizer = feature_tokenizer

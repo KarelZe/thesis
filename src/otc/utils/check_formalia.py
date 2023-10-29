@@ -187,7 +187,6 @@ def check_formalia(files: dict, vocabulary: list, acronyms: list) -> None:
         acronyms (list): list of acronyms
     """
     for file_name, file_contents in files.items():
-
         if file_name not in [
             ".\\expose.tex",
             ".\\presentation.tex",

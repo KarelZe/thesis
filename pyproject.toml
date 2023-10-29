@@ -43,16 +43,14 @@ typer = "^0.9.0"
 wandb = "^0.13.5"
 
 
-[project.optional-dependencies]
-dev = [
-  "mypy",
-  "pre-commit",
-  "pytest",
-  "coverage",
-  "ruff",
-  "sphinx",
-  "tox",
-]
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.5.0"
+ruff = "^0.1.3"
+pytest-cov = "^4.1.0"
+mypy = "^1.6.1"
+tox = "^4.11.3"
+pytest = "^7.4.3"
+
 
 [project.urls]
 "Homepage" = "https://github.com/KarelZe/thesis"
@@ -85,15 +83,12 @@ omit = [
 [tool.ruff]
 # See rules: https://beta.ruff.rs/docs/rules/
 select = [
-#    "A",    # flake8-builtins
-    "B",    # flake8-bugbear
     "C",    # flake8-comprehensions
     "D",    # pydocstyle
     "E",    # pycodestyle errors
     "F",    # pyflakes
     "I",    # isort
     "N",    # pep8-naming
-    "NPY",  # numpy
     "PD",   # pandas-vet
     "PT",   # pytest
     "PTH",  # flake8-use-pathlib
@@ -101,7 +96,6 @@ select = [
     "RET",  # return
     "RUF",  # ruff-specific rules
     "UP",   # pyupgrade
-    "S",    # flake8-bandit
     "SIM",  # flake8-simplify
     "W",    # pycodestyle warnings
 ]
@@ -113,7 +107,6 @@ ignore = [
     "N803",  # argument name should be lowercase
     "N806",  # variable name should be lowercase
     "C901",  # too complex
-    "S101", # use of assert
     "D206",  # indent with white space
     "W191",  # tab identation
 ]

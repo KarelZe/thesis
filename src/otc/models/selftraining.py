@@ -91,8 +91,8 @@ class SelfTrainingClassifier(MetaEstimatorMixin, BaseEstimator):
         """Fit self-training classifier using `X`, `y` as training data.
 
         Args:
-            train_set (dict) dict with training data
-            eval_set (Pool): pool of validation data
+            train_set (dict): training set
+            eval_set (Pool): validation set
             **kwargs: keyword arguments
 
         Raises:
