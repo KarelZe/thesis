@@ -25,19 +25,19 @@ jobs:
       shell: bash
       env:
           WANDB_API_KEY: ${{secrets.WANDB_API_KEY}}
-    - name: Set up Python
+    - name: Install poetry
+      run: pipx install poetry
+    - name: Set up Python and install dependencies
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
         cache: 'poetry'
-    - name: Install dependencies
       run: |
         poetry install
     - name: Test with pytest
       run: |
-        pytest --cov=src tests/ --doctest-modules --junitxml=cover/xunit-result.xml --cov-report xml:cover/coverage.xml
-        # convert to json
-        coverage json -o cover/coverage.json
+        poetry run pytest --cov=src tests/ --doctest-modules --junitxml=cover/xunit-result.xml --cov-report xml:cover/coverage.xml
+        poetry run coverage json -o cover/coverage.json
     - name: "Extract numbers from cov report"
       run: |
         export TOTAL=$(python -c "import json;print(json.load(open('cover/coverage.json'))['totals']['percent_covered_display'])")
