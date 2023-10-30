@@ -104,7 +104,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         """Restore weights and biases from checkpoint."""
         print("restore from checkpoint.")
         cp = Path("checkpoints/").glob("tf_clf*")
-        self.clf.load_state_dict(torch.load(cp[0]))
+        self.clf.load_state_dict(torch.load(next(cp)))
 
     def array_to_dataloader_finetune(
         self,
