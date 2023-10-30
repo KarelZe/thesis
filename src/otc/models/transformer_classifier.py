@@ -89,7 +89,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         """Write weights and biases to checkpoint."""
         # remove old files
         print("deleting old checkpoints.")
-        for filename in Path.glob("checkpoints/tf_clf*"):
+        for filename in Path("checkpoints/").glob("tf_clf*"):
             Path.unlink(filename)
 
         # create_dir
@@ -103,7 +103,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
     def _checkpoint_restore(self) -> None:
         """Restore weights and biases from checkpoint."""
         print("restore from checkpoint.")
-        cp = Path.glob("checkpoints/tf_clf*")
+        cp = Path("checkpoints/").glob("tf_clf*")
         self.clf.load_state_dict(torch.load(cp[0]))
 
     def array_to_dataloader_finetune(
