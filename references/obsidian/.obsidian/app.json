@@ -16,8 +16,5 @@
   "livePreview": true,
   "attachmentFolderPath": "🖼️Media",
   "readableLineLength": false,
-  "spellcheckLanguages": [
-    "de",
-    "en-GB-oxendict"
-  ]
+  "spellcheckLanguages": null
 }

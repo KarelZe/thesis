@@ -32,8 +32,8 @@ jobs:
       with:
         python-version: '3.10'
         cache: 'poetry'
-      run: |
-        poetry install
+    - name: install poetry
+      run: poetry install
     - name: Test with pytest
       run: |
         poetry run pytest --cov=src tests/ --doctest-modules --junitxml=cover/xunit-result.xml --cov-report xml:cover/coverage.xml

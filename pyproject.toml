@@ -44,12 +44,12 @@ wandb = "^0.13.5"
 
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^3.5.0"
-ruff = "^0.1.3"
-pytest-cov = "^4.1.0"
 mypy = "^1.6.1"
-tox = "^4.11.3"
+pre-commit = "^3.5.0"
 pytest = "^7.4.3"
+pytest-cov = "^4.1.0"
+ruff = "^0.1.3"
+tox = "^4.11.3"
 
 
 [project.urls]
