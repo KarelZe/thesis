@@ -94,7 +94,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
         # create_dir
         dir_checkpoints = "checkpoints/"
-        Path.mkdir(dir_checkpoints, exist_ok=True, parents=True)
+        Path(dir_checkpoints).mkdir(exist_ok=True, parents=True)
 
         # save new file
         print("saving new checkpoint.")
