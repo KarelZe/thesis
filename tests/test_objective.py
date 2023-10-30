@@ -35,7 +35,8 @@ class TestObjectives:
 
         # make 1 const feature and 1 non-const feature, as catboost requires non-const
         self._x_train = pd.DataFrame(data={"feature_1": 1}, index=index)
-        self._x_train["feature_2"] = np.random.randint(1, 6, self._x_train.shape[0])
+        rng = np.random.default_rng()
+        self._x_train["feature_2"] = rng.integers(1, 6, self._x_train.shape[0])
         self._y_train = self._x_train["feature_2"]
         self._x_val = self._x_train.copy()
         self._y_val = self._y_train.copy()
@@ -113,9 +114,9 @@ class TestObjectives:
 
         # labelled (-1,1) and unlabelled (0) instances
         # train set with -1, 1, and 0
-        self._y_train = pd.Series(np.random.randint(-1, 2, self._y_train.shape[0]))
-        # val set with 1
         rng = np.random.default_rng()
+        self._y_train = pd.Series(rng.integers(-1, 2, self._y_train.shape[0]))
+        # val set with 1
         self._y_val = rng.integers(low=1, high=2, size=self._y_train.shape[0])
 
         study = optuna.create_study(direction="maximize")

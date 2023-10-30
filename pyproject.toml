@@ -90,7 +90,9 @@ select = [
     "F",    # pyflakes
     "I",    # isort
     "N",    # pep8-naming
+    "NPY",  # numpy
     "PD",   # pandas-vet
+    "PIE",  # misc lints
     "PT",   # pytest
     "PTH",  # flake8-use-pathlib
     "PGH",  # pygrep

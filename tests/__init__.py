@@ -1,4 +1,1 @@
-"""Support for tests.
-
-
-"""
+"""Support for tests."""

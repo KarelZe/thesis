@@ -40,10 +40,6 @@ def set_seed(seed_val: int = 42) -> int:
     # see https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED
     os.environ["PYTHONHASHSEED"] = str(seed_val)
 
-    # pandas and numpy
-    #  https://stackoverflow.com/a/52375474/5755604
-    np.random.seed(seed_val)
-
     # python random module
     random.seed(seed_val)
 

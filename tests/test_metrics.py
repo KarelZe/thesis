@@ -3,7 +3,6 @@
 import numpy as np
 
 from otc.metrics.metrics import effective_spread
-from otc.models.objective import set_seed
 
 
 class TestMetrics:
@@ -19,11 +18,10 @@ class TestMetrics:
 
         Value may not be NaN.
         """
-        set_seed(7)
-
-        y_pred = np.random.choice([-1, 1], size=(10))
-        trade_price = np.random.rand(10) * 100
-        fundamental_value = np.random.rand(10) * 100
+        rng = np.random.default_rng(seed=7)
+        y_pred = rng.choice([-1, 1], size=(10))
+        trade_price = rng.random(10) * 100
+        fundamental_value = rng.random(10) * 100
 
         e_s = effective_spread(y_pred, trade_price, fundamental_value)
 
