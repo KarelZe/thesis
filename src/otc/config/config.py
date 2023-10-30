@@ -5,7 +5,7 @@ See also `prod.env`.
 
 from pathlib import Path
 
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
