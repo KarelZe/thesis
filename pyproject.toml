@@ -1,17 +1,15 @@
 # https://packaging.python.org/en/latest/tutorials/packaging-projects/
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
 
-[project]
+[tool.poetry]
 name = "otc"
-authors = [
-  { name="Markus Bilz", email="github@markusbilz.com" },
-]
+version = "0.0.1"
+authors = ["Markus Bilz <github@markusbilz.com>"]
 description = "Code to perform option trade classification using machine learning."
 readme = "README.md"
-license = {file = "LICENSE.txt"}
-requires-python = ">=3.8"
+license = "LICENSE.txt"
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python :: 3 :: Only",
@@ -19,59 +17,46 @@ classifiers = [
   "Framework :: Jupyter",
   "Operating System :: OS Independent",
 ]
-dependencies =[
-  "click==8.1.7",
-  "catboost==1.1",
-  "fastparquet==2023.10.1",
-  "google-auth==2.23.3", # needed by w&b in runpod
-  "gcsfs==2023.10.0",
-  "modin==0.17.0",
-  "numpy==1.23.4",
-  "optuna==3.1.0",
-  "pandas==1.5.1",
-  "pandas-datareader==0.10.0",
-  "psutil==5.9.6", #needed by w&b
-  "pydantic==1.10.2",
-  "python-dotenv>=0.5.1",
-  "pyyaml==6.0.1",
-  "requests==2.31.0",
-  "scikit-learn==1.1.3",
-  "seaborn==0.13.0",
-  "torch==2.0.0",
-  "tqdm==4.66.1",
-  "typer==0.9.0",
-  "wandb==0.13.5",
-]
-dynamic = ["version"]
 
-[project.optional-dependencies]
-dev = [
-  "autoflake",
-  "black",
-  "coverage",
-  "flake8",
-  "isort",
-  "mypy",
-  "pre-commit",
-  "pytest",
-  "pytest-cov",
-  "sphinx",
-  "tox",
-]
+[tool.poetry.dependencies]
+# https://stackoverflow.com/a/76647180/5755604
+catboost = "^1.1"
+click = "^8.1.7"
+fastparquet = "^2023.8.0"
+gcsfs = "^2023.9.2"
+google-auth = "^2.23.2" # needed by w&b in runpod
+modin = "^0.17.0"
+numpy = "^1.23.4"
+optuna = "^3.1.0"
+pandas = "^1.5.1"
+pandas-datareader = "^0.10.0"
+psutil = "^5.9.5" #needed by w&b
+pydantic = {extras = ["dotenv"], version = "^2.4.2"}
+pydantic-settings = "^2.0.3"
+python = "^3.8"
+pyyaml = "^6.0.1"
+requests = "^2.31.0"
+scikit-learn = "^1.1.3"
+seaborn = "^0.12.2"
+torch = ">=2.0.0, !=2.0.1, !=2.1.0"
+tqdm = "^4.66.1"
+typer = "^0.9.0"
+wandb = "^0.13.5"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.6.1"
+pre-commit = "^3.5.0"
+pytest = "^7.4.3"
+pytest-cov = "^4.1.0"
+ruff = "^0.1.3"
+tox = "^4.11.3"
+
 
 [project.urls]
 "Homepage" = "https://github.com/KarelZe/thesis"
 "Bug Tracker" = "https://github.com/KarelZe/thesis/issues"
 
-[tool.autoflake]
-recursive = true
-in-place = true
-ignore-init-module-imports = true
-remove-all-unused-imports = true
-remove-unused-variables = true
-
-[tool.isort]
-profile = "black"
 
 [tool.mypy]
 # https://github.com/python/mypy/issues/2410
@@ -79,11 +64,6 @@ ignore_missing_imports = true
 disallow_untyped_defs = true
 disallow_untyped_calls = true
 disallow_incomplete_defs = true
-
-[tool.pylint.TYPECHECK]
-# List of members which are set dynamically and missed by Pylint inference
-# system, and so shouldn't trigger E1101 when accessed.
-generated-members=["numpy.*", "torch.*"]
 
 [tool.setuptools.dynamic]
 version = { attr = "otc.__version__" }
@@ -100,3 +80,46 @@ omit = [
     "debug_*.py",
     "tests/*",
 ]
+
+[tool.ruff]
+# See rules: https://beta.ruff.rs/docs/rules/
+select = [
+    "C",    # flake8-comprehensions
+    "D",    # pydocstyle
+    "E",    # pycodestyle errors
+    "F",    # pyflakes
+    "I",    # isort
+    "N",    # pep8-naming
+    "NPY",  # numpy
+    "PD",   # pandas-vet
+    "PIE",  # misc lints
+    "PT",   # pytest
+    "PTH",  # flake8-use-pathlib
+    "PGH",  # pygrep
+    "RET",  # return
+    "RUF",  # ruff-specific rules
+    "UP",   # pyupgrade
+    "SIM",  # flake8-simplify
+    "W",    # pycodestyle warnings
+]
+
+include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
+
+ignore = [
+    "E501",  # line too long, handled by black
+    "N803",  # argument name should be lowercase
+    "N806",  # variable name should be lowercase
+    "C901",  # too complex
+    "D206",  # indent with white space
+    "W191",  # tab identation
+]
+
+[tool.ruff.isort]
+known-first-party = ["otc"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["D104", "F401"]  # disable missing docstrings in __init__, unused imports
+
+[tool.ruff.pydocstyle]
+convention = "google"

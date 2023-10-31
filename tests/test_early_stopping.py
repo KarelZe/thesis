@@ -1,5 +1,4 @@
-"""
-Tests for the early stopping implementation.
+"""Tests for the early stopping implementation.
 
 For early stopping see: https://en.wikipedia.org/wiki/Early_stopping.
 """
@@ -8,16 +7,15 @@ from otc.optim.early_stopping import EarlyStopping
 
 
 class TestEarlyStopping:
-    """
-    Perform automated tests for early stopping.
+    """Perform automated tests for early stopping.
 
     Args:
+    ----
         unittest (_type_): testcase
     """
 
     def test_do_stop_early(self) -> None:
-        """
-        Tests, if early stopping applies for increasing loss.
+        """Tests, if early stopping applies for increasing loss.
 
         Based on: https://stackoverflow.com/a/71999355/5755604.
         """
@@ -42,8 +40,7 @@ class TestEarlyStopping:
         assert early_stopping.early_stop
 
     def test_do_not_stop_early_decreasing(self) -> None:
-        """
-        Tests, if early stopping is ommited for decreasing loss.
+        """Tests, if early stopping is ommited for decreasing loss.
 
         As long as loss decreases, training should continue.
         """
@@ -57,8 +54,7 @@ class TestEarlyStopping:
         assert not early_stopping.early_stop
 
     def test_best_loss_below_delta(self) -> None:
-        """
-        Tests, if best loss is kept for changes below the threshold min_delta.
+        """Tests, if best loss is kept for changes below the threshold min_delta.
 
         Best loss is used for comparsion.
         """
@@ -72,10 +68,10 @@ class TestEarlyStopping:
         assert early_stopping.best_loss == 1
 
     def test_best_loss_above_delta(self) -> None:
-        """
-        Tests, if best loss is updated for changes above min_delta.
+        """Tests, if best loss is updated for changes above min_delta.
 
         Best loss is used for comparsion.
+
         Example:
         ```
         min_delta = 5

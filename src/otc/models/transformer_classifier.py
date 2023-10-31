@@ -1,13 +1,11 @@
-"""
-Sklearn-like wrapper around pytorch transformer models.
+"""Sklearn-like wrapper around pytorch transformer models.
 
 Can be used as a consistent interface for evaluation and tuning.
 """
 from __future__ import annotations
 
 import gc
-import glob
-import os
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -26,10 +24,10 @@ from otc.optim.scheduler import CosineWarmupScheduler
 
 
 class TransformerClassifier(BaseEstimator, ClassifierMixin):
-    """
-    Sklearn wrapper around transformer models.
+    """Sklearn wrapper around transformer models.
 
     Args:
+    ----
         BaseEstimator (_type_): base estimator
         ClassifierMixin (_type_): mixin
     Returns:
@@ -49,8 +47,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         features: list[str] | None = None,
         pretrain: bool = False,
     ) -> None:
-        """
-        Initialize the model.
+        """Initialize the model.
 
         Args:
             module (nn.Module): module to instantiate
@@ -78,8 +75,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self.classes_ = np.array([-1, 1])
 
     def _more_tags(self) -> dict[str, bool]:
-        """
-        Set tags for sklearn.
+        """Set tags for sklearn.
 
         See: https://scikit-learn.org/stable/developers/develop.html#estimator-tags
         """
@@ -90,29 +86,25 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         }
 
     def _checkpoint_write(self) -> None:
-        """
-        Write weights and biases to checkpoint.
-        """
+        """Write weights and biases to checkpoint."""
         # remove old files
         print("deleting old checkpoints.")
-        for filename in glob.glob("checkpoints/tf_clf*"):
-            os.remove(filename)
+        for filename in Path("checkpoints/").glob("tf_clf*"):
+            Path.unlink(filename)
 
         # create_dir
-        dir_checkpoints = "checkpoints/"
-        os.makedirs(dir_checkpoints, exist_ok=True)
+        dir_checkpoints = Path("checkpoints/")
+        dir_checkpoints.mkdir(exist_ok=True, parents=True)
 
         # save new file
         print("saving new checkpoint.")
-        torch.save(self.clf.state_dict(), os.path.join(dir_checkpoints, "tf_clf.ptx"))
+        torch.save(self.clf.state_dict(), dir_checkpoints / "tf_clf.ptx")
 
     def _checkpoint_restore(self) -> None:
-        """
-        Restore weights and biases from checkpoint.
-        """
+        """Restore weights and biases from checkpoint."""
         print("restore from checkpoint.")
-        cp = glob.glob("checkpoints/tf_clf*")
-        self.clf.load_state_dict(torch.load(cp[0]))
+        cp = Path("checkpoints/").glob("tf_clf*")
+        self.clf.load_state_dict(torch.load(next(cp)))
 
     def array_to_dataloader_finetune(
         self,
@@ -120,14 +112,14 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         y: npt.NDArray | pd.Series,
         weight: npt.NDArray | None = None,
     ) -> TabDataLoader:
-        """
-        Convert array like to dataloader.
+        """Convert array like to dataloader.
 
         Args:
             X (npt.NDArray | pd.DataFrame): feature matrix
             y (npt.NDArray | pd.Series): target vector
             weight (npt.NDArray | None, optional): weights for each sample.
             Defaults to None.
+
         Returns:
             TabDataLoader: data loader.
         """
@@ -147,9 +139,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         return tab_dl
 
     def _gen_perm(self, X: torch.Tensor) -> torch.Tensor:
-        """
-        Generate index permutation.
-        """
+        """Generate index permutation."""
         if X is None:
             return None
         return torch.randint_like(X, X.shape[0], dtype=torch.long)
@@ -157,21 +147,16 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
     def _gen_masks(
         self, X: torch.Tensor, perm: torch.Tensor, corrupt_probability: float = 0.15
     ) -> torch.Tensor:
-        """
-        Generate binary mask for detection.
-        """
+        """Generate binary mask for detection."""
         masks = torch.empty_like(X).bernoulli(p=corrupt_probability).bool()
-        new_masks = masks & (X != X[perm, torch.arange(X.shape[1], device=X.device)])
-        return new_masks
+        return masks & (X[perm, torch.arange(X.shape[1], device=X.device)] != X)
 
     def array_to_dataloader_pretrain(
         self,
         X: npt.NDArray | pd.DataFrame,
         y: npt.NDArray | pd.Series,
     ) -> TabDataLoader:
-        """
-        Generate dataloader for pretraining.
-        """
+        """Generate dataloader for pretraining."""
         data = TabDataset(
             X,
             y,
@@ -209,7 +194,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         del data
         return tab_dl
 
-    def fit(  # noqa: C901
+    def fit(
         self,
         X: npt.NDArray | pd.DataFrame,
         y: npt.NDArray | pd.Series,
@@ -217,15 +202,14 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         | tuple[pd.DataFrame, pd.Series]
         | None = None,
     ) -> TransformerClassifier:
-        """
-        Fit the model.
+        """Fit the model.
 
         Args:
             X (npt.NDArray | pd.DataFrame): feature matrix
             y (npt.NDArray | pd.Series): target
-            eval_set (tuple[npt.NDArray, npt.NDArray] |
-            tuple[pd.DataFrame, pd.Series] | None): eval set. Defaults to None.
+            eval_set (tuple[npt.NDArray, npt.NDArray] | tuple[pd.DataFrame, pd.Series] | None): eval set. Defaults to None.
             If no eval set is passed, the training set is used.
+
         Returns:
             TransformerClassifier: self
         """
@@ -244,7 +228,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self._stats_pretrain_epoch = []
 
         if self.pretrain:
-
             print("start pre-training...")
             mask = y == 0
 
@@ -328,20 +311,18 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             best_accuracy = -1.0
 
             for epoch in range(self.epochs_pretrain):
-
                 # perform training
                 loss_in_epoch_train = 0
 
                 batch = 0
 
                 for x_cat, x_cont, mask in train_loader_pretrain:
-
                     self.clf.train()
                     optimizer.zero_grad()
 
                     with torch.autocast(device_type="cuda", dtype=torch.float16):
                         logits = self.clf(x_cat, x_cont)
-                        train_loss = criterion(logits, mask.float())  # type: ignore[union-attr] # noqa: E501
+                        train_loss = criterion(logits, mask.float())
 
                     scaler.scale(train_loss).backward()
                     scaler.step(optimizer)
@@ -364,14 +345,13 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                 with torch.no_grad():
                     for x_cat, x_cont, mask in val_loader_pretrain:
-
                         # for my implementation
                         logits = self.clf(x_cat, x_cont)
-                        val_loss = criterion(logits, mask.float())  # type: ignore[union-attr] # noqa: E501
+                        val_loss = criterion(logits, mask.float())
                         loss_in_epoch_val += val_loss.item()
 
                         # accuracy
-                        # adapted from here, but over columns + rows https://github.com/puhsu/tabular-dl-pretrain-objectives/blob/3f503d197867c341b4133efcafd3243eb5bb93de/bin/mask.py#L440 # noqa: E501
+                        # adapted from here, but over columns + rows https://github.com/puhsu/tabular-dl-pretrain-objectives/blob/3f503d197867c341b4133efcafd3243eb5bb93de/bin/mask.py#L440
                         hard_predictions = torch.zeros_like(logits, dtype=torch.long)
                         hard_predictions[logits > 0] = 1
                         # sum columns and rows
@@ -485,7 +465,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         self._stats_epoch = []
 
         for epoch in range(self.epochs_finetune):
-
             # perform training
             loss_in_epoch_train = 0
             train_batch = 0
@@ -493,7 +472,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             self.clf.train()
 
             for x_cat, x_cont, weights, targets in train_loader_finetune:
-
                 # reset the gradients back to zero
                 self.clf.train()
                 optimizer.zero_grad()
@@ -601,8 +579,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         return self
 
     def predict(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
-        """
-        Predict class labels for X.
+        """Predict class labels for X.
 
         Args:
             X (npt.NDArray | pd.DataFrame): feature matrix
@@ -616,8 +593,7 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         return self.classes_[np.argmax(probability, axis=1)]
 
     def predict_proba(self, X: npt.NDArray | pd.DataFrame) -> npt.NDArray:
-        """
-        Predict class probabilities for X.
+        """Predict class probabilities for X.
 
         Args:
             X (npt.NDArray | pd.DataFrame): feature matrix
@@ -644,4 +620,4 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                 probabilites.append(probability.detach().cpu().numpy())
 
         probabilites = np.concatenate(probabilites)
-        return np.column_stack((1 - probabilites, probabilites))  # type: ignore
+        return np.column_stack((1 - probabilites, probabilites))

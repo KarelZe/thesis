@@ -1,5 +1,4 @@
-"""
-Provides objectives for optimizations.
+"""Provides objectives for optimizations.
 
 Adds support for classical rules, GBTs and transformer-based architectures.
 """
@@ -29,8 +28,7 @@ from otc.models.transformer_classifier import TransformerClassifier
 
 
 def set_seed(seed_val: int = 42) -> int:
-    """
-    Seeds basic parameters for reproducibility of results.
+    """Seeds basic parameters for reproducibility of results.
 
     Args:
         seed_val (int, optional): random seed used in rngs. Defaults to 42.
@@ -41,10 +39,6 @@ def set_seed(seed_val: int = 42) -> int:
     # python
     # see https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED
     os.environ["PYTHONHASHSEED"] = str(seed_val)
-
-    # pandas and numpy
-    #  https://stackoverflow.com/a/52375474/5755604
-    np.random.seed(seed_val)
 
     # python random module
     random.seed(seed_val)
@@ -61,8 +55,7 @@ def set_seed(seed_val: int = 42) -> int:
 
 
 class Objective:
-    """
-    Generic implementation of objective.
+    """Generic implementation of objective.
 
     Args:
         ABC (abstract): abstract class
@@ -78,8 +71,7 @@ class Objective:
         pretrain: bool = False,
         **kwargs: Any,
     ):
-        """
-        Initialize objective.
+        """Initialize objective.
 
         Args:
             x_train (pd.DataFrame): feature matrix (train)
@@ -88,8 +80,14 @@ class Objective:
             y_val (pd.Series): ground truth (val)
             name (str, optional): Name of objective. Defaults to "default".
             pretrain (bool, optional): Whether to pretrain. Defaults to False.
+            **kwargs: arguments
         """
-        self.x_train, self.y_train, self.x_val, self.y_val, = (
+        (
+            self.x_train,
+            self.y_train,
+            self.x_val,
+            self.y_val,
+        ) = (
             x_train,
             y_train,
             x_val,
@@ -103,8 +101,7 @@ class Objective:
     def objective_callback(
         self, study: optuna.Study, trial: optuna.trial.Trial | optuna.trial.FrozenTrial
     ) -> None:
-        """
-        Perform operations at the end of trail.
+        """Perform operations at the end of trail.
 
         Args:
             study (optuna.Study): current study.
@@ -114,10 +111,10 @@ class Objective:
 
 
 class FTTransformerObjective(Objective):
-    """
-    Implements an optuna optimization objective.
+    """Implements an optuna optimization objective.
 
     See here: https://optuna.readthedocs.io/en/stable/
+
     Args:
         Objective (Objective): objective
     """
@@ -133,8 +130,7 @@ class FTTransformerObjective(Objective):
         name: str = "default",
         pretrain: bool = False,
     ):
-        """
-        Initialize objective.
+        """Initialize objective.
 
         Args:
             x_train (pd.DataFrame): feature matrix (train)
@@ -149,8 +145,8 @@ class FTTransformerObjective(Objective):
             name (str, optional): Name of objective. Defaults to "default".
             pretrain (bool, optional): Whether to pretrain. Defaults to False.
         """
-        self._cat_features = [] if not cat_features else cat_features
-        self._cat_cardinalities = [] if not cat_cardinalities else cat_cardinalities
+        self._cat_features = cat_features if cat_features else []
+        self._cat_cardinalities = cat_cardinalities if cat_cardinalities else []
         self._cont_features: list[int] = [
             x for x in x_train.columns.tolist() if x not in self._cat_features
         ]
@@ -162,12 +158,13 @@ class FTTransformerObjective(Objective):
         super().__init__(x_train, y_train, x_val, y_val, name, pretrain)
 
     def __call__(self, trial: optuna.Trial) -> float:
-        """
-        Perform a new search trial in Bayesian search.
+        """Perform a new search trial in Bayesian search.
 
         Hyperarameters are suggested, unless they are fixed.
+
         Args:
             trial (optuna.Trial): current trial.
+
         Returns:
             float: accuracy of trial on validation set.
         """
@@ -181,10 +178,7 @@ class FTTransformerObjective(Objective):
         lr = trial.suggest_float("lr", 3e-5, 3e-4, log=True)
 
         # see 5.0a-mb-batch-size-finder
-        if not self._cat_features:
-            batch_size = 8192
-        else:
-            batch_size = 2048
+        batch_size = 8192 if not self._cat_features else 2048
 
         use_cuda = torch.cuda.is_available()
         device = torch.device("cuda" if use_cuda else "cpu")
@@ -232,8 +226,8 @@ class FTTransformerObjective(Objective):
         }
 
         module_params = {
-            "transformer": Transformer(**transformer_kwargs),  # type: ignore
-            "feature_tokenizer": FeatureTokenizer(**feature_tokenizer_kwargs),  # type: ignore # noqa: E501
+            "transformer": Transformer(**transformer_kwargs),
+            "feature_tokenizer": FeatureTokenizer(**feature_tokenizer_kwargs),
             "cat_features": self._cat_features,
             "cat_cardinalities": self._cat_cardinalities,
             "d_token": d_token,
@@ -246,7 +240,7 @@ class FTTransformerObjective(Objective):
             module_params=module_params,
             optim_params=optim_params,
             dl_params=dl_params,
-            callbacks=self._callbacks,  # type: ignore # noqa: E501
+            callbacks=self._callbacks,
             pretrain=self._pretrain,
         )
 
@@ -256,14 +250,14 @@ class FTTransformerObjective(Objective):
             eval_set=(self.x_val, self.y_val),
         )
 
-        return self._clf.score(self.x_val, self.y_val)  # type: ignore
+        return self._clf.score(self.x_val, self.y_val)
 
 
 class ClassicalObjective(Objective):
-    """
-    Implements an optuna optimization objective.
+    """Implements an optuna optimization objective.
 
     See here: https://optuna.readthedocs.io/en/stable/
+
     Args:
         Objective (Objective): objective
     """
@@ -278,8 +272,7 @@ class ClassicalObjective(Objective):
         pretrain: bool = False,
         **kwargs: Any,
     ):
-        """
-        Initialize objective.
+        """Initialize objective.
 
         Args:
             x_train (pd.DataFrame): feature matrix (train)
@@ -288,17 +281,19 @@ class ClassicalObjective(Objective):
             y_val (pd.Series): ground truth (val)
             name (str, optional): Name of objective. Defaults to "default".
             pretrain (bool, optional): Whether to pretrain. Defaults to False.
+            **kwargs: keyword arguments
         """
         self._callbacks = CallbackContainer([SaveCallback()])
         super().__init__(x_train, y_train, x_val, y_val, name, pretrain)
 
     def __call__(self, trial: optuna.Trial) -> float:
-        """
-        Perform a new search trial in Bayesian search.
+        """Perform a new search trial in Bayesian search.
 
         Hyperarameters are suggested, unless they are fixed.
+
         Args:
             trial (optuna.Trial): current trial.
+
         Returns:
             float: accuracy of trial on validation set.
         """
@@ -378,10 +373,10 @@ class ClassicalObjective(Objective):
 
 
 class GradientBoostingObjective(Objective):
-    """
-    Implements an optuna optimization objective.
+    """Implements an optuna optimization objective.
 
     See here: https://optuna.readthedocs.io/en/stable/
+
     Args:
         Objective (Objective): objective
     """
@@ -397,8 +392,7 @@ class GradientBoostingObjective(Objective):
         pretrain: bool = False,
         **kwargs: Any,
     ):
-        """
-        Initialize objective.
+        """Initialize objective.
 
         Args:
             x_train (pd.DataFrame): feature matrix (train)
@@ -409,6 +403,7 @@ class GradientBoostingObjective(Objective):
             Defaults to None.
             name (str, optional): Name of objective. Defaults to "default".
             pretrain (bool, optional): Whether to pretrain. Defaults to False.
+            **kwargs: keyword arguments
         """
         # decay weight of very old observations in training set. See eda notebook.
         weight = np.geomspace(0.001, 1, num=len(y_train))
@@ -439,12 +434,13 @@ class GradientBoostingObjective(Objective):
         self._callbacks = CallbackContainer([SaveCallback()])
 
     def __call__(self, trial: optuna.Trial) -> float:
-        """
-        Perform a new search trial in Bayesian search.
+        """Perform a new search trial in Bayesian search.
 
         Hyperarameters are suggested, unless they are fixed.
+
         Args:
             trial (optuna.Trial): current trial.
+
         Returns:
             float: accuracy of trial on validation set.
         """
@@ -478,7 +474,7 @@ class GradientBoostingObjective(Objective):
         }
 
         # callback only works for CPU, thus removed. See: https://bit.ly/3FjiuFx
-        self._clf = CatBoostClassifier(**kwargs_cat)  # type: ignore
+        self._clf = CatBoostClassifier(**kwargs_cat)
 
         if self.pretrain:
             self_train_clf = SelfTrainingClassifier(
@@ -494,4 +490,4 @@ class GradientBoostingObjective(Objective):
             )
 
         # calculate accuracy
-        return self._clf.score(self._val_pool)  # type: ignore
+        return self._clf.score(self._val_pool)

@@ -1,18 +1,16 @@
-"""
-Utility script to avoid common errors in LaTeX documents.
+"""Utility script to avoid common errors in LaTeX documents.
 
 TODO: add more tests.
 """
-import glob
 import os
 import re
+from pathlib import Path
 
 import typer
 
 
 def check_citation(file_name: str, file_contents: str) -> None:
-    r"""
-    Check if all citations include page counts.
+    r"""Check if all citations include page counts.
 
     Args:
         file_name (str): file name
@@ -34,8 +32,7 @@ def check_citation(file_name: str, file_contents: str) -> None:
 
 
 def check_formulae(file_name: str, file_contents: str) -> None:
-    r"""
-    Do the following tests.
+    r"""Do the following tests.
 
     Check if formula contains `\times` or `\quad`.
     Consistently use `boldsymbol` (instead of `mathbf`).
@@ -47,7 +44,7 @@ def check_formulae(file_name: str, file_contents: str) -> None:
         file_name (str): file name
         file_contents (str): contents of file
     """
-    matches = re.findall(r"\\dot\s|×|\\boldsymbol|\\text{|\\textit", file_contents)
+    matches = re.findall(r"\\dot\s|x|\\boldsymbol|\\text{|\\textit", file_contents)
     if matches:
         msg = typer.style(
             f"{file_name}: {matches} (prefer \\times over \\cdot; prefer"
@@ -59,8 +56,7 @@ def check_formulae(file_name: str, file_contents: str) -> None:
 
 
 def check_acronyms(file_name: str, file_contents: str, acronyms: list) -> None:
-    r"""
-    Check for acronyms in text that don't use `\gls{acr}` or `\gls{acr}` wrapping.
+    r"""Check for acronyms in text that don't use `\gls{acr}` or `\gls{acr}` wrapping.
 
     Args:
         file_name (str): file name
@@ -82,8 +78,7 @@ def check_acronyms(file_name: str, file_contents: str, acronyms: list) -> None:
 
 
 def check_hyphens(file_name: str, file_contents: str, vocabulary: list) -> None:
-    """
-    Check if there are versions of the same word with and w/o hyphen.
+    """Check if there are versions of the same word with and w/o hyphen.
 
     E. g., semi-supervised and semisupervised. (true) semi supervised (false).
 
@@ -110,8 +105,7 @@ def check_hyphens(file_name: str, file_contents: str, vocabulary: list) -> None:
 
 
 def check_refs(file_name: str, file_contents: str) -> None:
-    """
-    Check if there are references to tables, figures, appendix in lower-case letters.
+    """Check if there are references to tables, figures, appendix in lower-case letters.
 
     Args:
         file_name (str): file name
@@ -131,14 +125,13 @@ def check_refs(file_name: str, file_contents: str) -> None:
 
 
 def loc_files() -> dict:
-    """
-    Locate all urls in .tex files located in /reports dir.
+    """Locate all urls in .tex files located in /reports dir.
 
     Returns:
         dict: Dict with filename as key and file contents as values.
     """
     os.chdir("../../../reports")
-    files = glob.glob("./**/*.tex", recursive=True)
+    files = Path.glob("./**/*.tex")
 
     typer.echo(f"files checked: {files}")
 
@@ -146,7 +139,7 @@ def loc_files() -> dict:
     matches_per_file = {}
 
     for fname in files:
-        with open(fname, encoding="latin1") as infile:
+        with Path.open(fname, encoding="latin1") as infile:
             file_contents = infile.read()
             matches_per_file[fname] = file_contents
 
@@ -155,8 +148,7 @@ def loc_files() -> dict:
 
 
 def get_acronyms(files: dict) -> list:
-    """
-    Get acroynms from .tex file in lower-case.
+    """Get acroynms from .tex file in lower-case.
 
     Args:
         files (dict): dict with filenames and file contents
@@ -167,13 +159,11 @@ def get_acronyms(files: dict) -> list:
     rough_matches = re.findall(r"\\newacronym.+", str(files.get(".\\expose.tex")))
     refined_matches = re.findall(r"\{\b[^{}]*?}", "".join(rough_matches))
     # remove brackets and filter every third to skip over long form
-    acronyms = [re.sub(r"[\{\}]", "", part.lower()) for part in refined_matches[::3]]
-    return acronyms
+    return [re.sub(r"[\{\}]", "", part.lower()) for part in refined_matches[::3]]
 
 
 def get_vocabulary(files: dict) -> list:
-    """
-    Get vocabulary in lower-case from files.
+    """Get vocabulary in lower-case from files.
 
     Args:
         files (dict): dict with filename and file contents
@@ -185,19 +175,18 @@ def get_vocabulary(files: dict) -> list:
     for _, file_contents in files.items():
         words_in_file = re.findall(r"\b\S+\b", file_contents)
         vocab.extend(words_in_file)
-    vocab = [x.lower() for x in vocab]
-    return vocab
+    return [x.lower() for x in vocab]
 
 
 def check_formalia(files: dict, vocabulary: list, acronyms: list) -> None:
-    """
-    Check if formalia is fullfilled.
+    """Check if formalia is fullfilled.
 
     Args:
         files (dict): dict with filename as key and list of urls
+        vocabulary (list): list of words in vocabulary
+        acronyms (list): list of acronyms
     """
     for file_name, file_contents in files.items():
-
         if file_name not in [
             ".\\expose.tex",
             ".\\presentation.tex",
@@ -216,8 +205,7 @@ def check_formalia(files: dict, vocabulary: list, acronyms: list) -> None:
 
 
 def main() -> None:
-    """
-    Locate and check files.
+    """Locate and check files.
 
     Parse acronyms from files first, get vocabulary, then apply tests.
     """

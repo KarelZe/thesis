@@ -1,5 +1,4 @@
-"""
-Tests for the classical classifier.
+"""Tests for the classical classifier.
 
 Use of artificial data to test the classifier.
 """
@@ -14,16 +13,15 @@ from tests.templates import ClassifierMixin
 
 
 class TestClassicalClassifier(ClassifierMixin):
-    """
-    Perform automated tests for ClassicalClassifier.
+    """Perform automated tests for ClassicalClassifier.
 
     Args:
+    ----
         unittest (_type_): unittest module
     """
 
     def setup(self) -> None:
-        """
-        Set up basic classifier and data.
+        """Set up basic classifier and data.
 
         Prepares inputs and expected outputs for testing.
         """
@@ -41,8 +39,7 @@ class TestClassicalClassifier(ClassifierMixin):
         ).fit(self.x_train, self.y_train)
 
     def test_random_state(self) -> None:
-        """
-        Test, if random state is correctly set.
+        """Test, if random state is correctly set.
 
         Two classifiers with the same random state should give the same results.
         """
@@ -61,8 +58,7 @@ class TestClassicalClassifier(ClassifierMixin):
         assert (first_y_pred == second_y_pred).all()
 
     def test_fit(self) -> None:
-        """
-        Test, if fit works.
+        """Test, if fit works.
 
         A fitted classifier should have an attribute `layers_`.
         """
@@ -73,8 +69,7 @@ class TestClassicalClassifier(ClassifierMixin):
         assert check_is_fitted(fitted_classifier) is None
 
     def test_strategy_const(self) -> None:
-        """
-        Test, if strategy 'const' returns correct proabilities.
+        """Test, if strategy 'const' returns correct proabilities.
 
         A classifier with strategy 'constant' should return class probabilities
         of (0.5, 0.5), if a trade can not be classified.
@@ -85,8 +80,7 @@ class TestClassicalClassifier(ClassifierMixin):
         assert (fitted_classifier.predict_proba(self.x_test) == 0.5).all()
 
     def test_invalid_func(self) -> None:
-        """
-        Test, if only valid function strings can be passed.
+        """Test, if only valid function strings can be passed.
 
         An exception should be raised for invalid function strings.
         Test for 'foo', which is no valid rule.
@@ -95,12 +89,11 @@ class TestClassicalClassifier(ClassifierMixin):
             layers=[("foo", "all")],
             random_state=42,
         )
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match=r"Unknown function string"):
             classifier.fit(self.x_train, self.y_train)
 
     def test_invalid_subset(self) -> None:
-        """
-        Test, if only valid subset strings can be passed.
+        """Test, if only valid subset strings can be passed.
 
         An exception should be raised for invalid subsets.
         Test for 'bar', which is no valid subset.
@@ -109,12 +102,11 @@ class TestClassicalClassifier(ClassifierMixin):
             layers=[("tick", "bar")],
             random_state=42,
         )
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match=r"Unknown subset"):
             classifier.fit(self.x_train, self.y_train)
 
     def test_invalid_col_length(self) -> None:
-        """
-        Test, if only valid column length can be passed.
+        """Test, if only valid column length can be passed.
 
         An exception should be raised if length of columns list does not match
         the number of columns in the data. `features` is only used if, data is
@@ -124,12 +116,11 @@ class TestClassicalClassifier(ClassifierMixin):
         classifier = ClassicalClassifier(
             layers=[("tick", "all")], random_state=42, features=["one"]
         )
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match=r"Expected"):
             classifier.fit(self.x_train.values, self.y_train.values)
 
     def test_override(self) -> None:
-        """
-        Test, if classifier does not override valid results from layer one.
+        """Test, if classifier does not override valid results from layer one.
 
         If all data can be classified using first rule, first rule should
         only be applied.
@@ -152,8 +143,7 @@ class TestClassicalClassifier(ClassifierMixin):
         assert (y_pred == y_test).all()
 
     def test_np_array(self) -> None:
-        """
-        Test, if classifier works, if only np.ndarrays are provided.
+        """Test, if classifier works, if only np.ndarrays are provided.
 
         If only np.ndarrays are provided, the classifier should work, by constructing
         a dataframe from the arrays and the `columns` list.
@@ -174,9 +164,7 @@ class TestClassicalClassifier(ClassifierMixin):
 
     @pytest.mark.parametrize("subset", ["best", "ex"])
     def test_mid(self, subset: str) -> None:
-        """
-        Test, if no mid is calculated, if bid exceeds ask etc.
-        """
+        """Test, if no mid is calculated, if bid exceeds ask etc."""
         x_train = pd.DataFrame(
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
             columns=["TRADE_PRICE", f"bid_{subset}", f"ask_{subset}"],
@@ -203,8 +191,7 @@ class TestClassicalClassifier(ClassifierMixin):
 
     @pytest.mark.parametrize("subset", ["all", "ex"])
     def test_tick_rule(self, subset: str) -> None:
-        """
-        Test, if tick rule is correctly applied.
+        """Test, if tick rule is correctly applied.
 
         Tests cases where prev. trade price is higher, lower, equal or missing.
 
@@ -231,8 +218,7 @@ class TestClassicalClassifier(ClassifierMixin):
 
     @pytest.mark.parametrize("subset", ["all", "ex"])
     def test_rev_tick_rule(self, subset: str) -> None:
-        """
-        Test, if rev. tick rule is correctly applied.
+        """Test, if rev. tick rule is correctly applied.
 
         Tests cases where suc. trade price is higher, lower, equal or missing.
 
@@ -258,8 +244,7 @@ class TestClassicalClassifier(ClassifierMixin):
 
     @pytest.mark.parametrize("subset", ["best", "ex"])
     def test_quote_rule(self, subset: str) -> None:
-        """
-        Test, if quote rule is correctly applied.
+        """Test, if quote rule is correctly applied.
 
         Tests cases where prev. trade price is higher, lower, equal or missing.
 
@@ -292,8 +277,7 @@ class TestClassicalClassifier(ClassifierMixin):
 
     @pytest.mark.parametrize("subset", ["best", "ex"])
     def test_lr(self, subset: str) -> None:
-        """
-        Test, if the lr algorithm is correctly applied.
+        """Test, if the lr algorithm is correctly applied.
 
         Tests cases where both quote rule and tick rule all are used.
 
@@ -319,8 +303,7 @@ class TestClassicalClassifier(ClassifierMixin):
 
     @pytest.mark.parametrize("subset", ["best", "ex"])
     def test_rev_lr(self, subset: str) -> None:
-        """
-        Test, if the rev. lr algorithm is correctly applied.
+        """Test, if the rev. lr algorithm is correctly applied.
 
         Tests cases where both quote rule and tick rule all are used.
 
@@ -353,13 +336,12 @@ class TestClassicalClassifier(ClassifierMixin):
 
     @pytest.mark.parametrize("subset", ["best", "ex"])
     def test_emo(self, subset: str) -> None:
-        """
-        Test, if the emo algorithm is correctly applied.
+        """Test, if the emo algorithm is correctly applied.
 
         Tests cases where both quote rule at bid or ask and tick rule all are used.
 
         Args:
-            subset (str): subset e. g., 'ex'
+            subset (str): subset e.g., best
         """
         x_train = pd.DataFrame(
             [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
@@ -392,8 +374,7 @@ class TestClassicalClassifier(ClassifierMixin):
 
     @pytest.mark.parametrize("subset", ["best", "ex"])
     def test_rev_emo(self, subset: str) -> None:
-        """
-        Test, if the rev. emo algorithm is correctly applied.
+        """Test, if the rev. emo algorithm is correctly applied.
 
         Tests cases where both quote rule at bid or ask and rev. tick rule all are used.
 
@@ -426,8 +407,7 @@ class TestClassicalClassifier(ClassifierMixin):
 
     @pytest.mark.parametrize("subset", ["best", "ex"])
     def test_clnv(self, subset: str) -> None:
-        """
-        Test, if the clnv algorithm is correctly applied.
+        """Test, if the clnv algorithm is correctly applied.
 
         Tests cases where both quote rule and  tick rule all are used.
 
@@ -460,8 +440,7 @@ class TestClassicalClassifier(ClassifierMixin):
 
     @pytest.mark.parametrize("subset", ["best", "ex"])
     def test_rev_clnv(self, subset: str) -> None:
-        """
-        Test, if the rev. clnv algorithm is correctly applied.
+        """Test, if the rev. clnv algorithm is correctly applied.
 
         Tests cases where both quote rule and rev. tick rule all are used.
 
@@ -493,8 +472,7 @@ class TestClassicalClassifier(ClassifierMixin):
         assert (y_pred == y_test).all()
 
     def test_trade_size(self) -> None:
-        """
-        Test, if the trade size algorithm is correctly applied.
+        """Test, if the trade size algorithm is correctly applied.
 
         Tests cases where relevant data is present or missing.
         """
@@ -523,8 +501,7 @@ class TestClassicalClassifier(ClassifierMixin):
         assert (y_pred == y_test).all()
 
     def test_depth(self) -> None:
-        """
-        Test, if the depth rule is correctly applied.
+        """Test, if the depth rule is correctly applied.
 
         Tests cases where relevant data is present or missing.
         """

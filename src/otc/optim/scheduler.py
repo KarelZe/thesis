@@ -1,6 +1,4 @@
-"""
-Learnin rate scheduler with linear warmup phase and cosine decay.
-"""
+"""Learnin rate scheduler with linear warmup phase and cosine decay."""
 from typing import List
 
 import numpy as np
@@ -8,16 +6,15 @@ from torch import optim
 
 
 class CosineWarmupScheduler(optim.lr_scheduler._LRScheduler):
-    """
-    Cosine learning rate scheduler with linear warmup.
+    """Cosine learning rate scheduler with linear warmup.
 
     Args:
+    ----
         optim (optim): learning rate scheduler
     """
 
     def __init__(self, optimizer: optim.Optimizer, warmup: int, max_iters: int):
-        """
-        Cosine learning rate scheduler with linear warmup.
+        """Cosine learning rate scheduler with linear warmup.
 
         Args:
             optimizer (optim.Optimizer): _description_
@@ -29,8 +26,7 @@ class CosineWarmupScheduler(optim.lr_scheduler._LRScheduler):
         super().__init__(optimizer)
 
     def get_lr(self) -> List[float]:
-        """
-        Get the learning rate.
+        """Get the learning rate.
 
         Returns:
             List[float]: List of learning rates.
@@ -39,11 +35,10 @@ class CosineWarmupScheduler(optim.lr_scheduler._LRScheduler):
         return [base_lr * lr_factor for base_lr in self.base_lrs]
 
     def get_lr_factor(self, iteration: int) -> float:
-        """
-        Get the learning rate factor for the given epoch.
+        """Get the learning rate factor for the given epoch.
 
         Args:
-            epoch (int): epoch number
+            iteration (int): epoch number
 
         Returns:
             float: learning rate factor

@@ -25,27 +25,26 @@ jobs:
       shell: bash
       env:
           WANDB_API_KEY: ${{secrets.WANDB_API_KEY}}
-    - name: Set up Python
+    - name: Install poetry
+      run: pipx install poetry
+    - name: Set up Python and install dependencies
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install .
-        pip install .[dev]
+        cache: 'poetry'
+    - name: install poetry
+      run: poetry install
     - name: Test with pytest
       run: |
-        pytest --cov=src tests/ --doctest-modules --junitxml=cover/xunit-result.xml --cov-report xml:cover/coverage.xml
-        # convert to json
-        coverage json -o cover/coverage.json
+        poetry run pytest --cov=src tests/ --doctest-modules --junitxml=cover/xunit-result.xml --cov-report xml:cover/coverage.xml
+        poetry run coverage json -o cover/coverage.json
     - name: "Extract numbers from cov report"
       run: |
         export TOTAL=$(python -c "import json;print(json.load(open('cover/coverage.json'))['totals']['percent_covered_display'])")
         echo "total=$TOTAL" >> $GITHUB_ENV
         echo "### Total coverage: ${TOTAL}%" >> $GITHUB_STEP_SUMMARY
     - name: "Make badge"
-      uses: schneegans/dynamic-badges-action@v1.7.0
+      uses: schneegans/dynamic-badges-action@v1.6.0
       with:
         auth: ${{ secrets.GIST_TOKEN }}
         gistID: e2578f2f3e6322d299f1cb2e294d6b0b

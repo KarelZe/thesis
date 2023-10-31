@@ -1,17 +1,15 @@
-"""
-Holds configuration for folders, dbs, and wandb configuration.
+"""Holds configuration for folders, dbs, and wandb configuration.
 
 See also `prod.env`.
 """
 
 from pathlib import Path
 
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    """
-    Specifies settings.
+    """Specifies settings.
 
     Mainly W&B, GCS and Heroku.
     """
@@ -26,8 +24,7 @@ class Settings(BaseSettings):
     MODEL_DIR_REMOTE: Path
 
     class Config:
-        """
-        Specifies configuration.
+        """Specifies configuration.
 
         Filename is given by "prod.env". Keys are case-sensitive.
         """

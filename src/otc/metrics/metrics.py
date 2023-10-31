@@ -1,5 +1,4 @@
-"""
-Sklearn implementation of effective spread.
+"""Sklearn implementation of effective spread.
 
 See: https://hagstromer.org/2020/11/23/overestimated-effective-spreads/ for explanation.
 """
@@ -18,8 +17,7 @@ def effective_spread(
     fundamental_value: npt.NDArray,
     mode: Literal["nominal", "relative", "none"] = "nominal",
 ) -> np.float64 | npt.NDArray:
-    """
-    Calculate the effective spread.
+    """Calculate the effective spread.
 
     Depending on mode, calculate the nominal effective spread given by:
     $$
@@ -34,20 +32,23 @@ def effective_spread(
     If mode is "none", return the effective spread without averaging.
 
     Args:
+    ----
         y_pred (npt.NDArray): indicator if the trade is a buy or sell
         trade_price (npt.NDArray): trade price
         fundamental_value (npt.NDArray): fundamental value e. g., bid-ask
         midpoint.
         mode (Literal["nominal", "relative", "none"], optional): "nominal" or
         "relative" or "none". Defaults to "nominal".
+
     Returns:
+    -------
         float: average effective spread
     """
     check_consistent_length(y_pred, trade_price, fundamental_value)
     s = 2 * (trade_price - fundamental_value) * y_pred
     if mode == "nominal":
         return np.nanmean(s)
-    elif mode == "relative":
+    if mode == "relative":
         # nan when div by zero https://stackoverflow.com/a/54364060/5755604
         ps = np.empty(y_pred.shape)
         np.divide(s, fundamental_value, out=ps, where=fundamental_value != 0)

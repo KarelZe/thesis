@@ -1,5 +1,4 @@
-"""
-A fast dataloader-like object to load batches of tabular data sets.
+"""A fast dataloader-like object to load batches of tabular data sets.
 
 Adapted from here:
 https://discuss.pytorch.org/t/dataloader-much-slower-than-manual-batching/27014/6
@@ -12,8 +11,7 @@ import torch
 
 
 class TabDataLoader:
-    """
-    PyTorch Implementation of a dataloader for tabular data.
+    """PyTorch Implementation of a dataloader for tabular data.
 
     Due to a chunk-wise reading or several rows at once it is preferred
     over the standard dataloader that reads row-wise.
@@ -27,8 +25,7 @@ class TabDataLoader:
         device: str = "cpu",
         **kwargs: Any,
     ):
-        """
-        TabDataLoader.
+        """TabDataLoader.
 
         Tensors can be None e. g., if there is no categorical data.
 
@@ -36,6 +33,8 @@ class TabDataLoader:
             batch_size (int, optional): size of batch. Defaults to 4096.
             shuffle (bool, optional): shuffle data. Defaults to False.
             device (str, optional): device where. Defaults to "cpu".
+            **kwargs: keyword arguments
+            *tensors: tensors
         """
         self.device = device
         # check for tensors that are None
@@ -57,8 +56,7 @@ class TabDataLoader:
         self.n_batches = n_batches
 
     def __iter__(self) -> TabDataLoader:
-        """
-        Return itself.
+        """Return itself.
 
         Returns:
             TabDataLoader: TabDataLoader
@@ -71,12 +69,13 @@ class TabDataLoader:
         return self
 
     def __next__(self) -> tuple[torch.Tensor | None, ...]:
-        """
-        Generate next batch with size of 'batch_size'.
+        """Generate next batch with size of 'batch_size'.
 
         Batches can be underful.
+
         Raises:
             StopIteration: stopping criterion.
+
         Returns:
             Tuple[torch.Tensor | None, torch.Tensor, torch.Tensor]: (X_cat), X_cont,
             weight, y
@@ -96,8 +95,7 @@ class TabDataLoader:
         return tuple(mixed_batch)
 
     def __len__(self) -> int:
-        """
-        Get number of full and partial batches in data set.
+        """Get number of full and partial batches in data set.
 
         Returns:
             int: number of batches.

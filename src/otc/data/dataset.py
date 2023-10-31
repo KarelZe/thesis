@@ -1,5 +1,4 @@
-"""
-Implementation of a dataset for tabular data.
+"""Implementation of a dataset for tabular data.
 
 Supports both categorical and continous data.
 """
@@ -16,6 +15,7 @@ class TabDataset(Dataset):
     """PyTorch Dataset for tabular data.
 
     Args:
+    ----
         Dataset (Dataset): dataset
     """
 
@@ -28,8 +28,7 @@ class TabDataset(Dataset):
         cat_features: list[str] | None = None,
         cat_unique_counts: tuple[int, ...] | None = None,
     ):
-        """
-        Tabular data set holding data for the model.
+        """Tabular data set holding data for the model.
 
         Data set is inspired by CatBoost's Pool class:
         https://catboost.ai/en/docs/concepts/python-reference_pool
@@ -48,7 +47,7 @@ class TabDataset(Dataset):
             cat_unique_counts (tuple[int, ...] | None, optional): Number of categories
             per categorical feature. Defaults to None.
         """
-        self._cat_unique_counts = () if not cat_unique_counts else cat_unique_counts
+        self._cat_unique_counts = cat_unique_counts if cat_unique_counts else ()
         feature_names = [] if feature_names is None else feature_names
         # infer feature names from dataframe.
         if isinstance(x, pd.DataFrame):
@@ -58,7 +57,7 @@ class TabDataset(Dataset):
         ), "`len('feature_names)` must match `X.shape[1]`"
 
         # calculate cat indices
-        cat_features = [] if not cat_features else cat_features
+        cat_features = cat_features if cat_features else []
         assert set(cat_features).issubset(
             feature_names
         ), "Categorical features must be a subset of feature names."
@@ -74,9 +73,9 @@ class TabDataset(Dataset):
         ]
 
         # pd 2 np
-        x = x.values if isinstance(x, pd.DataFrame) else x
-        y = y.values if isinstance(y, pd.Series) else y
-        weight = weight.values if isinstance(weight, pd.Series) else weight
+        x = x.to_numpy() if isinstance(x, pd.DataFrame) else x
+        y = y.to_numpy() if isinstance(y, pd.Series) else y
+        weight = weight.to_numpy() if isinstance(weight, pd.Series) else weight
 
         assert (
             x.shape[0] == y.shape[0]
@@ -112,8 +111,7 @@ class TabDataset(Dataset):
         self.weight = weight
 
     def __len__(self) -> int:
-        """
-        Length of dataset.
+        """Length of dataset.
 
         Returns:
             int: length
@@ -123,8 +121,7 @@ class TabDataset(Dataset):
     def __getitem__(
         self, idx: int
     ) -> tuple[torch.Tensor | None, torch.Tensor, torch.Tensor, torch.Tensor]:
-        """
-        Get sample for model.
+        """Get sample for model.
 
         Args:
             idx (int): index of item.

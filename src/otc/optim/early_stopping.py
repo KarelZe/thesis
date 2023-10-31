@@ -1,5 +1,4 @@
-"""
-Early stopping of training when the loss does not improve after certain epochs.
+"""Early stopping of training when the loss does not improve after certain epochs.
 
 Adapted from here: https://bit.ly/3tTnyLU.
 """
@@ -15,15 +14,13 @@ logger = logging.getLogger(__name__)
 
 
 class EarlyStopping:
-    """
-    Implementation of early stopping.
+    """Implementation of early stopping.
 
     For early stopping see: https://en.wikipedia.org/wiki/Early_stopping.
     """
 
     def __init__(self, patience: int = 5, min_delta: float = 0) -> None:
-        """
-        Implement early stopping.
+        """Implement early stopping.
 
         Args:
             patience (int, optional): number of epochs to wait. Defaults to 5.
@@ -37,8 +34,7 @@ class EarlyStopping:
         self.early_stop = False
 
     def __call__(self, val_loss: float) -> None:
-        """
-        Tracks, whether training should be aborted.
+        """Tracks, whether training should be aborted.
 
         Args:
             val_loss (float): validation loss of current epoch.

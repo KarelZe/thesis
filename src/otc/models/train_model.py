@@ -1,5 +1,4 @@
-"""
-Script to perform a hyperparameter search for various models.
+"""Script to perform a hyperparameter search for various models.
 
 Currently classical rules and gradient boosted trees are supported.
 
@@ -65,7 +64,7 @@ FEATURE_SETS = {
     default="classical-size",
     help="Feature set to run study on.",
 )
-@click.option("--id", required=False, type=str, help="Id of run / name of study.")
+@click.option("--id", required=False, type=str, help="Id of run/name of study.")
 @click.option(
     "--dataset",
     required=False,
@@ -84,10 +83,10 @@ def main(
     dataset: str,
     pretrain: bool,
 ) -> None:
-    """
-    Start study.
+    """Start study.
 
     Args:
+    ----
         trials (int): no. of trials.
         seed (int): seed for rng.
         features (str): name of feature set.
@@ -101,7 +100,7 @@ def main(
 
     logger.info("Connecting to weights & biases. Downloading artifacts. 📦")
 
-    run = wandb.init(  # type: ignore
+    run = wandb.init(
         project=settings.WANDB_PROJECT, entity=settings.WANDB_ENTITY, name=id
     )
 
@@ -114,7 +113,8 @@ def main(
         artifact_study = run.use_artifact(id + ".optuna:latest")
         artifact_dir = artifact_study.download()
 
-        saved_study = pickle.load(open(Path(artifact_dir, id + ".optuna"), "rb"))
+        with Path(artifact_dir / id + ".optuna").open(mode="rb") as f:
+            saved_study = pickle.load(f)
         sampler = saved_study.sampler
 
     # select right feature set
@@ -139,7 +139,7 @@ def main(
         Path(artifact_dir_labelled, "train_set.parquet"), columns=columns
     )
     y_train = x_train["buy_sell"]
-    x_train.drop(columns=["buy_sell"], inplace=True)
+    x_train = x_train.drop(columns=["buy_sell"])
 
     if pretrain:
         # Load unlabelled data
@@ -150,7 +150,7 @@ def main(
             Path(artifact_dir_unlabelled, "train_set.parquet"), columns=columns
         )
         y_train_unlabelled = x_train_unlabelled["buy_sell"]
-        x_train_unlabelled.drop(columns=["buy_sell"], inplace=True)
+        x_train_unlabelled = x_train_unlabelled.drop(columns=["buy_sell"])
 
         # Concatenate labelled and unlabelled data unlabelled will merge in between
         x_train = pd.concat([x_train, x_train_unlabelled])
@@ -161,7 +161,7 @@ def main(
         Path(artifact_dir_labelled, "val_set.parquet"), columns=columns
     )
     y_val = x_val["buy_sell"]
-    x_val.drop(columns=["buy_sell"], inplace=True)
+    x_val = x_val.drop(columns=["buy_sell"])
 
     # pretrain training activated
     has_label = (y_train != 0).all()
@@ -220,7 +220,7 @@ def main(
     logger.info("writing artifacts to weights and biases. 🗃️")
 
     # provide summary statistics
-    wandb.run.summary.update(  # type: ignore
+    wandb.run.summary.update(
         {
             "best_accuracy": study.best_trial.value,
             "best_trial": study.best_trial.number,
@@ -234,7 +234,7 @@ def main(
         }
     )
 
-    wandb.log(  # type: ignore
+    wandb.log(
         {
             "plot_optimization_history": optuna.visualization.plot_optimization_history(
                 study
@@ -252,8 +252,7 @@ def main(
 
 
 if __name__ == "__main__":
-
-    with open("logging.yaml") as file:
+    with Path.open("logging.yaml") as file:
         loaded_config = yaml.safe_load(file)
         logging.config.dictConfig(loaded_config)
 

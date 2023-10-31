@@ -1,5 +1,4 @@
-"""
-Perform automated tests for transformer-based neural networks.
+"""Perform automated tests for transformer-based neural networks.
 
 Partly inspired by:
 https://github.com/tilman151/unittest_dl/blob/master/tests/test_model.py
@@ -25,18 +24,16 @@ from tests.templates import NeuralNetTestsMixin
 
 
 class TestFTTransformer(NeuralNetTestsMixin):
-    """
-    Perform tests specified in `NeuralNetTestsMixin` for\
-    `FTTransformer` model.
+    """Perform tests specified in `NeuralNetTestsMixin` for `FTTransformer` model.
 
     Args:
+    ----
         TestCase (test case): test class
         NeuralNetTestsMixin (neural net mixin): mixin
     """
 
     def setup(self) -> None:
-        """
-        Set up basic network and data.
+        """Set up basic network and data.
 
         Prepares inputs and expected outputs for testing.
         """
@@ -95,8 +92,7 @@ class TestFTTransformer(NeuralNetTestsMixin):
         self.net = FTTransformer(feature_tokenizer, transformer).to(device)
 
     def test_numerical_feature_tokenizer(self) -> None:
-        """
-        Test numerical feature tokenizer.
+        """Test numerical feature tokenizer.
 
         Adapted from: https://github.com/Yura52/rtdl/.
         """
@@ -108,8 +104,7 @@ class TestFTTransformer(NeuralNetTestsMixin):
         assert tokens.shape == (n_objects, n_features, d_token)
 
     def test_categorical_feature_tokenizer(self) -> None:
-        """
-        Test categorical feature tokenizer.
+        """Test categorical feature tokenizer.
 
         Adapted from: https://github.com/Yura52/rtdl/.
         """
@@ -125,8 +120,7 @@ class TestFTTransformer(NeuralNetTestsMixin):
         assert tokens.shape == (n_objects, n_features, d_token)
 
     def test_feature_tokenizer(self) -> None:
-        """
-        Test feature tokenizer.
+        """Test feature tokenizer.
 
         Adapted from: https://github.com/Yura52/rtdl/.
         """
@@ -142,8 +136,7 @@ class TestFTTransformer(NeuralNetTestsMixin):
         assert tokens.shape == (n_objects, num_continous + num_categorical, d_token)
 
     def test_cls_token(self) -> None:
-        """
-        Test [CLS] token.
+        """Test [CLS] token.
 
         Adapted from: https://github.com/Yura52/rtdl/.
         """
@@ -157,8 +150,7 @@ class TestFTTransformer(NeuralNetTestsMixin):
         assert (x[:, -1, :] == cls_token.expand(len(x))).all()
 
     def test_multihead_attention(self) -> None:
-        """
-        Test multi-headed attention.
+        """Test multi-headed attention.
 
         Adapted from: https://github.com/Yura52/rtdl/.
         """
