@@ -64,7 +64,7 @@ FEATURE_SETS = {
     default="classical-size",
     help="Feature set to run study on.",
 )
-@click.option("--id", required=False, type=str, help="Id of run / name of study.")
+@click.option("--id", required=False, type=str, help="Id of run/name of study.")
 @click.option(
     "--dataset",
     required=False,
