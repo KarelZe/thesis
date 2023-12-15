@@ -1,11 +1,19 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
-- family-names: "Bilz"
-  given-names: "Markus"
-  orcid: "https://orcid.org/0000-0000-0000-0000"
+  - given-names: Markus
+    family-names: Bilz
+    email: web@markusbilz.com
+    orcid: 'https://orcid.org/0009-0009-6833-4393'
 title: "Option Trade Classification with Machine Learning"
 version: 0.0.1
-doi: 00.0000/zenodo.1234
-date-released: 2023-03-31
+date-released: 2023-06-30
+repository-code: 'https://github.com/KarelZe/thesis'
 url: "https://github.com/KarelZe/thesis"
+keywords:
+  - rule-based classifier
+  - trade-classification
+  - transformer
+  - gradient-boosting
+  - semi-supervised-learning
+  - supervised-learning
