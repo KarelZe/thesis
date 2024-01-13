@@ -26,7 +26,7 @@ def loc_urls() -> dict:
 
     # find all .bib and .tex files
     os.chdir("../../../reports")
-    files = Path.rglob("./**/*.tex") + Path.rglob("./**/*.bib")
+    files = list(Path.cwd().rglob("./**/*.tex")) + list(Path.cwd().rglob("./**/*.bib"))
 
     typer.echo(f"files checked: {files}")
 
