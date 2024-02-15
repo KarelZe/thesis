@@ -467,7 +467,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
         for epoch in range(self.epochs_finetune):
             # perform training
             loss_in_epoch_train = 0
-            train_batch = 0
 
             self.clf.train()
 
@@ -498,7 +497,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
 
                 self._stats_step.append({"train_loss": train_loss.item(), "step": step})
 
-                train_batch += 1
                 step += 1
 
             self.clf.eval()
@@ -506,7 +504,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
             loss_in_epoch_val = 0.0
             correct = 0
 
-            val_batch = 0
             with torch.no_grad():
                 for x_cat, x_cont, weights, targets in val_loader_finetune:
                     logits = self.clf(x_cat, x_cont)
@@ -523,8 +520,6 @@ class TransformerClassifier(BaseEstimator, ClassifierMixin):
                         weights
                     )
                     loss_in_epoch_val += val_loss.item()
-
-                    val_batch += 1
 
             # loss average over all batches
             train_loss_all = loss_in_epoch_train / len(train_loader_finetune)
