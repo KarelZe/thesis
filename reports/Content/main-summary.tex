@@ -1,1 +1,108 @@
-Oh lord, help.
+
+% The dominant sequence transduction models are based on complex recurrent or
+% convolutional neural networks that include an encoder and a decoder. The best
+% performing models also connect the encoder and decoder through an attention
+% mechanism. We propose a new simple network architecture, the Transformer,
+% based solely on attention mechanisms, dispensing with recurrence and convolutions
+% entirely. Experiments on two machine translation tasks show these models to
+% be superior in quality while being more parallelizable and requiring significantly
+% less time to train. Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including
+% ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task,
+% our model establishes a new single-model state-of-the-art BLEU score of 41.8 after
+% training for 3.5 days on eight GPUs, a small fraction of the training costs of the
+% best models from the literature. We show that the Transformer generalizes well to
+% other tasks by applying it successfully to English constituency parsing both with
+% large and limited training data
+
+\section{Motivation}
+
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction. Applications include the study of option demand \autocite[][]{garleanuDemandBasedOptionPricing2009}, of informational content in option trading \autocites[][]{huDoesOptionTrading2014}[][]{panInformationOptionVolume2006}[][]{caoInformationalContentOption2005}, of order flow \autocite[][]{muravyevOrderFlowExpected2016}, or of trading costs \autocite[][]{muravyevOptionsTradingCosts2020}. 
+
+Despite the clear importance for empirical research, the true initiator of the trade is frequently absent in datasets and is inferred using trade classification rules \autocite[][]{easleyOptionVolumeStock1998}. In consequence, the correctness of empirical studies hinges on the algorithm's ability to accurately identify the trade initiator.
+
+Popular heuristic to sign trades are the tick test \autocite[][]{hasbrouckTradesQuotesInventories1988}, quote rule \autocite[][]{harrisDayEndTransactionPrice1989}, and hybrids thereof such as the \gls{LR} algorithm \autocite[][]{leeInferringTradeDirection1991}. These rules have initially been proposed and tested in the stock market. For option markets, the works of \textcites[][]{savickasInferringDirectionOption2003}[][]{grauerOptionTradeClassification2022} raise concerns about the transferability of trade signing rules due to deteriorating classification accuracies and systematic misclassifications. The latter is crutial, as non-random misclassifications bias the dependent research \autocites[][]{odders-whiteOccurrenceConsequencesInaccurate2000}[][]{theissenTestAccuracyLee2001}.
+
+A contending body of research \autocites{blazejewskiLocalNonParametricModel2005}{rosenthalModelingTradeDirection2012}{ronenMachineLearningTrade2022} improves trade classification performance through machine learning. The scope of current research is yet bound to the stock market and the \textit{artificial} setting, where fully-labelled trades are available. 
+
+The goal of our empirical study is to investigate if  machine learning-based classifier improve upon the accuracy of state-of-the-art approaches for option trade classification?
+
+% Thereby, our work addresses several addressed shortcomings.
+Our contributions are as follows: (I) By employing gradient-boosted trees and transformers we are able to establish a new state-of-the-art in terms of classification accuracy. (II) Our work is the first to consider both the supervised and the semi-supervised setting, where trades are partially-labelled. (III) Through a feature importance analysis based on Shapley values, we consistently attribute performance gains of rule-based and machine learning-based classifiers to feature groups. We discover that both paradigms share common features, but machine learning-based more effectively exploits the data. % Additional insights are gained from probing the Transformers' attention heads.
+
+% consistently attribute probing attention heads
+
+% Our We perform rigorous benchmarking.
+
+% rendering irrelevant
+
+
+% We assess the performance
+% Wee apply and where only a small fraction of trades can be labelled and peform a regorous benchmarking.
+
+
+% In summary, machine learning has been applied successfully in the context of trade
+% classification. A summary is given in Appendix A.1. No previous work performs
+% machine learning-based classification in the options markets. Our work fills this gap
+% and models trade classification using machine learning to improve upon extant rules.
+
+
+
+% The dataset is split into three disjoint sets for training, validation, and testing. As in \textcite{ellisAccuracyTradeClassification2000} and \textcite{ronenMachineLearningTrade2022} we perform a classical train-test split, thereby maintaining the temporal ordering within the data.
+
+% So far research focuses on the  None of which have been tested
+% hier ml based algos beschreiben
+
+
+% TODO: case of partially labelled dat + 
+% TODO: Hier überleitung ML einführen.
+% Envolving
+
+
+
+
+% Recent works 
+
+% Recent work of \textcite[][13--16]{grauerOptionTradeClassification2022} made significant progress in classification accuracy by proposing explicit overrides for order types and by combining multiple heuristics, thereby advancing the state-of-the-art performance in option trade classification. By this means, their approach enforces a more sophisticated decision boundary eventually leading to a more accurate classification. The fundamental constraint is, that overrides apply only to subsets of trades. Beyond heuristics, it remains open, if classifiers \emph{learned} on trade data can improve upon \emph{static} classification rules in terms of performance and robustness.
+
+
+
+
+
+% \section{State-of-the-Art}
+
+\section{Data}
+
+on a large-scale dataset of option trades recorded at the ISE and  previously studied in (Grauer). After a time-based train-validation-test split, we are left
+
+We train
+
+We distinguish between three feature sets with increasing data requirement
+
+
+\section{Methodology}
+
+We employ ML technology for trade classification, namely gradient-boosted trees, a wide tree-based ensemble, and the FT-Transformer \autocite{gorishniyRevisitingDeepLearning2021}, an Attention-based neural network architecture. We chose these approaches for their state-of-the-art classification performance in tabular modelling \autocites[][]{gorishniyRevisitingDeepLearning2021}[][]{grinsztajnWhyTreebasedModels2022} and their extendability to learn on partially-labelled trades.
+
+
+
+We consider 
+
+
+We implement all rule-based approachs in 
+
+% https://github.com/KarelZe/tclf
+
+W
+
+Analogous to tuning ML models on the validation set, we select the benchmarks on the validation set. For 
+
+
+To facilitate a fair comparison, we sele
+
+
+\section{Results}
+
+Following good measures, we perform robustness tests across different sub-samples such as option type, type of underlying, time among others. 
+
+
+% \section{Relevancy}
