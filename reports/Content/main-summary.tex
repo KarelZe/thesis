@@ -22,7 +22,7 @@ Despite the clear importance for empirical research, the true initiator of the t
 
 Popular heuristic to sign trades are the tick test \autocite[][]{hasbrouckTradesQuotesInventories1988}, quote rule \autocite[][]{harrisDayEndTransactionPrice1989}, and hybrids thereof such as the \gls{LR} algorithm \autocite[][]{leeInferringTradeDirection1991}. These rules have initially been proposed and tested in the stock market. For option markets, the works of \textcites[][]{savickasInferringDirectionOption2003}[][]{grauerOptionTradeClassification2022} raise concerns about the transferability of trade signing rules due to deteriorating classification accuracies and systematic misclassifications. The latter is crutial, as non-random misclassifications bias the dependent research \autocites[][]{odders-whiteOccurrenceConsequencesInaccurate2000}[][]{theissenTestAccuracyLee2001}.
 
-A contending body of research \autocites{blazejewskiLocalNonParametricModel2005}{rosenthalModelingTradeDirection2012}{ronenMachineLearningTrade2022} improves trade classification performance through \gls{ML}. The scope of current research is yet bound to the stock market and the \textit{artificial} setting, where fully-labelled trades are available. 
+A contending body of research \autocites{blazejewskiLocalNonParametricModel2005}{rosenthalModelingTradeDirection2012}{ronenMachineLearningTrade2022} improves trade classification performance through \gls{ML}. The scope of current research is yet bound to the stock market and the \textit{superficial} setting, where fully-labelled trades are available. 
 
 The goal of our empirical study is to investigate if machine learning-based classifier improve upon the accuracy of state-of-the-art approaches for option trade classification?
 
@@ -34,6 +34,7 @@ The goal of our empirical study is to investigate if machine learning-based clas
 
 Our contributions are three-fold: 
 \begin{enumerate}[label=(\roman*),noitemsep]
+% Our We perform rigorous benchmarking.
 \item By employing gradient-boosted trees and transformers we are able to establish a new state-of-the-art in terms of classification accuracy. 
 \item Our work is the first to consider both the supervised and the semi-supervised setting, where trades are partially-labelled.
 \item Through a feature importance analysis based on Shapley values, we can consistently attribute performance gains of rule-based and \gls{ML}-based classifiers to feature groups. We discover that both paradigms share common features, but \gls{ML}-based approaches more effectively exploit the data. % Additional insights are gained from probing the Transformers' attention heads.
@@ -41,7 +42,6 @@ Our contributions are three-fold:
 
 % consistently attribute probing attention heads
 
-% Our We perform rigorous benchmarking.
 
 % rendering irrelevant
 
@@ -81,30 +81,21 @@ Our contributions are three-fold:
 
 We perform the empirical analysis on two large-scale datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}. Our sample construction follows \textcite[][]{grauerOptionTradeClassification2022}, which fosters comparability between both works. 
 
-After a time-based train-validation-test split (60-20-20), required by the \gls{ML} estimators, we are left with two test set spanning from November 2015 -- May 2017 at the \gls{ISE} and November 2015 -- October 2017 at the \gls{CBOE}, respectively. Each test set contains between 9.8 Mio. --  12.8 Mio. labelled option trades. An additional unlabelled, training set of \gls{ISE} trades executed between Oct. 2012 -- Oct. 2013 is reserved for semi-supervised learning.
+After a time-based train-validation-test split (60-20-20), required by the \gls{ML} estimators, we are left with two test set spanning from November 2015 -- May 2017 at the \gls{ISE} and Nov. 2015 -- Oct. 2017 at the \gls{CBOE}, respectively. Each test set contains between 9.8 Mio. --  12.8 Mio. labelled option trades. An additional unlabelled, training set of \gls{ISE} trades executed between Oct. 2012 -- Oct. 2013 is reserved for learning in the semi-supervised setting.
 
-To establish a common ground with rule-based classification, we distinguish three feature sets with increasing data requirements and apply minimal feature engineering. The first set is based on the data requirements of tick/quote-based algorithms, the second of complex, hybrid algorithms with additional dependencies on trade size data, such as the \gls{GSU} method, and the third feature set includes option characteristics, like the option's $\Delta$. 
+To establish a common ground with rule-based classification, we distinguish three feature sets with increasing data requirements and employ minimal feature engineering. The first set is based on the data requirements of tick/quote-based algorithms, the second of hybrid algorithms with additional dependencies on trade size data, such as the \gls{GSU} method, and the third feature set includes option characteristics, like the option's $\Delta$ or underlying. 
 
 \section{Methodology}
 
-We employ ML technology for trade classification, namely gradient-boosted trees, a wide tree-based ensemble, and the FT-Transformer \autocite{gorishniyRevisitingDeepLearning2021}, an Attention-based neural network architecture. We chose these approaches for their state-of-the-art classification performance in tabular modelling \autocites[][]{gorishniyRevisitingDeepLearning2021}[][]{grinsztajnWhyTreebasedModels2022} and their extendability to learn on partially-labelled trades.
+We model trade classification using gradient-boosted trees \autocites[][]{friedmanGreedyFunctionApproximation2001}, a wide tree-based ensemble, and the FT-Transformer \autocite{gorishniyRevisitingDeepLearning2021}, a Transformer-based neural network architecture. We chose these approaches for their state-of-the-art performance in tabular modelling \autocites[][]{gorishniyRevisitingDeepLearning2021}[][]{grinsztajnWhyTreebasedModels2022} and their extendability to learn on partially-labelled trades. Additionally, Transformers offer some model interpretability through the Attention mechanism. An advantage we exploit later to derive insights into the decision process of Transformers.
 
+As  for being minimal intrusive
 
+For a rich evaluation, we all rule-based approaches are modelled a classifier.\footnote{The implementation of our classifiers is publicaly available under \url{https://github.com/KarelZe/tclf}}
 
-We consider 
-
-
-We implement all rule-based approachs in 
-
-% https://github.com/KarelZe/tclf
-
-W
-
-Analogous to tuning ML models on the validation set, we select the benchmarks on the validation set. For 
-
-
-To facilitate a fair comparison, we sele
-
+% Tuning
+To facilitate a fair comparison, we employ an exhaustive Bayesian search, to find a suitable hyperparameter configuration for each of our models. Classical
+rule have no hyperparameters per se. Akin to tuning the machine learning classifiers on the validation set, we select the classical benchmarks based on their validation performance. This is most rigorous, while preventing to overfit the test set.\footnote{All our experiments as well as the source code are publically available.}
 
 \section{Results}
 
