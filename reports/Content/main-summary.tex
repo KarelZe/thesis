@@ -14,7 +14,7 @@
 % other tasks by applying it successfully to English constituency parsing both with
 % large and limited training data
 
-\section{Motivation}
+\section{Background and Motivation}
 
 Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction. Applications include the study of option demand \autocite[][]{garleanuDemandBasedOptionPricing2009}, of informational content in option trading \autocites[][]{huDoesOptionTrading2014}[][]{panInformationOptionVolume2006}[][]{caoInformationalContentOption2005}, of order flow \autocite[][]{muravyevOrderFlowExpected2016}, or of trading costs \autocite[][]{muravyevOptionsTradingCosts2020}. 
 
@@ -26,7 +26,10 @@ A contending body of research \autocites{blazejewskiLocalNonParametricModel2005}
 
 The goal of our empirical study is to investigate if  machine learning-based classifier improve upon the accuracy of state-of-the-art approaches for option trade classification?
 
+\section{Contributions}
+
 % Thereby, our work addresses several addressed shortcomings.
+% TODO: by how much?
 Our contributions are as follows: (I) By employing gradient-boosted trees and transformers we are able to establish a new state-of-the-art in terms of classification accuracy. (II) Our work is the first to consider both the supervised and the semi-supervised setting, where trades are partially-labelled. (III) Through a feature importance analysis based on Shapley values, we consistently attribute performance gains of rule-based and machine learning-based classifiers to feature groups. We discover that both paradigms share common features, but machine learning-based more effectively exploits the data. % Additional insights are gained from probing the Transformers' attention heads.
 
 % consistently attribute probing attention heads
