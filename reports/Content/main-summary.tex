@@ -28,7 +28,7 @@ Our contributions are three-fold:
 
 We perform the empirical analysis on two large-scale datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}. Our sample construction follows \textcite[][]{grauerOptionTradeClassification2022}, which fosters comparability between both works. 
 
-After a time-based train-validation-test split (60-20-20), required by the \gls{ML} estimators, we are left with two test set spanning from November 2015 -- May 2017 at the \gls{ISE} and Nov. 2015 -- Oct. 2017 at the \gls{CBOE}, respectively. Each test set contains between 9.8 Mio. --  12.8 Mio. labelled option trades. An additional unlabelled, training set of \gls{ISE} trades executed between Oct. 2012 -- Oct. 2013 is reserved for learning in the semi-supervised setting.
+Training and validation is performed exclusively on \gls{ISE} trades. After a time-based train-validation-test split (60-20-20), required by the \gls{ML} estimators, we are left with a test set spanning from Nov. 2015 -- May 2017 at the \gls{ISE}. \gls{CBOE} trades between Nov. 2015 -- Oct. 2017 are used as a second test set. Each test set contains between 9.8 Mio. --  12.8 Mio. labelled option trades. An additional unlabelled, training set of \gls{ISE} trades executed between Oct. 2012 -- Oct. 2013 is reserved for learning in the semi-supervised setting.
 
 To establish a common ground with rule-based classification, we distinguish three feature sets with increasing data requirements and employ minimal feature engineering. The first set is based on the data requirements of tick/quote-based algorithms, the second of hybrid algorithms with additional dependencies on trade size data, such as the \gls{GSU} method, and the third feature set includes option characteristics, like the option's $\Delta$ or the underlying. 
 
@@ -38,10 +38,10 @@ We model trade classification using gradient-boosted trees \autocites[][]{friedm
 
 As stated earlier, our goal is to extend \gls{ML} classifiers for the semi-supervised setting to make use of the abundant, unlabelled trade data. We couple gradient-boosting with self-training \autocite{yarowskyUnsupervisedWordSense1995}, whereby confident predictions of unlabelled trades are interatively added into the training set as pseudo-labels. A new classifier is then retrained on labelled and pseudo-labelled trades. Likewise, the Transformer is pre-trained on unlabelled trades with the replaced token detection objective of \textcite{clarkElectraPretrainingText2020} and later finetuned on labelled training instances. Conceptually, the network learns to detect randomly replaced tokens or features of transactions. Both techniques are aimed at improving generalization performance.
 
-Classical trade classification rules are implemented as rule-based classifier allowing us to construct arbitrary candidates for benchmarking and support richer evaluation of feature importances.\footnote{The implementation is publically available under \url{https://pypi.org/project/tclf/}.}
+Classical trade classification rules are implemented as a rule-based classifier allowing us to construct arbitrary candidates for benchmarking and support richer evaluation of feature importances.\footnote{Our implementation is publically available under \url{https://pypi.org/project/tclf/}.}
 
 To facilitate a fair comparison, we run an exhaustive Bayesian search, to find a suitable hyperparameter configuration for each of our models. Classical
-rule have no hyperparameters per se. Akin to tuning the machine learning classifiers on the validation set, we select the classical benchmarks based on their validation performance. This is most rigorous, while preventing to overfit the test set.\footnote{All of our source code and experiments are publically available under \url{https://github.com/KarelZe/thesis}.}
+rule have no hyperparameters per se. Akin to tuning the machine learning classifiers on the validation set, we select the classical benchmarks based on their validation performance. This is most rigorous, while preventing to overfit the test set.\footnote{All of our source code and experiments are publically available under \url{https://github.com/KarelZe/thesis/}.}
 
 \section{Results}
 
