@@ -35,7 +35,7 @@ To establish a common ground with rule-based classification, we distinguish thre
 
 We model trade classification using gradient-boosted trees \autocites[][]{friedmanGreedyFunctionApproximation2001}, a wide tree-based ensemble, and the FT-Transformer \autocite{gorishniyRevisitingDeepLearning2021}, a Transformer-based neural network architecture. We select these approaches for their state-of-the-art performance in tabular modeling \autocites[][]{gorishniyRevisitingDeepLearning2021}[][]{grinsztajnWhyTreebasedModels2022} and their extendability to learn on partially-labeled trades. Additionally, Transformers offer \textit{some} model interpretability through the Attention mechanism. An advantage we exploit later to derive insights into the decision process of Transformers.
 
-As stated earlier, our goal is to extend \gls{ML} classifiers for the semi-supervised setting to make use of the abundant, unlabeled trade data. We couple gradient-boosting with self-training \autocite{yarowskyUnsupervisedWordSense1995}, whereby confident predictions of unlabeled trades are iteratively added into the training set as pseudo-labels. A new classifier is then retrained on labeled and pseudo-labeled trades. Likewise, the Transformer is pre-trained on unlabeled trades with the replaced token detection objective of \textcite{clarkElectraPretrainingText2020} and later finetuned on labeled training instances. Conceptually, the network is tasked to detect randomly replaced tokens or features of transactions. Both techniques are aimed at improving generalization performance.
+As stated earlier, our goal is to extend \gls{ML} classifiers for the semi-supervised setting to make use of the abundant, unlabeled trade data. We couple gradient-boosting with self-training \autocite{yarowskyUnsupervisedWordSense1995}, whereby confident predictions of unlabeled trades are iteratively added into the training set as pseudo-labels. A new classifier is then retrained on labeled and pseudo-labeled trades. Likewise, the Transformer is pre-trained on unlabeled trades with the replaced token detection objective \autocite{clarkElectraPretrainingText2020} and later finetuned on labeled training instances. Conceptually, the network is tasked to detect randomly replaced tokens or features of transactions. Both techniques are aimed at improving generalization performance.
 
 Classical trade classification rules are implemented as a rule-based classifier allowing us to construct arbitrary candidates for benchmarking and support richer evaluation of feature importances.\footnote{Our implementation is publically available under \url{https://pypi.org/project/tclf/}.}
 
@@ -44,11 +44,63 @@ rule have no hyperparameters per se. Akin to tuning the \gls{ML} classifiers on 
 
 \section{Results}
 
-Following good measures, we perform robustness tests across different sub-samples such as option type, type of underlying, and time among others. 
-% We demonstrate its efficacy by evaluating on the problem of click fraud detection on ads to obtain a 9% relative improvement on robot detection metrics over a supervised learning baseline and 4% over a contrastive learning experiment.
+\begin{table*}
+    \centering
+    \caption[Accuracies of Supervised Classifiers]{Accuracy of supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in \textbf{bold}.}
+    \label{tab:results-supervised-ise-cboe}
+    \begin{tabular}{@{}llSSSSSS@{}}
+        \toprule
+                   &             & \multicolumn{2}{c}{\glsentryshort{FS} Classic} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                                                 \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
+        Dataset    & Classifier  & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}              & {Acc. in \%}        & {+/-}              \\ \midrule
+        \gls{ISE}  & \gls{GBRT}  & 63.668637                                        & 3.620000                                              & 72.343640                                     & 4.730000           & \bfseries 74.120496 & \bfseries 6.510000 \\
+                   & Transformer & \bfseries 63.783020                              & \bfseries 3.730000                                    & \bfseries 72.581107                           & \bfseries 4.970000 & 73.921795           & 6.310000           \\ \addlinespace
+        \gls{CBOE} & \gls{GBRT}  & 66.002029                                        & 5.260000                                              & 71.951794                                     & 5.430000           & \bfseries 74.375033 & \bfseries 7.860000 \\
+                   & Transformer & \bfseries 66.182348                              & \bfseries 5.440000                                    & \bfseries 72.153338                           & \bfseries 5.640000 & 74.278318           & 7.760000           \\ \bottomrule
+    \end{tabular}
+\end{table*}
+
+
+\begin{table*}
+    \centering
+    \caption[Accuracies of Semi-Supervised Classifiers]{Accuracy of semi-supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in \textbf{bold}.}
+    \label{tab:results-semi-supervised-ise-cboe}
+    \begin{tabular}{@{}llSSSSSS@{}}
+        \toprule
+                   &             & \multicolumn{2}{c}{\glsentryshort{FS} Classic} & \multicolumn{2}{c}{\glsentryshort{FS} Size} & \multicolumn{2}{c}{\glsentryshort{FS} Option}                                                                 \\ \cmidrule(lr){3-4}\cmidrule(lr){5-6} \cmidrule(lr){7-8}
+        Dataset    & Classifier  & {Acc. in \%}                                     & {+/-}                                                 & {Acc. in \%}                                  & {+/-}              & {Acc. in \%}        & {+/-}              \\ \midrule
+        \gls{ISE}  & \gls{GBRT}  & 63.397514                                        & 3.350000                                              & 72.156489                                     & 4.550000           & 73.536644           & 5.930000           \\
+                   & Transformer & \bfseries 64.655751                              & \bfseries 4.600000                                    & \bfseries 72.859054                           & \bfseries 5.250000 & \bfseries 74.551410 & \bfseries 6.940000 \\ \addlinespace
+        \gls{CBOE} & \gls{GBRT}  & \bfseries 66.189454                              & \bfseries 5.440000                                    & \bfseries 71.922680                           & \bfseries 5.410000 & 73.953322           & 7.440000           \\
+                   & Transformer & 65.668441                                        & 4.920000                                              & 71.783984                                     & 5.270000           & \bfseries 74.095833 & \bfseries 7.580000 \\ \bottomrule
+    \end{tabular}
+\end{table*}
+
+For an evaluation of feature importances, that suffices for a cross-model comparison, we use \gls{SAGE} \autocite{covertUnderstandingGlobalFeature2020}. It is a global feature importance measure based on Shapley values and capable of handling complex feature interaction, such as highly correlated quotes and prices. We estimate \gls{SAGE} values in terms of improvement in zero-one loss per feature set, complementing our accuracy-based evaluation.
+
+\begin{figure*}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{sage-importances.pdf}
+    \caption[\glsentryshort{SAGE} Feature Importances]{\gls{SAGE} feature importances of rule-based and \gls{ML}-based classifiers. Importances estimated on \gls{ISE} test set with zero-one loss. Bigger feature importances are better. For feature set classical the \gls{GSU} method (small) is used and otherwhise the \gls{GSU} method (large).}
+    \label{fig:sage-importances}
+\end{figure*}
+
+As visible from \cref{fig:sage-importances} we find, that all models attain the largest improvement in loss from quoted prices and if provided from the quoted sizes. The contribution of the \gls{NBBO} to performance is roughly equal for all models, suggesting that even simple heuristics effectively exploit the data. For machine learning-based predictors, quotes at the exchange level hold equal importance in classification. This contrasts with \gls{GSU} methods, which rely less on exchange-level quotes.  The performance improvements from the trade size and quoted size, are slightly lower for rule-based methods compared to machine learning-based methods. Transformers and \glspl{GBRT} slightly benefit from the addition of option features, i.e., moneyness and time to maturity. 
+
+Regardless of the method used, changes in trade price, central to the tick test, are irrelevant for classification and can even harm performance. This result alligns with earlier studies of \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
+
+In summary,\dots
+
+An interesting venue for future research is to \dots
+% Similarly, additional features such as option type, issue type, the trading volume of the option series, and the underlying are also irrelevant. 
+% Overall, we observe a large agreement between the importance of features in classical trade classification rules and machine learning-based predictors.
+
+
+% Following good measures, we perform robustness tests across different sub-samples such as option type, type of underlying, and time among others. 
+% % We demonstrate its efficacy by evaluating on the problem of click fraud detection on ads to obtain a 9% relative improvement on robot detection metrics over a supervised learning baseline and 4% over a contrastive learning experiment.
 
 % But unlike these
 
 % spurting its growth
+
 
 % \section{Relevancy}
