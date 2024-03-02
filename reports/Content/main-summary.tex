@@ -8,24 +8,22 @@ Despite the clear importance for empirical research, the true initiator of the t
 
 Popular heuristic to sign trades are the tick test \autocite[][]{hasbrouckTradesQuotesInventories1988}, quote rule \autocite[][]{harrisDayEndTransactionPrice1989}, and hybrids thereof such as the \gls{LR} algorithm \autocite[][]{leeInferringTradeDirection1991}. These rules have initially been proposed and tested in the stock market. For option markets, the works of \textcites[][]{savickasInferringDirectionOption2003}[][]{grauerOptionTradeClassification2022} raise concerns about the transferability of trade signing rules due to deteriorating classification accuracies and systematic misclassifications. The latter is crucial, as non-random misclassifications bias the dependent research \autocites[][]{odders-whiteOccurrenceConsequencesInaccurate2000}[][]{theissenTestAccuracyLee2001}.
 
-A second, growing body of research \autocites{blazejewskiLocalNonParametricModel2005}{rosenthalModelingTradeDirection2012}{ronenMachineLearningTrade2022} advances trade classification performance through \gls{ML}. The scope of current works is yet bound to the stock market and the superficial setting, where supervised models are trained on fully-labeled trades. Then again, labelled trades are difficult to obtain, whereas unlabeled trades are abundant.
+A second, growing body of research \autocites{blazejewskiLocalNonParametricModel2005}{rosenthalModelingTradeDirection2012}{ronenMachineLearningTrade2022} advances trade classification performance through \gls{ML}. The scope of current works is yet bound to the stock market and the superficial setting, where supervised models are trained on fully-labeled trades. Then again, labeled trades are difficult to obtain, whereas unlabeled trades are abundant.
 
-The goal of our empirical study is to investigate if a machine learning-based classifier can improve upon the accuracy of state-of-the-art approaches in option trade classification?
+The goal of our empirical study is to investigate if a machine learning-based classifier can improve upon the accuracy of state-of-the-art approaches in option trade classification.
 
 \section{Contributions}
 
 Our contributions are three-fold: 
 \begin{enumerate}[label=(\roman*),noitemsep]
 \item By employing gradient-boosted trees and transformers we establish a new state-of-the-art in option trade classification. We outperform existing approaches by (...) in accuracy on a large sample of \gls{ISE} trades with comparable data requirements. Relative to the ubiquitous \gls{LR} algorithm, improvements are between (...) and (...). 
-The model's efficiacy is further demonstrated for trades at the \gls{CBOE}.
+The model's efficacy is further demonstrated for alternative trading venues, in sub-samples, and in an application study.
 
-\item Additional to supervised scenario, our work is the first to consider trade classification in the semi-supervised learning, where trades are only required to be partially-labeled.
+\item Additional to the supervised scenario, our work is the first to consider trade classification in the semi-supervised scenario, where trades are only partially labeled.
 \item Through a feature importance analysis based on Shapley values, we can consistently attribute performance gains of rule-based and \gls{ML}-based classifiers to feature groups. We discover that both paradigms share common features, but \gls{ML}-based approaches more effectively exploit the data.
 \end{enumerate}
 
 \section{Data}
-
-% We trained on the standard WMT 2014 English-German dataset consisting of about 4.5 million sentence pairs. Sentences were encoded using byte-pair encoding [3], which has a shared sourcetarget vocabulary of about 37000 tokens.
 
 We perform the empirical analysis on two large-scale datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}. Our sample construction follows \textcite[][]{grauerOptionTradeClassification2022}, which fosters comparability between both works. 
 
