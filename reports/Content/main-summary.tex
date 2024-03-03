@@ -10,16 +10,15 @@ Popular heuristic to sign trades are the tick test \autocite[][]{hasbrouckTrades
 
 A second, growing body of research \autocites{blazejewskiLocalNonParametricModel2005}{rosenthalModelingTradeDirection2012}{ronenMachineLearningTrade2022} advances trade classification performance through \gls{ML}. The scope of current works is yet bound to the stock market and the superficial setting, where supervised models are trained on fully-labeled trades. Then again, labeled trades are difficult to obtain, whereas unlabeled trades are abundant.
 
-The goal of our empirical study is to investigate if a machine learning-based classifier can improve upon the accuracy of state-of-the-art approaches in option trade classification.
+The goal of our empirical study is to investigate if a \gls{ML}-based classifier can improve upon the accuracy of state-of-the-art approaches in option trade classification.
 
 \section{Contributions}
 
 Our contributions are three-fold: 
 \begin{enumerate}[label=(\roman*),noitemsep]
-\item By employing gradient-boosted trees and transformers we establish a new state-of-the-art in option trade classification. We outperform existing approaches by (...) in accuracy on a large sample of \gls{ISE} trades with comparable data requirements. Relative to the ubiquitous \gls{LR} algorithm, improvements are between (...) and (...). 
-The model's efficacy is further demonstrated for alternative trading venues, in sub-samples, and in an application study.
-
-\item Additional to the supervised scenario, our work is the first to consider trade classification in the semi-supervised scenario, where trades are only partially labeled.
+\item By employing \glspl{GBRT} and transformers we establish a new state-of-the-art in option trade classification. We outperform existing approaches by \SI{3.73}{\percent}~-~\SI{6.51}{\percent} in accuracy on a large sample of \gls{ISE} trades. Relative to the ubiquitous \gls{LR} algorithm, improvements are up to \SI{17.02}{\percent}. 
+The model's efficacy is demonstrated for alternative trading venues, in sub-samples, and in an application study.
+\item Our work is the first to consider trade classification also in the semi-supervised scenario, where trades are only partially labeled. Our best models classify \SI{74.55}{\percent} (+ 6.94) of all trades correctly.
 \item Through a feature importance analysis based on Shapley values, we can consistently attribute performance gains of rule-based and \gls{ML}-based classifiers to feature groups. We discover that both paradigms share common features, but \gls{ML}-based approaches more effectively exploit the data.
 \end{enumerate}
 
@@ -27,20 +26,20 @@ The model's efficacy is further demonstrated for alternative trading venues, in 
 
 We perform the empirical analysis on two large-scale datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}. Our sample construction follows \textcite[][]{grauerOptionTradeClassification2022}, which fosters comparability between both works. 
 
-Training and validation are performed exclusively on \gls{ISE} trades. After a time-based train-validation-test split (60-20-20), required by the \gls{ML} estimators, we are left with a test set spanning from Nov. 2015 -- May 2017 at the \gls{ISE}. \gls{CBOE} trades between Nov. 2015 -- Oct. 2017 are used as a second test set. Each test set contains between 9.8 Mio. --  12.8 Mio. labeled option trades. An additional unlabeled, training set of \gls{ISE} trades executed between Oct. 2012 -- Oct. 2013 is reserved for learning in the semi-supervised setting.
+Training and validation are performed exclusively on \gls{ISE} trades. After a time-based train-validation-test split (\SI{60}{\percent}; \SI{20}{\percent}; \SI{20}{\percent}), required by the \gls{ML} estimators, we are left with a test set spanning from Nov. 2015 -- May 2017 at the \gls{ISE}. \gls{CBOE} trades between Nov. 2015 -- Oct. 2017 are used as a second test set. Each test set contains between 9.8 Mio. --  12.8 Mio. labeled option trades. An additional unlabeled, training set of \gls{ISE} trades executed between Oct. 2012 -- Oct. 2013 is reserved for learning in the semi-supervised setting.
 
 To establish a common ground with rule-based classification, we distinguish three feature sets with increasing data requirements and employ minimal feature engineering. The first set is based on the data requirements of tick/quote-based algorithms, the second of hybrid algorithms with additional dependencies on trade size data, such as the \gls{GSU} method \autocite{grauerOptionTradeClassification2022}, and the third feature set includes option characteristics, like the option's $\Delta$ or the underlying. 
 
 \section{Methodology}
 
-We model trade classification using gradient-boosted trees \autocites[][]{friedmanGreedyFunctionApproximation2001}, a wide tree-based ensemble, and the FT-Transformer \autocite{gorishniyRevisitingDeepLearning2021}, a Transformer-based neural network architecture. We select these approaches for their state-of-the-art performance in tabular modeling \autocites[][]{gorishniyRevisitingDeepLearning2021}[][]{grinsztajnWhyTreebasedModels2022} and their extendability to learn on partially-labeled trades. Additionally, Transformers offer \textit{some} model interpretability through the Attention mechanism. An advantage we exploit later to derive insights into the decision process of Transformers.
+We model trade classification using \glspl{GBRT} \autocites[][]{friedmanGreedyFunctionApproximation2001}, a wide tree-based ensemble, and the FT-Transformer \autocite{gorishniyRevisitingDeepLearning2021}, a Transformer-based neural network architecture. We select these approaches for their state-of-the-art performance in tabular modeling \autocites[][]{gorishniyRevisitingDeepLearning2021}[][]{grinsztajnWhyTreebasedModels2022} and their extendability to learn on partially-labeled trades. Additionally, Transformers offer \textit{some} model interpretability through the Attention mechanism. An advantage we exploit later to derive insights into the classification process of Transformers.
 
 As stated earlier, our goal is to extend \gls{ML} classifiers for the semi-supervised setting to make use of the abundant, unlabeled trade data. We couple gradient-boosting with self-training \autocite{yarowskyUnsupervisedWordSense1995}, whereby confident predictions of unlabeled trades are iteratively added into the training set as pseudo-labels. A new classifier is then retrained on labeled and pseudo-labeled trades. Likewise, the Transformer is pre-trained on unlabeled trades with the replaced token detection objective \autocite{clarkElectraPretrainingText2020} and later finetuned on labeled training instances. Conceptually, the network is tasked to detect randomly replaced tokens or features of transactions. Both techniques are aimed at improving generalization performance.
 
 Classical trade classification rules are implemented as a rule-based classifier allowing us to construct arbitrary candidates for benchmarking and support richer evaluation of feature importances.\footnote{Our implementation is publically available under \url{https://pypi.org/project/tclf/}.}
 
 To facilitate a fair comparison, we run an exhaustive Bayesian search, to find a suitable hyperparameter configuration for each of our models. Classical
-rule have no hyperparameters per se. Akin to tuning the \gls{ML} classifiers on the validation set, we select from 20 candidate rules the classical benchmarks based on their validation performance. This is most rigorous while preventing overfitting the test set.\footnote{All of our source code and experiments are publically available under \url{https://github.com/KarelZe/thesis/}.}
+rule have no hyperparameters per se. Akin to tuning the \gls{ML} classifiers on the validation set, we select candidate rules the classical benchmarks based on their validation performance. This is most rigorous while preventing overfitting the test set.\footnote{All of our source code and experiments are publically available under \url{https://github.com/KarelZe/thesis/}.}
 
 \section{Results}
 
@@ -84,7 +83,7 @@ For an evaluation of feature importances, that suffices for a cross-model compar
     \label{fig:sage-importances}
 \end{figure*}
 
-As visible from \cref{fig:sage-importances} we find, that all models attain the largest improvement in loss from quoted prices and if provided from the quoted sizes. The contribution of the \gls{NBBO} to performance is roughly equal for all models, suggesting that even simple heuristics effectively exploit the data. For machine learning-based predictors, quotes at the exchange level hold equal importance in classification. This contrasts with \gls{GSU} methods, which rely less on exchange-level quotes.  The performance improvements from the trade size and quoted size, are slightly lower for rule-based methods compared to machine learning-based methods. Transformers and \glspl{GBRT} slightly benefit from the addition of option features, i.e., moneyness and time to maturity. 
+As visible from \cref{fig:sage-importances} we find, that all models attain the largest improvement in loss from quoted prices and if provided from the quoted sizes. The contribution of the \gls{NBBO} to performance is roughly equal for all models, suggesting that even simple heuristics effectively exploit the data. For \gls{ML}-based predictors, quotes at the exchange level hold equal importance in classification. This contrasts with \gls{GSU} methods, which rely less on exchange-level quotes.  The performance improvements from the trade size and quoted size, are slightly lower for rule-based methods compared to \gls{ML}-based methods. Transformers and \glspl{GBRT} slightly benefit from the addition of option features, i.e., moneyness and time to maturity. 
 
 Regardless of the method used, changes in trade price, central to the tick test, are irrelevant for classification and can even harm performance. This result alligns with earlier studies of \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
 
