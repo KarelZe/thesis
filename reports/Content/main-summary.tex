@@ -8,7 +8,7 @@ Despite the clear importance for empirical research, the true initiator of the t
 
 Popular heuristic to sign trades are the tick test \autocite[][]{hasbrouckTradesQuotesInventories1988}, quote rule \autocite[][]{harrisDayEndTransactionPrice1989}, and hybrids thereof such as the \gls{LR} algorithm \autocite[][]{leeInferringTradeDirection1991}. These rules have initially been proposed and tested in the stock market. For option markets, the works of \textcites[][]{savickasInferringDirectionOption2003}[][]{grauerOptionTradeClassification2022} raise concerns about the transferability of trade signing rules due to deteriorating classification accuracies and systematic misclassifications. The latter is crucial, as non-random misclassifications bias the dependent research \autocites[][]{odders-whiteOccurrenceConsequencesInaccurate2000}[][]{theissenTestAccuracyLee2001}.
 
-A second, growing body of research \autocites{blazejewskiLocalNonParametricModel2005}{rosenthalModelingTradeDirection2012}{ronenMachineLearningTrade2022} advances trade classification performance through \gls{ML}. The scope of current works is yet bound to the stock market and the superficial setting, where supervised models are trained on fully-labeled trades. Then again, labeled trades are difficult to obtain, whereas unlabeled trades are abundant.
+A second, growing body of research \autocites{blazejewskiLocalNonParametricModel2005}{rosenthalModelingTradeDirection2012}{ronenMachineLearningTrade2022} advances trade classification performance through \gls{ML}. The scope of current works is yet bound to the stock market and the \textit{superficial} setting, where supervised models are trained on fully-labeled trades. Then again, labeled trades are difficult to obtain, whereas unlabeled trades are abundant.
 
 The goal of our empirical study is to investigate if a \gls{ML}-based classifier can improve upon the accuracy of state-of-the-art approaches in option trade classification.
 
@@ -19,7 +19,7 @@ Our contributions are three-fold:
 \item By employing \glspl{GBRT} and transformers we establish a new state-of-the-art in option trade classification. We outperform existing approaches by \SI{3.73}{\percent}~-~\SI{6.51}{\percent} in accuracy on a large sample of \gls{ISE} trades. Relative to the ubiquitous \gls{LR} algorithm, improvements are up to \SI{17.02}{\percent}. 
 The model's efficacy is demonstrated for alternative trading venues, in sub-samples, and in an application study.
 \item Our work is the first to consider trade classification also in the semi-supervised scenario, where trades are only partially labeled. Our best models classify \SI{74.55}{\percent} (+ 6.94) of all trades correctly.
-\item Through a feature importance analysis based on Shapley values, we can consistently attribute performance gains of rule-based and \gls{ML}-based classifiers to feature groups. We discover that both paradigms share common features, but \gls{ML}-based approaches more effectively exploit the data.
+\item Through a feature importance analysis based on Shapley values, we can consistently attribute performance gains of rule-based and \gls{ML}-based classifiers to feature groups. We show that both paradigms share common features, but \gls{ML}-based approaches more effectively exploit the data.
 \end{enumerate}
 
 \section{Data}
@@ -38,9 +38,21 @@ As stated earlier, our goal is to extend \gls{ML} classifiers for the semi-super
 
 Classical trade classification rules are implemented as a rule-based classifier allowing us to construct arbitrary candidates for benchmarking and support richer evaluation of feature importances.\footnote{Our implementation is publically available under \url{https://pypi.org/project/tclf/}.}
 
-To facilitate a fair comparison, we run an exhaustive Bayesian search, to find a suitable hyperparameter configuration for each of our models. Classical rules have no hyperparameters per se. Akin to tuning the \gls{ML} classifiers on the validation set, we select candidate rules for the classical benchmarks based on their validation performance. This is most rigorous while preventing overfitting the test set. The so-selected benchmarks come from a recent paper of \textcite{grauerOptionTradeClassification2022}, which we subsequently refer to as \gls{GSU} method (small/large).\footnote{All of our source code and experiments are publically available under \url{https://github.com/KarelZe/thesis/}.}
+For a fair comparison, we run an exhaustive Bayesian search, to find a suitable hyperparameter configuration for each of our models. Classical rules have no hyperparameters per se. Akin to tuning the \gls{ML} classifiers on the validation set, we select candidate rules for the classical benchmarks based on their validation performance. This is most rigorous while preventing overfitting the test set. The so-selected benchmarks come from a recent paper of \textcite{grauerOptionTradeClassification2022}, which we subsequently refer to as \gls{GSU} method (small/large).\footnote{All of our source code and experiments are publically available under \url{https://github.com/KarelZe/thesis/}.}
 
 \section{Results}
+
+% Following good measures, we perform robustness tests across different sub-samples such as option type, type of underlying, and time among others. 
+% Our classifiers deliver accurate predictions and improved robustness, which effectively
+% reduces noise and bias in option research dependent on reliable trade initiator
+% estimates. When applied to measuring trading cost through effective spreads,
+% the models dominate all rule-based approaches by approximating the true effective
+% spread of options best.
+
+% But unlike these
+
+% spurting its growth
+
 
 \begin{table*}
     \centering
@@ -86,19 +98,8 @@ As evident from \cref{fig:sage-importances} we find, that all models attain the 
 
 Regardless of the method used, changes in trade price, central to the tick test, are irrelevant for classification and can even harm performance. This result aligns with earlier studies of \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
 
-In summary,\dots
+\section{Conclusion}
 
-An interesting venue for future research is to \dots
-% Similarly, additional features such as option type, issue type, the trading volume of the option series, and the underlying are also irrelevant. 
-% Overall, we observe a large agreement between the importance of features in classical trade classification rules and machine learning-based predictors.
+In summary, our study showcases the efficacy of machine learning as a viable alternative to existing trade signing algorithms for classifying option trades, if partially-labeled or labeled trades are available for training. Compared to existing approaches, our classifiers also improve robustness, which together reduces noise and bias in option research dependent on reliable trade initiator estimates.
 
-
-% Following good measures, we perform robustness tests across different sub-samples such as option type, type of underlying, and time among others. 
-% % We demonstrate its efficacy by evaluating on the problem of click fraud detection on ads to obtain a 9% relative improvement on robot detection metrics over a supervised learning baseline and 4% over a contrastive learning experiment.
-
-% But unlike these
-
-% spurting its growth
-
-
-% \section{Relevancy}
+The out-of-sample results are particularily strong for the pre-trained FT-Transformer, indicating that pre-training can encode a generalizable knowledge about exchange trading in the model. An interesting venue for future research is to revisit training transformers on a larger corpus of unlabeled trades through pre-training objectives and study the effects from \textit{exchange-specific} finetuning.
