@@ -17,7 +17,7 @@ The goal of our empirical study is to investigate if a \gls{ML}-based classifier
 Our contributions are threefold: 
 \begin{enumerate}[label=(\roman*),noitemsep]
 \item By employing \glspl{GBRT} and Transformers we establish a new state-of-the-art in option trade classification. We outperform existing approaches by \SI{3.73}{\percent}~-~\SI{6.51}{\percent} in accuracy on a large sample of \gls{ISE} trades. Relative to the ubiquitous \gls{LR} algorithm, improvements are up to \SI{17.02}{\percent}. 
-The model's efficacy is demonstrated at alternative trading venues, in sub-samples, and in an application study.
+The model's efficacy is demonstrated at an alternative trading venue, in sub-samples, and in an application study.
 \item Our work is the first to consider trade classification in the semi-supervised scenario, in which trades are only partially-labeled. Our best models classify \SI{74.55}{\percent} (+ 6.94) of all trades correctly.
 \item Through a feature importance analysis based on Shapley values, we can consistently attribute performance gains of rule-based and \gls{ML}-based classifiers to feature groups. We show that both paradigms share common features, but \gls{ML}-based approaches exploit the data more effectively.
 \end{enumerate}
@@ -65,6 +65,8 @@ Advancements in classical trade classification have been fueled by more complex 
 
 The strong results of Transformers sharply contradict those of \textcite[][]{ronenMachineLearningTrade2022}, who benchmark random forests and \glspl{FFN} for trade classification in the equity and bond market and find clear dominance of the tree-based approach. First, unlike \gls{FFN}, the FT-Transformer is tailored to learn on tabular data through being a non-rotationally-invariant learner. Second, our data preprocessing and feature engineering are adapted to the requirements of neural networks. Without these measures, tree-based approaches excel due to their robustness in handling skewed and missing data.
 
+In the semi-supervised setting, as visualized in \cref{tab:results-semi-supervised-ise-cboe}, Transformers on \gls{ISE} dataset profit from pre-training on unlabeled trades with accuracies up to \SI{74.55}{\percent}, but the performance gains diminish on the \gls{CBOE} test set. Vice versa, we observe no benefits from semi-supervised training of \glspl{GBRT}.
+
 \begin{table}[h]
     \centering
     \caption[Accuracies of Semi-Supervised Classifiers]{Accuracy of semi-supervised \glspl{GBRT} and Transformers for different feature combinations on the \gls{ISE} and \gls{CBOE} datasets. The improvement is estimated as the absolute change in accuracy between the classifier and the benchmark. For the feature set classic \gls{GSU} (small) is the benchmark and otherwise \gls{GSU} (large). Models are trained on the \gls{ISE} training set. The best classifier per dataset is in \textbf{bold}.}
@@ -79,10 +81,6 @@ The strong results of Transformers sharply contradict those of \textcite[][]{ron
                    & Transformer & 65.668441                                        & 4.920000                                              & 71.783984                                     & 5.270000           & \bfseries 74.095833 & \bfseries 7.580000 \\ \bottomrule
     \end{tabular}
 \end{table}
-
-
-In the semi-supervised setting, as visualized in \cref{tab:results-semi-supervised-ise-cboe}, Transformers on \gls{ISE} dataset profit from pre-training on unlabeled trades with accuracies up to \SI{74.55}{\percent}, but the performance gains slightly diminish on the \gls{CBOE} test set. Vice versa, we observe no benefits from semi-supervised training of \glspl{GBRT}.
-
 An explanation as to why pre-training improves performance on \gls{ISE} but not \gls{CBOE} trades, may be found in the pre-training data and setup. It is conceivable, that pre-training encodes exchange-specific knowledge, such as trading regimes. Trades used for pre-training are recorded at the \gls{ISE} only and are repeatedly shown to the model. While our pre-training objective is stochastic with different features being masked in each step, past research has shown that repeatedly presenting the same tokens in conjunction with a small-sized pre-training dataset, can degrade performance on the downstream classification task. For instance, \textcite[][]{raffelExploringLimitsTransfer2020} document in the context of language modeling that a high degree of repetition encourages memorization in the transformer, but few repetitions are not harmful.
 
 Self-training with \glspl{GBRT} as a base learner generally performs worse than \glspl{GBRT} trained on labeled trades. With the pseudo labels derived from high-confident predictions, the success of self-training hinges on the reliability of the predicted class probabilities. In an analysis of the \gls{GBRT}, we observe that the validation loss in terms of sample-wise loss stagnates due to a growing number of overconfident but erroneous predictions. It is conceivable, that the increased number of confident yet incorrect predictions, affects the generated pseudo labels. Given these observations, we recommend using \glspl{GBRT} for supervised trade classification only. 
@@ -102,5 +100,5 @@ As evident from \cref{fig:sage-importances} we find, that all models attain the 
 
 In summary, our study showcases the efficacy of machine learning as a viable alternative to existing trade signing algorithms for classifying option trades, if partially-labeled or labeled trades are available for training. Compared to existing approaches, our classifiers also improve robustness, which together reduces noise and bias in option research dependent on reliable trade initiator estimates.
 
-The out-of-sample results are particularly strong for the pre-trained FT-Transformer, indicating that unsupervised pre-training can encode a generalizable knowledge about option trading in the model. An interesting venue for future research is to revisit training Transformers on a larger corpus of unlabeled trades through pre-training objectives and study the effects from exchange-specific finetuning.
+The out-of-sample results are particularly strong for the pre-trained FT-Transformer, indicating that unsupervised pre-training can encode a generalizable knowledge about the exchange in the model. An interesting venue for future research is to revisit training Transformers on a larger corpus of unlabeled trades through pre-training objectives and study the effects from exchange-specific finetuning.
 
