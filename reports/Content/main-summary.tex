@@ -2,7 +2,7 @@
 
 \section{Background and Motivation}
 
-Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s also crucial to determine the party that initiated the transaction. Applications include the study of option demand \autocite[][]{garleanuDemandBasedOptionPricing2009}, of informational content in option trading \autocites[][]{huDoesOptionTrading2014}[][]{panInformationOptionVolume2006}[][]{caoInformationalContentOption2005}, of order flow \autocite[][]{muravyevOrderFlowExpected2016}, or of trading costs \autocite[][]{muravyevOptionsTradingCosts2020}. 
+Every option trade has a buyer and seller side. For a plethora of problems in option research, it’s crucial to determine the party that initiated the transaction. Applications include the study of option demand \autocite[][]{garleanuDemandBasedOptionPricing2009}, of informational content in option trading \autocites[][]{huDoesOptionTrading2014}[][]{panInformationOptionVolume2006}[][]{caoInformationalContentOption2005}, of order flow \autocite[][]{muravyevOrderFlowExpected2016}, or of trading costs \autocite[][]{muravyevOptionsTradingCosts2020}. 
 
 Despite the clear importance for empirical research, the true initiator of the trade is frequently absent in datasets and is inferred using trade classification rules \autocite[][]{easleyOptionVolumeStock1998}. In consequence, the correctness of empirical studies hinges on the algorithm's ability to accurately identify the trade initiator.
 
@@ -96,7 +96,7 @@ For an evaluation of feature importances, that suffices for a cross-model compar
     \label{fig:sage-importances}
 \end{figure}
 
-As evident from \cref{fig:sage-importances} we find, that all models attain the largest improvement in loss from quoted prices and if provided from the quoted sizes. The contribution of the \gls{NBBO} to performance is roughly equal for all models, suggesting that even simple heuristics effectively exploit the data. For \gls{ML}-based predictors, quotes at the exchange level hold equal importance in classification. This contrasts with \gls{GSU} methods, which rely less on exchange level quotes. Transformers and \glspl{GBRT} slightly benefit from the addition of option features, i.e., moneyness and time to maturity. Regardless of the method used, changes in trade price, central to the tick test, are irrelevant for classification and can even harm performance. This result aligns with earlier studies of \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
+As evident from \cref{fig:sage-importances} we find, that all models attain the largest improvement in loss from quoted prices and if provided from the quoted sizes. The contribution of the \gls{NBBO} to performance is roughly equal for all models, suggesting that even simple heuristics effectively exploit the data. For \gls{ML}-based predictors, quotes at the exchange level hold equal importance in classification. This contrasts with \gls{GSU} methods, which rely less on exchange level quotes. Transformers and \glspl{GBRT} slightly benefit from the addition of option features, i. e., moneyness and time to maturity. Regardless of the method used, changes in trade price, central to the tick test, are irrelevant for classification and can even impede performance. This result aligns with earlier studies of \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
 
 \section{Conclusion}
 
