@@ -26,7 +26,7 @@ The model's efficacy is demonstrated for alternative trading venues, in sub-samp
 
 We perform the empirical analysis on two large-scale datasets of option trades recorded at the \gls{ISE} and \gls{CBOE}. Our sample construction follows \textcite[][]{grauerOptionTradeClassification2022}, which fosters comparability between both works. 
 
-Training and validation are performed exclusively on \gls{ISE} trades. After a time-based train-validation-test split (\SI{60}{\percent}; \SI{20}{\percent}; \SI{20}{\percent}), required by the \gls{ML} estimators, we are left with a test set spanning from Nov. 2015 -- May 2017 at the \gls{ISE}. \gls{CBOE} trades between Nov. 2015 -- Oct. 2017 are used as a second test set. Each test set contains between 9.8 Mio. --  12.8 Mio. labeled option trades. An additional unlabeled, training set of \gls{ISE} trades executed between Oct. 2012 -- Oct. 2013 is reserved for learning in the semi-supervised setting.
+Training and validation are performed exclusively on \gls{ISE} trades. After a time-based train-validation-test split, required by the \gls{ML} estimators, we are left with a test set spanning from Nov. 2015 -- May 2017 at the \gls{ISE}. \gls{CBOE} trades between Nov. 2015 -- Oct. 2017 are used as a second test set. Each test set contains between 9.8 Mio. --  12.8 Mio. labeled option trades. An additional unlabeled, training set of \gls{ISE} trades executed between Oct. 2012 -- Oct. 2013 is reserved for learning in the semi-supervised setting.
 
 To establish a common ground with rule-based classification, we distinguish three feature sets with increasing data requirements and employ minimal feature engineering. The first set is based on the data requirements of tick/quote-based algorithms, the second of hybrid algorithms with additional dependencies on trade size data, and the third feature set includes option characteristics, like the option's $\Delta$ or the underlying. 
 
@@ -42,6 +42,11 @@ For a fair comparison, we run an exhaustive Bayesian search, to find a suitable 
 
 \section{Results}
 
+Our models establish a new state-of-the-art for trade classification on the \gls{ISE} and \gls{CBOE} dataset, as shown in \cref{tab:results-supervised-ise-cboe}. For \gls{ISE} trades, Transformers achieve an accuracy of \SI{63.78}{\percent} when trained on trade and quoted prices as well as \SI{72.58}{\percent} when trained on additional quoted sizes, improving over current best of \textcite[][]{grauerOptionTradeClassification2022} by \SI{3.73}{\percent} and \SI{4.97}{\percent}. Similarly, \glspl{GBRT} reach accuracies between \SI{63.67}{\percent} and \SI{72.34}{\percent}. We observe performance improvements up to \SI{6.51}{\percent} for \glspl{GBRT} and \SI{6.31}{\percent} for Transformers when models have access to option characteristics. Relative to the ubiquitous tick test, quote rule, and \gls{LR} algorithm, improvements are \SI{23.88}{\percent}, \SI{17.11}{\percent}, and \SI{17.02}{\percent}. We derive from exhaustive robustness tests, that outperformance is strongest for in-the-money options, options with a long maturity, as well as options traded at the quotes. Both architectures generalize well on \gls{CBOE} data, with even stronger improvements between \SI{5.26}{\percent} and \SI{7.86}{\percent} over the benchmark depending on the model and feature set. 
+
+In the semi-supervised setting, as shown in \cref{tab:results-semi-supervised-ise-cboe}, Transformers on \gls{ISE} dataset profit from pre-training on unlabeled trades with accuracies up to \SI{74.55}{\percent}, but the performance gains slightly diminish on the \gls{CBOE} test set. Vice versa, we observe no benefits from semi-supervised training of \glspl{GBRT}.
+
+
 % Following good measures, we perform robustness tests across different sub-samples such as option type, type of underlying, and time among others. 
 % Our classifiers deliver accurate predictions and improved robustness, which effectively
 % reduces noise and bias in option research dependent on reliable trade initiator
@@ -53,6 +58,17 @@ For a fair comparison, we run an exhaustive Bayesian search, to find a suitable 
 
 % spurting its growth
 
+For an evaluation of feature importances, that suffices for a cross-model comparison, we use \gls{SAGE} \autocite{covertUnderstandingGlobalFeature2020}. It is a global feature importance measure based on Shapley values and is capable of handling complex feature interactions, such as highly correlated quotes and prices. We estimate \gls{SAGE} values in terms of improvement in zero-one loss per feature set, complementing our accuracy-based evaluation.
+
+As evident from \cref{fig:sage-importances} we find, that all models attain the largest improvement in loss from quoted prices and if provided from the quoted sizes. The contribution of the \gls{NBBO} to performance is roughly equal for all models, suggesting that even simple heuristics effectively exploit the data. For \gls{ML}-based predictors, quotes at the exchange level hold equal importance in classification. This contrasts with \gls{GSU} methods, which rely less on exchange-level quotes.  The performance improvements from the trade size and quoted size, are slightly lower for rule-based methods compared to \gls{ML}-based methods. Transformers and \glspl{GBRT} slightly benefit from the addition of option features, i.e., moneyness and time to maturity. 
+
+Regardless of the method used, changes in trade price, central to the tick test, are irrelevant for classification and can even harm performance. This result aligns with earlier studies of \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
+
+\section{Conclusion}
+
+In conclusion, our study showcases the efficacy of machine learning as a viable alternative to existing trade signing algorithms for classifying option trades, if partially-labeled or labeled trades are available for training. Compared to existing approaches, our classifiers also improve robustness, which together reduces noise and bias in option research dependent on reliable trade initiator estimates.
+
+The out-of-sample results are particularily strong for the pre-trained FT-Transformer, indicating that unsupervised pre-training can encode a generalizable knowledge about exchange trading in the model. An interesting venue for future research is to revisit training transformers on a larger corpus of unlabeled trades through pre-training objectives and study the effects from \textit{exchange-specific} finetuning.
 
 \begin{table*}
     \centering
@@ -85,21 +101,9 @@ For a fair comparison, we run an exhaustive Bayesian search, to find a suitable 
     \end{tabular}
 \end{table*}
 
-For an evaluation of feature importances, that suffices for a cross-model comparison, we use \gls{SAGE} \autocite{covertUnderstandingGlobalFeature2020}. It is a global feature importance measure based on Shapley values and is capable of handling complex feature interactions, such as highly correlated quotes and prices. We estimate \gls{SAGE} values in terms of improvement in zero-one loss per feature set, complementing our accuracy-based evaluation.
-
 \begin{figure*}[h]
     \centering
     \includegraphics[width=1\textwidth]{sage-importances.pdf}
     \caption[\glsentryshort{SAGE} Feature Importances]{\gls{SAGE} feature importances of rule-based and \gls{ML}-based classifiers. Importances estimated on \gls{ISE} test set with zero-one loss. Bigger feature importances are better. For the feature set classical the \gls{GSU} method (small) is used and otherwise the \gls{GSU} method (large).}
     \label{fig:sage-importances}
 \end{figure*}
-
-As evident from \cref{fig:sage-importances} we find, that all models attain the largest improvement in loss from quoted prices and if provided from the quoted sizes. The contribution of the \gls{NBBO} to performance is roughly equal for all models, suggesting that even simple heuristics effectively exploit the data. For \gls{ML}-based predictors, quotes at the exchange level hold equal importance in classification. This contrasts with \gls{GSU} methods, which rely less on exchange-level quotes.  The performance improvements from the trade size and quoted size, are slightly lower for rule-based methods compared to \gls{ML}-based methods. Transformers and \glspl{GBRT} slightly benefit from the addition of option features, i.e., moneyness and time to maturity. 
-
-Regardless of the method used, changes in trade price, central to the tick test, are irrelevant for classification and can even harm performance. This result aligns with earlier studies of \textcites{savickasInferringDirectionOption2003}{grauerOptionTradeClassification2022}.
-
-\section{Conclusion}
-
-In summary, our study showcases the efficacy of machine learning as a viable alternative to existing trade signing algorithms for classifying option trades, if partially-labeled or labeled trades are available for training. Compared to existing approaches, our classifiers also improve robustness, which together reduces noise and bias in option research dependent on reliable trade initiator estimates.
-
-The out-of-sample results are particularily strong for the pre-trained FT-Transformer, indicating that pre-training can encode a generalizable knowledge about exchange trading in the model. An interesting venue for future research is to revisit training transformers on a larger corpus of unlabeled trades through pre-training objectives and study the effects from \textit{exchange-specific} finetuning.
