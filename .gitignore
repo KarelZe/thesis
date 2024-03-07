@@ -412,10 +412,7 @@ TSWLatexianTemp*
 *.xmpdata
 
 # built document
-TOC.pdf
-expose.pdf
-presentation.pdf
-thesis.pdf
+*.pdf
 
 # weights and biases
 **/wandb

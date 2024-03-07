@@ -1,0 +1,144 @@
+\documentclass[oneside,a4paper,10pt]{article} % Specifies the page format and font size.
+
+% -------------------------------------- Integration of packages -------------------------------------- 
+\usepackage[utf8]{inputenc} % Enables the use of special characters.
+% Literature and language
+	\usepackage[english]{babel}
+	\usepackage[style=bwl-FU,backend=bibtex,natbib=true,maxcitenames=2]{biblatex}
+	\addbibresource{Content/bibliography.bib}
+	\usepackage{csquotes}
+% Format and layout
+	\usepackage[left=3cm,right=3cm,bottom=3cm]{geometry} % Specifies left and right side margins.
+	\usepackage{setspace} % Package that enables modifying the line spacing.
+	\setstretch{1.3} % Sets a line spacing of 1.3.
+	\parindent0pt % Sets the left indent at a new paragraph.
+    \parskip10pt % Sets the space between two paragraphs.
+	\usepackage{footmisc} % Implements a range of footnote options.
+	\renewcommand{\footnotelayout}{\setstretch{1}} % Sets a line spacing of 1 for the footnotes.
+	\pagestyle{headings} % Creates a header using the page number and the heading of the current section.
+	\usepackage[T1]{fontenc} % Enables the use of special characters.
+	\usepackage{eurosym} % Usage of €
+	\usepackage{acronym} % Enables the incorporation of a list of abbreviations.
+	\usepackage{nomencl} % Useful to create a list of symbols.
+	\usepackage{enumerate} % Useful for enumerations.
+	\usepackage{color} % Enables the definition of colors.
+	
+% Tables and Graphs
+	\usepackage{booktabs} % Improves the design of the tables
+	\usepackage{makecell} %Connected rows
+	\usepackage{longtable} % Allows tables to be longer than one page.
+	\usepackage{multirow,multicol} % With this package it is now possible to combine columns and rows within tables.
+	\usepackage{graphicx} % Allows to implement graphics.
+	\usepackage{subfig} % Enables graphs consisting of several figures.
+	\graphicspath{{./Graphs/}} % Tells LATEX that the images are kept in a folder named images under the directory of the main document.
+	\usepackage[hypcap=false]{caption} % Provides many ways to customize captions.
+	
+	\usepackage{enumitem} % enumerate with letters https://tex.stackexchange.com/a/129960
+
+% Mathematics
+    \usepackage{amscd,amsfonts,amsmath,amssymb,amsthm,amscd,bbm} % Extends the math set.
+
+
+	\usepackage{siunitx} % Enables the use of SI units e. g., proper handling of percentage
+
+	% manually define opening bracket which is otherwise parsed by sunitx
+	% https://tex.stackexchange.com/q/450026/169093
+	\usepackage{etoolbox} 
+	\newrobustcmd{\parl}{(}
+	\newrobustcmd{\parr}{)}
+	
+	\newcommand*{\tabindent}{ \hspace{2mm}} % Indentation for tables
+	
+	\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}\PackageWarning{TODO:}{#1!}} % Todos
+	
+	\sisetup{round-mode=places,round-precision=2, group-separator={,},output-decimal-marker={.}, round-pad = false, input-symbols = {(-)}, % separate-uncertainty=false,
+	group-minimum-digits=4, % 1,000 instead of 1000
+	% table-space-text-pre={(},
+	% table-align-text-pre=false,
+	% table-space-text-post={$^{***}$},
+	table-align-text-post=false,
+	detect-weight=true,
+	detect-inline-weight=math,
+	retain-explicit-plus=true,
+	% round-integer-to-decimal=false,
+	round-precision=2,
+	table-format = 1.3, 
+	output-exponent-marker=\ensuremath{\mathrm{e}}
+	} % round to 2 decimal places
+
+% --------------------------------- Information on thesis --------------------------------- 
+% Please fill in this information once at the beginning. This way, gaps will be filled in automatically in the following.
+\newcommand{\name}{Markus Bilz} % Enter your name.
+\newcommand{\titleofthesis}{Improving Option Trade Classification using Machine Learning} % Enter the title of your thesis.
+\newcommand{\streetadress}{Mathystr.~14-16 // XI-11} % Enter your street address.
+\newcommand{\postalcode}{76133} % Enter your postal code.
+\newcommand{\city}{Karlsruhe} % Enter your city/town.
+\newcommand{\email}{mail@markusbilz.com} % Enter your email address.
+\newcommand{\typeofthesis}{Master Thesis} % specify the type of thesis: Seminar Thesis, Bachelor Thesis, Master Thesis.
+\newcommand{\dateofthesis}{\today}
+
+% --------------------------------- Definition of hyperlinks --------------------------------- 
+% Hyperreferences
+	\usepackage{hyperref}
+	\definecolor{darkblue}{rgb}{0,0,.5}
+	\hypersetup{
+	    pdfstartview={FitH}, 
+        colorlinks=true,
+        linkcolor=black,
+        citecolor=darkblue,
+        urlcolor=black,
+        pdftitle=\titleofthesis,
+        pdfsubject=\typeofthesis,
+        pdfauthor=\name,
+        bookmarksopen
+        }
+
+
+	\usepackage[capitalise, noabbrev]{cleveref} % Enables the use of \cref{} to refer to figures, etc. with Fig.
+	\creflabelformat{equation}{#2#1#3} % omit round brackets
+	% https://tex.stackexchange.com/a/121055/169093
+	\Crefname{appsec}{appendix}{appendices}
+
+	\usepackage[acronym]{glossaries}
+	\makeglossaries
+			
+	\newacronym{ANN}{ANN}{artificial neural network}
+	\newacronym{AUC}{AUC}{area under the curve}
+	\newacronym{CRSP}{CRSP}{Center for Research in Securities Prices}
+	\newacronym{CBOE}{CBOE}{Chicago Board Options Exchange}
+	\newacronym{CLNV}{CLNV}{Chakrabarty-Li-Nguyen-Van-Ness}
+	\newacronym{EMO}{EMO}{Ellis-Michaely-O’Hara}
+	\newacronym{FFN}{FFN}{feed-forward network}
+	\newacronym{GBM}{GBM}{gradient boosting machine}
+	\newacronym{GSU}{GSU}{Grauer-Schuster-Uhrig-Homburg}
+	\newacronym{GBRT}{GBRT}{gradient-boosted regression tree}
+	\newacronym{ISE}{ISE}{International Securities Exchange}
+	\newacronym{LR}{LR}{Lee-Ready}
+	\newacronym[firstplural=long short-term memories (LSTMs)]{LSTM}{LSTM}{long short-term memory}
+	\newacronym{MAE}{MAE}{mean absolute error}
+	\newacronym{MSE}{MSE}{mean squared error}
+	\newacronym{NBBO}{NBBO}{national best bid and offer}
+	\newacronym{ML}{ML}{machine learning}
+	\newacronym{RMSE}{RMSE}{root mean squared error}
+	\newacronym{RF}{RF}{random forest}
+	\newacronym{SSE}{SSE}{sum of squared errors}
+	\newacronym{SHAP}{SHAP}{SHapley Additive exPlanations}
+	\newacronym{SAGE}{SAGE}{Shapley Additive Global importancE}		
+	
+
+% ----------------------------------- Start of document ----------------------------------- 
+\begin{document}
+\setcounter{page}{2} % Cover pages and title page are not numbered. Start numbering from page 2.
+
+% Title page 
+%	\input{Content/Titlepage_Thesis} % Exclude title page (with %) that is not being used.
+\input{Content/Titlepage_Thesis}
+% Main text section
+\newpage
+\setcounter{page}{1}\renewcommand{\thepage}{\arabic{page}} % Sets the numbering to Arabic.
+\include{Content/main-summary}
+
+% Bibliography
+\newpage
+\printbibliography
+\end{document}
