@@ -3,6 +3,7 @@
 Adapted from:
 https://github.com/Yura52/rtdl/
 """
+
 from __future__ import annotations
 
 import enum
