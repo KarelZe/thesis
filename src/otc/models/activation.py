@@ -3,6 +3,7 @@
 Adapted from:
 https://github.com/Yura52/rtdl/blob/main/rtdl/functional.py
 """
+
 import torch
 import torch.nn.functional as F  # noqa: N812
 from torch import nn

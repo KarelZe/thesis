@@ -2,6 +2,7 @@
 
 See: https://hagstromer.org/2020/11/23/overestimated-effective-spreads/ for explanation.
 """
+
 from __future__ import annotations
 
 from typing import Literal

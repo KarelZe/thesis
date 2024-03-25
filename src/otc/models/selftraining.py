@@ -2,6 +2,7 @@
 
 Based on sklearn implementation.
 """
+
 from __future__ import annotations
 
 import warnings

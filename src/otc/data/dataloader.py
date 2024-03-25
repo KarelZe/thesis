@@ -3,6 +3,7 @@
 Adapted from here:
 https://discuss.pytorch.org/t/dataloader-much-slower-than-manual-batching/27014/6
 """
+
 from __future__ import annotations
 
 from typing import Any
