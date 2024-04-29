@@ -3,7 +3,6 @@
 Adapted from here: https://bit.ly/3tTnyLU.
 """
 
-
 import logging
 import logging.config
 import math

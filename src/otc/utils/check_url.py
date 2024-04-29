@@ -2,6 +2,7 @@
 
 Looks into .bib and .tex files.
 """
+
 import os
 import re
 from pathlib import Path
