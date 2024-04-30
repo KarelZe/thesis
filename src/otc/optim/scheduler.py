@@ -1,4 +1,5 @@
 """Learnin rate scheduler with linear warmup phase and cosine decay."""
+
 from typing import List
 
 import numpy as np

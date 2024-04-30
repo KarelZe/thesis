@@ -4,7 +4,6 @@ Includes tests for data sets with categorical and without
 categorical data.
 """
 
-
 import numpy as np
 import pandas as pd
 import pytest
