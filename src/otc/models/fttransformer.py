@@ -34,10 +34,8 @@ def _is_glu_activation(activation: Callable[..., nn.Module]) -> bool:
         bool: truth value.
     """
     return (
-        isinstance(activation, str)
-        and activation.endswith("GLU")
-        or activation in [ReGLU, GeGLU]
-    )
+        isinstance(activation, str) and activation.endswith("GLU")
+    ) or activation in [ReGLU, GeGLU]
 
 
 def _all_or_none(values: list[Any]) -> bool:
