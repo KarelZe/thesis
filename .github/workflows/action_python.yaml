@@ -35,8 +35,8 @@ jobs:
       run: uv sync --all-extras --dev
     - name: Test with pytest
       run: |
-        uv run pytest --cov=src tests/ --doctest-modules --junitxml=cover/xunit-result.xml --cov-report xml:cover/coverage.xml
-        uv run coverage json -o cover/coverage.json
+        uv run pytest --cov=src tests/ --junitxml=cover/xunit-result.xml --cov-report xml:cover/coverage.xml
+        uv run coverage json cover/xunit-result.xml coverage.json
     - name: "Extract numbers from cov report"
       run: |
         export TOTAL=$(python -c "import json;print(json.load(open('cover/coverage.json'))['totals']['percent_covered_display'])")
