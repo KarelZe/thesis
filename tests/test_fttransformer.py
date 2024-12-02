@@ -32,35 +32,36 @@ class TestFTTransformer(NeuralNetTestsMixin):
         NeuralNetTestsMixin (neural net mixin): mixin
     """
 
-    def setup(self) -> None:
+    @classmethod
+    def setup_class(cls):
         """Set up basic network and data.
 
         Prepares inputs and expected outputs for testing.
         """
-        self.num_features_cont = 5
-        self.num_features_cat = 1
-        self.cat_cardinalities = [2]
-        self.batch_size = 64
+        cls.num_features_cont = 5
+        cls.num_features_cat = 1
+        cls.cat_cardinalities = [2]
+        cls.batch_size = 64
 
         set_seed()
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        self.x_cat = torch.randint(0, 1, (self.batch_size, self.num_features_cat)).to(
+        cls.x_cat = torch.randint(0, 1, (cls.batch_size, cls.num_features_cat)).to(
             device
         )
-        self.x_cont = (
-            torch.randn(self.batch_size, self.num_features_cont).float().to(device)
+        cls.x_cont = (
+            torch.randn(cls.batch_size, cls.num_features_cont).float().to(device)
         )
-        self.expected_outputs = (
-            torch.randint(0, 1, (self.batch_size, 1)).float().to(device)
+        cls.expected_outputs = (
+            torch.randint(0, 1, (cls.batch_size, 1)).float().to(device)
         )
 
         # https://github.com/Yura52/rtdl/blob/main/rtdl/modules.py
 
         params_feature_tokenizer: Dict[str, Any] = {
-            "num_continous": self.num_features_cont,
-            "cat_cardinalities": self.cat_cardinalities,
+            "num_continous": cls.num_features_cont,
+            "cat_cardinalities": cls.cat_cardinalities,
             "d_token": 96,
         }
         feature_tokenizer = FeatureTokenizer(**params_feature_tokenizer)
@@ -89,7 +90,7 @@ class TestFTTransformer(NeuralNetTestsMixin):
 
         transformer = Transformer(**params_transformer)
 
-        self.net = FTTransformer(feature_tokenizer, transformer).to(device)
+        cls.net = FTTransformer(feature_tokenizer, transformer).to(device)
 
     def test_numerical_feature_tokenizer(self) -> None:
         """Test numerical feature tokenizer.

@@ -24,23 +24,24 @@ class TestObjectives:
         metaclass (_type_, optional): parent. Defaults to abc.ABCMeta.
     """
 
-    def setup(self) -> None:
+    @classmethod
+    def setup_class(cls):
         """Set up basic data.
 
         Construct feature matrix and target.
         """
-        self._old_cwd = Path.cwd()
+        cls._old_cwd = Path.cwd()
         start = dt.datetime(2020, 1, 1).replace(tzinfo=dt.timezone.utc)
         end = dt.datetime(2021, 12, 31).replace(tzinfo=dt.timezone.utc)
         index = pd.date_range(start=start, end=end, freq="15min")
 
         # make 1 const feature and 1 non-const feature, as catboost requires non-const
-        self._x_train = pd.DataFrame(data={"feature_1": 1}, index=index)
+        cls._x_train = pd.DataFrame(data={"feature_1": 1}, index=index)
         rng = np.random.default_rng()
-        self._x_train["feature_2"] = rng.integers(1, 6, self._x_train.shape[0])
-        self._y_train = self._x_train["feature_2"]
-        self._x_val = self._x_train.copy()
-        self._y_val = self._y_train.copy()
+        cls._x_train["feature_2"] = rng.integers(1, 6, cls._x_train.shape[0])
+        cls._y_train = cls._x_train["feature_2"]
+        cls._x_val = cls._x_train.copy()
+        cls._y_val = cls._y_train.copy()
 
     def test_classical_objective(self) -> None:
         """Test if classical objective returns a valid value.
