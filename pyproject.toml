@@ -1,15 +1,17 @@
-# https://packaging.python.org/en/latest/tutorials/packaging-projects/
 [build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=1.0.0"]
+requires = ["hatchling>=1.12"]
+build-backend = "hatchling.build"
 
-[tool.poetry]
+[project]
 name = "otc"
 version = "0.0.1"
-authors = ["Markus Bilz <github@markusbilz.com>"]
+requires-python = ">=3.8"
 description = "Code to perform option trade classification using machine learning."
 readme = "README.md"
-license = "LICENSE.txt"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Markus Bilz", email = "github@markusbilz.com" }
+]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python :: 3 :: Only",
@@ -17,40 +19,30 @@ classifiers = [
   "Framework :: Jupyter",
   "Operating System :: OS Independent",
 ]
+dependencies = [
+  "catboost>=1.1",
+  "click>=8.1.7",
+  "fastparquet>=2023.8.0",
+  "gcsfs>=2023.9.2",
+  "google-auth>=2.23.4", # needed by w&b in runpod
+  "modin>=0.17.0",
+  "numpy>=1.23.4",
+  "optuna>=3.1.0",
+  "pandas>=1.5.1",
+  "pandas-datareader>=0.10.0",
+  "psutil>=5.9.5", # needed by w&b
+  "pydantic[dotenv]>=2.4.2",
+  "pydantic-settings>=2.1.0",
+  "pyyaml>=6.0.1",
+  "requests>=2.31.0",
+  "scikit-learn>=1.1.3",
+  "seaborn>=0.13.0",
+  "torch>=2.0.0",
+  "tqdm>=4.66.1",
+  "typer>=0.9.0",
+  "wandb>=0.13.5",
+]
 
-[tool.poetry.dependencies]
-# https://stackoverflow.com/a/76647180/5755604
-catboost = "^1.1"
-click = "^8.1.7"
-fastparquet = "^2023.8.0"
-gcsfs = "^2023.9.2"
-google-auth = "^2.23.4" # needed by w&b in runpod
-modin = "^0.17.0"
-numpy = "^1.23.4"
-optuna = "^3.1.0"
-pandas = "^1.5.1"
-pandas-datareader = "^0.10.0"
-psutil = "^5.9.5" #needed by w&b
-pydantic = {extras = ["dotenv"], version = "^2.4.2"}
-pydantic-settings = "^2.1.0"
-python = "^3.8"
-pyyaml = "^6.0.1"
-requests = "^2.31.0"
-scikit-learn = "^1.1.3"
-seaborn = "^0.13.0"
-torch = ">=2.0.0, !=2.0.1, !=2.1.0"
-tqdm = "^4.66.1"
-typer = "^0.9.0"
-wandb = "^0.13.5"
-
-
-[tool.poetry.group.dev.dependencies]
-mypy = "^1.7.1"
-pre-commit = "^3.5.0"
-pytest = "^7.4.3"
-pytest-cov = "^4.1.0"
-ruff = "^0.1.6"
-tox = "^4.11.3"
 
 
 [project.urls]
@@ -85,8 +77,6 @@ omit = [
 ]
 
 [tool.ruff]
-
-include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
 
 [tool.ruff.lint]
 
@@ -130,3 +120,14 @@ section-order = ["future", "standard-library", "third-party", "first-party", "lo
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+
+[tool.uv]
+dev-dependencies = [
+  "mypy>=1.7.1",
+  "pre-commit>=3.5.0",
+  "pytest>=7.4.3",
+  "pytest-cov>=4.1.0",
+  "ruff>=0.8.1",
+  "tox>=4.11.3",
+]
