@@ -20,23 +20,24 @@ class TestClassicalClassifier(ClassifierMixin):
         unittest (_type_): unittest module
     """
 
-    def setup(self) -> None:
+    @classmethod
+    def setup_class(cls):
         """Set up basic classifier and data.
 
         Prepares inputs and expected outputs for testing.
         """
-        self.x_train = pd.DataFrame(
+        cls.x_train = pd.DataFrame(
             [[1, 2], [3, 4], [1, 2], [3, 4]], columns=["BEST_ASK", "BEST_BID"]
         )
-        self.y_train = pd.Series([1, 1, -1, -1])
-        self.x_test = pd.DataFrame(
+        cls.y_train = pd.Series([1, 1, -1, -1])
+        cls.x_test = pd.DataFrame(
             [[1, 2], [3, 4], [1, 2], [3, 4]], columns=["BEST_ASK", "BEST_BID"]
         )
-        self.y_test = pd.Series([1, -1, 1, -1])
-        self.clf = ClassicalClassifier(
+        cls.y_test = pd.Series([1, -1, 1, -1])
+        cls.clf = ClassicalClassifier(
             layers=[("nan", "ex")],
             random_state=7,
-        ).fit(self.x_train, self.y_train)
+        ).fit(cls.x_train, cls.y_train)
 
     def test_random_state(self) -> None:
         """Test, if random state is correctly set.
