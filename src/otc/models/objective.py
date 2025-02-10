@@ -447,7 +447,7 @@ class GradientBoostingObjective(Objective):
         # https://catboost.ai/en/docs/features/training-on-gpu
         gpu_count = get_gpu_device_count()
         task_type = "GPU" if gpu_count > 0 else "CPU"
-        devices = f"0-{gpu_count-1}"
+        devices = f"0-{gpu_count - 1}"
 
         # kaggle book + https://catboost.ai/en/docs/concepts/parameter-tuning
         # friedman paper
