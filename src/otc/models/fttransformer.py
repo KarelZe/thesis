@@ -283,9 +283,9 @@ class FeatureTokenizer(nn.Module):
         """
         super().__init__()
         assert num_continous >= 0, "n_num_features must be non-negative"
-        assert (
-            num_continous or cat_cardinalities
-        ), "at least one of n_num_features or cat_cardinalities must be positive"
+        assert num_continous or cat_cardinalities, (
+            "at least one of n_num_features or cat_cardinalities must be positive"
+        )
         "and non-empty"
         self.initialization = "uniform"
         self.num_tokenizer = (
@@ -347,15 +347,15 @@ class FeatureTokenizer(nn.Module):
         Returns:
             torch.Tensor: tokens.
         """
-        assert (
-            x_num is not None or x_cat is not None
-        ), "At least one of x_num and x_cat must be presented"
-        assert _all_or_none(
-            [self.num_tokenizer, x_num]
-        ), "If self.num_tokenizer is (not) None, then x_num must (not) be None"
-        assert _all_or_none(
-            [self.cat_tokenizer, x_cat]
-        ), "If self.cat_tokenizer is (not) None, then x_cat must (not) be None"
+        assert x_num is not None or x_cat is not None, (
+            "At least one of x_num and x_cat must be presented"
+        )
+        assert _all_or_none([self.num_tokenizer, x_num]), (
+            "If self.num_tokenizer is (not) None, then x_num must (not) be None"
+        )
+        assert _all_or_none([self.cat_tokenizer, x_cat]), (
+            "If self.cat_tokenizer is (not) None, then x_cat must (not) be None"
+        )
         x = []
         if self.num_tokenizer is not None:
             x.append(self.num_tokenizer(x_num))
@@ -559,9 +559,9 @@ class MultiheadAttention(nn.Module):
             Tuple[torch.Tensor, Dict[str, torch.Tensor]]: Tuple with tokens and
             attention_stats
         """
-        assert _all_or_none(
-            [key_compression, value_compression]
-        ), "If key_compression is (not) None, then value_compression must (not) be None"
+        assert _all_or_none([key_compression, value_compression]), (
+            "If key_compression is (not) None, then value_compression must (not) be None"
+        )
         q, k, v = self.W_q(x_q), self.W_k(x_kv), self.W_v(x_kv)
         for tensor in [q, k, v]:
             assert tensor.shape[-1] % self.n_heads == 0, _INTERNAL_ERROR_MESSAGE
@@ -756,9 +756,9 @@ class Transformer(nn.Module):
                 f"Do you mean last_layer_query_idx=[{last_layer_query_idx}] ?"
             )
         if not prenormalization:
-            assert (
-                not first_prenormalization
-            ), "If `prenormalization` is False, then `first_prenormalization`"
+            assert not first_prenormalization, (
+                "If `prenormalization` is False, then `first_prenormalization`"
+            )
             "must be False"
         assert _all_or_none([n_tokens, kv_compression_ratio, kv_compression_sharing]), (
             "If any of the following arguments is (not) None, then all of them must "
@@ -814,9 +814,9 @@ class Transformer(nn.Module):
                 if kv_compression_sharing == "headwise":
                     layer["value_compression"] = make_kv_compression()
                 else:
-                    assert (
-                        kv_compression_sharing == "key-value"
-                    ), _INTERNAL_ERROR_MESSAGE
+                    assert kv_compression_sharing == "key-value", (
+                        _INTERNAL_ERROR_MESSAGE
+                    )
             self.blocks.append(layer)
 
         self.head = Transformer.Head(
@@ -874,9 +874,9 @@ class Transformer(nn.Module):
         Returns:
             torch.Tensor: output tensor.
         """
-        assert (
-            x.ndim == 3
-        ), "The input must have 3 dimensions: (n_objects, n_tokens, d_token)"
+        assert x.ndim == 3, (
+            "The input must have 3 dimensions: (n_objects, n_tokens, d_token)"
+        )
         for layer_idx, layer in enumerate(self.blocks):
             layer = cast(nn.ModuleDict, layer)
 
