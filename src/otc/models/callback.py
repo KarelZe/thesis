@@ -132,7 +132,7 @@ class SaveCallback(Callback):
             name (str): name of study.
         """
         if study.best_trial == trial:
-            prefix_file = f"{study.study_name}_" f"{model.__class__.__name__}_{name}"
+            prefix_file = f"{study.study_name}_{model.__class__.__name__}_{name}"
 
             uri_model: str
             file_model: str

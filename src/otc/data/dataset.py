@@ -52,15 +52,15 @@ class TabDataset(Dataset):
         # infer feature names from dataframe.
         if isinstance(x, pd.DataFrame):
             feature_names = x.columns.tolist()
-        assert (
-            len(feature_names) == x.shape[1]
-        ), "`len('feature_names)` must match `X.shape[1]`"
+        assert len(feature_names) == x.shape[1], (
+            "`len('feature_names)` must match `X.shape[1]`"
+        )
 
         # calculate cat indices
         cat_features = cat_features if cat_features else []
-        assert set(cat_features).issubset(
-            feature_names
-        ), "Categorical features must be a subset of feature names."
+        assert set(cat_features).issubset(feature_names), (
+            "Categorical features must be a subset of feature names."
+        )
 
         self._cat_idx = [
             feature_names.index(i) for i in cat_features if i in feature_names
@@ -77,12 +77,12 @@ class TabDataset(Dataset):
         y = y.to_numpy() if isinstance(y, pd.Series) else y
         weight = weight.to_numpy() if isinstance(weight, pd.Series) else weight
 
-        assert (
-            x.shape[0] == y.shape[0]
-        ), "Length of feature matrix must match length of target."
-        assert len(cat_features) == len(
-            self._cat_unique_counts
-        ), "For all categorical features the number of unique entries must be provided."
+        assert x.shape[0] == y.shape[0], (
+            "Length of feature matrix must match length of target."
+        )
+        assert len(cat_features) == len(self._cat_unique_counts), (
+            "For all categorical features the number of unique entries must be provided."
+        )
 
         # adjust target to be either 0 or 1
         self.y = torch.tensor(y).float()
@@ -105,9 +105,9 @@ class TabDataset(Dataset):
             if weight is not None
             else torch.ones(len(self.y), requires_grad=False).float()
         )
-        assert (
-            y.shape[0] == weight.shape[0]
-        ), "Length of label must match length of weight."
+        assert y.shape[0] == weight.shape[0], (
+            "Length of label must match length of weight."
+        )
         self.weight = weight
 
     def __len__(self) -> int:
