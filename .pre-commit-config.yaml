@@ -51,4 +51,3 @@ repos:
       - --fix
     - id: ruff-format
 exclude: "^(references|reports)"
-
