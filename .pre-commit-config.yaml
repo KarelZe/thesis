@@ -27,7 +27,7 @@ repos:
       - id: check-added-large-files
         exclude: uv.lock
       - id: check-builtin-literals
-      - id: check-byte-order-marker
+      - id: fix-byte-order-marker
       - id: check-merge-conflict
       - id: check-symlinks
       - id: check-toml
@@ -51,3 +51,4 @@ repos:
       - --fix
     - id: ruff-format
 exclude: "^(references|reports)"
+
