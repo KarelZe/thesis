@@ -4,7 +4,7 @@ Partly inspired by:
 https://github.com/tilman151/unittest_dl/blob/master/tests/test_model.py
 """
 
-from typing import Any, Dict
+from typing import Any
 
 import torch
 import torch.nn as nn
@@ -59,13 +59,13 @@ class TestFTTransformer(NeuralNetTestsMixin):
 
         # https://github.com/Yura52/rtdl/blob/main/rtdl/modules.py
 
-        params_feature_tokenizer: Dict[str, Any] = {
+        params_feature_tokenizer: dict[str, Any] = {
             "num_continous": cls.num_features_cont,
             "cat_cardinalities": cls.cat_cardinalities,
             "d_token": 96,
         }
         feature_tokenizer = FeatureTokenizer(**params_feature_tokenizer)
-        params_transformer: Dict[str, Any] = {
+        params_transformer: dict[str, Any] = {
             "d_token": 96,
             "n_blocks": 3,
             "attention_n_heads": 8,

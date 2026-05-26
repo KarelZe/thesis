@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "otc"
 version = "0.0.1"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 description = "Code to perform option trade classification using machine learning."
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -15,7 +15,7 @@ authors = [
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.10",
   "Framework :: Jupyter",
   "Operating System :: OS Independent",
 ]
@@ -83,7 +83,7 @@ omit = [
 # See rules: https://beta.ruff.rs/docs/rules/
 select = [
     "C",    # flake8-comprehensions
-    "D",    # pydocstyle
+    # "D",    # pydocstyle
     "E",    # pycodestyle errors
     "F",    # pyflakes
     "I",    # isort
@@ -92,7 +92,7 @@ select = [
     "PD",   # pandas-vet
     "PIE",  # misc lints
     "PT",   # pytest
-    "PTH",  # flake8-use-pathlib
+    # "PTH",  # flake8-use-pathlib
     "PGH",  # pygrep
     "RET",  # return
     "RUF",  # ruff-specific rules

@@ -1,7 +1,5 @@
 """Learnin rate scheduler with linear warmup phase and cosine decay."""
 
-from typing import List
-
 import numpy as np
 from torch import optim
 
@@ -26,7 +24,7 @@ class CosineWarmupScheduler(optim.lr_scheduler._LRScheduler):
         self.max_num_iters = max_iters
         super().__init__(optimizer)
 
-    def get_lr(self) -> List[float]:
+    def get_lr(self) -> list[float]:
         """Get the learning rate.
 
         Returns:

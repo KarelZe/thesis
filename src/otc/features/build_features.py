@@ -3,8 +3,6 @@
 See notebook/3.0b-feature-engineering.ipynb for details.
 """
 
-from typing import List, Tuple
-
 features_option = [
     "STRK_PRC",
     "ttm",
@@ -17,7 +15,7 @@ features_option = [
 
 # https://github.com/KarelZe/thesis/blob/main/notebooks/
 # 3.0a-mb-explanatory_data_analysis.ipynb
-features_categorical: List[Tuple[str, int]] = [
+features_categorical: list[tuple[str, int]] = [
     ("option_type", 2),
     ("issue_type", 6),
     ("root", 9107),  # + 1 for UNK which may be in val and test set
