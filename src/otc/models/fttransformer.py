@@ -710,7 +710,7 @@ class Transformer(nn.Module):
         residual_dropout: float,
         prenormalization: bool,
         first_prenormalization: bool,
-        last_layer_query_idx: None | list[int] | slice,
+        last_layer_query_idx: list[int] | slice | None,
         n_tokens: int | None,
         kv_compression_ratio: float | None,
         kv_compression_sharing: str | None,
