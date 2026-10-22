@@ -14,12 +14,12 @@ This repository contains all the resources for my thesis on option trade classif
 
 ## Development
 
-### Set up git pre-commit hooks 🐙
-Pre-commit hooks are pre-checks to avoid committing error-prone code. The tests are defined in the [`.pre-commit-config.yaml`](https://github.com/KarelZe/thesis/blob/main/.pre-commit-config.yaml). Install them using:
+### Set up git hooks with prek 🐙
+Git hooks are pre-checks to avoid committing error-prone code. The hooks are run with [`prek`](https://prek.j178.dev) and defined in [`prek.toml`](https://github.com/KarelZe/thesis/blob/main/prek.toml). Install them using:
 ```shell
 pip install .[dev]
-pre-commit install
-pre-commit run --all-files
+prek install
+prek run --all-files
 ```
 ### Run tests🧯
 Tests can be run using [`tox`](https://tox.wiki/en/latest/). Just type:

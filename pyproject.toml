@@ -125,7 +125,7 @@ convention = "google"
 [tool.uv]
 dev-dependencies = [
   "mypy>=1.7.1",
-  "pre-commit>=3.5.0",
+  "prek",
   "pytest>=7.4.3",
   "pytest-cov",
   "ruff>=0.8.1",
@@ -134,7 +134,7 @@ dev-dependencies = [
 ]
 
 [tool.tox]
-env_list = ["format", "lint", "pre-commit"]
+env_list = ["format", "lint", "prek"]
 min_version = "4.23"
 
 [tool.tox.env_run_base]
@@ -164,9 +164,9 @@ commands = [
     ["mypy", { replace = "posargs", default = ["src"], extend = true} ]
 ]
 
-[tool.tox.env.pre-commit]
-description = "pre-commit hooks"
-commands = [["pre-commit", "run", "--all-files", "--show-diff-on-failure"]]
+[tool.tox.env.prek]
+description = "prek hooks"
+commands = [["prek", "run", "--all-files", "--show-diff-on-failure"]]
 
 [tool.tox.env.test]
 description = "tests"
